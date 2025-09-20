@@ -1,0 +1,843 @@
+Delete:      1 A848    Other tick-borne viral encephalitis                          Other tick-borne viral encephalitis
+Add:         0 A848    Other tick-borne viral encephalitis                          Other tick-borne viral encephalitis
+Add:         1 A8481   Powassan virus disease                                       Powassan virus disease
+Add:         1 A8489   Other tick-borne viral encephalitis                          Other tick-borne viral encephalitis
+Delete:      1 B600    Babesiosis                                                   Babesiosis
+Add:         0 B600    Babesiosis                                                   Babesiosis
+Add:         1 B6000   Babesiosis, unspecified                                      Babesiosis, unspecified
+Add:         1 B6001   Babesiosis due to Babesia microti                            Babesiosis due to Babesia microti
+Add:         1 B6002   Babesiosis due to Babesia duncani                            Babesiosis due to Babesia duncani
+Add:         1 B6003   Babesiosis due to Babesia divergens                          Babesiosis due to Babesia divergens
+Add:         1 B6009   Other babesiosis                                             Other babesiosis
+Add:         1 D5703   Hb-SS disease with cerebral vascular involvement             Hb-SS disease with cerebral vascular involvement
+Add:         1 D5709   Hb-SS disease with crisis with other specified complication  Hb-SS disease with crisis with other specified complication
+Add:         1 D57213  Sickle-cell/Hb-C disease with cerebral vascular involvement  Sickle-cell/Hb-C disease with cerebral vascular involvement
+Add:         1 D57218  Sickle-cell/Hb-C disease with crisis with oth complication   Sickle-cell/Hb-C disease with crisis with other specified complication
+Revise from: 0 D5741   Sickle-cell thalassemia with crisis                          Sickle-cell thalassemia with crisis
+Revise to:   0 D5741   Sickle-cell thalassemia, unspecified, with crisis            Sickle-cell thalassemia, unspecified, with crisis
+Revise from: 1 D57411  Sickle-cell thalassemia with acute chest syndrome            Sickle-cell thalassemia with acute chest syndrome
+Revise to:   1 D57411  Sickle-cell thalassemia, unsp, with acute chest syndrome     Sickle-cell thalassemia, unspecified, with acute chest syndrome
+Revise from: 1 D57412  Sickle-cell thalassemia with splenic sequestration           Sickle-cell thalassemia with splenic sequestration
+Revise to:   1 D57412  Sickle-cell thalassemia, unsp, with splenic sequestration    Sickle-cell thalassemia, unspecified, with splenic sequestration
+Add:         1 D57413  Sickle-cell thalassemia, unsp, with cerebral vascular invl   Sickle-cell thalassemia, unspecified, with cerebral vascular involvement
+Add:         1 D57418  Sickle-cell thalassemia, unsp, with crisis with oth comp     Sickle-cell thalassemia, unspecified, with crisis with other specified complication
+Revise from: 1 D57419  Sickle-cell thalassemia with crisis, unspecified             Sickle-cell thalassemia with crisis, unspecified
+Revise to:   1 D57419  Sickle-cell thalassemia, unspecified, with crisis            Sickle-cell thalassemia, unspecified, with crisis
+Add:         1 D5742   Sickle-cell thalassemia beta zero without crisis             Sickle-cell thalassemia beta zero without crisis
+Add:         0 D5743   Sickle-cell thalassemia beta zero with crisis                Sickle-cell thalassemia beta zero with crisis
+Add:         1 D57431  Sickle-cell thalassemia beta zero with acute chest syndrome  Sickle-cell thalassemia beta zero with acute chest syndrome
+Add:         1 D57432  Sickle-cell thalassemia beta zero with splenic sequestration Sickle-cell thalassemia beta zero with splenic sequestration
+Add:         1 D57433  Sickle-cell thalassemia beta zero with cereb vascular invl   Sickle-cell thalassemia beta zero with cerebral vascular involvement
+Add:         1 D57438  Sickle-cell thalassemia beta zero with crisis with oth comp  Sickle-cell thalassemia beta zero with crisis with other specified complication
+Add:         1 D57439  Sickle-cell thalassemia beta zero with crisis, unspecified   Sickle-cell thalassemia beta zero with crisis, unspecified
+Add:         1 D5744   Sickle-cell thalassemia beta plus without crisis             Sickle-cell thalassemia beta plus without crisis
+Add:         0 D5745   Sickle-cell thalassemia beta plus with crisis                Sickle-cell thalassemia beta plus with crisis
+Add:         1 D57451  Sickle-cell thalassemia beta plus with acute chest syndrome  Sickle-cell thalassemia beta plus with acute chest syndrome
+Add:         1 D57452  Sickle-cell thalassemia beta plus with splenic sequestration Sickle-cell thalassemia beta plus with splenic sequestration
+Add:         1 D57453  Sickle-cell thalassemia beta plus with cereb vascular invl   Sickle-cell thalassemia beta plus with cerebral vascular involvement
+Add:         1 D57458  Sickle-cell thalassemia beta plus with crisis with oth comp  Sickle-cell thalassemia beta plus with crisis with other specified complication
+Add:         1 D57459  Sickle-cell thalassemia beta plus with crisis, unspecified   Sickle-cell thalassemia beta plus with crisis, unspecified
+Add:         1 D57813  Other sickle-cell disorders with cerebral vascular invl      Other sickle-cell disorders with cerebral vascular involvement
+Add:         1 D57818  Other sickle-cell disorders with crisis with oth comp        Other sickle-cell disorders with crisis with other specified complication
+Delete:      1 D591    Other autoimmune hemolytic anemias                           Other autoimmune hemolytic anemias
+Add:         0 D591    Other autoimmune hemolytic anemias                           Other autoimmune hemolytic anemias
+Add:         1 D5910   Autoimmune hemolytic anemia, unspecified                     Autoimmune hemolytic anemia, unspecified
+Add:         1 D5911   Warm autoimmune hemolytic anemia                             Warm autoimmune hemolytic anemia
+Add:         1 D5912   Cold autoimmune hemolytic anemia                             Cold autoimmune hemolytic anemia
+Add:         1 D5913   Mixed type autoimmune hemolytic anemia                       Mixed type autoimmune hemolytic anemia
+Add:         1 D5919   Other autoimmune hemolytic anemia                            Other autoimmune hemolytic anemia
+Delete:      1 D721    Eosinophilia                                                 Eosinophilia
+Add:         0 D721    Eosinophilia                                                 Eosinophilia
+Add:         1 D7210   Eosinophilia, unspecified                                    Eosinophilia, unspecified
+Add:         0 D7211   Hypereosinophilic syndrome [HES]                             Hypereosinophilic syndrome [HES]
+Add:         1 D72110  Idiopathic hypereosinophilic syndrome [IHES]                 Idiopathic hypereosinophilic syndrome [IHES]
+Add:         1 D72111  Lymphocytic Variant Hypereosinophilic Syndrome [LHES]        Lymphocytic Variant Hypereosinophilic Syndrome [LHES]
+Add:         1 D72118  Other hypereosinophilic syndrome                             Other hypereosinophilic syndrome
+Add:         1 D72119  Hypereosinophilic syndrome [HES], unspecified                Hypereosinophilic syndrome [HES], unspecified
+Add:         1 D7212   Drug rash with eosinophilia and systemic symptoms syndrome   Drug rash with eosinophilia and systemic symptoms syndrome
+Add:         1 D7218   Eosinophilia in diseases classified elsewhere                Eosinophilia in diseases classified elsewhere
+Add:         1 D7219   Other eosinophilia                                           Other eosinophilia
+Delete:      1 D848    Other specified immunodeficiencies                           Other specified immunodeficiencies
+Add:         0 D848    Other specified immunodeficiencies                           Other specified immunodeficiencies
+Add:         1 D8481   Immunodeficiency due to conditions classified elsewhere      Immunodeficiency due to conditions classified elsewhere
+Add:         0 D8482   Immunodeficiency due to drugs and external causes            Immunodeficiency due to drugs and external causes
+Add:         1 D84821  Immunodeficiency due to drugs                                Immunodeficiency due to drugs
+Add:         1 D84822  Immunodeficiency due to external causes                      Immunodeficiency due to external causes
+Add:         1 D8489   Other immunodeficiencies                                     Other immunodeficiencies
+Add:         0 D8983   Cytokine release syndrome                                    Cytokine release syndrome
+Add:         1 D89831  Cytokine release syndrome, grade 1                           Cytokine release syndrome, grade 1
+Add:         1 D89832  Cytokine release syndrome, grade 2                           Cytokine release syndrome, grade 2
+Add:         1 D89833  Cytokine release syndrome, grade 3                           Cytokine release syndrome, grade 3
+Add:         1 D89834  Cytokine release syndrome, grade 4                           Cytokine release syndrome, grade 4
+Add:         1 D89835  Cytokine release syndrome, grade 5                           Cytokine release syndrome, grade 5
+Add:         1 D89839  Cytokine release syndrome, grade unspecified                 Cytokine release syndrome, grade unspecified
+Delete:      1 E708    Other disorders of aromatic amino-acid metabolism            Other disorders of aromatic amino-acid metabolism
+Add:         0 E708    Other disorders of aromatic amino-acid metabolism            Other disorders of aromatic amino-acid metabolism
+Add:         1 E7081   Aromatic L-amino acid decarboxylase deficiency               Aromatic L-amino acid decarboxylase deficiency
+Add:         1 E7089   Other disorders of aromatic amino-acid metabolism            Other disorders of aromatic amino-acid metabolism
+Delete:      1 E748    Other specified disorders of carbohydrate metabolism         Other specified disorders of carbohydrate metabolism
+Add:         0 E748    Other specified disorders of carbohydrate metabolism         Other specified disorders of carbohydrate metabolism
+Add:         0 E7481   Disorders of glucose transport, not elsewhere classified     Disorders of glucose transport, not elsewhere classified
+Add:         1 E74810  Glucose transporter protein type 1 deficiency                Glucose transporter protein type 1 deficiency
+Add:         1 E74818  Other disorders of glucose transport                         Other disorders of glucose transport
+Add:         1 E74819  Disorders of glucose transport, unspecified                  Disorders of glucose transport, unspecified
+Add:         1 E7489   Other specified disorders of carbohydrate metabolism         Other specified disorders of carbohydrate metabolism
+Add:         0 F1013   Alcohol abuse, with withdrawal                               Alcohol abuse, with withdrawal
+Add:         1 F10130  Alcohol abuse with withdrawal, uncomplicated                 Alcohol abuse with withdrawal, uncomplicated
+Add:         1 F10131  Alcohol abuse with withdrawal delirium                       Alcohol abuse with withdrawal delirium
+Add:         1 F10132  Alcohol abuse with withdrawal with perceptual disturbance    Alcohol abuse with withdrawal with perceptual disturbance
+Add:         1 F10139  Alcohol abuse with withdrawal, unspecified                   Alcohol abuse with withdrawal, unspecified
+Add:         0 F1093   Alcohol use, unspecified with withdrawal                     Alcohol use, unspecified with withdrawal
+Add:         1 F10930  Alcohol use, unspecified with withdrawal, uncomplicated      Alcohol use, unspecified with withdrawal, uncomplicated
+Add:         1 F10931  Alcohol use, unspecified with withdrawal delirium            Alcohol use, unspecified with withdrawal delirium
+Add:         1 F10932  Alcohol use, unspecified with w/drawal w perceptual disturb  Alcohol use, unspecified with withdrawal with perceptual disturbance
+Add:         1 F10939  Alcohol use, unspecified with withdrawal, unspecified        Alcohol use, unspecified with withdrawal, unspecified
+Add:         1 F1113   Opioid abuse with withdrawal                                 Opioid abuse with withdrawal
+Add:         1 F1213   Cannabis abuse with withdrawal                               Cannabis abuse with withdrawal
+Add:         0 F1313   Sedative, hypnotic or anxiolytic abuse with withdrawal       Sedative, hypnotic or anxiolytic abuse with withdrawal
+Add:         1 F13130  Sedatv/hyp/anxiolytc abuse with withdrawal, uncomplicated    Sedative, hypnotic or anxiolytic abuse with withdrawal, uncomplicated
+Add:         1 F13131  Sedatv/hyp/anxiolytc abuse with withdrawal delirium          Sedative, hypnotic or anxiolytic abuse with withdrawal delirium
+Add:         1 F13132  Sedatv/hyp/anxiolytc abuse with w/drawal w perceptl disturb  Sedative, hypnotic or anxiolytic abuse with withdrawal with perceptual disturbance
+Add:         1 F13139  Sedatv/hyp/anxiolytc abuse with withdrawal, unspecified      Sedative, hypnotic or anxiolytic abuse with withdrawal, unspecified
+Add:         1 F1413   Cocaine abuse, unspecified with withdrawal                   Cocaine abuse, unspecified with withdrawal
+Add:         1 F1493   Cocaine use, unspecified with withdrawal                     Cocaine use, unspecified with withdrawal
+Add:         1 F1513   Other stimulant abuse with withdrawal                        Other stimulant abuse with withdrawal
+Add:         0 F1913   Other psychoactive substance abuse with withdrawal           Other psychoactive substance abuse with withdrawal
+Add:         1 F19130  Other psychoactive substance abuse with withdrawal, uncomp   Other psychoactive substance abuse with withdrawal, uncomplicated
+Add:         1 F19131  Other psychoactive substance abuse with withdrawal delirium  Other psychoactive substance abuse with withdrawal delirium
+Add:         1 F19132  Other psychoactv sub abuse with w/drawal w perceptl disturb  Other psychoactive substance abuse with withdrawal with perceptual disturbance
+Add:         1 F19139  Other psychoactv substance abuse with withdrawal, unsp       Other psychoactive substance abuse with withdrawal, unspecified
+Delete:      1 G111    Early-onset cerebellar ataxia                                Early-onset cerebellar ataxia
+Add:         0 G111    Early-onset cerebellar ataxia                                Early-onset cerebellar ataxia
+Add:         1 G1110   Early-onset cerebellar ataxia, unspecified                   Early-onset cerebellar ataxia, unspecified
+Add:         1 G1111   Friedreich ataxia                                            Friedreich ataxia
+Add:         1 G1119   Other early-onset cerebellar ataxia                          Other early-onset cerebellar ataxia
+Add:         1 G4042   Cyclin-Dependent Kinase-Like 5 Deficiency Disorder           Cyclin-Dependent Kinase-Like 5 Deficiency Disorder
+Add:         0 G4083   Dravet syndrome                                              Dravet syndrome
+Add:         1 G40833  Dravet syndrome, intractable, with status epilepticus        Dravet syndrome, intractable, with status epilepticus
+Add:         1 G40834  Dravet syndrome, intractable, without status epilepticus     Dravet syndrome, intractable, without status epilepticus
+Delete:      1 G712    Congenital myopathies                                        Congenital myopathies
+Add:         0 G712    Congenital myopathies                                        Congenital myopathies
+Add:         1 G7120   Congenital myopathy, unspecifed                              Congenital myopathy, unspecifed
+Add:         1 G7121   Nemaline myopathy                                            Nemaline myopathy
+Add:         0 G7122   Centronuclear myopathy                                       Centronuclear myopathy
+Add:         1 G71220  X-linked myotubular myopathy                                 X-linked myotubular myopathy
+Add:         1 G71228  Other centronuclear myopathy                                 Other centronuclear myopathy
+Add:         1 G7129   Other congenital myopathy                                    Other congenital myopathy
+Delete:      1 G960    Cerebrospinal fluid leak                                     Cerebrospinal fluid leak
+Add:         0 G960    Cerebrospinal fluid leak                                     Cerebrospinal fluid leak
+Add:         1 G9600   Cerebrospinal fluid leak, unspecified                        Cerebrospinal fluid leak, unspecified
+Add:         1 G9601   Cranial cerebrospinal fluid leak, spontaneous                Cranial cerebrospinal fluid leak, spontaneous
+Add:         1 G9602   Spinal cerebrospinal fluid leak, spontaneous                 Spinal cerebrospinal fluid leak, spontaneous
+Add:         1 G9608   Other cranial cerebrospinal fluid leak                       Other cranial cerebrospinal fluid leak
+Add:         1 G9609   Other spinal cerebrospinal fluid leak                        Other spinal cerebrospinal fluid leak
+Delete:      1 G9619   Other disorders of meninges, not elsewhere classified        Other disorders of meninges, not elsewhere classified
+Add:         0 G9619   Other disorders of meninges, not elsewhere classified        Other disorders of meninges, not elsewhere classified
+Add:         1 G96191  Perineural cyst                                              Perineural cyst
+Add:         1 G96198  Other disorders of meninges, not elsewhere classified        Other disorders of meninges, not elsewhere classified
+Delete:      1 G968    Other specified disorders of central nervous system          Other specified disorders of central nervous system
+Add:         0 G968    Other specified disorders of central nervous system          Other specified disorders of central nervous system
+Add:         0 G9681   Intracranial hypotension                                     Intracranial hypotension
+Add:         1 G96810  Intracranial hypotension, unspecified                        Intracranial hypotension, unspecified
+Add:         1 G96811  Intracranial hypotension, spontaneous                        Intracranial hypotension, spontaneous
+Add:         1 G96819  Other intracranial hypotension                               Other intracranial hypotension
+Add:         1 G9689   Other specified disorders of central nervous system          Other specified disorders of central nervous system
+Add:         1 G9783   Intracranial hypotension following lumbar CSF shunting       Intracranial hypotension following lumbar cerebrospinal fluid shunting
+Add:         1 G9784   Intracranial hypotension following other procedure           Intracranial hypotension following other procedure
+Delete:      1 H1850   Unspecified hereditary corneal dystrophies                   Unspecified hereditary corneal dystrophies
+Add:         0 H1850   Unspecified hereditary corneal dystrophies                   Unspecified hereditary corneal dystrophies
+Add:         1 H18501  Unspecified hereditary corneal dystrophies, right eye        Unspecified hereditary corneal dystrophies, right eye
+Add:         1 H18502  Unspecified hereditary corneal dystrophies, left eye         Unspecified hereditary corneal dystrophies, left eye
+Add:         1 H18503  Unspecified hereditary corneal dystrophies, bilateral        Unspecified hereditary corneal dystrophies, bilateral
+Add:         1 H18509  Unspecified hereditary corneal dystrophies, unspecified eye  Unspecified hereditary corneal dystrophies, unspecified eye
+Delete:      1 H1851   Endothelial corneal dystrophy                                Endothelial corneal dystrophy
+Add:         0 H1851   Endothelial corneal dystrophy                                Endothelial corneal dystrophy
+Add:         1 H18511  Endothelial corneal dystrophy, right eye                     Endothelial corneal dystrophy, right eye
+Add:         1 H18512  Endothelial corneal dystrophy, left eye                      Endothelial corneal dystrophy, left eye
+Add:         1 H18513  Endothelial corneal dystrophy, bilateral                     Endothelial corneal dystrophy, bilateral
+Add:         1 H18519  Endothelial corneal dystrophy, unspecified eye               Endothelial corneal dystrophy, unspecified eye
+Delete:      1 H1852   Epithelial (juvenile) corneal dystrophy                      Epithelial (juvenile) corneal dystrophy
+Add:         0 H1852   Epithelial (juvenile) corneal dystrophy                      Epithelial (juvenile) corneal dystrophy
+Add:         1 H18521  Epithelial (juvenile) corneal dystrophy, right eye           Epithelial (juvenile) corneal dystrophy, right eye
+Add:         1 H18522  Epithelial (juvenile) corneal dystrophy, left eye            Epithelial (juvenile) corneal dystrophy, left eye
+Add:         1 H18523  Epithelial (juvenile) corneal dystrophy, bilateral           Epithelial (juvenile) corneal dystrophy, bilateral
+Add:         1 H18529  Epithelial (juvenile) corneal dystrophy, unspecified eye     Epithelial (juvenile) corneal dystrophy, unspecified eye
+Delete:      1 H1853   Granular corneal dystrophy                                   Granular corneal dystrophy
+Add:         0 H1853   Granular corneal dystrophy                                   Granular corneal dystrophy
+Add:         1 H18531  Granular corneal dystrophy, right eye                        Granular corneal dystrophy, right eye
+Add:         1 H18532  Granular corneal dystrophy, left eye                         Granular corneal dystrophy, left eye
+Add:         1 H18533  Granular corneal dystrophy, bilateral                        Granular corneal dystrophy, bilateral
+Add:         1 H18539  Granular corneal dystrophy, unspecified eye                  Granular corneal dystrophy, unspecified eye
+Delete:      1 H1854   Lattice corneal dystrophy                                    Lattice corneal dystrophy
+Add:         0 H1854   Lattice corneal dystrophy                                    Lattice corneal dystrophy
+Add:         1 H18541  Lattice corneal dystrophy, right eye                         Lattice corneal dystrophy, right eye
+Add:         1 H18542  Lattice corneal dystrophy, left eye                          Lattice corneal dystrophy, left eye
+Add:         1 H18543  Lattice corneal dystrophy, bilateral                         Lattice corneal dystrophy, bilateral
+Add:         1 H18549  Lattice corneal dystrophy, unspecified eye                   Lattice corneal dystrophy, unspecified eye
+Delete:      1 H1855   Macular corneal dystrophy                                    Macular corneal dystrophy
+Add:         0 H1855   Macular corneal dystrophy                                    Macular corneal dystrophy
+Add:         1 H18551  Macular corneal dystrophy, right eye                         Macular corneal dystrophy, right eye
+Add:         1 H18552  Macular corneal dystrophy, left eye                          Macular corneal dystrophy, left eye
+Add:         1 H18553  Macular corneal dystrophy, bilateral                         Macular corneal dystrophy, bilateral
+Add:         1 H18559  Macular corneal dystrophy, unspecified eye                   Macular corneal dystrophy, unspecified eye
+Delete:      1 H1859   Other hereditary corneal dystrophies                         Other hereditary corneal dystrophies
+Add:         0 H1859   Other hereditary corneal dystrophies                         Other hereditary corneal dystrophies
+Add:         1 H18591  Other hereditary corneal dystrophies, right eye              Other hereditary corneal dystrophies, right eye
+Add:         1 H18592  Other hereditary corneal dystrophies, left eye               Other hereditary corneal dystrophies, left eye
+Add:         1 H18593  Other hereditary corneal dystrophies, bilateral              Other hereditary corneal dystrophies, bilateral
+Add:         1 H18599  Other hereditary corneal dystrophies, unspecified eye        Other hereditary corneal dystrophies, unspecified eye
+Revise from: 1 H5581   Saccadic eye movements                                       Saccadic eye movements
+Revise to:   1 H5581   Deficient saccadic eye movements                             Deficient saccadic eye movements
+Add:         1 H5582   Deficient smooth pursuit eye movements                       Deficient smooth pursuit eye movements
+Delete:      1 J82     Pulmonary eosinophilia, not elsewhere classified             Pulmonary eosinophilia, not elsewhere classified
+Add:         0 J82     Pulmonary eosinophilia, not elsewhere classified             Pulmonary eosinophilia, not elsewhere classified
+Add:         0 J828    Pulmonary eosinophilia, not elsewhere classified             Pulmonary eosinophilia, not elsewhere classified
+Add:         1 J8281   Chronic eosinophilic pneumonia                               Chronic eosinophilic pneumonia
+Add:         1 J8282   Acute eosinophilic pneumonia                                 Acute eosinophilic pneumonia
+Add:         1 J8283   Eosinophilic asthma                                          Eosinophilic asthma
+Add:         1 J8289   Other pulmonary eosinophilia, not elsewhere classified       Other pulmonary eosinophilia, not elsewhere classified
+Delete:      1 J8417   Oth interstit pulmon dis w fibrosis in dis classd elswhr     Other interstitial pulmonary diseases with fibrosis in diseases classified elsewhere
+Add:         0 J8417   Oth interstit pulmon dis w fibrosis in dis classd elswhr     Other interstitial pulmonary diseases with fibrosis in diseases classified elsewhere
+Add:         1 J84170  Interstit lung dis w progr fibrotic phenotype dis classd e   Interstitial lung disease with progressive fibrotic phenotype in diseases classified elsewhere
+Add:         1 J84178  Oth interstit pulmon dis with fibrosis in dis classd elswhr  Other interstitial pulmonary diseases with fibrosis in diseases classified elsewhere
+Delete:      1 K208    Other esophagitis                                            Other esophagitis
+Add:         0 K208    Other esophagitis                                            Other esophagitis
+Add:         1 K2080   Other esophagitis without bleeding                           Other esophagitis without bleeding
+Add:         1 K2081   Other esophagitis with bleeding                              Other esophagitis with bleeding
+Delete:      1 K209    Esophagitis, unspecified                                     Esophagitis, unspecified
+Add:         0 K209    Esophagitis, unspecified                                     Esophagitis, unspecified
+Add:         1 K2090   Esophagitis, unspecified without bleeding                    Esophagitis, unspecified without bleeding
+Add:         1 K2091   Esophagitis, unspecified with bleeding                       Esophagitis, unspecified with bleeding
+Delete:      1 K210    Gastro-esophageal reflux disease with esophagitis            Gastro-esophageal reflux disease with esophagitis
+Add:         0 K210    Gastro-esophageal reflux disease with esophagitis            Gastro-esophageal reflux disease with esophagitis
+Add:         1 K2100   Gastro-esophageal reflux dis with esophagitis, without bleed Gastro-esophageal reflux disease with esophagitis, without bleeding
+Add:         1 K2101   Gastro-esophageal reflux dis with esophagitis, with bleed    Gastro-esophageal reflux disease with esophagitis, with bleeding
+Delete:      1 K598    Other specified functional intestinal disorders              Other specified functional intestinal disorders
+Add:         0 K598    Other specified functional intestinal disorders              Other specified functional intestinal disorders
+Add:         1 K5981   Ogilvie syndrome                                             Ogilvie syndrome
+Add:         1 K5989   Other specified functional intestinal disorders              Other specified functional intestinal disorders
+Delete:      1 K740    Hepatic fibrosis                                             Hepatic fibrosis
+Add:         0 K740    Hepatic fibrosis                                             Hepatic fibrosis
+Add:         1 K7400   Hepatic fibrosis, unspecified                                Hepatic fibrosis, unspecified
+Add:         1 K7401   Hepatic fibrosis, early fibrosis                             Hepatic fibrosis, early fibrosis
+Add:         1 K7402   Hepatic fibrosis, advanced fibrosis                          Hepatic fibrosis, advanced fibrosis
+Add:         1 M057A   Rheu arthrit with rheu factor of oth site w/o org/sys invl   Rheumatoid arthritis with rheumatoid factor of other specified site without organ or systems involvement
+Add:         1 M058A   Other rheu arthritis with rheumatoid factor of oth site      Other rheumatoid arthritis with rheumatoid factor of other specified site
+Add:         1 M060A   Rheumatoid arthritis without rheumatoid factor, oth site     Rheumatoid arthritis without rheumatoid factor, other specified site
+Add:         1 M068A   Other specified rheumatoid arthritis, other specified site   Other specified rheumatoid arthritis, other specified site
+Add:         1 M080A   Unspecified juvenile rheumatoid arthritis, oth site          Unspecified juvenile rheumatoid arthritis, other specified site
+Add:         1 M082A   Juvenile rheumatoid arthritis with systemic onset, oth site  Juvenile rheumatoid arthritis with systemic onset, other specified site
+Add:         1 M084A   Pauciarticular juvenile rheumatoid arthritis, oth site       Pauciarticular juvenile rheumatoid arthritis, other specified site
+Add:         1 M089A   Juvenile arthritis, unspecified, other specified site        Juvenile arthritis, unspecified, other specified site
+Add:         1 M1909   Primary osteoarthritis, other specified site                 Primary osteoarthritis, other specified site
+Add:         1 M1919   Post-traumatic osteoarthritis, other specified site          Post-traumatic osteoarthritis, other specified site
+Add:         1 M1929   Secondary osteoarthritis, other specified site               Secondary osteoarthritis, other specified site
+Add:         1 M2419   Other articular cartilage disorders, other specified site    Other articular cartilage disorders, other specified site
+Add:         1 M2429   Disorder of ligament, other specified site                   Disorder of ligament, other specified site
+Add:         1 M2439   Pathological dislocation of other specified joint, NEC       Pathological dislocation of other specified joint, not elsewhere classified
+Add:         1 M2449   Recurrent dislocation, other specified joint                 Recurrent dislocation, other specified joint
+Add:         1 M2459   Contracture, other specified joint                           Contracture, other specified joint
+Add:         1 M2469   Ankylosis, other specified joint                             Ankylosis, other specified joint
+Add:         1 M2489   Other specific joint derangement of oth joint, NEC           Other specific joint derangement of other specified joint, not elsewhere classified
+Add:         1 M2539   Other instability, other specified joint                     Other instability, other specified joint
+Add:         1 M2559   Pain in other specified joint                                Pain in other specified joint
+Add:         1 M2569   Stiffness of other specified joint, not elsewhere classified Stiffness of other specified joint, not elsewhere classified
+Add:         0 M2664   Arthritis of temporomandibular joint                         Arthritis of temporomandibular joint
+Add:         1 M26641  Arthritis of right temporomandibular joint                   Arthritis of right temporomandibular joint
+Add:         1 M26642  Arthritis of left temporomandibular joint                    Arthritis of left temporomandibular joint
+Add:         1 M26643  Arthritis of bilateral temporomandibular joint               Arthritis of bilateral temporomandibular joint
+Add:         1 M26649  Arthritis of unspecified temporomandibular joint             Arthritis of unspecified temporomandibular joint
+Add:         0 M2665   Arthropathy of temporomandibular joint                       Arthropathy of temporomandibular joint
+Add:         1 M26651  Arthropathy of right temporomandibular joint                 Arthropathy of right temporomandibular joint
+Add:         1 M26652  Arthropathy of left temporomandibular joint                  Arthropathy of left temporomandibular joint
+Add:         1 M26653  Arthropathy of bilateral temporomandibular joint             Arthropathy of bilateral temporomandibular joint
+Add:         1 M26659  Arthropathy of unspecified temporomandibular joint           Arthropathy of unspecified temporomandibular joint
+Add:         0 M800A   Age-related osteopor with current path fracture, other site  Age-related osteoporosis with current pathological fracture, other site
+Add:         1 M800AXA Age-rel osteopor with current path fx, other site, init      Age-related osteoporosis with current pathological fracture, other site, initial encounter for fracture
+Add:         1 M800AXD Age-rel osteopor with current path fx, other site, 7thD      Age-related osteoporosis with current pathological fracture, other site, subsequent encounter for fracture with routine healing
+Add:         1 M800AXG Age-rel osteopor with current path fx, other site, 7thG      Age-related osteoporosis with current pathological fracture, other site, subsequent encounter for fracture with delayed healing
+Add:         1 M800AXK Age-rel osteopor with current path fx, other site, 7thK      Age-related osteoporosis with current pathological fracture, other site, subsequent encounter for fracture with nonunion
+Add:         1 M800AXP Age-rel osteopor with current path fx, other site, 7thP      Age-related osteoporosis with current pathological fracture, other site, subsequent encounter for fracture with malunion
+Add:         1 M800AXS Age-rel osteopor with current path fx, other site, sequela   Age-related osteoporosis with current pathological fracture, other site, sequela
+Add:         0 M808A   Other osteopor with current path fracture, other site        Other osteoporosis with current pathological fracture, other site
+Add:         1 M808AXA Other osteopor with current path fracture, other site, init  Other osteoporosis with current pathological fracture, other site, initial encounter for fracture
+Add:         1 M808AXD Other osteopor with current path fracture, other site, 7thD  Other osteoporosis with current pathological fracture, other site, subsequent encounter for fracture with routine healing
+Add:         1 M808AXG Other osteopor with current path fracture, other site, 7thG  Other osteoporosis with current pathological fracture, other site, subsequent encounter for fracture with delayed healing
+Add:         1 M808AXK Other osteopor with current path fracture, other site, 7thK  Other osteoporosis with current pathological fracture, other site, subsequent encounter for fracture with nonunion
+Add:         1 M808AXP Other osteopor with current path fracture, other site, 7thP  Other osteoporosis with current pathological fracture, other site, subsequent encounter for fracture with malunion
+Add:         1 M808AXS Other osteopor with current path fx, other site, sequela     Other osteoporosis with current pathological fracture, other site, sequela
+Delete:      1 M9250   Juvenile osteochondrosis of tibia and fibula, unsp leg       Juvenile osteochondrosis of tibia and fibula, unspecified leg
+Add:         0 M9250   Unspecified juvenile osteochondrosis of tibia and fibula     Unspecified juvenile osteochondrosis of tibia and fibula
+Add:         1 M92501  Unspecified juvenile osteochondrosis, right leg              Unspecified juvenile osteochondrosis, right leg
+Add:         1 M92502  Unspecified juvenile osteochondrosis, left leg               Unspecified juvenile osteochondrosis, left leg
+Add:         1 M92503  Unspecified juvenile osteochondrosis, bilateral leg          Unspecified juvenile osteochondrosis, bilateral leg
+Add:         1 M92509  Unspecified juvenile osteochondrosis, unspecified leg        Unspecified juvenile osteochondrosis, unspecified leg
+Delete:      1 M9251   Juvenile osteochondrosis of tibia and fibula, right leg      Juvenile osteochondrosis of tibia and fibula, right leg
+Add:         0 M9251   Juvenile osteochondrosis of proximal tibia                   Juvenile osteochondrosis of proximal tibia
+Add:         1 M92511  Juvenile osteochondrosis of proximal tibia, right leg        Juvenile osteochondrosis of proximal tibia, right leg
+Add:         1 M92512  Juvenile osteochondrosis of proximal tibia, left leg         Juvenile osteochondrosis of proximal tibia, left leg
+Add:         1 M92513  Juvenile osteochondrosis of proximal tibia, bilateral        Juvenile osteochondrosis of proximal tibia, bilateral
+Add:         1 M92519  Juvenile osteochondrosis of proximal tibia, unspecified leg  Juvenile osteochondrosis of proximal tibia, unspecified leg
+Delete:      1 M9252   Juvenile osteochondrosis of tibia and fibula, left leg       Juvenile osteochondrosis of tibia and fibula, left leg
+Add:         0 M9252   Juvenile osteochondrosis of tibia tubercle                   Juvenile osteochondrosis of tibia tubercle
+Add:         1 M92521  Juvenile osteochondrosis of tibia tubercle, right leg        Juvenile osteochondrosis of tibia tubercle, right leg
+Add:         1 M92522  Juvenile osteochondrosis of tibia tubercle, left leg         Juvenile osteochondrosis of tibia tubercle, left leg
+Add:         1 M92523  Juvenile osteochondrosis of tibia tubercle, bilateral        Juvenile osteochondrosis of tibia tubercle, bilateral
+Add:         1 M92529  Juvenile osteochondrosis of tibia tubercle, unspecified leg  Juvenile osteochondrosis of tibia tubercle, unspecified leg
+Add:         0 M9259   Other juvenile osteochondrosis of tibia and fibula           Other juvenile osteochondrosis of tibia and fibula
+Add:         1 M92591  Other juvenile osteochon of tibia and fibula, right leg      Other juvenile osteochondrosis of tibia and fibula, right leg
+Add:         1 M92592  Other juvenile osteochondrosis of tibia and fibula, left leg Other juvenile osteochondrosis of tibia and fibula, left leg
+Add:         1 M92593  Other juvenile osteochon of tibia and fibula, bilateral      Other juvenile osteochondrosis of tibia and fibula, bilateral
+Add:         1 M92599  Other juvenile osteochon of tibia and fibula, unsp leg       Other juvenile osteochondrosis of tibia and fibula, unspecified leg
+Add:         1 N00A    Acute nephritic syndrome with C3 glomerulonephritis          Acute nephritic syndrome with C3 glomerulonephritis
+Add:         1 N01A    Rapidly progressive nephritic syndrome with C3 glomrlneph    Rapidly progressive nephritic syndrome with C3 glomerulonephritis
+Add:         1 N02A    Recurrent and persistent hematuria with C3 glomrlneph        Recurrent and persistent hematuria with C3 glomerulonephritis
+Add:         1 N03A    Chronic nephritic syndrome with C3 glomerulonephritis        Chronic nephritic syndrome with C3 glomerulonephritis
+Add:         1 N04A    Nephrotic syndrome with C3 glomerulonephritis                Nephrotic syndrome with C3 glomerulonephritis
+Add:         1 N05A    Unspecified nephritic syndrome with C3 glomerulonephritis    Unspecified nephritic syndrome with C3 glomerulonephritis
+Add:         1 N06A    Isolated proteinuria with C3 glomerulonephritis              Isolated proteinuria with C3 glomerulonephritis
+Add:         1 N07A    Hereditary nephropathy, NEC with C3 glomerulonephritis       Hereditary nephropathy, not elsewhere classified with C3 glomerulonephritis
+Delete:      1 N183    Chronic kidney disease, stage 3 (moderate)                   Chronic kidney disease, stage 3 (moderate)
+Add:         0 N183    Chronic kidney disease, stage 3 (moderate)                   Chronic kidney disease, stage 3 (moderate)
+Add:         1 N1830   Chronic kidney disease, stage 3 unspecified                  Chronic kidney disease, stage 3 unspecified
+Add:         1 N1831   Chronic kidney disease, stage 3a                             Chronic kidney disease, stage 3a
+Add:         1 N1832   Chronic kidney disease, stage 3b                             Chronic kidney disease, stage 3b
+Add:         0 N612    Granulomatous mastitis                                       Granulomatous mastitis
+Add:         1 N6120   Granulomatous mastitis, unspecified breast                   Granulomatous mastitis, unspecified breast
+Add:         1 N6121   Granulomatous mastitis, right breast                         Granulomatous mastitis, right breast
+Add:         1 N6122   Granulomatous mastitis, left breast                          Granulomatous mastitis, left breast
+Add:         1 N6123   Granulomatous mastitis, bilateral breast                     Granulomatous mastitis, bilateral breast
+Add:         1 O34218  Maternal care for other type scar from previous cesarean del Maternal care for other type scar from previous cesarean delivery
+Add:         1 O3422   Maternal care for cesarean scar defect (isthmocele)          Maternal care for cesarean scar defect (isthmocele)
+Delete:      1 O9989   Oth diseases and conditions compl preg/chldbrth              Other specified diseases and conditions complicating pregnancy, childbirth and the puerperium
+Add:         0 O9989   Oth diseases and conditions compl preg/chldbrth              Other specified diseases and conditions complicating pregnancy, childbirth and the puerperium
+Add:         1 O99891  Oth diseases and conditions complicating pregnancy           Other specified diseases and conditions complicating pregnancy
+Add:         1 O99892  Oth diseases and conditions complicating childbirth          Other specified diseases and conditions complicating childbirth
+Add:         1 O99893  Oth diseases and conditions complicating puerperium          Other specified diseases and conditions complicating puerperium
+Add:         0 P9182   Neonatal cerebral infarction                                 Neonatal cerebral infarction
+Add:         1 P91821  Neonatal cerebral infarction, right side of brain            Neonatal cerebral infarction, right side of brain
+Add:         1 P91822  Neonatal cerebral infarction, left side of brain             Neonatal cerebral infarction, left side of brain
+Add:         1 P91823  Neonatal cerebral infarction, bilateral                      Neonatal cerebral infarction, bilateral
+Add:         1 P91829  Neonatal cerebral infarction, unspecified side               Neonatal cerebral infarction, unspecified side
+Delete:      1 Q5120   Other doubling of uterus, unspecified                        Other doubling of uterus, unspecified
+Revise from: 1 Q5121   Other complete doubling of uterus                            Other complete doubling of uterus
+Revise to:   1 Q5121   Complete doubling of uterus                                  Complete doubling of uterus
+Revise from: 1 Q5122   Other partial doubling of uterus                             Other partial doubling of uterus
+Revise to:   1 Q5122   Partial doubling of uterus                                   Partial doubling of uterus
+Revise from: 1 Q5128   Other doubling of uterus, other specified                    Other doubling of uterus, other specified
+Revise to:   1 Q5128   Other and unspecified doubling of uterus                     Other and unspecified doubling of uterus
+Delete:      1 R51     Headache                                                     Headache
+Add:         0 R51     Headache                                                     Headache
+Add:         1 R510    Headache with orthostatic component, NEC                     Headache with orthostatic component, not elsewhere classified
+Add:         1 R519    Headache, unspecified                                        Headache, unspecified
+Delete:      1 R740    Nonspec elev of levels of transamns & lactic acid dehydrgnse Nonspecific elevation of levels of transaminase and lactic acid dehydrogenase [LDH]
+Add:         0 R740    Nonspec elev of levels of transamns & lactic acid dehydrgnse Nonspecific elevation of levels of transaminase and lactic acid dehydrogenase [LDH]
+Add:         1 R7401   Elevation of levels of liver transaminase levels             Elevation of levels of liver transaminase levels
+Add:         1 R7402   Elevation of levels of lactic acid dehydrogenase [LDH]       Elevation of levels of lactic acid dehydrogenase [LDH]
+Add:         0 S20213  Contusion of bilateral front wall of thorax                  Contusion of bilateral front wall of thorax
+Add:         1 S20213A Contusion of bilateral front wall of thorax, init            Contusion of bilateral front wall of thorax, initial encounter
+Add:         1 S20213D Contusion of bilateral front wall of thorax, subs            Contusion of bilateral front wall of thorax, subsequent encounter
+Add:         1 S20213S Contusion of bilateral front wall of thorax, sequela         Contusion of bilateral front wall of thorax, sequela
+Add:         0 S20214  Contusion of middle front wall of thorax                     Contusion of middle front wall of thorax
+Add:         1 S20214A Contusion of middle front wall of thorax, initial encounter  Contusion of middle front wall of thorax, initial encounter
+Add:         1 S20214D Contusion of middle front wall of thorax, subs               Contusion of middle front wall of thorax, subsequent encounter
+Add:         1 S20214S Contusion of middle front wall of thorax, sequela            Contusion of middle front wall of thorax, sequela
+Add:         0 S20223  Contusion of bilateral back wall of thorax                   Contusion of bilateral back wall of thorax
+Add:         1 S20223A Contusion of bilateral back wall of thorax, init             Contusion of bilateral back wall of thorax, initial encounter
+Add:         1 S20223D Contusion of bilateral back wall of thorax, subs             Contusion of bilateral back wall of thorax, subsequent encounter
+Add:         1 S20223S Contusion of bilateral back wall of thorax, sequela          Contusion of bilateral back wall of thorax, sequela
+Add:         0 S20224  Contusion of middle back wall of thorax                      Contusion of middle back wall of thorax
+Add:         1 S20224A Contusion of middle back wall of thorax, initial encounter   Contusion of middle back wall of thorax, initial encounter
+Add:         1 S20224D Contusion of middle back wall of thorax, subs                Contusion of middle back wall of thorax, subsequent encounter
+Add:         1 S20224S Contusion of middle back wall of thorax, sequela             Contusion of middle back wall of thorax, sequela
+Add:         0 S20303  Unsp superfic injuries of bilateral front wall of thorax     Unspecified superficial injuries of bilateral front wall of thorax
+Add:         1 S20303A Unsp superfic injuries of bi front wall of thorax, init      Unspecified superficial injuries of bilateral front wall of thorax, initial encounter
+Add:         1 S20303D Unsp superfic injuries of bi front wall of thorax, subs      Unspecified superficial injuries of bilateral front wall of thorax, subsequent encounter
+Add:         1 S20303S Unsp superfic injuries of bi front wall of thorax, sequela   Unspecified superficial injuries of bilateral front wall of thorax, sequela
+Add:         0 S20304  Unspecified superfic injuries of middle front wall of thorax Unspecified superficial injuries of middle front wall of thorax
+Add:         1 S20304A Unsp superfic injuries of middle front wall of thorax, init  Unspecified superficial injuries of middle front wall of thorax, initial encounter
+Add:         1 S20304D Unsp superfic injuries of middle front wall of thorax, subs  Unspecified superficial injuries of middle front wall of thorax, subsequent encounter
+Add:         1 S20304S Unsp superfic injuries of middle front wall of thorax, sqla  Unspecified superficial injuries of middle front wall of thorax, sequela
+Add:         0 S20313  Abrasion of bilateral front wall of thorax                   Abrasion of bilateral front wall of thorax
+Add:         1 S20313A Abrasion of bilateral front wall of thorax, init             Abrasion of bilateral front wall of thorax, initial encounter
+Add:         1 S20313D Abrasion of bilateral front wall of thorax, subs             Abrasion of bilateral front wall of thorax, subsequent encounter
+Add:         1 S20313S Abrasion of bilateral front wall of thorax, sequela          Abrasion of bilateral front wall of thorax, sequela
+Add:         0 S20314  Abrasion of middle front wall of thorax                      Abrasion of middle front wall of thorax
+Add:         1 S20314A Abrasion of middle front wall of thorax, initial encounter   Abrasion of middle front wall of thorax, initial encounter
+Add:         1 S20314D Abrasion of middle front wall of thorax, subs                Abrasion of middle front wall of thorax, subsequent encounter
+Add:         1 S20314S Abrasion of middle front wall of thorax, sequela             Abrasion of middle front wall of thorax, sequela
+Add:         0 S20323  Blister (nonthermal) of bilateral front wall of thorax       Blister (nonthermal) of bilateral front wall of thorax
+Add:         1 S20323A Blister (nonthermal) of bilateral front wall of thorax, init Blister (nonthermal) of bilateral front wall of thorax, initial encounter
+Add:         1 S20323D Blister (nonthermal) of bilateral front wall of thorax, subs Blister (nonthermal) of bilateral front wall of thorax, subsequent encounter
+Add:         1 S20323S Blister of bilateral front wall of thorax, sequela           Blister (nonthermal) of bilateral front wall of thorax, sequela
+Add:         0 S20324  Blister (nonthermal) of middle front wall of thorax          Blister (nonthermal) of middle front wall of thorax
+Add:         1 S20324A Blister (nonthermal) of middle front wall of thorax, init    Blister (nonthermal) of middle front wall of thorax, initial encounter
+Add:         1 S20324D Blister (nonthermal) of middle front wall of thorax, subs    Blister (nonthermal) of middle front wall of thorax, subsequent encounter
+Add:         1 S20324S Blister (nonthermal) of middle front wall of thorax, sequela Blister (nonthermal) of middle front wall of thorax, sequela
+Add:         0 S20343  External constriction of bilateral front wall of thorax      External constriction of bilateral front wall of thorax
+Add:         1 S20343A External constrict of bilateral front wall of thorax, init   External constriction of bilateral front wall of thorax, initial encounter
+Add:         1 S20343D External constrict of bilateral front wall of thorax, subs   External constriction of bilateral front wall of thorax, subsequent encounter
+Add:         1 S20343S External constrict of bi front wall of thorax, sequela       External constriction of bilateral front wall of thorax, sequela
+Add:         0 S20344  External constriction of middle front wall of thorax         External constriction of middle front wall of thorax
+Add:         1 S20344A External constriction of middle front wall of thorax, init   External constriction of middle front wall of thorax, initial encounter
+Add:         1 S20344D External constriction of middle front wall of thorax, subs   External constriction of middle front wall of thorax, subsequent encounter
+Add:         1 S20344S External constrict of middle front wall of thorax, sequela   External constriction of middle front wall of thorax, sequela
+Add:         0 S20353  Superficial foreign body of bilateral front wall of thorax   Superficial foreign body of bilateral front wall of thorax
+Add:         1 S20353A Superficial fb of bilateral front wall of thorax, init       Superficial foreign body of bilateral front wall of thorax, initial encounter
+Add:         1 S20353D Superficial fb of bilateral front wall of thorax, subs       Superficial foreign body of bilateral front wall of thorax, subsequent encounter
+Add:         1 S20353S Superficial fb of bilateral front wall of thorax, sequela    Superficial foreign body of bilateral front wall of thorax, sequela
+Add:         0 S20354  Superficial foreign body of middle front wall of thorax      Superficial foreign body of middle front wall of thorax
+Add:         1 S20354A Superficial fb of middle front wall of thorax, init          Superficial foreign body of middle front wall of thorax, initial encounter
+Add:         1 S20354D Superficial fb of middle front wall of thorax, subs          Superficial foreign body of middle front wall of thorax, subsequent encounter
+Add:         1 S20354S Superficial fb of middle front wall of thorax, sequela       Superficial foreign body of middle front wall of thorax, sequela
+Add:         0 S20363  Insect bite (nonvenomous) of bilateral front wall of thorax  Insect bite (nonvenomous) of bilateral front wall of thorax
+Add:         1 S20363A Insect bite of bilateral front wall of thorax, init          Insect bite (nonvenomous) of bilateral front wall of thorax, initial encounter
+Add:         1 S20363D Insect bite of bilateral front wall of thorax, subs          Insect bite (nonvenomous) of bilateral front wall of thorax, subsequent encounter
+Add:         1 S20363S Insect bite of bilateral front wall of thorax, sequela       Insect bite (nonvenomous) of bilateral front wall of thorax, sequela
+Add:         0 S20364  Insect bite (nonvenomous) of middle front wall of thorax     Insect bite (nonvenomous) of middle front wall of thorax
+Add:         1 S20364A Insect bite of middle front wall of thorax, init             Insect bite (nonvenomous) of middle front wall of thorax, initial encounter
+Add:         1 S20364D Insect bite of middle front wall of thorax, subs             Insect bite (nonvenomous) of middle front wall of thorax, subsequent encounter
+Add:         1 S20364S Insect bite of middle front wall of thorax, sequela          Insect bite (nonvenomous) of middle front wall of thorax, sequela
+Add:         0 S20373  Other superficial bite of bilateral front wall of thorax     Other superficial bite of bilateral front wall of thorax
+Add:         1 S20373A Other superfic bite of bilateral front wall of thorax, init  Other superficial bite of bilateral front wall of thorax, initial encounter
+Add:         1 S20373D Other superfic bite of bilateral front wall of thorax, subs  Other superficial bite of bilateral front wall of thorax, subsequent encounter
+Add:         1 S20373S Other superfic bite of bi front wall of thorax, sequela      Other superficial bite of bilateral front wall of thorax, sequela
+Add:         0 S20374  Other superficial bite of middle front wall of thorax        Other superficial bite of middle front wall of thorax
+Add:         1 S20374A Other superficial bite of middle front wall of thorax, init  Other superficial bite of middle front wall of thorax, initial encounter
+Add:         1 S20374D Other superficial bite of middle front wall of thorax, subs  Other superficial bite of middle front wall of thorax, subsequent encounter
+Add:         1 S20374S Other superfic bite of middle front wall of thorax, sequela  Other superficial bite of middle front wall of thorax, sequela
+Add:         0 T4041   Fentanyl or fentanyl analogs                                 Poisoning by, adverse effect of and underdosing of fentanyl or fentanyl analogs
+Add:         0 T40411  Poisoning by fentanyl or fentanyl analogs, accidental        Poisoning by fentanyl or fentanyl analogs, accidental (unintentional)
+Add:         1 T40411A Poisoning by fentanyl or fentanyl analogs, accidental, init  Poisoning by fentanyl or fentanyl analogs, accidental (unintentional), initial encounter
+Add:         1 T40411D Poisoning by fentanyl or fentanyl analogs, accidental, subs  Poisoning by fentanyl or fentanyl analogs, accidental (unintentional), subsequent encounter
+Add:         1 T40411S Poisoning by fentanyl or fentanyl analogs, acc, sequela      Poisoning by fentanyl or fentanyl analogs, accidental (unintentional), sequela
+Add:         0 T40412  Poisoning by fentanyl or fentanyl analogs, self-harm         Poisoning by fentanyl or fentanyl analogs, intentional self-harm
+Add:         1 T40412A Poisoning by fentanyl or fentanyl analogs, self-harm, init   Poisoning by fentanyl or fentanyl analogs, intentional self-harm, initial encounter
+Add:         1 T40412D Poisoning by fentanyl or fentanyl analogs, self-harm, subs   Poisoning by fentanyl or fentanyl analogs, intentional self-harm, subsequent encounter
+Add:         1 T40412S Poisn by fentanyl or fentanyl analogs, self-harm, sequela    Poisoning by fentanyl or fentanyl analogs, intentional self-harm, sequela
+Add:         0 T40413  Poisoning by fentanyl or fentanyl analogs, assault           Poisoning by fentanyl or fentanyl analogs, assault
+Add:         1 T40413A Poisoning by fentanyl or fentanyl analogs, assault, init     Poisoning by fentanyl or fentanyl analogs, assault, initial encounter
+Add:         1 T40413D Poisoning by fentanyl or fentanyl analogs, assault, subs     Poisoning by fentanyl or fentanyl analogs, assault, subsequent encounter
+Add:         1 T40413S Poisoning by fentanyl or fentanyl analogs, assault, sequela  Poisoning by fentanyl or fentanyl analogs, assault, sequela
+Add:         0 T40414  Poisoning by fentanyl or fentanyl analogs, undetermined      Poisoning by fentanyl or fentanyl analogs, undetermined
+Add:         1 T40414A Poisoning by fentanyl or fentanyl analogs, undet, init       Poisoning by fentanyl or fentanyl analogs, undetermined, initial encounter
+Add:         1 T40414D Poisoning by fentanyl or fentanyl analogs, undet, subs       Poisoning by fentanyl or fentanyl analogs, undetermined, subsequent encounter
+Add:         1 T40414S Poisoning by fentanyl or fentanyl analogs, undet, sequela    Poisoning by fentanyl or fentanyl analogs, undetermined, sequela
+Add:         0 T40415  Adverse effect of fentanyl or fentanyl analogs               Adverse effect of fentanyl or fentanyl analogs
+Add:         1 T40415A Adverse effect of fentanyl or fentanyl analogs, init         Adverse effect of fentanyl or fentanyl analogs, initial encounter
+Add:         1 T40415D Adverse effect of fentanyl or fentanyl analogs, subs         Adverse effect of fentanyl or fentanyl analogs, subsequent encounter
+Add:         1 T40415S Adverse effect of fentanyl or fentanyl analogs, sequela      Adverse effect of fentanyl or fentanyl analogs, sequela
+Add:         0 T40416  Underdosing of fentanyl or fentanyl analogs                  Underdosing of fentanyl or fentanyl analogs
+Add:         1 T40416A Underdosing of fentanyl or fentanyl analogs, init            Underdosing of fentanyl or fentanyl analogs, initial encounter
+Add:         1 T40416D Underdosing of fentanyl or fentanyl analogs, subs            Underdosing of fentanyl or fentanyl analogs, subsequent encounter
+Add:         1 T40416S Underdosing of fentanyl or fentanyl analogs, sequela         Underdosing of fentanyl or fentanyl analogs, sequela
+Add:         0 T4042   Poisoning by, adverse effect of and underdosing of tramadol  Poisoning by, adverse effect of and underdosing of tramadol
+Add:         0 T40421  Poisoning by tramadol, accidental (unintentional)            Poisoning by tramadol, accidental (unintentional)
+Add:         1 T40421A Poisoning by tramadol, accidental (unintentional), init      Poisoning by tramadol, accidental (unintentional), initial encounter
+Add:         1 T40421D Poisoning by tramadol, accidental (unintentional), subs      Poisoning by tramadol, accidental (unintentional), subsequent encounter
+Add:         1 T40421S Poisoning by tramadol, accidental (unintentional), sequela   Poisoning by tramadol, accidental (unintentional), sequela
+Add:         0 T40422  Poisoning by tramadol, intentional self-harm                 Poisoning by tramadol, intentional self-harm
+Add:         1 T40422A Poisoning by tramadol, self-harm, initial encounter          Poisoning by tramadol, intentional self-harm, initial encounter
+Add:         1 T40422D Poisoning by tramadol, self-harm, subsequent encounter       Poisoning by tramadol, intentional self-harm, subsequent encounter
+Add:         1 T40422S Poisoning by tramadol, intentional self-harm, sequela        Poisoning by tramadol, intentional self-harm, sequela
+Add:         0 T40423  Poisoning by tramadol, assault                               Poisoning by tramadol, assault
+Add:         1 T40423A Poisoning by tramadol, assault, initial encounter            Poisoning by tramadol, assault, initial encounter
+Add:         1 T40423D Poisoning by tramadol, assault, subsequent encounter         Poisoning by tramadol, assault, subsequent encounter
+Add:         1 T40423S Poisoning by tramadol, assault, sequela                      Poisoning by tramadol, assault, sequela
+Add:         0 T40424  Poisoning by tramadol, undetermined                          Poisoning by tramadol, undetermined
+Add:         1 T40424A Poisoning by tramadol, undetermined, initial encounter       Poisoning by tramadol, undetermined, initial encounter
+Add:         1 T40424D Poisoning by tramadol, undetermined, subsequent encounter    Poisoning by tramadol, undetermined, subsequent encounter
+Add:         1 T40424S Poisoning by tramadol, undetermined, sequela                 Poisoning by tramadol, undetermined, sequela
+Add:         0 T40425  Adverse effect of tramadol                                   Adverse effect of tramadol
+Add:         1 T40425A Adverse effect of tramadol, initial encounter                Adverse effect of tramadol, initial encounter
+Add:         1 T40425D Adverse effect of tramadol, subsequent encounter             Adverse effect of tramadol, subsequent encounter
+Add:         1 T40425S Adverse effect of tramadol, sequela                          Adverse effect of tramadol, sequela
+Add:         0 T40426  Underdosing of tramadol                                      Underdosing of tramadol
+Add:         1 T40426A Underdosing of tramadol, initial encounter                   Underdosing of tramadol, initial encounter
+Add:         1 T40426D Underdosing of tramadol, subsequent encounter                Underdosing of tramadol, subsequent encounter
+Add:         1 T40426S Underdosing of tramadol, sequela                             Underdosing of tramadol, sequela
+Add:         0 T4049   Other synthetic narcotics                                    Poisoning by, adverse effect of and underdosing of other synthetic narcotics
+Add:         0 T40491  Poisoning by other synthetic narcotics, accidental           Poisoning by other synthetic narcotics, accidental (unintentional)
+Add:         1 T40491A Poisoning by other synthetic narcotics, accidental, init     Poisoning by other synthetic narcotics, accidental (unintentional), initial encounter
+Add:         1 T40491D Poisoning by other synthetic narcotics, accidental, subs     Poisoning by other synthetic narcotics, accidental (unintentional), subsequent encounter
+Add:         1 T40491S Poisoning by other synthetic narcotics, accidental, sequela  Poisoning by other synthetic narcotics, accidental (unintentional), sequela
+Add:         0 T40492  Poisoning by other synthetic narcotics, self-harm            Poisoning by other synthetic narcotics, intentional self-harm
+Add:         1 T40492A Poisoning by other synthetic narcotics, self-harm, init      Poisoning by other synthetic narcotics, intentional self-harm, initial encounter
+Add:         1 T40492D Poisoning by other synthetic narcotics, self-harm, subs      Poisoning by other synthetic narcotics, intentional self-harm, subsequent encounter
+Add:         1 T40492S Poisoning by other synthetic narcotics, self-harm, sequela   Poisoning by other synthetic narcotics, intentional self-harm, sequela
+Add:         0 T40493  Poisoning by other synthetic narcotics, assault              Poisoning by other synthetic narcotics, assault
+Add:         1 T40493A Poisoning by other synthetic narcotics, assault, init        Poisoning by other synthetic narcotics, assault, initial encounter
+Add:         1 T40493D Poisoning by other synthetic narcotics, assault, subs        Poisoning by other synthetic narcotics, assault, subsequent encounter
+Add:         1 T40493S Poisoning by other synthetic narcotics, assault, sequela     Poisoning by other synthetic narcotics, assault, sequela
+Add:         0 T40494  Poisoning by other synthetic narcotics, undetermined         Poisoning by other synthetic narcotics, undetermined
+Add:         1 T40494A Poisoning by other synthetic narcotics, undetermined, init   Poisoning by other synthetic narcotics, undetermined, initial encounter
+Add:         1 T40494D Poisoning by other synthetic narcotics, undetermined, subs   Poisoning by other synthetic narcotics, undetermined, subsequent encounter
+Add:         1 T40494S Poisoning by other synthetic narcotics, undet, sequela       Poisoning by other synthetic narcotics, undetermined, sequela
+Add:         0 T40495  Adverse effect of other synthetic narcotics                  Adverse effect of other synthetic narcotics
+Add:         1 T40495A Adverse effect of other synthetic narcotics, init            Adverse effect of other synthetic narcotics, initial encounter
+Add:         1 T40495D Adverse effect of other synthetic narcotics, subs            Adverse effect of other synthetic narcotics, subsequent encounter
+Add:         1 T40495S Adverse effect of other synthetic narcotics, sequela         Adverse effect of other synthetic narcotics, sequela
+Add:         0 T40496  Underdosing of other synthetic narcotics                     Underdosing of other synthetic narcotics
+Add:         1 T40496A Underdosing of other synthetic narcotics, initial encounter  Underdosing of other synthetic narcotics, initial encounter
+Add:         1 T40496D Underdosing of other synthetic narcotics, subs               Underdosing of other synthetic narcotics, subsequent encounter
+Add:         1 T40496S Underdosing of other synthetic narcotics, sequela            Underdosing of other synthetic narcotics, sequela
+Delete:      0 T404X   Synthetic narcotics                                          Poisoning by, adverse effect of and underdosing of other synthetic narcotics
+Delete:      0 T404X1  Poisoning by oth synthetic narcotics, accidental             Poisoning by other synthetic narcotics, accidental (unintentional)
+Delete:      1 T404X1A Poisoning by oth synthetic narcotics, accidental, init       Poisoning by other synthetic narcotics, accidental (unintentional), initial encounter
+Delete:      1 T404X1D Poisoning by oth synthetic narcotics, accidental, subs       Poisoning by other synthetic narcotics, accidental (unintentional), subsequent encounter
+Delete:      1 T404X1S Poisoning by oth synthetic narcotics, accidental, sequela    Poisoning by other synthetic narcotics, accidental (unintentional), sequela
+Delete:      0 T404X2  Poisoning by oth synthetic narcotics, intentional self-harm  Poisoning by other synthetic narcotics, intentional self-harm
+Delete:      1 T404X2A Poisoning by oth synthetic narcotics, self-harm, init        Poisoning by other synthetic narcotics, intentional self-harm, initial encounter
+Delete:      1 T404X2D Poisoning by oth synthetic narcotics, self-harm, subs        Poisoning by other synthetic narcotics, intentional self-harm, subsequent encounter
+Delete:      1 T404X2S Poisoning by oth synthetic narcotics, self-harm, sequela     Poisoning by other synthetic narcotics, intentional self-harm, sequela
+Delete:      0 T404X3  Poisoning by other synthetic narcotics, assault              Poisoning by other synthetic narcotics, assault
+Delete:      1 T404X3A Poisoning by other synthetic narcotics, assault, init encntr Poisoning by other synthetic narcotics, assault, initial encounter
+Delete:      1 T404X3D Poisoning by other synthetic narcotics, assault, subs encntr Poisoning by other synthetic narcotics, assault, subsequent encounter
+Delete:      1 T404X3S Poisoning by other synthetic narcotics, assault, sequela     Poisoning by other synthetic narcotics, assault, sequela
+Delete:      0 T404X4  Poisoning by other synthetic narcotics, undetermined         Poisoning by other synthetic narcotics, undetermined
+Delete:      1 T404X4A Poisoning by oth synthetic narcotics, undetermined, init     Poisoning by other synthetic narcotics, undetermined, initial encounter
+Delete:      1 T404X4D Poisoning by oth synthetic narcotics, undetermined, subs     Poisoning by other synthetic narcotics, undetermined, subsequent encounter
+Delete:      1 T404X4S Poisoning by oth synthetic narcotics, undetermined, sequela  Poisoning by other synthetic narcotics, undetermined, sequela
+Delete:      0 T404X5  Adverse effect of other synthetic narcotics                  Adverse effect of other synthetic narcotics
+Delete:      1 T404X5A Adverse effect of other synthetic narcotics, init encntr     Adverse effect of other synthetic narcotics, initial encounter
+Delete:      1 T404X5D Adverse effect of other synthetic narcotics, subs encntr     Adverse effect of other synthetic narcotics, subsequent encounter
+Delete:      1 T404X5S Adverse effect of other synthetic narcotics, sequela         Adverse effect of other synthetic narcotics, sequela
+Delete:      0 T404X6  Underdosing of other synthetic narcotics                     Underdosing of other synthetic narcotics
+Delete:      1 T404X6A Underdosing of other synthetic narcotics, initial encounter  Underdosing of other synthetic narcotics, initial encounter
+Delete:      1 T404X6D Underdosing of other synthetic narcotics, subs encntr        Underdosing of other synthetic narcotics, subsequent encounter
+Delete:      1 T404X6S Underdosing of other synthetic narcotics, sequela            Underdosing of other synthetic narcotics, sequela
+Delete:      1 T86840  Corneal transplant rejection                                 Corneal transplant rejection
+Add:         0 T86840  Corneal transplant rejection                                 Corneal transplant rejection
+Add:         1 T868401 Corneal transplant rejection, right eye                      Corneal transplant rejection, right eye
+Add:         1 T868402 Corneal transplant rejection, left eye                       Corneal transplant rejection, left eye
+Add:         1 T868403 Corneal transplant rejection, bilateral                      Corneal transplant rejection, bilateral
+Add:         1 T868409 Corneal transplant rejection, unspecified eye                Corneal transplant rejection, unspecified eye
+Delete:      1 T86841  Corneal transplant failure                                   Corneal transplant failure
+Add:         0 T86841  Corneal transplant failure                                   Corneal transplant failure
+Add:         1 T868411 Corneal transplant failure, right eye                        Corneal transplant failure, right eye
+Add:         1 T868412 Corneal transplant failure, left eye                         Corneal transplant failure, left eye
+Add:         1 T868413 Corneal transplant failure, bilateral                        Corneal transplant failure, bilateral
+Add:         1 T868419 Corneal transplant failure, unspecified eye                  Corneal transplant failure, unspecified eye
+Delete:      1 T86842  Corneal transplant infection                                 Corneal transplant infection
+Add:         0 T86842  Corneal transplant infection                                 Corneal transplant infection
+Add:         1 T868421 Corneal transplant infection, right eye                      Corneal transplant infection, right eye
+Add:         1 T868422 Corneal transplant infection, left eye                       Corneal transplant infection, left eye
+Add:         1 T868423 Corneal transplant infection, bilateral                      Corneal transplant infection, bilateral
+Add:         1 T868429 Corneal transplant infection, unspecified eye                Corneal transplant infection, unspecified eye
+Delete:      1 T86848  Other complications of corneal transplant                    Other complications of corneal transplant
+Add:         0 T86848  Other complications of corneal transplant                    Other complications of corneal transplant
+Add:         1 T868481 Other complications of corneal transplant, right eye         Other complications of corneal transplant, right eye
+Add:         1 T868482 Other complications of corneal transplant, left eye          Other complications of corneal transplant, left eye
+Add:         1 T868483 Other complications of corneal transplant, bilateral         Other complications of corneal transplant, bilateral
+Add:         1 T868489 Other complications of corneal transplant, unspecified eye   Other complications of corneal transplant, unspecified eye
+Delete:      1 T86849  Unspecified complication of corneal transplant               Unspecified complication of corneal transplant
+Add:         0 T86849  Unspecified complication of corneal transplant               Unspecified complication of corneal transplant
+Add:         1 T868491 Unspecified complication of corneal transplant, right eye    Unspecified complication of corneal transplant, right eye
+Add:         1 T868492 Unspecified complication of corneal transplant, left eye     Unspecified complication of corneal transplant, left eye
+Add:         1 T868493 Unspecified complication of corneal transplant, bilateral    Unspecified complication of corneal transplant, bilateral
+Add:         1 T868499 Unspecified complication of corneal transplant, unsp         Unspecified complication of corneal transplant, unspecified eye
+Add:         0 U07     Emergency use of U07                                         Emergency use of U07
+Add:         1 U070    Vaping-related disorder                                      Vaping-related disorder
+Add:         1 U071    COVID-19                                                     COVID-19
+Add:         0 V0003   Ped on foot injured in collision with stnd micr-mob conv     Pedestrian on foot injured in collision with standing micro-mobility pedestrian conveyance
+Add:         0 V00031  Ped on foot injured in clsn with rider of stnd electr scoot  Pedestrian on foot injured in collision with rider of standing electric scooter
+Add:         1 V00031A Ped on foot inj clsn with rider of stnd electr scoot, init   Pedestrian on foot injured in collision with rider of standing electric scooter, initial encounter
+Add:         1 V00031D Ped on foot inj clsn with rider of stnd electr scoot, subs   Pedestrian on foot injured in collision with rider of standing electric scooter, subsequent encounter
+Add:         1 V00031S Ped on foot inj clsn with rider of stnd electr scoot, sqla   Pedestrian on foot injured in collision with rider of standing electric scooter, sequela
+Add:         0 V00038  Ped on foot injured in clsn with rider of stnd micr-mob conv Pedestrian on foot injured in collision with rider of other standing micro-mobility pedestrian conveyance
+Add:         1 V00038A Ped on foot inj clsn with rider of stnd micr-mob conv, init  Pedestrian on foot injured in collision with rider of other standing micro-mobility pedestrian conveyance, initial encounter
+Add:         1 V00038D Ped on foot inj clsn with rider of stnd micr-mob conv, subs  Pedestrian on foot injured in collision with rider of other standing micro-mobility pedestrian conveyance, subsequent encounter
+Add:         1 V00038S Ped on foot inj clsn with rider of stnd micr-mob conv, sqla  Pedestrian on foot injured in collision with rider of other standing micro-mobility pedestrian conveyance, sequela
+Add:         0 V0084   Accident with standing micro-mobility pedestrian conveyance  Accident with standing micro-mobility pedestrian conveyance
+Add:         0 V00841  Fall from standing electric scooter                          Fall from standing electric scooter
+Add:         1 V00841A Fall from standing electric scooter, initial encounter       Fall from standing electric scooter, initial encounter
+Add:         1 V00841D Fall from standing electric scooter, subsequent encounter    Fall from standing electric scooter, subsequent encounter
+Add:         1 V00841S Fall from standing electric scooter, sequela                 Fall from standing electric scooter, sequela
+Add:         0 V00842  Pedestrian on stnd electr scoot colliding with statnry obj   Pedestrian on standing electric scooter colliding with stationary object
+Add:         1 V00842A Ped on stnd electr scoot colliding with statnry obj, init    Pedestrian on standing electric scooter colliding with stationary object, initial encounter
+Add:         1 V00842D Ped on stnd electr scoot colliding with statnry obj, subs    Pedestrian on standing electric scooter colliding with stationary object, subsequent encounter
+Add:         1 V00842S Ped on stnd electr scoot colliding with statnry obj, sequela Pedestrian on standing electric scooter colliding with stationary object, sequela
+Add:         0 V00848  Other accident with stnd micr-mob pedestrian conveyance      Other accident with standing micro-mobility pedestrian conveyance
+Add:         1 V00848A Other accident with stnd micr-mob conv, initial encounter    Other accident with standing micro-mobility pedestrian conveyance, initial encounter
+Add:         1 V00848D Other accident with stnd micr-mob conv, subsequent encounter Other accident with standing micro-mobility pedestrian conveyance, subsequent encounter
+Add:         1 V00848S Other accident with stnd micr-mob conv, sequela              Other accident with standing micro-mobility pedestrian conveyance, sequela
+Add:         0 V0103   Ped on stnd micr-mob conv inj in clsn with pedl cyc nontraf  Pedestrian on standing micro-mobility pedestrian conveyance injured in collision with pedal cycle in nontraffic accident
+Add:         0 V01031  Ped on stnd electr scoot inj in clsn with pedl cyc nontraf   Pedestrian on standing electric scooter injured in collision with pedal cycle in nontraffic accident
+Add:         1 V01031A Ped stnd electr scoot inj clsn with pedl cyc nontraf, init   Pedestrian on standing electric scooter injured in collision with pedal cycle in nontraffic accident, initial encounter
+Add:         1 V01031D Ped stnd electr scoot inj clsn with pedl cyc nontraf, subs   Pedestrian on standing electric scooter injured in collision with pedal cycle in nontraffic accident, subsequent encounter
+Add:         1 V01031S Ped stnd electr scoot inj clsn with pedl cyc nontraf, sqla   Pedestrian on standing electric scooter injured in collision with pedal cycle in nontraffic accident, sequela
+Add:         0 V01038  Ped other stnd micr-mob conv inj clsn with pedl cyc nontraf  Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with pedal cycle in nontraffic accident
+Add:         1 V01038A Ped oth stnd micr-mob conv inj clsn w pedl cyc nontraf, init Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with pedal cycle in nontraffic accident, initial encounter
+Add:         1 V01038D Ped oth stnd micr-mob conv inj clsn w pedl cyc nontraf, subs Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with pedal cycle in nontraffic accident, subsequent encounter
+Add:         1 V01038S Ped oth stnd micr-mob conv inj clsn w pedl cyc nontraf, sqla Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with pedal cycle in nontraffic accident, sequela
+Add:         0 V0113   Ped on stnd micr-mob conv inj in clsn with pedl cyc in traf  Pedestrian on standing micro-mobility pedestrian conveyance injured in collision with pedal cycle in traffic accident
+Add:         0 V01131  Ped on stnd electr scoot inj in clsn with pedl cyc in traf   Pedestrian on standing electric scooter injured in collision with pedal cycle in traffic accident
+Add:         1 V01131A Ped stnd electr scoot inj clsn with pedl cyc in traf, init   Pedestrian on standing electric scooter injured in collision with pedal cycle in traffic accident, initial encounter
+Add:         1 V01131D Ped stnd electr scoot inj clsn with pedl cyc in traf, subs   Pedestrian on standing electric scooter injured in collision with pedal cycle in traffic accident, subsequent encounter
+Add:         1 V01131S Ped stnd electr scoot inj clsn with pedl cyc in traf, sqla   Pedestrian on standing electric scooter injured in collision with pedal cycle in traffic accident, sequela
+Add:         0 V01138  Ped other stnd micr-mob conv inj clsn with pedl cyc in traf  Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with pedal cycle in traffic accident
+Add:         1 V01138A Ped oth stnd micr-mob conv inj clsn w pedl cyc in traf, init Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with pedal cycle in traffic accident, initial encounter
+Add:         1 V01138D Ped oth stnd micr-mob conv inj clsn w pedl cyc in traf, subs Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with pedal cycle in traffic accident, subsequent encounter
+Add:         1 V01138S Ped oth stnd micr-mob conv inj clsn w pedl cyc in traf, sqla Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with pedal cycle in traffic accident, sequela
+Add:         0 V0193   Ped on stnd micr-mob conv inj in clsn with pedl cyc, unsp    Pedestrian on standing micro-mobility pedestrian conveyance injured in collision with pedal cycle, unspecified whether traffic or nontraffic accident
+Add:         0 V01931  Ped on stnd electr scoot injured in clsn with pedl cyc, unsp Pedestrian on standing electric scooter injured in collision with pedal cycle, unspecified whether traffic or nontraffic accident
+Add:         1 V01931A Ped on stnd electr scoot inj clsn with pedl cyc, unsp, init  Pedestrian on standing electric scooter injured in collision with pedal cycle, unspecified whether traffic or nontraffic accident, initial encounter
+Add:         1 V01931D Ped on stnd electr scoot inj clsn with pedl cyc, unsp, subs  Pedestrian on standing electric scooter injured in collision with pedal cycle, unspecified whether traffic or nontraffic accident, subsequent encounter
+Add:         1 V01931S Ped on stnd electr scoot inj clsn with pedl cyc, unsp, sqla  Pedestrian on standing electric scooter injured in collision with pedal cycle, unspecified whether traffic or nontraffic accident, sequela
+Add:         0 V01938  Ped on other stnd micr-mob conv inj clsn with pedl cyc, unsp Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with pedal cycle, unspecified whether traffic or nontraffic accident
+Add:         1 V01938A Ped oth stnd micr-mob conv inj clsn w pedl cyc, unsp, init   Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with pedal cycle, unspecified whether traffic or nontraffic accident, initial encounter
+Add:         1 V01938D Ped oth stnd micr-mob conv inj clsn w pedl cyc, unsp, subs   Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with pedal cycle, unspecified whether traffic or nontraffic accident, subsequent encounter
+Add:         1 V01938S Ped oth stnd micr-mob conv inj clsn w pedl cyc, unsp, sqla   Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with pedal cycle, unspecified whether traffic or nontraffic accident, sequela
+Add:         0 V0203   Ped on stnd micr-mob conv injured in clsn 2/3whl nontraf     Pedestrian on standing micro-mobility pedestrian conveyance injured in collision with two- or three-wheeled motor vehicle in nontraffic accident
+Add:         0 V02031  Ped on stnd electr scoot injured in collision 2/3whl nontraf Pedestrian on standing electric scooter injured in collision with two- or three-wheeled motor vehicle in nontraffic accident
+Add:         1 V02031A Ped on stnd electr scoot inj in clsn 2/3whl nontraf, init    Pedestrian on standing electric scooter injured in collision with two- or three-wheeled motor vehicle in nontraffic accident, initial encounter
+Add:         1 V02031D Ped on stnd electr scoot inj in clsn 2/3whl nontraf, subs    Pedestrian on standing electric scooter injured in collision with two- or three-wheeled motor vehicle in nontraffic accident, subsequent encounter
+Add:         1 V02031S Ped on stnd electr scoot inj in clsn 2/3whl nontraf, sequela Pedestrian on standing electric scooter injured in collision with two- or three-wheeled motor vehicle in nontraffic accident, sequela
+Add:         0 V02038  Ped on other stnd micr-mob conv inj in clsn 2/3whl nontraf   Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with two- or three-wheeled motor vehicle in nontraffic accident
+Add:         1 V02038A Ped other stnd micr-mob conv inj clsn 2/3whl nontraf, init   Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with two- or three-wheeled motor vehicle in nontraffic accident, initial encounter
+Add:         1 V02038D Ped other stnd micr-mob conv inj clsn 2/3whl nontraf, subs   Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with two- or three-wheeled motor vehicle in nontraffic accident, subsequent encounter
+Add:         1 V02038S Ped other stnd micr-mob conv inj clsn 2/3whl nontraf, sqla   Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with two- or three-wheeled motor vehicle in nontraffic accident, sequela
+Add:         0 V0213   Ped on stnd micr-mob conv injured in clsn 2/3whl in traf     Pedestrian on standing micro-mobility pedestrian conveyance injured in collision with two- or three-wheeled motor vehicle in traffic accident
+Add:         0 V02131  Ped on stnd electr scoot injured in collision 2/3whl in traf Pedestrian on standing electric scooter injured in collision with two- or three-wheeled motor vehicle in traffic accident
+Add:         1 V02131A Ped on stnd electr scoot inj in clsn 2/3whl in traf, init    Pedestrian on standing electric scooter injured in collision with two- or three-wheeled motor vehicle in traffic accident, initial encounter
+Add:         1 V02131D Ped on stnd electr scoot inj in clsn 2/3whl in traf, subs    Pedestrian on standing electric scooter injured in collision with two- or three-wheeled motor vehicle in traffic accident, subsequent encounter
+Add:         1 V02131S Ped on stnd electr scoot inj in clsn 2/3whl in traf, sequela Pedestrian on standing electric scooter injured in collision with two- or three-wheeled motor vehicle in traffic accident, sequela
+Add:         0 V02138  Ped on other stnd micr-mob conv inj in clsn 2/3whl in traf   Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with two- or three-wheeled motor vehicle in traffic accident
+Add:         1 V02138A Ped other stnd micr-mob conv inj clsn 2/3whl in traf, init   Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with two- or three-wheeled motor vehicle in traffic accident, initial encounter
+Add:         1 V02138D Ped other stnd micr-mob conv inj clsn 2/3whl in traf, subs   Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with two- or three-wheeled motor vehicle in traffic accident, subsequent encounter
+Add:         1 V02138S Ped other stnd micr-mob conv inj clsn 2/3whl in traf, sqla   Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with two- or three-wheeled motor vehicle in traffic accident, sequela
+Add:         0 V0293   Ped on stnd micr-mob conv injured in collision 2/3whl, unsp  Pedestrian on standing micro-mobility pedestrian conveyance injured in collision with two- or three-wheeled motor vehicle, unspecified whether traffic or nontraffic accident
+Add:         0 V02931  Ped on stnd electr scoot injured in collision 2/3whl, unsp   Pedestrian on standing electric scooter injured in collision with two- or three wheeled motor vehicle, unspecified whether traffic or nontraffic accident
+Add:         1 V02931A Ped on stnd electr scoot injured in clsn 2/3whl, unsp, init  Pedestrian on standing electric scooter injured in collision with two- or three wheeled motor vehicle, unspecified whether traffic or nontraffic accident, initial encounter
+Add:         1 V02931D Ped on stnd electr scoot injured in clsn 2/3whl, unsp, subs  Pedestrian on standing electric scooter injured in collision with two- or three wheeled motor vehicle, unspecified whether traffic or nontraffic accident, subsequent encounter
+Add:         1 V02931S Ped on stnd electr scoot inj in clsn 2/3whl, unsp, sequela   Pedestrian on standing electric scooter injured in collision with two- or three wheeled motor vehicle, unspecified whether traffic or nontraffic accident, sequela
+Add:         0 V02938  Ped on other stnd micr-mob conv injured in clsn 2/3whl, unsp Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with two- or three wheeled motor vehicle, unspecified whether traffic or nontraffic accident
+Add:         1 V02938A Ped on other stnd micr-mob conv inj clsn 2/3whl, unsp, init  Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with two- or three wheeled motor vehicle, unspecified whether traffic or nontraffic accident, initial encounter
+Add:         1 V02938D Ped on other stnd micr-mob conv inj clsn 2/3whl, unsp, subs  Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with two- or three wheeled motor vehicle, unspecified whether traffic or nontraffic accident, subsequent encounter
+Add:         1 V02938S Ped on other stnd micr-mob conv inj clsn 2/3whl, unsp, sqla  Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with two- or three wheeled motor vehicle, unspecified whether traffic or nontraffic accident, sequela
+Add:         0 V0303   Ped on stnd micr-mob conv injured in w/car/trk/van nontraf   Pedestrian on standing micro-mobility pedestrian conveyance injured in collision with car, pick-up or van in nontraffic accident
+Add:         0 V03031  Ped on stnd electr scoot injured in w/car/trk/van nontraf    Pedestrian on standing electric scooter injured in collision with car, pick-up or van in nontraffic accident
+Add:         1 V03031A Ped on stnd electr scoot inj in w/car/trk/van nontraf, init  Pedestrian on standing electric scooter injured in collision with car, pick-up or van in nontraffic accident, initial encounter
+Add:         1 V03031D Ped on stnd electr scoot inj in w/car/trk/van nontraf, subs  Pedestrian on standing electric scooter injured in collision with car, pick-up or van in nontraffic accident, subsequent encounter
+Add:         1 V03031S Ped on stnd electr scoot inj in w/car/trk/van nontraf, sqla  Pedestrian on standing electric scooter injured in collision with car, pick-up or van in nontraffic accident, sequela
+Add:         0 V03038  Ped on other stnd micr-mob conv inj in w/car/trk/van nontraf Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with car, pick-up or van in nontraffic accident
+Add:         1 V03038A Ped other stnd micr-mob conv inj w/car/trk/van nontraf, init Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with car, pick-up or van in nontraffic accident, initial encounter
+Add:         1 V03038D Ped other stnd micr-mob conv inj w/car/trk/van nontraf, subs Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with car, pick-up or van in nontraffic accident, subsequent encounter
+Add:         1 V03038S Ped other stnd micr-mob conv inj w/car/trk/van nontraf, sqla Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with car, pick-up or van in nontraffic accident, sequela
+Add:         0 V0313   Ped on stnd micr-mob conv injured in w/car/trk/van in traf   Pedestrian on standing micro-mobility pedestrian conveyance injured in collision with car, pick-up or van in traffic accident
+Add:         0 V03131  Ped on stnd electr scoot injured in w/car/trk/van in traf    Pedestrian on standing electric scooter injured in collision with car, pick-up or van in traffic accident
+Add:         1 V03131A Ped on stnd electr scoot inj in w/car/trk/van in traf, init  Pedestrian on standing electric scooter injured in collision with car, pick-up or van in traffic accident, initial encounter
+Add:         1 V03131D Ped on stnd electr scoot inj in w/car/trk/van in traf, subs  Pedestrian on standing electric scooter injured in collision with car, pick-up or van in traffic accident, subsequent encounter
+Add:         1 V03131S Ped on stnd electr scoot inj in w/car/trk/van in traf, sqla  Pedestrian on standing electric scooter injured in collision with car, pick-up or van in traffic accident, sequela
+Add:         0 V03138  Ped on other stnd micr-mob conv inj in w/car/trk/van in traf Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with car, pick-up or van in traffic accident
+Add:         1 V03138A Ped other stnd micr-mob conv inj w/car/trk/van in traf, init Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with car, pick-up or van in traffic accident, initial encounter
+Add:         1 V03138D Ped other stnd micr-mob conv inj w/car/trk/van in traf, subs Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with car, pick-up or van in traffic accident, subsequent encounter
+Add:         1 V03138S Ped other stnd micr-mob conv inj w/car/trk/van in traf, sqla Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with car, pick-up or van in traffic accident, sequela
+Add:         0 V0393   Ped on stnd micr-mob conv injured in w/car/trk/van, unsp     Pedestrian on standing micro-mobility pedestrian conveyance injured in collision with car, pick-up or van, unspecified whether traffic or nontraffic accident
+Add:         0 V03931  Ped on stnd electr scoot injured in w/car/trk/van, unsp      Pedestrian on standing electric scooter injured in collision with car, pick-up or van, unspecified whether traffic or nontraffic accident
+Add:         1 V03931A Ped on stnd electr scoot inj in w/car/trk/van, unsp, init    Pedestrian on standing electric scooter injured in collision with car, pick-up or van, unspecified whether traffic or nontraffic accident, initial encounter
+Add:         1 V03931D Ped on stnd electr scoot inj in w/car/trk/van, unsp, subs    Pedestrian on standing electric scooter injured in collision with car, pick-up or van, unspecified whether traffic or nontraffic accident, subsequent encounter
+Add:         1 V03931S Ped on stnd electr scoot inj in w/car/trk/van, unsp, sequela Pedestrian on standing electric scooter injured in collision with car, pick-up or van, unspecified whether traffic or nontraffic accident, sequela
+Add:         0 V03938  Ped on other stnd micr-mob conv inj in w/car/trk/van, unsp   Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with car, pick-up or van, unspecified whether traffic or nontraffic accident
+Add:         1 V03938A Ped other stnd micr-mob conv inj w/car/trk/van, unsp, init   Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with car, pick-up or van, unspecified whether traffic or nontraffic accident, initial encounter
+Add:         1 V03938D Ped other stnd micr-mob conv inj w/car/trk/van, unsp, subs   Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with car, pick-up or van, unspecified whether traffic or nontraffic accident, subsequent encounter
+Add:         1 V03938S Ped other stnd micr-mob conv inj w/car/trk/van, unsp, sqla   Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with car, pick-up or van, unspecified whether traffic or nontraffic accident, sequela
+Add:         0 V0403   Ped on stnd micr-mob conv inj in clsn with hv veh nontraf    Pedestrian on standing micro-mobility pedestrian conveyance injured in collision with heavy transport vehicle or bus in nontraffic accident
+Add:         0 V04031  Ped on stnd electr scoot injured in clsn with hv veh nontraf Pedestrian on standing electric scooter injured in collision with heavy transport vehicle or bus in nontraffic accident
+Add:         1 V04031A Ped on stnd electr scoot inj clsn with hv veh nontraf, init  Pedestrian on standing electric scooter injured in collision with heavy transport vehicle or bus in nontraffic accident, initial encounter
+Add:         1 V04031D Ped on stnd electr scoot inj clsn with hv veh nontraf, subs  Pedestrian on standing electric scooter injured in collision with heavy transport vehicle or bus in nontraffic accident, subsequent encounter
+Add:         1 V04031S Ped on stnd electr scoot inj clsn with hv veh nontraf, sqla  Pedestrian on standing electric scooter injured in collision with heavy transport vehicle or bus in nontraffic accident, sequela
+Add:         0 V04038  Ped on other stnd micr-mob conv inj clsn with hv veh nontraf Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with heavy transport vehicle or bus in nontraffic accident
+Add:         1 V04038A Ped oth stnd micr-mob conv inj clsn w hv veh nontraf, init   Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with heavy transport vehicle or bus in nontraffic accident, initial encounter
+Add:         1 V04038D Ped oth stnd micr-mob conv inj clsn w hv veh nontraf, subs   Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with heavy transport vehicle or bus in nontraffic accident, subsequent encounter
+Add:         1 V04038S Ped oth stnd micr-mob conv inj clsn w hv veh nontraf, sqla   Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with heavy transport vehicle or bus in nontraffic accident, sequela
+Add:         0 V0413   Ped on stnd micr-mob conv inj in clsn with hv veh in traf    Pedestrian on standing micro-mobility pedestrian conveyance injured in collision with heavy transport vehicle or bus in traffic accident
+Add:         0 V04131  Ped on stnd electr scoot injured in clsn with hv veh in traf Pedestrian on standing electric scooter injured in collision with heavy transport vehicle or bus in traffic accident
+Add:         1 V04131A Ped on stnd electr scoot inj clsn with hv veh in traf, init  Pedestrian on standing electric scooter injured in collision with heavy transport vehicle or bus in traffic accident, initial encounter
+Add:         1 V04131D Ped on stnd electr scoot inj clsn with hv veh in traf, subs  Pedestrian on standing electric scooter injured in collision with heavy transport vehicle or bus in traffic accident, subsequent encounter
+Add:         1 V04131S Ped on stnd electr scoot inj clsn with hv veh in traf, sqla  Pedestrian on standing electric scooter injured in collision with heavy transport vehicle or bus in traffic accident, sequela
+Add:         0 V04138  Ped on other stnd micr-mob conv inj clsn with hv veh in traf Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with heavy transport vehicle or bus in traffic accident
+Add:         1 V04138A Ped oth stnd micr-mob conv inj clsn w hv veh in traf, init   Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with heavy transport vehicle or bus in traffic accident, initial encounter
+Add:         1 V04138D Ped oth stnd micr-mob conv inj clsn w hv veh in traf, subs   Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with heavy transport vehicle or bus in traffic accident, subsequent encounter
+Add:         1 V04138S Ped oth stnd micr-mob conv inj clsn w hv veh in traf, sqla   Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with heavy transport vehicle or bus in traffic accident, sequela
+Add:         0 V0493   Ped on stnd micr-mob conv injured in clsn with hv veh, unsp  Pedestrian on standing micro-mobility pedestrian conveyance injured in collision with heavy transport vehicle or bus, unspecified whether traffic or nontraffic accident
+Add:         0 V04931  Ped on stnd electr scoot injured in clsn with hv veh, unsp   Pedestrian on standing electric scooter injured in collision with heavy transport vehicle or bus, unspecified whether traffic or nontraffic accident
+Add:         1 V04931A Ped on stnd electr scoot inj in clsn with hv veh, unsp, init Pedestrian on standing electric scooter injured in collision with heavy transport vehicle or bus, unspecified whether traffic or nontraffic accident, initial encounter
+Add:         1 V04931D Ped on stnd electr scoot inj in clsn with hv veh, unsp, subs Pedestrian on standing electric scooter injured in collision with heavy transport vehicle or bus, unspecified whether traffic or nontraffic accident, subsequent encounter
+Add:         1 V04931S Ped on stnd electr scoot inj in clsn with hv veh, unsp, sqla Pedestrian on standing electric scooter injured in collision with heavy transport vehicle or bus, unspecified whether traffic or nontraffic accident, sequela
+Add:         0 V04938  Ped on other stnd micr-mob conv inj clsn with hv veh, unsp   Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with heavy transport vehicle or bus, unspecified whether traffic or nontraffic accident
+Add:         1 V04938A Ped oth stnd micr-mob conv inj clsn with hv veh, unsp, init  Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with heavy transport vehicle or bus, unspecified whether traffic or nontraffic accident, initial encounter
+Add:         1 V04938D Ped oth stnd micr-mob conv inj clsn with hv veh, unsp, subs  Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with heavy transport vehicle or bus, unspecified whether traffic or nontraffic accident, subsequent encounter
+Add:         1 V04938S Ped oth stnd micr-mob conv inj clsn with hv veh, unsp, sqla  Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with heavy transport vehicle or bus, unspecified whether traffic or nontraffic accident, sequela
+Add:         0 V0503   Ped on stnd micr-mob conv injured in clsn train/veh nontraf  Pedestrian on standing micro-mobility pedestrian conveyance injured in collision with railway train or railway vehicle in nontraffic accident
+Add:         0 V05031  Ped on stnd electr scoot injured in clsn train/veh nontraf   Pedestrian on standing electric scooter injured in collision with railway train or railway vehicle in nontraffic accident
+Add:         1 V05031A Ped on stnd electr scoot inj in clsn train/veh nontraf, init Pedestrian on standing electric scooter injured in collision with railway train or railway vehicle in nontraffic accident, initial encounter
+Add:         1 V05031D Ped on stnd electr scoot inj in clsn train/veh nontraf, subs Pedestrian on standing electric scooter injured in collision with railway train or railway vehicle in nontraffic accident, subsequent encounter
+Add:         1 V05031S Ped on stnd electr scoot inj in clsn train/veh nontraf, sqla Pedestrian on standing electric scooter injured in collision with railway train or railway vehicle in nontraffic accident, sequela
+Add:         0 V05038  Ped on other stnd micr-mob conv inj clsn train/veh nontraf   Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with railway train or railway vehicle in nontraffic accident
+Add:         1 V05038A Ped oth stnd micr-mob conv inj clsn train/veh nontraf, init  Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with railway train or railway vehicle in nontraffic accident, initial encounter
+Add:         1 V05038D Ped oth stnd micr-mob conv inj clsn train/veh nontraf, subs  Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with railway train or railway vehicle in nontraffic accident, subsequent encounter
+Add:         1 V05038S Ped oth stnd micr-mob conv inj clsn train/veh nontraf, sqla  Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with railway train or railway vehicle in nontraffic accident, sequela
+Add:         0 V0513   Ped on stnd micr-mob conv injured in clsn train/veh in traf  Pedestrian on standing micro-mobility pedestrian conveyance injured in collision with railway train or railway vehicle in traffic accident
+Add:         0 V05131  Ped on stnd electr scoot injured in clsn train/veh in traf   Pedestrian on standing electric scooter injured in collision with railway train or railway vehicle in traffic accident
+Add:         1 V05131A Ped on stnd electr scoot inj in clsn train/veh in traf, init Pedestrian on standing electric scooter injured in collision with railway train or railway vehicle in traffic accident, initial encounter
+Add:         1 V05131D Ped on stnd electr scoot inj in clsn train/veh in traf, subs Pedestrian on standing electric scooter injured in collision with railway train or railway vehicle in traffic accident, subsequent encounter
+Add:         1 V05131S Ped on stnd electr scoot inj in clsn train/veh in traf, sqla Pedestrian on standing electric scooter injured in collision with railway train or railway vehicle in traffic accident, sequela
+Add:         0 V05138  Ped on other stnd micr-mob conv inj clsn train/veh in traf   Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with railway train or railway vehicle in traffic accident
+Add:         1 V05138A Ped oth stnd micr-mob conv inj clsn train/veh in traf, init  Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with railway train or railway vehicle in traffic accident, initial encounter
+Add:         1 V05138D Ped oth stnd micr-mob conv inj clsn train/veh in traf, subs  Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with railway train or railway vehicle in traffic accident, subsequent encounter
+Add:         1 V05138S Ped oth stnd micr-mob conv inj clsn train/veh in traf, sqla  Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with railway train or railway vehicle in traffic accident, sequela
+Add:         0 V0593   Ped on stnd micr-mob conv injured in clsn train/veh, unsp    Pedestrian on standing micro-mobility pedestrian conveyance injured in collision with railway train or railway vehicle, unspecified whether traffic or nontraffic accident
+Add:         0 V05931  Ped on stnd electr scoot injured in clsn train/veh, unsp     Pedestrian on standing electric scooter injured in collision with railway train or railway vehicle, unspecified whether traffic or nontraffic accident
+Add:         1 V05931A Ped on stnd electr scoot inj in clsn train/veh, unsp, init   Pedestrian on standing electric scooter injured in collision with railway train or railway vehicle, unspecified whether traffic or nontraffic accident, initial encounter
+Add:         1 V05931D Ped on stnd electr scoot inj in clsn train/veh, unsp, subs   Pedestrian on standing electric scooter injured in collision with railway train or railway vehicle, unspecified whether traffic or nontraffic accident, subsequent encounter
+Add:         1 V05931S Ped on stnd electr scoot inj in clsn train/veh, unsp, sqla   Pedestrian on standing electric scooter injured in collision with railway train or railway vehicle, unspecified whether traffic or nontraffic accident, sequela
+Add:         0 V05938  Ped on other stnd micr-mob conv inj in clsn train/veh, unsp  Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with railway train or railway vehicle, unspecified whether traffic or nontraffic accident
+Add:         1 V05938A Ped other stnd micr-mob conv inj clsn train/veh, unsp, init  Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with railway train or railway vehicle, unspecified whether traffic or nontraffic accident, initial encounter
+Add:         1 V05938D Ped other stnd micr-mob conv inj clsn train/veh, unsp, subs  Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with railway train or railway vehicle, unspecified whether traffic or nontraffic accident, subsequent encounter
+Add:         1 V05938S Ped other stnd micr-mob conv inj clsn train/veh, unsp, sqla  Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with railway train or railway vehicle, unspecified whether traffic or nontraffic accident, sequela
+Add:         0 V0603   Ped on stnd micr-mob conv injured in clsn oth non-mv nontraf Pedestrian on standing micro-mobility pedestrian conveyance injured in collision with other nonmotor vehicle in nontraffic accident
+Add:         0 V06031  Ped on stnd electr scoot injured in clsn oth non-mv nontraf  Pedestrian on standing electric scooter injured in collision with other nonmotor vehicle in nontraffic accident
+Add:         1 V06031A Ped on stnd electr scoot inj clsn oth non-mv nontraf, init   Pedestrian on standing electric scooter injured in collision with other nonmotor vehicle in nontraffic accident, initial encounter
+Add:         1 V06031D Ped on stnd electr scoot inj clsn oth non-mv nontraf, subs   Pedestrian on standing electric scooter injured in collision with other nonmotor vehicle in nontraffic accident, subsequent encounter
+Add:         1 V06031S Ped on stnd electr scoot inj clsn oth non-mv nontraf, sqla   Pedestrian on standing electric scooter injured in collision with other nonmotor vehicle in nontraffic accident, sequela
+Add:         0 V06038  Ped on other stnd micr-mob conv inj clsn oth non-mv nontraf  Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with other nonmotor vehicle in nontraffic accident
+Add:         1 V06038A Ped oth stnd micr-mob conv inj clsn oth non-mv nontraf, init Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with other nonmotor vehicle in nontraffic accident, initial encounter
+Add:         1 V06038D Ped oth stnd micr-mob conv inj clsn oth non-mv nontraf, subs Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with other nonmotor vehicle in nontraffic accident, subsequent encounter
+Add:         1 V06038S Ped oth stnd micr-mob conv inj clsn oth non-mv nontraf, sqla Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with other nonmotor vehicle in nontraffic accident, sequela
+Add:         0 V0613   Ped on stnd micr-mob conv injured in clsn oth non-mv in traf Pedestrian on standing micro-mobility pedestrian conveyance injured in collision with other nonmotor vehicle in traffic accident
+Add:         0 V06131  Ped on stnd electr scoot injured in clsn oth non-mv in traf  Pedestrian on standing electric scooter injured in collision with other nonmotor vehicle in traffic accident
+Add:         1 V06131A Ped on stnd electr scoot inj clsn oth non-mv in traf, init   Pedestrian on standing electric scooter injured in collision with other nonmotor vehicle in traffic accident, initial encounter
+Add:         1 V06131D Ped on stnd electr scoot inj clsn oth non-mv in traf, subs   Pedestrian on standing electric scooter injured in collision with other nonmotor vehicle in traffic accident, subsequent encounter
+Add:         1 V06131S Ped on stnd electr scoot inj clsn oth non-mv in traf, sqla   Pedestrian on standing electric scooter injured in collision with other nonmotor vehicle in traffic accident, sequela
+Add:         0 V06138  Ped on other stnd micr-mob conv inj clsn oth non-mv in traf  Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with other nonmotor vehicle in traffic accident
+Add:         1 V06138A Ped oth stnd micr-mob conv inj clsn oth non-mv in traf, init Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with other nonmotor vehicle in traffic accident, initial encounter
+Add:         1 V06138D Ped oth stnd micr-mob conv inj clsn oth non-mv in traf, subs Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with other nonmotor vehicle in traffic accident, subsequent encounter
+Add:         1 V06138S Ped oth stnd micr-mob conv inj clsn oth non-mv in traf, sqla Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with other nonmotor vehicle in traffic accident, sequela
+Add:         0 V0693   Ped on stnd micr-mob conv injured in clsn oth non-mv, unsp   Pedestrian on standing micro-mobility pedestrian conveyance injured in collision with other nonmotor vehicle, unspecified whether traffic or nontraffic accident
+Add:         0 V06931  Ped on stnd electr scoot injured in clsn oth non-mv, unsp    Pedestrian on standing electric scooter injured in collision with other nonmotor vehicle, unspecified whether traffic or nontraffic accident
+Add:         1 V06931A Ped on stnd electr scoot inj in clsn oth non-mv, unsp, init  Pedestrian on standing electric scooter injured in collision with other nonmotor vehicle, unspecified whether traffic or nontraffic accident, initial encounter
+Add:         1 V06931D Ped on stnd electr scoot inj in clsn oth non-mv, unsp, subs  Pedestrian on standing electric scooter injured in collision with other nonmotor vehicle, unspecified whether traffic or nontraffic accident, subsequent encounter
+Add:         1 V06931S Ped on stnd electr scoot inj in clsn oth non-mv, unsp, sqla  Pedestrian on standing electric scooter injured in collision with other nonmotor vehicle, unspecified whether traffic or nontraffic accident, sequela
+Add:         0 V06938  Ped on other stnd micr-mob conv inj in clsn oth non-mv, unsp Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with other nonmotor vehicle, unspecified whether traffic or nontraffic accident
+Add:         1 V06938A Ped other stnd micr-mob conv inj clsn oth non-mv, unsp, init Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with other nonmotor vehicle, unspecified whether traffic or nontraffic accident, initial encounter
+Add:         1 V06938D Ped other stnd micr-mob conv inj clsn oth non-mv, unsp, subs Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with other nonmotor vehicle, unspecified whether traffic or nontraffic accident, subsequent encounter
+Add:         1 V06938S Ped other stnd micr-mob conv inj clsn oth non-mv, unsp, sqla Pedestrian on other standing micro-mobility pedestrian conveyance injured in collision with other nonmotor vehicle, unspecified whether traffic or nontraffic accident, sequela
+Delete:      1 Y771    Therapeutic and rehab ophthalmic devices assoc w incdt       Therapeutic (nonsurgical) and rehabilitative ophthalmic devices associated with adverse incidents
+Add:         0 Y771    Therapeutic and rehab ophthalmic devices assoc w incdt       Therapeutic (nonsurgical) and rehabilitative ophthalmic devices associated with adverse incidents
+Add:         1 Y7711   Contact lens associated with adverse incidents               Contact lens associated with adverse incidents
+Add:         1 Y7719   Other therapeutic and rehab ophthalmic devices assoc w incdt Other therapeutic (nonsurgical) and rehabilitative ophthalmic devices associated with adverse incidents
+Revise from: 1 Y92002  Bathrm of unsp non-institut resdnce sngl-fmly house as place Bathroom of unspecified non-institutional (private) residence single-family (private) house as the place of occurrence of the external cause
+Revise to:   1 Y92002  Bathroom of unsp non-institut (private) residence as place   Bathroom of unspecified non-institutional (private) residence as the place of occurrence of the external cause
+Add:         0 Z0382   Enctr for observation for suspected foreign body ruled out   Encounter for observation for suspected foreign body ruled out
+Add:         1 Z03821  Enctr for observation for suspected ingested fb ruled out    Encounter for observation for suspected ingested foreign body ruled out
+Add:         1 Z03822  Enctr for obs for suspected aspirated (inhaled) fb ruled out Encounter for observation for suspected aspirated (inhaled) foreign body ruled out
+Add:         1 Z03823  Enctr for obs for suspected inserted (injected) fb ruled out Encounter for observation for suspected inserted (injected) foreign body ruled out
+Revise from: 1 Z681    Body mass index (BMI) 19.9 or less, adult                    Body mass index (BMI) 19.9 or less, adult
+Revise to:   1 Z681    Body mass index [BMI] 19.9 or less, adult                    Body mass index [BMI] 19.9 or less, adult
+Revise from: 0 Z682    Body mass index (BMI) 20-29, adult                           Body mass index (BMI) 20-29, adult
+Revise to:   0 Z682    Body mass index [BMI] 20-29, adult                           Body mass index [BMI] 20-29, adult
+Revise from: 1 Z6820   Body mass index (BMI) 20.0-20.9, adult                       Body mass index (BMI) 20.0-20.9, adult
+Revise to:   1 Z6820   Body mass index [BMI] 20.0-20.9, adult                       Body mass index [BMI] 20.0-20.9, adult
+Revise from: 1 Z6821   Body mass index (BMI) 21.0-21.9, adult                       Body mass index (BMI) 21.0-21.9, adult
+Revise to:   1 Z6821   Body mass index [BMI] 21.0-21.9, adult                       Body mass index [BMI] 21.0-21.9, adult
+Revise from: 1 Z6822   Body mass index (BMI) 22.0-22.9, adult                       Body mass index (BMI) 22.0-22.9, adult
+Revise to:   1 Z6822   Body mass index [BMI] 22.0-22.9, adult                       Body mass index [BMI] 22.0-22.9, adult
+Revise from: 1 Z6823   Body mass index (BMI) 23.0-23.9, adult                       Body mass index (BMI) 23.0-23.9, adult
+Revise to:   1 Z6823   Body mass index [BMI] 23.0-23.9, adult                       Body mass index [BMI] 23.0-23.9, adult
+Revise from: 1 Z6824   Body mass index (BMI) 24.0-24.9, adult                       Body mass index (BMI) 24.0-24.9, adult
+Revise to:   1 Z6824   Body mass index [BMI] 24.0-24.9, adult                       Body mass index [BMI] 24.0-24.9, adult
+Revise from: 1 Z6825   Body mass index (BMI) 25.0-25.9, adult                       Body mass index (BMI) 25.0-25.9, adult
+Revise to:   1 Z6825   Body mass index [BMI] 25.0-25.9, adult                       Body mass index [BMI] 25.0-25.9, adult
+Revise from: 1 Z6826   Body mass index (BMI) 26.0-26.9, adult                       Body mass index (BMI) 26.0-26.9, adult
+Revise to:   1 Z6826   Body mass index [BMI] 26.0-26.9, adult                       Body mass index [BMI] 26.0-26.9, adult
+Revise from: 1 Z6827   Body mass index (BMI) 27.0-27.9, adult                       Body mass index (BMI) 27.0-27.9, adult
+Revise to:   1 Z6827   Body mass index [BMI] 27.0-27.9, adult                       Body mass index [BMI] 27.0-27.9, adult
+Revise from: 1 Z6828   Body mass index (BMI) 28.0-28.9, adult                       Body mass index (BMI) 28.0-28.9, adult
+Revise to:   1 Z6828   Body mass index [BMI] 28.0-28.9, adult                       Body mass index [BMI] 28.0-28.9, adult
+Revise from: 1 Z6829   Body mass index (BMI) 29.0-29.9, adult                       Body mass index (BMI) 29.0-29.9, adult
+Revise to:   1 Z6829   Body mass index [BMI] 29.0-29.9, adult                       Body mass index [BMI] 29.0-29.9, adult
+Revise from: 0 Z683    Body mass index (BMI) 30-39, adult                           Body mass index (BMI) 30-39, adult
+Revise to:   0 Z683    Body mass index [BMI] 30-39, adult                           Body mass index [BMI] 30-39, adult
+Revise from: 1 Z6830   Body mass index (BMI) 30.0-30.9, adult                       Body mass index (BMI) 30.0-30.9, adult
+Revise to:   1 Z6830   Body mass index [BMI]30.0-30.9, adult                        Body mass index [BMI]30.0-30.9, adult
+Revise from: 1 Z6831   Body mass index (BMI) 31.0-31.9, adult                       Body mass index (BMI) 31.0-31.9, adult
+Revise to:   1 Z6831   Body mass index [BMI] 31.0-31.9, adult                       Body mass index [BMI] 31.0-31.9, adult
+Revise from: 1 Z6832   Body mass index (BMI) 32.0-32.9, adult                       Body mass index (BMI) 32.0-32.9, adult
+Revise to:   1 Z6832   Body mass index [BMI] 32.0-32.9, adult                       Body mass index [BMI] 32.0-32.9, adult
+Revise from: 1 Z6833   Body mass index (BMI) 33.0-33.9, adult                       Body mass index (BMI) 33.0-33.9, adult
+Revise to:   1 Z6833   Body mass index [BMI] 33.0-33.9, adult                       Body mass index [BMI] 33.0-33.9, adult
+Revise from: 1 Z6834   Body mass index (BMI) 34.0-34.9, adult                       Body mass index (BMI) 34.0-34.9, adult
+Revise to:   1 Z6834   Body mass index [BMI] 34.0-34.9, adult                       Body mass index [BMI] 34.0-34.9, adult
+Revise from: 1 Z6835   Body mass index (BMI) 35.0-35.9, adult                       Body mass index (BMI) 35.0-35.9, adult
+Revise to:   1 Z6835   Body mass index [BMI] 35.0-35.9, adult                       Body mass index [BMI] 35.0-35.9, adult
+Revise from: 1 Z6836   Body mass index (BMI) 36.0-36.9, adult                       Body mass index (BMI) 36.0-36.9, adult
+Revise to:   1 Z6836   Body mass index [BMI] 36.0-36.9, adult                       Body mass index [BMI] 36.0-36.9, adult
+Revise from: 1 Z6837   Body mass index (BMI) 37.0-37.9, adult                       Body mass index (BMI) 37.0-37.9, adult
+Revise to:   1 Z6837   Body mass index [BMI] 37.0-37.9, adult                       Body mass index [BMI] 37.0-37.9, adult
+Revise from: 1 Z6838   Body mass index (BMI) 38.0-38.9, adult                       Body mass index (BMI) 38.0-38.9, adult
+Revise to:   1 Z6838   Body mass index [BMI] 38.0-38.9, adult                       Body mass index [BMI] 38.0-38.9, adult
+Revise from: 1 Z6839   Body mass index (BMI) 39.0-39.9, adult                       Body mass index (BMI) 39.0-39.9, adult
+Revise to:   1 Z6839   Body mass index [BMI] 39.0-39.9, adult                       Body mass index [BMI] 39.0-39.9, adult
+Revise from: 0 Z684    Body mass index (BMI) 40 or greater, adult                   Body mass index (BMI) 40 or greater, adult
+Revise to:   0 Z684    Body mass index [BMI] 40 or greater, adult                   Body mass index [BMI] 40 or greater, adult
+Revise from: 1 Z6841   Body mass index (BMI) 40.0-44.9, adult                       Body mass index (BMI) 40.0-44.9, adult
+Revise to:   1 Z6841   Body mass index [BMI]40.0-44.9, adult                        Body mass index [BMI]40.0-44.9, adult
+Revise from: 1 Z6842   Body mass index (BMI) 45.0-49.9, adult                       Body mass index (BMI) 45.0-49.9, adult
+Revise to:   1 Z6842   Body mass index [BMI] 45.0-49.9, adult                       Body mass index [BMI] 45.0-49.9, adult
+Revise from: 1 Z6843   Body mass index (BMI) 50.0-59.9, adult                       Body mass index (BMI) 50.0-59.9, adult
+Revise to:   1 Z6843   Body mass index [BMI] 50.0-59.9, adult                       Body mass index [BMI] 50.0-59.9, adult
+Revise from: 1 Z6844   Body mass index (BMI) 60.0-69.9, adult                       Body mass index (BMI) 60.0-69.9, adult
+Revise to:   1 Z6844   Body mass index [BMI] 60.0-69.9, adult                       Body mass index [BMI] 60.0-69.9, adult
+Revise from: 1 Z6845   Body mass index (BMI) 70 or greater, adult                   Body mass index (BMI) 70 or greater, adult
+Revise to:   1 Z6845   Body mass index [BMI] 70 or greater, adult                   Body mass index [BMI] 70 or greater, adult
+Revise from: 0 Z685    Body mass index (BMI) pediatric                              Body mass index (BMI) pediatric
+Revise to:   0 Z685    Body mass index [BMI] pediatric                              Body mass index [BMI] pediatric
+Revise from: 1 Z6851   BMI pediatric, less than 5th percentile for age              Body mass index (BMI) pediatric, less than 5th percentile for age
+Revise to:   1 Z6851   Body mass index pediatric, less than 5th percentile for age  Body mass index [BMI] pediatric, less than 5th percentile for age
+Revise from: 1 Z6852   BMI pediatric, 5th percentile to less than 85% for age       Body mass index (BMI) pediatric, 5th percentile to less than 85th percentile for age
+Revise to:   1 Z6852   Body mass index pediatric, 5th percentile to < 85% for age   Body mass index [BMI] pediatric, 5th percentile to less than 85th percentile for age
+Revise from: 1 Z6853   BMI pediatric, 85% to less than 95th percentile for age      Body mass index (BMI) pediatric, 85th percentile to less than 95th percentile for age
+Revise to:   1 Z6853   Body mass index pediatric, 85% to less than 95% for age      Body mass index [BMI] pediatric, 85th percentile to less than 95th percentile for age
+Revise from: 1 Z6854   BMI pediatric, greater than or equal to 95% for age          Body mass index (BMI) pediatric, greater than or equal to 95th percentile for age
+Revise to:   1 Z6854   Body mass index pediatric, > or equal to 95% for age         Body mass index [BMI] pediatric, greater than or equal to 95th percentile for age
+Revise from: 1 Z881    Allergy status to other antibiotic agents status             Allergy status to other antibiotic agents status
+Revise to:   1 Z881    Allergy status to other antibiotic agents                    Allergy status to other antibiotic agents
+Revise from: 1 Z882    Allergy status to sulfonamides status                        Allergy status to sulfonamides status
+Revise to:   1 Z882    Allergy status to sulfonamides                               Allergy status to sulfonamides
+Revise from: 1 Z883    Allergy status to other anti-infective agents status         Allergy status to other anti-infective agents status
+Revise to:   1 Z883    Allergy status to other anti-infective agents                Allergy status to other anti-infective agents
+Revise from: 1 Z884    Allergy status to anesthetic agent status                    Allergy status to anesthetic agent status
+Revise to:   1 Z884    Allergy status to anesthetic agent                           Allergy status to anesthetic agent
+Revise from: 1 Z885    Allergy status to narcotic agent status                      Allergy status to narcotic agent status
+Revise to:   1 Z885    Allergy status to narcotic agent                             Allergy status to narcotic agent
+Revise from: 1 Z886    Allergy status to analgesic agent status                     Allergy status to analgesic agent status
+Revise to:   1 Z886    Allergy status to analgesic agent                            Allergy status to analgesic agent
+Revise from: 1 Z887    Allergy status to serum and vaccine status                   Allergy status to serum and vaccine status
+Revise to:   1 Z887    Allergy status to serum and vaccine                          Allergy status to serum and vaccine
+Revise from: 1 Z888    Allergy status to oth drug/meds/biol subst status            Allergy status to other drugs, medicaments and biological substances status
+Revise to:   1 Z888    Allergy status to other drug/meds/biol subst                 Allergy status to other drugs, medicaments and biological substances
+Revise from: 1 Z889    Allergy status to unsp drug/meds/biol subst status           Allergy status to unspecified drugs, medicaments and biological substances status
+Revise to:   1 Z889    Allergy status to unspecified drug/meds/biol subst           Allergy status to unspecified drugs, medicaments and biological substances
+
+Headers
+  22581 headers in icd10cm_order_2020.txt
+  22736 headers in icd10cm_order_2021.txt
+    162 additions
+      7 deletions
+      5 revisions
+of which
+      5 revisions to both long and short titles
+      0 revisions to long title only
+      0 revisions to short title only
+
+Codes
+  72184 codes in icd10cm_order_2020.txt
+  72616 codes in icd10cm_order_2021.txt
+    490 additions
+     58 deletions
+     47 revisions
+of which
+     47 revisions to both long and short titles
+      0 revisions to long title only
+      0 revisions to short title only

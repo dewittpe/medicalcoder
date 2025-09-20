@@ -1,0 +1,11 @@
+Delete:      Z283    Underimmunization status
+Add:         Z28310  Unvaccinated for COVID-19
+Add:         Z28311  Partially vaccinated for COVID-19
+Add:         Z2839   Other underimmunization status
+
+Codes
+  72748 codes in icd10cm_order_2022.txt
+  72750 codes in icd10cm_order_2022.txt
+      3 additions
+      1 deletions
+      0 revisions

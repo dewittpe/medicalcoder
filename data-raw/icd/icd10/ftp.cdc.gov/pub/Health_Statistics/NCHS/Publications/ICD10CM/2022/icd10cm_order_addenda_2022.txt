@@ -1,0 +1,30 @@
+Revise from: 0 O1001   Pre-existing essential hypertension complicating pregnancy,  Pre-existing essential hypertension complicating pregnancy,
+Revise to:   0 O1001   Pre-existing essential hypertension complicating pregnancy   Pre-existing essential hypertension complicating pregnancy
+Delete:      1 Z283    Underimmunization status                                     Underimmunization status
+Add:         0 Z283    Underimmunization status                                     Underimmunization status
+Add:         0 Z2831   Underimmunization for COVID-19 status                        Underimmunization for COVID-19 status
+Add:         1 Z28310  Unvaccinated for COVID-19                                    Unvaccinated for COVID-19
+Add:         1 Z28311  Partially vaccinated for COVID-19                            Partially vaccinated for COVID-19
+Add:         1 Z2839   Other underimmunization status                               Other underimmunization status
+
+Headers
+  22776 headers in icd10cm_order_2022.txt
+  22778 headers in icd10cm_order_2022.txt
+      2 additions
+      0 deletions
+      1 revisions
+of which
+      1 revisions to both long and short titles
+      0 revisions to long title only
+      0 revisions to short title only
+
+Codes
+  72748 codes in icd10cm_order_2022.txt
+  72750 codes in icd10cm_order_2022.txt
+      3 additions
+      1 deletions
+      0 revisions
+of which
+      0 revisions to both long and short titles
+      0 revisions to long title only
+      0 revisions to short title only

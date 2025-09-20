@@ -1,2 +1,5 @@
 *.Rout
 data-raw/icd/icd9/.download_stamp
+data-raw/icd/icd10/.download_stamp
+data-raw/icd/icd9/icd9_cm_pcs.rds
+data-raw/icd/icd10/icd10.rds

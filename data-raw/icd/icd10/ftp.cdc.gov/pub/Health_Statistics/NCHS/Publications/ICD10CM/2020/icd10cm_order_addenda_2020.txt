@@ -1,0 +1,457 @@
+Revise from: 1 B9621   Shiga toxin E coli (STEC) O157 causing dis classd elswhr     Shiga toxin-producing Escherichia coli [E. coli] (STEC) O157 as the cause of diseases classified elsewhere
+Revise to:   1 B9621   Shig tox E coli [STEC] O157 causing diseases classd elswhr   Shiga toxin-producing Escherichia coli [E. coli] [STEC] O157 as the cause of diseases classified elsewhere
+Revise from: 1 B9622   Oth shiga toxin E coli (STEC) causing diseases classd elswhr Other specified Shiga toxin-producing Escherichia coli [E. coli] (STEC) as the cause of diseases classified elsewhere
+Revise to:   1 B9622   Oth shiga toxin E coli [STEC] causing diseases classd elswhr Other specified Shiga toxin-producing Escherichia coli [E. coli] [STEC] as the cause of diseases classified elsewhere
+Revise from: 1 B9623   Unsp shiga toxin E coli (STEC) causing dis classd elswhr     Unspecified Shiga toxin-producing Escherichia coli [E. coli] (STEC) as the cause of diseases classified elsewhere
+Revise to:   1 B9623   Unsp shig tox E coli [STEC] causing diseases classd elswhr   Unspecified Shiga toxin-producing Escherichia coli [E. coli] [STEC] as the cause of diseases classified elsewhere
+Add:         1 D75A    Glucose-6-phosphate dehydrgnse (G6PD) defic without anemia   Glucose-6-phosphate dehydrogenase (G6PD) deficiency without anemia
+Delete:      1 D813    Adenosine deaminase [ADA] deficiency                         Adenosine deaminase [ADA] deficiency
+Add:         0 D813    Adenosine deaminase [ADA] deficiency                         Adenosine deaminase [ADA] deficiency
+Add:         1 D8130   Adenosine deaminase deficiency, unspecified                  Adenosine deaminase deficiency, unspecified
+Add:         1 D8131   Severe combined immunodef due to adenosine deaminase defic   Severe combined immunodeficiency due to adenosine deaminase deficiency
+Add:         1 D8132   Adenosine deaminase 2 deficiency                             Adenosine deaminase 2 deficiency
+Add:         1 D8139   Other adenosine deaminase deficiency                         Other adenosine deaminase deficiency
+Revise from: 1 G43A0   Cyclical vomiting, not intractable                           Cyclical vomiting, not intractable
+Revise to:   1 G43A0   Cyclical vomiting, in migraine, not intractable              Cyclical vomiting, in migraine, not intractable
+Revise from: 1 G43A1   Cyclical vomiting, intractable                               Cyclical vomiting, intractable
+Revise to:   1 G43A1   Cyclical vomiting, in migraine, intractable                  Cyclical vomiting, in migraine, intractable
+Delete:      0 H814    Vertigo of central origin                                    Vertigo of central origin
+Add:         1 H814    Vertigo of central origin                                    Vertigo of central origin
+Delete:      1 H8141   Vertigo of central origin, right ear                         Vertigo of central origin, right ear
+Delete:      1 H8142   Vertigo of central origin, left ear                          Vertigo of central origin, left ear
+Delete:      1 H8143   Vertigo of central origin, bilateral                         Vertigo of central origin, bilateral
+Delete:      1 H8149   Vertigo of central origin, unspecified ear                   Vertigo of central origin, unspecified ear
+Add:         1 I2693   Single subsegmental pulmon emblsm w/o acute cor pulmonale    Single subsegmental pulmonary embolism without acute cor pulmonale
+Add:         1 I2694   Mult subsegmental pulmon emboli without acute cor pulmonale  Multiple subsegmental pulmonary emboli without acute cor pulmonale
+Delete:      1 I481    Persistent atrial fibrillation                               Persistent atrial fibrillation
+Add:         0 I481    Persistent atrial fibrillation                               Persistent atrial fibrillation
+Add:         1 I4811   Longstanding persistent atrial fibrillation                  Longstanding persistent atrial fibrillation
+Add:         1 I4819   Other persistent atrial fibrillation                         Other persistent atrial fibrillation
+Delete:      1 I482    Chronic atrial fibrillation                                  Chronic atrial fibrillation
+Add:         0 I482    Chronic atrial fibrillation                                  Chronic atrial fibrillation
+Add:         1 I4820   Chronic atrial fibrillation, unspecified                     Chronic atrial fibrillation, unspecified
+Add:         1 I4821   Permanent atrial fibrillation                                Permanent atrial fibrillation
+Revise from: 1 I70238  Athscl natv art of right leg w ulcer oth prt lower right leg Atherosclerosis of native arteries of right leg with ulceration of other part of lower right leg
+Revise to:   1 I70238  Athscl native art of right leg with ulcer oth prt low leg    Atherosclerosis of native arteries of right leg with ulceration of other part of lower leg
+Revise from: 1 I70248  Athscl native art of left leg w ulcer oth prt lower left leg Atherosclerosis of native arteries of left leg with ulceration of other part of lower left leg
+Revise to:   1 I70248  Athscl native art of left leg with ulcer oth prt low leg     Atherosclerosis of native arteries of left leg with ulceration of other part of lower leg
+Add:         0 I8024   Phlebitis and thrombophlebitis of peroneal vein              Phlebitis and thrombophlebitis of peroneal vein
+Add:         1 I80241  Phlebitis and thrombophlebitis of right peroneal vein        Phlebitis and thrombophlebitis of right peroneal vein
+Add:         1 I80242  Phlebitis and thrombophlebitis of left peroneal vein         Phlebitis and thrombophlebitis of left peroneal vein
+Add:         1 I80243  Phlebitis and thrombophlebitis of peroneal vein, bilateral   Phlebitis and thrombophlebitis of peroneal vein, bilateral
+Add:         1 I80249  Phlebitis and thrombophlebitis of unspecified peroneal vein  Phlebitis and thrombophlebitis of unspecified peroneal vein
+Add:         0 I8025   Phlebitis and thrombophlebitis of calf muscular vein         Phlebitis and thrombophlebitis of calf muscular vein
+Add:         1 I80251  Phlebitis and thrombophlebitis of right calf muscular vein   Phlebitis and thrombophlebitis of right calf muscular vein
+Add:         1 I80252  Phlebitis and thrombophlebitis of left calf muscular vein    Phlebitis and thrombophlebitis of left calf muscular vein
+Add:         1 I80253  Phlebitis and thombophlb of calf muscular vein, bilateral    Phlebitis and thrombophlebitis of calf muscular vein, bilateral
+Add:         1 I80259  Phlebitis and thombophlb of unspecified calf muscular vein   Phlebitis and thrombophlebitis of unspecified calf muscular vein
+Add:         0 I8245   Acute embolism and thrombosis of peroneal vein               Acute embolism and thrombosis of peroneal vein
+Add:         1 I82451  Acute embolism and thrombosis of right peroneal vein         Acute embolism and thrombosis of right peroneal vein
+Add:         1 I82452  Acute embolism and thrombosis of left peroneal vein          Acute embolism and thrombosis of left peroneal vein
+Add:         1 I82453  Acute embolism and thrombosis of peroneal vein, bilateral    Acute embolism and thrombosis of peroneal vein, bilateral
+Add:         1 I82459  Acute embolism and thrombosis of unspecified peroneal vein   Acute embolism and thrombosis of unspecified peroneal vein
+Add:         0 I8246   Acute embolism and thrombosis of calf muscular vein          Acute embolism and thrombosis of calf muscular vein
+Add:         1 I82461  Acute embolism and thrombosis of right calf muscular vein    Acute embolism and thrombosis of right calf muscular vein
+Add:         1 I82462  Acute embolism and thrombosis of left calf muscular vein     Acute embolism and thrombosis of left calf muscular vein
+Add:         1 I82463  Acute embolism and thombos of calf muscular vein, bilateral  Acute embolism and thrombosis of calf muscular vein, bilateral
+Add:         1 I82469  Acute embolism and thombos unsp calf muscular vein           Acute embolism and thrombosis of unspecified calf muscular vein
+Add:         0 I8255   Chronic embolism and thrombosis of peroneal vein             Chronic embolism and thrombosis of peroneal vein
+Add:         1 I82551  Chronic embolism and thrombosis of right peroneal vein       Chronic embolism and thrombosis of right peroneal vein
+Add:         1 I82552  Chronic embolism and thrombosis of left peroneal vein        Chronic embolism and thrombosis of left peroneal vein
+Add:         1 I82553  Chronic embolism and thrombosis of peroneal vein, bilateral  Chronic embolism and thrombosis of peroneal vein, bilateral
+Add:         1 I82559  Chronic embolism and thrombosis of unspecified peroneal vein Chronic embolism and thrombosis of unspecified peroneal vein
+Add:         0 I8256   Chronic embolism and thrombosis of calf muscular vein        Chronic embolism and thrombosis of calf muscular vein
+Add:         1 I82561  Chronic embolism and thrombosis of right calf muscular vein  Chronic embolism and thrombosis of right calf muscular vein
+Add:         1 I82562  Chronic embolism and thrombosis of left calf muscular vein   Chronic embolism and thrombosis of left calf muscular vein
+Add:         1 I82563  Chronic embolism and thombos of calf muscular vein, bi       Chronic embolism and thrombosis of calf muscular vein, bilateral
+Add:         1 I82569  Chronic embolism and thombos unsp calf muscular vein         Chronic embolism and thrombosis of unspecified calf muscular vein
+Revise from: 1 J440    Chronic obstructive pulmon disease w acute lower resp infct  Chronic obstructive pulmonary disease with acute lower respiratory infection
+Revise to:   1 J440    Chr obstructive pulmon disease with (acute) lower resp infct Chronic obstructive pulmonary disease with (acute) lower respiratory infection
+Add:         1 L89006  Pressure-induced deep tissue damage of unspecified elbow     Pressure-induced deep tissue damage of unspecified elbow
+Add:         1 L89016  Pressure-induced deep tissue damage of right elbow           Pressure-induced deep tissue damage of right elbow
+Add:         1 L89026  Pressure-induced deep tissue damage of left elbow            Pressure-induced deep tissue damage of left elbow
+Add:         1 L89106  Pressr-induc deep tissue damage of unspecified part of back  Pressure-induced deep tissue damage of unspecified part of back
+Add:         1 L89116  Pressure-induced deep tissue damage of right upper back      Pressure-induced deep tissue damage of right upper back
+Add:         1 L89126  Pressure-induced deep tissue damage of left upper back       Pressure-induced deep tissue damage of left upper back
+Add:         1 L89136  Pressure-induced deep tissue damage of right lower back      Pressure-induced deep tissue damage of right lower back
+Add:         1 L89146  Pressure-induced deep tissue damage of left lower back       Pressure-induced deep tissue damage of left lower back
+Add:         1 L89156  Pressure-induced deep tissue damage of sacral region         Pressure-induced deep tissue damage of sacral region
+Add:         1 L89206  Pressure-induced deep tissue damage of unspecified hip       Pressure-induced deep tissue damage of unspecified hip
+Add:         1 L89216  Pressure-induced deep tissue damage of right hip             Pressure-induced deep tissue damage of right hip
+Add:         1 L89226  Pressure-induced deep tissue damage of left hip              Pressure-induced deep tissue damage of left hip
+Add:         1 L89306  Pressure-induced deep tissue damage of unspecified buttock   Pressure-induced deep tissue damage of unspecified buttock
+Add:         1 L89316  Pressure-induced deep tissue damage of right buttock         Pressure-induced deep tissue damage of right buttock
+Add:         1 L89326  Pressure-induced deep tissue damage of left buttock          Pressure-induced deep tissue damage of left buttock
+Add:         1 L8946   Pressr-induc dp tiss damag of contig site of back, butt & hp Pressure-induced deep tissue damage of contiguous site of back, buttock and hip
+Add:         1 L89506  Pressure-induced deep tissue damage of unspecified ankle     Pressure-induced deep tissue damage of unspecified ankle
+Add:         1 L89516  Pressure-induced deep tissue damage of right ankle           Pressure-induced deep tissue damage of right ankle
+Add:         1 L89526  Pressure-induced deep tissue damage of left ankle            Pressure-induced deep tissue damage of left ankle
+Add:         1 L89606  Pressure-induced deep tissue damage of unspecified heel      Pressure-induced deep tissue damage of unspecified heel
+Add:         1 L89616  Pressure-induced deep tissue damage of right heel            Pressure-induced deep tissue damage of right heel
+Add:         1 L89626  Pressure-induced deep tissue damage of left heel             Pressure-induced deep tissue damage of left heel
+Add:         1 L89816  Pressure-induced deep tissue damage of head                  Pressure-induced deep tissue damage of head
+Add:         1 L89896  Pressure-induced deep tissue damage of other site            Pressure-induced deep tissue damage of other site
+Add:         1 L8996   Pressure-induced deep tissue damage of unspecified site      Pressure-induced deep tissue damage of unspecified site
+Revise from: 1 M50120  Mid-cervical disc disorder, unspecified                      Mid-cervical disc disorder, unspecified
+Revise to:   1 M50120  Mid-cervical disc disorder, unspecified level                Mid-cervical disc disorder, unspecified level
+Revise from: 1 M6688   Spontaneous rupture of other tendons, other                  Spontaneous rupture of other tendons, other
+Revise to:   1 M6688   Spontaneous rupture of other tendons, other sites            Spontaneous rupture of other tendons, other sites
+Revise from: 1 M67839  Oth disrd of synovium and tendon, unspecified forearm        Other specified disorders of synovium and tendon, unspecified forearm
+Revise to:   1 M67839  Oth disrd of synovium and tendon, unspecified wrist          Other specified disorders of synovium and tendon, unspecified wrist
+Revise from: 0 M775    Other enthesopathy of foot                                   Other enthesopathy of foot
+Revise to:   0 M775    Other enthesopathy of foot and ankle                         Other enthesopathy of foot and ankle
+Revise from: 1 M7750   Other enthesopathy of unspecified foot                       Other enthesopathy of unspecified foot
+Revise to:   1 M7750   Other enthesopathy of unspecified foot and ankle             Other enthesopathy of unspecified foot and ankle
+Revise from: 1 M7751   Other enthesopathy of right foot                             Other enthesopathy of right foot
+Revise to:   1 M7751   Other enthesopathy of right foot and ankle                   Other enthesopathy of right foot and ankle
+Revise from: 1 M7752   Other enthesopathy of left foot                              Other enthesopathy of left foot
+Revise to:   1 M7752   Other enthesopathy of left foot and ankle                    Other enthesopathy of left foot and ankle
+Revise from: 1 N35814  Other anterior urethral stricture, male, anterior            Other anterior urethral stricture, male, anterior
+Revise to:   1 N35814  Other anterior urethral stricture, male                      Other anterior urethral stricture, male
+Add:         1 N6315   Unspecified lump in the right breast, overlapping quadrants  Unspecified lump in the right breast, overlapping quadrants
+Add:         1 N6325   Unspecified lump in the left breast, overlapping quadrants   Unspecified lump in the left breast, overlapping quadrants
+Add:         1 N9985   Post endometrial ablation syndrome                           Post endometrial ablation syndrome
+Delete:      1 Q660    Congenital talipes equinovarus                               Congenital talipes equinovarus
+Add:         0 Q660    Congenital talipes equinovarus                               Congenital talipes equinovarus
+Add:         1 Q6600   Congenital talipes equinovarus, unspecified foot             Congenital talipes equinovarus, unspecified foot
+Add:         1 Q6601   Congenital talipes equinovarus, right foot                   Congenital talipes equinovarus, right foot
+Add:         1 Q6602   Congenital talipes equinovarus, left foot                    Congenital talipes equinovarus, left foot
+Delete:      1 Q661    Congenital talipes calcaneovarus                             Congenital talipes calcaneovarus
+Add:         0 Q661    Congenital talipes calcaneovarus                             Congenital talipes calcaneovarus
+Add:         1 Q6610   Congenital talipes calcaneovarus, unspecified foot           Congenital talipes calcaneovarus, unspecified foot
+Add:         1 Q6611   Congenital talipes calcaneovarus, right foot                 Congenital talipes calcaneovarus, right foot
+Add:         1 Q6612   Congenital talipes calcaneovarus, left foot                  Congenital talipes calcaneovarus, left foot
+Delete:      1 Q6621   Congenital metatarsus primus varus                           Congenital metatarsus primus varus
+Add:         0 Q6621   Congenital metatarsus primus varus                           Congenital metatarsus primus varus
+Add:         1 Q66211  Congenital metatarsus primus varus, right foot               Congenital metatarsus primus varus, right foot
+Add:         1 Q66212  Congenital metatarsus primus varus, left foot                Congenital metatarsus primus varus, left foot
+Add:         1 Q66219  Congenital metatarsus primus varus, unspecified foot         Congenital metatarsus primus varus, unspecified foot
+Delete:      1 Q6622   Congenital metatarsus adductus                               Congenital metatarsus adductus
+Add:         0 Q6622   Congenital metatarsus adductus                               Congenital metatarsus adductus
+Add:         1 Q66221  Congenital metatarsus adductus, right foot                   Congenital metatarsus adductus, right foot
+Add:         1 Q66222  Congenital metatarsus adductus, left foot                    Congenital metatarsus adductus, left foot
+Add:         1 Q66229  Congenital metatarsus adductus, unspecified foot             Congenital metatarsus adductus, unspecified foot
+Delete:      1 Q663    Other congenital varus deformities of feet                   Other congenital varus deformities of feet
+Add:         0 Q663    Other congenital varus deformities of feet                   Other congenital varus deformities of feet
+Add:         1 Q6630   Other congenital varus deformities of feet, unspecified foot Other congenital varus deformities of feet, unspecified foot
+Add:         1 Q6631   Other congenital varus deformities of feet, right foot       Other congenital varus deformities of feet, right foot
+Add:         1 Q6632   Other congenital varus deformities of feet, left foot        Other congenital varus deformities of feet, left foot
+Delete:      1 Q664    Congenital talipes calcaneovalgus                            Congenital talipes calcaneovalgus
+Add:         0 Q664    Congenital talipes calcaneovalgus                            Congenital talipes calcaneovalgus
+Add:         1 Q6640   Congenital talipes calcaneovalgus, unspecified foot          Congenital talipes calcaneovalgus, unspecified foot
+Add:         1 Q6641   Congenital talipes calcaneovalgus, right foot                Congenital talipes calcaneovalgus, right foot
+Add:         1 Q6642   Congenital talipes calcaneovalgus, left foot                 Congenital talipes calcaneovalgus, left foot
+Delete:      1 Q667    Congenital pes cavus                                         Congenital pes cavus
+Add:         0 Q667    Congenital pes cavus                                         Congenital pes cavus
+Add:         1 Q6670   Congenital pes cavus, unspecified foot                       Congenital pes cavus, unspecified foot
+Add:         1 Q6671   Congenital pes cavus, right foot                             Congenital pes cavus, right foot
+Add:         1 Q6672   Congenital pes cavus, left foot                              Congenital pes cavus, left foot
+Delete:      1 Q669    Congenital deformity of feet, unspecified                    Congenital deformity of feet, unspecified
+Add:         0 Q669    Congenital deformity of feet, unspecified                    Congenital deformity of feet, unspecified
+Add:         1 Q6690   Congenital deformity of feet, unspecified, unspecified foot  Congenital deformity of feet, unspecified, unspecified foot
+Add:         1 Q6691   Congenital deformity of feet, unspecified, right foot        Congenital deformity of feet, unspecified, right foot
+Add:         1 Q6692   Congenital deformity of feet, unspecified, left foot         Congenital deformity of feet, unspecified, left foot
+Delete:      1 Q796    Ehlers-Danlos syndrome                                       Ehlers-Danlos syndrome
+Add:         0 Q796    Ehlers-Danlos syndromes                                      Ehlers-Danlos syndromes
+Add:         1 Q7960   Ehlers-Danlos syndrome, unspecified                          Ehlers-Danlos syndrome, unspecified
+Add:         1 Q7961   Classical Ehlers-Danlos syndrome                             Classical Ehlers-Danlos syndrome
+Add:         1 Q7962   Hypermobile Ehlers-Danlos syndrome                           Hypermobile Ehlers-Danlos syndrome
+Add:         1 Q7963   Vascular Ehlers-Danlos syndrome                              Vascular Ehlers-Danlos syndrome
+Add:         1 Q7969   Other Ehlers-Danlos syndromes                                Other Ehlers-Danlos syndromes
+Delete:      1 Q871    Congenital malform syndromes predom assoc w short stature    Congenital malformation syndromes predominantly associated with short stature
+Add:         0 Q871    Congenital malform syndromes predom assoc w short stature    Congenital malformation syndromes predominantly associated with short stature
+Add:         1 Q8711   Prader-Willi syndrome                                        Prader-Willi syndrome
+Add:         1 Q8719   Other congen malform synd predom assoc with short stature    Other congenital malformation syndromes predominantly associated with short stature
+Add:         1 R1115   Cyclical vomiting syndrome unrelated to migraine             Cyclical vomiting syndrome unrelated to migraine
+Delete:      1 R828    Abnormal findings on cytolog and histolog exam of urine      Abnormal findings on cytological and histological examination of urine
+Add:         0 R828    Abnormal findings on cytolog and histolog exam of urine      Abnormal findings on cytological and histological examination of urine
+Add:         1 R8281   Pyuria                                                       Pyuria
+Add:         1 R8289   Other abn findings on cytolog and histolog exam of urine     Other abnormal findings on cytological and histological examination of urine
+Revise from: 1 R82993  Hyperuricoscuria                                             Hyperuricoscuria
+Revise to:   1 R82993  Hyperuricosuria                                              Hyperuricosuria
+Add:         0 S0212   Fracture of orbital roof                                     Fracture of orbital roof
+Add:         0 S02121  Fracture of orbital roof, right side                         Fracture of orbital roof, right side
+Add:         1 S02121A Fracture of orbital roof, right side, init                   Fracture of orbital roof, right side, initial encounter for closed fracture
+Add:         1 S02121B Fracture of orbital roof, right side, 7thB                   Fracture of orbital roof, right side, initial encounter for open fracture
+Add:         1 S02121D Fracture of orbital roof, right side, 7thD                   Fracture of orbital roof, right side, subsequent encounter for fracture with routine healing
+Add:         1 S02121G Fracture of orbital roof, right side, 7thG                   Fracture of orbital roof, right side, subsequent encounter for fracture with delayed healing
+Add:         1 S02121K Fracture of orbital roof, right side, 7thK                   Fracture of orbital roof, right side, subsequent encounter for fracture with nonunion
+Add:         1 S02121S Fracture of orbital roof, right side, sequela                Fracture of orbital roof, right side, sequela
+Add:         0 S02122  Fracture of orbital roof, left side                          Fracture of orbital roof, left side
+Add:         1 S02122A Fracture of orbital roof, left side, init                    Fracture of orbital roof, left side, initial encounter for closed fracture
+Add:         1 S02122B Fracture of orbital roof, left side, 7thB                    Fracture of orbital roof, left side, initial encounter for open fracture
+Add:         1 S02122D Fracture of orbital roof, left side, 7thD                    Fracture of orbital roof, left side, subsequent encounter for fracture with routine healing
+Add:         1 S02122G Fracture of orbital roof, left side, 7thG                    Fracture of orbital roof, left side, subsequent encounter for fracture with delayed healing
+Add:         1 S02122K Fracture of orbital roof, left side, 7thK                    Fracture of orbital roof, left side, subsequent encounter for fracture with nonunion
+Add:         1 S02122S Fracture of orbital roof, left side, sequela                 Fracture of orbital roof, left side, sequela
+Add:         0 S02129  Fracture of orbital roof, unspecified side                   Fracture of orbital roof, unspecified side
+Add:         1 S02129A Fracture of orbital roof, unspecified side, init             Fracture of orbital roof, unspecified side, initial encounter for closed fracture
+Add:         1 S02129B Fracture of orbital roof, unspecified side, 7thB             Fracture of orbital roof, unspecified side, initial encounter for open fracture
+Add:         1 S02129D Fracture of orbital roof, unspecified side, 7thD             Fracture of orbital roof, unspecified side, subsequent encounter for fracture with routine healing
+Add:         1 S02129G Fracture of orbital roof, unspecified side, 7thG             Fracture of orbital roof, unspecified side, subsequent encounter for fracture with delayed healing
+Add:         1 S02129K Fracture of orbital roof, unspecified side, 7thK             Fracture of orbital roof, unspecified side, subsequent encounter for fracture with nonunion
+Add:         1 S02129S Fracture of orbital roof, unspecified side, sequela          Fracture of orbital roof, unspecified side, sequela
+Add:         0 S0283   Fracture of medial orbital wall                              Fracture of medial orbital wall
+Add:         0 S02831  Fracture of medial orbital wall, right side                  Fracture of medial orbital wall, right side
+Add:         1 S02831A Fracture of medial orbital wall, right side, init            Fracture of medial orbital wall, right side, initial encounter for closed fracture
+Add:         1 S02831B Fracture of medial orbital wall, right side, 7thB            Fracture of medial orbital wall, right side, initial encounter for open fracture
+Add:         1 S02831D Fracture of medial orbital wall, right side, 7thD            Fracture of medial orbital wall, right side, subsequent encounter for fracture with routine healing
+Add:         1 S02831G Fracture of medial orbital wall, right side, 7thG            Fracture of medial orbital wall, right side, subsequent encounter for fracture with delayed healing
+Add:         1 S02831K Fracture of medial orbital wall, right side, 7thK            Fracture of medial orbital wall, right side, subsequent encounter for fracture with nonunion
+Add:         1 S02831S Fracture of medial orbital wall, right side, sequela         Fracture of medial orbital wall, right side, sequela
+Add:         0 S02832  Fracture of medial orbital wall, left side                   Fracture of medial orbital wall, left side
+Add:         1 S02832A Fracture of medial orbital wall, left side, init             Fracture of medial orbital wall, left side, initial encounter for closed fracture
+Add:         1 S02832B Fracture of medial orbital wall, left side, 7thB             Fracture of medial orbital wall, left side, initial encounter for open fracture
+Add:         1 S02832D Fracture of medial orbital wall, left side, 7thD             Fracture of medial orbital wall, left side, subsequent encounter for fracture with routine healing
+Add:         1 S02832G Fracture of medial orbital wall, left side, 7thG             Fracture of medial orbital wall, left side, subsequent encounter for fracture with delayed healing
+Add:         1 S02832K Fracture of medial orbital wall, left side, 7thK             Fracture of medial orbital wall, left side, subsequent encounter for fracture with nonunion
+Add:         1 S02832S Fracture of medial orbital wall, left side, sequela          Fracture of medial orbital wall, left side, sequela
+Add:         0 S02839  Fracture of medial orbital wall, unspecified side            Fracture of medial orbital wall, unspecified side
+Add:         1 S02839A Fracture of medial orbital wall, unspecified side, init      Fracture of medial orbital wall, unspecified side, initial encounter for closed fracture
+Add:         1 S02839B Fracture of medial orbital wall, unspecified side, 7thB      Fracture of medial orbital wall, unspecified side, initial encounter for open fracture
+Add:         1 S02839D Fracture of medial orbital wall, unspecified side, 7thD      Fracture of medial orbital wall, unspecified side, subsequent encounter for fracture with routine healing
+Add:         1 S02839G Fracture of medial orbital wall, unspecified side, 7thG      Fracture of medial orbital wall, unspecified side, subsequent encounter for fracture with delayed healing
+Add:         1 S02839K Fracture of medial orbital wall, unspecified side, 7thK      Fracture of medial orbital wall, unspecified side, subsequent encounter for fracture with nonunion
+Add:         1 S02839S Fracture of medial orbital wall, unspecified side, sequela   Fracture of medial orbital wall, unspecified side, sequela
+Add:         0 S0284   Fracture of lateral orbital wall                             Fracture of lateral orbital wall
+Add:         0 S02841  Fracture of lateral orbital wall, right side                 Fracture of lateral orbital wall, right side
+Add:         1 S02841A Fracture of lateral orbital wall, right side, init           Fracture of lateral orbital wall, right side, initial encounter for closed fracture
+Add:         1 S02841B Fracture of lateral orbital wall, right side, 7thB           Fracture of lateral orbital wall, right side, initial encounter for open fracture
+Add:         1 S02841D Fracture of lateral orbital wall, right side, 7thD           Fracture of lateral orbital wall, right side, subsequent encounter for fracture with routine healing
+Add:         1 S02841G Fracture of lateral orbital wall, right side, 7thG           Fracture of lateral orbital wall, right side, subsequent encounter for fracture with delayed healing
+Add:         1 S02841K Fracture of lateral orbital wall, right side, 7thK           Fracture of lateral orbital wall, right side, subsequent encounter for fracture with nonunion
+Add:         1 S02841S Fracture of lateral orbital wall, right side, sequela        Fracture of lateral orbital wall, right side, sequela
+Add:         0 S02842  Fracture of lateral orbital wall, left side                  Fracture of lateral orbital wall, left side
+Add:         1 S02842A Fracture of lateral orbital wall, left side, init            Fracture of lateral orbital wall, left side, initial encounter for closed fracture
+Add:         1 S02842B Fracture of lateral orbital wall, left side, 7thB            Fracture of lateral orbital wall, left side, initial encounter for open fracture
+Add:         1 S02842D Fracture of lateral orbital wall, left side, 7thD            Fracture of lateral orbital wall, left side, subsequent encounter for fracture with routine healing
+Add:         1 S02842G Fracture of lateral orbital wall, left side, 7thG            Fracture of lateral orbital wall, left side, subsequent encounter for fracture with delayed healing
+Add:         1 S02842K Fracture of lateral orbital wall, left side, 7thK            Fracture of lateral orbital wall, left side, subsequent encounter for fracture with nonunion
+Add:         1 S02842S Fracture of lateral orbital wall, left side, sequela         Fracture of lateral orbital wall, left side, sequela
+Add:         0 S02849  Fracture of lateral orbital wall, unspecified side           Fracture of lateral orbital wall, unspecified side
+Add:         1 S02849A Fracture of lateral orbital wall, unspecified side, init     Fracture of lateral orbital wall, unspecified side, initial encounter for closed fracture
+Add:         1 S02849B Fracture of lateral orbital wall, unspecified side, 7thB     Fracture of lateral orbital wall, unspecified side, initial encounter for open fracture
+Add:         1 S02849D Fracture of lateral orbital wall, unspecified side, 7thD     Fracture of lateral orbital wall, unspecified side, subsequent encounter for fracture with routine healing
+Add:         1 S02849G Fracture of lateral orbital wall, unspecified side, 7thG     Fracture of lateral orbital wall, unspecified side, subsequent encounter for fracture with delayed healing
+Add:         1 S02849K Fracture of lateral orbital wall, unspecified side, 7thK     Fracture of lateral orbital wall, unspecified side, subsequent encounter for fracture with nonunion
+Add:         1 S02849S Fracture of lateral orbital wall, unspecified side, sequela  Fracture of lateral orbital wall, unspecified side, sequela
+Add:         0 S0285   Fracture of orbit, unspecified                               Fracture of orbit, unspecified
+Add:         1 S0285XA Fracture of orbit, unspecified, init                         Fracture of orbit, unspecified, initial encounter for closed fracture
+Add:         1 S0285XB Fracture of orbit, unspecified, 7thB                         Fracture of orbit, unspecified, initial encounter for open fracture
+Add:         1 S0285XD Fracture of orbit, unspecified, 7thD                         Fracture of orbit, unspecified, subsequent encounter for fracture with routine healing
+Add:         1 S0285XG Fracture of orbit, unspecified, 7thG                         Fracture of orbit, unspecified, subsequent encounter for fracture with delayed healing
+Add:         1 S0285XK Fracture of orbit, unspecified, 7thK                         Fracture of orbit, unspecified, subsequent encounter for fracture with nonunion
+Add:         1 S0285XS Fracture of orbit, unspecified, sequela                      Fracture of orbit, unspecified, sequela
+Revise from: 0 T40906  Underdosing of unspecified psychodysleptics                  Underdosing of unspecified psychodysleptics
+Revise to:   0 T40906  Underdosing of unspecified psychodysleptics [hallucinogens]  Underdosing of unspecified psychodysleptics [hallucinogens]
+Revise from: 1 T40906A Underdosing of unspecified psychodysleptics, init encntr     Underdosing of unspecified psychodysleptics, initial encounter
+Revise to:   1 T40906A Underdosing of unspecified psychodysleptics, init            Underdosing of unspecified psychodysleptics [hallucinogens], initial encounter
+Revise from: 1 T40906D Underdosing of unspecified psychodysleptics, subs encntr     Underdosing of unspecified psychodysleptics, subsequent encounter
+Revise to:   1 T40906D Underdosing of unspecified psychodysleptics, subs            Underdosing of unspecified psychodysleptics [hallucinogens], subsequent encounter
+Revise from: 1 T40906S Underdosing of unspecified psychodysleptics, sequela         Underdosing of unspecified psychodysleptics, sequela
+Revise to:   1 T40906S Underdosing of unspecified psychodysleptics, sequela         Underdosing of unspecified psychodysleptics [hallucinogens], sequela
+Revise from: 0 T40996  Underdosing of other psychodysleptics                        Underdosing of other psychodysleptics
+Revise to:   0 T40996  Underdosing of other psychodysleptics [hallucinogens]        Underdosing of other psychodysleptics [hallucinogens]
+Revise from: 1 T40996A Underdosing of other psychodysleptics, initial encounter     Underdosing of other psychodysleptics, initial encounter
+Revise to:   1 T40996A Underdosing of other psychodysleptics, initial encounter     Underdosing of other psychodysleptics [hallucinogens], initial encounter
+Revise from: 1 T40996D Underdosing of other psychodysleptics, subsequent encounter  Underdosing of other psychodysleptics, subsequent encounter
+Revise to:   1 T40996D Underdosing of other psychodysleptics, subsequent encounter  Underdosing of other psychodysleptics [hallucinogens], subsequent encounter
+Revise from: 1 T40996S Underdosing of other psychodysleptics, sequela               Underdosing of other psychodysleptics, sequela
+Revise to:   1 T40996S Underdosing of other psychodysleptics, sequela               Underdosing of other psychodysleptics [hallucinogens], sequela
+Revise from: 0 T441X6  Underdosing of other parasympathomimetics                    Underdosing of other parasympathomimetics
+Revise to:   0 T441X6  Underdosing of other parasympathomimetics [cholinergics]     Underdosing of other parasympathomimetics [cholinergics]
+Revise from: 1 T441X6A Underdosing of other parasympathomimetics, initial encounter Underdosing of other parasympathomimetics, initial encounter
+Revise to:   1 T441X6A Underdosing of other parasympathomimetics, initial encounter Underdosing of other parasympathomimetics [cholinergics], initial encounter
+Revise from: 1 T441X6D Underdosing of other parasympathomimetics, subs encntr       Underdosing of other parasympathomimetics, subsequent encounter
+Revise to:   1 T441X6D Underdosing of other parasympath, subsequent encounter       Underdosing of other parasympathomimetics [cholinergics], subsequent encounter
+Revise from: 1 T441X6S Underdosing of other parasympathomimetics, sequela           Underdosing of other parasympathomimetics, sequela
+Revise to:   1 T441X6S Underdosing of other parasympathomimetics, sequela           Underdosing of other parasympathomimetics [cholinergics], sequela
+Add:         0 T5091   Multiple unspecified drug/meds/biol subst                    Poisoning by, adverse effect of and underdosing of multiple unspecified drugs, medicaments and biological substances
+Add:         0 T50911  Poisoning by multiple unsp drug/meds/biol subst, accidental  Poisoning by multiple unspecified drugs, medicaments and biological substances, accidental (unintentional)
+Add:         1 T50911A Poisoning by multiple unsp drug/meds/biol subst, acc, init   Poisoning by multiple unspecified drugs, medicaments and biological substances, accidental (unintentional), initial encounter
+Add:         1 T50911D Poisoning by multiple unsp drug/meds/biol subst, acc, subs   Poisoning by multiple unspecified drugs, medicaments and biological substances, accidental (unintentional), subsequent encounter
+Add:         1 T50911S Poisn by multiple unsp drug/meds/biol subst, acc, sequela    Poisoning by multiple unspecified drugs, medicaments and biological substances, accidental (unintentional), sequela
+Add:         0 T50912  Poisoning by multiple unsp drug/meds/biol subst, self-harm   Poisoning by multiple unspecified drugs, medicaments and biological substances, intentional self-harm
+Add:         1 T50912A Poisn by multiple unsp drug/meds/biol subst, self-harm, init Poisoning by multiple unspecified drugs, medicaments and biological substances, intentional self-harm, initial encounter
+Add:         1 T50912D Poisn by multiple unsp drug/meds/biol subst, self-harm, subs Poisoning by multiple unspecified drugs, medicaments and biological substances, intentional self-harm, subsequent encounter
+Add:         1 T50912S Poisn by mult unsp drug/meds/biol subst, slf-hrm, sequela    Poisoning by multiple unspecified drugs, medicaments and biological substances, intentional self-harm, sequela
+Add:         0 T50913  Poisoning by multiple unsp drug/meds/biol subst, assault     Poisoning by multiple unspecified drugs, medicaments and biological substances, assault
+Add:         1 T50913A Poisn by multiple unsp drug/meds/biol subst, assault, init   Poisoning by multiple unspecified drugs, medicaments and biological substances, assault, initial encounter
+Add:         1 T50913D Poisn by multiple unsp drug/meds/biol subst, assault, subs   Poisoning by multiple unspecified drugs, medicaments and biological substances, assault, subsequent encounter
+Add:         1 T50913S Poisn by mult unsp drug/meds/biol subst, assault, sequela    Poisoning by multiple unspecified drugs, medicaments and biological substances, assault, sequela
+Add:         0 T50914  Poisoning by multiple unsp drug/meds/biol subst, undet       Poisoning by multiple unspecified drugs, medicaments and biological substances, undetermined
+Add:         1 T50914A Poisoning by multiple unsp drug/meds/biol subst, undet, init Poisoning by multiple unspecified drugs, medicaments and biological substances, undetermined, initial encounter
+Add:         1 T50914D Poisoning by multiple unsp drug/meds/biol subst, undet, subs Poisoning by multiple unspecified drugs, medicaments and biological substances, undetermined, subsequent encounter
+Add:         1 T50914S Poisn by multiple unsp drug/meds/biol subst, undet, sequela  Poisoning by multiple unspecified drugs, medicaments and biological substances, undetermined, sequela
+Add:         0 T50915  Adverse effect of multiple unspecified drug/meds/biol subst  Adverse effect of multiple unspecified drugs, medicaments and biological substances
+Add:         1 T50915A Adverse effect of multiple unsp drug/meds/biol subst, init   Adverse effect of multiple unspecified drugs, medicaments and biological substances, initial encounter
+Add:         1 T50915D Adverse effect of multiple unsp drug/meds/biol subst, subs   Adverse effect of multiple unspecified drugs, medicaments and biological substances, subsequent encounter
+Add:         1 T50915S Adverse effect of mult unsp drug/meds/biol subst, sequela    Adverse effect of multiple unspecified drugs, medicaments and biological substances, sequela
+Add:         0 T50916  Underdosing of multiple unspecified drug/meds/biol subst     Underdosing of multiple unspecified drugs, medicaments and biological substances
+Add:         1 T50916A Undrdose of multiple unspecified drug/meds/biol subst, init  Underdosing of multiple unspecified drugs, medicaments and biological substances, initial encounter
+Add:         1 T50916D Undrdose of multiple unspecified drug/meds/biol subst, subs  Underdosing of multiple unspecified drugs, medicaments and biological substances, subsequent encounter
+Add:         1 T50916S Undrdose of multiple unsp drug/meds/biol subst, sequela      Underdosing of multiple unspecified drugs, medicaments and biological substances, sequela
+Add:         0 T6701   Heatstroke and sunstroke                                     Heatstroke and sunstroke
+Add:         1 T6701XA Heatstroke and sunstroke, initial encounter                  Heatstroke and sunstroke, initial encounter
+Add:         1 T6701XD Heatstroke and sunstroke, subsequent encounter               Heatstroke and sunstroke, subsequent encounter
+Add:         1 T6701XS Heatstroke and sunstroke, sequela                            Heatstroke and sunstroke, sequela
+Add:         0 T6702   Exertional heatstroke                                        Exertional heatstroke
+Add:         1 T6702XA Exertional heatstroke, initial encounter                     Exertional heatstroke, initial encounter
+Add:         1 T6702XD Exertional heatstroke, subsequent encounter                  Exertional heatstroke, subsequent encounter
+Add:         1 T6702XS Exertional heatstroke, sequela                               Exertional heatstroke, sequela
+Add:         0 T6709   Other heatstroke and sunstroke                               Other heatstroke and sunstroke
+Add:         1 T6709XA Other heatstroke and sunstroke, initial encounter            Other heatstroke and sunstroke, initial encounter
+Add:         1 T6709XD Other heatstroke and sunstroke, subsequent encounter         Other heatstroke and sunstroke, subsequent encounter
+Add:         1 T6709XS Other heatstroke and sunstroke, sequela                      Other heatstroke and sunstroke, sequela
+Delete:      1 T670XXA Heatstroke and sunstroke, initial encounter                  Heatstroke and sunstroke, initial encounter
+Delete:      1 T670XXD Heatstroke and sunstroke, subsequent encounter               Heatstroke and sunstroke, subsequent encounter
+Delete:      1 T670XXS Heatstroke and sunstroke, sequela                            Heatstroke and sunstroke, sequela
+Revise from: 0 V4313   Car passenger injured in collision w pick-up nontraf         Car passenger injured in collision with pick-up in nontraffic accident
+Revise to:   0 V4313   Car passenger injured in clsn with pick-up truck nontraf     Car passenger injured in collision with pick-up truck in nontraffic accident
+Revise from: 1 V4313XA Car passenger injured in collision w pick-up nontraf, init   Car passenger injured in collision with pick-up in nontraffic accident, initial encounter
+Revise to:   1 V4313XA Car pasngr injured in clsn with pick-up truck nontraf, init  Car passenger injured in collision with pick-up truck in nontraffic accident, initial encounter
+Revise from: 1 V4313XD Car passenger injured in collision w pick-up nontraf, subs   Car passenger injured in collision with pick-up in nontraffic accident, subsequent encounter
+Revise to:   1 V4313XD Car pasngr injured in clsn with pick-up truck nontraf, subs  Car passenger injured in collision with pick-up truck in nontraffic accident, subsequent encounter
+Revise from: 1 V4313XS Car passenger injured in clsn w pick-up nontraf, sequela     Car passenger injured in collision with pick-up in nontraffic accident, sequela
+Revise to:   1 V4313XS Car pasngr inj in clsn with pick-up truck nontraf, sequela   Car passenger injured in collision with pick-up truck in nontraffic accident, sequela
+Add:         0 Y35009  Legal intervnt w unsp firearm disch, unsp person injured     Legal intervention involving unspecified firearm discharge, unspecified person injured
+Add:         1 Y35009A Legal intrvnt w unsp firearm disch, unsp person inj, init    Legal intervention involving unspecified firearm discharge, unspecified person injured, initial encounter
+Add:         1 Y35009D Legal intrvnt w unsp firearm disch, unsp person inj, subs    Legal intervention involving unspecified firearm discharge, unspecified person injured, subsequent encounter
+Add:         1 Y35009S Legal intrvnt w unsp firearm disch, unsp person inj, sequela Legal intervention involving unspecified firearm discharge, unspecified person injured, sequela
+Add:         0 Y35019  Legal intervnt w injury by mch gun, unsp person injured      Legal intervention involving injury by machine gun, unspecified person injured
+Add:         1 Y35019A Legal intrvnt w injury by mch gun, unsp person injured, init Legal intervention involving injury by machine gun, unspecified person injured, initial encounter
+Add:         1 Y35019D Legal intrvnt w injury by mch gun, unsp person injured, subs Legal intervention involving injury by machine gun, unspecified person injured, subsequent encounter
+Add:         1 Y35019S Legal intrvnt w injury by mch gun, unsp person inj, sequela  Legal intervention involving injury by machine gun, unspecified person injured, sequela
+Add:         0 Y35029  Legal intervnt w injury by handgun, unsp person injured      Legal intervention involving injury by handgun, unspecified person injured
+Add:         1 Y35029A Legal intrvnt w injury by handgun, unsp person injured, init Legal intervention involving injury by handgun, unspecified person injured, initial encounter
+Add:         1 Y35029D Legal intrvnt w injury by handgun, unsp person injured, subs Legal intervention involving injury by handgun, unspecified person injured, subsequent encounter
+Add:         1 Y35029S Legal intrvnt w injury by handgun, unsp person inj, sequela  Legal intervention involving injury by handgun, unspecified person injured, sequela
+Add:         0 Y35039  Legal intervnt w injury by rifl pelet, unsp person injured   Legal intervention involving injury by rifle pellet, unspecified person injured
+Add:         1 Y35039A Legal intrvnt w injury by rifl pelet, unsp person inj, init  Legal intervention involving injury by rifle pellet, unspecified person injured, initial encounter
+Add:         1 Y35039D Legal intrvnt w injury by rifl pelet, unsp person inj, subs  Legal intervention involving injury by rifle pellet, unspecified person injured, subsequent encounter
+Add:         1 Y35039S Legal intrvnt w injury by rifl pelet, unsp person inj, sqla  Legal intervention involving injury by rifle pellet, unspecified person injured, sequela
+Add:         0 Y35049  Legal intervnt w injury by rubr bulet, unsp person injured   Legal intervention involving injury by rubber bullet, unspecified person injured
+Add:         1 Y35049A Legal intrvnt w injury by rubr bulet, unsp person inj, init  Legal intervention involving injury by rubber bullet, unspecified person injured, initial encounter
+Add:         1 Y35049D Legal intrvnt w injury by rubr bulet, unsp person inj, subs  Legal intervention involving injury by rubber bullet, unspecified person injured, subsequent encounter
+Add:         1 Y35049S Legal intrvnt w injury by rubr bulet, unsp person inj, sqla  Legal intervention involving injury by rubber bullet, unspecified person injured, sequela
+Add:         0 Y35099  Legal intervnt involving firearm disch, unsp person injured  Legal intervention involving other firearm discharge, unspecified person injured
+Add:         1 Y35099A Legal intervnt w firearm disch, unsp person injured, init    Legal intervention involving other firearm discharge, unspecified person injured, initial encounter
+Add:         1 Y35099D Legal intervnt w firearm disch, unsp person injured, subs    Legal intervention involving other firearm discharge, unspecified person injured, subsequent encounter
+Add:         1 Y35099S Legal intervnt w firearm disch, unsp person injured, sequela Legal intervention involving other firearm discharge, unspecified person injured, sequela
+Add:         0 Y35109  Legal intervnt involving unsp explosv, unsp person injured   Legal intervention involving unspecified explosives, unspecified person injured
+Add:         1 Y35109A Legal intervnt w unsp explosv, unsp person injured, init     Legal intervention involving unspecified explosives, unspecified person injured, initial encounter
+Add:         1 Y35109D Legal intervnt w unsp explosv, unsp person injured, subs     Legal intervention involving unspecified explosives, unspecified person injured, subsequent encounter
+Add:         1 Y35109S Legal intervnt w unsp explosv, unsp person injured, sequela  Legal intervention involving unspecified explosives, unspecified person injured, sequela
+Add:         0 Y35119  Legal intervnt w injury by dynamite, unsp person injured     Legal intervention involving injury by dynamite, unspecified person injured
+Add:         1 Y35119A Legal intrvnt w injury by dynamite, unsp person inj, init    Legal intervention involving injury by dynamite, unspecified person injured, initial encounter
+Add:         1 Y35119D Legal intrvnt w injury by dynamite, unsp person inj, subs    Legal intervention involving injury by dynamite, unspecified person injured, subsequent encounter
+Add:         1 Y35119S Legal intrvnt w injury by dynamite, unsp person inj, sequela Legal intervention involving injury by dynamite, unspecified person injured, sequela
+Add:         0 Y35129  Legal intrvnt w injury by explosv shell, unsp person injured Legal intervention involving injury by explosive shell, unspecified person injured
+Add:         1 Y35129A Legal intrvnt w inj by explosv shell, unsp person inj, init  Legal intervention involving injury by explosive shell, unspecified person injured, initial encounter
+Add:         1 Y35129D Legal intrvnt w inj by explosv shell, unsp person inj, subs  Legal intervention involving injury by explosive shell, unspecified person injured, subsequent encounter
+Add:         1 Y35129S Legal intrvnt w inj by explosv shell, unsp person inj, sqla  Legal intervention involving injury by explosive shell, unspecified person injured, sequela
+Add:         0 Y35199  Legal intervnt involving other explosv, unsp person injured  Legal intervention involving other explosives, unspecified person injured
+Add:         1 Y35199A Legal intervnt w other explosv, unsp person injured, init    Legal intervention involving other explosives, unspecified person injured, initial encounter
+Add:         1 Y35199D Legal intervnt w other explosv, unsp person injured, subs    Legal intervention involving other explosives, unspecified person injured, subsequent encounter
+Add:         1 Y35199S Legal intervnt w other explosv, unsp person injured, sequela Legal intervention involving other explosives, unspecified person injured, sequela
+Add:         0 Y35209  Legal intervnt involving unsp gas, unsp person injured       Legal intervention involving unspecified gas, unspecified person injured
+Add:         1 Y35209A Legal intervnt involving unsp gas, unsp person injured, init Legal intervention involving unspecified gas, unspecified person injured, initial encounter
+Add:         1 Y35209D Legal intervnt involving unsp gas, unsp person injured, subs Legal intervention involving unspecified gas, unspecified person injured, subsequent encounter
+Add:         1 Y35209S Legal intervnt w unsp gas, unsp person injured, sequela      Legal intervention involving unspecified gas, unspecified person injured, sequela
+Add:         0 Y35219  Legal intervnt w injury by tear gas, unsp person injured     Legal intervention involving injury by tear gas, unspecified person injured
+Add:         1 Y35219A Legal intrvnt w injury by tear gas, unsp person inj, init    Legal intervention involving injury by tear gas, unspecified person injured, initial encounter
+Add:         1 Y35219D Legal intrvnt w injury by tear gas, unsp person inj, subs    Legal intervention involving injury by tear gas, unspecified person injured, subsequent encounter
+Add:         1 Y35219S Legal intrvnt w injury by tear gas, unsp person inj, sequela Legal intervention involving injury by tear gas, unspecified person injured, sequela
+Add:         0 Y35299  Legal intervnt involving other gas, unsp person injured      Legal intervention involving other gas, unspecified person injured
+Add:         1 Y35299A Legal intervnt w other gas, unsp person injured, init        Legal intervention involving other gas, unspecified person injured, initial encounter
+Add:         1 Y35299D Legal intervnt w other gas, unsp person injured, subs        Legal intervention involving other gas, unspecified person injured, subsequent encounter
+Add:         1 Y35299S Legal intervnt w other gas, unsp person injured, sequela     Legal intervention involving other gas, unspecified person injured, sequela
+Add:         0 Y35309  Legal intervnt w unsp blunt objects, unsp person injured     Legal intervention involving unspecified blunt objects, unspecified person injured
+Add:         1 Y35309A Legal intrvnt w unsp blunt objects, unsp person inj, init    Legal intervention involving unspecified blunt objects, unspecified person injured, initial encounter
+Add:         1 Y35309D Legal intrvnt w unsp blunt objects, unsp person inj, subs    Legal intervention involving unspecified blunt objects, unspecified person injured, subsequent encounter
+Add:         1 Y35309S Legal intrvnt w unsp blunt objects, unsp person inj, sequela Legal intervention involving unspecified blunt objects, unspecified person injured, sequela
+Add:         0 Y35319  Legal intervnt involving baton, unspecified person injured   Legal intervention involving baton, unspecified person injured
+Add:         1 Y35319A Legal intervnt involving baton, unsp person injured, init    Legal intervention involving baton, unspecified person injured, initial encounter
+Add:         1 Y35319D Legal intervnt involving baton, unsp person injured, subs    Legal intervention involving baton, unspecified person injured, subsequent encounter
+Add:         1 Y35319S Legal intervnt involving baton, unsp person injured, sequela Legal intervention involving baton, unspecified person injured, sequela
+Add:         0 Y35399  Legal intervnt w other blunt objects, unsp person injured    Legal intervention involving other blunt objects, unspecified person injured
+Add:         1 Y35399A Legal intrvnt w other blunt objects, unsp person inj, init   Legal intervention involving other blunt objects, unspecified person injured, initial encounter
+Add:         1 Y35399D Legal intrvnt w other blunt objects, unsp person inj, subs   Legal intervention involving other blunt objects, unspecified person injured, subsequent encounter
+Add:         1 Y35399S Legal intrvnt w other blunt obj, unsp person inj, sequela    Legal intervention involving other blunt objects, unspecified person injured, sequela
+Add:         0 Y35409  Legal intervnt w unsp sharp objects, unsp person injured     Legal intervention involving unspecified sharp objects, unspecified person injured
+Add:         1 Y35409A Legal intrvnt w unsp sharp objects, unsp person inj, init    Legal intervention involving unspecified sharp objects, unspecified person injured, initial encounter
+Add:         1 Y35409D Legal intrvnt w unsp sharp objects, unsp person inj, subs    Legal intervention involving unspecified sharp objects, unspecified person injured, subsequent encounter
+Add:         1 Y35409S Legal intrvnt w unsp sharp objects, unsp person inj, sequela Legal intervention involving unspecified sharp objects, unspecified person injured, sequela
+Add:         0 Y35419  Legal intervnt involving bayonet, unspecified person injured Legal intervention involving bayonet, unspecified person injured
+Add:         1 Y35419A Legal intervnt involving bayonet, unsp person injured, init  Legal intervention involving bayonet, unspecified person injured, initial encounter
+Add:         1 Y35419D Legal intervnt involving bayonet, unsp person injured, subs  Legal intervention involving bayonet, unspecified person injured, subsequent encounter
+Add:         1 Y35419S Legal intervnt w bayonet, unsp person injured, sequela       Legal intervention involving bayonet, unspecified person injured, sequela
+Add:         0 Y35499  Legal intervnt w other sharp objects, unsp person injured    Legal intervention involving other sharp objects, unspecified person injured
+Add:         1 Y35499A Legal intrvnt w other sharp objects, unsp person inj, init   Legal intervention involving other sharp objects, unspecified person injured, initial encounter
+Add:         1 Y35499D Legal intrvnt w other sharp objects, unsp person inj, subs   Legal intervention involving other sharp objects, unspecified person injured, subsequent encounter
+Add:         1 Y35499S Legal intrvnt w other sharp obj, unsp person inj, sequela    Legal intervention involving other sharp objects, unspecified person injured, sequela
+Add:         0 Y35819  Legal intervnt involving manhandling, unsp person injured    Legal intervention involving manhandling, unspecified person injured
+Add:         1 Y35819A Legal intervnt w manhandling, unsp person injured, init      Legal intervention involving manhandling, unspecified person injured, initial encounter
+Add:         1 Y35819D Legal intervnt w manhandling, unsp person injured, subs      Legal intervention involving manhandling, unspecified person injured, subsequent encounter
+Add:         1 Y35819S Legal intervnt w manhandling, unsp person injured, sequela   Legal intervention involving manhandling, unspecified person injured, sequela
+Add:         0 Y3583   Legal intervention involving a conducted energy device       Legal intervention involving a conducted energy device
+Add:         0 Y35831  Legal intervnt w a cond energy device, law enforc injured    Legal intervention involving a conducted energy device, law enforcement official injured
+Add:         1 Y35831A Legal intrvnt w a cond energy device, law enforc inj, init   Legal intervention involving a conducted energy device, law enforcement official injured, initial encounter
+Add:         1 Y35831D Legal intrvnt w a cond energy device, law enforc inj, subs   Legal intervention involving a conducted energy device, law enforcement official injured, subsequent encounter
+Add:         1 Y35831S Legal intrvnt w a cond energy device, law enforc inj, sqla   Legal intervention involving a conducted energy device, law enforcement official injured, sequela
+Add:         0 Y35832  Legal intervnt w a cond energy device, bystand injured       Legal intervention involving a conducted energy device, bystander injured
+Add:         1 Y35832A Legal intervnt w a cond energy device, bystand injured, init Legal intervention involving a conducted energy device, bystander injured, initial encounter
+Add:         1 Y35832D Legal intervnt w a cond energy device, bystand injured, subs Legal intervention involving a conducted energy device, bystander injured, subsequent encounter
+Add:         1 Y35832S Legal intrvnt w a cond energy device, bystand inj, sequela   Legal intervention involving a conducted energy device, bystander injured, sequela
+Add:         0 Y35833  Legal intervnt w a cond energy device, suspect injured       Legal intervention involving a conducted energy device, suspect injured
+Add:         1 Y35833A Legal intervnt w a cond energy device, suspect injured, init Legal intervention involving a conducted energy device, suspect injured, initial encounter
+Add:         1 Y35833D Legal intervnt w a cond energy device, suspect injured, subs Legal intervention involving a conducted energy device, suspect injured, subsequent encounter
+Add:         1 Y35833S Legal intrvnt w a cond energy device, suspect inj, sequela   Legal intervention involving a conducted energy device, suspect injured, sequela
+Add:         0 Y35839  Legal intervnt w a cond energy device, unsp person injured   Legal intervention involving a conducted energy device, unspecified person injured
+Add:         1 Y35839A Legal intrvnt w a cond energy device, unsp person inj, init  Legal intervention involving a conducted energy device, unspecified person injured, initial encounter
+Add:         1 Y35839D Legal intrvnt w a cond energy device, unsp person inj, subs  Legal intervention involving a conducted energy device, unspecified person injured, subsequent encounter
+Add:         1 Y35839S Legal intrvnt w a cond energy device, unsp person inj, sqla  Legal intervention involving a conducted energy device, unspecified person injured, sequela
+Add:         0 Y3599   Legal intervnt, means unsp, unspecified person injured       Legal intervention, means unspecified, unspecified person injured
+Add:         1 Y3599XA Legal intervnt, means unsp, unspecified person injured, init Legal intervention, means unspecified, unspecified person injured, initial encounter
+Add:         1 Y3599XD Legal intervnt, means unsp, unspecified person injured, subs Legal intervention, means unspecified, unspecified person injured, subsequent encounter
+Add:         1 Y3599XS Legal intervnt, means unsp, unsp person injured, sequela     Legal intervention, means unspecified, unspecified person injured, sequela
+Add:         0 Z0102   Enctr for exam of eyes and vision fol failed vision screen   Encounter for examination of eyes and vision following failed vision screening
+Add:         1 Z01020  Enctr for ex of eyes and vis fol fail vis scrn w/o abn find  Encounter for examination of eyes and vision following failed vision screening without abnormal findings
+Add:         1 Z01021  Enctr for exam of eyes and vis fol fail vis scrn wbn find    Encounter for examination of eyes and vision following failed vision screening with abnormal findings
+Add:         1 Z117    Encounter for testing for latent tuberculosis infection      Encounter for testing for latent tuberculosis infection
+Add:         1 Z227    Latent tuberculosis                                          Latent tuberculosis
+Revise from: 1 Z4542   Encounter for adjust and mgmt of neuropacemaker (brain)      Encounter for adjustment and management of neuropacemaker (brain) (peripheral nerve) (spinal cord)
+Revise to:   1 Z4542   Encounter for adjustment and management of neurostimulator   Encounter for adjustment and management of neurostimulator
+Revise from: 1 Z6843   Body mass index (BMI) 50-59.9, adult                         Body mass index (BMI) 50-59.9, adult
+Revise to:   1 Z6843   Body mass index (BMI) 50.0-59.9, adult                       Body mass index (BMI) 50.0-59.9, adult
+Add:         1 Z7184   Encounter for health counseling related to travel            Encounter for health counseling related to travel
+Add:         1 Z86002  Pers hx of in-situ neoplasm of other and unsp genital organs Personal history of in-situ neoplasm of other and unspecified genital organs
+Add:         1 Z86003  Pers hx of in-situ neoplm of oral cavity, esoph and stomach  Personal history of in-situ neoplasm of oral cavity, esophagus and stomach
+Add:         1 Z86004  Pers hx of in-situ neoplasm of other and unsp dgstv orgs     Personal history of in-situ neoplasm of other and unspecified digestive organs
+Add:         1 Z86005  Pers hx of in-situ neoplasm of middle ear and resp sys       Personal history of in-situ neoplasm of middle ear and respiratory system
+Add:         1 Z86006  Personal history of melanoma in-situ                         Personal history of melanoma in-situ
+Add:         1 Z86007  Personal history of in-situ neoplasm of skin                 Personal history of in-situ neoplasm of skin
+Add:         1 Z8615   Personal history of latent tuberculosis infection            Personal history of latent tuberculosis infection
+Add:         1 Z9682   Presence of neurostimulator                                  Presence of neurostimulator
+
+Headers
+  22512 headers in icd10cm_order_2019.txt
+  22581 headers in icd10cm_order_2020.txt
+     70 additions
+      1 deletions
+      5 revisions
+of which
+      5 revisions to both long and short titles
+      0 revisions to long title only
+      0 revisions to short title only
+
+Codes
+  71932 codes in icd10cm_order_2019.txt
+  72184 codes in icd10cm_order_2020.txt
+    273 additions
+     21 deletions
+     30 revisions
+of which
+     24 revisions to both long and short titles
+      6 revisions to long title only
+      0 revisions to short title only

@@ -1,0 +1,623 @@
+Delete:      C4311   Malignant melanoma of right eyelid, including canthus
+Add:         C43111  Malignant melanoma of right upper eyelid, including canthus
+Add:         C43112  Malignant melanoma of right lower eyelid, including canthus
+Delete:      C4312   Malignant melanoma of left eyelid, including canthus
+Add:         C43121  Malignant melanoma of left upper eyelid, including canthus
+Add:         C43122  Malignant melanoma of left lower eyelid, including canthus
+Delete:      C4A11   Merkel cell carcinoma of right eyelid, including canthus
+Add:         C4A111  Merkel cell carcinoma of right upper eyelid, including canthus
+Add:         C4A112  Merkel cell carcinoma of right lower eyelid, including canthus
+Delete:      C4A12   Merkel cell carcinoma of left eyelid, including canthus
+Add:         C4A121  Merkel cell carcinoma of left upper eyelid, including canthus
+Add:         C4A122  Merkel cell carcinoma of left lower eyelid, including canthus
+Delete:      C44102  Unspecified malignant neoplasm of skin of right eyelid, including canthus
+Add:         C441021 Unspecified malignant neoplasm of skin of right upper eyelid, including canthus
+Add:         C441022 Unspecified malignant neoplasm of skin of right lower eyelid, including canthus
+Delete:      C44109  Unspecified malignant neoplasm of skin of left eyelid, including canthus
+Add:         C441091 Unspecified malignant neoplasm of skin of left upper eyelid, including canthus
+Add:         C441092 Unspecified malignant neoplasm of skin of left lower eyelid, including canthus
+Delete:      C44112  Basal cell carcinoma of skin of right eyelid, including canthus
+Add:         C441121 Basal cell carcinoma of skin of right upper eyelid, including canthus
+Add:         C441122 Basal cell carcinoma of skin of right lower eyelid, including canthus
+Delete:      C44119  Basal cell carcinoma of skin of left eyelid, including canthus
+Add:         C441191 Basal cell carcinoma of skin of left upper eyelid, including canthus
+Add:         C441192 Basal cell carcinoma of skin of left lower eyelid, including canthus
+Delete:      C44122  Squamous cell carcinoma of skin of right eyelid, including canthus
+Add:         C441221 Squamous cell carcinoma of skin of right upper eyelid, including canthus
+Add:         C441222 Squamous cell carcinoma of skin of right lower eyelid, including canthus
+Delete:      C44129  Squamous cell carcinoma of skin of left eyelid, including canthus
+Add:         C441291 Squamous cell carcinoma of skin of left upper eyelid, including canthus
+Add:         C441292 Squamous cell carcinoma of skin of left lower eyelid, including canthus
+Add:         C44131  Sebaceous cell carcinoma of skin of unspecified eyelid, including canthus
+Add:         C441321 Sebaceous cell carcinoma of skin of right upper eyelid, including canthus
+Add:         C441322 Sebaceous cell carcinoma of skin of right lower eyelid, including canthus
+Add:         C441391 Sebaceous cell carcinoma of skin of left upper eyelid, including canthus
+Add:         C441392 Sebaceous cell carcinoma of skin of left lower eyelid, including canthus
+Delete:      C44192  Other specified malignant neoplasm of skin of right eyelid, including canthus
+Add:         C441921 Other specified malignant neoplasm of skin of right upper eyelid, including canthus
+Add:         C441922 Other specified malignant neoplasm of skin of right lower eyelid, including canthus
+Delete:      C44199  Other specified malignant neoplasm of skin of left eyelid, including canthus
+Add:         C441991 Other specified malignant neoplasm of skin of left upper eyelid, including canthus
+Add:         C441992 Other specified malignant neoplasm of skin of left lower eyelid, including canthus
+Delete:      D0311   Melanoma in situ of right eyelid, including canthus
+Add:         D03111  Melanoma in situ of right upper eyelid, including canthus
+Add:         D03112  Melanoma in situ of right lower eyelid, including canthus
+Delete:      D0312   Melanoma in situ of left eyelid, including canthus
+Add:         D03121  Melanoma in situ of left upper eyelid, including canthus
+Add:         D03122  Melanoma in situ of left lower eyelid, including canthus
+Delete:      D0411   Carcinoma in situ of skin of right eyelid, including canthus
+Add:         D04111  Carcinoma in situ of skin of right upper eyelid, including canthus
+Add:         D04112  Carcinoma in situ of skin of right lower eyelid, including canthus
+Delete:      D0412   Carcinoma in situ of skin of left eyelid, including canthus
+Add:         D04121  Carcinoma in situ of skin of left upper eyelid, including canthus
+Add:         D04122  Carcinoma in situ of skin of left lower eyelid, including canthus
+Delete:      D2211   Melanocytic nevi of right eyelid, including canthus
+Add:         D22111  Melanocytic nevi of right upper eyelid, including canthus
+Add:         D22112  Melanocytic nevi of right lower eyelid, including canthus
+Delete:      D2212   Melanocytic nevi of left eyelid, including canthus
+Add:         D22121  Melanocytic nevi of left upper eyelid, including canthus
+Add:         D22122  Melanocytic nevi of left lower eyelid, including canthus
+Delete:      D2311   Other benign neoplasm of skin of right eyelid, including canthus
+Add:         D23111  Other benign neoplasm of skin of right upper eyelid, including canthus
+Add:         D23112  Other benign neoplasm of skin of right lower eyelid, including canthus
+Delete:      D2312   Other benign neoplasm of skin of left eyelid, including canthus
+Add:         D23121  Other benign neoplasm of skin of left upper eyelid, including canthus
+Add:         D23122  Other benign neoplasm of skin of left lower eyelid, including canthus
+Revise from: E671    Hypercarotinemia
+Revise to:   E671    Hypercarotenemia
+Revise from: E7253   Hyperoxaluria
+Revise to:   E7253   Primary hyperoxaluria
+Delete:      E728    Other specified disorders of amino-acid metabolism
+Add:         E7281   Disorders of gamma aminobutyric acid metabolism
+Add:         E7289   Other specified disorders of amino-acid metabolism
+Add:         E7526   Sulfatase deficiency
+Delete:      E784    Other hyperlipidemia
+Add:         E7841   Elevated Lipoprotein(a)
+Add:         E7849   Other hyperlipidemia
+Add:         E8802   Plasminogen deficiency
+Add:         F1223   Cannabis dependence with withdrawal
+Add:         F1293   Cannabis use, unspecified with withdrawal
+Delete:      F53     Puerperal psychosis
+Add:         F530    Postpartum depression
+Add:         F531    Puerperal psychosis
+Revise from: F6810   Factitious disorder, unspecified
+Revise to:   F6810   Factitious disorder imposed on self, unspecified
+Revise from: F6811   Factitious disorder with predominantly psychological signs and symptoms
+Revise to:   F6811   Factitious disorder imposed on self, with predominantly psychological signs and symptoms
+Revise from: F6812   Factitious disorder with predominantly physical signs and symptoms
+Revise to:   F6812   Factitious disorder imposed on self, with predominantly physical signs and symptoms
+Revise from: F6813   Factitious disorder with combined psychological and physical signs and symptoms
+Revise to:   F6813   Factitious disorder imposed on self, with combined psychological and physical signs and symptoms
+Add:         F68A    Factitious disorder imposed on another
+Delete:      G513    Clonic hemifacial spasm
+Add:         G5131   Clonic hemifacial spasm, right
+Add:         G5132   Clonic hemifacial spasm, left
+Add:         G5133   Clonic hemifacial spasm, bilateral
+Add:         G5139   Clonic hemifacial spasm, unspecified
+Delete:      G710    Muscular dystrophy
+Add:         G7100   Muscular dystrophy, unspecified
+Add:         G7101   Duchenne or Becker muscular dystrophy
+Add:         G7102   Facioscapulohumeral muscular dystrophy
+Add:         G7109   Other specified muscular dystrophies
+Add:         H0100A  Unspecified blepharitis right eye, upper and lower eyelids
+Add:         H0100B  Unspecified blepharitis left eye, upper and lower eyelids
+Add:         H0101A  Ulcerative blepharitis right eye, upper and lower eyelids
+Add:         H0101B  Ulcerative blepharitis left eye, upper and lower eyelids
+Add:         H0102A  Squamous blepharitis right eye, upper and lower eyelids
+Add:         H0102B  Squamous blepharitis left eye, upper and lower eyelids
+Add:         H02151  Paralytic ectropion of right upper eyelid
+Add:         H02152  Paralytic ectropion of right lower eyelid
+Add:         H02153  Paralytic ectropion of right eye, unspecified eyelid
+Add:         H02154  Paralytic ectropion of left upper eyelid
+Add:         H02155  Paralytic ectropion of left lower eyelid
+Add:         H02156  Paralytic ectropion of left eye, unspecified eyelid
+Add:         H02159  Paralytic ectropion of unspecified eye, unspecified eyelid
+Add:         H0220A  Unspecified lagophthalmos right eye, upper and lower eyelids
+Add:         H0220B  Unspecified lagophthalmos left eye, upper and lower eyelids
+Add:         H0220C  Unspecified lagophthalmos, bilateral, upper and lower eyelids
+Add:         H0221A  Cicatricial lagophthalmos right eye, upper and lower eyelids
+Add:         H0221B  Cicatricial lagophthalmos left eye, upper and lower eyelids
+Add:         H0221C  Cicatricial lagophthalmos, bilateral, upper and lower eyelids
+Add:         H0222A  Mechanical lagophthalmos right eye, upper and lower eyelids
+Add:         H0222B  Mechanical lagophthalmos left eye, upper and lower eyelids
+Add:         H0222C  Mechanical lagophthalmos, bilateral, upper and lower eyelids
+Add:         H0223A  Paralytic lagophthalmos right eye, upper and lower eyelids
+Add:         H0223B  Paralytic lagophthalmos left eye, upper and lower eyelids
+Add:         H0223C  Paralytic lagophthalmos, bilateral, upper and lower eyelids
+Add:         H02881  Meibomian gland dysfunction right upper eyelid
+Add:         H02882  Meibomian gland dysfunction right lower eyelid
+Add:         H02883  Meibomian gland dysfunction of right eye, unspecified eyelid
+Add:         H02884  Meibomian gland dysfunction left upper eyelid
+Add:         H02885  Meibomian gland dysfunction left lower eyelid
+Add:         H02886  Meibomian gland dysfunction of left eye, unspecified eyelid
+Add:         H02889  Meibomian gland dysfunction of unspecified eye, unspecified eyelid
+Add:         H0288A  Meibomian gland dysfunction right eye, upper and lower eyelids
+Add:         H0288B  Meibomian gland dysfunction left eye, upper and lower eyelids
+Revise from: H04201  Unspecified epiphora, right lacrimal gland
+Revise to:   H04201  Unspecified epiphora, right side
+Revise from: H04202  Unspecified epiphora, left lacrimal gland
+Revise to:   H04202  Unspecified epiphora, left side
+Revise from: H04203  Unspecified epiphora, bilateral lacrimal glands
+Revise to:   H04203  Unspecified epiphora, bilateral
+Revise from: H04209  Unspecified epiphora, unspecified lacrimal gland
+Revise to:   H04209  Unspecified epiphora, unspecified side
+Revise from: H04221  Epiphora due to insufficient drainage, right lacrimal gland
+Revise to:   H04221  Epiphora due to insufficient drainage, right side
+Revise from: H04222  Epiphora due to insufficient drainage, left lacrimal gland
+Revise to:   H04222  Epiphora due to insufficient drainage, left side
+Revise from: H04223  Epiphora due to insufficient drainage, bilateral lacrimal glands
+Revise to:   H04223  Epiphora due to insufficient drainage, bilateral
+Revise from: H04229  Epiphora due to insufficient drainage, unspecified lacrimal gland
+Revise to:   H04229  Epiphora due to insufficient drainage, unspecified side
+Add:         H10821  Rosacea conjunctivitis, right eye
+Add:         H10822  Rosacea conjunctivitis, left eye
+Add:         H10823  Rosacea conjunctivitis, bilateral
+Add:         H10829  Rosacea conjunctivitis, unspecified eye
+Delete:      H578    Other specified disorders of eye and adnexa
+Add:         H57811  Brow ptosis, right
+Add:         H57812  Brow ptosis, left
+Add:         H57813  Brow ptosis, bilateral
+Add:         H57819  Brow ptosis, unspecified
+Add:         H5789   Other specified disorders of eye and adnexa
+Revise from: I63219  Cerebral infarction due to unspecified occlusion or stenosis of unspecified vertebral arteries
+Revise to:   I63219  Cerebral infarction due to unspecified occlusion or stenosis of unspecified vertebral artery
+Revise from: I63239  Cerebral infarction due to unspecified occlusion or stenosis of unspecified carotid arteries
+Revise to:   I63239  Cerebral infarction due to unspecified occlusion or stenosis of unspecified carotid artery
+Revise from: I63333  Cerebral infarction to thrombosis of bilateral posterior cerebral arteries
+Revise to:   I63333  Cerebral infarction due to thrombosis of bilateral posterior cerebral arteries
+Revise from: I63343  Cerebral infarction to thrombosis of bilateral cerebellar arteries
+Revise to:   I63343  Cerebral infarction due to thrombosis of bilateral cerebellar arteries
+Delete:      I638    Other cerebral infarction
+Add:         I6381   Other cerebral infarction due to occlusion or stenosis of small artery
+Add:         I6389   Other cerebral infarction
+Add:         I67850  Cerebral autosomal dominant arteriopathy with subcortical infarcts and leukoencephalopathy
+Add:         I67858  Other hereditary cerebrovascular disease
+Revise from: J84848  Other interstitial  lung diseases of childhood
+Revise to:   J84848  Other interstitial lung diseases of childhood
+Delete:      K352    Acute appendicitis with generalized peritonitis
+Add:         K3520   Acute appendicitis with generalized peritonitis, without abscess
+Add:         K3521   Acute appendicitis with generalized peritonitis, with abscess
+Delete:      K353    Acute appendicitis with localized peritonitis
+Add:         K3530   Acute appendicitis with localized peritonitis, without perforation or gangrene
+Add:         K3531   Acute appendicitis with localized peritonitis and gangrene, without perforation
+Add:         K3532   Acute appendicitis with perforation and localized peritonitis, without abscess
+Add:         K3533   Acute appendicitis with perforation and localized peritonitis, with abscess
+Delete:      K3589   Other acute appendicitis
+Add:         K35890  Other acute appendicitis without perforation or gangrene
+Add:         K35891  Other acute appendicitis without perforation, with gangrene
+Revise from: K435    Parastomal hernia without obstruction or  gangrene
+Revise to:   K435    Parastomal hernia without obstruction or gangrene
+Delete:      K613    Ischiorectal abscess
+Add:         K6131   Horseshoe abscess
+Add:         K6139   Other ischiorectal abscess
+Add:         K615    Supralevator abscess
+Add:         K82A1   Gangrene of gallbladder in cholecystitis
+Add:         K82A2   Perforation of gallbladder in cholecystitis
+Delete:      K830    Cholangitis
+Add:         K8301   Primary sclerosing cholangitis
+Add:         K8309   Other cholangitis
+Revise from: L98495  Non-pressure chronic ulcer of other sites with muscle involvement without evidence of necrosis
+Revise to:   L98495  Non-pressure chronic ulcer of skin of other sites with muscle involvement without evidence of necrosis
+Revise from: L98496  Non-pressure chronic ulcer of other sites with bone involvement without evidence of necrosis
+Revise to:   L98496  Non-pressure chronic ulcer of skin of other sites with bone involvement without evidence of necrosis
+Revise from: L98498  Non-pressure chronic ulcer of other sites with other specified severity
+Revise to:   L98498  Non-pressure chronic ulcer of skin of other sites with other specified severity
+Revise from: M26621  Arthralgia of right temporomandibular  joint
+Revise to:   M26621  Arthralgia of right temporomandibular joint
+Revise from: M5001   Cervical disc disorder with myelopathy,  high cervical region
+Revise to:   M5001   Cervical disc disorder with myelopathy, high cervical region
+Revise from: M5011   Cervical disc disorder with radiculopathy,  high cervical region
+Revise to:   M5011   Cervical disc disorder with radiculopathy, high cervical region
+Revise from: M5021   Other cervical disc displacement,  high cervical region
+Revise to:   M5021   Other cervical disc displacement, high cervical region
+Revise from: M5031   Other cervical disc degeneration,  high cervical region
+Revise to:   M5031   Other cervical disc degeneration, high cervical region
+Revise from: M5081   Other cervical disc disorders,  high cervical region
+Revise to:   M5081   Other cervical disc disorders, high cervical region
+Revise from: M5091   Cervical disc disorder, unspecified,  high cervical region
+Revise to:   M5091   Cervical disc disorder, unspecified, high cervical region
+Delete:      M791    Myalgia
+Add:         M7910   Myalgia, unspecified site
+Add:         M7911   Myalgia of mastication muscle
+Add:         M7912   Myalgia of auxiliary muscles, head and neck
+Add:         M7918   Myalgia, other site
+Revise from: M86621  Other chronic osteomyelitis, right  humerus
+Revise to:   M86621  Other chronic osteomyelitis, right humerus
+Revise from: M86622  Other chronic osteomyelitis, left  humerus
+Revise to:   M86622  Other chronic osteomyelitis, left humerus
+Revise from: M86629  Other chronic osteomyelitis, unspecified  humerus
+Revise to:   M86629  Other chronic osteomyelitis, unspecified humerus
+Add:         N35016  Post-traumatic urethral stricture, male, overlapping sites
+Add:         N35116  Postinfective urethral stricture, not elsewhere classified, male, overlapping sites
+Delete:      N358    Other urethral stricture
+Add:         N35811  Other urethral stricture, male, meatal
+Add:         N35812  Other urethral bulbous stricture, male
+Add:         N35813  Other membranous urethral stricture, male
+Add:         N35814  Other anterior urethral stricture, male, anterior
+Add:         N35816  Other urethral stricture, male, overlapping sites
+Add:         N35819  Other urethral stricture, male, unspecified site
+Add:         N3582   Other urethral stricture, female
+Delete:      N359    Urethral stricture, unspecified
+Add:         N35911  Unspecified urethral stricture, male, meatal
+Add:         N35912  Unspecified bulbous urethral stricture, male
+Add:         N35913  Unspecified membranous urethral stricture, male
+Add:         N35914  Unspecified anterior urethral stricture, male
+Add:         N35916  Unspecified urethral stricture, male, overlapping sites
+Add:         N35919  Unspecified urethral stricture, male, unspecified site
+Add:         N3592   Unspecified urethral stricture, female
+Revise from: N630    Unspecified lump in unspecified  breast
+Revise to:   N630    Unspecified lump in unspecified breast
+Add:         N99116  Postprocedural urethral stricture, male, overlapping sites
+Revise from: O00212  Left ovarian pregnancy without intrauterine pregnancy
+Revise to:   O00212  Left ovarian pregnancy with intrauterine pregnancy
+Add:         O30131  Triplet pregnancy, trichorionic/triamniotic, first trimester
+Add:         O30132  Triplet pregnancy, trichorionic/triamniotic, second trimester
+Add:         O30133  Triplet pregnancy, trichorionic/triamniotic, third trimester
+Add:         O30139  Triplet pregnancy, trichorionic/triamniotic, unspecified trimester
+Add:         O30231  Quadruplet pregnancy, quadrachorionic/quadra-amniotic, first trimester
+Add:         O30232  Quadruplet pregnancy, quadrachorionic/quadra-amniotic, second trimester
+Add:         O30233  Quadruplet pregnancy, quadrachorionic/quadra-amniotic, third trimester
+Add:         O30239  Quadruplet pregnancy, quadrachorionic/quadra-amniotic, unspecified trimester
+Add:         O30831  Other specified multiple gestation, number of chorions and amnions are both equal to the number of fetuses, first trimester
+Add:         O30832  Other specified multiple gestation, number of chorions and amnions are both equal to the number of fetuses, second trimester
+Add:         O30833  Other specified multiple gestation, number of chorions and amnions are both equal to the number of fetuses, third trimester
+Add:         O30839  Other specified multiple gestation, number of chorions and amnions are both equal to the number of fetuses, unspecified trimester
+Delete:      O860    Infection of obstetric surgical wound
+Add:         O8600   Infection of obstetric surgical wound, unspecified
+Add:         O8601   Infection of obstetric surgical wound, superficial incisional site
+Add:         O8602   Infection of obstetric surgical wound, deep incisional site
+Add:         O8603   Infection of obstetric surgical wound, organ and space site
+Add:         O8604   Sepsis following an obstetrical procedure
+Add:         O8609   Infection of obstetric surgical wound, other surgical site
+Delete:      P027    Newborn affected by chorioamnionitis
+Add:         P0270   Newborn affected by fetal inflammatory response syndrome
+Add:         P0278   Newborn affected by other conditions from chorioamnionitis
+Delete:      P041    Newborn affected by other maternal medication
+Add:         P0411   Newborn affected by maternal antineoplastic chemotherapy
+Add:         P0412   Newborn affected by maternal cytotoxic drugs
+Add:         P0413   Newborn affected by maternal use of anticonvulsants
+Add:         P0414   Newborn affected by maternal use of opiates
+Add:         P0415   Newborn affected by maternal use of antidepressants
+Add:         P0416   Newborn affected by maternal use of amphetamines
+Add:         P0417   Newborn affected by maternal use of sedative-hypnotics
+Add:         P041A   Newborn affected by maternal use of anxiolytics
+Add:         P0418   Newborn affected by other maternal medication
+Add:         P0419   Newborn affected by maternal use of unspecified medication
+Add:         P0440   Newborn affected by maternal use of unspecified drugs of addiction
+Add:         P0442   Newborn affected by maternal use of hallucinogens
+Delete:      P048    Newborn affected by other maternal noxious substances
+Add:         P0481   Newborn affected by maternal use of cannabis
+Add:         P0489   Newborn affected by other maternal noxious substances
+Add:         P354    Congenital Zika virus disease
+Delete:      P742    Disturbances of sodium balance of newborn
+Add:         P7421   Hypernatremia of newborn
+Add:         P7422   Hyponatremia of newborn
+Delete:      P743    Disturbances of potassium balance of newborn
+Add:         P7431   Hyperkalemia of newborn
+Add:         P7432   Hypokalemia of newborn
+Delete:      P744    Other transitory electrolyte disturbances of newborn
+Add:         P7441   Alkalosis of newborn
+Add:         P74421  Hyperchloremia of newborn
+Add:         P74422  Hypochloremia of newborn
+Add:         P7449   Other transitory electrolyte disturbance of newborn
+Delete:      Q512    Other doubling of uterus
+Add:         Q5120   Other doubling of uterus, unspecified
+Add:         Q5121   Other complete doubling of uterus
+Add:         Q5122   Other partial doubling of uterus
+Add:         Q5128   Other doubling of uterus, other specified
+Revise from: Q6689   Other  specified congenital deformities of feet
+Revise to:   Q6689   Other specified congenital deformities of feet
+Delete:      Q935    Other deletions of part of a chromosome
+Add:         Q9351   Angelman syndrome
+Add:         Q9359   Other deletions of part of a chromosome
+Add:         Q9382   Williams syndrome
+Revise from: R402330 Coma scale, best motor response, abnormal, unspecified time
+Revise to:   R402330 Coma scale, best motor response, abnormal flexion, unspecified time
+Revise from: R402331 Coma scale, best motor response, abnormal, in the field [EMT or ambulance]
+Revise to:   R402331 Coma scale, best motor response, abnormal flexion, in the field [EMT or ambulance]
+Revise from: R402332 Coma scale, best motor response, abnormal, at arrival to emergency department
+Revise to:   R402332 Coma scale, best motor response, abnormal flexion, at arrival to emergency department
+Revise from: R402333 Coma scale, best motor response, abnormal, at hospital admission
+Revise to:   R402333 Coma scale, best motor response, abnormal flexion, at hospital admission
+Revise from: R402334 Coma scale, best motor response, abnormal, 24 hours or more after hospital admission
+Revise to:   R402334 Coma scale, best motor response, abnormal flexion, 24 hours or more after hospital admission
+Delete:      R8299   Other abnormal findings in urine
+Add:         R82991  Hypocitraturia
+Add:         R82992  Hyperoxaluria
+Add:         R82993  Hyperuricoscuria
+Add:         R82994  Hypercalciuria
+Add:         R82998  Other abnormal findings in urine
+Delete:      R938    Abnormal findings on diagnostic imaging of other specified body structures
+Add:         R93811  Abnormal radiologic findings on diagnostic imaging of right testicle
+Add:         R93812  Abnormal radiologic findings on diagnostic imaging of left testicle
+Add:         R93813  Abnormal radiologic findings on diagnostic imaging of testicles, bilateral
+Add:         R93819  Abnormal radiologic findings on diagnostic imaging of unspecified testicle
+Add:         R9389   Abnormal findings on diagnostic imaging of other specified body structures
+Revise from: S62626A Displaced fracture of medial phalanx of right little finger, initial encounter for closed fracture
+Revise to:   S62626A Displaced fracture of middle phalanx of right little finger, initial encounter for closed fracture
+Revise from: S62626B Displaced fracture of medial phalanx of right little finger, initial encounter for open fracture
+Revise to:   S62626B Displaced fracture of middle phalanx of right little finger, initial encounter for open fracture
+Revise from: S62626D Displaced fracture of medial phalanx of right little finger, subsequent encounter for fracture with routine healing
+Revise to:   S62626D Displaced fracture of middle phalanx of right little finger, subsequent encounter for fracture with routine healing
+Revise from: S62626G Displaced fracture of medial phalanx of right little finger, subsequent encounter for fracture with delayed healing
+Revise to:   S62626G Displaced fracture of middle phalanx of right little finger, subsequent encounter for fracture with delayed healing
+Revise from: S62626K Displaced fracture of medial phalanx of right little finger, subsequent encounter for fracture with nonunion
+Revise to:   S62626K Displaced fracture of middle phalanx of right little finger, subsequent encounter for fracture with nonunion
+Revise from: S62626P Displaced fracture of medial phalanx of right little finger, subsequent encounter for fracture with malunion
+Revise to:   S62626P Displaced fracture of middle phalanx of right little finger, subsequent encounter for fracture with malunion
+Revise from: S62626S Displaced fracture of medial phalanx of right little finger, sequela
+Revise to:   S62626S Displaced fracture of middle phalanx of right little finger, sequela
+Revise from: S62627A Displaced fracture of medial phalanx of left little finger, initial encounter for closed fracture
+Revise to:   S62627A Displaced fracture of middle phalanx of left little finger, initial encounter for closed fracture
+Revise from: S62627B Displaced fracture of medial phalanx of left little finger, initial encounter for open fracture
+Revise to:   S62627B Displaced fracture of middle phalanx of left little finger, initial encounter for open fracture
+Revise from: S62627D Displaced fracture of medial phalanx of left little finger, subsequent encounter for fracture with routine healing
+Revise to:   S62627D Displaced fracture of middle phalanx of left little finger, subsequent encounter for fracture with routine healing
+Revise from: S62627G Displaced fracture of medial phalanx of left little finger, subsequent encounter for fracture with delayed healing
+Revise to:   S62627G Displaced fracture of middle phalanx of left little finger, subsequent encounter for fracture with delayed healing
+Revise from: S62627K Displaced fracture of medial phalanx of left little finger, subsequent encounter for fracture with nonunion
+Revise to:   S62627K Displaced fracture of middle phalanx of left little finger, subsequent encounter for fracture with nonunion
+Revise from: S62627P Displaced fracture of medial phalanx of left little finger, subsequent encounter for fracture with malunion
+Revise to:   S62627P Displaced fracture of middle phalanx of left little finger, subsequent encounter for fracture with malunion
+Revise from: S62627S Displaced fracture of medial phalanx of left little finger, sequela
+Revise to:   S62627S Displaced fracture of middle phalanx of left little finger, sequela
+Revise from: S62628A Displaced fracture of medial phalanx of other finger, initial encounter for closed fracture
+Revise to:   S62628A Displaced fracture of middle phalanx of other finger, initial encounter for closed fracture
+Revise from: S62628B Displaced fracture of medial phalanx of other finger, initial encounter for open fracture
+Revise to:   S62628B Displaced fracture of middle phalanx of other finger, initial encounter for open fracture
+Revise from: S62628D Displaced fracture of medial phalanx of other finger, subsequent encounter for fracture with routine healing
+Revise to:   S62628D Displaced fracture of middle phalanx of other finger, subsequent encounter for fracture with routine healing
+Revise from: S62628G Displaced fracture of medial phalanx of other finger, subsequent encounter for fracture with delayed healing
+Revise to:   S62628G Displaced fracture of middle phalanx of other finger, subsequent encounter for fracture with delayed healing
+Revise from: S62628K Displaced fracture of medial phalanx of other finger, subsequent encounter for fracture with nonunion
+Revise to:   S62628K Displaced fracture of middle phalanx of other finger, subsequent encounter for fracture with nonunion
+Revise from: S62628P Displaced fracture of medial phalanx of other finger, subsequent encounter for fracture with malunion
+Revise to:   S62628P Displaced fracture of middle phalanx of other finger, subsequent encounter for fracture with malunion
+Revise from: S62628S Displaced fracture of medial phalanx of other finger, sequela
+Revise to:   S62628S Displaced fracture of middle phalanx of other finger, sequela
+Revise from: S62629A Displaced fracture of medial phalanx of unspecified finger, initial encounter for closed fracture
+Revise to:   S62629A Displaced fracture of middle phalanx of unspecified finger, initial encounter for closed fracture
+Revise from: S62629B Displaced fracture of medial phalanx of unspecified finger, initial encounter for open fracture
+Revise to:   S62629B Displaced fracture of middle phalanx of unspecified finger, initial encounter for open fracture
+Revise from: S62629D Displaced fracture of medial phalanx of unspecified finger, subsequent encounter for fracture with routine healing
+Revise to:   S62629D Displaced fracture of middle phalanx of unspecified finger, subsequent encounter for fracture with routine healing
+Revise from: S62629G Displaced fracture of medial phalanx of unspecified finger, subsequent encounter for fracture with delayed healing
+Revise to:   S62629G Displaced fracture of middle phalanx of unspecified finger, subsequent encounter for fracture with delayed healing
+Revise from: S62629K Displaced fracture of medial phalanx of unspecified finger, subsequent encounter for fracture with nonunion
+Revise to:   S62629K Displaced fracture of middle phalanx of unspecified finger, subsequent encounter for fracture with nonunion
+Revise from: S62629P Displaced fracture of medial phalanx of unspecified finger, subsequent encounter for fracture with malunion
+Revise to:   S62629P Displaced fracture of middle phalanx of unspecified finger, subsequent encounter for fracture with malunion
+Revise from: S62629S Displaced fracture of medial phalanx of unspecified finger, sequela
+Revise to:   S62629S Displaced fracture of middle phalanx of unspecified finger, sequela
+Revise from: S62654A Nondisplaced fracture of medial phalanx of right ring finger, initial encounter for closed fracture
+Revise to:   S62654A Nondisplaced fracture of middle phalanx of right ring finger, initial encounter for closed fracture
+Revise from: S62654B Nondisplaced fracture of medial phalanx of right ring finger, initial encounter for open fracture
+Revise to:   S62654B Nondisplaced fracture of middle phalanx of right ring finger, initial encounter for open fracture
+Revise from: S62654D Nondisplaced fracture of medial phalanx of right ring finger, subsequent encounter for fracture with routine healing
+Revise to:   S62654D Nondisplaced fracture of middle phalanx of right ring finger, subsequent encounter for fracture with routine healing
+Revise from: S62654G Nondisplaced fracture of medial phalanx of right ring finger, subsequent encounter for fracture with delayed healing
+Revise to:   S62654G Nondisplaced fracture of middle phalanx of right ring finger, subsequent encounter for fracture with delayed healing
+Revise from: S62654K Nondisplaced fracture of medial phalanx of right ring finger, subsequent encounter for fracture with nonunion
+Revise to:   S62654K Nondisplaced fracture of middle phalanx of right ring finger, subsequent encounter for fracture with nonunion
+Revise from: S62654P Nondisplaced fracture of medial phalanx of right ring finger, subsequent encounter for fracture with malunion
+Revise to:   S62654P Nondisplaced fracture of middle phalanx of right ring finger, subsequent encounter for fracture with malunion
+Revise from: S62654S Nondisplaced fracture of medial phalanx of right ring finger, sequela
+Revise to:   S62654S Nondisplaced fracture of middle phalanx of right ring finger, sequela
+Revise from: S62655A Nondisplaced fracture of medial phalanx of left ring finger, initial encounter for closed fracture
+Revise to:   S62655A Nondisplaced fracture of middle phalanx of left ring finger, initial encounter for closed fracture
+Revise from: S62655B Nondisplaced fracture of medial phalanx of left ring finger, initial encounter for open fracture
+Revise to:   S62655B Nondisplaced fracture of middle phalanx of left ring finger, initial encounter for open fracture
+Revise from: S62655D Nondisplaced fracture of medial phalanx of left ring finger, subsequent encounter for fracture with routine healing
+Revise to:   S62655D Nondisplaced fracture of middle phalanx of left ring finger, subsequent encounter for fracture with routine healing
+Revise from: S62655G Nondisplaced fracture of medial phalanx of left ring finger, subsequent encounter for fracture with delayed healing
+Revise to:   S62655G Nondisplaced fracture of middle phalanx of left ring finger, subsequent encounter for fracture with delayed healing
+Revise from: S62655K Nondisplaced fracture of medial phalanx of left ring finger, subsequent encounter for fracture with nonunion
+Revise to:   S62655K Nondisplaced fracture of middle phalanx of left ring finger, subsequent encounter for fracture with nonunion
+Revise from: S62655P Nondisplaced fracture of medial phalanx of left ring finger, subsequent encounter for fracture with malunion
+Revise to:   S62655P Nondisplaced fracture of middle phalanx of left ring finger, subsequent encounter for fracture with malunion
+Revise from: S62655S Nondisplaced fracture of medial phalanx of left ring finger, sequela
+Revise to:   S62655S Nondisplaced fracture of middle phalanx of left ring finger, sequela
+Revise from: S62656A Nondisplaced fracture of medial phalanx of right little finger, initial encounter for closed fracture
+Revise to:   S62656A Nondisplaced fracture of middle phalanx of right little finger, initial encounter for closed fracture
+Revise from: S62656B Nondisplaced fracture of medial phalanx of right little finger, initial encounter for open fracture
+Revise to:   S62656B Nondisplaced fracture of middle phalanx of right little finger, initial encounter for open fracture
+Revise from: S62656D Nondisplaced fracture of medial phalanx of right little finger, subsequent encounter for fracture with routine healing
+Revise to:   S62656D Nondisplaced fracture of middle phalanx of right little finger, subsequent encounter for fracture with routine healing
+Revise from: S62656G Nondisplaced fracture of medial phalanx of right little finger, subsequent encounter for fracture with delayed healing
+Revise to:   S62656G Nondisplaced fracture of middle phalanx of right little finger, subsequent encounter for fracture with delayed healing
+Revise from: S62656K Nondisplaced fracture of medial phalanx of right little finger, subsequent encounter for fracture with nonunion
+Revise to:   S62656K Nondisplaced fracture of middle phalanx of right little finger, subsequent encounter for fracture with nonunion
+Revise from: S62656P Nondisplaced fracture of medial phalanx of right little finger, subsequent encounter for fracture with malunion
+Revise to:   S62656P Nondisplaced fracture of middle phalanx of right little finger, subsequent encounter for fracture with malunion
+Revise from: S62656S Nondisplaced fracture of medial phalanx of right little finger, sequela
+Revise to:   S62656S Nondisplaced fracture of middle phalanx of right little finger, sequela
+Revise from: S62657A Nondisplaced fracture of medial phalanx of left little finger, initial encounter for closed fracture
+Revise to:   S62657A Nondisplaced fracture of middle phalanx of left little finger, initial encounter for closed fracture
+Revise from: S62657B Nondisplaced fracture of medial phalanx of left little finger, initial encounter for open fracture
+Revise to:   S62657B Nondisplaced fracture of middle phalanx of left little finger, initial encounter for open fracture
+Revise from: S62657D Nondisplaced fracture of medial phalanx of left little finger, subsequent encounter for fracture with routine healing
+Revise to:   S62657D Nondisplaced fracture of middle phalanx of left little finger, subsequent encounter for fracture with routine healing
+Revise from: S62657G Nondisplaced fracture of medial phalanx of left little finger, subsequent encounter for fracture with delayed healing
+Revise to:   S62657G Nondisplaced fracture of middle phalanx of left little finger, subsequent encounter for fracture with delayed healing
+Revise from: S62657K Nondisplaced fracture of medial phalanx of left little finger, subsequent encounter for fracture with nonunion
+Revise to:   S62657K Nondisplaced fracture of middle phalanx of left little finger, subsequent encounter for fracture with nonunion
+Revise from: S62657P Nondisplaced fracture of medial phalanx of left little finger, subsequent encounter for fracture with malunion
+Revise to:   S62657P Nondisplaced fracture of middle phalanx of left little finger, subsequent encounter for fracture with malunion
+Revise from: S62657S Nondisplaced fracture of medial phalanx of left little finger, sequela
+Revise to:   S62657S Nondisplaced fracture of middle phalanx of left little finger, sequela
+Revise from: S62658A Nondisplaced fracture of medial phalanx of other finger, initial encounter for closed fracture
+Revise to:   S62658A Nondisplaced fracture of middle phalanx of other finger, initial encounter for closed fracture
+Revise from: S62658B Nondisplaced fracture of medial phalanx of other finger, initial encounter for open fracture
+Revise to:   S62658B Nondisplaced fracture of middle phalanx of other finger, initial encounter for open fracture
+Revise from: S62658D Nondisplaced fracture of medial phalanx of other finger, subsequent encounter for fracture with routine healing
+Revise to:   S62658D Nondisplaced fracture of middle phalanx of other finger, subsequent encounter for fracture with routine healing
+Revise from: S62658G Nondisplaced fracture of medial phalanx of other finger, subsequent encounter for fracture with delayed healing
+Revise to:   S62658G Nondisplaced fracture of middle phalanx of other finger, subsequent encounter for fracture with delayed healing
+Revise from: S62658K Nondisplaced fracture of medial phalanx of other finger, subsequent encounter for fracture with nonunion
+Revise to:   S62658K Nondisplaced fracture of middle phalanx of other finger, subsequent encounter for fracture with nonunion
+Revise from: S62658P Nondisplaced fracture of medial phalanx of other finger, subsequent encounter for fracture with malunion
+Revise to:   S62658P Nondisplaced fracture of middle phalanx of other finger, subsequent encounter for fracture with malunion
+Revise from: S62658S Nondisplaced fracture of medial phalanx of other finger, sequela
+Revise to:   S62658S Nondisplaced fracture of middle phalanx of other finger, sequela
+Revise from: S62659A Nondisplaced fracture of medial phalanx of unspecified finger, initial encounter for closed fracture
+Revise to:   S62659A Nondisplaced fracture of middle phalanx of unspecified finger, initial encounter for closed fracture
+Revise from: S62659B Nondisplaced fracture of medial phalanx of unspecified finger, initial encounter for open fracture
+Revise to:   S62659B Nondisplaced fracture of middle phalanx of unspecified finger, initial encounter for open fracture
+Revise from: S62659D Nondisplaced fracture of medial phalanx of unspecified finger, subsequent encounter for fracture with routine healing
+Revise to:   S62659D Nondisplaced fracture of middle phalanx of unspecified finger, subsequent encounter for fracture with routine healing
+Revise from: S62659G Nondisplaced fracture of medial phalanx of unspecified finger, subsequent encounter for fracture with delayed healing
+Revise to:   S62659G Nondisplaced fracture of middle phalanx of unspecified finger, subsequent encounter for fracture with delayed healing
+Revise from: S62659K Nondisplaced fracture of medial phalanx of unspecified finger, subsequent encounter for fracture with nonunion
+Revise to:   S62659K Nondisplaced fracture of middle phalanx of unspecified finger, subsequent encounter for fracture with nonunion
+Revise from: S62659P Nondisplaced fracture of medial phalanx of unspecified finger, subsequent encounter for fracture with malunion
+Revise to:   S62659P Nondisplaced fracture of middle phalanx of unspecified finger, subsequent encounter for fracture with malunion
+Revise from: S62659S Nondisplaced fracture of medial phalanx of unspecified finger, sequela
+Revise to:   S62659S Nondisplaced fracture of middle phalanx of unspecified finger, sequela
+Revise from: S99101A Unspecified physeal fracture of right  metatarsal, initial encounter for closed fracture
+Revise to:   S99101A Unspecified physeal fracture of right metatarsal, initial encounter for closed fracture
+Revise from: S99101B Unspecified physeal fracture of right  metatarsal, initial encounter for open fracture
+Revise to:   S99101B Unspecified physeal fracture of right metatarsal, initial encounter for open fracture
+Revise from: S99101D Unspecified physeal fracture of right  metatarsal, subsequent encounter for fracture with routine healing
+Revise to:   S99101D Unspecified physeal fracture of right metatarsal, subsequent encounter for fracture with routine healing
+Revise from: S99101G Unspecified physeal fracture of right  metatarsal, subsequent encounter for fracture with delayed healing
+Revise to:   S99101G Unspecified physeal fracture of right metatarsal, subsequent encounter for fracture with delayed healing
+Revise from: S99101K Unspecified physeal fracture of right  metatarsal, subsequent encounter for fracture with nonunion
+Revise to:   S99101K Unspecified physeal fracture of right metatarsal, subsequent encounter for fracture with nonunion
+Revise from: S99101P Unspecified physeal fracture of right  metatarsal, subsequent encounter for fracture with malunion
+Revise to:   S99101P Unspecified physeal fracture of right metatarsal, subsequent encounter for fracture with malunion
+Revise from: S99101S Unspecified physeal fracture of right  metatarsal, sequela
+Revise to:   S99101S Unspecified physeal fracture of right metatarsal, sequela
+Revise from: S99132A Salter-Harris Type III physeal fracture of left  metatarsal, initial encounter for closed fracture
+Revise to:   S99132A Salter-Harris Type III physeal fracture of left metatarsal, initial encounter for closed fracture
+Revise from: S99132B Salter-Harris Type III physeal fracture of left  metatarsal, initial encounter for open fracture
+Revise to:   S99132B Salter-Harris Type III physeal fracture of left metatarsal, initial encounter for open fracture
+Revise from: S99132D Salter-Harris Type III physeal fracture of left  metatarsal, subsequent encounter for fracture with routine healing
+Revise to:   S99132D Salter-Harris Type III physeal fracture of left metatarsal, subsequent encounter for fracture with routine healing
+Revise from: S99132G Salter-Harris Type III physeal fracture of left  metatarsal, subsequent encounter for fracture with delayed healing
+Revise to:   S99132G Salter-Harris Type III physeal fracture of left metatarsal, subsequent encounter for fracture with delayed healing
+Revise from: S99132K Salter-Harris Type III physeal fracture of left  metatarsal, subsequent encounter for fracture with nonunion
+Revise to:   S99132K Salter-Harris Type III physeal fracture of left metatarsal, subsequent encounter for fracture with nonunion
+Revise from: S99132P Salter-Harris Type III physeal fracture of left  metatarsal, subsequent encounter for fracture with malunion
+Revise to:   S99132P Salter-Harris Type III physeal fracture of left metatarsal, subsequent encounter for fracture with malunion
+Revise from: S99132S Salter-Harris Type III physeal fracture of left  metatarsal, sequela
+Revise to:   S99132S Salter-Harris Type III physeal fracture of left metatarsal, sequela
+Add:         T43641A Poisoning by ecstasy, accidental (unintentional), initial encounter
+Add:         T43641D Poisoning by ecstasy, accidental (unintentional), subsequent encounter
+Add:         T43641S Poisoning by ecstasy, accidental (unintentional), sequela
+Add:         T43642A Poisoning by ecstasy, intentional self-harm, initial encounter
+Add:         T43642D Poisoning by ecstasy, intentional self-harm, subsequent encounter
+Add:         T43642S Poisoning by ecstasy, intentional self-harm, sequela
+Add:         T43643A Poisoning by ecstasy, assault, initial encounter
+Add:         T43643D Poisoning by ecstasy, assault, subsequent encounter
+Add:         T43643S Poisoning by ecstasy, assault, sequela
+Add:         T43644A Poisoning by ecstasy, undetermined, initial encounter
+Add:         T43644D Poisoning by ecstasy, undetermined, subsequent encounter
+Add:         T43644S Poisoning by ecstasy, undetermined, sequela
+Add:         T7451XA Adult forced sexual exploitation, confirmed, initial encounter
+Add:         T7451XD Adult forced sexual exploitation, confirmed, subsequent encounter
+Add:         T7451XS Adult forced sexual exploitation, confirmed, sequela
+Add:         T7452XA Child sexual exploitation, confirmed, initial encounter
+Add:         T7452XD Child sexual exploitation, confirmed, subsequent encounter
+Add:         T7452XS Child sexual exploitation, confirmed, sequela
+Add:         T7461XA Adult forced labor exploitation, confirmed, initial encounter
+Add:         T7461XD Adult forced labor exploitation, confirmed, subsequent encounter
+Add:         T7461XS Adult forced labor exploitation, confirmed, sequela
+Add:         T7462XA Child forced labor exploitation, confirmed, initial encounter
+Add:         T7462XD Child forced labor exploitation, confirmed, subsequent encounter
+Add:         T7462XS Child forced labor exploitation, confirmed, sequela
+Add:         T7651XA Adult forced sexual exploitation, suspected, initial encounter
+Add:         T7651XD Adult forced sexual exploitation, suspected, subsequent encounter
+Add:         T7651XS Adult forced sexual exploitation, suspected, sequela
+Add:         T7652XA Child sexual exploitation, suspected, initial encounter
+Add:         T7652XD Child sexual exploitation, suspected, subsequent encounter
+Add:         T7652XS Child sexual exploitation, suspected, sequela
+Add:         T7661XA Adult forced labor exploitation, suspected, initial encounter
+Add:         T7661XD Adult forced labor exploitation, suspected, subsequent encounter
+Add:         T7661XS Adult forced labor exploitation, suspected, sequela
+Add:         T7662XA Child forced labor exploitation, suspected, initial encounter
+Add:         T7662XD Child forced labor exploitation, suspected, subsequent encounter
+Add:         T7662XS Child forced labor exploitation, suspected, sequela
+Revise from: T8111XA Postprocedural  cardiogenic shock, initial encounter
+Revise to:   T8111XA Postprocedural cardiogenic shock, initial encounter
+Revise from: T8111XD Postprocedural  cardiogenic shock, subsequent encounter
+Revise to:   T8111XD Postprocedural cardiogenic shock, subsequent encounter
+Revise from: T8111XS Postprocedural  cardiogenic shock, sequela
+Revise to:   T8111XS Postprocedural cardiogenic shock, sequela
+Add:         T8140XA Infection following a procedure, unspecified, initial encounter
+Add:         T8140XD Infection following a procedure, unspecified, subsequent encounter
+Add:         T8140XS Infection following a procedure, unspecified, sequela
+Add:         T8141XA Infection following a procedure, superficial incisional surgical site, initial encounter
+Add:         T8141XD Infection following a procedure, superficial incisional surgical site, subsequent encounter
+Add:         T8141XS Infection following a procedure, superficial incisional surgical site, sequela
+Add:         T8142XA Infection following a procedure, deep incisional surgical site, initial encounter
+Add:         T8142XD Infection following a procedure, deep incisional surgical site, subsequent encounter
+Add:         T8142XS Infection following a procedure, deep incisional surgical site, sequela
+Add:         T8143XA Infection following a procedure, organ and space surgical site, initial encounter
+Add:         T8143XD Infection following a procedure, organ and space surgical site, subsequent encounter
+Add:         T8143XS Infection following a procedure, organ and space surgical site, sequela
+Add:         T8144XA Sepsis following a procedure, initial encounter
+Add:         T8144XD Sepsis following a procedure, subsequent encounter
+Add:         T8144XS Sepsis following a procedure, sequela
+Add:         T8149XA Infection following a procedure, other surgical site, initial encounter
+Add:         T8149XD Infection following a procedure, other surgical site, subsequent encounter
+Add:         T8149XS Infection following a procedure, other surgical site, sequela
+Delete:      T814XXA Infection following a procedure, initial encounter
+Delete:      T814XXD Infection following a procedure, subsequent encounter
+Delete:      T814XXS Infection following a procedure, sequela
+Revise from: V00821A Fall from babystroller, initial encounter
+Revise to:   V00821A Fall from baby stroller, initial encounter
+Revise from: V00821D Fall from babystroller, subsequent encounter
+Revise to:   V00821D Fall from baby stroller, subsequent encounter
+Revise from: V00821S Fall from babystroller, sequela
+Revise to:   V00821S Fall from baby stroller, sequela
+Revise from: V00822A Babystroller colliding with stationary object, initial encounter
+Revise to:   V00822A Baby stroller colliding with stationary object, initial encounter
+Revise from: V00822D Babystroller colliding with stationary object, subsequent encounter
+Revise to:   V00822D Baby stroller colliding with stationary object, subsequent encounter
+Revise from: V00822S Babystroller colliding with stationary object, sequela
+Revise to:   V00822S Baby stroller colliding with stationary object, sequela
+Revise from: V00828A Other accident with babystroller, initial encounter
+Revise to:   V00828A Other accident with baby stroller, initial encounter
+Revise from: V00828D Other accident with babystroller, subsequent encounter
+Revise to:   V00828D Other accident with baby stroller, subsequent encounter
+Revise from: V00828S Other accident with babystroller, sequela
+Revise to:   V00828S Other accident with baby stroller, sequela
+Add:         Y076    Multiple perpetrators of maltreatment and neglect
+Revise from: Y92000  Kitchen of unspecified non-institutional (private) residence as  the place of occurrence of the external cause
+Revise to:   Y92000  Kitchen of unspecified non-institutional (private) residence as the place of occurrence of the external cause
+Revise from: Y9323   Activity, snow (alpine) (downhill) skiing, snow boarding, sledding, tobogganing and snow tubing
+Revise to:   Y9323   Activity, snow (alpine) (downhill) skiing, snowboarding, sledding, tobogganing and snow tubing
+Delete:      Z048    Encounter for examination and observation for other specified reasons
+Add:         Z0481   Encounter for examination and observation of victim following forced sexual exploitation
+Add:         Z0482   Encounter for examination and observation of victim following forced labor exploitation
+Add:         Z0489   Encounter for examination and observation for other specified reasons
+Add:         Z1330   Encounter for screening examination for mental health and behavioral disorders, unspecified
+Add:         Z1331   Encounter for screening for depression
+Add:         Z1332   Encounter for screening for maternal depression
+Add:         Z1339   Encounter for screening examination for other mental health and behavioral disorders
+Delete:      Z134    Encounter for screening for certain developmental disorders in childhood
+Add:         Z1340   Encounter for screening for unspecified developmental delays
+Add:         Z1341   Encounter for autism screening
+Add:         Z1342   Encounter for screening for global developmental delays (milestones)
+Add:         Z1349   Encounter for screening for other developmental delays
+Add:         Z20821  Contact with and (suspected) exposure to Zika virus
+Add:         Z2883   Immunization not carried out due to unavailability of vaccine
+Revise from: Z4003   Encounter for prophylactic removal of fallopian tube(s )
+Revise to:   Z4003   Encounter for prophylactic removal of fallopian tube(s)
+Add:         Z62813  Personal history of forced labor or sexual exploitation in childhood
+Revise from: Z6843   Body mass index (BMI) 50-59.9 , adult
+Revise to:   Z6843   Body mass index (BMI) 50-59.9, adult
+Revise from: Z77123  Contact with and (suspected) exposure to radon and other naturally occuring radiation
+Revise to:   Z77123  Contact with and (suspected) exposure to radon and other naturally occurring radiation
+Revise from: Z7729   Contact with and (suspected ) exposure to other hazardous substances
+Revise to:   Z7729   Contact with and (suspected) exposure to other hazardous substances
+Add:         Z83430  Family history of elevated lipoprotein(a)
+Add:         Z83438  Family history of other disorder of lipoprotein metabolism and other lipidemia
+Add:         Z9142   Personal history of forced labor or sexual exploitation
+
+Codes
+  71704 codes in icd10cm_order_2018.txt
+  71932 codes in icd10cm_order_2019.txt
+    279 additions
+     51 deletions
+    143 revisions

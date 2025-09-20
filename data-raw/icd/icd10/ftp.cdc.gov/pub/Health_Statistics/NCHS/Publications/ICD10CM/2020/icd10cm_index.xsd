@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema
+    attributeFormDefault="unqualified"
+    elementFormDefault="unqualified"
+    id="cm_index"
+    version="1.0"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <xsd:annotation>
+        <xsd:documentation>ICD-10-PCS Index Document Definition</xsd:documentation>
+        <xsd:documentation>2011-05-29</xsd:documentation>
+    </xsd:annotation>
+
+    <xsd:element type="xsd:string" name="version"/>
+    <xsd:element type="xsd:string" name="nemod"/>
+    <xsd:element type="xsd:string" name="seeAlso"/>
+    <xsd:element type="xsd:string" name="see"/>
+    <xsd:element type="xsd:string" name="code"/>
+    <xsd:element type="xsd:string" name="seecat"/>
+    <xsd:element type="xsd:string" name="subcat"/>
+    <xsd:element type="xsd:string" name="manif"/>
+    <xsd:element type="xsd:string" name="warning"/>
+
+    <xsd:element name="title">
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:element ref="nemod" minOccurs="0" maxOccurs="1"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:group name="addend">
+        <xsd:choice>
+            <xsd:element type="xsd:string" name="unc" />
+            <xsd:element type="xsd:string" name="old" />
+            <xsd:element type="xsd:string" name="new" />
+        </xsd:choice>
+    </xsd:group>
+
+    <xsd:element name="diff">
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:group ref="addend" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="cell">
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:choice minOccurs="0" maxOccurs="1">
+                    <xsd:element ref="diff" />
+                </xsd:choice>
+            </xsd:sequence>
+            <xsd:attribute name="col" use="required">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:integer">
+                        <xsd:minInclusive value="1"/>
+                        <xsd:maxInclusive value="9"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="head">
+        <xsd:complexType mixed="true">
+            <xsd:attribute name="col" use="required">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:integer">
+                        <xsd:minInclusive value="1"/>
+                        <xsd:maxInclusive value="9"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:group name="termGroup">
+        <xsd:sequence>
+            <xsd:element ref="see" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="seeAlso" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="code" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="seecat" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="subcat" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="manif" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="warning" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="cell" minOccurs="0" maxOccurs="9"/>
+            <xsd:element ref="term" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:group>
+
+    <xsd:element name="term">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:choice minOccurs="1" maxOccurs="1">
+                    <xsd:element ref="title" />
+                    <xsd:element ref="diff" />
+                </xsd:choice>
+                <xsd:group ref="termGroup"/>
+            </xsd:sequence>
+            <xsd:attribute name="level" use="required">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:integer">
+                        <xsd:minInclusive value="1"/>
+                        <xsd:maxInclusive value="9"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="mainTerm">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:choice minOccurs="1" maxOccurs="1">
+                    <xsd:element ref="title" />
+                    <xsd:element ref="diff" />
+                </xsd:choice>
+                <xsd:group ref="termGroup"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="letter">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:choice minOccurs="1" maxOccurs="1">
+                    <xsd:element ref="title" />
+                    <xsd:element ref="diff" />
+                </xsd:choice>
+                <xsd:element ref="mainTerm" minOccurs="1" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="indexHeading">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:choice minOccurs="1" maxOccurs="9">
+                    <xsd:element ref="head" />
+                </xsd:choice>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="ICD10CM.index">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="version" minOccurs="0" maxOccurs="1"/>
+                <xsd:element ref="title" minOccurs="0" maxOccurs="1"/>
+                <xsd:element ref="indexHeading" minOccurs="0" maxOccurs="1"/>
+                <xsd:element ref="letter" minOccurs="1" maxOccurs="unbounded"/>
+            </xsd:sequence>
+            <xsd:attribute name="isAddenda">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="true"/>
+                        <xsd:enumeration value="false"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+
+</xsd:schema>

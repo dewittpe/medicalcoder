@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema
+    attributeFormDefault="unqualified"
+    elementFormDefault="unqualified"
+    id="drug-neoplasm-schema"
+    version="1.0"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <xsd:annotation>
+        <xsd:documentation>ICD-10 Drug and Neoplasm Document Definition</xsd:documentation>
+        <xsd:documentation>2019-05-17</xsd:documentation>
+    </xsd:annotation>
+
+    <xsd:complexType mixed="true" name="contentType">
+        <xsd:annotation>
+            <xsd:documentation>Allows the new/old tags to identify modifications in the addenda.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+            <xsd:element type="xsd:string" minOccurs="0" maxOccurs="1" name="new"/>
+            <xsd:element type="xsd:string" minOccurs="0" maxOccurs="1" name="old"/>
+            <xsd:element type="xsd:string" minOccurs="0" maxOccurs="1" name="nemod"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element type="contentType" name="version"/>
+    <xsd:element type="contentType" name="title"/>
+<!--     <xsd:element type="contentType" name="nemod"/>   -->
+    <xsd:element type="contentType" name="manif"/>
+    <xsd:element type="contentType" name="see"/>
+    <xsd:element type="contentType" name="seeAlso"/>
+
+    <!--NOTE: IDENTICAL TO CELL TYPE [TH,TD], KEEPING SEPARATE IN CASE OF CHANGE...-->
+    <xsd:complexType mixed="true" name="headType">
+        <xsd:annotation>
+            <xsd:documentation>Table cell (TH) definition supporting new/old tags.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="contentType">
+                <xsd:attribute type="xsd:positiveInteger" use="required" name="col"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element type="headType" name="head"/>
+
+    <xsd:complexType name="indexHeadingType">
+        <xsd:annotation>
+            <xsd:documentation>Collection tag for column headers sub-elements (head tags).</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="head" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element type="indexHeadingType" name="indexHeading"/>
+
+    <xsd:complexType name="cellType">
+        <xsd:annotation>
+            <xsd:documentation>Table cell (TD) definition supporting new/old tags.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="contentType">
+                <xsd:attribute type="xsd:positiveInteger" use="required" name="col"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element type="cellType" name="cell"/>
+
+    <xsd:group name="termGroup">
+        <xsd:annotation>
+            <xsd:documentation>Sub-elements shared across term and mainTerm elements.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="title" minOccurs="0" maxOccurs="1"/>
+<!--            <xsd:element ref="nemod" minOccurs="0" maxOccurs="1"/>   -->
+            <xsd:element ref="manif" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="see" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="seeAlso" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="cell" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="term" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:group>
+
+    <xsd:complexType abstract="false" name="termType">
+        <xsd:annotation>
+            <xsd:documentation>Sub-class mainTerm and add the level attribute to it.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="mainTermType">
+                <xsd:attribute type="xsd:positiveInteger" use="required" name="level"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element type="termType" name="term"/>
+
+    <xsd:complexType abstract="false" name="mainTermType">
+        <xsd:annotation>
+            <xsd:documentation>The mainTerm type is the base term element.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:group ref="termGroup"/>
+    </xsd:complexType>
+    <xsd:element type="mainTermType" name="mainTerm"/>
+
+    <xsd:complexType abstract="false" name="letterType">
+        <xsd:sequence>
+            <xsd:element ref="title" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="mainTerm" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element type="letterType" name="letter"/>
+
+<!--    <xsd:element name="ICD10CM.index">   -->
+    <xsd:element name="ICD10CM.index">
+        <xsd:annotation>
+            <xsd:documentation>Top level element and direct child-element sequence.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="version" minOccurs="0" maxOccurs="1"/>
+                <xsd:element ref="title" minOccurs="0" maxOccurs="1"/>
+                <xsd:element ref="indexHeading" minOccurs="0" maxOccurs="1"/>
+                <xsd:element ref="letter" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+</xsd:schema>
+
