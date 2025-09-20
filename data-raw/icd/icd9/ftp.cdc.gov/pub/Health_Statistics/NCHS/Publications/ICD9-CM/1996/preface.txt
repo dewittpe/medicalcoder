@@ -1,0 +1,182 @@
+PREFACE
+This sixth edition of the International Classification of Diseases, 9th Revision, Clinical Modification (ICD-9-CM) is being published by the United States Government in recognition of its responsibility to promulgate this classification throughout the United States for morbidity coding. The International Classification of Diseases, 9th Revision, published by the World Health Organization (WHO) is the foundation of the ICD-9-CM and continues to be the classification employed in cause-of-death coding in the United States. The ICD-9-CM is completely comparable with the ICD-9. The WHO Collaborating Center for Classification of Diseases in North America serves as liaison between the international obligations for comparable classifications and the national health data needs of the United States.
+
+The ICD-9-CM is recommended for use in all clinical settings but is required for reporting diagnoses and diseases to all U.S. Public Health Service and Health Care Financing Administration programs. Guidance in the use of this classification can be found in the section "Guidance in the Use of ICD-9-CM."
+
+ICD-9-CM extensions, interpretations, modifications, addenda, or errata other than those approved by the U.S. Public Health Service and the Health Care Financing Administration are not to be considered official and should not be utilized. Continuous maintenance of the ICD-9- CM is the responsibility of the Federal Government. However, because the ICD-9-CM represents the best in contemporary thinking of clinicians, nosologists, epidemiologists, and statisticians from both public and private sectors, no future modifications will be considered without extensive advice from the appropriate representatives of all major users.
+
+All official authorized addenda through October 1, 1996, have been included in this sixth edition.
+
+ACKNOWLEDGMENTS
+
+Steering Committee
+Comments and suggestions in the preparation of the International Classification of Diseases, 9th Revision, Clinical Modification (ICD-9-CM) were provided to the National Center for Health Statistics by a Steering Committee. The committee was chaired by Robert A. Israel, and included the following representatives from participating organizations.
+
+Robert A. Israel National Center for Health Statistics
+Mary E. Converse, R.R.A. American Hospital Association
+John B. Davis Statistics Canada (observer)
+E. Martin Egelston, Ph.D. American Hospital Association
+Delray Green, R.R.A. National Center for Health Statistics
+Kenneth Johnson American Association of Health Data Systems
+William H. Kincaid American Association for Health Records
+M. Sue Meads, R.R.A. National Center for Health Statistics
+Elizabeth Price, R.R.A. American Medical Record Association
+Harry L. Savitt Health Care Financing Administration
+Vergil N. Slee, M.D. Commission on Professional and Hospital Activities
+Gail L. Warden American Hospital Association
+Mary-j Waterstraat, R.R.A. American Medical Record Association
+Karel M. Weigel, R.R.A. Council on Clinical Classifications
+Harold A. Zintel, M.D. Council on Clinical Classifications
+
+Publication
+
+Morbidity Classification staff and the Division of Data Services, National Center for Health Statistics, created the electronic version of this publication:
+Amy L. Blum, M.H.S.A., R.R.A. Morbidity Classification Staff
+Michael Kremer, M.P.H. Morbidity Classification Staff
+Richard L. Welch Publications Branch Chief
+Rolfe W. Larson Publishing Section Chief
+Margaret Calvert Avery Managing Editor
+Stephen L. Sloan Communication Arts Section Chief
+Patricia A. Vaughan Designer
+June Gable Technical Advisor
+Linda Washington Marketing
+
+TABLE OF CONTENTS
+
+Preface
+Acknowledgments
+Introduction
+The ICD-9-CM Coordination and Maintenance Committee
+Conventions Used in the Tabular List
+Guidance in the Use of ICD-9-CM
+Classification of Diseases and Injuries
+1. Infectious and Parasitic Diseases
+2. Neoplasms
+3. Endocrine, Nutritional, and Metabolic Diseases and Immunity Disorders
+4. Diseases of the Blood and Blood-Forming Organs
+5. Mental Disorders
+6. Diseases of the Nervous System and Sense Organs
+7. Diseases of the Circulatory System
+8. Diseases of the Respiratory System
+9. Diseases of the Digestive System
+10. Diseases of the Genitourinary System
+11. Complications of Pregnancy, Childbirth, and the Puerperium
+12. Diseases of the Skin and Subcutaneous Tissue
+13. Diseases of the Musculoskeletal System and Connective Tissue
+14. Congenital Anomalies
+15. Certain Conditions Originating in the Perinatal Period
+16. Symptoms, Signs, and Ill-Defined Conditions
+17. Injury and Poisoning
+Supplementary Classification
+Classification of Factors Influencing Health Status and Contact With Health Service
+Classification of External Causes of Injury and Poisoning
+Appendices
+A. Morphology of Neoplasms B. Glossary of Mental Disorders C. Classification of Drugs by American Hospital Formulary Service List Number and Their ICD-9-CM Equivalents D. Classification of Industrial Accidents According to Agency E. List of Three-Digit Categories
+
+INTRODUCTION
+
+The International Classification of Diseases, 9th Revision, Clinical Modification (ICD-9-CM) is based on the official version of the World Health Organization's 9th Revision, International Classification of Diseases (ICD-9). ICD-9 is designed for the classification of morbidity and mortality information for statistical purposes, and for the indexing of hospital records by disease and operations, for data storage and retrieval. The historical background of the International Classification of Diseases may be found in the Introduction to ICD-9 (Manual of the International Classification of Diseases, Injuries, and Causes of Death, World Health Organization, Geneva, Switzerland, 1977).
+
+ICD-9-CM is a clinical modification of the World Health Organization's International Classification of Diseases, 9th Revision (ICD-9). The term "clinical" is used to emphasize the modification's intent: to serve as a useful tool in the area of classification of morbidity data for indexing of medical records, medical care review, and ambulatory and other medical care programs, as well as for basic health statistics. To describe the clinical picture of the patient, the codes must be more precise than those needed only for statistical groupings and trend analysis.
+
+THE ICD-9-CM COORDINATION AND MAINTENANCE COMMITTEE
+
+Annual modifications are made to the ICD-9-CM through the ICD-9-CM Coordination and Maintenance Committee (C&M). The Committee is made up of representatives from two Federal Government agencies, the National Center for Health Statistics and the Health Care Financing Administration. The Committee holds meetings twice a year which are open to the public. Modifcation proposals submitted to the Committee for consideration are presented at the meetings for public discussion. Those modification proposals which are approved are incorporated into the official government version of the ICD-9-CM and become effective for use the October 1 of the year following their presentation. This CD-ROM contains the modifications approved from the 1995 C&M cycle.
+
+This CD-ROM is the only official federal government version of the ICD-9-CM. It may be purchased through the Government Printing Office.
+
+CHARACTERISTICS OF ICD-9-CM
+
+ICD-9-CM far exceeds its predecessors in the number of codes provided. The disease classification has been expanded to include health-related conditions and to provide greater specificity at the fifth-digit level of detail. These fifth digits are not optional; they are intended for use in recording the information substantiated in the clinical record.
+
+Volume I of ICD-9-CM contains five appendices:
+
+Appendix A Morphology of Neoplasms
+Appendix B Glossary of Mental Disorders
+Appendix C Classification of Drugs by American Hospital Formulary Service List Number and Their ICD-9-CM Equivalents
+Appendix D Classification of Industrial Accidents According to Agency
+Appendix E List of Three-Digit Categories
+These appendices are included as a reference to the user in order to provide further information about the patient's clinical picture, to further define a diagnostic statement, to aid in classifying new drugs, or to reference three-digit categories.
+Volume 2(1) of ICD-9-CM contains many diagnostic terms which do not appear in Volume I(2) since the index includes most diagnostic terms currently in use.
+
+The Disease Classification
+
+ICD-9-CM is totally compatible with its parent system, ICD-9, thus meeting the need for comparability of morbidity and mortality statistics at the international level. A few fourth-digit codes were created in existing three-digit rubrics only when the necessary detail could not be accommodated by the use of a fifth-digit subclassification. To ensure that each rubric of ICD-9-CM collapses back to its ICD-9 counterpart the following specifications governed the ICD-9-CM disease classification:
+
+Specifications for the Tabular List
+
+1. Three-digit rubrics and their contents are unchanged from ICD-9.
+2. The sequence of three-digit rubrics is unchanged from ICD-9.
+3. Unsubdivided three-digit rubrics are subdivided where necessary to: a) Add clinical detail b) Isolate terms for clinical accuracy
+4. The modification in ICD-9-CM is accomplished by the addition of a fifth digit to existing ICD-9 rubrics.
+5. The optional dual classification in ICD-9 is modified. a) Duplicate rubrics are deleted: 1) Four-digit manifestation categories duplicating etiology entries. 2) Manifestation inclusion terms duplicating etiology entries. b) Manifestations of diseases are identified, to the extent possible, by creating five-digit codes in the etiology rubrics. c) When the manifestation of a disease cannot be included in the etiology rubrics, provision for its identification is made by retaining the ICD-9 rubrics used for classifying manifestations of disease.
+6. The format of ICD-9-CM is revised from that used in ICD-9.
+a) American spelling of medical terms is used. b) Inclusion terms are indented beneath the titles of codes. c) Codes not to be used for principal tabulation of disease are printed with the notation, "Code first underlying disease."
+
+Specifications for the Alphabetic Index
+
+1. Format of the Alphabetic Index follows the format of ICD-9.
+2. When two codes are required to indicate etiology and manifestation, the manifestation code appears in brackets, e.g., diabetic cataract 250.5X [366.41]. The etiology code is always sequenced first followed by the manifestation code.
+
+CONVENTIONS USED IN THE TABULAR LIST
+
+The ICD-9-CM Tabular List for both the Disease and Procedure Classification makes use of certain abbreviations, punctuation, and other conventions which need to be clearly understood.
+
+Abbreviations
+
+NEC Not elsewhere classifiable. The category number for the term including NEC is to be used only when the coder lacks the information necessary to code the term to a more specific category.
+NOS Not otherwise specified. This abbreviation is the equivalent of "unspecified."
+
+Punctuation
+
+[ ] Brackets are used to enclose synonyms, alternative wordings, or explanatory phrases.
+() Parentheses are used to enclose supplementary words which may be present or absent in the statement of a disease or procedure without affecting the code number to which it is assigned.
+: Colons are used in the Tabular List after an incomplete term which needs one or more of the modifiers which follow in order to make it assignable to a given category.
+
+Other Conventions
+
+Format: ICD-9-CM uses an indented format for ease in reference.
+
+Instructional Notations
+
+Includes(3):
+This note appears immediately under a three-digit code title to further define, or give example of, the contents of the category.
+Excludes(4):
+Terms following the word "excludes" are to be coded elsewhere. The term excludes means "DO NOT CODE HERE".
+Use additional code(5)
+This instruction is placed in the Tabular List in those categories where the user will need to add further information (by using an additional code) to give a more complete picture of the diagnosis or procedure.
+Code first underlying disease:(6)
+This instructional note is used for those codes not intended to be used as a principal diagnosis, or not to be sequenced before the underlying disease. The note requires that the underlying disease (etiology) be recorded first and the particular manifestation recorded secondarily. This note appears only in the Tabular List.
+
+GUIDANCE IN THE USE OF ICD-9-CM
+
+To code accurately, it is necessary to have a working knowledge of medical terminology and to understand the characteristics, terminology, and conventions of the ICD-9-CM. Transforming verbal descriptions of diseases, injuries, conditions, and procedures into numerical designations (coding) is a complex activity and should not be undertaken without proper training.
+Originally coding was accomplished to provide access to medical records by diagnoses and operations through retrieval for medical research, education, and administration. Medical codes today are utilized to facilitate payment of health services, to evaluate utilization patterns, and to study the appropriateness of health care costs. Coding provides the bases for epidemiological studies and research into the quality of health care.
+Coding must be performed correctly and consistently to produce meaningful statistics to aid in the planning for the health needs of the Nation.
+Basic steps in coding diagnoses/diseases:
+
+1. Always consult Volume 2, Alphabetic Index to ICD-9-CM first.
+Locate the main entry term. The Alphabetic Index is arranged by condition. Conditions may be expressed as nouns, adjectives, and eponyms. Some conditions have multiple entries under their synonyms. Select the appropriate code.
+
+2. Refer to Volume I of the ICD-9-CM locating the selected code.
+Be guided by any exclusion notes or other instructions that would direct the use of a different code from that selected in the Index for a particular diagnosis, condition, or disease.
+
+3. Read and be guided by the conventions used in the Tabular List (Volume 1, ICD-9-CM).
+
+As reference for use by researchers and to maintain comparability with its parent, the ICD-9, a list of three-digit ICD-9-CM categories is given in Appendix E. While these categories form natural statistical groupings, they cannot substitute for the required five-digit ICD-9-CM code.
+Questions regarding the use and interpretation of the International Classification of Diseases, 9th Revision, Clinical Modification can be directed to any of the organizations listed below.
+
+Central Office on ICD-9-CM American Hospital Association 1 North Franklin Chicago, Illinois 60606
+
+National Center for Health Statistics Centers for Disease Control and Prevention Department of Health and Human Services 6525 Belcrest Road Hyattsville, Maryland 20782
+
+Health Care Financing Administration Division of Prospective Payment System Office of Hospital Policy 7500 Security Blvd., C5-06-27 Baltimore, Maryland 21244-185
+
+
+Endnotes
+1 (Popup) In this CD-ROM version of the ICD-9-CM, material of Volume 2 can be found in the "Index to Diseases (FY97)" and the "Index to External Causes (FY97)"
+2 (Popup) In this CD-ROM version of the ICD-9-CM, material of Volume 1 can be found in "Tabular List of Diseases (FY97)", "Tabular List of Procedures (FY97)" and "Index to Procedures (FY97)".
+3 (Popup) This note appears immediately under a three-digit code title to further define, or give example of, the contents of the category.
+4 (Popup) Terms following the word "excludes" are to be coded elsewhere. The term excludes means "DO NOT CODE HERE".
+5 (Popup) This instruction is placed in the Tabular List in those categories where the user will need to add further information (by using an additional code) to give a more complete picture of the diagnosis or procedure.
+6 (Popup) This instructional note is used for those codes not intended to be used as a principal diagnosis, or not to be sequenced before the underlying disease. The note requires that the underlying disease (etiology) be recorded first and the particular manifestation recorded secondarily. This note appears only in the Tabular List.

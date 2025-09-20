@@ -1,0 +1,39 @@
+SHELL := /bin/bash
+
+# =============================================================================
+# Verify that GNU make is being used and minimum version 4.3.  Grouped targets
+# are used and thus make >= 4.3 is required.
+# =============================================================================
+ifeq ($(origin .RECIPEPREFIX), undefined)  # quick GNU vs BSD probe
+  $(error Please use GNU make (gmake). On macOS: brew install make && use gmake)
+endif
+
+# Require GNU make with grouped-target support (added in 4.3)
+ifeq (,$(filter grouped-target,$(.FEATURES)))
+  $(error Please use GNU Make >= 4.3 (no grouped-target support; found $(MAKE_VERSION)))
+endif
+
+# =============================================================================
+# Make behavior
+# =============================================================================
+MAKEFLAGS += --warn-undefined-variables
+MAKEFLAGS += --no-builtin-rules
+.SUFFIXES:               # clear implicit suffix rules
+.DELETE_ON_ERROR:        # avoid half-written targets
+.NOEXPORT:               # don't export every var by default
+
+# =============================================================================
+# Tools (overridable)
+# =============================================================================
+
+R         ?= R --vanilla
+RSCRIPT   ?= Rscript --vanilla
+RCMDBATCH ?= R CMD BATCH --vanilla
+
+PANDOC   ?= pandoc
+PANDOC_MIN_VERSION ?= 3.7
+
+# CRAN mirror and repos (used in R calls)
+CRAN     ?= https://cran.rstudio.com
+REPOS    := "options(repos=c(CRAN='$(CRAN)'))"
+
