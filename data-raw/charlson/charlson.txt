@@ -1,0 +1,22 @@
+condition_description                  | condition | cdmf2019 | quan2011 | quan2005 | deyo1992
+AIDS                                   | aids      | 6        |          |          |
+AIDS/HIV                               | aidshiv   |          | 4        | 6        | 6
+HIV infection, no AIDS                 | hiv       | 3        |          |          |
+Any malignancy                         | mal       | 2        | 2        | 2        | 2
+Cerebrovascular disease                | cebvd     | 1        | 0        | 1        | 1
+Chronic pulmonary disease              | copd      | 1        | 1        | 1        | 1
+Congestive heart failure               | chf       | 1        | 2        | 1        | 1
+Dementia                               | dem       | 1        | 2        | 1        | 1
+Diabetes with chronic complications    | dmc       | 2        | 1        | 2        | 2
+Diabetes without chronic complications | dm        | 1        | 0        | 1        | 1
+Hemiplegia or paraplegia               | hp        | 2        | 2        | 2        | 2
+Liver disease, mild                    | mld       | 1        | 2        | 1        | 1
+Liver disease, moderate to severe      | msld      | 3        | 4        | 3        | 3
+Metastatic solid tumor                 | mst       | 6        | 6        | 6        | 6
+Myocardial infarction                  | mi        | 1        | 0        | 1        | 1
+Peptic ulcer disease                   | pud       | 1        | 0        | 1        | 1
+Peripheral vascular disease            | pvd       | 1        | 0        | 1        | 1
+Renal disease                          | rnd       |          | 1        | 2        | 2
+Renal disease, mild to moderate        | rndm      | 1        |          |          |
+Renal disease, severe                  | rnds      | 3        |          |          |
+Rheumatic disease                      | rhd       | 1        | 1        | 1        | 1
