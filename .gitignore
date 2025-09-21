@@ -1,4 +1,9 @@
 *.Rout
+data-raw/charlson/charlson_codes.rds
+data-raw/charlson/charlson_index_scores.rds
+data-raw/elixhauser/elixhauser_codes.rds
+data-raw/elixhauser/elixhauser_poa.rds
+data-raw/elixhauser/elixhauser_index_scores.rds
 data-raw/icd/desc_start_stop.rds
 data-raw/icd/icd10/.download_stamp
 data-raw/icd/icd10/icd10.rds
@@ -12,5 +17,3 @@ data-raw/icd/icd_subchapters.rds
 data-raw/icd/known_and_assignable_start_stop.rds
 data-raw/pccc/pccc_codes.rds
 data-raw/pccc/pccc_conditions.rds
-data-raw/charlson/charlson_codes.rds
-data-raw/charlson/charlson_index_scores.rds
