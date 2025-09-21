@@ -1,0 +1,111 @@
+---
+title: "Charlson Comorbidities"
+output:
+ rmarkdown::html_vignette:
+   toc: true
+   number_sections: false
+bibliography: references.bib
+vignette: >
+ %\VignetteIndexEntry{Charlson Comorbidities}
+ %\VignetteEngine{knitr::rmarkdown}
+ %\VignetteEncoding{UTF-8}
+---
+
+```{r, label = "setup", include = FALSE}
+# IMPORTANT SYNTAX NOTE:
+#
+# DO NOT USE the pipeOp `|>`
+#
+# While convenient, that is a R 4.1.0 feature at a minimum. Notable improvements
+# to the pipeOp come in 4.2.0 and 4.2.1.  To keep this package dependent on R >=
+# 3.5.0 do not use the pipeOp.
+
+library(kableExtra)
+options(qwraps2_markup = "markdown")
+options(knitr.kable.NA = '')
+knitr::opts_chunk$set(collapse = TRUE, fig.align = "center")
+```
+
+```{r, label = 'medicalcoder-namespace'}
+library(medicalcoder)
+packageVersion("medicalcoder")
+```
+
+# Introduction
+
+The `medicalcoder` package implements several variants of the Charlson
+comorbidities algorithm.
+
+* `charslon_deyo1992`: Deyo's original set of codes [@deyo1992adapting;@quan2005]
+* `charlson_quan2005` and `charlson_quan2011`: Codes and index scoring [@quan2005;@quan2011]
+* `charlson_cdmf2019`: [@glasheen2019]
+
+# ICD Codes and Index Scores
+
+End users can access the lookup tables for the mapping between ICD-9 and ICD-10
+codes to conditions and the index scoring in `data.frame`s from the
+`get_charlson_codes()` and `get_charlson_index_scores()` calls respectively.
+
+```{r}
+str(get_charlson_codes())
+str(get_charlson_index_scores())
+```
+
+# Applying Charlson
+
+Example, applying the @quan2005 variant of the Charlson comorbidities to the
+`mdcr` data is can be done thusly.
+
+```{r}
+mdcr_results <-
+  comorbidities(
+    data = mdcr,
+    id.vars = "patid",
+    icdv.var = "icdv",
+    icd.codes = "code",
+    dx.var = "dx",
+    flag.method = "current",
+    poa = 1,
+    method = "charlson_quan2005"
+  )
+```
+
+The return object is a `data.frame` with 0/1 integer indicator columns for the
+relevant conditions, the id.vars (if applicable), `age_score` (if age, in years,
+is supplied), `num_cmrb` the number of comorbidities, `cmrb_flag` a 0/1
+indicator for presence of at least one comorbidity, and `cci` the Charlson
+Comorbidity Index.
+
+```{r}
+str(mdcr_results)
+```
+
+Call `summary` on the return object for a list of summary objects.  These can be
+used to generate output tables to the end user's liking.
+
+```{r}
+str(
+  summary(mdcr_results)
+)
+```
+
+```{r, results = "asis"}
+x <- summary(mdcr_results)$conditions[, c("condition_description", "count", "percent")]
+tab <-
+  kableExtra::kbl(
+    x = x,
+    format = "html",
+    caption = "Counts and percentages of patients in the mdcr example data sets with the @quan2005 comorbidities.",
+    col.names = c("", "Count", "Percentage"),
+    digits = 3
+  )
+tab <- kableExtra::pack_rows(tab, group_label = "Comorbidity", start_row = 1, end_row = 17)
+tab <- kableExtra::pack_rows(tab, group_label = "Total Comorbidities", start_row = 18, end_row = nrow(x))
+tab
+```
+
+# References
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                              End of File                                -->
+<!-- ----------------------------------------------------------------------- -->

@@ -1,0 +1,153 @@
+---
+title: "Elixhauser Comorbidities"
+output:
+ rmarkdown::html_vignette:
+   toc: true
+   number_sections: false
+bibliography: references.bib
+vignette: >
+ %\VignetteIndexEntry{Elixhauser Comorbidities}
+ %\VignetteEngine{knitr::rmarkdown}
+ %\VignetteEncoding{UTF-8}
+---
+
+```{r, label = "setup", include = FALSE}
+# IMPORTANT SYNTAX NOTE:
+#
+# DO NOT USE the pipeOp `|>`
+#
+# While convenient, that is a R 4.1.0 feature at a minimum. Notable improvements
+# to the pipeOp come in 4.2.0 and 4.2.1.  To keep this package dependent on R >=
+# 3.5.0 do not use the pipeOp.
+
+library(kableExtra)
+options(qwraps2_markup = "markdown")
+options(knitr.kable.NA = '')
+knitr::opts_chunk$set(collapse = TRUE, fig.align = "center")
+```
+
+```{r, label = 'medicalcoder-namespace'}
+library(medicalcoder)
+packageVersion("medicalcoder")
+```
+
+# Introduction
+
+The `medicalcoder` package implements several variants of the Elixhauser
+comorbidity algorithm.
+
+* Based on codes provided by the Agency for Healthcare Research and Quality (AHRQ) for fiscal years 2022 through 2025 [@ahrq2025]
+  *  `elixhauser_ahrq2022`
+  *  `elixhauser_ahrq2023`
+  *  `elixhauser_ahrq2024`
+  *  `elixhauser_ahrq2025`
+
+* Codes from Table 2 of @quan2005
+  * `elixhauser_elixhauser1988`: [@elixhauser1998;@quan2005]
+  * `elixhauser_ahrq_web`: [@quan2005;@ahrq2017]
+  * `elixhauser_quan2005`: [@quan2005]
+
+**IMPORTANT NOTE:** Elixhauser 1998 and AHRQ Web used diagnostic related
+group (DRG) codes as part of the methods.  The `medicalcoder`
+package _does not_ use DRG codes.  This is consistent with the way these
+methods were implemented in @quan2005.
+
+# ICD Codes and Index Scores
+
+End users may access three lookup tables relevant to Elixhauser variants.
+
+```{r}
+str(get_elixhauser_codes())
+str(get_elixhauser_index_scores())
+str(get_elixhauser_poa())
+```
+
+* `get_elixhauser_codes()` returns a `data.frame` of the ICD codes mapping to
+  each condition with indicators for the inclusion in specific variants.
+
+* `get_elixhauser_index_scores()` returns a `data.frame` with points scored per
+  condition for both mortality and readmission indices by variant.
+
+* `get_elixhauser_poa()` returns a `data.frame` which reports which conditions
+  are required and not required to be present-on-admission for the conditions to
+  be classified as a comorbidity by variant.  For the variants not listed the
+  default is as with the Charlson and PCCC methods, the code needs to be
+  present-on-admission for the condition to be flagged.
+
+# Applying Elixhauser
+
+The Elixhauser method considers if the diagnostic codes are for primary or
+secondary diagnoses.  This is not considered for the PCCC and Charlson methods.
+As such, the following call will throw a warning that the `primarydx.var` or
+`primarydx` argument was not set and that all conditions will be assumed to be
+secondary.  To suppress this warning pass an appropriate value for either
+argument.
+
+```{r}
+# will warn because primarydx and primarydx.var are both NULL
+mdcr_results0 <-
+  comorbidities(
+    data = mdcr,
+    id.vars = "patid",
+    icdv.var = "icdv",
+    icd.codes = "code",
+    dx.var = "dx",
+    flag.method = "current",
+    poa = 1,
+    method = "elixhauser_ahrq2025"
+  )
+
+# no warning
+mdcr_results <-
+  comorbidities(
+    data = mdcr,
+    id.vars = "patid",
+    icdv.var = "icdv",
+    icd.codes = "code",
+    dx.var = "dx",
+    flag.method = "current",
+    poa = 1,
+    method = "elixhauser_ahrq2025",
+    primarydx = 0
+  )
+
+identical(mdcr_results, mdcr_results0)
+```
+
+The return object is a `data.frame` with 0/1 integer indicator columns for the
+relevant conditions, the id.vars (if applicable), `num_cmrb` the number of comorbidities, `cmrb_flag` a 0/1
+indicator for presence of at least one comorbidity, and the mortality and
+readmission index scores.
+
+```{r}
+str(mdcr_results)
+```
+
+Call `summary` to get a list of summaries which can be used to generate summary
+tables.
+
+```{r}
+summary(mdcr_results)
+```
+
+```{r, results = "asis"}
+x <- summary(mdcr_results)$conditions
+tab <-
+  kableExtra::kbl(
+    x = x,
+    format = "html",
+    caption = "Counts and percentages of patients in the mdcr example data sets with the Elixhauser @quan2005 comorbidities.",
+    col.names = c("", "Count", "Percentage"),
+    digits = 3
+  )
+tab <- kableExtra::pack_rows(tab, group_label = "Comorbidity", start_row = 1, end_row = 39)
+tab <- kableExtra::pack_rows(tab, group_label = "Total Comorbidities", start_row = 39, end_row = nrow(x))
+tab
+```
+
+
+# References
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                              End of File                                -->
+<!-- ----------------------------------------------------------------------- -->

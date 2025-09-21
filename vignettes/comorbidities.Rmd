@@ -1,0 +1,370 @@
+---
+title: "Comorbidities"
+output:
+ rmarkdown::html_vignette:
+   toc: true
+   number_sections: false
+bibliography: references.bib
+vignette: >
+ %\VignetteIndexEntry{Comorbidities}
+ %\VignetteEngine{knitr::rmarkdown}
+ %\VignetteEncoding{UTF-8}
+---
+
+```{r, label = "setup", include = FALSE}
+# IMPORTANT SYNTAX NOTE:
+#
+# DO NOT USE the pipeOp `|>`
+#
+# While convenient, that is a R 4.1.0 feature at a minimum. Notable improvements
+# to the pipeOp come in 4.2.0 and 4.2.1.  To keep this package dependent on R >=
+# 3.5.0 do not use the pipeOp.
+
+library(kableExtra)
+knitr::opts_chunk$set(collapse = TRUE, fig.align = "center")
+options(qwraps2_markup = "markdown")
+```
+
+```{r, label = 'medicalcoder-namespace'}
+library(medicalcoder)
+packageVersion("medicalcoder")
+```
+
+# Comorbidity Algorithms
+
+There are three comorbidity algorithms, each with several variants,
+implemented in the `medicalcoder` package:
+
+1. Pediatric Complex Chronic Condition System (PCCC)
+   a. Version 2.0 [@feudtner2014pediatric]
+       i. `pccc_v2.0` is consistent with the older R package pccc (v1.0.6) [@dewitt2025pccc].
+       ii. `pccc_v2.1` modifies the set of ICD codes to be more consistent with documentation and other implementations of v2.0.
+
+   b. Version 3.0 [@feinstein2024pediatric]
+       i. `pccc_v3.0` is consistent with the SAS software published on the [Children's Hospital Association](https://www.childrenshospitals.org/content/analytics/toolkit/complex-chronic-conditions) website in conjunction with @feinstein2024pediatric.
+       ii. `pccc_v3.1` modifies the set of ICD codes to be more consistent with documentation.
+
+2. Charlson
+   a. `charslon_deyo1992`: Deyo's original set of codes [@deyo1992adapting;@quan2005]
+   b. `charlson_quan2005` and `charlson_quan2011`: Codes and index scoring [@quan2005;@quan2011]
+   c. `charlson_cdmf2019`: [@glasheen2019]
+
+3. Elixhauser
+   a. Based on codes provided by the Agency for Healthcare Research and Quality (AHRQ) for fiscal years 2022 through 2025 [@ahrq2025]
+      i. `elixhauser_ahrq2022`
+      ii. `elixhauser_ahrq2023`
+      iii. `elixhauser_ahrq2024`
+      iv. `elixhauser_ahrq2025`
+
+   b. Codes from Table 2 of @quan2005
+      i. `elixhauser_elixhauser1988`: [@elixhauser1998;@quan2005]
+      ii. `elixhauser_ahrq_web`: [@quan2005;@ahrq2017]
+      iii. `elixhauser_quan2005`: [@quan2005]
+
+**IMPORTANT NOTE:** Elixhauser 1998 and AHRQ Web used diagnostic related
+group (DRG) codes as part of the methods.  The `medicalcoder`
+package _does not_ use DRG codes.  This is consistent with the way these
+methods were implemented in @quan2005.
+
+A list of the valid methods for the package can be accessed via a non-exported
+function.  In general, the methods are listed in the form of
+`<algorithm>_<version>`.
+```{r label = "valid-methods"}
+medicalcoder:::comorbidities_methods()
+```
+
+Vignettes for each of the major methods are available.
+
+```{r echo = TRUE, eval = FALSE}
+vignette(topic = "pccc", package = "medicalcoder")
+vignette(topic = "charlson", package = "medicalcoder")
+vignette(topic = "elixhauser", package = "medicalcoder")
+```
+
+The focus of this vignette is to highlight the general use of the
+`comorbidities` function.
+
+```{r, label = 'test-that-the-args-have-not-changed', include = FALSE}
+# IF THIS FAILS YOU NEED TO MAKE SURE THE DOCUMENTATION IN THIS VIGNETTE IS
+# UPTO DATE
+# dput(capture.output(args(comorbidities)))
+stopifnot(
+  capture.output(args(comorbidities))  ==
+    c("function (data, icd.codes, method, id.vars = NULL, icdv.var = NULL, ",
+      "    icdv = NULL, dx.var = NULL, dx = NULL, poa.var = NULL, poa = NULL, ",
+      "    age.var = NULL, primarydx.var = NULL, primarydx = NULL, flag.method = c(\"current\", ",
+      "        \"cumulative\"), full.codes = TRUE, compact.codes = TRUE, ",
+      "    subconditions = FALSE) ", "NULL")
+)
+```
+
+Details of the function arguments call are in the manual.
+```{r label = "read-the-manual", eval = FALSE}
+help(topic = "comorbidities", package = "medicalcoder")
+```
+
+```{r label = "comorbidities-args"}
+args(comorbidities)
+```
+
+We highlight a general concept for the arguments.  Note that several arguments
+are in pairs, e.g., `dx.var` and `dx` (used for denoting if codes are
+diagnostic or procedural), or `poa.var` and `poa` (used for denoting if a codes
+are present on admission).  The `.var` version is the name of a variable within
+the `data.frame` passed into the `data` argument.  The version without `.var` is
+a default value to be applied to the entirety of `data`. We will see some
+examples where this is useful.
+
+The `data` element is expected to be a `data.frame`, or at least something that
+inherits the `data.frame` class.  The format is expected to be a 'long' format.
+One row per code.  Two example data sets in the package show the general
+expected form of the `data`.
+
+```{r label = "example-data"}
+head(mdcr)
+head(mdcr_longitudinal)
+```
+
+A great level of detail for each of the comorbidity algorithms are provided in
+dedicated vignettes:
+
+```{r label = "other-vignettes", eval = FALSE}
+vignette(package = "medicalcoder")$results
+```
+
+# When are conditions flag?
+
+Whether or not the code is present on admission (POA) is useful when applying
+the comorbidity algorithms and considering if the patient has a comorbidity at
+time of encounter start of if the condition is a result of the current
+hospitalization.
+
+Implementation of Elixhauser comorbidities for 2022 and beyond [@ahrq2025]
+explicitly define the use of present on admission flags for specific conditions
+(see the `poa_required` flag reported in the data set returned by
+`get_elixhauser_poa`).
+```{r}
+str(get_elixhauser_poa())
+```
+
+For Charlson comorbidities, from @quan2011:
+
+> We defined comorbidities in the previous admissions using major and secondary
+> diagnoses, without consideration of diagnosis type. The presence of a comorbid
+> condition was assigned to a patient when it was present in index or previous
+> admission records. Otherwise, the absence of the condition was assigned to the
+> patient.
+
+From @quan2005:
+
+> The decision of whether to include or exclude specific codes or conditions
+> from a coding algorithm depends to a large extent on a given study’s
+> objectives. The original Charlson index used conditions present in
+> hospitalized medical patients (regardless of whether the condition was present
+> at baseline or arose after admission) to predict survival over an ensuing
+> year. For such a study, a decision to exclude conditions arising after
+> admission would not be ideal, as it would result in a loss of prognostic
+> information relevant to long-term survival, and an 'under-adjustment' in
+> risk-adjusted survival analyses. In contrast, in the context of studying
+> in-hospital outcomes of a surgical procedure, researchers would be best
+> advised to confine their risk adjustment to variables that are predominantly
+> present at baseline. In jurisdictions that have diagnosis type indicators, the
+> methodological decision is simply one of deciding, based on study objectives,
+> whether to use or not use the indicators. In regions or countries without
+> diagnosis type indicators, meanwhile, the data that we present ... can help
+> researchers make decisions on a condition-by-condition basis of whether to
+> include particular variables, depending on their study objectives.
+
+PCCC does not explicitly note the if POA is required.
+
+`medicalcoder` has been built to consider POA for all comorbidity algorithms.
+
+End users can use a 0/1 indicator variable in the data set to report
+which codes are POA via the function argument `poa.var`.  If all the codes are
+to be considered POA or not, the functional argument `poa` can be used to set a
+common status without adding a column to the input data set.
+
+Additionally, `medicalcoder` provides a `flag.method` argument for longitudinal
+data sets.
+
+**Example:** Let's assume we have a patient record for six encounters.  We use
+ICD-10 diagnostic codes C78.4 and I50.40 which maps to a cancer and heart
+failure (cardiovascular disease) comorbidity respectively for PCCC, Charlson,
+and Elixhauser. For demonstration, we also flag POA with the second report of
+I50.40 intentionally marked as not present on admission.
+
+```{r, label = "example-setup"}
+lookup_icd_codes(c("C78.4", "I50.40"))
+
+subset(get_pccc_codes(),
+       subset = full_code %in% c("C78.4", "I50.40"),
+       select = c("icdv", "dx", "code", "full_code", "condition", "pccc_v3.0"))
+
+subset(get_charlson_codes(),
+       subset = full_code %in% c("C78.4", "I50.40"),
+       select = c("icdv", "dx", "code", "full_code", "condition", "charlson_quan2011"))
+
+subset(get_elixhauser_codes(),
+       subset = full_code %in% c("C78.4", "I50.40") & elixhauser_ahrq2025 == 1L,
+       select = c("icdv", "dx", "code", "full_code", "condition", "elixhauser_ahrq2025"))
+
+record <-
+data.table::fread(text = "
+patid | encid | code   | poa
+A     | 1     | NA     | NA
+A     | 2     | C78.4  | 0
+A     | 3     | I50.40 | 1
+A     | 4     | NA     | NA
+A     | 5     | C78.4  | 1
+A     | 5     | I50.40 | 0
+A     | 6     | NA     | NA
+")
+```
+
+We will call `comorbidities` for the three methods using static POA flags and
+dynamic POA flags, and both flag methods.
+
+```{r, include = FALSE}
+args <-
+  list(data = record,
+       icd.codes = "code",
+       id.vars = c("patid", "encid"),
+       icdv = 10L,
+       dx = 1,
+       primarydx = 0L
+  )
+args_current_poa0 <- c(args, poa = 0L,        flag.method = "current")
+args_current_poa1 <- c(args, poa = 1L,        flag.method = "current")
+args_current_poav <- c(args, poa.var = "poa", flag.method = "current")
+args_cumulative_poa0 <- c(args, poa = 0L,        flag.method = "cumulative")
+args_cumulative_poa1 <- c(args, poa = 1L,        flag.method = "cumulative")
+args_cumulative_poav <- c(args, poa.var = "poa", flag.method = "cumulative")
+
+left_cols <-
+  cbind(encid = 1L:6L,
+        ICD = c("", "C78.4", paste0("I50.40", footnote_marker_symbol(1L)),
+                "", paste0("C78.4", footnote_marker_symbol(1L), "; I50.40"), ""))
+
+rtn <-
+  rbind(
+    do.call(cbind,
+            list(
+              left_cols,
+              do.call(comorbidities, c(args_current_poa0, method = "pccc_v3.0"))[,           .(CVD = cvd_dxpr_or_tech, CANCER = malignancy_dxpr_or_tech)],
+              do.call(comorbidities, c(args_current_poa0, method = "charlson_quan2011"))[,   .(CVD = chf,              CANCER = mst)],
+              do.call(comorbidities, c(args_current_poa0, method = "elixhauser_ahrq2025"))[, .(CVD = HF,               CANCER = CANCER_METS)],
+              do.call(comorbidities, c(args_current_poa1, method = "pccc_v3.0"))[,           .(CVD = cvd_dxpr_or_tech, CANCER = malignancy_dxpr_or_tech)],
+              do.call(comorbidities, c(args_current_poa1, method = "charlson_quan2011"))[,   .(CVD = chf,              CANCER = mst)],
+              do.call(comorbidities, c(args_current_poa1, method = "elixhauser_ahrq2025"))[, .(CVD = HF,               CANCER = CANCER_METS)],
+              do.call(comorbidities, c(args_current_poav, method = "pccc_v3.0"))[,           .(CVD = cvd_dxpr_or_tech, CANCER = malignancy_dxpr_or_tech)],
+              do.call(comorbidities, c(args_current_poav, method = "charlson_quan2011"))[,   .(CVD = chf,              CANCER = mst)],
+              do.call(comorbidities, c(args_current_poav, method = "elixhauser_ahrq2025"))[, .(CVD = HF,               CANCER = CANCER_METS)]
+    ))
+  ,
+    do.call(cbind,
+            list(
+              left_cols,
+              do.call(comorbidities, c(args_cumulative_poa0, method = "pccc_v3.0"))[,           .(CVD = cvd_dxpr_or_tech, CANCER = malignancy_dxpr_or_tech)],
+              do.call(comorbidities, c(args_cumulative_poa0, method = "charlson_quan2011"))[,   .(CVD = chf,              CANCER = mst)],
+              do.call(comorbidities, c(args_cumulative_poa0, method = "elixhauser_ahrq2025"))[, .(CVD = HF,               CANCER = CANCER_METS)],
+              do.call(comorbidities, c(args_cumulative_poa1, method = "pccc_v3.0"))[,           .(CVD = cvd_dxpr_or_tech, CANCER = malignancy_dxpr_or_tech)],
+              do.call(comorbidities, c(args_cumulative_poa1, method = "charlson_quan2011"))[,   .(CVD = chf,              CANCER = mst)],
+              do.call(comorbidities, c(args_cumulative_poa1, method = "elixhauser_ahrq2025"))[, .(CVD = HF,               CANCER = CANCER_METS)],
+              do.call(comorbidities, c(args_cumulative_poav, method = "pccc_v3.0"))[,           .(CVD = cvd_dxpr_or_tech, CANCER = malignancy_dxpr_or_tech)],
+              do.call(comorbidities, c(args_cumulative_poav, method = "charlson_quan2011"))[,   .(CVD = chf,              CANCER = mst)],
+              do.call(comorbidities, c(args_cumulative_poav, method = "elixhauser_ahrq2025"))[, .(CVD = HF,               CANCER = CANCER_METS)]
+    ))
+  )
+```
+
+```{r, echo = FALSE, results = "asis"}
+tab <-
+  kbl(
+    rtn,
+    row.names = FALSE,
+    escape = FALSE,
+    caption = "Indicators for when a comorbidity is flagged based on the algorithm, present on admission (poa), and flag.method. The two ICD codes,C78.4 and I50.40, map to cancer and cardiovascular disease respectively."
+  )
+tab <-
+  footnote(
+    tab,
+    symbol = c("Present on Admission"),
+    general = "C78.4 does not need to be POA to count for Elixhauser. I50.40 does need to be POA to count for Elixhauser."
+  )
+
+tab <- pack_rows(tab, "flag.method = 'current'", 1L, 6L)
+tab <- pack_rows(tab, "flag.method = 'cumulative'", 7L, 12L)
+tab <- add_header_above(tab, c(" " = 2L, rep(c("PCCC" = 2L, "Charlson" = 2L, "Elixhauser" = 2L), 3L)))
+tab <- add_header_above(tab, c(" " = 2L, c("POA = 0" = 6L, "POA = 1" = 6L, "poa.var = 'poa'" = 6L)))
+tab
+```
+
+
+# Mapping ICD Codes to Comorbidities
+
+End users can quickly assess the lookup table for all the ICD codes associated
+with a comorbidity algorithm using the `get_<comorbidity>_codes` functions.
+Each `data.frame` has columns for the ICD version, diagnostic or procedure flag,
+the compact code, and the full code.  A column for the condition and other
+method specific flags are provided.  Lastly, there are indicator columns for the
+variant of each method
+
+```{r, label = "get-codes"}
+str(get_pccc_codes())
+str(get_charlson_codes())
+str(get_elixhauser_codes())
+```
+
+End users should be aware that just because an ICD code is in one of these data
+sets does not mean that the patient has the condition.  For Elixhauser, the
+presence on admission is important to consider.  For PCCC version 3.0 and 3.1
+tech dependencies on its own is insufficient to flag a condition (see
+`vignette(topic = "pccc", package = "medicalcoder")`).
+
+For the `charlson_cdmf2019` method [@glasheen2019] the AIDS categories is
+defined by the presence of HIV and an opportunistic infection.  In the
+following example, if only considering ICD codes which flag 'aids',
+there would be several thousand cases of aids.  At the same time only six cases
+of HIV.
+
+<!-- NOTE: the following example is also in tests/test-charlson_cdmf2019.R -->
+```{r}
+cdmf_eg <-
+  merge(x = mdcr,
+        y = subset(get_charlson_codes(),
+                   condition %in% c("aids", "hiv") &
+                   charlson_cdmf2019 == 1),
+        by = c("icdv", "dx", "code"))
+data.table::setDT(cdmf_eg)
+
+cdmf_eg <-
+  data.table::dcast(data = cdmf_eg,
+                    patid ~ condition,
+                    value.var = "charlson_cdmf2019",
+                    fun.aggregate = function(x) {as.integer(sum(x) > 0)})
+
+cdmf_eg[, .N, keyby = .(hiv, aids)]
+```
+
+When calling `comorbidities` we get the expected result.
+
+```{r}
+cmdf_mdcr <-
+  comorbidities(data = mdcr,
+                icd.codes = "code",
+                id.vars = "patid",
+                icdv.var = "icdv",
+                dx.var = "dx",
+                method = "charlson_cdmf2019",
+                flag.method = "current",
+                poa = 1)
+data.table::setDT(cmdf_mdcr)
+
+cmdf_mdcr[, .N, keyby = .(hiv, aids)]
+```
+
+# References
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                              End of File                                -->
+<!------------------------------------------------------------------------- -->

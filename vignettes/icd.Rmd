@@ -1,0 +1,417 @@
+---
+title: "ICD Codes"
+output:
+ rmarkdown::html_vignette:
+   toc: true
+   toc_depth: 1
+   number_sections: false
+vignette: >
+ %\VignetteIndexEntry{ICD Codes}
+ %\VignetteEngine{knitr::rmarkdown}
+ %\VignetteEncoding{UTF-8}
+---
+
+```{r label = "setup", include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, fig.align = "center")
+```
+
+There are four functions in the medicalcoder package specifically for working
+with International Classification of Diseases (ICD) codes.
+
+1. `get_icd_codes`: returns a look up table of ICD codes as a `data.frame`.
+2. `lookup_icd_codes`: returns details on specific ICD codes.
+3. `is_icd`: returns `TRUE` or `FLASE` for a vector of codes while considering
+   ICD version, type, and billable status.
+4. `icd_compact_to_full`: insert a decimal point into a string to be consistent
+   with ICD-9 diagnostic, ICD-9 procedure, or ICD-10 diagnostic codes.  (ICD-10
+   procedure codes do not have decimal places.)  NOTE: this will not validate
+   the return as a valid ICD code, just format the input string appropriately.
+
+# `get_icd_codes`
+
+A look up table for the ICD codes have been built as internal data sets within
+the medicalcoder package.  The sources for these look up tables come from the
+Centers for Disease Control (CDC) and from the Centers for Medicare & Medicaid
+Services (CMS).  The specific links to the source data sets can be found in the
+source code for the medicalcoder package on
+[Github](https://github.com/dewittpe/medicalcoder).
+```{r label = "medicalcoder-url"}
+cat(packageDescription('medicalcoder')$URL)
+```
+
+End users can get a `data.frame` with
+ICD-9 diagnostic, ICD-9 procedure, ICD-10 diagnostic, and ICD-10 procedure codes.
+
+```{r label = "get-icd-codes"}
+library(medicalcoder)
+icd_codes <- get_icd_codes()
+str(icd_codes)
+```
+The columns of this data.frame are:
+
+* `icdv`: integer value 9 or 10 indicating ICD-9 or ICD-10
+* `dx`: 1 if the code is a diagnostic code, i.e., from the ICD-9-CM or ICD-10-CM
+  standard.  This also covers codes from the World Health Organization (WHO) and
+  the Center for Disease Control and Prevention (CDC) Mortality codes.
+  `dx` will be 0 if the code is a procedure code, i.e., from the ICD-9-PCS or
+  ICD-10-PCS standard.
+* `full_code`: the full ICD code with the decimal point if applicable.
+* `code`: compact code, any applicable decimal point has been omitted.
+* `src`: a character vector denoting the source of the information.
+* `known_start`: The first year that the medicalcoder package as data for this
+  code.
+  * For codes based on the ICD-9-CM, ICD-9-PCS, ICD-10-CM, ICD-10-PCS standards
+    the year is the _fiscal year_ for the United States Federal Government;
+    October 1 - September 30.
+    For example, fiscal year 2018 started October 1, 2017 and ended on September
+    30, 2018.
+
+  * For codes from the World Health Organization (WHO) and the Centers for
+    Disease Control and Prevention (CDC) Mortality coding, the year is
+    _calendar year_.
+
+* `known_end`: the last year the code was part of the standard, or that the
+  medicalcoder package an data for.
+  * ICD-9 last year of active use was FY 2015.
+  * ICD-10 is active.  The current version of medicalcoder has details on ICD-10
+    codes through FY `r max(icd_codes[["known_end"]][icd_codes[["icdv"]] == 10L])`.
+
+```{r, label = "example-for-assignable", include = FALSE}
+d4 <- lookup_icd_codes(x = "^C84\\.6", regex = TRUE, compact.codes = FALSE)
+d4 <- subset(d4, src %in% c("cms", "who"), select = c("src", "full_code"))
+d4 <- unique(d4)
+d4
+```
+
+* `assignable_start`: The first year (fiscal or calendar based on src) a code
+  was assignable. `NA` indicates the code was never assignable.  Assignable
+  status can vary from source to source. For example the code "C84.6" is an
+  assignable code using the WHO ICD-10 codes because there is no code with more
+  granularity.  The same code is not assignable under ICD-10-CM because codes
+  `r paste(d4$full_code[nchar(d4$full_code) > 5], collapse = ", ")`
+  exist.  Codes that are not assignable are called header codes.  Ideally codes
+  are reported with the greatest level of granularity, but that is not always the
+  case.
+
+* `assignable_end`: The last year the code was assignable.
+
+To get the descriptions of the ICD codes call `get_icd_codes` with
+`with.descriptions = TRUE`.
+```{r, label = "icd-codes-with-descriptions"}
+str(get_icd_codes(with.descriptions = TRUE))
+```
+The return has the additional columns:
+
+* `desc`: the description of the code
+* `desc_start`: the first fiscal_year that the description was documented
+* `desc_end`: the last fiscal_year that the description was documented
+
+Over time the descriptions for some ICD codes were modified within sources.
+There are also many differences between sources.  The table below has several
+examples.
+
+```{r, label = "deltas-in-desc", results = "hide"}
+delta_in_desc <-
+  subset(get_icd_codes(with.descriptions = TRUE),
+         subset = full_code %in% c("Z88.7", "010.93", "V76.49"),
+         select = c("full_code", "src", "desc", "desc_start", "desc_end"))
+```
+
+```{r, label = "deltas-in-desc-show", echo = FALSE, results = "asis"}
+knitr::kable(delta_in_desc, row.names = FALSE)
+```
+
+* Z88.7 has differences in the description over time within `cms` source and
+  between `cms` and `who`.
+
+* The only difference in the description for 010.93 is a comma.
+
+* ICD-9-CM V79.49 had the description of 'other' which would require exploration
+  of the header codes to understand. Even when the most verbose description may
+  still require consideration of the header codes to fully understand.
+
+Lastly, the `get_icd_codes` function includes the argument `with.hierarchy`
+which will provide additional details for the codes.
+
+```{r label = "get-icd-descs-with-heirarchy"}
+str(get_icd_codes(with.hierarchy = TRUE))
+```
+The additional columns, in order of hierarchy, are:
+
+* chapter
+* subchapter
+* category
+* subcategory
+* subclassification
+* subsubclassification
+* extension
+
+To keep the install size of `medicalcoder` under the size
+limits for CRAN, the stored data is structured in a way that several joins and
+other operations are need to have a data set that is end user friendly.
+Several data sets are generated and cached when the namespace is loaded.
+
+# `lookup_icd_codes`
+
+A related function, `lookup_icd_codes`, allows the user to look up specific ICD
+codes. The return is a `data.frame`.  The columns report the input code, if it
+was matched as a full code (with an applicable decimal point) or a compact code
+(applicable decimal point omitted) along with the ICD version ,type, and when
+the code was assignable.
+
+```{r, label = "lookup-icd-code-example"}
+codes <- c("0011", "7329", "732", "73291", "not a code", "001.1", "A9248", "A924", "Z00")
+knitr::kable(lookup_icd_codes(codes), row.names = FALSE)
+```
+
+It is possible to restrict the look up to just full or compact codes.  The
+default, as shown above, is to consider full and compact codes.  Set `full.codes
+= FALSE` so only compact codes are considered.
+```{r, label = "lookup-compact-icd-codes"}
+knitr::kable(
+  lookup_icd_codes(codes, full.codes = FALSE),
+  row.names = FALSE
+)
+```
+And set `compact.codes = FALSE` to only consider full codes.
+```{r, label = "lookup-full-icd-codes"}
+knitr::kable(
+  lookup_icd_codes(codes, compact.codes = FALSE),
+  row.names = FALSE
+)
+```
+
+By default, `lookup_icd_codes` considers the input to be a string and a direct
+match to the internal lookup table is made.
+
+`lookup_icd_codes` can also accept regular expressions.  By providing a vector
+of regular expression patterns for the codes (passed to `grep`)
+
+```{r, label = "lookup-icd-code-by-regex"}
+knitr::kable(
+  lookup_icd_codes(x = "^C84\\.6[0-1A-Z]", regex = TRUE),
+  row.names = FALSE
+)
+```
+
+# `is_icd`
+
+By convention, ICD codes are generally reported without decimal points. Under
+this convention discriminating between ICD-9 and ICD-10, and between diagnostic
+and procedure codes can be difficult.
+
+Is "7993" a valid code?  It is not a valid ICD-10 code as a four digit code
+could not be an ICD-10 procedure code, and all ICD-10 diagnostic codes start
+with a letter, not a number.  So this string could only be a ICD-9 code.  It is
+a valid ICD-9 diagnostic code, and a valid ICD-9 procedure code.
+
+```{r label = "icd-7993"}
+is_icd(x = "7993")
+is_icd(x = "7993", icdv =  9, dx = 1)
+is_icd(x = "7993", icdv =  9, dx = 0)
+is_icd(x = "7993", icdv = 10, dx = 1)
+is_icd(x = "7993", icdv = 10, dx = 0)
+lookup_icd_codes("7993")
+```
+
+A vector of possible codes:
+```{r}
+x <- c("7993", "A924", "7993", "A924", "no", "A92", "516", "5163", "51631", "A00")
+is_icd(x)
+```
+
+If you have codes with decimal points then discriminating between ICD-9
+diagnostic and procedure codes can be done.
+
+```{r}
+x <- c("7993",  # valid dx and pr code
+       ".7993", # not a valid code
+       "7.993", # not a valid code
+       "79.93", # invalid dx code; valid pr code
+       "799.3", # valid dx code; invalid pr code
+       "7993.") # not a valid code
+data.frame(x = x,
+           icd9_dx = is_icd(x, icdv = 9, dx = 1, warn.ambiguous = FALSE),
+           icd9_pr = is_icd(x, icdv = 9, dx = 0, warn.ambiguous = FALSE))
+```
+
+### Assignable codes
+
+Ideally, codes are reported with the greatest level of detail.  While there are
+always a chance for incomplete coding, it is possible that an assignable code in
+one year becomes a header code in a subsequent year.  Let's look at the
+ICD-9 DX code 516.3 and five digit codes 516.30 through 516.39 (not all of these
+are valid, as we'll see in the examples.)
+
+Given the default settings, we have the following results for testing if these
+strings are valid ICD-9 dx codes.
+
+By default, if no year is provided in the `is_icd` call then return will
+be `TRUE` if the code was ever assignable.
+
+```{r, results = "asis"}
+x <- paste0("516.3", c("", 0:9))
+tab <-
+  data.frame(
+    code       = x,
+    default    = is_icd(x, icdv = 9, dx = 1),
+    assignable_1997 = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 1997),
+    assignable_2010 = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 2010),
+    assignable_2011 = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 2011),
+    assignable_2012 = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 2012),
+    assignable_2013 = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 2013),
+    assignable_2016 = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 2016),
+    assignable_ever = is_icd(x, src = "cms", icdv = 9, dx = 1, ever.assignable = TRUE)
+  )
+knitr::kable(tab)
+```
+
+Similar information can be quickly and easily retrieved via `lookup_icd_codes`.
+```{r, results = "asis"}
+knitr::kable(lookup_icd_codes(x))
+```
+
+For fiscal years `r lookup_icd_codes("516.3")$assignable_start` through
+`r lookup_icd_codes("516.3")$assignable_end` the code 516.3 was assignable.  In
+`r lookup_icd_codes("516.30")$assignable_start` 516.3 was not assignable due to the
+introduction of the five digit codes 516.30, 516.31, 516.32, 516.33, 516.34,
+516.35, 516.36, and 516.37.  Codes 526.38 and 516.39 were never in the ICD-9-CM
+standard.  When looking at retrospective data over several years the use of the
+`ever.assignable` argument will simplify the testing for valid codes.
+
+### Header codes
+
+There is also an option to considering header codes to be valid.  As seen below,
+the code "516" is a header, it was never assignable in ICD-9-CM.
+By setting `headerok = TRUE` "516" will be flagged as a valid code.  A ICD-10
+header "A00" will be FALSE in the following checks of ICD-9 codes.
+
+```{r}
+x <- c("516", "5163", "51631", "A00")
+tab <-
+  data.frame(
+    code     = x,
+    default  = is_icd(x, icdv = 9, dx = 1, src = "cms", headerok = FALSE, ever.assignable = FALSE, warn.ambiguous = FALSE),
+    ever     = is_icd(x, icdv = 9, dx = 1, src = "cms", headerok = FALSE, ever.assignable = TRUE,  warn.ambiguous = FALSE),
+    headerok = is_icd(x, icdv = 9, dx = 1, src = "cms", headerok = TRUE,                           warn.ambiguous = FALSE)
+  )
+knitr::kable(tab)
+```
+
+A more complex situation is ICD-9-CM code 719.7 and the five digit codes
+719.70, 719.75, 719.76, 719.77, 719.78, and 719.79.  The five digit codes were
+assignable codes through FY 2004.  Starting in FY 2004 the five digit codes were
+removed from the standard and the four digit code became assignable.  This is a
+rare example of a header code becoming assignable.
+```{r label="7197"}
+x <- paste0("719.7", c("", "0", 5:9))
+tab <-
+  data.frame(
+    code            = x,
+    default         = is_icd(x, src = "cms", icdv = 9, dx = 1),
+    assignable_2002 = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 2002),
+    assignable_2003 = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 2003),
+    assignable_2004 = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 2004),
+    assignable_2005 = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 2005),
+    assignable_ever = is_icd(x, src = "cms", icdv = 9, dx = 1, ever.assignable = TRUE)
+  )
+knitr::kable(tab)
+```
+
+# `icd_compact_to_full`
+
+To go from a full code to a compact code is simple, omit any decimal point in
+the string.
+
+To go from a compact code to a full code requires knowing if the code is from
+version 9 or 10, and if it is a diagnostic or a procedure code.
+`icd_compact_to_full` will format a string appropriately, within reason.  This
+method only formats the strings and will not validate the return.
+
+For example, the compact code "E1234" is in the format expected for a ICD-9
+diagnostic code or ICD-10 diagnostic code.  It could not be a procedure code as
+ICD-9 procedure codes are all numeric values and ICD-10 procedure codes are
+seven characters long.  The actual code E1234 is not a valid ICD code.  We use
+this string as an example.
+
+```{r}
+icd_compact_to_full("E1234", icdv =  9, dx = 1)
+icd_compact_to_full("E1234", icdv = 10, dx = 1)
+
+lookup_icd_codes(c("E1234", "E123.4", "E12.34"))[, c("input_code", "match_type")]
+```
+
+Notice that no change to the string is made when trying to convert to a full
+procedure code.
+
+```{r}
+icd_compact_to_full("E1234", icdv =  9, dx = 0)
+icd_compact_to_full("E1234", icdv = 10, dx = 0)
+```
+
+# General Notes on ICD Code Structure
+
+All four sets of codes have a hierarchical structure.  The first level of the
+hierarchy is the chapter which groups codes by disease category, body system,
+and/or condition.  Following that are subchapters for all but the ICD-9
+procedure codes.  After the subchapter, depending on the ICD variant, are the
+category, subcategory, subclassification, subsubclassification, and extension.
+
+## ICD-9 Diagnostic Codes
+ICD-9 Diagnostic codes are organized by a hierarchy of five levels:
+
+1. chapter,
+2. subchapter,
+3. category,
+4. subcategory, and
+5. subclassification.
+
+ICD-9 diagnostic codes are three to five digits, not counting a decimal point,
+numeric or alpha numeric strings.  The first three digits are the category with
+numeric code 000 through 999 (leading zeros are part of the numeric code), or
+V00-V99, or E000-E999.  When the category does not provide sufficient detail,
+a fourth numeric digit, separated from the category by a decimal point, is used.
+Lastly, when the subcategory is insufficient detail, then a fifth numeric digit
+is used, save for the E categories.
+
+## ICD-9 Procedure Codes
+ICD-9 Procedure codes are organized by a hierarchy
+four levels:
+
+1. chapter,
+2. category,
+3. subcategory, and
+4. subclassification.
+
+The codes are numeric strings of four digits with a decimal point between the
+second and third digits.  The first two digits are the category, the third digit
+is the subcategory, and the fourth digit is the subclassification.
+
+## ICD-10 Diagnostic Codes
+
+ICD-10 diagnostic codes are up to seven alphanumeric codes with a hierarchy of
+
+1. chapter,
+2. subchapter,
+3. category,
+4. subcategory,
+5. subclassification,
+6. subsubclassification, and
+7. extension.
+
+The category describes the general type of disease of injury, with the
+subcategory, subclassification and subsubclassification providing detail on the
+cause, manifestation, location, severity, and type of disease or injury.
+Finally, the extension specifies the type of encounter, i.e., initial or
+subsequent encounter, or sequela for encounters related to prior disease or
+injury.
+
+## ICD-10 Procedure Codes
+
+In general, ICD-10 procedure codes are seven digits.  In medicalcoder, the three
+digit (chapter, subchapter, _category_) and the seven digit codes are in the
+data base.
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                              End of File                                -->
+<!-- ----------------------------------------------------------------------- -->
