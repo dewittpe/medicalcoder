@@ -1,4 +1,6 @@
 *.Rout
+*.tar.gz
+*.Rcheck/*
 .DS_Store
 data-raw/charlson/charlson_codes.rds
 data-raw/charlson/charlson_index_scores.rds
