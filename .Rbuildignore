@@ -1,0 +1,10 @@
+^.*\.Rout$
+^.*Makefile$
+^.*Makevars$
+^README\.Rmd
+^_pkgdown\.yml$
+^data-raw/*
+^docs/*
+^examples/*
+^lib/*
+^man-roxygen/*

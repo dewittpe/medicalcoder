@@ -1,9 +1,10 @@
 *.Rout
+.DS_Store
 data-raw/charlson/charlson_codes.rds
 data-raw/charlson/charlson_index_scores.rds
 data-raw/elixhauser/elixhauser_codes.rds
-data-raw/elixhauser/elixhauser_poa.rds
 data-raw/elixhauser/elixhauser_index_scores.rds
+data-raw/elixhauser/elixhauser_poa.rds
 data-raw/icd/desc_start_stop.rds
 data-raw/icd/icd10/.download_stamp
 data-raw/icd/icd10/icd10.rds
