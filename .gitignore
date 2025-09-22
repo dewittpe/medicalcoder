@@ -13,7 +13,7 @@ data-raw/icd/icd10/icd10.rds
 data-raw/icd/icd9/.download_stamp
 data-raw/icd/icd9/icd9_cm_pcs.rds
 data-raw/icd/icd_chapters.rds
-data-raw/icd/icd_chapters_subchapters.dat
+data-raw/icd/icd_chapters_subchapters.rds
 data-raw/icd/icd_codes.rds
 data-raw/icd/icd_descs.rds
 data-raw/icd/icd_subchapters.rds

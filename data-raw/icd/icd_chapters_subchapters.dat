@@ -1,0 +1,639 @@
+icdv ; dx ; chapter ; subchapter ; code_range_start ; code_range_end ; pattern            ; description
+9    ; 1  ; 1       ;            ; 001              ; 139            ; ^(0|1[0-3])        ; 001-139 Infectious And Parasitic Diseases
+9    ; 1  ; 2       ;            ; 140              ; 239            ; ^(1[4-9]|2[0-3])   ; 140-239 Neoplasms
+9    ; 1  ; 3       ;            ; 240              ; 279            ; ^2[4-7]            ; 240-279 Endocrine, Nutritional And Metabolic Diseases, And Immunity Disorders
+9    ; 1  ; 4       ;            ; 280              ; 289            ; ^28                ; 280-289 Diseases Of The Blood And Blood-Forming Organs
+9    ; 1  ; 5       ;            ; 290              ; 319            ; ^(29|3[0-1])       ; 290-319 Mental Disorders
+9    ; 1  ; 6       ;            ; 320              ; 389            ; ^(3[2-8])          ; 320-389 Diseases Of The Nervous System And Sense Organs
+9    ; 1  ; 7       ;            ; 390              ; 459            ; ^(39|4[0-5])       ; 390-459 Diseases Of The Circulatory System
+9    ; 1  ; 8       ;            ; 460              ; 519            ; ^(4[6-9]|5[0-1])   ; 460-519 Diseases Of The Respiratory System
+9    ; 1  ; 9       ;            ; 520              ; 579            ; ^5[2-7]            ; 520-579 Diseases Of The Digestive System
+9    ; 1  ; 10      ;            ; 580              ; 629            ; ^(5[8-9]|6[0-2])   ; 580-629 Diseases Of The Genitourinary System
+9    ; 1  ; 11      ;            ; 630              ; 679            ; ^6[3-7]            ; 630-679 Complications Of Pregnancy, Childbirth, And The Puerperium
+9    ; 1  ; 12      ;            ; 680              ; 709            ; ^(6[8-9]|70)       ; 680-709 Diseases Of The Skin And Subcutaneous Tissue
+9    ; 1  ; 13      ;            ; 710              ; 739            ; ^7[1-3]            ; 710-739 Diseases Of The Musculoskeletal System And Connective Tissue
+9    ; 1  ; 14      ;            ; 740              ; 759            ; ^7[4-5]            ; 740-759 Congenital Anomalies
+9    ; 1  ; 15      ;            ; 760              ; 779            ; ^7[6-7]            ; 760-779 Certain Conditions Originating In The Perinatal Period
+9    ; 1  ; 16      ;            ; 780              ; 799            ; ^7[8-9]            ; 780-799 Symptoms, Signs, And Ill-Defined Conditions
+9    ; 1  ; 17      ;            ; 800              ; 999            ; ^(8|9)\d\d         ; 800-999 Injury And Poisoning
+9    ; 1  ; 18      ;            ; V01              ; V91            ; ^V                 ; V01-V91 Supplementary Classification Of Factors Influencing Health Status And Contact With Health Services
+9    ; 1  ; 19      ;            ; E000             ; E999           ; ^E                 ; E000-E999 Supplementary Classification Of External Causes Of Injury And Poisoning
+9    ; 1  ;         ; 001-009    ; 001              ; 009            ; ^00[1-9]           ; 001-009 Intestinal Infectious Diseases
+9    ; 1  ;         ; 010-018    ; 010              ; 018            ; ^01[0-8]           ; 010-018 Tuberculosis
+9    ; 1  ;         ; 020-027    ; 020              ; 027            ; ^02[0-7]           ; 020-027 Zoonotic Bacterial Diseases
+9    ; 1  ;         ; 030-041    ; 030              ; 041            ; ^0(3|4[0-1])       ; 030-041 Other Bacterial Diseases
+9    ; 1  ;         ; 042-042    ; 042              ; 042            ; ^042               ; 042-042 Human Immunodeficiency Virus
+9    ; 1  ;         ; 045-049    ; 045              ; 049            ; ^04[5-9]           ; 045-049 Poliomyelitis And Other Non-Arthropod-Borne Viral Diseases Of Central Nervous System
+9    ; 1  ;         ; 050-059    ; 050              ; 059            ; ^05                ; 050-059 Viral Diseases Accompanied By Exanthem
+9    ; 1  ;         ; 060-066    ; 060              ; 066            ; ^06                ; 060-066 Arthropod-Borne Viral Diseases
+9    ; 1  ;         ; 070-079    ; 070              ; 079            ; ^07                ; 070-079 Other Diseases Due To Viruses And Chlamydiae
+9    ; 1  ;         ; 080-088    ; 080              ; 088            ; ^08                ; 080-088 Rickettsioses And Other Arthropod-Borne Diseases
+9    ; 1  ;         ; 090-099    ; 090              ; 099            ; ^09                ; 090-099 Syphilis And Other Venereal Diseases
+9    ; 1  ;         ; 100-104    ; 100              ; 104            ; ^10                ; 100-104 Other Spirochetal Diseases
+9    ; 1  ;         ; 110-118    ; 110              ; 118            ; ^11                ; 110-118 Mycoses
+9    ; 1  ;         ; 120-129    ; 120              ; 129            ; ^12                ; 120-129 Helminthiases
+9    ; 1  ;         ; 130-136    ; 130              ; 136            ; ^13[0-6]           ; 130-136 Other Infectious And Parasitic Diseases
+9    ; 1  ;         ; 137-139    ; 137              ; 139            ; ^13[7-9]           ; 137-139 Late Effects Of Infectious And Parasitic Diseases
+9    ; 1  ;         ; 140-149    ; 140              ; 149            ; ^14                ; 140-149 Malignant Neoplasm Of Lip, Oral Cavity, And Pharynx
+9    ; 1  ;         ; 150-159    ; 150              ; 159            ; ^15                ; 150-159 Malignant Neoplasm Of Digestive Organs And Peritoneum
+9    ; 1  ;         ; 160-165    ; 160              ; 165            ; ^16                ; 160-165 Malignant Neoplasm Of Respiratory And Intrathoracic Organs
+9    ; 1  ;         ; 170-176    ; 170              ; 176            ; ^17[0-6]           ; 170-176 Malignant Neoplasm Of Bone, Connective Tissue, Skin, And Breast
+9    ; 1  ;         ; 179-189    ; 179              ; 189            ; ^1(79|8)           ; 179-189 Malignant Neoplasm Of Genitourinary Organs
+9    ; 1  ;         ; 190-199    ; 190              ; 199            ; ^19                ; 190-199 Malignant Neoplasm Of Other And Unspecified Sites
+9    ; 1  ;         ; 200-209    ; 200              ; 209            ; ^20                ; 200-209 Malignant Neoplasm Of Lymphatic And Hematopoietic Tissue
+9    ; 1  ;         ; 210-229    ; 210              ; 229            ; ^2[1-2]            ; 210-229 Benign Neoplasms
+9    ; 1  ;         ; 230-234    ; 230              ; 234            ; ^23[0-4]           ; 230-234 Carcinoma In Situ
+9    ; 1  ;         ; 235-238    ; 235              ; 238            ; ^23[5-8]           ; 235-238 Neoplasms Of Uncertain Behavior
+9    ; 1  ;         ; 239-239    ; 239              ; 239            ; ^239               ; 239-239 Neoplasms Of Unspecified Nature
+9    ; 1  ;         ; 240-246    ; 240              ; 246            ; ^24[0-6]           ; 240-246 Disorders Of Thyroid Gland
+9    ; 1  ;         ; 249-259    ; 249              ; 259            ; ^2(49|5)           ; 249-259 Diseases Of Other Endocrine Glands
+9    ; 1  ;         ; 260-269    ; 260              ; 269            ; ^26                ; 260-269 Nutritional Deficiencies
+9    ; 1  ;         ; 270-279    ; 270              ; 279            ; ^27                ; 270-279 Other Metabolic Disorders And Immunity Disorders
+9    ; 1  ;         ; 280        ; 280              ; 280            ; ^280               ; 280 Iron deficiency anemias
+9    ; 1  ;         ; 281        ; 281              ; 281            ; ^281               ; 281 Other deficiency anemias
+9    ; 1  ;         ; 282        ; 282              ; 282            ; ^282               ; 282 Hereditary hemolytic anemias
+9    ; 1  ;         ; 283        ; 283              ; 283            ; ^283               ; 283 Acquired hemolytic anemias
+9    ; 1  ;         ; 284        ; 284              ; 284            ; ^284               ; 284 Aplastic anemia and other bone marrow failure syndromes
+9    ; 1  ;         ; 285        ; 285              ; 285            ; ^285               ; 285 Other and unspecified anemias
+9    ; 1  ;         ; 286        ; 286              ; 286            ; ^286               ; 286 Coagulation defects
+9    ; 1  ;         ; 287        ; 287              ; 287            ; ^287               ; 287 Purpura and other hemorrhagic conditions
+9    ; 1  ;         ; 288        ; 288              ; 288            ; ^288               ; 288 Diseases of white blood cells
+9    ; 1  ;         ; 289        ; 289              ; 289            ; ^289               ; 289 Other diseases of blood and blood-forming organs
+9    ; 1  ;         ; 290-294    ; 290              ; 294            ; ^29[0-4]           ; 290-294 Organic Psychotic Conditions
+9    ; 1  ;         ; 295-299    ; 295              ; 299            ; ^29[5-9]           ; 295-299 Other Psychoses
+9    ; 1  ;         ; 300-316    ; 300              ; 316            ; ^3(0|1[0-6])       ; 300-316 Neurotic Disorders, Personality Disorders, And Other Nonpsychotic Mental Disorders
+9    ; 1  ;         ; 317-319    ; 317              ; 319            ; ^31[7-9]           ; 317-319 Intellectual Disabilities
+9    ; 1  ;         ; 320-327    ; 320              ; 327            ; ^32                ; 320-327 Inflammatory Diseases Of The Central Nervous System
+9    ; 1  ;         ; 330-337    ; 330              ; 337            ; ^33[0-7]           ; 330-337 Hereditary And Degenerative Diseases Of The Central Nervous System
+9    ; 1  ;         ; 338-338    ; 338              ; 338            ; ^338               ; 338-338 Pain
+9    ; 1  ;         ; 339-339    ; 339              ; 339            ; ^339               ; 339-339 Other Headache Syndromes
+9    ; 1  ;         ; 340-349    ; 340              ; 349            ; ^34                ; 340-349 Other Disorders Of The Central Nervous System
+9    ; 1  ;         ; 350-359    ; 350              ; 359            ; ^35                ; 350-359 Disorders Of The Peripheral Nervous System
+9    ; 1  ;         ; 360-379    ; 360              ; 379            ; ^3[6-7]            ; 360-379 Disorders Of The Eye And Adnexa
+9    ; 1  ;         ; 380-389    ; 380              ; 389            ; ^38                ; 380-389 Diseases Of The Ear And Mastoid Process
+9    ; 1  ;         ; 390-392    ; 390              ; 392            ; ^39[0-2]           ; 390-392 Acute Rheumatic Fever
+9    ; 1  ;         ; 393-398    ; 393              ; 398            ; ^39[3-8]           ; 393-398 Chronic Rheumatic Heart Disease
+9    ; 1  ;         ; 401-405    ; 401              ; 405            ; ^40[1-5]           ; 401-405 Hypertensive Disease
+9    ; 1  ;         ; 410-414    ; 410              ; 414            ; ^41[0-4]           ; 410-414 Ischemic Heart Disease
+9    ; 1  ;         ; 415-417    ; 415              ; 417            ; ^41[5-7]           ; 415-417 Diseases Of Pulmonary Circulation
+9    ; 1  ;         ; 420-429    ; 420              ; 429            ; ^42                ; 420-429 Other Forms Of Heart Disease
+9    ; 1  ;         ; 430-438    ; 430              ; 438            ; ^43                ; 430-438 Cerebrovascular Disease
+9    ; 1  ;         ; 440-449    ; 440              ; 449            ; ^44                ; 440-449 Diseases Of Arteries, Arterioles, And Capillaries
+9    ; 1  ;         ; 451-459    ; 451              ; 459            ; ^45                ; 451-459 Diseases Of Veins And Lymphatics, And Other Diseases Of Circulatory System
+9    ; 1  ;         ; 460-466    ; 460              ; 466            ; ^46                ; 460-466 Acute Respiratory Infections
+9    ; 1  ;         ; 470-478    ; 470              ; 478            ; ^47                ; 470-478 Other Diseases Of Upper Respiratory Tract
+9    ; 1  ;         ; 480-488    ; 480              ; 488            ; ^48                ; 480-488 Pneumonia And Influenza
+9    ; 1  ;         ; 490-496    ; 490              ; 496            ; ^49                ; 490-496 Chronic Obstructive Pulmonary Disease And Allied Conditions
+9    ; 1  ;         ; 500-508    ; 500              ; 508            ; ^50                ; 500-508 Pneumoconioses And Other Lung Diseases Due To External Agents
+9    ; 1  ;         ; 510-519    ; 510              ; 519            ; ^51                ; 510-519 Other Diseases Of Respiratory System
+9    ; 1  ;         ; 520-529    ; 520              ; 529            ; ^52                ; 520-529 Diseases Of Oral Cavity, Salivary Glands, And Jaws
+9    ; 1  ;         ; 530-539    ; 530              ; 539            ; ^53                ; 530-539 Diseases Of Esophagus, Stomach, And Duodenum
+9    ; 1  ;         ; 540-543    ; 540              ; 543            ; ^54                ; 540-543 Appendicitis
+9    ; 1  ;         ; 550-553    ; 550              ; 553            ; ^55[0-3]           ; 550-553 Hernia Of Abdominal Cavity
+9    ; 1  ;         ; 555-558    ; 555              ; 558            ; ^55[5-8]           ; 555-558 Noninfective Enteritis And Colitis
+9    ; 1  ;         ; 560-569    ; 560              ; 569            ; ^56                ; 560-569 Other Diseases Of Intestines And Peritoneum
+9    ; 1  ;         ; 570-579    ; 570              ; 579            ; ^57                ; 570-579 Other Diseases Of Digestive System
+9    ; 1  ;         ; 580-589    ; 580              ; 589            ; ^58                ; 580-589 Nephritis, Nephrotic Syndrome, And Nephrosis
+9    ; 1  ;         ; 590-599    ; 590              ; 599            ; ^59                ; 590-599 Other Diseases Of Urinary System
+9    ; 1  ;         ; 600-608    ; 600              ; 608            ; ^60                ; 600-608 Diseases Of Male Genital Organs
+9    ; 1  ;         ; 610-612    ; 610              ; 612            ; ^61[0-2]           ; 610-612 Disorders Of Breast
+9    ; 1  ;         ; 614-616    ; 614              ; 616            ; ^61[4-6]           ; 614-616 Inflammatory Disease Of Female Pelvic Organs
+9    ; 1  ;         ; 617-629    ; 617              ; 629            ; ^6(1[7-9]|2)       ; 617-629 Other Disorders Of Female Genital Tract
+9    ; 1  ;         ; 630-639    ; 630              ; 639            ; ^63                ; 630-639 Ectopic And Molar Pregnancy And Other Pregnancy With Abortive Outcome
+9    ; 1  ;         ; 640-649    ; 640              ; 649            ; ^64                ; 640-649 Complications Mainly Related To Pregnancy
+9    ; 1  ;         ; 650-659    ; 650              ; 659            ; ^65                ; 650-659 Normal Delivery, And Other Indications For Care In Pregnancy, Labor, And Delivery
+9    ; 1  ;         ; 660-669    ; 660              ; 669            ; ^66                ; 660-669 Complications Occurring Mainly In The Course Of Labor And Delivery
+9    ; 1  ;         ; 670-677    ; 670              ; 677            ; ^67[0-7]           ; 670-677 Complications Of The Puerperium
+9    ; 1  ;         ; 678-679    ; 678              ; 679            ; ^67[8-9]           ; 678-679 Other Maternal And Fetal Complications
+9    ; 1  ;         ; 680-686    ; 680              ; 686            ; ^68                ; 680-686 Infections Of Skin And Subcutaneous Tissue
+9    ; 1  ;         ; 690-698    ; 690              ; 698            ; ^69                ; 690-698 Other Inflammatory Conditions Of Skin And Subcutaneous Tissue
+9    ; 1  ;         ; 700-709    ; 700              ; 709            ; ^70                ; 700-709 Other Diseases Of Skin And Subcutaneous Tissue710-719  Arthropathies And Related Disorders
+9    ; 1  ;         ; 710-719    ; 700              ;                ; ^71                ; 710-719 Arthropathies and Related Disorders
+9    ; 1  ;         ; 720-724    ; 720              ; 724            ; ^72[0-4]           ; 720-724 Dorsopathies
+9    ; 1  ;         ; 725-729    ; 725              ; 729            ; ^72[5-9]           ; 725-729 Rheumatism, Excluding The Back
+9    ; 1  ;         ; 730-739    ; 730              ; 739            ; ^73                ; 730-739 Osteopathies, Chondropathies, And Acquired Musculoskeletal Deformities
+9    ; 1  ;         ; 740        ; 740              ; 740            ; ^740               ; 740 Anencephalus and similar anomalies
+9    ; 1  ;         ; 741        ; 741              ; 741            ; ^741               ; 741 Spina bifida
+9    ; 1  ;         ; 742        ; 742              ; 742            ; ^742               ; 742 Other congenital anomalies of nervous system
+9    ; 1  ;         ; 743        ; 743              ; 743            ; ^743               ; 743 Congenital anomalies of eye
+9    ; 1  ;         ; 744        ; 744              ; 744            ; ^744               ; 744 Congenital anomalies of ear face and neck
+9    ; 1  ;         ; 745        ; 745              ; 745            ; ^745               ; 745 Bulbus cordis anomalies and anomalies of cardiac septal closure
+9    ; 1  ;         ; 746        ; 746              ; 746            ; ^746               ; 746 Other congenital anomalies of heart
+9    ; 1  ;         ; 747        ; 747              ; 747            ; ^747               ; 747 Other congenital anomalies of circulatory system
+9    ; 1  ;         ; 748        ; 748              ; 748            ; ^748               ; 748 Congenital anomalies of respiratory system
+9    ; 1  ;         ; 749        ; 749              ; 749            ; ^749               ; 749 Cleft palate and cleft lip
+9    ; 1  ;         ; 750        ; 750              ; 750            ; ^750               ; 750 Other congenital anomalies of upper alimentary tract
+9    ; 1  ;         ; 751        ; 751              ; 751            ; ^751               ; 751 Other congenital anomalies of digestive system
+9    ; 1  ;         ; 752        ; 752              ; 752            ; ^752               ; 752 Congenital anomalies of genital organs
+9    ; 1  ;         ; 753        ; 753              ; 753            ; ^753               ; 753 Congenital anomalies of urinary system
+9    ; 1  ;         ; 754        ; 754              ; 754            ; ^754               ; 754 Certain congenital musculoskeletal deformities
+9    ; 1  ;         ; 755        ; 755              ; 755            ; ^755               ; 755 Other congenital anomalies of limbs
+9    ; 1  ;         ; 756        ; 756              ; 756            ; ^756               ; 756 Other congenital musculoskeletal anomalies
+9    ; 1  ;         ; 757        ; 757              ; 757            ; ^757               ; 757 Congenital anomalies of the integument
+9    ; 1  ;         ; 758        ; 758              ; 758            ; ^758               ; 758 Chromosomal anomalies
+9    ; 1  ;         ; 759        ; 759              ; 759            ; ^759               ; 759 Other and unspecified congenital anomalies
+9    ; 1  ;         ; 760-763    ; 760              ; 763            ; ^76[0-3]           ; 760-763 Maternal Causes Of Perinatal Morbidity And Mortality
+9    ; 1  ;         ; 764-779    ; 764              ; 779            ; ^7(6[4-9]|7)       ; 764-779 Other Conditions Originating In The Perinatal Period
+9    ; 1  ;         ; 780-789    ; 780              ; 789            ; ^78                ; 780-789 Symptoms
+9    ; 1  ;         ; 790-796    ; 790              ; 796            ; ^79[0-6]           ; 790-796 Nonspecific Abnormal Findings
+9    ; 1  ;         ; 797-799    ; 797              ; 799            ; ^79[7-9]           ; 797-799 Ill-Defined And Unknown Causes Of Morbidity And Mortality
+9    ; 1  ;         ; 800-804    ; 800              ; 804            ; ^80[0-4]           ; 800-804 Fracture Of Skull
+9    ; 1  ;         ; 805-809    ; 805              ; 809            ; ^80[5-9]           ; 805-809 Fracture Of Spine And Trunk
+9    ; 1  ;         ; 810-819    ; 810              ; 819            ; ^81                ; 810-819 Fracture Of Upper Limb
+9    ; 1  ;         ; 820-829    ; 820              ; 829            ; ^82                ; 820-829 Fracture Of Lower Limb
+9    ; 1  ;         ; 830-839    ; 830              ; 839            ; ^83                ; 830-839 Dislocation
+9    ; 1  ;         ; 840-848    ; 840              ; 848            ; ^84                ; 840-848 Sprains And Strains Of Joints And Adjacent Muscles
+9    ; 1  ;         ; 850-854    ; 850              ; 854            ; ^85                ; 850-854 Intracranial Injury, Excluding Those With Skull Fracture
+9    ; 1  ;         ; 860-869    ; 860              ; 869            ; ^86                ; 860-869 Internal Injury Of Chest, Abdomen, And Pelvis
+9    ; 1  ;         ; 870-879    ; 870              ; 879            ; ^87                ; 870-879 Open Wound Of Head, Neck, And Trunk
+9    ; 1  ;         ; 880-887    ; 880              ; 887            ; ^88                ; 880-887 Open Wound Of Upper Limb
+9    ; 1  ;         ; 890-897    ; 890              ; 897            ; ^89                ; 890-897 Open Wound Of Lower Limb
+9    ; 1  ;         ; 900-904    ; 900              ; 904            ; ^90[0-4]           ; 900-904 Injury To Blood Vessels
+9    ; 1  ;         ; 905-909    ; 905              ; 909            ; ^90[5-9]           ; 905-909 Late Effects Of Injuries, Poisonings, Toxic Effects, And Other External Causes
+9    ; 1  ;         ; 910-919    ; 910              ; 919            ; ^91                ; 910-919 Superficial Injury
+9    ; 1  ;         ; 920-924    ; 920              ; 924            ; ^92[0-4]           ; 920-924 Contusion With Intact Skin Surface
+9    ; 1  ;         ; 925-929    ; 925              ; 929            ; ^92[5-9]           ; 925-929 Crushing Injury
+9    ; 1  ;         ; 930-939    ; 930              ; 939            ; ^93                ; 930-939 Effects Of Foreign Body Entering Through Orifice
+9    ; 1  ;         ; 940-949    ; 940              ; 949            ; ^94                ; 940-949 Burns
+9    ; 1  ;         ; 950-957    ; 950              ; 957            ; ^95[0-7]           ; 950-957 Injury To Nerves And Spinal Cord
+9    ; 1  ;         ; 958-959    ; 958              ; 959            ; ^95[8-9]           ; 958-959 Certain Traumatic Complications And Unspecified Injuries
+9    ; 1  ;         ; 960-979    ; 960              ; 979            ; ^9[6-7]            ; 960-979 Poisoning By Drugs, Medicinals And Biological Substances
+9    ; 1  ;         ; 980-989    ; 980              ; 989            ; ^98                ; 980-989 Toxic Effects Of Substances Chiefly Nonmedicinal As To Source
+9    ; 1  ;         ; 990-995    ; 990              ; 995            ; ^99[0-5]           ; 990-995 Other And Unspecified Effects Of External Causes
+9    ; 1  ;         ; 996-999    ; 996              ; 999            ; ^99[6-9]           ; 996-999 Complications Of Surgical And Medical Care, Not Elsewhere Classified
+9    ; 1  ;         ; V01-V09    ; V01              ; V09            ; ^V0                ; V01-V09 Persons With Potential Health Hazards Related To Communicable Diseases
+9    ; 1  ;         ; V10-V19    ; V10              ; V19            ; ^V1                ; V10-V19 Persons With Potential Health Hazards Related To Personal And Family History
+9    ; 1  ;         ; V20-V29    ; V20              ; V29            ; ^V2                ; V20-V29 Persons Encountering Health Services In Circumstances Related To Reproduction And Development
+9    ; 1  ;         ; V30-V39    ; V30              ; V39            ; ^V3                ; V30-V39 Liveborn Infants According To Type Of Birth
+9    ; 1  ;         ; V40-V49    ; V40              ; V49            ; ^V4                ; V40-V49 Persons With A Condition Influencing Their Health Status
+9    ; 1  ;         ; V50-V59    ; V50              ; V59            ; ^V5                ; V50-V59 Persons Encountering Health Services For Specific Procedures And Aftercare
+9    ; 1  ;         ; V60-V69    ; V60              ; V69            ; ^V6                ; V60-V69 Persons Encountering Health Services In Other Circumstances
+9    ; 1  ;         ; V70-V82    ; V70              ; V82            ; ^V(7|8[0-2])       ; V70-V82 Persons Without Reported Diagnosis Encountered During Examination And Investigation Of Individuals And Populations
+9    ; 1  ;         ; V83-V84    ; V83              ; V84            ; ^V8[3-4]           ; V83-V84 Genetics
+9    ; 1  ;         ; V85-V85    ; V85              ; V85            ; ^V85               ; V85-V85 Body Mass Index
+9    ; 1  ;         ; V86-V86    ; V86              ; V86            ; ^V86               ; V86-V86 Estrogen Receptor Status
+9    ; 1  ;         ; V87-V87    ; V87              ; V87            ; ^V87               ; V87-V87 Other Specified Personal Exposures And History Presenting Hazards To Health
+9    ; 1  ;         ; V88-V88    ; V88              ; V88            ; ^V88               ; V88-V88 Acquired Absence Of Other Organs And Tissue
+9    ; 1  ;         ; V89-V89    ; V89              ; V89            ; ^V89               ; V89-V89 Other Suspected Conditions Not Found
+9    ; 1  ;         ; V90-V90    ; V90              ; V90            ; ^V90               ; V90-V90 Retained Foreign Body
+9    ; 1  ;         ; V91-V91    ; V91              ; V91            ; ^V91               ; V91-V91 Multiple Gestation Placenta Status
+9    ; 1  ;         ; E000-E000  ; E000             ; E000           ; ^E000              ; E000-E000 External Cause Status
+9    ; 1  ;         ; E001-E030  ; E001             ; E030           ; ^E0[0-3]           ; E001-E030 Activity
+9    ; 1  ;         ; E800-E807  ; E800             ; E807           ; ^E80               ; E800-E807 Railway Accidents
+9    ; 1  ;         ; E810-E819  ; E810             ; E819           ; ^E81               ; E810-E819 Motor Vehicle Traffic Accidents
+9    ; 1  ;         ; E820-E825  ; E820             ; E825           ; ^E82[0-5]          ; E820-E825 Motor Vehicle Nontraffic Accidents
+9    ; 1  ;         ; E826-E829  ; E826             ; E829           ; ^E82[6-9]          ; E826-E829 Other Road Vehicle Accidents
+9    ; 1  ;         ; E830-E838  ; E830             ; E838           ; ^E83               ; E830-E838 Water Transport Accidents
+9    ; 1  ;         ; E840-E845  ; E840             ; E845           ; ^E84[0-5]          ; E840-E845 Air And Space Transport Accidents
+9    ; 1  ;         ; E846-E849  ; E846             ; E849           ; ^E84[6-9]          ; E846-E849 Vehicle Accidents, Not Elsewhere Classifiable
+9    ; 1  ;         ; E850-E858  ; E850             ; E858           ; ^E85               ; E850-E858 Accidental Poisoning By Drugs, Medicinal Substances, And Biologicals
+9    ; 1  ;         ; E860-E869  ; E860             ; E869           ; ^E86               ; E860-E869 Accidental Poisoning By Other Solid And Liquid Substances, Gases, And Vapors
+9    ; 1  ;         ; E870-E876  ; E870             ; E876           ; ^E87[0-6]          ; E870-E876 Misadventures To Patients During Surgical And Medical Care
+9    ; 1  ;         ; E878-E879  ; E878             ; E879           ; ^E87[8-9]          ; E878-E879 Surgical And Medical Procedures As The Cause Of Abnormal Reaction Of Patient Or Later Complication, Without Mention Of Misadventure At The Time Of Procedure
+9    ; 1  ;         ; E880-E888  ; E880             ; E888           ; ^E88               ; E880-E888 Accidental Falls
+9    ; 1  ;         ; E890-E899  ; E890             ; E899           ; ^E89               ; E890-E899 Accidents Caused By Fire And Flames
+9    ; 1  ;         ; E900-E909  ; E900             ; E909           ; ^E90               ; E900-E909 Accidents Due To Natural And Environmental Factors
+9    ; 1  ;         ; E910-E915  ; E910             ; E915           ; ^E91[0-5]          ; E910-E915 Accidents Caused By Submersion, Suffocation, And Foreign Bodies
+9    ; 1  ;         ; E916-E928  ; E916             ; E928           ; ^E9(1[6-9]|2[0-8]) ; E916-E928 Other Accidents
+9    ; 1  ;         ; E929-E929  ; E929             ; E929           ; ^E929              ; E929-E929 Late Effects Of Accidental Injury
+9    ; 1  ;         ; E930-E949  ; E930             ; E949           ; ^E9(3|4)           ; E930-E949 Drugs, Medicinal And Biological Substances Causing Adverse Effects In Therapeutic Use
+9    ; 1  ;         ; E950-E959  ; E950             ; E959           ; ^E95               ; E950-E959 Suicide And Self-Inflicted Injury
+9    ; 1  ;         ; E960-E969  ; E960             ; E969           ; ^E96               ; E960-E969 Homicide And Injury Purposely Inflicted By Other Persons
+9    ; 1  ;         ; E970-E979  ; E970             ; E979           ; ^E97               ; E970-E979 Legal Intervention
+9    ; 1  ;         ; E980-E989  ; E980             ; E989           ; ^E98               ; E980-E989 Injury Undetermined Whether Accidentally Or Purposely Inflicted
+9    ; 1  ;         ; E990-E999  ; E990             ; E999           ; ^E99               ; E990-E999 Injury Resulting From Operations Of War
+9    ; 0  ; 0.      ;            ; 00               ; 00             ; ^00                ; 0. Procedures and interventions, not elsewhere classified
+9    ; 0  ; 1.      ;            ; 01               ; 05             ; ^0[1-5]            ; 1. Operations on the nervous system
+9    ; 0  ; 2.      ;            ; 06               ; 07             ; ^0[6-7]            ; 2. Operations on the endocrine system
+9    ; 0  ; 3.      ;            ; 08               ; 16             ; ^(0[8-9]|1[0-6])   ; 3. Operations on the eye
+9    ; 0  ; 3A.     ;            ; 17               ; 17             ; ^17                ; 3A. Other miscellaneous diagnostic and therapeutic procedures
+9    ; 0  ; 4.      ;            ; 18               ; 20             ; ^(1[8-9]|20)       ; 4. Operations on the ear
+9    ; 0  ; 5.      ;            ; 21               ; 29             ; ^2[1-9]            ; 5. Operations on the nose, mouth, and pharynx
+9    ; 0  ; 6.      ;            ; 30               ; 34             ; ^3[0-4]            ; 6. Operations on the respiratory system
+9    ; 0  ; 7.      ;            ; 35               ; 39             ; ^3[5-9]            ; 7. Operations on the cardiovascular system
+9    ; 0  ; 8.      ;            ; 40               ; 41             ; ^4[0-1]            ; 8. Operations on the hemic and lymphatic system
+9    ; 0  ; 9.      ;            ; 42               ; 54             ; ^(4[2-9]|5[0-4])   ; 9. Operations on the digestive system
+9    ; 0  ; 10.     ;            ; 55               ; 59             ; ^5[5-9]            ; 10. Operations on the urinary system
+9    ; 0  ; 11.     ;            ; 60               ; 64             ; ^6[0-4]            ; 11. Operations on the male genital organs
+9    ; 0  ; 12.     ;            ; 65               ; 71             ; ^(6[5-9]|7[0-1])   ; 12. Operations on the female genital organs
+9    ; 0  ; 13.     ;            ; 72               ; 75             ; ^7[2-5]            ; 13. Obstetrical procedures
+9    ; 0  ; 14.     ;            ; 76               ; 84             ; ^(7[6-9]|8[0-4])   ; 14. Operations on the musculoskeletal system
+9    ; 0  ; 15.     ;            ; 85               ; 86             ; ^8[5-6]            ; 15. Operations on the integumentary system
+9    ; 0  ; 16.     ;            ; 87               ; 99             ; ^(8[7-9]|9)        ; 16. Miscellaneous diagnostic and therapeutic procedures
+10   ; 1  ; I       ;            ; A00              ; B99            ; ^(A|B)             ; I: Certain infectious and parasitic diseases
+10   ; 1  ;         ; A00-A09    ; A00              ; A09            ; ^A0                ; A00-A09 Intestinal infectious diseases
+10   ; 1  ;         ; A15-A19    ; A15              ; A19            ; ^A1[5-9]           ; A15-A19 Tuberculosis
+10   ; 1  ;         ; A20-A28    ; A20              ; A28            ; ^A2                ; A20-A28 Certain zoonotic bacterial diseases
+10   ; 1  ;         ; A30-A49    ; A30              ; A49            ; ^A(3|4)            ; A30-A49 Other bacterial diseases
+10   ; 1  ;         ; A50-A64    ; A50              ; A64            ; ^A(5|6[0-4])       ; A50-A64 Infections with a predominantly sexual mode of transmission
+10   ; 1  ;         ; A65-A69    ; A65              ; A69            ; ^A6[5-9]           ; A65-A69 Other spirochaetal diseases
+10   ; 1  ;         ; A70-A74    ; A70              ; A74            ; ^A7[0-4]           ; A70-A74 Other diseases caused by chlamydiae
+10   ; 1  ;         ; A75-A79    ; A75              ; A79            ; ^A7[5-9]           ; A75-A79 Rickettsioses
+10   ; 1  ;         ; A80-A89    ; A80              ; A89            ; ^A8                ; A80-A89 Viral infections of the central nervous system
+10   ; 1  ;         ; A92-A99    ; A92              ; A99            ; ^A9                ; A92-A99 Arthropod-borne viral fevers and viral haemorrhagic fevers
+10   ; 1  ;         ; B00-B09    ; B00              ; B09            ; ^B0                ; B00-B09 Viral infections characterized by skin and mucous membrane lesions
+10   ; 1  ;         ; B10-B10    ; B10              ; B10            ; ^B10               ; B10 Other human herpesviruses
+10   ; 1  ;         ; B15-B19    ; B15              ; B19            ; ^B1[1-9]           ; B15-B19 Viral hepatitis
+10   ; 1  ;         ; B20-B24    ; B20              ; B24            ; ^B2[0-4]           ; B20-B24 Human immunodeficiency virus [HIV] disease
+10   ; 1  ;         ; B25-B34    ; B25              ; B34            ; ^B(2[5-9]|3[0-4])  ; B25-B34 Other viral diseases
+10   ; 1  ;         ; B35-B49    ; B35              ; B49            ; ^B(3[5-9]|4)       ; B35-B49 Mycoses
+10   ; 1  ;         ; B50-B64    ; B50              ; B64            ; ^B(5|6[0-4])       ; B50-B64 Protozoal diseases
+10   ; 1  ;         ; B65-B83    ; B65              ; B83            ; ^B(6[5-9]|7|8[0-3]); B65-B83 Helminthiases
+10   ; 1  ;         ; B85-B89    ; B85              ; B89            ; ^B8[5-9]           ; B85-B89 Pediculosis, acariasis and other infestations
+10   ; 1  ;         ; B90-B94    ; B90              ; B94            ; ^B9[0-4]           ; B90-B94 Sequelae of infectious and parasitic diseases
+10   ; 1  ;         ; B95-B98    ; B95              ; B98            ; ^B9[5-8]           ; B95-B98 Bacterial, viral and other infectious agents
+10   ; 1  ;         ; B99-B99    ; B99              ; B99            ; ^B99               ; B99-B99 Other infectious diseases
+10   ; 1  ; II      ;            ; C00              ; D48            ; ^(C|D[0-4])        ; II: Neoplasms
+10   ; 1  ;         ; C00-C14    ; C00              ; C14            ; ^C(0|1[0-4])       ; C00-C14 Malignant neoplasms of lip, oral cavity and pharynx
+10   ; 1  ;         ; C15-C26    ; C15              ; C26            ; ^C(1[5-9]|2[0-6])  ; C15-C26 Malignant neoplasms of digestive organs
+10   ; 1  ;         ; C30-C39    ; C30              ; C39            ; ^C3                ; C30-C39 Malignant neoplasms of respiratory and intrathoracic organs
+10   ; 1  ;         ; C40-C41    ; C40              ; C41            ; ^C4[0-1]           ; C40-C41 Malignant neoplasms of bone and articular cartilage
+10   ; 1  ;         ; C43-C44    ; C43              ; C44            ; ^C4[3-4]           ; C43-C44 Melanoma and other malignant neoplasms of skin
+10   ; 1  ;         ; C45-C49    ; C45              ; C49            ; ^C4[5-9]           ; C45-C49 Malignant neoplasms of mesothelial and soft tissue
+10   ; 1  ;         ; C50-C50    ; C50              ; C50            ; ^C50               ; C50-C50 Malignant neoplasm of breast
+10   ; 1  ;         ; C51-C58    ; C51              ; C58            ; ^C5[1-8]           ; C51-C58 Malignant neoplasms of female genital organs
+10   ; 1  ;         ; C60-C63    ; C60              ; C63            ; ^C6[0-3]           ; C60-C63 Malignant neoplasms of male genital organs
+10   ; 1  ;         ; C64-C68    ; C64              ; C68            ; ^C6[4-8]           ; C64-C68 Malignant neoplasms of urinary tract
+10   ; 1  ;         ; C69-C72    ; C69              ; C72            ; ^C(69|7[0-2])      ; C69-C72 Malignant neoplasms of eye, brain and other parts of central nervous system
+10   ; 1  ;         ; C73-C75    ; C73              ; C75            ; ^C7[3-5]           ; C73-C75 Malignant neoplasms of thyroid and other endocrine glands
+10   ; 1  ;         ; C76-C80    ; C76              ; C80            ; ^C(7[6-9]|80)      ; C76-C80 Malignant neoplasms of ill-defined, secondary and unspecified sites
+10   ; 1  ;         ; C81-C96    ; C81              ; C96            ; ^C(8[1-9]|9[0-6])  ; C81-C96 Malignant neoplasms, stated or presumed to be primary, of lymphoid, haematopoietic and related tissue
+10   ; 1  ;         ; C97-C97    ; C97              ; C97            ; ^C97               ; C97-C97 Malignant neoplasms of independent (primary) multiple sites
+10   ; 1  ;         ; D00-D09    ; D00              ; D09            ; ^D0                ; D00-D09 In situ neoplasms
+10   ; 1  ;         ; D10-D36    ; D10              ; D36            ; ^D([1-2]|3[0-6])   ; D10-D36 Benign neoplasms
+10   ; 1  ;         ; D37-D48    ; D37              ; D48            ; ^D(3[7-9]|4[0-8])  ; D37-D48 Neoplasms of uncertain or unknown behaviour
+10   ; 1  ; III     ;            ; D50              ; D89            ; ^D[5-9]            ; III: Diseases of the blood and blood-forming organs and certain disorders involving the immune mechanism
+10   ; 1  ;         ; D50-D53    ; D50              ; D53            ; ^D5[0-3]           ; D50-D53 Nutritional anaemias
+10   ; 1  ;         ; D55-D59    ; D55              ; D59            ; ^D5[5-9]           ; D55-D59 Haemolytic anaemias
+10   ; 1  ;         ; D60-D64    ; D60              ; D64            ; ^D6[0-4]           ; D60-D64 Aplastic and other anaemias
+10   ; 1  ;         ; D65-D69    ; D65              ; D69            ; ^D6[5-9]           ; D65-D69 Coagulation defects, purpura and other haemorrhagic conditions
+10   ; 1  ;         ; D70-D77    ; D70              ; D77            ; ^D7[0-7]           ; D70-D77 Other diseases of blood and blood-forming organs
+10   ; 1  ;         ; D80-D89    ; D80              ; D89            ; ^D8                ; D80-D89 Certain disorders involving the immune mechanism
+10   ; 1  ; IV      ;            ; E00              ; E90            ; ^E                 ; IV: Endocrine, nutritional and metabolic diseases
+10   ; 1  ;         ; E00-E07    ; E00              ; E07            ; ^E0[0-7]           ; E00-E07 Disorders of thyroid gland
+10   ; 1  ;         ; E10-E14    ; E10              ; E14            ; ^E1[0-4]           ; E10-E14 Diabetes mellitus
+10   ; 1  ;         ; E15-E16    ; E15              ; E16            ; ^E1[5-6]           ; E15-E16 Other disorders of glucose regulation and pancreatic internal secretion
+10   ; 1  ;         ; E20-E35    ; E20              ; E35            ; ^E(2|3[0-5])       ; E20-E35 Disorders of other endocrine glands
+10   ; 1  ;         ; E40-E46    ; E40              ; E46            ; ^E4[0-6]           ; E40-E46 Malnutrition
+10   ; 1  ;         ; E50-E64    ; E50              ; E64            ; ^E(5|6[0-4])       ; E50-E64 Other nutritional deficiencies
+10   ; 1  ;         ; E65-E68    ; E65              ; E68            ; ^E6[5-8]           ; E65-E68 Obesity and other hyperalimentation
+10   ; 1  ;         ; E70-E90    ; E70              ; E90            ; ^E[7-9]            ; E70-E90 Metabolic disorders
+10   ; 1  ; V       ;            ; F00              ; F99            ; ^F                 ; V: Mental and behavioural disorders
+10   ; 1  ;         ; F00-F09    ; F00              ; F09            ; ^F0                ; F00-F09 Organic, including symptomatic, mental disorders
+10   ; 1  ;         ; F10-F19    ; F10              ; F19            ; ^F1                ; F10-F19 Mental and behavioural disorders due to psychoactive substance use
+10   ; 1  ;         ; F20-F29    ; F20              ; F29            ; ^F2                ; F20-F29 Schizophrenia, schizotypal and delusional disorders
+10   ; 1  ;         ; F30-F39    ; F30              ; F39            ; ^F3                ; F30-F39 Mood [affective] disorders
+10   ; 1  ;         ; F40-F48    ; F40              ; F48            ; ^F4                ; F40-F48 Neurotic, stress-related and somatoform disorders
+10   ; 1  ;         ; F50-F59    ; F50              ; F59            ; ^F5                ; F50-F59 Behavioural syndromes associated with physiological disturbances and physical factors
+10   ; 1  ;         ; F60-F69    ; F60              ; F69            ; ^F6                ; F60-F69 Disorders of adult personality and behaviour
+10   ; 1  ;         ; F70-F79    ; F70              ; F79            ; ^F7                ; F70-F79 Mental retardation
+10   ; 1  ;         ; F80-F89    ; F80              ; F89            ; ^F8                ; F80-F89 Disorders of psychological development
+10   ; 1  ;         ; F90-F98    ; F90              ; F98            ; ^F9[0-8]           ; F90-F98 Behavioural and emotional disorders with onset usually occurring in childhood and adolescence
+10   ; 1  ;         ; F99-F99    ; F99              ; F99            ; ^F99               ; F99-F99 Unspecified mental disorder
+10   ; 1  ; VI      ;            ; G00              ; G99            ; ^G                 ; VI: Diseases of the nervous system
+10   ; 1  ;         ; G00-G09    ; G00              ; G09            ; ^G0                ; G00-G09 Inflammatory diseases of the central nervous system
+10   ; 1  ;         ; G10-G14    ; G10              ; G14            ; ^G1                ; G10-G14 Systemic atrophies primarily affecting the central nervous system
+10   ; 1  ;         ; G20-G26    ; G20              ; G26            ; ^G2                ; G20-G26 Extrapyramidal and movement disorders
+10   ; 1  ;         ; G30-G32    ; G30              ; G32            ; ^G3[0-2]           ; G30-G32 Other degenerative diseases of the nervous system
+10   ; 1  ;         ; G35-G37    ; G35              ; G37            ; ^G3[5-7]           ; G35-G37 Demyelinating diseases of the central nervous system
+10   ; 1  ;         ; G40-G47    ; G40              ; G47            ; ^G4                ; G40-G47 Episodic and paroxysmal disorders
+10   ; 1  ;         ; G50-G59    ; G50              ; G59            ; ^G5                ; G50-G59 Nerve, nerve root and plexus disorders
+10   ; 1  ;         ; G60-G64    ; G60              ; G64            ; ^G6                ; G60-G64 Polyneuropathies and other disorders of the peripheral nervous system
+10   ; 1  ;         ; G70-G73    ; G70              ; G73            ; ^G7                ; G70-G73 Diseases of myoneural junction and muscle
+10   ; 1  ;         ; G80-G83    ; G80              ; G83            ; ^G8                ; G80-G83 Cerebral palsy and other paralytic syndromes
+10   ; 1  ;         ; G90-G99    ; G90              ; G99            ; ^G9                ; G90-G99 Other disorders of the nervous system
+10   ; 1  ; VII     ;            ; H00              ; H59            ; ^H[0-5]            ; VII: Diseases of the eye and adnexa
+10   ; 1  ;         ; H00-H06    ; H00              ; H06            ; ^H0                ; H00-H06 Disorders of eyelid, lacrimal system and orbit
+10   ; 1  ;         ; H10-H13    ; H10              ; H13            ; ^H1[0-3]           ; H10-H13 Disorders of conjunctiva
+10   ; 1  ;         ; H15-H22    ; H15              ; H22            ; ^H(1[5-9]|2[0-2])  ; H15-H22 Disorders of sclera, cornea, iris and ciliary body
+10   ; 1  ;         ; H25-H28    ; H25              ; H28            ; ^H2[5-8]           ; H25-H28 Disorders of lens
+10   ; 1  ;         ; H30-H36    ; H30              ; H36            ; ^H3                ; H30-H36 Disorders of choroid and retina
+10   ; 1  ;         ; H40-H42    ; H40              ; H42            ; ^H4[0-2]           ; H40-H42 Glaucoma
+10   ; 1  ;         ; H43-H45    ; H43              ; H45            ; ^H4[3-5]           ; H43-H45 Disorders of vitreous body and globe
+10   ; 1  ;         ; H46-H48    ; H46              ; H48            ; ^H4[6-8]           ; H46-H48 Disorders of optic nerve and visual pathways
+10   ; 1  ;         ; H49-H52    ; H49              ; H52            ; ^H(49|5[0-2])      ; H49-H52 Disorders of ocular muscles, binocular movement, accommodation and refraction
+10   ; 1  ;         ; H53-H54    ; H53              ; H54            ; ^H5[3-4]           ; H53-H54 Visual disturbances and blindness
+10   ; 1  ;         ; H55-H59    ; H55              ; H59            ; ^H5[5-9]           ; H55-H59 Other disorders of eye and adnexa
+10   ; 1  ; VIII    ;            ; H60              ; H95            ; ^H[6-9]            ; VIII: Diseases of the ear and mastoid 0 ocess
+10   ; 1  ;         ; H60-H62    ; H60              ; H62            ; ^H6[0-2]           ; H60-H62 Diseases of external ear
+10   ; 1  ;         ; H65-H75    ; H65              ; H75            ; ^H(6[5-9]|7)       ; H65-H75 Diseases of middle ear and mastoid
+10   ; 1  ;         ; H80-H83    ; H80              ; H83            ; ^H8                ; H80-H83 Diseases of inner ear
+10   ; 1  ;         ; H90-H95    ; H90              ; H95            ; ^H9                ; H90-H95 Other disorders of ear
+10   ; 1  ; IX      ;            ; I00              ; I99            ; ^I                 ; IX: Diseases of the circulatory system
+10   ; 1  ;         ; I00-I02    ; I00              ; I02            ; ^I0[0-2]           ; I00-I02 Acute rheumatic fever
+10   ; 1  ;         ; I05-I09    ; I05              ; I09            ; ^I0[5-9]           ; I05-I09 Chronic rheumatic heart diseases
+10   ; 1  ;         ; I10-I15    ; I10              ; I15            ; ^I1                ; I10-I15 Hypertensive diseases
+10   ; 1  ;         ; I20-I25    ; I20              ; I25            ; ^I2[0-5]           ; I20-I25 Ischaemic heart diseases
+10   ; 1  ;         ; I26-I28    ; I26              ; I28            ; ^I2[6-8]           ; I26-I28 Pulmonary heart disease and diseases of pulmonary circulation
+10   ; 1  ;         ; I30-I52    ; I30              ; I52            ; ^I(3|4|5[0-2])     ; I30-I52 Other forms of heart disease
+10   ; 1  ;         ; I60-I69    ; I60              ; I69            ; ^I6                ; I60-I69 Cerebrovascular diseases
+10   ; 1  ;         ; I70-I79    ; I70              ; I79            ; ^I7                ; I70-I79 Diseases of arteries, arterioles and capillaries
+10   ; 1  ;         ; I80-I89    ; I80              ; I89            ; ^I8                ; I80-I89 Diseases of veins, lymphatic vessels and lymph nodes, not elsewhere classified
+10   ; 1  ;         ; I95-I99    ; I95              ; I99            ; ^I9                ; I95-I99 Other and unspecified disorders of the circulatory system
+10   ; 1  ; X       ;            ; J00              ; J99            ; ^J                 ; X: Diseases of the respiratory system
+10   ; 1  ;         ; J00-J06    ; J00              ; J06            ; ^J0[0-6]           ; J00-J06 Acute upper respiratory infections
+10   ; 1  ;         ; J09-J18    ; J09              ; J18            ; ^J(09|1)           ; J09-J18 Influenza and pneumonia
+10   ; 1  ;         ; J20-J22    ; J20              ; J22            ; ^J2                ; J20-J22 Other acute lower respiratory infections
+10   ; 1  ;         ; J30-J39    ; J30              ; J39            ; ^J3                ; J30-J39 Other diseases of upper respiratory tract
+10   ; 1  ;         ; J40-J47    ; J40              ; J47            ; ^J4                ; J40-J47 Chronic lower respiratory diseases
+10   ; 1  ;         ; J60-J70    ; J60              ; J70            ; ^J(6|70)           ; J60-J70 Lung diseases due to external agents
+10   ; 1  ;         ; J80-J84    ; J80              ; J84            ; ^J8[0-4]           ; J80-J84 Other respiratory diseases principally affecting the interstitium
+10   ; 1  ;         ; J85-J86    ; J85              ; J86            ; ^J8[5-6]           ; J85-J86 Suppurative and necrotic conditions of lower respiratory tract
+10   ; 1  ;         ; J90-J94    ; J90              ; J94            ; ^J9[0-4]           ; J90-J94 Other diseases of pleura
+10   ; 1  ;         ; J95-J99    ; J95              ; J99            ; ^J9[5-9]           ; J95-J99 Other diseases of the respiratory system
+10   ; 1  ; XI      ;            ; K00              ; K93            ; ^K                 ; XI: Diseases of the digestive system
+10   ; 1  ;         ; K00-K14    ; K00              ; K14            ; ^K(0|1[0-4])       ; K00-K14 Diseases of oral cavity, salivary glands and jaws
+10   ; 1  ;         ; K20-K31    ; K20              ; K31            ; ^K(2|3[0-1])       ; K20-K31 Diseases of oesophagus, stomach and duodenum
+10   ; 1  ;         ; K35-K38    ; K35              ; K38            ; ^K3[5-8]           ; K35-K38 Diseases of appendix
+10   ; 1  ;         ; K40-K46    ; K40              ; K46            ; ^K4                ; K40-K46 Hernia
+10   ; 1  ;         ; K50-K52    ; K50              ; K52            ; ^K5[0-2]           ; K50-K52 Noninfective enteritis and colitis
+10   ; 1  ;         ; K55-K64    ; K55              ; K64            ; ^K(5[5-9]|6[0-4])  ; K55-K64 Other diseases of intestines
+10   ; 1  ;         ; K65-K67    ; K65              ; K67            ; ^K6[5-7]           ; K65-K67 Diseases of peritoneum
+10   ; 1  ;         ; K70-K77    ; K70              ; K77            ; ^K7                ; K70-K77 Diseases of liver
+10   ; 1  ;         ; K80-K87    ; K80              ; K87            ; ^K8                ; K80-K87 Disorders of gallbladder, biliary tract and pancreas
+10   ; 1  ;         ; K90-K93    ; K90              ; K93            ; ^K9                ; K90-K93 Other diseases of the digestive system
+10   ; 1  ; XII     ;            ; L00              ; L99            ; ^L                 ; XII: Diseases of the skin and subcutaneous tissue
+10   ; 1  ;         ; L00-L08    ; L00              ; L08            ; ^L0                ; L00-L08 Infections of the skin and subcutaneous tissue
+10   ; 1  ;         ; L10-L14    ; L10              ; L14            ; ^L1                ; L10-L14 Bullous disorders
+10   ; 1  ;         ; L20-L30    ; L20              ; L30            ; ^L(2|3)            ; L20-L30 Dermatitis and eczema
+10   ; 1  ;         ; L40-L45    ; L40              ; L45            ; ^L4                ; L40-L45 Papulosquamous disorders
+10   ; 1  ;         ; L50-L54    ; L50              ; L54            ; ^L5[0-4]           ; L50-L54 Urticaria and erythema
+10   ; 1  ;         ; L55-L59    ; L55              ; L59            ; ^L5[5-9]           ; L55-L59 Radiation-related disorders of the skin and subcutaneous tissue
+10   ; 1  ;         ; L60-L75    ; L60              ; L75            ; ^L(6|7)            ; L60-L75 Disorders of skin appendages
+10   ; 1  ;         ; L80-L99    ; L80              ; L99            ; ^L(8|9)            ; L80-L99 Other disorders of the skin and subcutaneous tissue
+10   ; 1  ; XIII    ;            ; M00              ; M99            ; ^M                 ; XIII: Diseases of the musculoskeletal system and connective tissue
+10   ; 1  ;         ; M00-M03    ; M00              ; M03            ; ^M0[0-3]           ; M00-M03 Infectious arthropathies
+10   ; 1  ;         ; M05-M14    ; M05              ; M14            ; ^M(0[5-9]|1[0-4])  ; M05-M14 Inflammatory polyarthropathies
+10   ; 1  ;         ; M15-M19    ; M15              ; M19            ; ^M1[5-9]           ; M15-M19 Arthrosis
+10   ; 1  ;         ; M20-M25    ; M20              ; M25            ; ^M2                ; M20-M25 Other joint disorders
+10   ; 1  ;         ; M30-M36    ; M30              ; M36            ; ^M3                ; M30-M36 Systemic connective tissue disorders
+10   ; 1  ;         ; M40-M43    ; M40              ; M43            ; ^M4[0-3]           ; M40-M43 Deforming dorsopathies
+10   ; 1  ;         ; M45-M49    ; M45              ; M49            ; ^M4[5-9]           ; M45-M49 Spondylopathies
+10   ; 1  ;         ; M50-M54    ; M50              ; M54            ; ^M5                ; M50-M54 Other dorsopathies
+10   ; 1  ;         ; M60-M63    ; M60              ; M63            ; ^M6[0-3]           ; M60-M63 Disorders of muscles
+10   ; 1  ;         ; M65-M68    ; M65              ; M68            ; ^M6[5-8]           ; M65-M68 Disorders of synovium and tendon
+10   ; 1  ;         ; M70-M79    ; M70              ; M79            ; ^M7                ; M70-M79 Other soft tissue disorders
+10   ; 1  ;         ; M80-M85    ; M80              ; M85            ; ^M8[0-5]           ; M80-M85 Disorders of bone density and structure
+10   ; 1  ;         ; M86-M90    ; M86              ; M90            ; ^M(8[6-9]|90)      ; M86-M90 Other osteopathies
+10   ; 1  ;         ; M91-M94    ; M91              ; M94            ; ^M9[1-4]           ; M91-M94 Chondropathies
+10   ; 1  ;         ; M95-M99    ; M95              ; M99            ; ^M9[5-9]           ; M95-M99 Other disorders of the musculoskeletal system and connective tissue
+10   ; 1  ; XIV     ;            ; N00              ; N99            ; ^N                 ; XIV: Diseases of the genitourinary system
+10   ; 1  ;         ; N00-N08    ; N00              ; N08            ; ^N0                ; N00-N08 Glomerular diseases
+10   ; 1  ;         ; N10-N16    ; N10              ; N16            ; ^N1[0-6]           ; N10-N16 Renal tubulo-interstitial diseases
+10   ; 1  ;         ; N17-N19    ; N17              ; N19            ; ^N1[7-9]           ; N17-N19 Renal failure
+10   ; 1  ;         ; N20-N23    ; N20              ; N23            ; ^N2[0-3]           ; N20-N23 Urolithiasis
+10   ; 1  ;         ; N25-N29    ; N25              ; N29            ; ^N2[5-9]           ; N25-N29 Other disorders of kidney and ureter
+10   ; 1  ;         ; N30-N39    ; N30              ; N39            ; ^N3                ; N30-N39 Other diseases of urinary system
+10   ; 1  ;         ; N40-N51    ; N40              ; N51            ; ^N(4|5)            ; N40-N51 Diseases of male genital organs
+10   ; 1  ;         ; N60-N64    ; N60              ; N64            ; ^N6                ; N60-N64 Disorders of breast
+10   ; 1  ;         ; N70-N77    ; N70              ; N77            ; ^N7                ; N70-N77 Inflammatory diseases of female pelvic organs
+10   ; 1  ;         ; N80-N98    ; N80              ; N98            ; ^N(8|9[0-8])       ; N80-N98 Noninflammatory disorders of female genital tract
+10   ; 1  ;         ; N99-N99    ; N99              ; N99            ; ^N99               ; N99-N99 Other disorders of the genitourinary system
+10   ; 1  ; XV      ;            ; O00              ; O99            ; ^O                 ; XV: Pregnancy, childbirth and the puerperium
+10   ; 1  ;         ; O00-O08    ; O00              ; O08            ; ^O0                ; O00-O08 Pregnancy with abortive outcome
+10   ; 1  ;         ; O10-O16    ; O10              ; O16            ; ^O1                ; O10-O16 Oedema, proteinuria and hypertensive disorders in pregnancy, childbirth and the puerperium
+10   ; 1  ;         ; O20-O29    ; O20              ; O29            ; ^O2                ; O20-O29 Other maternal disorders predominantly related to pregnancy
+10   ; 1  ;         ; O30-O48    ; O30              ; O48            ; ^O(3|4)            ; O30-O48 Maternal care related to the fetus and amniotic cavity and possible delivery problems
+10   ; 1  ;         ; O60-O75    ; O60              ; O75            ; ^O(6|7)            ; O60-O75 Complications of labour and delivery
+10   ; 1  ;         ; O80-O84    ; O80              ; O84            ; ^O8[0-4]           ; O80-O84 Delivery
+10   ; 1  ;         ; O85-O92    ; O85              ; O92            ; ^O(8[5-9]|9[0-2])  ; O85-O92 Complications predominantly related to the puerperium
+10   ; 1  ;         ; O94-O99    ; O94              ; O99            ; ^O9[4-9]           ; O94-O99 Other obstetric conditions, not elsewhere classified
+10   ; 1  ; XVI     ;            ; P00              ; P96            ; ^P                 ; XVI: Certain conditions originating in the perinatal period
+10   ; 1  ;         ; P00-P04    ; P00              ; P04            ; ^P0[0-4]           ; P00-P04 Fetus and newborn affected by maternal factors and by complications of pregnancy, labour and delivery
+10   ; 1  ;         ; P05-P08    ; P05              ; P08            ; ^P0[5-9]           ; P05-P08 Disorders related to length of gestation and fetal growth
+10   ; 1  ;         ; P10-P15    ; P10              ; P15            ; ^P1                ; P10-P15 Birth trauma
+10   ; 1  ;         ; P20-P29    ; P20              ; P29            ; ^P2                ; P20-P29 Respiratory and cardiovascular disorders specific to the perinatal period
+10   ; 1  ;         ; P35-P39    ; P35              ; P39            ; ^P3                ; P35-P39 Infections specific to the perinatal period
+10   ; 1  ;         ; P50-P61    ; P50              ; P61            ; ^P(5|6)            ; P50-P61 Haemorrhagic and haematological disorders of fetus and newborn
+10   ; 1  ;         ; P70-P74    ; P70              ; P74            ; ^P7[0-4]           ; P70-P74 Transitory endocrine and metabolic disorders specific to fetus and newborn
+10   ; 1  ;         ; P75-P78    ; P75              ; P78            ; ^P7[5-8]           ; P75-P78 Digestive system disorders of fetus and newborn
+10   ; 1  ;         ; P80-P83    ; P80              ; P83            ; ^P8                ; P80-P83 Conditions involving the integument and temperature regulation of fetus and newborn
+10   ; 1  ;         ; P90-P96    ; P90              ; P96            ; ^P9                ; P90-P96 Other disorders originating in the perinatal period
+10   ; 1  ; XVII    ;            ; Q00              ; Q99            ; ^Q                 ; XVII: Congenital malformations, deformations and chromosomal abnormalities
+10   ; 1  ;         ; Q00-Q07    ; Q00              ; Q07            ; ^Q0                ; Q00-Q07 Congenital malformations of the nervous system
+10   ; 1  ;         ; Q10-Q18    ; Q10              ; Q18            ; ^Q1                ; Q10-Q18 Congenital malformations of eye, ear, face and neck
+10   ; 1  ;         ; Q20-Q28    ; Q20              ; Q28            ; ^Q2                ; Q20-Q28 Congenital malformations of the circulatory system
+10   ; 1  ;         ; Q30-Q34    ; Q30              ; Q34            ; ^Q3[0-4]           ; Q30-Q34 Congenital malformations of the respiratory system
+10   ; 1  ;         ; Q35-Q37    ; Q35              ; Q37            ; ^Q3[5-7]           ; Q35-Q37 Cleft lip and cleft palate
+10   ; 1  ;         ; Q38-Q45    ; Q38              ; Q45            ; ^Q(3[8-9]|4)       ; Q38-Q45 Other congenital malformations of the digestive system
+10   ; 1  ;         ; Q50-Q56    ; Q50              ; Q56            ; ^Q5                ; Q50-Q56 Congenital malformations of genital organs
+10   ; 1  ;         ; Q60-Q64    ; Q60              ; Q64            ; ^Q6[0-4]           ; Q60-Q64 Congenital malformations of the urinary system
+10   ; 1  ;         ; Q65-Q79    ; Q65              ; Q79            ; ^Q(6[5-9]|7)       ; Q65-Q79 Congenital malformations and deformations of the musculoskeletal system
+10   ; 1  ;         ; Q80-Q89    ; Q80              ; Q89            ; ^Q8                ; Q80-Q89 Other congenital malformations
+10   ; 1  ;         ; Q90-Q99    ; Q90              ; Q99            ; ^Q9                ; Q90-Q99 Chromosomal abnormalities, not elsewhere classified
+10   ; 1  ; XVIII   ;            ; R00              ; R99            ; ^R                 ; XVIII: Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified
+10   ; 1  ;         ; R00-R09    ; R00              ; R09            ; ^R0                ; R00-R09 Symptoms and signs involving the circulatory and respiratory systems
+10   ; 1  ;         ; R10-R19    ; R10              ; R19            ; ^R1                ; R10-R19 Symptoms and signs involving the digestive system and abdomen
+10   ; 1  ;         ; R20-R23    ; R20              ; R23            ; ^R2[0-3]           ; R20-R23 Symptoms and signs involving the skin and subcutaneous tissue
+10   ; 1  ;         ; R25-R29    ; R25              ; R29            ; ^R2[5-9]           ; R25-R29 Symptoms and signs involving the nervous and musculoskeletal systems
+10   ; 1  ;         ; R30-R39    ; R30              ; R39            ; ^R3                ; R30-R39 Symptoms and signs involving the urinary system
+10   ; 1  ;         ; R40-R46    ; R40              ; R46            ; ^R4[0-6]           ; R40-R46 Symptoms and signs involving cognition, perception, emotional state and behaviour
+10   ; 1  ;         ; R47-R49    ; R47              ; R49            ; ^R4[7-9]           ; R47-R49 Symptoms and signs involving speech and voice
+10   ; 1  ;         ; R50-R69    ; R50              ; R69            ; ^R(5|6)            ; R50-R69 General symptoms and signs
+10   ; 1  ;         ; R70-R79    ; R70              ; R79            ; ^R7                ; R70-R79 Abnormal findings on examination of blood, without diagnosis
+10   ; 1  ;         ; R80-R82    ; R80              ; R82            ; ^R8[0-2]           ; R80-R82 Abnormal findings on examination of urine, without diagnosis
+10   ; 1  ;         ; R83-R89    ; R83              ; R89            ; ^R8[3-9]           ; R83-R89 Abnormal findings on examination of other body fluids, substances and tissues, without diagnosis
+10   ; 1  ;         ; R90-R94    ; R90              ; R94            ; ^R9[0-4]           ; R90-R94 Abnormal findings on diagnostic imaging and in function studies, without diagnosis
+10   ; 1  ;         ; R95-R99    ; R95              ; R99            ; ^R9[5-9]           ; R95-R99 Ill-defined and unknown causes of mortality
+10   ; 1  ; XIX     ;            ; S00              ; T98            ; ^(S|T)             ; XIX: Injury, poisoning and certain other consequences of external causes
+10   ; 1  ;         ; S00-S09    ; S00              ; S09            ; ^S0                ; S00-S09 Injuries to the head
+10   ; 1  ;         ; S10-S19    ; S10              ; S19            ; ^S1                ; S10-S19 Injuries to the neck
+10   ; 1  ;         ; S20-S29    ; S20              ; S29            ; ^S2                ; S20-S29 Injuries to the thorax
+10   ; 1  ;         ; S30-S39    ; S30              ; S39            ; ^S3                ; S30-S39 Injuries to the abdomen, lower back, lumbar spine and pelvis
+10   ; 1  ;         ; S40-S49    ; S40              ; S49            ; ^S4                ; S40-S49 Injuries to the shoulder and upper arm
+10   ; 1  ;         ; S50-S59    ; S50              ; S59            ; ^S5                ; S50-S59 Injuries to the elbow and forearm
+10   ; 1  ;         ; S60-S69    ; S60              ; S69            ; ^S6                ; S60-S69 Injuries to the wrist and hand
+10   ; 1  ;         ; S70-S79    ; S70              ; S79            ; ^S7                ; S70-S79 Injuries to the hip and thigh
+10   ; 1  ;         ; S80-S89    ; S80              ; S89            ; ^S8                ; S80-S89 Injuries to the knee and lower leg
+10   ; 1  ;         ; S90-S99    ; S90              ; S99            ; ^S9                ; S90-S99 Injuries to the ankle and foot
+10   ; 1  ;         ; T00-T07    ; T00              ; T07            ; ^T0[0-7]           ; T00-T07 Injuries involving multiple body regions
+10   ; 1  ;         ; T08-T14    ; T08              ; T14            ; ^T(0[8-9]|1[0-4])  ; T08-T14 Injuries to unspecified part of trunk, limb or body region
+10   ; 1  ;         ; T15-T19    ; T15              ; T19            ; ^T1[5-9]           ; T15-T19 Effects of foreign body entering through natural orifice
+10   ; 1  ;         ; T20-T25    ; T20              ; T25            ; ^T2[0-5]           ; T20-T25 Burns and corrosions of external body surface, specified by site
+10   ; 1  ;         ; T26-T28    ; T26              ; T28            ; ^T2[6-8]           ; T26-T28 Burns and corrosions confined to eye and internal organs
+10   ; 1  ;         ; T29-T32    ; T29              ; T32            ; ^T(29|3[0-2])      ; T29-T32 Burns and corrosions of multiple and unspecified body regions
+10   ; 1  ;         ; T33-T35    ; T33              ; T35            ; ^T3[3-5]           ; T33-T35 Frostbite
+10   ; 1  ;         ; T36-T50    ; T36              ; T50            ; ^T(3[6-9]|4|50)    ; T36-T50 Poisoning by drugs, medicaments and biological substances
+10   ; 1  ;         ; T51-T65    ; T51              ; T65            ; ^T(5[1-9]|6[0-5])  ; T51-T65 Toxic effects of substances chiefly nonmedicinal as to source
+10   ; 1  ;         ; T66-T78    ; T66              ; T78            ; ^T(6[6-9]|7[0-8])  ; T66-T78 Other and unspecified effects of external causes
+10   ; 1  ;         ; T79-T79    ; T79              ; T79            ; ^T79               ; T79-T79 Certain early complications of trauma
+10   ; 1  ;         ; T80-T88    ; T80              ; T88            ; ^T8                ; T80-T88 Complications of surgical and medical care, not elsewhere classified
+10   ; 1  ;         ; T90-T98    ; T90              ; T98            ; ^T9                ; T90-T98 Sequelae of injuries, of poisoning and of other consequences of external causes
+10   ; 1  ; XX      ;            ; V01              ; Y98            ; ^(V|W|X|Y)         ; XX: External causes of morbidity and mortality
+10   ; 1  ;         ; V01-V09    ; V01              ; V09            ; ^V0                ; V01-V09 Pedestrian injured in transport accident
+10   ; 1  ;         ; V10-V19    ; V10              ; V19            ; ^V1                ; V10-V19 Pedal cyclist injured in transport accident
+10   ; 1  ;         ; V20-V29    ; V20              ; V29            ; ^V2                ; V20-V29 Motorcycle rider injured in transport accident
+10   ; 1  ;         ; V30-V39    ; V30              ; V39            ; ^V3                ; V30-V39 Occupant of three-wheeled motor vehicle injured in transport accident
+10   ; 1  ;         ; V40-V49    ; V40              ; V49            ; ^V4                ; V40-V49 Car occupant injured in transport accident
+10   ; 1  ;         ; V50-V59    ; V50              ; V59            ; ^V5                ; V50-V59 Occupant of pick-up truck or van injured in transport accident
+10   ; 1  ;         ; V60-V69    ; V60              ; V69            ; ^V6                ; V60-V69 Occupant of heavy transport vehicle injured in transport accident
+10   ; 1  ;         ; V70-V79    ; V70              ; V79            ; ^V7                ; V70-V79 Bus occupant injured in transport accident
+10   ; 1  ;         ; V80-V89    ; V80              ; V89            ; ^V8                ; V80-V89 Other land transport accidents
+10   ; 1  ;         ; V90-V94    ; V90              ; V94            ; ^V9[0-4]           ; V90-V94 Water transport accidents
+10   ; 1  ;         ; V95-V97    ; V95              ; V97            ; ^V9[5-7]           ; V95-V97 Air and space transport accidents
+10   ; 1  ;         ; V98-V99    ; V98              ; V99            ; ^V9[8-9]           ; V98-V99 Other and unspecified transport accidents
+10   ; 1  ;         ; W00-W19    ; W00              ; W19            ; ^W[0-1]            ; W00-W19 Falls
+10   ; 1  ;         ; W20-W49    ; W20              ; W49            ; ^W[2-4]            ; W20-W49 Exposure to inanimate mechanical forces
+10   ; 1  ;         ; W50-W64    ; W50              ; W64            ; ^W(5|6[0-4])       ; W50-W64 Exposure to animate mechanical forces
+10   ; 1  ;         ; W65-W74    ; W65              ; W74            ; ^W(6[5-9]|7[0-4])  ; W65-W74 Accidental drowning and submersion
+10   ; 1  ;         ; W75-W84    ; W75              ; W84            ; ^W(7[5-9]|8[0-4])  ; W75-W84 Other accidental threats to breathing
+10   ; 1  ;         ; W85-W99    ; W85              ; W99            ; ^W(8[5-9]|9)       ; W85-W99 Exposure to electric current, radiation and extreme ambient air temperature and pressure
+10   ; 1  ;         ; X00-X09    ; X00              ; X09            ; ^X0                ; X00-X09 Exposure to smoke, fire and flames
+10   ; 1  ;         ; X10-X19    ; X10              ; X19            ; ^X1                ; X10-X19 Contact with heat and hot substances
+10   ; 1  ;         ; X20-X29    ; X20              ; X29            ; ^X2                ; X20-X29 Contact with venomous animals and plants
+10   ; 1  ;         ; X30-X39    ; X30              ; X39            ; ^X3                ; X30-X39 Exposure to forces of nature
+10   ; 1  ;         ; X40-X49    ; X40              ; X49            ; ^X4                ; X40-X49 Accidental poisoning by and exposure to noxious substances
+10   ; 1  ;         ; X50-X57    ; X50              ; X57            ; ^X5[0-7]           ; X50-X57 Overexertion, travel and privation
+10   ; 1  ;         ; X58-X59    ; X58              ; X59            ; ^X5[8-9]           ; X58-X59 Accidental exposure to other and unspecified factors
+10   ; 1  ;         ; X60-X84    ; X60              ; X84            ; ^X(6|7|8[0-4])     ; X60-X84 Intentional self-harm
+10   ; 1  ;         ; X85-Y09    ; X85              ; Y09            ; ^(X8[5-9]|X9|Y0)   ; X85-Y09 Assault
+10   ; 1  ;         ; Y10-Y34    ; Y10              ; Y34            ; ^Y(1|2|3[0-4])     ; Y10-Y34 Event of undetermined intent
+10   ; 1  ;         ; Y35-Y36    ; Y35              ; Y36            ; ^Y3[5-6]           ; Y35-Y36 Legal intervention and operations of war
+10   ; 1  ;         ; Y40-Y59    ; Y40              ; Y59            ; ^Y(4|5)            ; Y40-Y59 Drugs, medicaments and biological substances causing adverse effects in therapeutic use
+10   ; 1  ;         ; Y60-Y69    ; Y60              ; Y69            ; ^Y6                ; Y60-Y69 Misadventures to patients during surgical and medical care
+10   ; 1  ;         ; Y70-Y82    ; Y70              ; Y82            ; ^Y(7|8[0-2])       ; Y70-Y82 Medical devices associated with adverse incidents in diagnostic and therapeutic use
+10   ; 1  ;         ; Y83-Y84    ; Y83              ; Y84            ; ^Y8[3-4]           ; Y83-Y84 Surgical and other medical procedures as the cause of abnormal reaction of the patient, or of later complication, without mention of misadventure at the time of the procedure
+10   ; 1  ;         ; Y85-Y89    ; Y85              ; Y89            ; ^Y8[5-9]           ; Y85-Y89 Sequelae of external causes of morbidity and mortality
+10   ; 1  ;         ; Y90-Y98    ; Y90              ; Y98            ; ^Y9                ; Y90-Y98 Supplementary factors related to causes of morbidity and mortality classified elsewhere
+10   ; 1  ; XXI     ;            ; Z00              ; Z99            ; ^Z                 ; XXI: Factors influencing health status and contact with health services
+10   ; 1  ;         ; Z00-Z13    ; Z00              ; Z13            ; ^Z(0|1)            ; Z00-Z13 Persons encountering health services for examination and investigation
+10   ; 1  ;         ; Z20-Z29    ; Z20              ; Z29            ; ^Z2                ; Z20-Z29 Persons with potential health hazards related to communicable diseases
+10   ; 1  ;         ; Z30-Z39    ; Z30              ; Z39            ; ^Z3                ; Z30-Z39 Persons encountering health services in circumstances related to reproduction
+10   ; 1  ;         ; Z40-Z54    ; Z40              ; Z54            ; ^Z(4|5[0-4])       ; Z40-Z54 Persons encountering health services for specific procedures and health care
+10   ; 1  ;         ; Z55-Z65    ; Z55              ; Z65            ; ^Z(5[5-9]|6[0-5])  ; Z55-Z65 Persons with potential health hazards related to socioeconomic and psychosocial circumstances
+10   ; 1  ;         ; Z70-Z76    ; Z70              ; Z76            ; ^Z7                ; Z70-Z76 Persons encountering health services in other circumstances
+10   ; 1  ;         ; Z80-Z99    ; Z80              ; Z99            ; ^Z(8|9)            ; Z80-Z99 Persons with potential health hazards related to family and personal history and certain conditions influencing health status
+10   ; 1  ; XXII    ;            ; U00              ; U99            ; ^U                 ; XXII: Codes for special purposes
+10   ; 1  ;         ; U00-U49    ; U00              ; U49            ; ^U[0-4]            ; U00-U49 Provisional assignment of new diseases of uncertain etiology or emergency use
+10   ; 1  ;         ; U82-U85    ; U82              ; U85            ; ^U8[2-5]           ; U82-U85 Resistance to antimicrobial and antineoplastic drugs
+10   ; 0  ; 0       ;            ; 0                ; 0              ; ^0                 ; 0  Medical and Surgical
+10   ; 0  ;         ; 00         ; 00               ; 00             ; ^00                ; 00 Central Nervous System and Cranial Nerves
+10   ; 0  ;         ; 01         ; 01               ; 01             ; ^01                ; 01 Peripheral Nervous System
+10   ; 0  ;         ; 02         ; 02               ; 02             ; ^02                ; 02 Heart and Great Vessels
+10   ; 0  ;         ; 03         ; 03               ; 03             ; ^03                ; 03 Upper Arteries
+10   ; 0  ;         ; 04         ; 04               ; 04             ; ^04                ; 04 Lower Arteries
+10   ; 0  ;         ; 05         ; 05               ; 05             ; ^05                ; 05 Upper Veins
+10   ; 0  ;         ; 06         ; 06               ; 06             ; ^06                ; 06 Lower Veins
+10   ; 0  ;         ; 07         ; 07               ; 07             ; ^07                ; 07 Lymphatic and Hemic Systems
+10   ; 0  ;         ; 08         ; 08               ; 08             ; ^08                ; 08 Eye
+10   ; 0  ;         ; 09         ; 09               ; 09             ; ^09                ; 09 Ear, Nose, Sinus
+10   ; 0  ;         ; 0B         ; 0B               ; 0B             ; ^0B                ; 0B Respiratory System
+10   ; 0  ;         ; 0C         ; 0C               ; 0C             ; ^0C                ; 0C Mouth and Throat
+10   ; 0  ;         ; 0D         ; 0D               ; 0D             ; ^0D                ; 0D Gastrointestinal System
+10   ; 0  ;         ; 0F         ; 0F               ; 0F             ; ^0F                ; 0F Hepatobiliary System and Pancreas
+10   ; 0  ;         ; 0G         ; 0G               ; 0G             ; ^0G                ; 0G Endocrine System
+10   ; 0  ;         ; 0H         ; 0H               ; 0H             ; ^0H                ; 0H Skin and Breast
+10   ; 0  ;         ; 0J         ; 0J               ; 0J             ; ^0J                ; 0J Subcutaneous Tissue and Fascia
+10   ; 0  ;         ; 0K         ; 0K               ; 0K             ; ^0K                ; 0K Muscles
+10   ; 0  ;         ; 0L         ; 0L               ; 0L             ; ^0L                ; 0L Tendons
+10   ; 0  ;         ; 0M         ; 0M               ; 0M             ; ^0M                ; 0M Bursae and Ligaments
+10   ; 0  ;         ; 0N         ; 0N               ; 0N             ; ^0N                ; 0N Head and Facial Bones
+10   ; 0  ;         ; 0P         ; 0P               ; 0P             ; ^0P                ; 0P Upper Bones
+10   ; 0  ;         ; 0Q         ; 0Q               ; 0Q             ; ^0Q                ; 0Q Lower Bones
+10   ; 0  ;         ; 0R         ; 0R               ; 0R             ; ^0R                ; 0R Upper Joints
+10   ; 0  ;         ; 0S         ; 0S               ; 0S             ; ^0S                ; 0S Lower Joints
+10   ; 0  ;         ; 0T         ; 0T               ; 0T             ; ^0T                ; 0T Urinary System
+10   ; 0  ;         ; 0U         ; 0U               ; 0U             ; ^0U                ; 0U Female Reproductive System
+10   ; 0  ;         ; 0V         ; 0V               ; 0V             ; ^0V                ; 0V Male Reproductive System
+10   ; 0  ;         ; 0W         ; 0W               ; 0W             ; ^0W                ; 0W Anatomical Regions, General
+10   ; 0  ;         ; 0X         ; 0X               ; 0X             ; ^0X                ; 0X Anatomical Regions, Upper Extremities
+10   ; 0  ;         ; 0Y         ; 0Y               ; 0Y             ; ^0Y                ; 0Y Anatomical Regions, Lower Extremities
+10   ; 0  ; 1       ;            ; 1                ; 1              ; ^1                 ; 1  Obstetrics
+10   ; 0  ;         ; 10         ; 10               ; 10             ; ^10                ; 10 Pregnancy
+10   ; 0  ; 2       ;            ; 2                ; 2              ; ^2                 ; 2  Placement
+10   ; 0  ;         ; 2W         ; 2W               ; 2W             ; ^2W                ; 2W Anatomical Regions
+10   ; 0  ;         ; 2Y         ; 2Y               ; 2Y             ; ^2Y                ; 2Y Anatomical Orifices
+10   ; 0  ; 3       ;            ; 3                ; 3              ; ^3                 ; 3  Administration
+10   ; 0  ;         ; 30         ; 30               ; 30             ; ^30                ; 30 Circulatory
+10   ; 0  ;         ; 3C         ; 3C               ; 3C             ; ^3C                ; 3C Indwelling Device
+10   ; 0  ;         ; 3E         ; 3E               ; 3E             ; ^3E                ; 3E Physiological Systems and Anatomical Regions
+10   ; 0  ; 4       ;            ; 4                ; 4              ; ^4                 ; 4  Measurement and Monitoring
+10   ; 0  ;         ; 4A         ; 4A               ; 4A             ; ^4A                ; 4A Physiological Systems
+10   ; 0  ;         ; 4B         ; 4B               ; 4B             ; ^4B                ; 4B Physiological Devices
+10   ; 0  ; 5       ;            ; 5                ; 5              ; ^5                 ; 5  Extracorporeal or Systemic Assistance and Performance
+10   ; 0  ;         ; 5A         ; 5A               ; 5A             ; ^5A                ; 5A Physiological Systems
+10   ; 0  ; 6       ;            ; 6                ; 6              ; ^6                 ; 6  Extracorporeal or Systemic Therapies
+10   ; 0  ;         ; 6A         ; 6A               ; 6A             ; ^6A                ; 6A Physiological Systems
+10   ; 0  ; 7       ;            ; 7                ; 7              ; ^7                 ; 7  Osteopathic
+10   ; 0  ;         ; 7W         ; 7W               ; 7W             ; ^7W                ; 7W Anatomical Regions
+10   ; 0  ; 8       ;            ; 8                ; 8              ; ^8                 ; 8  Other Procedures
+10   ; 0  ;         ; 8C         ; 8C               ; 8C             ; ^8C                ; 8C Indwelling Device
+10   ; 0  ;         ; 8E         ; 8E               ; 8E             ; ^8E                ; 8E Physiological Systems and Anatomical Regions
+10   ; 0  ; 9       ;            ; 9                ; 9              ; ^9                 ; 9  Chiropractic
+10   ; 0  ;         ; 9W         ; 9W               ; 9W             ; ^9W                ; 9W Anatomical Regions
+10   ; 0  ; B       ;            ; B                ; B              ; ^B                 ; B  Imaging
+10   ; 0  ;         ; B0         ; B0               ; B0             ; ^B0                ; B0 Central Nervous System
+10   ; 0  ;         ; B2         ; B2               ; B2             ; ^B2                ; B2 Heart
+10   ; 0  ;         ; B3         ; B3               ; B3             ; ^B3                ; B3 Upper Arteries
+10   ; 0  ;         ; B4         ; B4               ; B4             ; ^B4                ; B4 Lower Arteries
+10   ; 0  ;         ; B5         ; B5               ; B5             ; ^B5                ; B5 Veins
+10   ; 0  ;         ; B7         ; B7               ; B7             ; ^B7                ; B7 Lymphatic System
+10   ; 0  ;         ; B8         ; B8               ; B8             ; ^B8                ; B8 Eye
+10   ; 0  ;         ; B9         ; B9               ; B9             ; ^B9                ; B9 Ear, Nose, Mouth and Throat
+10   ; 0  ;         ; BB         ; BB               ; BB             ; ^BB                ; BB Respiratory System
+10   ; 0  ;         ; BD         ; BD               ; BD             ; ^BD                ; BD Gastrointestinal System
+10   ; 0  ;         ; BF         ; BF               ; BF             ; ^BF                ; BF Hepatobiliary System and Pancreas
+10   ; 0  ;         ; BG         ; BG               ; BG             ; ^BG                ; BG Endocrine System
+10   ; 0  ;         ; BH         ; BH               ; BH             ; ^BH                ; BH Skin, Subcutaneous Tissue and Breast
+10   ; 0  ;         ; BL         ; BL               ; BL             ; ^BL                ; BL Connective Tissue
+10   ; 0  ;         ; BN         ; BN               ; BN             ; ^BN                ; BN Skull and Facial Bones
+10   ; 0  ;         ; BP         ; BP               ; BP             ; ^BP                ; BP Non-Axial Upper Bones
+10   ; 0  ;         ; BQ         ; BQ               ; BQ             ; ^BQ                ; BQ Non-Axial Lower Bones
+10   ; 0  ;         ; BR         ; BR               ; BR             ; ^BR                ; BR Axial Skeleton, Except Skull and Facial Bones
+10   ; 0  ;         ; BT         ; BT               ; BT             ; ^BT                ; BT Urinary System
+10   ; 0  ;         ; BU         ; BU               ; BU             ; ^BU                ; BU Female Reproductive System
+10   ; 0  ;         ; BV         ; BV               ; BV             ; ^BV                ; BV Male Reproductive System
+10   ; 0  ;         ; BW         ; BW               ; BW             ; ^BW                ; BW Anatomical Regions
+10   ; 0  ;         ; BY         ; BY               ; BY             ; ^BY                ; BY Fetus and Obstetrical
+10   ; 0  ; C       ;            ; C                ; C              ; ^C                 ; C  Nuclear Medicine
+10   ; 0  ;         ; C0         ; C0               ; C0             ; ^C0                ; C0 Central Nervous System
+10   ; 0  ;         ; C2         ; C2               ; C2             ; ^C2                ; C2 Heart
+10   ; 0  ;         ; C5         ; C5               ; C5             ; ^C5                ; C5 Veins
+10   ; 0  ;         ; C7         ; C7               ; C7             ; ^C7                ; C7 Lymphatic and Hematologic System
+10   ; 0  ;         ; C8         ; C8               ; C8             ; ^C8                ; C8 Eye
+10   ; 0  ;         ; C9         ; C9               ; C9             ; ^C9                ; C9 Ear, Nose, Mouth and Throat
+10   ; 0  ;         ; CB         ; CB               ; CB             ; ^CB                ; CB Respiratory System
+10   ; 0  ;         ; CD         ; CD               ; CD             ; ^CD                ; CD Gastrointestinal System
+10   ; 0  ;         ; CF         ; CF               ; CF             ; ^CF                ; CF Hepatobiliary System and Pancreas
+10   ; 0  ;         ; CG         ; CG               ; CG             ; ^CG                ; CG Endocrine System
+10   ; 0  ;         ; CH         ; CH               ; CH             ; ^CH                ; CH Skin, Subcutaneous Tissue and Breast
+10   ; 0  ;         ; CP         ; CP               ; CP             ; ^CP                ; CP Musculoskeletal System
+10   ; 0  ;         ; CT         ; CT               ; CT             ; ^CT                ; CT Urinary System
+10   ; 0  ;         ; CV         ; CV               ; CV             ; ^CV                ; CV Male Reproductive System
+10   ; 0  ;         ; CW         ; CW               ; CW             ; ^CW                ; CW Anatomical Regions
+10   ; 0  ; D       ;            ; D                ; D              ; ^D                 ; D  Radiation Therapy
+10   ; 0  ;         ; D0         ; D0               ; D0             ; ^D0                ; D0 Central and Peripheral Nervous System
+10   ; 0  ;         ; D7         ; D7               ; D7             ; ^D7                ; D7 Lymphatic and Hematologic System
+10   ; 0  ;         ; D8         ; D8               ; D8             ; ^D8                ; D8 Eye
+10   ; 0  ;         ; D9         ; D9               ; D9             ; ^D9                ; D9 Ear, Nose, Mouth and Throat
+10   ; 0  ;         ; DB         ; DB               ; DB             ; ^DB                ; DB Respiratory System
+10   ; 0  ;         ; DD         ; DD               ; DD             ; ^DD                ; DD Gastrointestinal System
+10   ; 0  ;         ; DF         ; DF               ; DF             ; ^DF                ; DF Hepatobiliary System and Pancreas
+10   ; 0  ;         ; DG         ; DG               ; DG             ; ^DG                ; DG Endocrine System
+10   ; 0  ;         ; DH         ; DH               ; DH             ; ^DH                ; DH Skin
+10   ; 0  ;         ; DM         ; DM               ; DM             ; ^DM                ; DM Breast
+10   ; 0  ;         ; DP         ; DP               ; DP             ; ^DP                ; DP Musculoskeletal System
+10   ; 0  ;         ; DT         ; DT               ; DT             ; ^DT                ; DT Urinary System
+10   ; 0  ;         ; DU         ; DU               ; DU             ; ^DU                ; DU Female Reproductive System
+10   ; 0  ;         ; DV         ; DV               ; DV             ; ^DV                ; DV Male Reproductive System
+10   ; 0  ;         ; DW         ; DW               ; DW             ; ^DW                ; DW Anatomical Regions
+10   ; 0  ; F       ;            ; F                ; F              ; ^F                 ; F  Physical Rehabilitation and Diagnostic Audiology
+10   ; 0  ;         ; F0         ; F0               ; F0             ; ^F0                ; F0 Rehabilitation
+10   ; 0  ;         ; F1         ; F1               ; F1             ; ^F1                ; F1 Diagnostic Audiology
+10   ; 0  ; G       ;            ; G                ; G              ; ^G                 ; G  Mental Health
+10   ; 0  ;         ; GZ         ; GZ               ; GZ             ; ^GZ                ; GZ None
+10   ; 0  ; H       ;            ; H                ; H              ; ^H                 ; H  Substance Abuse Treatment
+10   ; 0  ;         ; HZ         ; HZ               ; HZ             ; ^HZ                ; HZ None
+10   ; 0  ; X       ;            ; X                ; X              ; ^X                 ; X  New Technology
+10   ; 0  ;         ; X0         ; X0               ; X0             ; ^X0                ; X0 Nervous System
+10   ; 0  ;         ; X2         ; X2               ; X2             ; ^X2                ; X2 Cardiovascular System
+10   ; 0  ;         ; XD         ; XD               ; XD             ; ^XD                ; XD Gastrointestinal System
+10   ; 0  ;         ; XF         ; XF               ; XF             ; ^XF                ; XF Hepatobiliary System and Pancreas
+10   ; 0  ;         ; XH         ; XH               ; XH             ; ^XH                ; XH Skin, Subcutaneous Tissue, Fascia and Breast
+10   ; 0  ;         ; XK         ; XK               ; XK             ; ^XK                ; XK Muscles, Tendons, Bursae and Ligaments
+10   ; 0  ;         ; XN         ; XN               ; XN             ; ^XN                ; XN Bones
+10   ; 0  ;         ; XR         ; XR               ; XR             ; ^XR                ; XR Joints
+10   ; 0  ;         ; XT         ; XT               ; XT             ; ^XT                ; XT Urinary System
+10   ; 0  ;         ; XW         ; XW               ; XW             ; ^XW                ; XW Anatomical Regions
+10   ; 0  ;         ; XX         ; XX               ; XX             ; ^XX                ; XX Physiological Systems
+10   ; 0  ;         ; XY         ; XY               ; XY             ; ^XY                ; XY Extracorporeal
