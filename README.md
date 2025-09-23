@@ -42,7 +42,7 @@ The primary objectives of `medicalcoder` are:
      - That said, there are non-trivial performance gains when passing a
        [`data.table](https://cran.r-project.org/package=data.table) to the
        `comorbidities()` function compared to a base `data.frame` or the
-       Tidyverse's `tibble`.
+       Tidyverse's `tibble`.  (See benchmarking section).
 
    - Internal lookup tables
      - All required data are included in the package. If you have the .tar.gz
@@ -73,6 +73,29 @@ There are several tools for working with ICD codes and comorbidity algorithms.
 - Support for both ICD-9 and ICD-10 diagnostic and procedure codes.
 - Longitudinal patient-level comorbidity flagging using present-on-admission indicators.
 - Fully self-contained package (no external dependencies).
+
+## Benchmarking
+
+The major factors impacting the expected computation time for applying a
+comorbidity algorithm to a data set are:
+
+1. Data size: number of subjects/encounters.
+2. Data storage class: `medicalcoder` has been built such that no imports of
+   other namespaces is required.  That said, when a `data.table` is passed to
+   `comorbidities()` and the `data.table` namespace is available, then S3
+   dispatch for `merge` is used, along with some other methods, to reduce memory
+   use and reduce computation time.
+3. flag.method: "current" will take less time than the "cumulative" method.
+
+In the following graphic the mean time for applying Charlson (Quan 2005),
+Elixhauser (Quan 2005), and the PCCC v3.1 (without and with subconditions) to
+data sets by number of encounters is plotted.  Under 1,000 encounters, there is
+little difference in the time required to apply the different algorithms between
+`data.frame`s, `data.table`s, and `tibble`s.  For data sets with more than 5,000
+encounters, there is a noticable time saving in using `data.table`s over the
+other two classes.
+
+<img src="man/figures/bench1.svg" align="center" alt = "benmarking"/>
 
 ## Install
 
