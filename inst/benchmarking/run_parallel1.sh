@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-mkdir -p bench1_results logs
+mkdir -p bench1_results logs1 bench2_results logs2
 
 # Detect cores (Linux + macOS)
 if command -v nproc >/dev/null 2>&1; then
@@ -35,8 +35,8 @@ parallel \
   --shuf \
   --bar \
   --eta \
-  --joblog logs/joblog.tsv \
-  --results logs/out \
+  --joblog logs1/joblog1.tsv \
+  --results logs1/out \
   '
     OUT="bench1_results/{data_class}__{subjects}__{method}__{seed}__{iter}.rds"
     # Idempotent: skip if file exists and is non-empty
@@ -44,4 +44,4 @@ parallel \
 
     Rscript benchmark1.R "$(basename "$OUT")"
   ' \
-  :::: grid.tsv
+  :::: grid1.tsv

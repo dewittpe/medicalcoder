@@ -110,7 +110,7 @@ build_set2 <- function(data_class = c("DF", "DT", "TBL") , subjects = 10 , seed 
   data_class <- match.arg(data_class)
 
   # encounters
-  encs <- sample(x = encounter_distribution$nencounters, size = subjects, prob = encounter_distribution$d)
+  encs <- sample(x = encounter_distribution$nencounters, size = subjects, prob = encounter_distribution$d, replace = TRUE)
   se <- Map(function(s, e) {data.frame(s = s, e = seq_len(e))}, s = seq_len(length(encs)), e = encs)
   se <- do.call(rbind, se)
 
@@ -164,9 +164,6 @@ build_set2 <- function(data_class = c("DF", "DT", "TBL") , subjects = 10 , seed 
   set
 }
 
-build_set1()
-build_set2()
-
 benchmark1 <- function(data, method, subconditions) {
   tic <- Sys.time()
   comorbidities(
@@ -182,6 +179,7 @@ benchmark1 <- function(data, method, subconditions) {
     subconditions = subconditions
   )
   toc <- Sys.time()
+
   data.frame(
     data_class = attr(data, "data_class"),
     subjects   = attr(data, "nsubjects"),
@@ -197,7 +195,7 @@ benchmark1 <- function(data, method, subconditions) {
 benchmark2 <- function(data, method, subconditions, flag.method) {
   tic <- Sys.time()
   comorbidities(
-    data = set,
+    data = data,
     icd.codes = "full_code",
     id.vars = c("subject_id", "enc_id"),
     icdv.var = "icdv",
@@ -211,7 +209,7 @@ benchmark2 <- function(data, method, subconditions, flag.method) {
   toc <- Sys.time()
 
   data.frame(
-    data_class = data_class,
+    data_class = attr(data, "data_class"),
     subjects   = attr(data, "nsubjects"),
     encounters = attr(data, "nencounters"),
     method     = method,
