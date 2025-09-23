@@ -1,0 +1,8 @@
+*.tsv
+.bench1
+Rplots.pdf
+bench1_results/
+bench2
+bench2_results/
+logs1/
+logs2/
