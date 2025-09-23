@@ -320,12 +320,12 @@ mdcr_results_v3.1_01 <-
        flag.method = 'current',
        method = "pccc_v3.1")
 ```
-and a useful summary of the object returned from `comorbidities` is gained by calling
-`summary`. The return is a `data.table` with columns for the
-count and percentages.  For `pccc_v2.0` and `pccc_v2.1` the condition, label,
-count, and percentage, are reported.  For `pccc_v3.0` and `pccc_v3.1` the
-columns are extended to provide the counts and percentages for `dxpr_or_tech`,
-`dxpr_only`, `tech_only`, and `dxpr_and_tech`.
+and a useful summary of the object returned from `comorbidities` is gained by
+calling `summary()`. The return is a `data.table` with columns for the count
+and percentages.  For `pccc_v2.0` and `pccc_v2.1` the condition, label, count,
+and percentage, are reported.  For `pccc_v3.0` and `pccc_v3.1` the columns are
+extended to provide the counts and percentages for `dxpr_or_tech`, `dxpr_only`,
+`tech_only`, and `dxpr_and_tech`.
 
 ```{r, label = "comorbidities-summary-table-str"}
 str(summary(mdcr_results_v2.1_01))

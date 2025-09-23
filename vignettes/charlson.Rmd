@@ -80,7 +80,7 @@ Comorbidity Index.
 str(mdcr_results)
 ```
 
-Call `summary` on the return object for a list of summary objects.  These can be
+Call `summary()` on the return object for a list of summary objects.  These can be
 used to generate output tables to the end user's liking.
 
 ```{r}
