@@ -71,7 +71,7 @@ The columns of this data.frame are:
     _calendar year_.
 
 * `known_end`: the last year the code was part of the standard, or that the
-  `medicalcoder` package an data for.
+  `medicalcoder` package has data for.
   * ICD-9 last year of active use was FY 2015.
   * ICD-10 is active.  The current version of `medicalcoder` has details on ICD-10
     codes through FY `r max(icd_codes[["known_end"]][icd_codes[["icdv"]] == 10L])`.
@@ -237,7 +237,7 @@ data.frame(x = x,
 
 ### Assignable codes
 
-Ideally, codes are reported with the greatest level of detail.  While there are
+Ideally, codes are reported with the greatest level of detail.  While there is
 always a chance for incomplete coding, it is possible that an assignable code in
 one year becomes a header code in a subsequent year.  Let's look at the
 ICD-9 DX code 516.3 and five digit codes 516.30 through 516.39 (not all of these
