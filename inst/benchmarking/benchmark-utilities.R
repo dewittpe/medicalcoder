@@ -73,7 +73,11 @@ build_set1 <- function(data_class = c("DF", "DT", "TBL") , subjects = 10 , seed 
           icd_dx_codes[sample(seq_len(nrow(icd_dx_codes)), size = adx), ],
           icd_pr_codes[sample(seq_len(nrow(icd_pr_codes)), size = apr), ]
         )
-      x$subject_id <- sid
+      if (nrow(x)) {
+        x$subject_id <- sid
+      } else {
+        x <- data.frame(icdv = NA_integer_, dx = NA_integer_, full_code = NA_character_, subject_id = sid)
+      }
       x
     },
     pdx = pdxs, ppr = pprs, adx = dxs, apr = prs, sid = seq_along(pdxs),

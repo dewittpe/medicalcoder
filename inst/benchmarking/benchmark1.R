@@ -1,7 +1,7 @@
 source("benchmark-utilities.R")
 
 if (interactive()) {
-  outfile <- "DT__1e1__pccc_v3.1__1__1.rds"
+  outfile <- "DT__1e3__pccc_v3.1__1__1.rds"
 } else {
   outfile <- commandArgs(trailingOnly = TRUE)
 }

@@ -10,8 +10,8 @@ else
   CORES=$(sysctl -n hw.ncpu)
 fi
 
-# Default concurrency: one quarter of machine cores (>=1)
-JOBS=$(( CORES / 4 ))
+# Default concurrency: on dragontail 80% of machine cores (>=1)
+JOBS=$(( 4 * CORES / 5 ))
 if [ "$JOBS" -lt 1 ]; then JOBS=1; fi
 
 # Memory safeguard: require 2 GiB free before starting another job.
@@ -32,7 +32,7 @@ parallel \
   --header : \
   --jobs "$JOBS" \
   --memfree "$MEMFREE" \
-  --suffle \
+  --shuf \
   --bar \
   --eta \
   --joblog logs/joblog.tsv \
