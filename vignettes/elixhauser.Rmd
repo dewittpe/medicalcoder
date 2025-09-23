@@ -77,11 +77,10 @@ str(get_elixhauser_poa())
 # Applying Elixhauser
 
 The Elixhauser method considers if the diagnostic codes are for primary or
-secondary diagnoses.  This is not considered for the PCCC and Charlson methods.
-As such, the following call will throw a warning that the `primarydx.var` or
-`primarydx` argument was not set and that all conditions will be assumed to be
-secondary.  To suppress this warning pass an appropriate value for either
-argument.
+secondary diagnoses. As such, the following call will throw a warning that the
+`primarydx.var` or `primarydx` argument was not set and that all conditions will
+be assumed to be secondary.  To suppress this warning pass an appropriate value
+for either argument.
 
 ```{r}
 # will warn because primarydx and primarydx.var are both NULL
