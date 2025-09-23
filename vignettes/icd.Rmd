@@ -18,16 +18,17 @@ knitr::opts_chunk$set(collapse = TRUE, fig.align = "center")
 There are four functions in the `medicalcoder` package specifically for working
 with International Classification of Diseases (ICD) codes.
 
-1. `get_icd_codes`: returns a look up table of ICD codes as a `data.frame`.
-2. `lookup_icd_codes`: returns details on specific ICD codes.
-3. `is_icd`: returns `TRUE` or `FLASE` for a vector of codes while considering
+1. `get_icd_codes()`: returns a look up table of ICD codes as a `data.frame`.
+2. `lookup_icd_codes()`: returns details on specific ICD codes.
+3. `is_icd()`: returns `TRUE` or `FLASE` for a vector of codes while considering
    ICD version, type, and billable status.
-4. `icd_compact_to_full`: insert a decimal point into a string to be consistent
-   with ICD-9 diagnostic, ICD-9 procedure, or ICD-10 diagnostic codes.  (ICD-10
-   procedure codes do not have decimal places.)  NOTE: this will not validate
-   the return as a valid ICD code, just format the input string appropriately.
+4. `icd_compact_to_full()`: insert a decimal point into a string to be
+   consistent with ICD-9 diagnostic, ICD-9 procedure, or ICD-10 diagnostic
+   codes.  (ICD-10 procedure codes do not have decimal places.)  NOTE: this will
+   not validate the return as a valid ICD code, just format the input string
+   appropriately.
 
-# `get_icd_codes`
+# `get_icd_codes()`
 
 A look up table for the ICD codes have been built as internal data sets within
 the `medicalcoder` package.  The sources for these look up tables come from the
@@ -95,7 +96,7 @@ d4
 
 * `assignable_end`: The last year the code was assignable.
 
-To get the descriptions of the ICD codes call `get_icd_codes` with
+To get the descriptions of the ICD codes call `get_icd_codes()` with
 `with.descriptions = TRUE`.
 ```{r, label = "icd-codes-with-descriptions"}
 str(get_icd_codes(with.descriptions = TRUE))
@@ -130,7 +131,7 @@ knitr::kable(delta_in_desc, row.names = FALSE)
   of the header codes to understand. Even when the most verbose description may
   still require consideration of the header codes to fully understand.
 
-Lastly, the `get_icd_codes` function includes the argument `with.hierarchy`
+Lastly, the `get_icd_codes()` function includes the argument `with.hierarchy`
 which will provide additional details for the codes.
 
 ```{r label = "get-icd-descs-with-heirarchy"}
@@ -151,9 +152,9 @@ limits for CRAN, the stored data is structured in a way that several joins and
 other operations are need to have a data set that is end user friendly.
 Several data sets are generated and cached when the namespace is loaded.
 
-# `lookup_icd_codes`
+# `lookup_icd_codes()`
 
-A related function, `lookup_icd_codes`, allows the user to look up specific ICD
+A related function, `lookup_icd_codes()`, allows the user to look up specific ICD
 codes. The return is a `data.frame`.  The columns report the input code, if it
 was matched as a full code (with an applicable decimal point) or a compact code
 (applicable decimal point omitted) along with the ICD version ,type, and when
@@ -181,11 +182,11 @@ knitr::kable(
 )
 ```
 
-By default, `lookup_icd_codes` considers the input to be a string and a direct
+By default, `lookup_icd_codes()` considers the input to be a string and a direct
 match to the internal lookup table is made.
 
-`lookup_icd_codes` can also accept regular expressions.  By providing a vector
-of regular expression patterns for the codes (passed to `grep`)
+`lookup_icd_codes()` can also accept regular expressions.  By providing a vector
+of regular expression patterns for the codes (passed to `grep()`)
 
 ```{r, label = "lookup-icd-code-by-regex"}
 knitr::kable(
@@ -194,7 +195,7 @@ knitr::kable(
 )
 ```
 
-# `is_icd`
+# `is_icd()`
 
 By convention, ICD codes are generally reported without decimal points. Under
 this convention discriminating between ICD-9 and ICD-10, and between diagnostic
@@ -246,7 +247,7 @@ are valid, as we'll see in the examples.)
 Given the default settings, we have the following results for testing if these
 strings are valid ICD-9 dx codes.
 
-By default, if no year is provided in the `is_icd` call then return will
+By default, if no year is provided in the `is_icd()` call then return will
 be `TRUE` if the code was ever assignable.
 
 ```{r, results = "asis"}
@@ -266,7 +267,7 @@ tab <-
 knitr::kable(tab)
 ```
 
-Similar information can be quickly and easily retrieved via `lookup_icd_codes`.
+Similar information can be quickly and easily retrieved via `lookup_icd_codes()`.
 ```{r, results = "asis"}
 knitr::kable(lookup_icd_codes(x))
 ```
@@ -318,14 +319,14 @@ tab <-
 knitr::kable(tab)
 ```
 
-# `icd_compact_to_full`
+# `icd_compact_to_full()`
 
 To go from a full code to a compact code is simple, omit any decimal point in
 the string.
 
 To go from a compact code to a full code requires knowing if the code is from
 version 9 or 10, and if it is a diagnostic or a procedure code.
-`icd_compact_to_full` will format a string appropriately, within reason.  This
+`icd_compact_to_full()` will format a string appropriately, within reason.  This
 method only formats the strings and will not validate the return.
 
 For example, the compact code "E1234" is in the format expected for a ICD-9
