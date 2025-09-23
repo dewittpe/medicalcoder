@@ -101,7 +101,16 @@ little difference in the time required to apply the different algorithms between
 encounters, there is a noticable time saving in using `data.table`s over the
 other two classes.
 
-<img src="man/figures/bench1.svg" align="center" alt = "benmarking"/>
+<img src="man/figures/benchmark1.svg" align="center" alt = "benmarking"/>
+
+The following graphic shows expected time to apply several of the comorbidity
+algorithms to data sets based on the total number of encounters.  The number of
+subjects was set and the number of encounters were randomly created.
+
+<img src="man/figures/benchmark2.svg" align="center" alt = "benmarking"/>
+
+Details on the benchmarking can be found on the
+[`medicalcoder` GitHub](https://github.com/dewittpe/medicalcoder/tree/main/benchmarking).
 
 ## Install
 

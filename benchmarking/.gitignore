@@ -1,5 +1,6 @@
 *.tsv
 .bench1
+.bench2
 Rplots.pdf
 bench1_results/
 bench2
