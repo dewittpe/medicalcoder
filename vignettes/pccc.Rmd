@@ -84,13 +84,13 @@ Version 3 refines this rule: technology dependence codes are assessed
 conditionally, recognizing that many do not reflect chronic conditions.
 
 Example: ICD-10 Z46.81
-(`r subset(get_icd_codes(with.descriptions = TRUE), code == "Z4681")$desc`) is
+(`r subset(get_icd_codes(with.descriptions = TRUE), code == "Z4681")$desc`) is a
 metabolic and technology dependence code.  If a patient had this code in their
 medical records then they would be classified has having a metabolic condition
 and a tech dependence.  Under version 2, this patient would be flagged as having
 a metabolic condition and technology dependence.  Under version 3, the patient
 would only be flagged with a metabolic condition and technology dependence if at
-least on non-technology condition is flagged.
+least one non-technology condition is flagged.
 
 ## ICD Codes for PCCC
 Let's look at the codes that are in the PCCC schema.  Calling `get_pccc_codes`
@@ -129,7 +129,7 @@ pat1 <-
              code = c("34590", "78065", "3432", "78065", "9929", "8606"))
 ```
 
-An inner join between the `pccc_codes` and `pat1` can give use the conditions
+An inner join between the `pccc_codes` and `pat1` will yield the conditions
 this patient has.
 
 ```{r, label = "inner-join-pat1-pccc-codes"}
@@ -368,9 +368,9 @@ tab <-
 tab
 ```
 
-There are additional details we should consider with respect the ICD codes.  The
-ICD version, 9 or 10, and if the code is a diagnostic or a procedure code. For
-example, code ICD-9 diagnostic code 332.1 has the same compact code as ICD-9
+There are additional details we should consider with respect to the ICD codes.
+The ICD version, 9 or 10, and if the code is a diagnostic or a procedure code.
+For example, code ICD-9 diagnostic code 332.1 has the same compact code as ICD-9
 procedure code 33.21, 3321.  In the case of the `mdcr` data where we have only
 compact codes, the need to distinguish between ICD-9 diagnostic and ICD-9
 procedure is critically important.  In the `mdcr` data the code 3321 does appear
@@ -407,7 +407,7 @@ mdcr_results_v3.1_02 <-
   )
 ```
 
-The there is an increased specificity by using the diagnostic/procedure flag.
+Specificity is increased by using the diagnostic/procedure flag.
 Using `pccc_v2.1` there are `r sum(mdcr_results_v2.1_02$cmrb_flag != mdcr_results_v2.1_01$cmrb_flag)`
 false positive flags when the diagnostic/procedure flag is omitted from the
 `comorbidities` call.
@@ -476,9 +476,8 @@ flagged as having a renal condition. However, when reviewing the patient
 record, the compact code "5641" is listed as a diagnostic criteria and the full
 code 564.1 is for
 `r subset(get_icd_codes(with.descriptions = TRUE), full_code == "564.1" & desc_end == 2015)$desc`.
-This is an example of what should be obvious, discriminating between diagnostic
-and procedure codes is critically important when looking for complex chronic
-conditions.
+This is an example of where discriminating between diagnostic and procedure
+codes is critically important when looking for complex chronic conditions.
 
 If we explicitly look at an inner join between this patient's data and the pccc
 lookup table we see that the code 5641 matches the procedure code in the pccc
@@ -907,8 +906,8 @@ As with permutation 5, since the only code in the record for encounter 2 and 3
 is the technology dependent metabolic code, there is no flagged condition. On
 encounter 4, when the dxpr code for a respiratory condition is reported then the
 respiratory condition _and_ the metabolic condition is flagged as technology
-dependent only conditions are flagged so long as at least one other condition is
-flagged.
+dependent. Note that technology only conditions are flagged if at least one
+other condition is flagged.
 
 # Subconditions
 
@@ -966,8 +965,8 @@ with_subconditions <-
 ```
 
 The structure of the return object `with_subconditions` is a list with two
-elements.  The first element are the conditions and is identical to the results
-of calling `comorbidities` with `subconditions = FALSE`.
+elements.  The first element, `conditions`, is identical to the results
+of calling `comorbidities()` with `subconditions = FALSE`.
 
 ```{r}
 with_subconditions
@@ -977,11 +976,11 @@ all.equal(with_subconditions$conditions,
           check.attributes = FALSE)
 ```
 
-The second element of `without_subconditions` is list of `data.frame`s, one for
+The second element of `with_subconditions` is list of `data.frame`s, one for
 each condition, with indicators for only those with the condition.
 
 A quick and easy way to get a summary of the subconditions is to call
-`summary`.
+`summary()`.
 
 ```{r}
 str(
@@ -1103,8 +1102,8 @@ rslts <-
 Let's start by looking at the respiratory results.  The only subcondition that
 should be, and is, flagged is chronic respiratory diseases.  A reminder: the
 `data.frame` for a subcondition only report rows for when the primary condition
-was flagged.  We see in the following the encounters where the chronic
-respiratory diseases is flagged is consistent with when the primary respiratory
+was flagged.  We see in the following encounters where the chronic
+respiratory disease is flagged is consistent with when the primary respiratory
 condition is flagged.
 
 ```{r}
@@ -1132,7 +1131,7 @@ scnd <-
 tab <-
   kableExtra::kbl(
     merge(cnd, scnd, all = TRUE, by = "plabel"),
-    caption = "Encounters flagging for repsiratory condition and the chronic respiratory disease subcondition.",
+    caption = "Encounters flagging for respiratory condition and the chronic respiratory disease subcondition.",
     col.names = c("", "Condition", "Subcondition")
   )
 tab <- kableExtra::add_header_above(tab, c("", "Encounters" = 2))
@@ -1180,7 +1179,7 @@ scnd <-
 tab <-
   kableExtra::kbl(
     x = merge(cnd, scnd, all = TRUE, by = "plabel"),
-    caption = "Encounters flagging for a metabolic condition and the encounters flagging for subcondtions device and technology use and/or other metabolic disorders.",
+    caption = "Encounters flagging for a metabolic condition and the encounters flagging for subconidtions device and technology use and/or other metabolic disorders.",
     col.names = c("", "Condition", "Device and Technology Use", "Other Metabolic Disorders")
   )
 tab <-

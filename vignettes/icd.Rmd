@@ -376,8 +376,7 @@ Lastly, when the subcategory is insufficient detail, then a fifth numeric digit
 is used, save for the E categories.
 
 ## ICD-9 Procedure Codes
-ICD-9 Procedure codes are organized by a hierarchy
-four levels:
+ICD-9 Procedure codes are organized by a hierarchy of four levels:
 
 1. chapter,
 2. category,
