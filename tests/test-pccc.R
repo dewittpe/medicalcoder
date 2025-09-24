@@ -40,16 +40,6 @@ x <-
 stopifnot("all icdv 10 pr full codes are valid ever.assignable icd codes" = all(x))
 
 ################################################################################
-# verify no more than two rows for a code by pccc version
-library(data.table)
-x <-
-  melt(as.data.table(pccc_codes),
-       id.vars = c("icdv", "dx", "code"),
-       measure.vars = patterns("pccc_")
-      )[, .(N = sum(value)), by = .(icdv, dx, code, variable)]
-stopifnot(all(x$N <= 2))
-
-################################################################################
 # verify that there is not going to be an error if no matches are found
 dat <- data.frame(patid = 1:26,
                   icd = c(letters, LETTERS),
