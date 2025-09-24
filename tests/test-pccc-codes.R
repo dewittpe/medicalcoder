@@ -68,14 +68,23 @@ x <-
 stopifnot("all icdv 10 pr full codes are valid ever.assignable icd codes" = all(x))
 
 ################################################################################
-# verify no more than two rows for a code by pccc version
-library(data.table)
-melt(as.data.table(pccc_codes),
-     id.vars = c("icdv", "dx", "code"),
-     measure.vars = patterns("pccc_")
-    )[, .(N = sum(value)), by = .(icdv, dx, code, variable)
-     ][, stopifnot(all(N <= 2))]
+# verify no more than two rows for a code by pccc variant
+variants <- grep("^pccc_", names(pccc_codes), value = TRUE)
+codes <-
+  aggregate(
+    pccc_codes[variants],
+    by = pccc_codes[c("icdv", "dx", "code")],
+    FUN = sum
+  )
+stopifnot(
+  max(unlist(codes[variants])) == 2
+)
 
+################################################################################
 # check that the row names are just sequential integers
 pc <- get_pccc_codes()
 stopifnot(identical(rownames(pc), as.character(seq_len(nrow(pc)))))
+
+################################################################################
+#                                 End of File                                  #
+################################################################################
