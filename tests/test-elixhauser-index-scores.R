@@ -23,3 +23,7 @@ stopifnot(
 
 eis <- get_elixhauser_index_scores()
 stopifnot(identical(rownames(eis), as.character(seq_len(nrow(eis)))))
+
+################################################################################
+#                                 End of File                                  #
+################################################################################

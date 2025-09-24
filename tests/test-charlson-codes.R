@@ -58,3 +58,7 @@ cc <- get_charlson_codes()
 ci <- get_charlson_index_scores()
 stopifnot(identical(rownames(cc), as.character(seq_len(nrow(cc)))))
 stopifnot(identical(rownames(ci), as.character(seq_len(nrow(ci)))))
+
+################################################################################
+#                                 End of File                                  #
+################################################################################

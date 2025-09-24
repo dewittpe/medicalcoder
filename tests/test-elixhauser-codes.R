@@ -102,3 +102,7 @@ stopifnot(
 # check that the row names are just sequential integers
 ec <- get_elixhauser_codes()
 stopifnot(identical(rownames(ec), as.character(seq_len(nrow(ec)))))
+
+################################################################################
+#                                 End of File                                  #
+################################################################################

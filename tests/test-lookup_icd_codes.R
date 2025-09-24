@@ -29,3 +29,7 @@ stopifnot(
   identical(names(m3), expected_regex_false_names),
   identical(names(m4), expected_regex_true_names)
 )
+
+################################################################################
+#                                 End of File                                  #
+################################################################################

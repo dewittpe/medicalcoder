@@ -29,3 +29,6 @@ stopifnot(
   identical(get_charlson_index_scores(), medicalcoder:::..mdcr_internal_charlson_index_scores..)
 )
 
+################################################################################
+#                                 End of File                                  #
+################################################################################
