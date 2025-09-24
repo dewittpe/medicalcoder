@@ -1,6 +1,16 @@
 ################################################################################
 # test that the output when using a data.frame, tibble, or data.table are all
 # the same.
+if (requireNamespace("data.table", quietly = TRUE)) {
+  message("SKIP: data.table not available; skipping test-tibble-datatable.R")
+  quit(save = "no", status = 0, runLast = FALSE)
+}
+
+if (requireNamespace("tibble", quietly = TRUE)) {
+  message("SKIP: tibble not available; skipping test-tibble-datatable.R")
+  quit(save = "no", status = 0, runLast = FALSE)
+}
+
 library(medicalcoder)
 library(tibble)
 library(data.table)

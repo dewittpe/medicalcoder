@@ -7,13 +7,10 @@
 # creates a problem with a few codes that were not documented but in the
 # software.  Those will be noted in this script.
 library(medicalcoder)
-library(data.table)
-setDTthreads(threads = 1L) # to prevent CPU time exceeding elapsed time on CRAN
 
 # get the ICD codes from the medicalcoder package and add a code_id column
 icd_codes <- get_icd_codes()
-setDT(icd_codes)
-icd_codes[, code_id := 1:.N]
+icd_codes[["code_id"]] <- seq_len(nrow(icd_codes))
 
 # pccc_1.0.6 requires the input to be in a wide format and can only apply logic
 # for ICD-9 or ICD-10 in one call.  Split the codes into the four sets ICD-9-CM,
@@ -24,27 +21,42 @@ icd_codes[, code_id := 1:.N]
 # directory such that the pccc_v1.0.6 package is not needed in the SUGGESTS
 # section of the DESCRIPTION file.
 
-###  library(pccc)
-###  stopifnot(packageVersion("pccc") == "1.0.6")
+### library(pccc)
+### stopifnot(packageVersion("pccc") == "1.0.6")
 ###
-###  oldpccc <- rbind(
-###    pccc::ccc(data = icd_codes[icdv ==  9 & dx == 1, .(code_id,  code)],
-###               id = code_id, dx_cols = "code", icdv = 9)
-###    ,
-###    pccc::ccc(data = icd_codes[icdv ==  9 & dx == 0, .(code_id,  code)],
-###               id = code_id, pc_cols = "code", icdv = 9)
-###    ,
-###    pccc::ccc(data = icd_codes[icdv ==  10 & dx == 1, .(code_id,  code)],
-###               id = code_id, dx_cols = "code", icdv = 10)
-###    ,
-###    pccc::ccc(data = icd_codes[icdv ==  10 & dx == 0, .(code_id,  code)],
-###               id = code_id, pc_cols = "code", icdv = 10)
-###  )
+### oldpccc <- rbind(
+###   pccc::ccc(
+###     data = icd_codes[icd_codes$icdv ==  9 & icd_codes$dx == 1, c("code_id", "code")],
+###     id = code_id,
+###     dx_cols = "code",
+###     icdv = 9
+###   )
+###   ,
+###   pccc::ccc(
+###     data = icd_codes[icd_codes$icdv ==  9 & icd_codes$dx == 0, c("code_id", "code")],
+###     id = code_id,
+###     pc_cols = "code",
+###     icdv = 9
+###   )
+###   ,
+###   pccc::ccc(
+###     data = icd_codes[icd_codes$icdv ==  10 & icd_codes$dx == 1, c("code_id", "code")],
+###     id = code_id,
+###     dx_cols = "code",
+###     icdv = 10
+###   )
+###   ,
+###   pccc::ccc(
+###     data = icd_codes[icd_codes$icdv ==  10 & icd_codes$dx == 0, c("code_id", "code")],
+###     id = code_id,
+###     pc_cols = "code",
+###     icdv = 10
+###   )
+### )
 ###
-###  saveRDS(oldpccc, file = "results_pccc_1.0.6.rds")
+### saveRDS(oldpccc, file = "results_pccc_1.0.6.rds")
 
 oldpccc <- readRDS(file = "results_pccc_1.0.6.rds")
-setDT(oldpccc)
 
 newpccc <-
   medicalcoder::comorbidities(
@@ -66,73 +78,56 @@ newpccc <-
     , method = "pccc_v2.0"
   )
 
+old_vs_mdcr <-
+  merge(
+    x = oldpccc,
+    y = newpccc,
+    all = TRUE,
+    by = "code_id",
+    suffixes = c("_old", "_mdcr")
+  )
 
 old_vs_mdcr <-
-  merge(x = oldpccc,
-        y = newpccc,
-        all = TRUE,
-        by = "code_id",
-        suffixes = c("_old", "_mdcr"))
-
-old_vs_mdcr <- merge(x = old_vs_mdcr,
-              y = icd_codes[, .(code_id, icdv, dx, full_code)],
-              all = TRUE,
-              by = "code_id")
+  merge(x = old_vs_mdcr,
+    y = icd_codes[, c("code_id", "icdv", "dx", "full_code")],
+    all = TRUE,
+    by = "code_id"
+  )
 
 stopifnot(!any(is.na(old_vs_mdcr)))
 
-# We expect there are no difference in the neuromusc flag
+# expect no difference in the following conditions:
+#   neuromusc
+#   cvd
+#   respiratory
+#   renal
+#   gi
+#   hemato_immu
+#   metabolic
+#   congeni_genetic
+#   malignancy
+#   neonatal
 stopifnot(
-  old_vs_mdcr[neuromusc_old != neuromusc_mdcr][, .N == 0]
+  with(old_vs_mdcr, all(neuromusc_old == neuromusc_mdcr)),
+  with(old_vs_mdcr, all(cvd_old == cvd_mdcr)),
+  with(old_vs_mdcr, all(respiratory_old == respiratory_mdcr)),
+  with(old_vs_mdcr, all(renal_old == renal_mdcr)),
+  with(old_vs_mdcr, all(gi_old == gi_mdcr)),
+  with(old_vs_mdcr, all(hemato_immu_old == hemato_immu_mdcr)),
+  with(old_vs_mdcr, all(metabolic_old == metabolic_mdcr)),
+  with(old_vs_mdcr, all(congeni_genetic_old == congeni_genetic_mdcr)),
+  with(old_vs_mdcr, all(malignancy_old == malignancy_mdcr)),
+  with(old_vs_mdcr, all(neonatal_old == neonatal_mdcr))
 )
 
-# we expect there is no difference in the cvd flag
+# we expect there is no difference in the ccc_flag (old) vs cmrb_flag (new)
 stopifnot(
-  old_vs_mdcr[cvd_old != cvd_mdcr][, .N == 0]
+  with(old_vs_mdcr, all(ccc_flag == cmrb_flag))
 )
 
-# we expect there is no difference in the respiratory flag
-stopifnot(
-  old_vs_mdcr[respiratory_old != respiratory_mdcr][, .N == 0]
-)
-
-# we expect there is no difference in the renal flag
-stopifnot(
-  old_vs_mdcr[renal_old != renal_mdcr][, .N == 0]
-)
-
-# we expect there is no difference in the gi flag
-stopifnot(
-  old_vs_mdcr[gi_old != gi_mdcr][, .N == 0]
-)
-
-# we expect there is no difference in the hemato_immu flag
-stopifnot(
-  old_vs_mdcr[hemato_immu_old != hemato_immu_mdcr][, .N == 0]
-)
-
-# we expect there is no difference in the metabolic flag
-stopifnot(
-  old_vs_mdcr[metabolic_old != metabolic_mdcr][, .N == 0]
-)
-
-# we expect there is no difference in the congeni_genetic flag
-stopifnot(
-  old_vs_mdcr[congeni_genetic_old != congeni_genetic_mdcr][, .N == 0]
-)
-
-# we expect there is no difference in the malignancy flag
-stopifnot(
-  old_vs_mdcr[malignancy_old != malignancy_mdcr][, .N == 0]
-)
-
-# we expect there is no difference in the neonatal flag
-stopifnot(
-  old_vs_mdcr[neonatal_old != neonatal_mdcr][, .N == 0]
-)
-
-# we expect there are some differences in the tech_dep flag
-
+#
+# we _do_ expect differences in the tech_dep flag
+#
 # ICD-9-CM 349.1 - not in the v2 document, but in the software for neuromusc
 # only. This raises an problem that the subcondtion is not defined.  To allow
 # for the methods in medicalcoder to work, a non missing subcondition is needed.
@@ -168,7 +163,7 @@ stopifnot(
 # metabolic.  The device flag as been added to this code.
 # subset(get_icd_codes(with.descriptions = TRUE), grepl("^V65\\.4", full_code) & icdv == 9)
 
-mismatch_tech_dep <- old_vs_mdcr[tech_dep != any_tech_dep]
+mismatch_tech_dep <- old_vs_mdcr[old_vs_mdcr$tech_dep != old_vs_mdcr$any_tech_dep, ]
 stopifnot(nrow(mismatch_tech_dep) == 18L)
 stopifnot(
           isTRUE(identical(sort(mismatch_tech_dep$full_code),
@@ -208,8 +203,8 @@ stopifnot(
 #subset(get_icd_codes(with.descriptions = TRUE), grepl("^Z94", full_code) & icdv == 10)
 
 #
-mismatch_transplant <- old_vs_mdcr[transplant != any_transplant]
-mismatch_transplant[, .(full_code, transplant, any_transplant)]
+mismatch_transplant <- old_vs_mdcr[old_vs_mdcr$transplant != old_vs_mdcr$any_transplant, ]
+mismatch_transplant[, c("full_code", "transplant", "any_transplant")]
 stopifnot(nrow(mismatch_transplant) == 15L)
 
 stopifnot(
@@ -230,10 +225,6 @@ stopifnot(
           )
 )
 
-# we expect there is no difference in the ccc_flag
-stopifnot(
-  old_vs_mdcr[ccc_flag != cmrb_flag][, .N == 0]
-)
 
 ################################################################################
 #                                 End of File                                  #

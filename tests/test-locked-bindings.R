@@ -1,3 +1,8 @@
+if (requireNamespace("data.table", quietly = TRUE)) {
+  message("SKIP: data.table not available; skipping test-locked-bindings.R")
+  quit(save = "no", status = 0, runLast = FALSE)
+}
+
 library(data.table)
 
 # it is possible for a end user to modify the internal objects, this is a R
@@ -10,15 +15,22 @@ library(data.table)
 #> stopifnot(all(mtcars[["cyl"]] == 1L))
 #> stopifnot(all(datasets::mtcars[["cyl"]] == 1L))
 
-# medicalcoder tries to prevent this for it's lookup tables.  Importally, the
-# builds several user friendly data sets in .onLoad.  If a end user tries to
+# medicalcoder tries to prevent this for its lookup tables.  Importally, :w
+#
+# several user friendly data sets in .onLoad.  If a end user tries to
 # modify the non-exported internal objects, only accessable via ::: then the
 # namespace is loaded _before_ anything else can be done and the data sets used
 # within the package should be preserved.
 setDT(medicalcoder:::..mdcr_internal_icd_codes..)
 x <- medicalcoder:::..mdcr_internal_icd_codes..
+
+# bad user, don't modify things, even if you can!
 x[, icdv := 8L]
-stopifnot(medicalcoder:::..mdcr_internal_icd_codes..[, all(icdv == 8L)])  # bad, but...
+stopifnot(medicalcoder:::..mdcr_internal_icd_codes..[, all(icdv == 8L)])
+
+# but the good news is that when the namespace was loaded the data set that
+# needed to be provided to the user and is called within the package via
+# get_icd_codes is not modified!
 x <- medicalcoder::get_icd_codes()
 stopifnot(x[["icdv"]] %in% c(9L, 10L))
 
@@ -62,8 +74,10 @@ stopifnot(all(get_icd_codes()[["icdv"]] == 98L))
 
 # so, yeah, end users could mess things up but if someone does this that is on
 # them.  Importantly, the get_x functions use
-#   unserialize(serialize(x, connection = NULL))
-# to ensure end users only get deep copies of the internal data sets.  One quick
+#
+# unserialize(serialize(x, connection = NULL))
+#
+# to ensure end users only get deep copies of the chached data sets.  One quick
 # check.
 detach("package:medicalcoder", unload = TRUE)
 library(medicalcoder)
@@ -78,7 +92,6 @@ stopifnot(
   all(z[["icdv"]] %in% c(9L, 10L)),
   all(x[["icdv"]] == 42L)
 )
-
 
 ################################################################################
 #                                 End of File                                  #
