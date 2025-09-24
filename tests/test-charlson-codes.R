@@ -1,10 +1,10 @@
 library(medicalcoder)
-library(data.table)
-library(tibble)
 
-stopifnot(is.data.frame(medicalcoder:::..mdcr_internal_charlson_codes..))
-stopifnot(!is_tibble(medicalcoder:::..mdcr_internal_charlson_codes..))
-stopifnot(!is.data.table(medicalcoder:::..mdcr_internal_charlson_codes..))
+# verify that the internal data set is a data.frame, and only a data.frame, not
+# a data.table, not a tibble
+stopifnot( inherits(medicalcoder:::..mdcr_internal_charlson_codes.., "data.frame"))
+stopifnot(!inherits(medicalcoder:::..mdcr_internal_charlson_codes.., "data.table"))
+stopifnot(!inherits(medicalcoder:::..mdcr_internal_charlson_codes.., "tbl_df"))
 
 stopifnot(
   identical(
@@ -26,10 +26,9 @@ stopifnot(
   )
 )
 
-
-stopifnot(is.data.frame(get_charlson_codes()))
-stopifnot(!is_tibble(get_charlson_codes()))
-stopifnot(!is.data.table(get_charlson_codes()))
+stopifnot( inherits(get_charlson_codes(), "data.frame"))
+stopifnot(!inherits(get_charlson_codes(), "data.table"))
+stopifnot(!inherits(get_charlson_codes(), "tbl_df"))
 
 stopifnot(
   identical(

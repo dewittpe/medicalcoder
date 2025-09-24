@@ -1,9 +1,6 @@
 ################################################################################
 # Tests for the charlson comorbidities
-
 library(medicalcoder)
-library("data.table")
-setDTthreads(threads = 1L) # to prevent CPU time exceeding elapsed time on CRAN
 
 ################################################################################
 # verify the list of possible charlson methods
@@ -97,17 +94,27 @@ cdmf_eg <-
                    condition %in% c("aids", "hiv") &
                    charlson_cdmf2019 == 1),
         by = c("icdv", "dx", "code"))
-data.table::setDT(cdmf_eg)
 
 cdmf_eg <-
-  data.table::dcast(data = cdmf_eg,
-                    patid ~ condition,
-                    value.var = "charlson_cdmf2019",
-                    fun.aggregate = function(x) {as.integer(sum(x) > 0)})
+  aggregate(
+    x = cdmf_eg[["charlson_cdmf2019"]],
+    by = cdmf_eg[c("patid", "condition")],
+    FUN = function(x) as.integer(sum(x) > 0)
+  )
+
+cdmf_eg <-
+  merge(
+    x = cdmf_eg[cdmf_eg$condition == "aids", c("patid", "x")],
+    y = cdmf_eg[cdmf_eg$condition == "hiv",  c("patid", "x")],
+    all = TRUE,
+    suffixes = c(".aids", ".hiv"),
+    by = c("patid")
+  )
 
 stopifnot(
-  all(
-    cdmf_eg[, .N, keyby = .(hiv, aids)][,  .(hiv == c(0, 1, 1), aids == c(1, 0, 1), N == c(2716, 6, 1))]
+  identical(
+    table(cdmf_eg[, c("x.aids", "x.hiv")], useNA = "always"),
+    structure(c(1L, 6L, 2716L, 0L), dim = c(2L, 2L), dimnames = list(x.aids = c("1", NA), x.hiv = c("1", NA)), class = "table")
   )
 )
 
@@ -120,11 +127,11 @@ cmdf_mdcr <-
                 method = "charlson_cdmf2019",
                 flag.method = "current",
                 poa = 1)
-data.table::setDT(cmdf_mdcr)
 
 stopifnot(
-  all(
-    cmdf_mdcr[, .N, keyby = .(hiv, aids)][, .(hiv == c(0, 1, 1), aids == c(0, 0, 1), N == c(38255, 6, 1))]
+  identical(
+    table(cmdf_mdcr[, c("hiv", "aids")]),
+    structure(c(38255L, 6L, 0L, 1L), dim = c(2L, 2L), dimnames = list(hiv = c("0", "1"), aids = c("0", "1")), class = "table")
   )
 )
 
