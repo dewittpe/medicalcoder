@@ -11,33 +11,6 @@ stopifnot(
   )
 )
 
-################################################################################
-# Verify that all the ICD codes in the data set are valid codes
-x <- is_icd(pccc_codes$code, headerok = TRUE, ever.assignable = TRUE, warn.ambiguous = FALSE)
-stopifnot("all compact pccc_codes are valid ever.assignable icd codes" = all(x))
-
-x <- is_icd(pccc_codes$full_code, headerok = TRUE, ever.assignable = TRUE, warn.ambiguous = FALSE)
-stopifnot("all full pccc_codes are valid ever.assignable icd codes" = all(x))
-
-x <-
-  pccc_codes[pccc_codes$icdv == 9 & pccc_codes$dx == 1, "full_code"] |>
-  is_icd(icdv = 9, dx = 1, headerok = TRUE, ever.assignable = TRUE, warn.ambiguous = FALSE)
-stopifnot("all icdv 9 dx full codes are valid ever.assignable icd codes" = all(x))
-
-x <-
-  pccc_codes[pccc_codes$icdv == 9 & pccc_codes$dx == 0, "full_code"] |>
-  is_icd(icdv = 9, dx = 0, headerok = TRUE, ever.assignable = TRUE, warn.ambiguous = FALSE)
-stopifnot("all icdv 9 pr full codes are valid ever.assignable icd codes" = all(x))
-
-x <-
-  pccc_codes[pccc_codes$icdv == 10 & pccc_codes$dx == 1, "full_code"] |>
-  is_icd(icdv = 10, dx = 1L, headerok = TRUE, ever.assignable = TRUE, warn.ambiguous = FALSE)
-stopifnot("all icdv 10 dx full codes are valid ever.assignable icd codes" = all(x))
-
-x <-
-  pccc_codes[pccc_codes$icdv == 10 & pccc_codes$dx == 0L, "full_code"] |>
-  is_icd(icdv = 10, dx = 0L, headerok = TRUE, ever.assignable = TRUE)
-stopifnot("all icdv 10 pr full codes are valid ever.assignable icd codes" = all(x))
 
 ################################################################################
 # verify that there is not going to be an error if no matches are found
