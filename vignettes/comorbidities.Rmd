@@ -363,6 +363,7 @@ data.table::setDT(cmdf_mdcr)
 cmdf_mdcr[, .N, keyby = .(hiv, aids)]
 ```
 
+<!--  Graphics take up too much disk space and package exceeds 5MB install size. need to better option...
 # Benchmarking
 
 The major factors impacting the expected computation time for applying a
@@ -385,7 +386,6 @@ encounters, there is a noticable time saving in using `data.table`s over the
 other two classes.
 
 ```{r}
-#knitr::include_graphics(system.file("man", "figures", "benchmark1.svg"))
 knitr::include_graphics("../man/figures/benchmark1.svg")
 ```
 
@@ -394,12 +394,12 @@ algorithms to data sets based on the total number of encounters.  The number of
 subjects was set and the number of encounters were randomly created.
 
 ```{r}
-#knitr::include_graphics(system.file("man", "figures", "benchmark2.svg"))
 knitr::include_graphics("../man/figures/benchmark2.svg")
 ```
 
 Details on the benchmarking can be found on the
 [`medicalcoder` GitHub](https://github.com/dewittpe/medicalcoder/tree/main/benchmarking).
+-->
 
 # References
 
