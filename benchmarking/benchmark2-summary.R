@@ -53,4 +53,4 @@ ggplot(bench2_summary) +
     axis.text.x = element_text(hjust = 0.75)
   )
 
-ggsave(file = "benchmark2.svg", width = 7, height = 4)
+ggsave(file = "benchmark2.svg", width = 12, height = 7)
