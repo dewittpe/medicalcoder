@@ -1,4 +1,4 @@
-if (requireNamespace("data.table", quietly = TRUE)) {
+if (!requireNamespace("data.table", quietly = TRUE)) {
   message("SKIP: data.table not available; skipping test-locked-bindings.R")
   quit(save = "no", status = 0, runLast = FALSE)
 }

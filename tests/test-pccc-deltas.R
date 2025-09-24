@@ -3,7 +3,7 @@
 # inst/mappings/icd-codes-and-mappings.R
 #
 # ANY CHANGES IN THE CODES AND THESE TESTS MAY IMPACT THE WRITE UP AND THESE TESTS
-if (requireNamespace("data.table", quietly = TRUE)) {
+if (!requireNamespace("data.table", quietly = TRUE)) {
   message("SKIP: data.table not available; skipping test-pccc-deltas.R")
   quit(save = "no", status = 0, runLast = FALSE)
 }
