@@ -1,7 +1,5 @@
 ################################################################################
 library(medicalcoder)
-library(data.table)
-
 # build and test the longitudinal flagging of conditions.  The renal code will
 # be provided twice, once as poa and once as not poa.   This should flag on the
 # encounter as expected.  the duplication is here to see if there is a any bug
@@ -45,7 +43,7 @@ library(data.table)
 #     - renal_dxpr_or_tech
 
 record <-
-  data.table::fread(text = "
+  read.table(text = "
   patid | encid | code   | poa
   A     | 1     | NA     | NA
   A     | 2     | C78.4  | 0
@@ -63,7 +61,10 @@ record <-
   B     | 3     | NA     |
   B     | 4     | N18.4  | 0
   B     | 5     | NA     | NA
-  ")
+  ",
+  header = TRUE,
+  sep = "|",
+  strip.white = TRUE)
 
 # set the data in an unsorted order to verify that the output will be sorted and
 # as expected.
@@ -71,7 +72,7 @@ set.seed(42)
 rws <- c(sample(seq_len(nrow(record))),
          sample(seq_len(nrow(record))),
          sample(seq_len(nrow(record))))
-record <- record[rws]
+record <- record[rws, ]
 
 ################################################################################
 # Expected results
@@ -153,63 +154,24 @@ CMRBS <-
 # PCCC Subconditions
 #
 # The PCCC with subconditions should have the same comorbidities as the objects
-# without subconditions
-stopifnot(
-  isTRUE(
-    all.equal(target = CMRBS$pccc_current_0,
-              current = CMRBS$spccc_current_0$conditions,
-              check.attributes = FALSE)
-  )
-)
-CMRBS$spccc_current_0$conditions <- NULL
+# without subconditions.
+for (x in grep("^pccc_", names(CMRBS), value = TRUE)) {
+  check <-
+    all.equal(
+      target = CMRBS[[x]],
+      current = CMRBS[[paste0("s", x)]][["conditions"]],
+      check.attributes = FALSE
+    )
+  if (check) {
+    CMRBS[[paste0("s", x)]][["conditions"]] <- NULL
+  } else {
+    stop(sprintf('CMRBS[[s%s]][["conditions"]] is not all.equal to CMRBS[[%s]]', x, x))
+  }
+}
 
-stopifnot(
-  isTRUE(
-    all.equal(target = CMRBS$pccc_current_1,
-              current = CMRBS$spccc_current_1$conditions,
-              check.attributes = FALSE)
-  )
-)
-CMRBS$spccc_current_1$conditions <- NULL
-
-stopifnot(
-  isTRUE(
-    all.equal(target = CMRBS$pccc_current_v,
-              current = CMRBS$spccc_current_v$conditions,
-              check.attributes = FALSE)
-  )
-)
-CMRBS$spccc_current_v$conditions <- NULL
-
-stopifnot(
-  isTRUE(
-    all.equal(target = CMRBS$pccc_cumulative_0,
-              current = CMRBS$spccc_cumulative_0$conditions,
-              check.attributes = FALSE)
-  )
-)
-CMRBS$spccc_cumulative_0$conditions <- NULL
-
-stopifnot(
-  isTRUE(
-    all.equal(target = CMRBS$pccc_cumulative_1,
-              current = CMRBS$spccc_cumulative_1$conditions,
-              check.attributes = FALSE)
-  )
-)
-CMRBS$spccc_cumulative_1$conditions <- NULL
-
-stopifnot(
-  isTRUE(
-    all.equal(target = CMRBS$pccc_cumulative_v,
-              current = CMRBS$spccc_cumulative_v$conditions,
-              check.attributes = FALSE)
-  )
-)
-CMRBS$spccc_cumulative_v$conditions <- NULL
 
 # Check each of the subconditions.  For the following conditions, all of which
-# shuold not be flagged, the number of rows in the output should be zero.
+# should not be flagged, the number of rows in the output should be zero.
 for (cnd in c("respiratory", "neuromusc", "neonatal", "misc", "metabolic", "hemato_immu", "gi", "congeni_genetic")) {
   stopifnot(
     nrow(CMRBS$spccc_current_0$subconditions[[cnd]]) == 0L,
@@ -227,7 +189,7 @@ for (cnd in c("respiratory", "neuromusc", "neonatal", "misc", "metabolic", "hema
   CMRBS$spccc_cumulative_v$subconditions[[cnd]] <- NULL
 }
 
-# For cvd
+# Specific checks for cvd
 stopifnot(identical(nrow(CMRBS$spccc_current_0$subconditions[["cvd"]]), 0L))
 CMRBS$spccc_current_0$subconditions[["cvd"]] <- NULL
 
@@ -235,7 +197,7 @@ stopifnot(
   identical(CMRBS$spccc_current_1$subconditions[["cvd"]][["patid"]], c("A", "A")),
   identical(CMRBS$spccc_current_1$subconditions[["cvd"]][["encid"]], c(3L, 5L)),
   identical(CMRBS$spccc_current_1$subconditions[["cvd"]][["other"]], c(1L, 1L)),
-  all(CMRBS$spccc_current_1$subconditions[["cvd"]][, -c("patid", "encid", "other")] == 0)
+  all(CMRBS$spccc_current_1$subconditions[["cvd"]][, !(names(CMRBS$spccc_current_1$subconditions[["cvd"]]) %in% c("patid", "encid", "other"))] == 0)
 )
 CMRBS$spccc_current_1$subconditions[["cvd"]] <- NULL
 
@@ -243,7 +205,7 @@ stopifnot(
   identical(CMRBS$spccc_current_v$subconditions[["cvd"]][["patid"]], c("A")),
   identical(CMRBS$spccc_current_v$subconditions[["cvd"]][["encid"]], c(3L)),
   identical(CMRBS$spccc_current_v$subconditions[["cvd"]][["other"]], c(1L)),
-  all(CMRBS$spccc_current_v$subconditions[["cvd"]][, -c("patid", "encid", "other")] == 0)
+  all(CMRBS$spccc_current_v$subconditions[["cvd"]][, !(names(CMRBS$spccc_current_v$subconditions[["cvd"]]) %in% c("patid", "encid", "other"))] == 0)
 )
 CMRBS$spccc_current_v$subconditions[["cvd"]] <- NULL
 
@@ -251,7 +213,7 @@ stopifnot(
   identical(CMRBS$spccc_cumulative_0$subconditions[["cvd"]][["patid"]], rep("A", 4)),
   identical(CMRBS$spccc_cumulative_0$subconditions[["cvd"]][["encid"]], 4:7),
   identical(CMRBS$spccc_cumulative_0$subconditions[["cvd"]][["other"]], rep(1L, 4)),
-  all(CMRBS$spccc_cumulative_0$subconditions[["cvd"]][, -c("patid", "encid", "other")] == 0)
+  all(CMRBS$spccc_cumulative_0$subconditions[["cvd"]][, !(names(CMRBS$spccc_current_0$subconditions[["cvd"]]) %in% c("patid", "encid", "other"))] == 0)
 )
 CMRBS$spccc_cumulative_0$subconditions[["cvd"]] <- NULL
 
@@ -259,7 +221,7 @@ stopifnot(
   identical(CMRBS$spccc_cumulative_1$subconditions[["cvd"]][["patid"]], rep("A", 5)),
   identical(CMRBS$spccc_cumulative_1$subconditions[["cvd"]][["encid"]], 3:7),
   identical(CMRBS$spccc_cumulative_1$subconditions[["cvd"]][["other"]], rep(1L, 5)),
-  all(CMRBS$spccc_cumulative_1$subconditions[["cvd"]][, -c("patid", "encid", "other")] == 0)
+  all(CMRBS$spccc_cumulative_1$subconditions[["cvd"]][, !(names(CMRBS$spccc_current_1$subconditions[["cdv"]]) %in% c("patid", "encid", "other"))] == 0)
 )
 CMRBS$spccc_cumulative_1$subconditions[["cvd"]] <- NULL
 
@@ -267,7 +229,7 @@ stopifnot(
   identical(CMRBS$spccc_cumulative_v$subconditions[["cvd"]][["patid"]], rep("A", 5)),
   identical(CMRBS$spccc_cumulative_v$subconditions[["cvd"]][["encid"]], 3:7),
   identical(CMRBS$spccc_cumulative_v$subconditions[["cvd"]][["other"]], rep(1L, 5)),
-  all(CMRBS$spccc_cumulative_v$subconditions[["cvd"]][, -c("patid", "encid", "other")] == 0)
+  all(CMRBS$spccc_cumulative_v$subconditions[["cvd"]][, !(names(CMRBS$spccc_cumulative_v$subconditions[["cvd"]]) %in% c("patid", "encid", "other"))] == 0)
 )
 CMRBS$spccc_cumulative_v$subconditions[["cvd"]] <- NULL
 
@@ -279,7 +241,7 @@ stopifnot(
   identical(CMRBS$spccc_current_1$subconditions[["malignancy"]][["patid"]], c("A", "A")),
   identical(CMRBS$spccc_current_1$subconditions[["malignancy"]][["encid"]], c(2L, 5L)),
   identical(CMRBS$spccc_current_1$subconditions[["malignancy"]][["neoplasms"]], c(1L, 1L)),
-  all(CMRBS$spccc_current_1$subconditions[["malignancy"]][, -c("patid", "encid", "neoplasms")] == 0)
+  all(CMRBS$spccc_current_1$subconditions[["malignancy"]][, !(names(CMRBS$spccc_current_1$subconditions[["malignancy"]]) %in% c("patid", "encid", "neoplasms"))] == 0)
 )
 CMRBS$spccc_current_1$subconditions[["malignancy"]] <- NULL
 
@@ -287,7 +249,7 @@ stopifnot(
   identical(CMRBS$spccc_current_v$subconditions[["malignancy"]][["patid"]], c("A")),
   identical(CMRBS$spccc_current_v$subconditions[["malignancy"]][["encid"]], c(5L)),
   identical(CMRBS$spccc_current_v$subconditions[["malignancy"]][["neoplasms"]], c(1L)),
-  all(CMRBS$spccc_current_v$subconditions[["malignancy"]][, -c("patid", "encid", "neoplasms")] == 0)
+  all(CMRBS$spccc_current_v$subconditions[["malignancy"]][, !(names(CMRBS$spccc_current_v$subconditions[["malignancy"]]) %in% c("patid", "encid", "neoplasms"))] == 0)
 )
 CMRBS$spccc_current_v$subconditions[["malignancy"]] <- NULL
 
@@ -295,7 +257,7 @@ stopifnot(
   identical(CMRBS$spccc_cumulative_0$subconditions[["malignancy"]][["patid"]], rep("A", 5)),
   identical(CMRBS$spccc_cumulative_0$subconditions[["malignancy"]][["encid"]], 3:7),
   identical(CMRBS$spccc_cumulative_0$subconditions[["malignancy"]][["neoplasms"]], rep(1L, 5)),
-  all(CMRBS$spccc_cumulative_0$subconditions[["malignancy"]][, -c("patid", "encid", "neoplasms")] == 0)
+  all(CMRBS$spccc_cumulative_0$subconditions[["malignancy"]][, !(names(CMRBS$spccc_cumulative_0$subconditions[["malignancy"]]) %in% c("patid", "encid", "neoplasms"))] == 0)
 )
 CMRBS$spccc_cumulative_0$subconditions[["malignancy"]] <- NULL
 
@@ -303,7 +265,7 @@ stopifnot(
   identical(CMRBS$spccc_cumulative_1$subconditions[["malignancy"]][["patid"]], rep("A", 6)),
   identical(CMRBS$spccc_cumulative_1$subconditions[["malignancy"]][["encid"]], 2:7),
   identical(CMRBS$spccc_cumulative_1$subconditions[["malignancy"]][["neoplasms"]], rep(1L, 6)),
-  all(CMRBS$spccc_cumulative_1$subconditions[["malignancy"]][, -c("patid", "encid", "neoplasms")] == 0)
+  all(CMRBS$spccc_cumulative_1$subconditions[["malignancy"]][, !(names(CMRBS$spccc_cumulative_1$subconditions[["malignancy"]]) %in% c("patid", "encid", "neoplasms"))] == 0)
 )
 CMRBS$spccc_cumulative_1$subconditions[["malignancy"]] <- NULL
 
@@ -311,7 +273,7 @@ stopifnot(
   identical(CMRBS$spccc_cumulative_v$subconditions[["malignancy"]][["patid"]], rep("A", 5)),
   identical(CMRBS$spccc_cumulative_v$subconditions[["malignancy"]][["encid"]], 3:7),
   identical(CMRBS$spccc_cumulative_v$subconditions[["malignancy"]][["neoplasms"]], rep(1L, 5)),
-  all(CMRBS$spccc_cumulative_v$subconditions[["malignancy"]][, -c("patid", "encid", "neoplasms")] == 0)
+  all(CMRBS$spccc_cumulative_v$subconditions[["malignancy"]][, !(names(CMRBS$spccc_cumulative_v$subconditions[["malignancy"]]) %in% c("patid", "encid", "neoplasms"))] == 0)
 )
 CMRBS$spccc_cumulative_v$subconditions[["malignancy"]] <- NULL
 
@@ -323,7 +285,7 @@ stopifnot(
   identical(CMRBS$spccc_current_1$subconditions[["renal"]][["patid"]], c("A", "B", "B")),
   identical(CMRBS$spccc_current_1$subconditions[["renal"]][["encid"]], c(4L, 1L, 4L)),
   identical(CMRBS$spccc_current_1$subconditions[["renal"]][["chronic_renal_failure"]], c(1L, 1L, 1L)),
-  all(CMRBS$spccc_current_1$subconditions[["renal"]][, -c("patid", "encid", "chronic_renal_failure")] == 0)
+  all(CMRBS$spccc_current_1$subconditions[["renal"]][, !(names(CMRBS$spccc_current_1$subconditions[["renal"]]) %in% c("patid", "encid", "chronic_renal_failure"))] == 0)
 )
 CMRBS$spccc_current_1$subconditions[["renal"]] <- NULL
 
@@ -331,7 +293,7 @@ stopifnot(
   identical(CMRBS$spccc_current_v$subconditions[["renal"]][["patid"]], c("A", "B")),
   identical(CMRBS$spccc_current_v$subconditions[["renal"]][["encid"]], c(4L, 1L)),
   identical(CMRBS$spccc_current_v$subconditions[["renal"]][["chronic_renal_failure"]], c(1L, 1L)),
-  all(CMRBS$spccc_current_v$subconditions[["renal"]][, -c("patid", "encid", "chronic_renal_failure")] == 0)
+  all(CMRBS$spccc_current_v$subconditions[["renal"]][, !(names(CMRBS$spccc_current_v$subconditions[["renal"]]) %in% c("patid", "encid", "chronic_renal_failure"))] == 0)
 )
 CMRBS$spccc_current_v$subconditions[["renal"]] <- NULL
 
@@ -339,7 +301,7 @@ stopifnot(
   identical(CMRBS$spccc_cumulative_0$subconditions[["renal"]][["patid"]], rep(c("A", "B"), times = c(3, 4))),
   identical(CMRBS$spccc_cumulative_0$subconditions[["renal"]][["encid"]], c(5:7, 2:5)),
   identical(CMRBS$spccc_cumulative_0$subconditions[["renal"]][["chronic_renal_failure"]], rep(1L, 7)),
-  all(CMRBS$spccc_cumulative_0$subconditions[["renal"]][, -c("patid", "encid", "chronic_renal_failure")] == 0)
+  all(CMRBS$spccc_cumulative_0$subconditions[["renal"]][, !(names(CMRBS$spccc_cumulative_0$subconditions[["renal"]]) %in% c("patid", "encid", "chronic_renal_failure"))] == 0)
 )
 CMRBS$spccc_cumulative_0$subconditions[["renal"]] <- NULL
 
@@ -347,7 +309,7 @@ stopifnot(
   identical(CMRBS$spccc_cumulative_1$subconditions[["renal"]][["patid"]], rep(c("A", "B"), times = c(4, 5))),
   identical(CMRBS$spccc_cumulative_1$subconditions[["renal"]][["encid"]], c(4:7, 1:5)),
   identical(CMRBS$spccc_cumulative_1$subconditions[["renal"]][["chronic_renal_failure"]], rep(1L, 9)),
-  all(CMRBS$spccc_cumulative_1$subconditions[["renal"]][, -c("patid", "encid", "chronic_renal_failure")] == 0)
+  all(CMRBS$spccc_cumulative_1$subconditions[["renal"]][, !(names(CMRBS$spccc_cumulative_1$subconditions[["renal"]]) %in% c("patid", "encid", "chronic_renal_failure"))] == 0)
 )
 CMRBS$spccc_cumulative_1$subconditions[["renal"]] <- NULL
 
@@ -355,7 +317,7 @@ stopifnot(
   identical(CMRBS$spccc_cumulative_v$subconditions[["renal"]][["patid"]], rep(c("A", "B"), times = c(4, 5))),
   identical(CMRBS$spccc_cumulative_v$subconditions[["renal"]][["encid"]], c(4:7, 1:5)),
   identical(CMRBS$spccc_cumulative_v$subconditions[["renal"]][["chronic_renal_failure"]], rep(1L, 9)),
-  all(CMRBS$spccc_cumulative_v$subconditions[["renal"]][, -c("patid", "encid", "chronic_renal_failure")] == 0)
+  all(CMRBS$spccc_cumulative_v$subconditions[["renal"]][, !(names(CMRBS$spccc_cumulative_v$subconditions[["renal"]]) %in% c("patid", "encid", "chronic_renal_failure"))] == 0)
 )
 CMRBS$spccc_cumulative_v$subconditions[["renal"]] <- NULL
 
