@@ -1,3 +1,5 @@
+include ../Makevars
+
 USER_SHELL := $(shell echo $$SHELL)
 SHELL := $(if $(USER_SHELL),$(USER_SHELL),/bin/bash)
 .SHELLFLAGS := -lc
@@ -14,21 +16,25 @@ V44 := 4.4.0 4.4.1 4.4.2
 V45 := 4.5.0 4.5.1
 LATEST := latest
 VERSIONS := $(V35) $(V36) $(V40) $(V41) $(V42) $(V43) $(V44) $(V45) $(LATEST)
+WITHSUGGESTS := $(addsuffix -with-suggests,$(V44)) $(addsuffix -with-suggests,$(V45)) $(addsuffix -with-suggests,$(LATEST))
 
 PKG_ROOT    := ..
 PKG_VERSION := $(shell awk '/^Version:/{print $$2}' $(PKG_ROOT)/DESCRIPTION)
 PKG_NAME    := $(shell awk '/^Package:/{print $$2}' $(PKG_ROOT)/DESCRIPTION)
 TARBALL     := $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
-RVS := $(addprefix R-,$(VERSIONS))
+RVS := $(addprefix R-,$(VERSIONS)) $(addprefix R-,$(WITHSUGGESTS))
 CHECKS := $(addsuffix /$(PKG_NAME).Rcheck/00check.log,$(RVS))
 
 .PHONY: all clean
 
-all: $(CHECKS)
+all: report.Rout
 
 $(TARBALL): $(PKG_ROOT)/$(TARBALL)
 	cp $< $@
+
+report.Rout: report.R $(CHECKS)
+	$(RCMDBATCH) $<
 
 R-%/$(PKG_NAME).Rcheck/00check.log: $(TARBALL)
 	$(RM) -r R-$*
@@ -44,6 +50,20 @@ R-%/$(PKG_NAME).Rcheck/00check.log: $(TARBALL)
 		r-base:$* \
 		R CMD check --no-build-vignettes --ignore-vignettes --no-manual -o R-$* $(TARBALL)
 	$(CONTAINER) rm mdcr_$*
+
+R-%-with-suggests/$(PKG_NAME).Rcheck/00check.log: $(TARBALL)
+	$(RM) -r R-$*-with-suggests
+	mkdir -p R-$*-with-suggests
+	$(CONTAINER) rm mdcr_$*-with-suggests || true;
+	$(CONTAINER) info >/dev/null 2>&1 || { echo "$(CONTAINER) is unavailable or the daemon cannot be reached"; exit 1; }
+	$(CONTAINER) pull r-base:$*
+	$(CONTAINER) run \
+		--name mdcr_$*-with-suggests\
+		-v "$$(PWD)":/home/docker \
+		-w /home/docker \
+			r-base:$* \
+			bash -lc "apt-get update && apt-get install -y libxml2-dev libfontconfig1-dev libharfbuzz-dev && R -e \"install.packages(c('data.table', 'knitr', 'kableExtra', 'tibble'))\" && R CMD check -o R-$*-with-suggests $(TARBALL)"
+	$(CONTAINER) rm mdcr_$*-with-suggests
 
 clean:
 	$(RM) -r $(RVS)

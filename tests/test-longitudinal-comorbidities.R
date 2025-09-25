@@ -43,25 +43,16 @@ library(medicalcoder)
 #     - renal_dxpr_or_tech
 
 record <-
-  read.table(text =
-    "patid\tencid\tcode\tpoa
-A\t1\tNA\tNA
-A\t2\tC78.4\t0
-A\t3\tI50.40\t1
-A\t4\tN18.4\t1
-A\t4\tN18.4\t0
-A\t5\tC78.4\t1
-A\t5\tI50.40\t0
-A\t6\tNA\tNA
-A\t7\t-\t1
-B\t1\tNA\tNA
-B\t1\tN18.4\t1
-B\t1\tN18.4\t0
-B\t2\tNA\t
-B\t3\tNA\t
-B\t4\tN18.4\t0
-B\t5\tNA\tNA",
-  header = TRUE, sep = "\t")
+  structure(
+    list(
+      patid = c("A", "A", "A", "A", "A", "A", "A", "A", "A", "B", "B", "B", "B", "B", "B", "B"),
+      encid = c(1L, 2L, 3L, 4L, 4L, 5L, 5L, 6L, 7L, 1L, 1L, 1L, 2L, 3L, 4L, 5L),
+      code  = c(NA, "C78.4", "I50.40", "N18.4", "N18.4", "C78.4", "I50.40", NA, "-", NA, "N18.4", "N18.4", NA, NA, "N18.4", NA),
+      poa = c(NA, 0L, 1L, 1L, 0L, 1L, 0L, NA, 1L, NA, 1L, 0L, NA, NA, 0L, NA)
+    ),
+  class = "data.frame",
+  row.names = c(NA, -16L)
+)
 
 # set the data in an unsorted order to verify that the output will be sorted and
 # as expected.
