@@ -45,30 +45,27 @@ stopifnot(isTRUE(identical(names(ICDDH),    c(expected_icd_code_columns, expecte
 
 # Verify the column classes are as expected
 nc <-
-  read.delim(text =
-  "
-  name                 | class
-  icdv                 | integer
-  dx                   | integer
-  full_code            | character
-  code                 | character
-  src                  | character
-  known_start          | integer
-  known_end            | integer
-  assignable_start     | integer
-  assignable_end       | integer
-  desc                 | character
-  desc_start           | integer
-  desc_end             | integer
-  chapter              | character
-  subchapter           | character
-  category             | character
-  subcategory          | character
-  subclassification    | character
-  subsubclassification | character
-  extension            | character
-  ", sep = "|", strip.white = TRUE
-  )
+  read.delim(header = TRUE, sep = "\t", text =
+  "name\tclass
+icdv\tinteger
+dx\tinteger
+full_code\tcharacter
+code\tcharacter
+src\tcharacter
+known_start\tinteger
+known_end\tinteger
+assignable_start\tinteger
+assignable_end\tinteger
+desc\tcharacter
+desc_start\tinteger
+desc_end\tinteger
+chapter\tcharacter
+subchapter\tcharacter
+category\tcharacter
+subcategory\tcharacter
+subclassification\tcharacter
+subsubclassification\tcharacter
+extension\tcharacter")
 
 for(j in names(ICDCODES)) {
   stopifnot(isTRUE(inherits(ICDCODES[[j]], subset(nc, name == j)[["class"]])))

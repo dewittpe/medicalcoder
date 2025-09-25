@@ -43,28 +43,25 @@ library(medicalcoder)
 #     - renal_dxpr_or_tech
 
 record <-
-  read.table(text = "
-  patid | encid | code   | poa
-  A     | 1     | NA     | NA
-  A     | 2     | C78.4  | 0
-  A     | 3     | I50.40 | 1
-  A     | 4     | N18.4  | 1
-  A     | 4     | N18.4  | 0
-  A     | 5     | C78.4  | 1
-  A     | 5     | I50.40 | 0
-  A     | 6     | NA     | NA
-  A     | 7     | -      | 1
-  B     | 1     | NA     | NA
-  B     | 1     | N18.4  | 1
-  B     | 1     | N18.4  | 0
-  B     | 2     | NA     |
-  B     | 3     | NA     |
-  B     | 4     | N18.4  | 0
-  B     | 5     | NA     | NA
-  ",
-  header = TRUE,
-  sep = "|",
-  strip.white = TRUE)
+  read.table(text =
+    "patid\tencid\tcode\tpoa
+A\t1\tNA\tNA
+A\t2\tC78.4\t0
+A\t3\tI50.40\t1
+A\t4\tN18.4\t1
+A\t4\tN18.4\t0
+A\t5\tC78.4\t1
+A\t5\tI50.40\t0
+A\t6\tNA\tNA
+A\t7\t-\t1
+B\t1\tNA\tNA
+B\t1\tN18.4\t1
+B\t1\tN18.4\t0
+B\t2\tNA\t
+B\t3\tNA\t
+B\t4\tN18.4\t0
+B\t5\tNA\tNA",
+  header = TRUE, sep = "\t")
 
 # set the data in an unsorted order to verify that the output will be sorted and
 # as expected.

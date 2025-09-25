@@ -38,26 +38,22 @@ rtn <- comorbidities(data = mdcr, id.vars = "patid", icd.codes = "code", poa = 1
 rtn <- comorbidities_summary_table(rtn)
 
 expected_rtn  <-
-  read.delim(text =
-"
-condition                  | pccc_v2.0
-Neuromuscular              | 5,842 (15.3)
-Cardiovascular disease     | 5,034 (13.2)
-Respiratory                | 3,317 (8.7)
-Renal                      | 2,967 (7.8)
-Gastrointestinal           | 6,891 (18.0)
-Hematologic or Immunologic | 2,806 (7.3)
-Metabolic                  | 3,307 (8.6)
-Congenital or genetic      | 3,399 (8.9)
-Malignancy                 | 4,024 (10.5)
-Neonatal                   | 1,572 (4.1)
-Transplant                 | 1,227 (3.2)
-Technology dependence      | 8,797 (23.0)
-Any CCC                    | 22,686 (59.3)
-",
-      sep = "|",
-      strip.white = TRUE
-  )
+  read.delim(header = TRUE, sep = "\t", text =
+"condition\tpccc_v2.0
+Neuromuscular\t5,842 (15.3)
+Cardiovascular disease\t5,034 (13.2)
+Respiratory\t3,317 (8.7)
+Renal\t2,967 (7.8)
+Gastrointestinal\t6,891 (18.0)
+Hematologic or Immunologic\t2,806 (7.3)
+Metabolic\t3,307 (8.6)
+Congenital or genetic\t3,399 (8.9)
+Malignancy\t4,024 (10.5)
+Neonatal\t1,572 (4.1)
+Transplant\t1,227 (3.2)
+Technology dependence\t8,797 (23.0)
+Any CCC\t22,686 (59.3)
+")
 
 stopifnot(
   "pccc 2.0 summary table is as expected" = isTRUE(identical(rtn, expected_rtn))
@@ -70,26 +66,22 @@ rtn <- comorbidities(data = mdcr, id.vars = "patid", icd.codes = "code", poa = 1
 rtn <- comorbidities_summary_table(rtn)
 
 expected_rtn  <-
-  read.delim(text =
-"
-condition                  | pccc_v2.1
-Neuromuscular              | 5,988 (15.6)
-Cardiovascular disease     | 5,034 (13.2)
-Respiratory                | 3,321 (8.7)
-Renal                      | 2,967 (7.8)
-Gastrointestinal           | 6,891 (18.0)
-Hematologic or Immunologic | 2,806 (7.3)
-Metabolic                  | 3,333 (8.7)
-Congenital or genetic      | 3,399 (8.9)
-Malignancy                 | 4,057 (10.6)
-Neonatal                   | 1,572 (4.1)
-Transplant                 | 1,476 (3.9)
-Technology dependence      | 8,850 (23.1)
-Any CCC                    | 22,733 (59.4)
-",
-      sep = "|",
-      strip.white = TRUE
-  )
+  read.delim(header = TRUE, sep = "\t", text =
+"condition\tpccc_v2.1
+Neuromuscular\t5,988 (15.6)
+Cardiovascular disease\t5,034 (13.2)
+Respiratory\t3,321 (8.7)
+Renal\t2,967 (7.8)
+Gastrointestinal\t6,891 (18.0)
+Hematologic or Immunologic\t2,806 (7.3)
+Metabolic\t3,333 (8.7)
+Congenital or genetic\t3,399 (8.9)
+Malignancy\t4,057 (10.6)
+Neonatal\t1,572 (4.1)
+Transplant\t1,476 (3.9)
+Technology dependence\t8,850 (23.1)
+Any CCC\t22,733 (59.4)
+")
 
 stopifnot(
   "pccc 2.1 summary table is as expected" = isTRUE(identical(rtn, expected_rtn))
