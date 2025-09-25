@@ -31,7 +31,9 @@ $(TARBALL): $(PKG_ROOT)/$(TARBALL)
 	cp $< $@
 
 R-%/$(PKG_NAME).Rcheck/00check.log: $(TARBALL)
+	$(RM) -r R-$*
 	mkdir -p R-$*
+	$(CONTAINER) rm mdcr_$* || true;
 	$(CONTAINER) info >/dev/null 2>&1 || { echo "$(CONTAINER) is unavailable or the daemon cannot be reached"; exit 1; }
 	$(CONTAINER) pull r-base:$*
 	$(CONTAINER) run \
@@ -40,7 +42,7 @@ R-%/$(PKG_NAME).Rcheck/00check.log: $(TARBALL)
 		-w /home/docker \
 		-e _R_CHECK_FORCE_SUGGESTS_=false \
 		r-base:$* \
-		R CMD check --ignore-vignettes --no-manual -o R-$* $(TARBALL)
+		R CMD check --no-build-vignettes --ignore-vignettes --no-manual -o R-$* $(TARBALL)
 	$(CONTAINER) rm mdcr_$*
 
 clean:
