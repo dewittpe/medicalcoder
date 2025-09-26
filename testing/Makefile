@@ -61,8 +61,8 @@ R-%-with-suggests/$(PKG_NAME).Rcheck/00check.log: $(TARBALL)
 		--name mdcr_$*-with-suggests\
 		-v "$$(PWD)":/home/docker \
 		-w /home/docker \
-			r-base:$* \
-			bash -lc "apt-get update && apt-get install -y libxml2-dev libfontconfig1-dev libharfbuzz-dev && R -e \"install.packages(c('data.table', 'knitr', 'kableExtra', 'tibble'))\" && R CMD check -o R-$*-with-suggests $(TARBALL)"
+		r-base:$* \
+		bash -lc "apt-get update && apt-get install -y libxml2-dev libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev texinfo texlive-latex-base texlive-fonts-extra texlive-fonts-recommended texlive-latex-extra && R -e \"install.packages(c('kableExtra', 'knitr', 'data.table', 'tibble'), Ncpus = 2L)\" && R CMD check -o R-$*-with-suggests $(TARBALL)" > R-$*-with-suggests/docker.log 2>&1
 	$(CONTAINER) rm mdcr_$*-with-suggests
 
 clean:
