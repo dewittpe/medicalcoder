@@ -1,0 +1,64 @@
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r "setup", include = FALSE}
+library(rcmdcheck)
+library(knitr)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  echo = FALSE,
+  results = "hide"
+)
+```
+
+# Testing medicalcoder
+
+Along with GitHub Actions and local tests, the workflow in this directory will
+test a recent local build of `medicalcoder` against every major and minor
+release of R from 3.5.0 through the latest version, with, and without, suggested
+packages.  The tests are done in [Docker](https://www.docker.com/) images based
+on the [R-base](https://hub.docker.com/_/r-base) images.
+
+## System Requirements:
+To run the tests you need 
+
+* [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+* [GNU Make](https://www.gnu.org/software/make/)
+
+Just run `make` from this directory.
+
+# Last Testing Results
+
+```{r}
+checks <-
+  list.files(path = ".", pattern = "00check.log", full.name = TRUE, recursive = TRUE) |>
+  sapply(parse_check, simplify = FALSE)
+checks
+```
+
+```{r}
+DF <-
+  checks |>
+  sapply(
+    function(x) {
+      with(x,
+        data.frame(
+          rversion,
+          status,
+          errors = ifelse(length(errors), errors, ""),
+          warnings = ifelse(length(warnings), warnings, ""),
+          notes    = ifelse(length(notes), notes, ""),
+          checkdir,
+          version
+        )
+      )
+    },
+  simplify = FALSE
+  )
+  
+DF <- do.call(rbind, DF)
+rownames(DF) <- NULL
+
+head(DF)
+```
+
