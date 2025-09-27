@@ -213,23 +213,53 @@ comorbidities.data.frame <- function(data,
 
   ##############################################################################
   # verify input arguments
-  stopifnot(isTRUEorFALSE(full.codes),
-            isTRUEorFALSE(compact.codes),
-            full.codes | compact.codes)
+  stopifnot(
+    isTRUEorFALSE(full.codes),
+    isTRUEorFALSE(compact.codes),
+    full.codes | compact.codes
+  )
 
-  flag.method <- match.arg(flag.method, several.ok = FALSE)
+  stopifnot(
+    is.character(icd.codes) &&
+      length(icd.codes) == 1L &&
+      icd.codes %in% names(data)
+  )
 
-  # check that the variables are in data, if they are passed in.
-  stopifnot(is.character(icd.codes) &&
-            length(icd.codes) == 1L &&
-            all(icd.codes %in% names(data)))
-
-  id.vars.created <-
-    check_and_set_id_vars(
-      data_names = names(data),
-      id.vars    = id.vars,
-      envir      = environment()
+  flag.method <-
+    match.arg(
+      flag.method,
+      several.ok = FALSE
     )
+
+  method <-
+    match.arg(
+      method,
+      choices = comorbidities_methods(),
+      several.ok = FALSE
+    )
+
+  if (startsWith(method, "charlson") && !is.null(age.var)) {
+    stopifnot(
+      is.character(age.var) &&
+        length(age.var) == 1L &&
+        age.var %in% names(data)
+    )
+  }
+
+  stopifnot(isTRUEorFALSE(subconditions))
+  if (subconditions & !startsWith(method, "pccc")) {
+    warning("subconditions only implimented for PCCC")
+    subconditions <- FALSE
+  }
+
+  # Cumulative flagging carries a condition forward from its first encounter.
+  # Identify the earliest encounter per condition (and subcondition for PCCC),
+  # replicate that flag across later encounters for the same id.vars stack, and
+  # flip poa to 1L after the first occurrence so downstream methods treat the
+  # condition as persistent.
+  if (flag.method == "cumulative" & length(id.vars) < 2L) {
+    stop("When using `flag.method = 'cumulative'` the `id.vars` are expected to be provided and have a minimum length of 2, e.g., c('subject_id', 'encounter_number')", call. = FALSE)
+  }
 
   # Check if icdv.var and/or icdv have been specified and check for expected
   # values.  if icdv is specified and icdv.var is NULL then then the icdv will
@@ -277,6 +307,16 @@ comorbidities.data.frame <- function(data,
     }
   }
 
+  ########################################################################
+
+  id.vars.created <-
+    check_and_set_id_vars(
+      data_names = names(data),
+      id.vars    = id.vars,
+      envir      = environment()
+    )
+
+
   check_and_set_poa_var(
     data_names  = names(data),
     poa.var     = poa.var,
@@ -293,28 +333,6 @@ comorbidities.data.frame <- function(data,
     method        = method,
     envir         = environment()
   )
-
-  # Check method
-  method <- match.arg(method, choices = comorbidities_methods(), several.ok = FALSE)
-
-  if (startsWith(method, "charlson") && !is.null(age.var)) {
-    stopifnot(age.var %in% names(data))
-  }
-
-  stopifnot(isTRUEorFALSE(subconditions))
-  if (subconditions & !grepl("pccc", method)) {
-    warning("subconditions only implimented for PCCC")
-    subconditions <- FALSE
-  }
-
-  # Cumulative flagging carries a condition forward from its first encounter.
-  # Identify the earliest encounter per condition (and subcondition for PCCC),
-  # replicate that flag across later encounters for the same id.vars stack, and
-  # flip poa to 1L after the first occurrence so downstream methods treat the
-  # condition as persistent.
-  if (flag.method == "cumulative" & length(id.vars) < 2L) {
-    stop("When using `flag.method = 'cumulative'` the `id.vars` are expected to be provided and have a minimum length of 2, e.g., c('subject_id', 'encounter_number')", call. = FALSE)
-  }
 
   ##############################################################################
   # Determine how to join the data and the look up table
