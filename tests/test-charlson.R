@@ -136,5 +136,83 @@ stopifnot(
 )
 
 ################################################################################
+# tests for different sets of inputs
+# with or with icdv
+# with or without dx
+
+mdcr2 <- mdcr
+
+# add a patient and row to this data set that will result in a false positive
+# for charlson_quan2005 when dx is not specified correctly.  This can be an
+# ICD-9 procedure code which has the same compact form as an ICD-9 diagnostic
+# code.  Found a good code for this.  ICD-9 5829, as a diagnostic code maps to
+# rnd, as a procedure code it would map to nothing.  Add a patient to mdcr2 with
+# this procedure code.
+if (interactive()) {
+  merge(
+    get_icd_codes(),
+    subset(get_charlson_codes(), charlson_quan2005 == 1 & icdv == 9, "code"),
+    by = "code"
+  )
+
+  lookup_icd_codes("5829")
+  subset(get_charlson_codes(), charlson_quan2005 == 1 & code == "5829")
+  mdcr[mdcr$code == "5829", ]
+}
+
+mdcr2 <-
+  rbind(
+    mdcr2,
+    data.frame(patid = 0, icdv = 9, code = "5829", dx = 0L, age = 42)
+  )
+
+# common arguments for the calls to comorbidities
+cargs <-
+  list(
+    data = mdcr2,
+    id.vars = "patid",
+    icd.codes = "code",
+    poa = 1,
+    method = "charlson_quan2005"
+  )
+
+out00 <- do.call(comorbidities, c(cargs, list(icdv.var = "icdv", dx.var = "dx")))
+out01 <- do.call(comorbidities, c(cargs, list(                   dx.var = "dx")))
+out02 <- do.call(comorbidities, c(cargs, list(icdv = 9,          dx.var = "dx")))
+out03 <- do.call(comorbidities, c(cargs, list(icdv = 10,         dx.var = "dx")))
+out04 <- do.call(comorbidities, c(cargs, list(icdv.var = "icdv"               )))
+out05 <- do.call(comorbidities, c(cargs, list(icdv.var = "icdv", dx = 0       )))
+out06 <- do.call(comorbidities, c(cargs, list(icdv.var = "icdv", dx = 1       )))
+
+# all the outputs should be unique _except_ out04 and out06: charlson is only
+# defined on diagnostic codes, so when nothing is passed for dx.var and dx then
+# any diagnostic or procedure code will flag, in the same way that when dx = 1
+# will treat al the input codes as diagnostic and will have the same false
+# positives.
+stopifnot(
+  !isTRUE(all.equal(out00, out01)),
+  !isTRUE(all.equal(out00, out02)),
+  !isTRUE(all.equal(out00, out03)),
+  !isTRUE(all.equal(out00, out04)),
+  !isTRUE(all.equal(out00, out05)),
+  !isTRUE(all.equal(out00, out06)),
+  !isTRUE(all.equal(out01, out02)),
+  !isTRUE(all.equal(out01, out03)),
+  !isTRUE(all.equal(out01, out04)),
+  !isTRUE(all.equal(out01, out05)),
+  !isTRUE(all.equal(out01, out06)),
+  !isTRUE(all.equal(out02, out03)),
+  !isTRUE(all.equal(out02, out04)),
+  !isTRUE(all.equal(out02, out05)),
+  !isTRUE(all.equal(out02, out06)),
+  !isTRUE(all.equal(out03, out04)),
+  !isTRUE(all.equal(out03, out05)),
+  !isTRUE(all.equal(out03, out06)),
+  !isTRUE(all.equal(out04, out05)),
+   isTRUE(all.equal(out04, out06)),
+  !isTRUE(all.equal(out05, out06))
+)
+
+################################################################################
 #                                 End of File                                  #
 ################################################################################
