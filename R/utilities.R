@@ -22,36 +22,28 @@ NULL
 #' @family check_and_set
 #' @noRd
 #' @keywords internal
-check_and_set_icdv_var <- function(data_names, icdv.var, icdv, envir) {
-  rtn <- is.null(icdv.var)
-  if (is.null(icdv.var)) {
-    if (!is.null(icdv)) {
-      stopifnot(inherits(icdv, "numeric") | inherits(icdv, "integer"))
-      stopifnot(length(icdv) == 1L)
-      icdv <- as.integer(icdv)
-      stopifnot(icdv %in% c(9L, 10L))
-      icdv.var <- "..medicalcoder_icdv.."
-      while(icdv.var %in% data_names) {
-        icdv.var <- paste0(".", icdv.var, ".")
-      }
-      # Use parse()/eval() to avoid adding a data.table dependency
-      # while still mutating the caller's data in place, mirroring
-      # `:=` style behaviour with base R only.
-      e <- parse(text = paste0("data <- cbind(data, ", icdv.var, " = ", icdv, ")"))
-      eval(e, envir = envir)
-      assign(x = "icdv.var", value = icdv.var, envir = envir)
-    } else {
-      # do nothing; icdv.var and  icdv are both NULL
-    }
-  } else {
-    if (!is.null(icdv)) {
-      warning("'icdv.var' and 'icdv' were both specified; ignoring 'icdv'")
-    }
-    stopifnot(length(icdv.var) == 1L)
-    stopifnot(icdv.var %in% data_names)
-  }
-  rtn
-}
+#check_and_set_icdv_var <- function(data_names, icdv.var, icdv, envir) {
+#  rtn <- is.null(icdv.var)
+#  if (is.null(icdv.var)) {
+#    if (!is.null(icdv)) {
+#      # Use parse()/eval() to avoid adding a data.table dependency
+#      # while still mutating the caller's data in place, mirroring
+#      # `:=` style behaviour with base R only.
+#      e <- parse(text = paste0("data <- cbind(data, ", icdv.var, " = ", icdv, ")"))
+#      eval(e, envir = envir)
+#      assign(x = "icdv.var", value = icdv.var, envir = envir)
+#    } else {
+#      # do nothing; icdv.var and  icdv are both NULL
+#    }
+#  } else {
+#    if (!is.null(icdv)) {
+#      warning("'icdv.var' and 'icdv' were both specified; ignoring 'icdv'")
+#    }
+#    stopifnot(length(icdv.var) == 1L)
+#    stopifnot(icdv.var %in% data_names)
+#  }
+#  rtn
+#}
 
 #' @rdname check_and_set
 #' @family check_and_set

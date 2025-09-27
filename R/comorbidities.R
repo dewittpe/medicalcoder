@@ -143,37 +143,12 @@
 #' @example examples/comorbidities.R
 #'
 #' @export
-comorbidities <- function(data,
-                          icd.codes,
-                          method,
-                          id.vars = NULL,
-                          icdv.var = NULL, icdv = NULL,
-                          dx.var = NULL, dx = NULL,
-                          poa.var = NULL,  poa = NULL,
-                          age.var = NULL,
-                          primarydx.var = NULL, primarydx = NULL,
-                          flag.method = c("current", "cumulative"),
-                          full.codes = TRUE,
-                          compact.codes = TRUE,
-                          subconditions = FALSE
-                          ) {
+comorbidities <- function(data, icd.codes, method, id.vars = NULL, icdv.var = NULL, icdv = NULL, dx.var = NULL, dx = NULL, poa.var = NULL,  poa = NULL, age.var = NULL, primarydx.var = NULL, primarydx = NULL, flag.method = c("current", "cumulative"), full.codes = TRUE, compact.codes = TRUE, subconditions = FALSE) {
   UseMethod("comorbidities")
 }
 
 #' @export
-comorbidities.data.frame <- function(data,
-                                     icd.codes,
-                                     method,
-                                     id.vars = NULL,
-                                     icdv.var = NULL, icdv = NULL,
-                                     dx.var = NULL, dx = NULL,
-                                     poa.var = NULL,  poa = NULL,
-                                     age.var = NULL,
-                                     primarydx.var = NULL, primarydx = NULL,
-                                     flag.method = c("current", "cumulative"),
-                                     full.codes = TRUE,
-                                     compact.codes = TRUE,
-                                     subconditions = FALSE) {
+comorbidities.data.frame <- function(data, icd.codes, method, id.vars = NULL, icdv.var = NULL, icdv = NULL, dx.var = NULL, dx = NULL, poa.var = NULL, poa = NULL, age.var = NULL, primarydx.var = NULL, primarydx = NULL, flag.method = c("current", "cumulative"), full.codes = TRUE, compact.codes = TRUE, subconditions = FALSE) {
 
   ##############################################################################
   # verify input arguments
@@ -188,6 +163,8 @@ comorbidities.data.frame <- function(data,
             length(icd.codes) == 1L &&
             all(icd.codes %in% names(data)))
 
+  # Check if the id.var has been defined and is part of the data, create if
+  # needed
   id.vars.created <- is.null(id.vars)
   if (id.vars.created) {
     id.vars <- "..medicalcoder_id.."
@@ -199,12 +176,31 @@ comorbidities.data.frame <- function(data,
     stopifnot(id.vars %in% names(data))
   }
 
-  check_and_set_icdv_var(
-    data_names = names(data),
-    icdv.var   = icdv.var,
-    icdv       = icdv,
-    envir      = environment()
-  )
+  # for the icd version, if the icdv and icdv.var are both defined then take
+  # icdv.var preferentially.
+  if (!is.null(icdv.var)) {
+    if (!is.null(icdv)) {
+      warning("'icdv.var' and 'icdv' were both specified; ignoring 'icdv'")
+    } else {
+      stopifnot(length(icdv.var) == 1L)
+      stopifnot(icdv.var %in% names(data))
+    }
+  } else { # icdv.var is NULL
+    if (is.null(icdv)) {
+      # both icdv.var and icdv are NULL
+      # do nothing
+    } else {
+      stopifnot(inherits(icdv, "numeric") | inherits(icdv, "integer"))
+      stopifnot(length(icdv) == 1L)
+      icdv <- as.integer(icdv)
+      stopifnot(icdv %in% c(9L, 10L))
+      icdv.var <- "..medicalcoder_icdv.."
+      while(icdv.var %in% names(data)) {
+        icdv.var <- paste0(".", icdv.var, ".")
+      }
+      data <- mdcr_set(data, j = icdv.var, value = icdv)
+    }
+  }
 
   check_and_set_dx_var(
     data_names = names(data),
