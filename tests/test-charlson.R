@@ -180,10 +180,14 @@ out00 <- do.call(comorbidities, c(cargs, list(icdv.var = "icdv", dx.var = "dx"))
 out01 <- do.call(comorbidities, c(cargs, list(                   dx.var = "dx")))
 out02 <- do.call(comorbidities, c(cargs, list(icdv = 9,          dx.var = "dx")))
 out03 <- do.call(comorbidities, c(cargs, list(icdv = 10,         dx.var = "dx")))
-out04 <- do.call(comorbidities, c(cargs, list(icdv.var = "icdv"               )))
-out05 <- do.call(comorbidities, c(cargs, list(icdv.var = "icdv", dx = 0       )))
-out06 <- do.call(comorbidities, c(cargs, list(icdv.var = "icdv", dx = 1       )))
-out07 <- do.call(comorbidities, cargs)
+out04 <- do.call(comorbidities, c(cargs, list(icdv = 9)))
+out05 <- do.call(comorbidities, c(cargs, list(icdv = 10)))
+out06 <- do.call(comorbidities, c(cargs, list(icdv.var = "icdv"        )))
+out07 <- do.call(comorbidities, c(cargs, list(icdv.var = "icdv", dx = 0)))
+out08 <- do.call(comorbidities, c(cargs, list(icdv.var = "icdv", dx = 1)))
+out09 <- do.call(comorbidities, c(cargs, list(                   dx = 0)))
+out10 <- do.call(comorbidities, c(cargs, list(                   dx = 1)))
+out11 <- do.call(comorbidities, cargs)
 
 expected_out_false_positive <- structure(list(patid = 0, aidshiv = 0L, mal = 0L, cebvd = 0L, copd = 0L, chf = 0L, dem = 0L, dmc = 0L, dm = 0L, hp = 0L, mld = 0L, msld = 0L, mst = 0L, mi = 0L, pud = 0L, pvd = 0L, rnd = 1L, rhd = 0L, num_cmrb = 1L, cmrb_flag = 1L, cci = 2L, age_score = NA_integer_), row.names = c(NA, -1L), class = c("medicalcoder_comorbidities", "data.frame"), method = "charlson_quan2005", id.vars = "patid", flag.method = "current")
 expected_out <- structure(list(patid = 0, aidshiv = 0L, mal = 0L, cebvd = 0L, copd = 0L, chf = 0L, dem = 0L, dmc = 0L, dm = 0L, hp = 0L, mld = 0L, msld = 0L, mst = 0L, mi = 0L, pud = 0L, pvd = 0L, rnd = 0L, rhd = 0L, num_cmrb = 0L, cmrb_flag = 0L, cci = 0L, age_score = NA_integer_), row.names = c(NA, -1L), class = c("medicalcoder_comorbidities", "data.frame"), method = "charlson_quan2005", id.vars = "patid", flag.method = "current")
@@ -196,7 +200,11 @@ stopifnot(
   identical(out04, expected_out_false_positive),
   identical(out05, expected_out),
   identical(out06, expected_out_false_positive),
-  identical(out07, expected_out_false_positive)
+  identical(out07, expected_out),
+  identical(out08, expected_out_false_positive),
+  identical(out09, expected_out),
+  identical(out10, expected_out_false_positive),
+  identical(out11, expected_out_false_positive)
 )
 
 # More general: common arguments for the calls to comorbidities

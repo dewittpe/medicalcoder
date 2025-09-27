@@ -64,7 +64,7 @@
 #'     indicator column per condition.
 #'
 #'     * For `method = "pccc_v3.0"` and `method = "pccc_v3.1"`,
-#'       there are four columns per condition: 
+#'       there are four columns per condition:
 #'       * `<condition>_dxpr_or_tech`: the condition was flag due to the
 #'         presence of either a diagnostic or procedure code, or was flag due to
 #'         the presence of a technology dependence code along with at least one
@@ -202,12 +202,32 @@ comorbidities.data.frame <- function(data,
     envir      = environment()
   )
 
-  check_and_set_dx_var(
-    data_names = names(data),
-    dx.var   = dx.var,
-    dx       = dx,
-    envir    = environment()
-  )
+  if (!is.null(dx.var)) {
+    if (!is.null(dx)) {
+      warning("'dx.var' and 'dx' were both specified; ignoring 'dx'", call. = FALSE)
+      dx <- NULL
+    } else{
+      stopifnot(length(dx.var) == 1L)
+      stopifnot(dx.var %in% names(data))
+    }
+  } else {
+    if (!is.null(dx)) {
+      stopifnot(inherits(dx, "numeric") | inherits(dx, "integer"))
+      stopifnot(length(dx) == 1L)
+      dx <- as.integer(dx)
+      stopifnot(dx %in% c(0L, 1L))
+    } else {
+      # both dx.var and dx are NULL
+      # do nothing
+    }
+  }
+
+  #check_and_set_dx_var(
+  #  data_names = names(data),
+  #  dx.var   = dx.var,
+  #  dx       = dx,
+  #  envir    = environment()
+  #)
 
   check_and_set_poa_var(
     data_names  = names(data),
@@ -276,6 +296,9 @@ comorbidities.data.frame <- function(data,
     cols_to_keep <- c(cols_to_keep, primarydx.var, method)
   }
   idx <- lookup[[method]] == 1L
+  if (!is.null(dx)) {
+    idx <- idx & (lookup[["dx"]] == dx)
+  }
   lookup <- mdcr_subset(lookup, i = idx)
 
   ##############################################################################
