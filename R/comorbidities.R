@@ -161,6 +161,42 @@ comorbidities <- function(data,
 }
 
 #' @export
+comorbidities.data.table <- function(data,
+                          icd.codes,
+                          method,
+                          id.vars = NULL,
+                          icdv.var = NULL, icdv = NULL,
+                          dx.var = NULL, dx = NULL,
+                          poa.var = NULL,  poa = NULL,
+                          age.var = NULL,
+                          primarydx.var = NULL, primarydx = NULL,
+                          flag.method = c("current", "cumulative"),
+                          full.codes = TRUE,
+                          compact.codes = TRUE,
+                          subconditions = FALSE
+                          ) {
+  NextMethod("comorbidities")
+}
+
+#' @export
+comorbidities.tbl_df <- function(data,
+                          icd.codes,
+                          method,
+                          id.vars = NULL,
+                          icdv.var = NULL, icdv = NULL,
+                          dx.var = NULL, dx = NULL,
+                          poa.var = NULL,  poa = NULL,
+                          age.var = NULL,
+                          primarydx.var = NULL, primarydx = NULL,
+                          flag.method = c("current", "cumulative"),
+                          full.codes = TRUE,
+                          compact.codes = TRUE,
+                          subconditions = FALSE
+                          ) {
+  NextMethod("comorbidities")
+}
+
+#' @export
 comorbidities.data.frame <- function(data,
                                      icd.codes,
                                      method,
