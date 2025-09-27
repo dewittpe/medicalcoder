@@ -22,29 +22,6 @@ NULL
 #' @family check_and_set
 #' @noRd
 #' @keywords internal
-check_and_set_id_vars <- function(data_names, id.vars, envir) {
-  rtn <- is.null(id.vars) # return if the id.vars was created
-  if (is.null(id.vars)) {
-    id.vars <- "..medicalcoder_id.."
-    while(id.vars %in% data_names) {
-      id.vars <- paste0(".", id.vars, ".")
-    }
-    # Use parse()/eval() to avoid adding a data.table dependency
-    # while still mutating the caller's data in place, mirroring
-    # `:=` style behaviour with base R only.
-    e <- parse(text = paste0("data <- cbind(data, ", id.vars, " = 1L)"))
-    eval(e, envir = envir)
-    assign(x = "id.vars", value = id.vars, envir = envir)
-  } else {
-    stopifnot(all(id.vars %in% data_names))
-  }
-  rtn
-}
-
-#' @rdname check_and_set
-#' @family check_and_set
-#' @noRd
-#' @keywords internal
 check_and_set_icdv_var <- function(data_names, icdv.var, icdv, envir) {
   rtn <- is.null(icdv.var)
   if (is.null(icdv.var)) {

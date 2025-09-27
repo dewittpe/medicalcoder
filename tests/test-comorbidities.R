@@ -3,6 +3,35 @@ library(medicalcoder)
 set.seed(42)
 
 ################################################################################
+# verify that an error will be thrown if id.vars is passed and it is not a name
+# in the data
+e <-
+  tryCatch(
+    comorbidities(data = mdcr, id.vars = "not_a_name", icd.code = "code"),
+    error = function(e) {e}
+  )
+stopifnot(inherits(e, "error"))
+
+if (requireNamespace("data.table", quietly = TRUE)) {
+  e <-
+    tryCatch(
+      comorbidities(data = data.table::as.data.table(mdcr), id.vars = "not_a_name", icd.code = "code"),
+      error = function(e) {e}
+    )
+  stopifnot(inherits(e, "error"))
+}
+
+if (requireNamespace("tibble", quietly = TRUE)) {
+  e <-
+    tryCatch(
+      comorbidities(data = tibble::as_tibble(mdcr), id.vars = "not_a_name", icd.code = "code"),
+      error = function(e) {e}
+    )
+  stopifnot(inherits(e, "error"))
+}
+
+
+################################################################################
 # Test: check_and_set_*
 #
 # The check_and_set_* are non-exported methods.  We test them here with calls to

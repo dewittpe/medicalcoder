@@ -188,14 +188,16 @@ comorbidities.data.frame <- function(data,
             length(icd.codes) == 1L &&
             all(icd.codes %in% names(data)))
 
-  data <- mdcr_select(data, c(icd.codes, id.vars, icdv.var, dx.var, poa.var, age.var, primarydx.var))
-
-  id.vars.created <-
-    check_and_set_id_vars(
-      data_names = names(data),
-      id.vars    = id.vars,
-      envir      = environment()
-    )
+  id.vars.created <- is.null(id.vars)
+  if (id.vars.created) {
+    id.vars <- "..medicalcoder_id.."
+    while(id.vars %in% names(data)) {
+      id.vars <- paste0(".", id.vars, ".")
+    }
+    data <- mdcr_set(data, j = id.vars, value = 1L)
+  } else {
+    stopifnot(id.vars %in% names(data))
+  }
 
   check_and_set_icdv_var(
     data_names = names(data),
