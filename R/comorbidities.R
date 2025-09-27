@@ -195,13 +195,32 @@ comorbidities.data.frame <- function(data,
       envir      = environment()
     )
 
-  check_and_set_icdv_var(
-    data_names = names(data),
-    icdv.var   = icdv.var,
-    icdv       = icdv,
-    envir      = environment()
-  )
+  # Check if icdv.var and/or icdv have been specified and check for expected
+  # values.  if icdv is specified and icdv.var is NULL then then the icdv will
+  # be used to subset the lookup table of ICD codes and conditions by method
+  if (!is.null(icdv.var)) {
+    if (!is.null(icdv)) {
+      warning("'icdv.var' and 'icdv' were both specified; ignoring 'icdv'", call. = FALSE)
+      icdv <- NULL
+    } else {
+      stopifnot(length(icdv.var) == 1L && is.character(icdv.var))
+      stopifnot(icdv.var %in% names(data))
+    }
+  } else {
+    if (!is.null(icdv)) {
+      stopifnot(inherits(icdv, "numeric") | inherits(icdv, "integer"))
+      stopifnot(length(icdv) == 1L)
+      icdv <- as.integer(icdv)
+      stopifnot(icdv %in% c(9L, 10L))
+    } else {
+      # both icdv.var and icdv are NULL
+      # do nothing
+    }
+  }
 
+  # Check is dx.var and/or dx have been specified.  If dx has been specified and
+  # dx.var is NULL, then the value of dx will be used to subset the lookup
+  # table.
   if (!is.null(dx.var)) {
     if (!is.null(dx)) {
       warning("'dx.var' and 'dx' were both specified; ignoring 'dx'", call. = FALSE)
@@ -221,13 +240,6 @@ comorbidities.data.frame <- function(data,
       # do nothing
     }
   }
-
-  #check_and_set_dx_var(
-  #  data_names = names(data),
-  #  dx.var   = dx.var,
-  #  dx       = dx,
-  #  envir    = environment()
-  #)
 
   check_and_set_poa_var(
     data_names  = names(data),
@@ -298,6 +310,9 @@ comorbidities.data.frame <- function(data,
   idx <- lookup[[method]] == 1L
   if (!is.null(dx)) {
     idx <- idx & (lookup[["dx"]] == dx)
+  }
+  if (!is.null(icdv)) {
+    idx <- idx & (lookup[["icdv"]] == icdv)
   }
   lookup <- mdcr_subset(lookup, i = idx)
 
