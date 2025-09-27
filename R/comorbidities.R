@@ -219,11 +219,11 @@ comorbidities.data.frame <- function(data,
     full.codes | compact.codes
   )
 
-  stopifnot(
-    is.character(icd.codes) &&
-      length(icd.codes) == 1L &&
-      icd.codes %in% names(data)
-  )
+  is_a_column <- function(x, cols) {
+    stopifnot(is.character(x) && length(x) == 1L && x %in% cols)
+  }
+
+  is_a_column(icd.codes, names(data))
 
   flag.method <-
     match.arg(
@@ -239,11 +239,7 @@ comorbidities.data.frame <- function(data,
     )
 
   if (startsWith(method, "charlson") && !is.null(age.var)) {
-    stopifnot(
-      is.character(age.var) &&
-        length(age.var) == 1L &&
-        age.var %in% names(data)
-    )
+    is_a_column(age.var, names(data))
   }
 
   stopifnot(isTRUEorFALSE(subconditions))
@@ -269,8 +265,7 @@ comorbidities.data.frame <- function(data,
       warning("'icdv.var' and 'icdv' were both specified; ignoring 'icdv'", call. = FALSE)
       icdv <- NULL
     } else {
-      stopifnot(length(icdv.var) == 1L && is.character(icdv.var))
-      stopifnot(icdv.var %in% names(data))
+      is_a_column(icdv.var, names(data))
     }
   } else {
     if (!is.null(icdv)) {
@@ -292,8 +287,7 @@ comorbidities.data.frame <- function(data,
       warning("'dx.var' and 'dx' were both specified; ignoring 'dx'", call. = FALSE)
       dx <- NULL
     } else{
-      stopifnot(length(dx.var) == 1L)
-      stopifnot(dx.var %in% names(data))
+      is_a_column(dx.var, names(data))
     }
   } else {
     if (!is.null(dx)) {
