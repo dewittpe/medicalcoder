@@ -132,5 +132,83 @@ for (obj in names(current)) {
 }
 
 ################################################################################
+# tests for different sets of inputs
+# with or with icdv
+# with or without dx
+
+# common arguments for the calls to comorbidities
+cargs <-
+  list(
+    data = mdcr,
+    id.vars = "patid",
+    icd.codes = "code",
+    poa = 1,
+    method = "pccc_v3.1"
+  )
+
+out00 <- do.call(comorbidities, c(cargs, list(icdv.var = "icdv", dx.var = "dx")))
+out01 <- do.call(comorbidities, c(cargs, list(                   dx.var = "dx")))
+out02 <- do.call(comorbidities, c(cargs, list(icdv = 9,          dx.var = "dx")))
+out03 <- do.call(comorbidities, c(cargs, list(icdv = 10,         dx.var = "dx")))
+out04 <- do.call(comorbidities, c(cargs, list(icdv.var = "icdv"               )))
+out05 <- do.call(comorbidities, c(cargs, list(icdv.var = "icdv", dx = 0       )))
+out06 <- do.call(comorbidities, c(cargs, list(icdv.var = "icdv", dx = 1       )))
+out07 <- do.call(comorbidities, c(cargs))
+
+# all the outputs should be unique
+stopifnot(
+  !isTRUE(all.equal(out00, out01)),
+  !isTRUE(all.equal(out00, out02)),
+  !isTRUE(all.equal(out00, out03)),
+  !isTRUE(all.equal(out00, out04)),
+  !isTRUE(all.equal(out00, out05)),
+  !isTRUE(all.equal(out00, out06)),
+  !isTRUE(all.equal(out00, out07)),
+
+  !isTRUE(all.equal(out01, out02)),
+  !isTRUE(all.equal(out01, out03)),
+  !isTRUE(all.equal(out01, out04)),
+  !isTRUE(all.equal(out01, out05)),
+  !isTRUE(all.equal(out01, out06)),
+  !isTRUE(all.equal(out01, out07)),
+
+  !isTRUE(all.equal(out02, out03)),
+  !isTRUE(all.equal(out02, out04)),
+  !isTRUE(all.equal(out02, out05)),
+  !isTRUE(all.equal(out02, out06)),
+  !isTRUE(all.equal(out02, out07)),
+
+  !isTRUE(all.equal(out03, out04)),
+  !isTRUE(all.equal(out03, out05)),
+  !isTRUE(all.equal(out03, out06)),
+  !isTRUE(all.equal(out03, out07)),
+
+  !isTRUE(all.equal(out04, out05)),
+  !isTRUE(all.equal(out04, out06)),
+  !isTRUE(all.equal(out04, out07)),
+
+  !isTRUE(all.equal(out05, out06)),
+  !isTRUE(all.equal(out05, out07)),
+
+  !isTRUE(all.equal(out06, out07))
+)
+
+# out00 should be "correct", out01 and out04 should only have false positives
+stopifnot(
+  all(out00$num_cmrb <= out01$num_cmrb),
+  all(out00$num_cmrb <= out04$num_cmrb)
+)
+
+# for out02, out03, out05, and out06, there will be false positives and false
+# negatives
+stopifnot(
+  !identical(out00$num_cmrb, out02$num_cmrb),
+  !identical(out00$num_cmrb, out03$num_cmrb),
+  !identical(out00$num_cmrb, out05$num_cmrb),
+  !identical(out00$num_cmrb, out06$num_cmrb),
+  !identical(out00$num_cmrb, out07$num_cmrb)
+)
+
+################################################################################
 #                                 End of File                                  #
 ################################################################################
