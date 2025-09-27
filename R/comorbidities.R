@@ -64,7 +64,7 @@
 #'     indicator column per condition.
 #'
 #'     * For `method = "pccc_v3.0"` and `method = "pccc_v3.1"`,
-#'       there are four columns per condition: 
+#'       there are four columns per condition:
 #'       * `<condition>_dxpr_or_tech`: the condition was flag due to the
 #'         presence of either a diagnostic or procedure code, or was flag due to
 #'         the presence of a technology dependence code along with at least one
@@ -187,6 +187,8 @@ comorbidities.data.frame <- function(data,
   stopifnot(is.character(icd.codes) &&
             length(icd.codes) == 1L &&
             all(icd.codes %in% names(data)))
+
+  data <- mdcr_select(data, c(icd.codes, id.vars, icdv.var, dx.var, poa.var, age.var, primarydx.var))
 
   id.vars.created <-
     check_and_set_id_vars(
