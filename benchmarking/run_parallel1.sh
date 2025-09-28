@@ -16,7 +16,7 @@ if [ "$JOBS" -lt 1 ]; then JOBS=1; fi
 
 # Memory safeguard: require 2 GiB free before starting another job.
 # Tweak this per box; you can also use 4G/8G on small/large machines.
-MEMFREE="2G"
+MEMFREE="128G"
 
 # Export per-job env to force single-threaded math/libs:
 export OPENBLAS_NUM_THREADS=1

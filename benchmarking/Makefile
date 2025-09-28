@@ -17,11 +17,12 @@ benchmark%.svg: benchmark%-summary.R .bench%
 	$(RSCRIPT) $<
 
 clean:
+	$(RM) .bench*
 	$(RM) benchmark*.svg
 	$(RM) Rplots.pdf
 	$(RM) grid1.tsv grid2.tsv
-	$(RM) -r log1
-	$(RM) -r log2
+	$(RM) -r logs1
+	$(RM) -r logs2
 	$(RM) -r bench1_results
 	$(RM) -r bench2_results
 
