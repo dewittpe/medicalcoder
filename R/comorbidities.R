@@ -301,35 +301,6 @@ comorbidities.data.frame <- function(data,
     }
   }
 
-  ########################################################################
-
-  #
-  # DELETE THIS SOON
-  #
-  #id.vars.created <-
-  #  check_and_set_id_vars(
-  #    data_names = names(data),
-  #    id.vars    = id.vars,
-  #    envir      = environment()
-  #  )
-
-  #check_and_set_poa_var(
-  #  data_names  = names(data),
-  #  poa.var     = poa.var,
-  #  poa         = poa,
-  #  flag.method = flag.method,
-  #  method      = method,
-  #  envir       = environment()
-  #)
-
-  #check_and_set_primarydx_var(
-  #  data_names    = names(data),
-  #  primarydx.var = primarydx.var,
-  #  primarydx     = primarydx,
-  #  method        = method,
-  #  envir         = environment()
-  #)
-
   ##############################################################################
   # Determine how to join the data and the look up table
   # the by_y will be prepended by full_code or code in the merge calls that
@@ -346,25 +317,25 @@ comorbidities.data.frame <- function(data,
   }
 
   ##############################################################################
-  #cols_to_keep <- c(id.vars, "condition", poa.var)
+  # Determine the lookup table and the columns for the lookup table to keep
   lookup_to_keep <- c("condition")
-  if (grepl("^pccc", method)) {
+  if (startsWith(method, "pccc")) {
     lookup <- get_pccc_codes()
-    #cols_to_keep <- c(cols_to_keep, "subcondition", "transplant_flag", "tech_dep_flag")
     lookup_to_keep <- c(lookup_to_keep, "subcondition", "transplant_flag", "tech_dep_flag")
-  } else if (grepl("^charlson", method)) {
+  } else if (startsWith(method, "charlson")) {
     lookup <- get_charlson_codes()
     lookup_to_keep <- c(lookup_to_keep)
-  } else if (grepl("^elixhauser", method)) {
+  } else if (startsWith(method, "elixhauser")) {
     lookup <- get_elixhauser_codes()
-    #cols_to_keep <- c(cols_to_keep, primarydx.var, method)
     lookup_to_keep <- c(lookup_to_keep)
   }
 
   idx <- lookup[[method]] == 1L
+
   if (!is.null(dx)) {
     idx <- idx & (lookup[["dx"]] == dx)
   }
+
   if (!is.null(icdv)) {
     idx <- idx & (lookup[["icdv"]] == icdv)
   }
