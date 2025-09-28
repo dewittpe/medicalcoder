@@ -456,7 +456,11 @@ comorbidities.data.frame <- function(data,
     iddf <- unique(mdcr_select(data, cols = id.vars))
   } else {
     iddf <- unique(mdcr_select(cmrb, cols = id.vars))
+    if (nrow(iddf) == 0) {
+      iddf <- stats::setNames(data.frame(1L), id.vars)
+    }
   }
+
   iddf <- mdcr_setorder(iddf, id.vars)
 
   ##############################################################################
@@ -553,11 +557,20 @@ comorbidities.data.frame <- function(data,
   if (id.vars.created) {
     if (subconditions) {
       ccc$conditions <- mdcr_set(ccc$conditions, j = id.vars, value = NULL)
+        if (nrow(data) == 0) {
+          ccc$conditions <- ccc$conditions[0, ]
+        }
       for (i in seq_along(ccc$subcondition)) {
         ccc$subconditions[[i]] <- mdcr_set(ccc$subconditions[[i]], j = id.vars, value = NULL)
+        if (nrow(data) == 0) {
+          ccc$subconditions[[i]] <- ccc$subconditions[[i]][0, ]
+        }
       }
     } else {
       ccc <- mdcr_set(ccc, j = id.vars, value = NULL)
+      if (nrow(data) == 0) {
+        ccc <- ccc[0, ]
+      }
     }
   }
 

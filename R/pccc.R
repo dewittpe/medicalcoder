@@ -203,7 +203,7 @@
   num_cmrb <- as.integer(rowSums(X))
   cmrb_flag <- as.integer(num_cmrb > 0L)
 
-  X <- cbind(X, any_tech_dep = 0L, any_transplant = 0L)
+  X <- cbind(X, any_tech_dep = rep(0L, nrow(X)), any_transplant = rep(0L, nrow(X)))
 
   X[match(key_tech, key_iddf), "any_tech_dep"] <- 1L
   X[match(key_tran, key_iddf), "any_transplant"] <- 1L
