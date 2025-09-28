@@ -27,6 +27,8 @@ TARBALL     := $(PKG_NAME)_$(PKG_VERSION).tar.gz
 RVS := $(addprefix R-,$(WITHOUTSUGGESTS)) $(addprefix R-,$(WITHSUGGESTS))
 CHECKS := $(addsuffix /$(PKG_NAME).Rcheck/00check.log,$(RVS))
 
+.PRECIOUS: $(CHECKS)
+
 .PHONY: all clean
 
 all: README.md
@@ -35,7 +37,7 @@ $(TARBALL): $(PKG_ROOT)/$(TARBALL)
 	cp $< $@
 
 README.md: README.Rmd $(CHECKS)
-	$(R) -q -e "knitr::knit('%<', output = '$@')"
+	$(R) -q -e "knitr::knit('$<', output = '$@')"
 
 R-%-without-suggests/$(PKG_NAME).Rcheck/00check.log: .images/R-%-without-suggests.stamp $(TARBALL)
 	$(RM) -r R-$*-without-suggests
