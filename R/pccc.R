@@ -120,11 +120,10 @@
   colnames(dxpr_or_tech_X) <- paste0(colnames(dxpr_or_tech_X), "_dxpr_or_tech")
   colnames(dxpr_and_tech_X) <- paste0(colnames(dxpr_and_tech_X), "_dxpr_and_tech")
 
-  X <- cbind(dxpr_X, tech_X, dxpr_and_tech_X, dxpr_or_tech_X,
-             any_tech_dep,
-             any_transplant = 0L,
-             num_cmrb = NA_integer_,
-             cmrb_flag = NA_integer_)
+  X <- cbind(dxpr_X, tech_X, dxpr_and_tech_X, dxpr_or_tech_X, any_tech_dep)
+  X <- cbind(X, any_transplant = rep(0L, nrow(X)))
+  X <- cbind(X, num_cmrb = rep(NA_integer_, nrow(X)))
+  X <- cbind(X, cmrb_flag = rep(NA_integer_, nrow(X)))
 
   key_tran <- do.call(paste, c(any_transplant, sep = "\r"))
   X[match(key_tran, key_iddf), "any_transplant"] <- 1L

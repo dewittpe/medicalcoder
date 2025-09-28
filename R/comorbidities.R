@@ -303,30 +303,32 @@ comorbidities.data.frame <- function(data,
 
   ########################################################################
 
-  id.vars.created <-
-    check_and_set_id_vars(
-      data_names = names(data),
-      id.vars    = id.vars,
-      envir      = environment()
-    )
+  #
+  # DELETE THIS SOON
+  #
+  #id.vars.created <-
+  #  check_and_set_id_vars(
+  #    data_names = names(data),
+  #    id.vars    = id.vars,
+  #    envir      = environment()
+  #  )
 
+  #check_and_set_poa_var(
+  #  data_names  = names(data),
+  #  poa.var     = poa.var,
+  #  poa         = poa,
+  #  flag.method = flag.method,
+  #  method      = method,
+  #  envir       = environment()
+  #)
 
-  check_and_set_poa_var(
-    data_names  = names(data),
-    poa.var     = poa.var,
-    poa         = poa,
-    flag.method = flag.method,
-    method      = method,
-    envir       = environment()
-  )
-
-  check_and_set_primarydx_var(
-    data_names    = names(data),
-    primarydx.var = primarydx.var,
-    primarydx     = primarydx,
-    method        = method,
-    envir         = environment()
-  )
+  #check_and_set_primarydx_var(
+  #  data_names    = names(data),
+  #  primarydx.var = primarydx.var,
+  #  primarydx     = primarydx,
+  #  method        = method,
+  #  envir         = environment()
+  #)
 
   ##############################################################################
   # Determine how to join the data and the look up table
@@ -344,17 +346,21 @@ comorbidities.data.frame <- function(data,
   }
 
   ##############################################################################
-  # Gcols_to_keep <- c(id.vars, "condition",et the needed lookup table and set the cols to keep
-  cols_to_keep <- c(id.vars, "condition", poa.var)
+  #cols_to_keep <- c(id.vars, "condition", poa.var)
+  lookup_to_keep <- c("condition")
   if (grepl("^pccc", method)) {
     lookup <- get_pccc_codes()
-    cols_to_keep <- c(cols_to_keep, "subcondition", "transplant_flag", "tech_dep_flag")
+    #cols_to_keep <- c(cols_to_keep, "subcondition", "transplant_flag", "tech_dep_flag")
+    lookup_to_keep <- c(lookup_to_keep, "subcondition", "transplant_flag", "tech_dep_flag")
   } else if (grepl("^charlson", method)) {
     lookup <- get_charlson_codes()
+    lookup_to_keep <- c(lookup_to_keep)
   } else if (grepl("^elixhauser", method)) {
     lookup <- get_elixhauser_codes()
-    cols_to_keep <- c(cols_to_keep, primarydx.var, method)
+    #cols_to_keep <- c(cols_to_keep, primarydx.var, method)
+    lookup_to_keep <- c(lookup_to_keep)
   }
+
   idx <- lookup[[method]] == 1L
   if (!is.null(dx)) {
     idx <- idx & (lookup[["dx"]] == dx)
@@ -362,44 +368,110 @@ comorbidities.data.frame <- function(data,
   if (!is.null(icdv)) {
     idx <- idx & (lookup[["icdv"]] == icdv)
   }
+
   lookup <- mdcr_subset(lookup, i = idx)
 
   ##############################################################################
   # inner join the data with the lookup table
-  if (full.codes) {
-    on_full <-
-      merge(
-        x = data,
-        y = lookup,
-        all = FALSE,
-        by.x = by_x,
-        by.y = c("full_code", by_y),
-        suffixes = c("", ".y"),
-        sort = FALSE
-      )
+  on_full <-
+    merge(
+      x = if (full.codes) {data} else {data[0, ]},
+      y = lookup,
+      all = FALSE,
+      by.x = by_x,
+      by.y = c("full_code", by_y),
+      suffixes = c("", ".y"),
+      sort = FALSE
+    )
+
+  on_comp <-
+    merge(
+      x = if (compact.codes) {data} else {data[0, ]},
+      y = lookup,
+      all = FALSE,
+      by.x = by_x,
+      by.y = c("code", by_y),
+      suffixes = c("", ".y"),
+      sort = FALSE
+    )
+
+  ##############################################################################
+  # Now determine if the id.vars, poa.var, and primarydx.var need to be
+  # constructed and added to the the on_full and on_comp sets
+  id.vars.created <- is.null(id.vars)
+
+  build_name <- function(stem, names) {
+    while(stem %in% names) {
+      stem <- paste0(".", stem, ".")
+    }
+    stem
+  }
+  nms <- unique(c(names(on_full), names(on_comp)))
+
+  if (id.vars.created) {
+    id.vars <- build_name("..medicalcoder_id..", nms)
+    on_full <- mdcr_set(on_full, j = id.vars, value = rep(1L, nrow(on_full)))
+    on_comp <- mdcr_set(on_comp, j = id.vars, value = rep(1L, nrow(on_comp)))
   }
 
-  if (compact.codes) {
-    on_comp <-
-      merge(
-        x = data,
-        y = lookup,
-        all = FALSE,
-        by.x = by_x,
-        by.y = c("code", by_y),
-        suffixes = c("", ".y"),
-        sort = FALSE
-      )
+  if (is.null(poa.var) & is.null(poa)) {
+    poa <- as.integer(flag.method == "current")
+    warning(
+      sprintf("'poa.var' and 'poa' are both NULL.  With flag.method = '%s' poa is set to %d.",
+        flag.method, poa),
+      call. = FALSE
+    )
   }
 
-  if (full.codes & compact.codes) {
-    cmrb <- rbind(mdcr_select(on_full, cols = cols_to_keep),
-                  mdcr_select(on_comp, cols = cols_to_keep))
-  } else if (!full.codes & compact.codes) {
-    cmrb <- mdcr_subset(on_comp, cols = cols_to_keep)
-  } else if (full.codes & !compact.codes) {
-    cmrb <- mdcr_subset(on_full, cols = cols_to_keep)
+  if (is.null(poa.var)) {
+    stopifnot(inherits(poa, "numeric") | inherits(poa, "integer"))
+    stopifnot(length(poa) == 1L)
+    poa <- as.integer(poa)
+    stopifnot(poa %in% c(0L, 1L))
+    poa.var <- build_name("..medicalcoder_poa..", nms)
+    on_full <- mdcr_set(on_full, j = poa.var, value = rep(poa, nrow(on_full)))
+    on_comp <- mdcr_set(on_comp, j = poa.var, value = rep(poa, nrow(on_comp)))
+  } else {
+    if (!is.null(poa)) {
+      warning("'poa.var' and 'poa' were both specified; ignoring 'poa'")
+    }
+    is_a_column(poa.var, nms)
   }
+
+  if (startsWith(method, "elixhauser")) {
+    if (is.null(primarydx.var)) {
+      if (!is.null(primarydx)) {
+        stopifnot(inherits(primarydx, "numeric") | inherits(primarydx, "integer"))
+        stopifnot(length(primarydx) == 1L)
+        primarydx <- as.integer(primarydx)
+        stopifnot(primarydx %in% c(0L, 1L))
+      } else {
+        if (grepl("^elixhauser", method)) {
+          warning("Assuming all codes provided are seconday diagnostic codes.  Define `primarydx.var` or `primarydx` if this assumption is incorrect.", call. = FALSE)
+        }
+        primarydx <- 0L
+      }
+
+      primarydx.var <- build_name("..medicalcoder_primarydx..", nms)
+
+      if (grepl("^elixhauser", method)) {
+        on_full <- mdcr_set(on_full, j = primarydx.var, value = rep(primarydx, nrow(on_full)))
+        on_comp <- mdcr_set(on_comp, j = primarydx.var, value = rep(primarydx, nrow(on_comp)))
+      }
+
+    } else {
+      if (!is.null(primarydx)) {
+        warning("'primarydx.var' and 'primarydx' were both specified; ignoring 'primarydx'")
+      }
+      is_a_column(primarydx.var, nms)
+    }
+  }
+
+  cmrb <-
+    rbind(
+      mdcr_select(on_full, c(id.vars, poa.var, primarydx.var, method, lookup_to_keep)),
+      mdcr_select(on_comp, c(id.vars, poa.var, primarydx.var, method, lookup_to_keep))
+    )
 
   # retain only meaningful rows, that is, unique rows.  If a condition is
   # reported more than once with the same information except for poa, then keep
@@ -409,7 +481,11 @@ comorbidities.data.frame <- function(data,
   cmrb <- mdcr_subset(cmrb, keep)
 
   # create a data.frame with one unique row for the id.vars
-  iddf <- unique(mdcr_select(data, cols = id.vars))
+  if (!id.vars.created) {
+    iddf <- unique(mdcr_select(data, cols = id.vars))
+  } else {
+    iddf <- unique(mdcr_select(cmrb, cols = id.vars))
+  }
   iddf <- mdcr_setorder(iddf, id.vars)
 
   ##############################################################################

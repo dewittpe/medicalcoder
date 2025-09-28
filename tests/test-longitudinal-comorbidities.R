@@ -83,23 +83,6 @@ args <-
        primarydx = 0
   )
 
-# for dev work
-#args <-
-#  c(args,
-#    list(
-#      dx.var = NULL,
-#      icdv.var = NULL,
-#      age.var = NULL,
-#      primarydx.var = NULL,
-#      flag.method = "current",
-#      poa.var = "poa",
-#      poa = NULL,
-#      method = "charlson_quan2005",
-#      subconditions = FALSE
-#    )
-#)
-#list2env(args, .GlobalEnv)
-
 CMRBS <-
   list(
        charlson_current_0 = do.call(comorbidities, c(args, list(method = "charlson_quan2005", flag.method = "current", poa = 0))),
