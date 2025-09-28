@@ -20,9 +20,13 @@ bench1_summary <-
          , by = .(data_class, subjects, encounters, method, subconditions, flag.method)
          ]
 
+# relative time
+bench1_summary[, df_mean := mean[data_class == "data.frame"], by = .(subjects, encounters, method, subconditions, flag.method)]
+bench1_summary[, rt := (mean / df_mean)]
+
 ggplot(bench1_summary) +
   theme_bw() +
-  aes(x = subjects, 
+  aes(x = subjects,
       ymin = q1,
       y = median,
       ymax = q3,
@@ -31,7 +35,6 @@ ggplot(bench1_summary) +
       linetype = data_class,
       shape = data_class
   ) +
-  #geom_errorbar(width = 0.5) +
   geom_point() +
   geom_line() +
   scale_x_log10(labels = scales::label_comma()) +
@@ -51,3 +54,24 @@ ggplot(bench1_summary) +
   )
 
 ggsave(file = "benchmark1.svg", width = 7, height = 7)
+
+ggplot(bench1_summary) +
+  theme_bw() +
+  aes(x = encounters, y = rt, color = data_class, fill = data_class, linetype = data_class) +
+  stat_smooth(method = "loess", formula = y ~ x) +
+  scale_y_continuous() +
+  scale_x_log10(labels = scales::label_comma()) +
+  annotation_logticks(sides = "b") +
+  scale_color_manual(name = "Data Class", values = cclr) +
+  scale_fill_manual(name = "Data Class", values = cclr) +
+  scale_linetype_manual(name = "Data Class", values = ctyp) +
+  xlab("Encounters") +
+  ylab("Relative expected run time (vs data.frame)") +
+  facet_wrap(. ~ fifelse(subconditions, paste(method, "(with subconditions)"), method)) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    legend.position = "bottom",
+    axis.text.x = element_text(hjust = 0.75)
+  )
+
+ggsave(file = "benchmark1-relative.svg", width = 7, height = 7)

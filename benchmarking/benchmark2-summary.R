@@ -20,6 +20,10 @@ bench2_summary <-
          , by = .(data_class, encounters, method, subconditions, flag.method)
          ]
 
+# relative time
+bench2_summary[, df_mean := mean[data_class == "data.frame"], by = .(encounters, method, subconditions, flag.method)]
+bench2_summary[, rt := (mean / df_mean)]
+
 ggplot(bench2_summary) +
   theme_bw() +
   aes(x = encounters,
@@ -54,3 +58,27 @@ ggplot(bench2_summary) +
   )
 
 ggsave(file = "benchmark2.svg", width = 12, height = 7)
+
+ggplot(bench2_summary) +
+  theme_bw() +
+  aes(x = encounters, y = rt, color = data_class, fill = data_class, linetype = data_class) +
+  stat_smooth(method = "loess", formula = y ~ x) +
+  scale_y_continuous() +
+  scale_x_log10(labels = scales::label_comma()) +
+  annotation_logticks(sides = "b") +
+  scale_fill_manual(name = "Data Class", values = cclr) +
+  scale_color_manual(name = "Data Class", values = cclr) +
+  scale_linetype_manual(name = "Data Class", values = ctyp) +
+  xlab("Encounters") +
+  ylab("Relative expected run time (vs data.frame)") +
+  facet_wrap(
+    . ~ fifelse(subconditions, paste(method, "(with subconditions)"), method) + flag.method,
+    nrow = 2
+    ) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    legend.position = "bottom",
+    axis.text.x = element_text(hjust = 0.75)
+  )
+
+ggsave(file = "benchmark2-relative.svg", width = 12, height = 7)
