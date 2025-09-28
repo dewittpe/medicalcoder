@@ -540,7 +540,7 @@ comorbidities.data.frame <- function(data,
       ccc <- merge(ccc, mdcr_select(ages, cols = c(id.vars, "age_score")), all.x = TRUE, by = id.vars, sort = FALSE)
       ccc[["cci"]] <- ccc[["cci"]] + ccc[["age_score"]]
     } else {
-      ccc[["age_score"]] <- NA_integer_
+      ccc[["age_score"]] <- rep(NA_integer_, nrow(ccc))
     }
   } else if (startsWith(method, "elixhauser")) {
     ccc <- .elixhauser(id.vars = id.vars, iddf = iddf, cmrb = cmrb, poa.var = poa.var, primarydx.var = primarydx.var, method)
