@@ -3,6 +3,37 @@ library(medicalcoder)
 set.seed(42)
 
 ################################################################################
+# verify an error will be thrown if lenght(id.vars) < 2 and flag.method =
+# "cumulative"
+
+rtn <- # length(id.vars) = 0
+  tryCatch(
+    comorbidities(
+      data = mdcr,
+      icd.codes = "code",
+      poa = 1,
+      flag.method = 'cumulative',
+      method = "pccc_v3.1"
+    ),
+    error = function(e) e
+  )
+stopifnot(inherits(rtn, "error"))
+
+rtn <- # length(id.vars) = 1
+  tryCatch(
+    comorbidities(
+      data = mdcr,
+      id.vars = "patid",
+      icd.codes = "code",
+      poa = 1,
+      flag.method = 'cumulative',
+      method = "pccc_v3.1"
+    ),
+    error = function(e) e
+  )
+stopifnot(inherits(rtn, "error"))
+
+################################################################################
 # Test: check_and_set_*
 #
 # The check_and_set_* are non-exported methods.  We test them here with calls to
