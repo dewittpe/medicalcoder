@@ -1,13 +1,13 @@
-^.*\.Rout$
 ^.*Makefile$
 ^.*Makevars$
+^.*\.Rout$
 ^README\.Rmd
 ^_pkgdown\.yml$
+^benchmarking/*
 ^data-raw/*
+^dev\.R$
 ^docs/*
 ^examples/*
 ^lib/*
 ^man-roxygen/*
-^benchmarking/*
-^docs/*
 ^testing/*

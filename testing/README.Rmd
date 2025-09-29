@@ -3,6 +3,8 @@
 ```{r "setup", include = FALSE}
 library(rcmdcheck)
 library(knitr)
+library(data.table)
+options(knitr.kable.NA = '')
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -33,40 +35,75 @@ Just run `make` from this directory.
 check_logs <- list.files(path = ".", pattern = "00check.log", full.name = TRUE, recursive = TRUE)
 checks <- sapply(check_logs, parse_check, simplify = FALSE)
 
-DF <-
+for (i in seq_along(checks)) {
+  checks[[i]][["errors"]] <- gsub("\\n", " ", checks[[i]][["errors"]])
+  checks[[i]][["warnings"]] <- gsub("\\n", " ", checks[[i]][["warnings"]])
+  checks[[i]][["notes"]] <- gsub("\\n", " ", checks[[i]][["notes"]])
+}
+
+errors <- lapply(checks, getElement, "errors")
+unique(errors)
+
+warnings <- lapply(checks, getElement, "warnings")
+unique(warnings)
+
+notes <- lapply(checks, getElement, "notes")
+unique(notes)
+
+DT <-
   checks |>
-  sapply(
+  lapply(
     function(x) {
       with(x,
-        data.frame(
+        data.table(
           rversion,
           status,
-          errors = ifelse(length(errors), errors, ""),
-          warnings = ifelse(length(warnings), warnings, ""),
-          notes    = ifelse(length(notes), notes, ""),
+          errors   = ifelse(length(errors) > 0, errors, NA_character_),
+          warnings = ifelse(length(warnings) > 0, warnings, NA_character_),
+          notes    = ifelse(length(notes) > 0, notes, NA_character_),
           checkdir,
           version
         )
       )
-    },
-  simplify = FALSE
-  )
+    }
+  ) |>
+  rbindlist()
 
-DF <- do.call(rbind, DF)
-rownames(DF) <- NULL
+DT[, suggests := fifelse(grepl("R-.+without-suggests.+$", DF$checkdir), "Without Suggested Packages", "With Suggested Packages")]
+DT[, checkdir := NULL]
+DT <- unique(DT)
 
-DF$suggests <-
-  ifelse(grepl("R-.+without-suggests.+$", DF$checkdir), "Without", "With")
+DT[, errors   := factor(errors)]
+DT[, warnings := factor(warnings)]
+DT[, notes    := factor(notes)]
+setkey(DT, suggests, rversion)
 ```
 
 ```{r results = "asis"}
 kableExtra::kbl(
-  x = DF[, c("suggests", "status", "errors", "warnings", "notes")],
-  col.names = c("Suggested Packages", "Status", "Errors", "Warnings", "Notes"),
+  x = DT[, .(
+    "R Version" = rversion,
+    #"Suggested Packages" = suggests,
+    "Status" = status,
+    "Error"  = fifelse(errors == "", "", paste("Error", as.numeric(errors))),
+    "Warning"  = fifelse(warnings == "", "", paste("Warning", as.numeric(warnings))),
+    "Note"  = fifelse(notes == "", "", paste("Note", as.numeric(notes)))
+    )],
   align = "cccccc",
   format = "markdown"
   ) |>
-kableExtra::pack_rows(index = table(DF$rversion)) |>
-kableExtra::kable_paper(lightable_options = "striped")
+kableExtra::pack_rows(index = table(DT$suggests))
+
+cat("* Errors:",
+  paste("  * Error", seq_len(nlevels(DT$errors)), levels(DT$errors)),
+  sep = "\n")
+
+cat("* Warnings:",
+  paste("  * Warning", seq_len(nlevels(DT$warnings)), levels(DT$warnings)),
+  sep = "\n")
+
+cat("* Notes:",
+  paste("  * Note", seq_len(nlevels(DT$notes)), levels(DT$notes)),
+  sep = "\n")
 ```
 

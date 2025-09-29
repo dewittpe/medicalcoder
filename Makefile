@@ -35,7 +35,7 @@ all:
 # Build the package
 # =============================================================================
 
-$(TARBALL): .install_dev_deps.Rout data-raw .document.Rout $(VIGNETTES) $(TESTS) $(DATA)
+$(TARBALL): .install_dev_deps.Rout .document.Rout $(VIGNETTES) $(TESTS) $(DATA)
 	$(R) CMD build --resave-data --md5 "$(PKG_ROOT)"
 
 # Run data-raw with parallelism you can override
@@ -90,7 +90,7 @@ COVR_TYPES_examples   := examples
 
 covr-report-%.html: $(TARBALL) .install_dev_deps.Rout
 	$(R) --quiet \
-	  -e "x <- covr::package_coverage(type=c('$(COVR_TYPES_$*)'))" \
+	  -e "x <- covr::package_coverage(type=c('$(COVR_TYPES_$*)'), function_exclusions = c(\".onLoad\"))" \
 	  -e "covr::report(x, file='$@')"
 
 covr: covr-report-tests.html covr-report-vignettes.html covr-report-examples.html
