@@ -8,11 +8,10 @@
 #'
 #' @param x a data.frame or data.table
 #' @param i Optional. Indicates the rows on which the values must be updated. If
-#' not `NULL`, implies all rows.
-#' @param j Column name (character).  For `mdcr_set` this is the column
-#' assigned `value`, update values if it exits.
-#' For `mdcr_na2zero` the column to replace `NA` values with 0s.  If
-#' `x[[j]]` does note exist it will be created.
+#'   not `NULL`, implies all rows.
+#' @param j Column name (character).  For `mdcr_set` this is the column assigned
+#'   `value`, update values if it exits. If `x[[j]]` does note exist it will be
+#'   created.
 #' @param value replacement values
 #'
 #' @family data.frame tools
@@ -37,20 +36,6 @@ mdcr_set <- function(x, i = NULL, j, value) {
     }
   }
   x
-}
-
-#'
-#' @rdname mdcr_data_frame_tools
-#' @family data.frame tools
-#' @noRd
-#' @keywords internal
-mdcr_na2zero <- function(x, j) {
-  stopifnot(is.data.frame(x))
-  if (j %in% names(x)) {
-    mdcr_set(x, i = which(is.na(x[[j]])), j = j, value = 0L)
-  } else {
-    mdcr_set(x, j = j, value = 0)
-  }
 }
 
 #'

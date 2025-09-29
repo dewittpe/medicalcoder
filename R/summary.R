@@ -168,7 +168,7 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
     data.frame(
       condition = c(names(cnds), rep("num_cmrb", ncol(tlts))),
       label     = c(conditions$condition_label, "Any Technology Dependence", "Any Transplantation", "Any Condition", colnames(tlts)),
-      count     = c(colSums(cnds), colSums(tlts)),
+      count     = as.integer(c(colSums(cnds), colSums(tlts))),
       percent   = 100 * c(colMeans(cnds), colMeans(tlts))
     )
 
@@ -209,13 +209,13 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
     cbind(
           condition = conditions$condition,
           label = conditions$condition_label,
-          data.frame(dxpr_or_tech_count = counts$dxpr_or_tech,
+          data.frame(dxpr_or_tech_count = as.integer(counts$dxpr_or_tech),
                      dxpr_or_tech_percent = percents$dxpr_or_tech),
-          data.frame(dxpr_only_count = counts$dxpr_only,
+          data.frame(dxpr_only_count = as.integer(counts$dxpr_only),
                      dxpr_only_percent = percents$dxpr_only),
-          data.frame(tech_only_count = counts$tech_only,
+          data.frame(tech_only_count = as.integer(counts$tech_only),
                      tech_only_percent = percents$tech_only),
-          data.frame(dxpr_and_tech_count = counts$dxpr_and_tech,
+          data.frame(dxpr_and_tech_count = as.integer(counts$dxpr_and_tech),
                      dxpr_and_tech_percent = percents$dxpr_and_tech)
     )
 
@@ -224,7 +224,7 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
       data.frame(
         condition = c(names(counts$flags), rep("num_cmrb", length(counts$totals))),
         label = c("Any Technology Dependence", "Any Transplantation", "Any Condition", names(counts$totals)),
-        dxpr_or_tech_count = c(counts$flag, counts$totals),
+        dxpr_or_tech_count = as.integer(c(counts$flag, counts$totals)),
         dxpr_or_tech_percent = c(percents$flag, percents$totals),
         dxpr_only_count = NA_integer_,
         dxpr_only_percent = NA_real_,
