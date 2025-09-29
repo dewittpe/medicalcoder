@@ -11,7 +11,6 @@ stopifnot(
   )
 )
 
-
 ################################################################################
 # verify that there is not going to be an error if no matches are found
 dat <- data.frame(patid = 1:26,
@@ -19,7 +18,9 @@ dat <- data.frame(patid = 1:26,
                   pr1 = 1:26,
                   icdv = sample(9:10, size = 26, replace = TRUE))
 
-stopifnot(sum(comorbidities(data = dat, icd.codes = "icd", poa = 1, flag.method = "current", method = "pccc_v3.0"), na.rm = TRUE) == 0)
+stopifnot(sum(
+    comorbidities(data = dat, icd.codes = "icd", poa = 1, flag.method = "current", method = "pccc_v3.0")
+    , na.rm = TRUE) == 0)
 
 stopifnot(sum(comorbidities(data = dat, id.vars = "patid", icd.codes = "icd",                    poa = 1, flag.method = "current", method = "pccc_v3.0"), na.rm = TRUE) == sum(1:26))
 stopifnot(sum(comorbidities(data = dat, id.vars = "patid", icd.codes = "icd", icdv.var = "icdv", poa = 1, flag.method = "current", method = "pccc_v3.0"), na.rm = TRUE) == sum(1:26))
