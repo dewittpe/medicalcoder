@@ -87,24 +87,15 @@ comorbidity algorithm to a data set are:
    use and reduce computation time.
 3. flag.method: "current" will take less time than the "cumulative" method.
 
-In the following graphic the mean time for applying Charlson (Quan 2005),
-Elixhauser (Quan 2005), and the PCCC v3.1 (without and with subconditions) to
-data sets by number of encounters is plotted.  Under 1,000 encounters, there is
-little difference in the time required to apply the different algorithms between
-`data.frame`s, `data.table`s, and `tibble`s.  For data sets with more than 5,000
-encounters, there is a noticable time saving in using `data.table`s over the
-other two classes.
-
-<img src="man/figures/benchmark1.svg" align="center" alt = "benmarking"/>
-
-The following graphic shows expected time to apply several of the comorbidity
-algorithms to data sets based on the total number of encounters.  The number of
-subjects was set and the number of encounters were randomly created.
-
-<img src="man/figures/benchmark2.svg" align="center" alt = "benmarking"/>
-
 Details on the benchmarking can be found on the
 [`medicalcoder` GitHub](https://github.com/dewittpe/medicalcoder/tree/main/benchmarking).
+
+The following graphic, the top row of plots show the expected time to apply several of the comorbidity
+algorithms to data sets based on the total number of encounters.  The bottom row
+shows the relative time for applying the comorbidity when the input data is a
+`data.frame` or `tibble` versus `data.frame`.
+
+<img src="man/figures/benchmark2-composite.svg" align="center" alt = "benmarking"/>
 
 ## Install
 

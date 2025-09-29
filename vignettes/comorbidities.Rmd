@@ -363,44 +363,6 @@ data.table::setDT(cmdf_mdcr)
 cmdf_mdcr[, .N, keyby = .(hiv, aids)]
 ```
 
-<!--  Graphics take up too much disk space and package exceeds 5MB install size. need to better option...
-# Benchmarking
-
-The major factors impacting the expected computation time for applying a
-comorbidity algorithm to a data set are:
-
-1. Data size: number of subjects/encounters.
-2. Data storage class: `medicalcoder` has been built such that no imports of
-   other namespaces is required.  That said, when a `data.table` is passed to
-   `comorbidities()` and the `data.table` namespace is available, then S3
-   dispatch for `merge` is used, along with some other methods, to reduce memory
-   use and reduce computation time.
-3. flag.method: "current" will take less time than the "cumulative" method.
-
-In the following graphic the mean time for applying Charlson (Quan 2005),
-Elixhauser (Quan 2005), and the PCCC v3.1 (without and with subconditions) to
-data sets by number of encounters is plotted.  Under 1,000 encounters, there is
-little difference in the time required to apply the different algorithms between
-`data.frame`s, `data.table`s, and `tibble`s.  For data sets with more than 5,000
-encounters, there is a noticable time saving in using `data.table`s over the
-other two classes.
-
-```{r}
-knitr::include_graphics("../man/figures/benchmark1.svg")
-```
-
-The following graphic shows expected time to apply several of the comorbidity
-algorithms to data sets based on the total number of encounters.  The number of
-subjects was set and the number of encounters were randomly created.
-
-```{r}
-knitr::include_graphics("../man/figures/benchmark2.svg")
-```
-
-Details on the benchmarking can be found on the
-[`medicalcoder` GitHub](https://github.com/dewittpe/medicalcoder/tree/main/benchmarking).
--->
-
 # References
 
 <!-- ----------------------------------------------------------------------- -->
