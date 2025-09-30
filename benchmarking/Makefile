@@ -4,7 +4,7 @@ include ../Makevars
 
 .PHONY: all clean
 
-all: benchmark1.svg benchmark2.svg
+all: benchmark2.svg
 
 grid%.tsv: make_grid%.sh
 	./$<
@@ -19,7 +19,7 @@ benchmark%.svg: benchmark%-summary.R .bench%
 clean:
 	$(RM) .bench*
 	$(RM) benchmark*.svg
-	$(RM) Rplots.pdf
+	$(RM) *.pdf
 	$(RM) grid1.tsv grid2.tsv
 	$(RM) -r logs1
 	$(RM) -r logs2
