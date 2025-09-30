@@ -97,9 +97,10 @@ Details on the benchmarking can be found on the
 [`medicalcoder` GitHub](https://github.com/dewittpe/medicalcoder/tree/main/benchmarking).
 
 The following graphic, the top row of plots show the expected time to apply several of the comorbidity
-algorithms to data sets based on the total number of encounters.  The bottom row
+algorithms to data sets based on the total number of encounters.  The middle row
 shows the relative time for applying the comorbidity when the input data is a
-`data.frame` or `tibble` versus `data.frame`.
+`data.frame` or `tibble` versus `data.frame`.  Lastly, the bottom row shows the
+max amount of RAM used.
 
 <img src="man/figures/benchmark2-composite.svg" align="center" alt = "benmarking"/>
 
