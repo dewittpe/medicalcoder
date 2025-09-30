@@ -133,22 +133,27 @@ g <-
 
 facet_spec <- . ~ fifelse(subconditions, paste(method, "(with subconditions)"), method)
 
+outtable <- list()
+
 for (mt in unique(bench2_summary$method)) {
   for (sc in unique(bench2_summary$subconditions)) {
     for (dc in unique(bench2_summary$data_class)) {
       for (fm in unique(bench2_summary$flag.method)) {
         thisdt <- subset(bench2_summary, method == mt & subconditions == sc & data_class == dc & flag.method == fm)
         if (nrow(thisdt)) {
-          ats <- loess(log10(median_time_seconds) ~ log10(encounters), data = thisdt)
-          ats <- predict(ats, se = TRUE)
+          ats_loess <- loess(log10(median_time_seconds) ~ log10(encounters), data = thisdt)
+          ats <- predict(ats_loess, se = TRUE)
+
+          mem_loess <- loess(log10(median_rss_kib) ~ log10(encounters), data = thisdt)
+          mem <- predict(mem_loess, se = TRUE)
+
           bench2_summary[method == mt & subconditions == sc & data_class == dc & flag.method == fm & !is.na(median_time_seconds) & !is.na(encounters),
                          `:=`(
                               time_smoothed_y   = 10^(ats$fit),
                               time_smoothed_lwr = 10^(ats$fit - 1.96 * ats$se.fit),
                               time_smoothed_upr = 10^(ats$fit + 1.96 * ats$se.fit)
                               )]
-          mem <- loess(log10(median_rss_kib) ~ log10(encounters), data = thisdt)
-          mem <- predict(mem, se = TRUE)
+
           bench2_summary[method == mt & subconditions == sc & data_class == dc & flag.method == fm & !is.na(median_rss_kib) & !is.na(encounters),
                          `:=`(
                               mem_smoothed_y   = 10^(mem$fit),
@@ -156,8 +161,8 @@ for (mt in unique(bench2_summary$method)) {
                               mem_smoothed_upr = 10^(mem$fit + 1.96 * mem$se.fit)
                               )]
           if (dc != "data.frame") {
-            rts <- loess(relative_time ~ log10(encounters), data = thisdt)
-            rts <- predict(rts, se = TRUE)
+            rts_loess <- loess(relative_time ~ log10(encounters), data = thisdt)
+            rts <- predict(rts_loess, se = TRUE)
             bench2_summary[method == mt & subconditions == sc & data_class == dc & flag.method == fm & !is.na(relative_time) & !is.na(encounters),
                            `:=`(
                                 rel_time_smoothed_y   = rts$fit,
@@ -165,11 +170,27 @@ for (mt in unique(bench2_summary$method)) {
                                 rel_time_smoothed_upr = rts$fit + 1.96 * rts$se.fit
                                 )]
           }
+
+          outtable <-
+            c(outtable,
+              list(
+                data.table(
+                  method = mt, subconditions = sc, data_class = dc, flag.method = fm, encounters = 10^(3:6),
+                  time_seconds  = 10^(predict(ats_loess, newdata = data.frame(encounters = 10^(3:6)))),
+                  memory        = 10^(predict(mem_loess, newdata = data.frame(encounters = 10^(3:6)))),
+                  relative_time = if (dc != "data.table") {predict(rts_loess, newdata = data.frame(encounters = 10^(3:6)))} else {1.0}
+                )
+              )
+          )
+
         }
       }
     }
   }
 }
+
+outtable <- rbindlist(outtable)
+saveRDS(outtable, file = "outtable.rds")
 
 bench2_summary[data_class == "data.frame",
                `:=`(
