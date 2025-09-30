@@ -104,70 +104,89 @@ comorbidity algorithms, flagging methods, and input data structrue.
 <!-- NOTE: Graphic is omitted from the README because the graphic is too large
 to be part of the package that is provided to CRAN -->
 
-In general, the expected time to apply a comorbidity method is the same between
-`data.frame`s and `tibble`s.
-
 ```{r outtable, include = FALSE}
 outtable <- readRDS("benchmarking/outtable.rds")
 setDT(outtable)
+outtable_orig <- copy(outtable)
 outtable[, memory := memory / (1024^2)] # From KiB to GiB
 
 outtable <-
   dcast(
     data = outtable,
-    data_class + encounters ~ method + subconditions + flag.method,
+    data_class + encounters + method + subconditions ~ flag.method,
     value.var = list("time_seconds", "relative_time", "memory")
   )
 
 neworder <-
-  c("data_class",
+  c("method",
+    "subconditions",
     "encounters",
-    "time_seconds_charlson_quan2005_FALSE_current",
-    "relative_time_charlson_quan2005_FALSE_current",
-    "memory_charlson_quan2005_FALSE_current",
-    "time_seconds_charlson_quan2005_FALSE_cumulative",
-    "relative_time_charlson_quan2005_FALSE_cumulative",
-    "memory_charlson_quan2005_FALSE_cumulative",
-
-    "time_seconds_elixhauser_quan2005_FALSE_current",
-    "relative_time_elixhauser_quan2005_FALSE_current",
-    "memory_elixhauser_quan2005_FALSE_current",
-    "time_seconds_elixhauser_quan2005_FALSE_cumulative",
-    "relative_time_elixhauser_quan2005_FALSE_cumulative",
-    "memory_elixhauser_quan2005_FALSE_cumulative",
-
-    "time_seconds_pccc_v3.1_FALSE_current",
-    "relative_time_pccc_v3.1_FALSE_current",
-    "memory_pccc_v3.1_FALSE_current",
-    "time_seconds_pccc_v3.1_FALSE_cumulative",
-    "relative_time_pccc_v3.1_FALSE_cumulative",
-    "memory_pccc_v3.1_FALSE_cumulative",
-
-    "time_seconds_pccc_v3.1_TRUE_current",
-    "relative_time_pccc_v3.1_TRUE_current",
-    "memory_pccc_v3.1_TRUE_current",
-    "time_seconds_pccc_v3.1_TRUE_cumulative",
-    "relative_time_pccc_v3.1_TRUE_cumulative",
-    "memory_pccc_v3.1_TRUE_cumulative"
+    "data_class",
+    "time_seconds_current",
+    "relative_time_current",
+    "memory_current",
+    "time_seconds_cumulative",
+    "relative_time_cumulative",
+    "memory_cumulative"
   )
 
 setcolorder(outtable, neworder = neworder)
 outtable[, data_class := factor(data_class, levels = c("data.frame", "data.table", "tibble"))]
-setkey(outtable, data_class, encounters)
+setkey(outtable, method, subconditions, encounters, data_class)
 
 outtable[, encounters := qwraps2::frmt(as.integer(encounters))]
+
+outtable[, method := fifelse(subconditions, paste(method, "(with subconditions)"), method)]
+outtable[, subconditions := NULL]
+
+outtable[, method := paste('<div class="rotated-text">', method, '</div>')]
 ```
 
+In general, the expected time to apply a comorbidity method is the same between
+`data.frame`s and `tibble`s.  There is a notable decrease in time required when
+`data.table`s are passed to `comorbidities()`.  Best observed case: a
+`data.table` took
+`r outtable_orig[data_class == "data.table", min(relative_time)]`
+the time of a `data.frame`.
+
 ```{r show-outtable, echo = FALSE, results = "asis"}
+cat("
+<style>
+.rotated-text {
+    transform: rotate(-90deg); /* Rotates the text 90 degrees counter-clockwise */
+    display: inline-block; /* Essential for proper rotation and alignment of inline content */
+    margin-top: 50px; /* Adjust as needed for positioning */
+    margin-left: 50px; /* Adjust as needed for positioning */
+    font-size: 20px;
+    font-weight: bold;
+}
+</style>
+"
+)
+
 kbl(
-  x = outtable[, -"data_class"],
+  x = outtable,
   format = "html",
+  escape = FALSE,
   digits = 2,
-  col.names = c("Encounters", rep(c("Time (seconds)", "Relative time", "Memory (GB)"), times = 8))
+  align = "cccrrrrrr",
+  col.names = c("Method", "Encounters", "Data Class", rep(c("Time (seconds)", "Relative time", "Memory (GB)"), times = 2)),
+  caption = "Expected time (seconds), relative time (with respect to data.frame), and expected memory use, for applying the Charlson (Quan 2005), Elixhauser (Quan 2005), and the PCCC (without and with subconditions) to data sets by flagging method (current or cumulative), number of encounters, and input data storage format."
 ) |>
-pack_rows(index = table(outtable[["data_class"]])) |>
-add_header_above(header = c("", rep(c("current" = 3, "cummulative" = 3), 4))) |>
-add_header_above(header = c("", "Charlson (Quan 2005)" = 6, "Elixhauser (Quan 2005)" = 6, "PCCC v3.1" = 6, "PCCC v3.1 (with subconditions)" = 6))
+collapse_rows(columns = 1:2, valign = "middle") |>
+row_spec(row = c(seq(0 * nrow(outtable) / 4 + 1, 1 * nrow(outtable) / 4, by = 6)), background = "#D9D9D9") |>
+row_spec(row = c(seq(0 * nrow(outtable) / 4 + 2, 1 * nrow(outtable) / 4, by = 6)), background = "#D9D9D9") |>
+row_spec(row = c(seq(0 * nrow(outtable) / 4 + 3, 1 * nrow(outtable) / 4, by = 6)), background = "#D9D9D9") |>
+row_spec(row = c(seq(1 * nrow(outtable) / 4 + 1, 2 * nrow(outtable) / 4, by = 6)), background = "#B9B9B9") |>
+row_spec(row = c(seq(1 * nrow(outtable) / 4 + 2, 2 * nrow(outtable) / 4, by = 6)), background = "#B9B9B9") |>
+row_spec(row = c(seq(1 * nrow(outtable) / 4 + 3, 2 * nrow(outtable) / 4, by = 6)), background = "#B9B9B9") |>
+row_spec(row = c(seq(2 * nrow(outtable) / 4 + 1, 3 * nrow(outtable) / 4, by = 6)), background = "#D9D9D9") |>
+row_spec(row = c(seq(2 * nrow(outtable) / 4 + 2, 3 * nrow(outtable) / 4, by = 6)), background = "#D9D9D9") |>
+row_spec(row = c(seq(2 * nrow(outtable) / 4 + 3, 3 * nrow(outtable) / 4, by = 6)), background = "#D9D9D9") |>
+row_spec(row = c(seq(3 * nrow(outtable) / 4 + 1, 4 * nrow(outtable) / 4, by = 6)), background = "#B9B9B9") |>
+row_spec(row = c(seq(3 * nrow(outtable) / 4 + 2, 4 * nrow(outtable) / 4, by = 6)), background = "#B9B9B9") |>
+row_spec(row = c(seq(3 * nrow(outtable) / 4 + 3, 4 * nrow(outtable) / 4, by = 6)), background = "#B9B9B9") |>
+add_header_above(c("", "", "", "flag.method = 'current'" = 3, "flag.method = 'cumulative'" = 3))
 ```
 
 
