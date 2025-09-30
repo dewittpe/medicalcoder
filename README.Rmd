@@ -6,6 +6,8 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.path = "man/figures/README-"
 )
+library(kableExtra)
+suppressPackageStartupMessages(library(data.table))
 ```
 
 # `medicalcoder`: An R package for working with ICD codes and Comorbidity Algorithms <img src="man/figures/medicalcoder_600x600_hex.png" width="150px" align="right" alt = "medicalcoder hex logo"/>
@@ -95,14 +97,79 @@ comorbidity algorithm to a data set are:
 
 Details on the benchmarking can be found on the
 [`medicalcoder` GitHub](https://github.com/dewittpe/medicalcoder/tree/main/benchmarking).
+There you can view a
+[graphic](https://github.com/dewittpe/medicalcoder/tree/main/benchmarking/benchmark2-composite.svg)
+showing the expected time, relative time, and expected memory usage for several
+comorbidity algorithms, flagging methods, and input data structrue.
+<!-- NOTE: Graphic is omitted from the README because the graphic is too large
+to be part of the package that is provided to CRAN -->
 
-The following graphic, the top row of plots show the expected time to apply several of the comorbidity
-algorithms to data sets based on the total number of encounters.  The middle row
-shows the relative time for applying the comorbidity when the input data is a
-`data.frame` or `tibble` versus `data.frame`.  Lastly, the bottom row shows the
-max amount of RAM used.
+In general, the expected time to apply a comorbidity method is the same between
+`data.frame`s and `tibble`s.
 
-<img src="man/figures/benchmark2-composite.svg" align="center" alt = "benmarking"/>
+```{r outtable, include = FALSE}
+outtable <- readRDS("benchmarking/outtable.rds")
+setDT(outtable)
+outtable[, memory := memory / (1024^2)] # From KiB to GiB
+
+outtable <-
+  dcast(
+    data = outtable,
+    data_class + encounters ~ method + subconditions + flag.method,
+    value.var = list("time_seconds", "relative_time", "memory")
+  )
+
+neworder <-
+  c("data_class",
+    "encounters",
+    "time_seconds_charlson_quan2005_FALSE_current",
+    "relative_time_charlson_quan2005_FALSE_current",
+    "memory_charlson_quan2005_FALSE_current",
+    "time_seconds_charlson_quan2005_FALSE_cumulative",
+    "relative_time_charlson_quan2005_FALSE_cumulative",
+    "memory_charlson_quan2005_FALSE_cumulative",
+
+    "time_seconds_elixhauser_quan2005_FALSE_current",
+    "relative_time_elixhauser_quan2005_FALSE_current",
+    "memory_elixhauser_quan2005_FALSE_current",
+    "time_seconds_elixhauser_quan2005_FALSE_cumulative",
+    "relative_time_elixhauser_quan2005_FALSE_cumulative",
+    "memory_elixhauser_quan2005_FALSE_cumulative",
+
+    "time_seconds_pccc_v3.1_FALSE_current",
+    "relative_time_pccc_v3.1_FALSE_current",
+    "memory_pccc_v3.1_FALSE_current",
+    "time_seconds_pccc_v3.1_FALSE_cumulative",
+    "relative_time_pccc_v3.1_FALSE_cumulative",
+    "memory_pccc_v3.1_FALSE_cumulative",
+
+    "time_seconds_pccc_v3.1_TRUE_current",
+    "relative_time_pccc_v3.1_TRUE_current",
+    "memory_pccc_v3.1_TRUE_current",
+    "time_seconds_pccc_v3.1_TRUE_cumulative",
+    "relative_time_pccc_v3.1_TRUE_cumulative",
+    "memory_pccc_v3.1_TRUE_cumulative"
+  )
+
+setcolorder(outtable, neworder = neworder)
+outtable[, data_class := factor(data_class, levels = c("data.frame", "data.table", "tibble"))]
+setkey(outtable, data_class, encounters)
+
+outtable[, encounters := qwraps2::frmt(as.integer(encounters))]
+```
+
+```{r show-outtable, echo = FALSE, results = "asis"}
+kbl(
+  x = outtable[, -"data_class"],
+  format = "html",
+  digits = 2,
+  col.names = c("Encounters", rep(c("Time (seconds)", "Relative time", "Memory (GB)"), times = 8))
+) |>
+pack_rows(index = table(outtable[["data_class"]])) |>
+add_header_above(header = c("", rep(c("current" = 3, "cummulative" = 3), 4))) |>
+add_header_above(header = c("", "Charlson (Quan 2005)" = 6, "Elixhauser (Quan 2005)" = 6, "PCCC v3.1" = 6, "PCCC v3.1 (with subconditions)" = 6))
+```
+
 
 ## Install
 

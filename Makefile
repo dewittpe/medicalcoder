@@ -61,7 +61,7 @@ data-raw:
 	  > $@ 2>&1
 
 # README depends on dev deps because it uses devtools::load_all()
-$(PKG_ROOT)/README.md: $(PKG_ROOT)/README.Rmd .install_dev_deps.Rout
+$(PKG_ROOT)/README.md: $(PKG_ROOT)/README.Rmd .install_dev_deps.Rout benchmarking/outtable.rds
 	$(RSCRIPT) -e "devtools::load_all('$(PKG_ROOT)')" \
 	  -e "knitr::knit('$(PKG_ROOT)/README.Rmd', output='README.md')"
 
