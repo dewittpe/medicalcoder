@@ -171,14 +171,15 @@ for (mt in unique(bench2_summary$method)) {
                                 )]
           }
 
+          enc <- c(1e3, 2e3, 5e3, 1e4, 2e4, 5e4, 1e5, 2e5, 5e5, 1e6)
           outtable <-
             c(outtable,
               list(
                 data.table(
-                  method = mt, subconditions = sc, data_class = dc, flag.method = fm, encounters = 10^(3:6),
-                  time_seconds  = 10^(predict(ats_loess, newdata = data.frame(encounters = 10^(3:6)))),
-                  memory        = 10^(predict(mem_loess, newdata = data.frame(encounters = 10^(3:6)))),
-                  relative_time = if (dc != "data.frame") {predict(rts_loess, newdata = data.frame(encounters = 10^(3:6)))} else {1.0}
+                  method = mt, subconditions = sc, data_class = dc, flag.method = fm, encounters = enc,
+                  time_seconds  = 10^(predict(ats_loess, newdata = data.frame(encounters = enc))),
+                  memory        = 10^(predict(mem_loess, newdata = data.frame(encounters = enc))),
+                  relative_time = if (dc != "data.frame") {predict(rts_loess, newdata = data.frame(encounters = enc))} else {1.0}
                 )
               )
           )
