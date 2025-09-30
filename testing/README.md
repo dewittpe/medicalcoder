@@ -283,11 +283,17 @@ Just run `make` from this directory.
 </tbody>
 </table>
 
-* Errors:
-* Warnings:
-  1. checking package dependencies ... WARNING Skipping vignette re-building Packages suggested but not available for checking:   'data.table', 'kableExtra', 'knitr', 'rmarkdown', 'tibble'  VignetteBuilder package required for checking but not installed: ‘knitr’
-* Notes:
-  1. checking package dependencies ... NOTE Packages suggested but not available for checking:   ‘data.table’ ‘kableExtra’ ‘knitr’ ‘rmarkdown’ ‘tibble’
-  2. checking package dependencies ... NOTE Packages suggested but not available for checking:   'data.table', 'kableExtra', 'knitr', 'rmarkdown', 'tibble'
-  3. checking package vignettes ... NOTE Package has ‘vignettes’ subdirectory but apparently no vignettes. Perhaps the ‘VignetteBuilder’ information is missing from the DESCRIPTION file?
+
+**Errors:**
+
+
+**Warnings:**
+
+1. checking package dependencies ... WARNING Skipping vignette re-building Packages suggested but not available for checking:   'data.table', 'kableExtra', 'knitr', 'rmarkdown', 'tibble'  VignetteBuilder package required for checking but not installed: ‘knitr’
+
+**Notes:**
+
+1. checking package dependencies ... NOTE Packages suggested but not available for checking:   ‘data.table’ ‘kableExtra’ ‘knitr’ ‘rmarkdown’ ‘tibble’
+2. checking package dependencies ... NOTE Packages suggested but not available for checking:   'data.table', 'kableExtra', 'knitr', 'rmarkdown', 'tibble'
+3. checking package vignettes ... NOTE Package has ‘vignettes’ subdirectory but apparently no vignettes. Perhaps the ‘VignetteBuilder’ information is missing from the DESCRIPTION file?
 
