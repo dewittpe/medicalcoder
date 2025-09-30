@@ -106,28 +106,18 @@ In general, the expected time to apply a comorbidity method is the same between
 the time of a `data.frame`.
 
 
-<style>
-.rotated-text {
-    transform: rotate(-90deg); /* Rotates the text 90 degrees counter-clockwise */
-    display: inline-block; /* Essential for proper rotation and alignment of inline content */
-    margin-top: 50px; /* Adjust as needed for positioning */
-    margin-left: 50px; /* Adjust as needed for positioning */
-    font-size: 20px;
-    font-weight: bold;
-}
-</style>
+### Benchmarking Charlson (Quan 2005)
+
 <table>
-<caption>Expected time (seconds), relative time (with respect to data.frame), and expected memory use, for applying the Charlson (Quan 2005), Elixhauser (Quan 2005), and the PCCC (without and with subconditions) to data sets by flagging method (current or cumulative), number of encounters, and input data storage format.</caption>
+<caption>Expected time (seconds), relative time (with respect to data.frame), and expected memory use, by flagging method (current or cumulative), number of encounters, and input data storage format.</caption>
  <thead>
 <tr>
-<th style="empty-cells: hide;border-bottom:hidden;" colspan="1"></th>
 <th style="empty-cells: hide;border-bottom:hidden;" colspan="1"></th>
 <th style="empty-cells: hide;border-bottom:hidden;" colspan="1"></th>
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">flag.method = 'current'</div></th>
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">flag.method = 'cumulative'</div></th>
 </tr>
   <tr>
-   <th style="text-align:center;"> Method </th>
    <th style="text-align:center;"> Encounters </th>
    <th style="text-align:center;"> Data Class </th>
    <th style="text-align:right;"> Time (seconds) </th>
@@ -140,7 +130,6 @@ the time of a `data.frame`.
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:center;vertical-align: middle !important;background-color: rgba(217, 217, 217, 255) !important;" rowspan="30"> <div class="rotated-text"> charlson_quan2005 </div> </td>
    <td style="text-align:center;vertical-align: middle !important;background-color: rgba(217, 217, 217, 255) !important;" rowspan="3"> 1,000 </td>
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.frame </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.10 </td>
@@ -151,7 +140,6 @@ the time of a `data.frame`.
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.28 </td>
   </tr>
   <tr>
-   
    
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.table </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.08 </td>
@@ -163,7 +151,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> tibble </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.10 </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.03 </td>
@@ -173,7 +160,6 @@ the time of a `data.frame`.
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.28 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;" rowspan="3"> 2,000 </td>
    <td style="text-align:center;"> data.frame </td>
    <td style="text-align:right;"> 0.17 </td>
@@ -184,7 +170,6 @@ the time of a `data.frame`.
    <td style="text-align:right;"> 0.29 </td>
   </tr>
   <tr>
-   
    
    <td style="text-align:center;"> data.table </td>
    <td style="text-align:right;"> 0.14 </td>
@@ -196,7 +181,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> tibble </td>
    <td style="text-align:right;"> 0.17 </td>
    <td style="text-align:right;"> 1.01 </td>
@@ -206,7 +190,6 @@ the time of a `data.frame`.
    <td style="text-align:right;"> 0.29 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;background-color: rgba(217, 217, 217, 255) !important;" rowspan="3"> 5,000 </td>
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.frame </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.41 </td>
@@ -218,7 +201,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.table </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.31 </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.75 </td>
@@ -229,7 +211,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> tibble </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.41 </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.00 </td>
@@ -239,7 +220,6 @@ the time of a `data.frame`.
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.35 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;" rowspan="3"> 10,000 </td>
    <td style="text-align:center;"> data.frame </td>
    <td style="text-align:right;"> 0.87 </td>
@@ -251,7 +231,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> data.table </td>
    <td style="text-align:right;"> 0.61 </td>
    <td style="text-align:right;"> 0.70 </td>
@@ -262,7 +241,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> tibble </td>
    <td style="text-align:right;"> 0.86 </td>
    <td style="text-align:right;"> 0.99 </td>
@@ -272,7 +250,6 @@ the time of a `data.frame`.
    <td style="text-align:right;"> 0.43 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;background-color: rgba(217, 217, 217, 255) !important;" rowspan="3"> 20,000 </td>
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.frame </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.84 </td>
@@ -284,7 +261,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.table </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.21 </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.66 </td>
@@ -295,7 +271,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> tibble </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.83 </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.99 </td>
@@ -305,7 +280,6 @@ the time of a `data.frame`.
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.61 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;" rowspan="3"> 50,000 </td>
    <td style="text-align:center;"> data.frame </td>
    <td style="text-align:right;"> 4.70 </td>
@@ -317,7 +291,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> data.table </td>
    <td style="text-align:right;"> 2.88 </td>
    <td style="text-align:right;"> 0.63 </td>
@@ -328,7 +301,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> tibble </td>
    <td style="text-align:right;"> 4.72 </td>
    <td style="text-align:right;"> 1.01 </td>
@@ -338,7 +310,6 @@ the time of a `data.frame`.
    <td style="text-align:right;"> 1.15 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;background-color: rgba(217, 217, 217, 255) !important;" rowspan="3"> 100,000 </td>
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.frame </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 8.68 </td>
@@ -350,7 +321,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.table </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 5.04 </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.60 </td>
@@ -361,7 +331,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> tibble </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 8.74 </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.01 </td>
@@ -371,7 +340,6 @@ the time of a `data.frame`.
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 2.08 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;" rowspan="3"> 200,000 </td>
    <td style="text-align:center;"> data.frame </td>
    <td style="text-align:right;"> 16.10 </td>
@@ -383,7 +351,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> data.table </td>
    <td style="text-align:right;"> 8.89 </td>
    <td style="text-align:right;"> 0.57 </td>
@@ -394,7 +361,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> tibble </td>
    <td style="text-align:right;"> 16.22 </td>
    <td style="text-align:right;"> 1.02 </td>
@@ -404,7 +370,6 @@ the time of a `data.frame`.
    <td style="text-align:right;"> 3.89 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;background-color: rgba(217, 217, 217, 255) !important;" rowspan="3"> 500,000 </td>
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.frame </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 38.00 </td>
@@ -416,7 +381,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.table </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 19.96 </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.54 </td>
@@ -427,7 +391,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> tibble </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 38.19 </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.02 </td>
@@ -437,7 +400,6 @@ the time of a `data.frame`.
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 9.16 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;" rowspan="3"> 1,000,000 </td>
    <td style="text-align:center;"> data.frame </td>
    <td style="text-align:right;"> 74.39 </td>
@@ -449,7 +411,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> data.table </td>
    <td style="text-align:right;"> 38.00 </td>
    <td style="text-align:right;"> 0.52 </td>
@@ -460,7 +421,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> tibble </td>
    <td style="text-align:right;"> 74.70 </td>
    <td style="text-align:right;"> 1.03 </td>
@@ -469,41 +429,64 @@ the time of a `data.frame`.
    <td style="text-align:right;"> 1.01 </td>
    <td style="text-align:right;"> 18.24 </td>
   </tr>
+</tbody>
+</table>
+
+
+### Benchmarking Elixhauser (Quan 2005)
+
+<table>
+<caption>Expected time (seconds), relative time (with respect to data.frame), and expected memory use, by flagging method (current or cumulative), number of encounters, and input data storage format.</caption>
+ <thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1"></th>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1"></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">flag.method = 'current'</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">flag.method = 'cumulative'</div></th>
+</tr>
   <tr>
-   <td style="text-align:center;vertical-align: middle !important;background-color: rgba(185, 185, 185, 255) !important;" rowspan="30"> <div class="rotated-text"> elixhauser_quan2005 </div> </td>
-   <td style="text-align:center;vertical-align: middle !important;background-color: rgba(185, 185, 185, 255) !important;" rowspan="3"> 1,000 </td>
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> data.frame </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.11 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.00 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.30 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.49 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.00 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.28 </td>
+   <th style="text-align:center;"> Encounters </th>
+   <th style="text-align:center;"> Data Class </th>
+   <th style="text-align:right;"> Time (seconds) </th>
+   <th style="text-align:right;"> Relative time </th>
+   <th style="text-align:right;"> Memory (GB) </th>
+   <th style="text-align:right;"> Time (seconds) </th>
+   <th style="text-align:right;"> Relative time </th>
+   <th style="text-align:right;"> Memory (GB) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:center;vertical-align: middle !important;background-color: rgba(217, 217, 217, 255) !important;" rowspan="3"> 1,000 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.frame </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.11 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.00 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.30 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.49 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.00 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.28 </td>
   </tr>
   <tr>
    
-   
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> data.table </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.10 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.87 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.30 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.37 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.78 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.28 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.table </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.10 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.87 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.30 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.37 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.78 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.28 </td>
   </tr>
   <tr>
    
-   
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> tibble </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.11 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.00 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.30 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.51 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.04 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.28 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> tibble </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.11 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.00 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.30 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.51 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.04 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.28 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;" rowspan="3"> 2,000 </td>
    <td style="text-align:center;"> data.frame </td>
    <td style="text-align:right;"> 0.20 </td>
@@ -515,7 +498,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> data.table </td>
    <td style="text-align:right;"> 0.16 </td>
    <td style="text-align:right;"> 0.83 </td>
@@ -526,7 +508,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> tibble </td>
    <td style="text-align:right;"> 0.19 </td>
    <td style="text-align:right;"> 0.99 </td>
@@ -536,40 +517,36 @@ the time of a `data.frame`.
    <td style="text-align:right;"> 0.30 </td>
   </tr>
   <tr>
-   
-   <td style="text-align:center;vertical-align: middle !important;background-color: rgba(185, 185, 185, 255) !important;" rowspan="3"> 5,000 </td>
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> data.frame </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.45 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.00 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.31 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 2.38 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.00 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.39 </td>
+   <td style="text-align:center;vertical-align: middle !important;background-color: rgba(217, 217, 217, 255) !important;" rowspan="3"> 5,000 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.frame </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.45 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.00 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.31 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 2.38 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.00 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.39 </td>
   </tr>
   <tr>
    
-   
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> data.table </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.34 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.77 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.31 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.45 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.61 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.38 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.table </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.34 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.77 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.31 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.45 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.61 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.38 </td>
   </tr>
   <tr>
    
-   
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> tibble </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.44 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.99 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.31 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 2.45 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.03 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.38 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> tibble </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.44 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.99 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.31 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 2.45 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.03 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.38 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;" rowspan="3"> 10,000 </td>
    <td style="text-align:center;"> data.frame </td>
    <td style="text-align:right;"> 0.95 </td>
@@ -581,7 +558,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> data.table </td>
    <td style="text-align:right;"> 0.69 </td>
    <td style="text-align:right;"> 0.73 </td>
@@ -592,7 +568,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> tibble </td>
    <td style="text-align:right;"> 0.94 </td>
    <td style="text-align:right;"> 1.00 </td>
@@ -602,40 +577,36 @@ the time of a `data.frame`.
    <td style="text-align:right;"> 0.49 </td>
   </tr>
   <tr>
-   
-   <td style="text-align:center;vertical-align: middle !important;background-color: rgba(185, 185, 185, 255) !important;" rowspan="3"> 20,000 </td>
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> data.frame </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.97 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.00 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.38 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 10.49 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.00 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.80 </td>
+   <td style="text-align:center;vertical-align: middle !important;background-color: rgba(217, 217, 217, 255) !important;" rowspan="3"> 20,000 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.frame </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.97 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.00 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.38 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 10.49 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.00 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.80 </td>
   </tr>
   <tr>
    
-   
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> data.table </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.38 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.70 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.39 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 5.58 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.53 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.76 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.table </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.38 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.70 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.39 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 5.58 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.53 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.76 </td>
   </tr>
   <tr>
    
-   
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> tibble </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 2.01 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.02 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.38 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 10.61 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.01 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.75 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> tibble </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 2.01 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.02 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.38 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 10.61 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.01 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.75 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;" rowspan="3"> 50,000 </td>
    <td style="text-align:center;"> data.frame </td>
    <td style="text-align:right;"> 4.94 </td>
@@ -647,7 +618,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> data.table </td>
    <td style="text-align:right;"> 3.30 </td>
    <td style="text-align:right;"> 0.67 </td>
@@ -658,7 +628,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> tibble </td>
    <td style="text-align:right;"> 5.19 </td>
    <td style="text-align:right;"> 1.06 </td>
@@ -668,40 +637,36 @@ the time of a `data.frame`.
    <td style="text-align:right;"> 1.53 </td>
   </tr>
   <tr>
-   
-   <td style="text-align:center;vertical-align: middle !important;background-color: rgba(185, 185, 185, 255) !important;" rowspan="3"> 100,000 </td>
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> data.frame </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 9.03 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.00 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.81 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 51.85 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.00 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 3.03 </td>
+   <td style="text-align:center;vertical-align: middle !important;background-color: rgba(217, 217, 217, 255) !important;" rowspan="3"> 100,000 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.frame </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 9.03 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.00 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.81 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 51.85 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.00 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 3.03 </td>
   </tr>
   <tr>
    
-   
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> data.table </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 5.70 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.64 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.85 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 23.79 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.46 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 2.92 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.table </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 5.70 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.64 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.85 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 23.79 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.46 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 2.92 </td>
   </tr>
   <tr>
    
-   
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> tibble </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 9.60 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.08 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.81 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 50.33 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.98 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 2.87 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> tibble </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 9.60 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.08 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.81 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 50.33 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.98 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 2.87 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;" rowspan="3"> 200,000 </td>
    <td style="text-align:center;"> data.frame </td>
    <td style="text-align:right;"> 16.86 </td>
@@ -713,7 +678,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> data.table </td>
    <td style="text-align:right;"> 10.02 </td>
    <td style="text-align:right;"> 0.61 </td>
@@ -724,7 +688,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> tibble </td>
    <td style="text-align:right;"> 17.79 </td>
    <td style="text-align:right;"> 1.07 </td>
@@ -734,40 +697,36 @@ the time of a `data.frame`.
    <td style="text-align:right;"> 5.61 </td>
   </tr>
   <tr>
-   
-   <td style="text-align:center;vertical-align: middle !important;background-color: rgba(185, 185, 185, 255) !important;" rowspan="3"> 500,000 </td>
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> data.frame </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 41.10 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.00 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 2.97 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 246.93 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.00 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 14.39 </td>
+   <td style="text-align:center;vertical-align: middle !important;background-color: rgba(217, 217, 217, 255) !important;" rowspan="3"> 500,000 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.frame </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 41.10 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.00 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 2.97 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 246.93 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.00 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 14.39 </td>
   </tr>
   <tr>
    
-   
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> data.table </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 22.67 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.57 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 3.23 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 103.05 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.42 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 12.40 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.table </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 22.67 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.57 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 3.23 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 103.05 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.42 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 12.40 </td>
   </tr>
   <tr>
    
-   
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> tibble </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 41.69 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.04 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 2.96 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 242.61 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.99 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 14.03 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> tibble </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 41.69 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.04 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 2.96 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 242.61 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.99 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 14.03 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;" rowspan="3"> 1,000,000 </td>
    <td style="text-align:center;"> data.frame </td>
    <td style="text-align:right;"> 83.11 </td>
@@ -779,7 +738,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> data.table </td>
    <td style="text-align:right;"> 43.80 </td>
    <td style="text-align:right;"> 0.54 </td>
@@ -790,7 +748,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> tibble </td>
    <td style="text-align:right;"> 81.07 </td>
    <td style="text-align:right;"> 0.99 </td>
@@ -799,8 +756,34 @@ the time of a `data.frame`.
    <td style="text-align:right;"> 1.01 </td>
    <td style="text-align:right;"> 29.17 </td>
   </tr>
+</tbody>
+</table>
+
+
+### Benchmarking PCCC v3.1 (without subconditions)
+
+<table>
+<caption>Expected time (seconds), relative time (with respect to data.frame), and expected memory use, by flagging method (current or cumulative), number of encounters, and input data storage format.</caption>
+ <thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1"></th>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1"></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">flag.method = 'current'</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">flag.method = 'cumulative'</div></th>
+</tr>
   <tr>
-   <td style="text-align:center;vertical-align: middle !important;background-color: rgba(217, 217, 217, 255) !important;" rowspan="30"> <div class="rotated-text"> pccc_v3.1 </div> </td>
+   <th style="text-align:center;"> Encounters </th>
+   <th style="text-align:center;"> Data Class </th>
+   <th style="text-align:right;"> Time (seconds) </th>
+   <th style="text-align:right;"> Relative time </th>
+   <th style="text-align:right;"> Memory (GB) </th>
+   <th style="text-align:right;"> Time (seconds) </th>
+   <th style="text-align:right;"> Relative time </th>
+   <th style="text-align:right;"> Memory (GB) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
    <td style="text-align:center;vertical-align: middle !important;background-color: rgba(217, 217, 217, 255) !important;" rowspan="3"> 1,000 </td>
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.frame </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.15 </td>
@@ -812,7 +795,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.table </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.13 </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.86 </td>
@@ -823,7 +805,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> tibble </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.16 </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.02 </td>
@@ -833,7 +814,6 @@ the time of a `data.frame`.
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.32 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;" rowspan="3"> 2,000 </td>
    <td style="text-align:center;"> data.frame </td>
    <td style="text-align:right;"> 0.28 </td>
@@ -845,7 +825,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> data.table </td>
    <td style="text-align:right;"> 0.23 </td>
    <td style="text-align:right;"> 0.81 </td>
@@ -856,7 +835,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> tibble </td>
    <td style="text-align:right;"> 0.28 </td>
    <td style="text-align:right;"> 1.01 </td>
@@ -866,7 +844,6 @@ the time of a `data.frame`.
    <td style="text-align:right;"> 0.39 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;background-color: rgba(217, 217, 217, 255) !important;" rowspan="3"> 5,000 </td>
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.frame </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.68 </td>
@@ -878,7 +855,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.table </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.50 </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.75 </td>
@@ -889,7 +865,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> tibble </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.68 </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.01 </td>
@@ -899,7 +874,6 @@ the time of a `data.frame`.
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.60 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;" rowspan="3"> 10,000 </td>
    <td style="text-align:center;"> data.frame </td>
    <td style="text-align:right;"> 1.47 </td>
@@ -911,7 +885,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> data.table </td>
    <td style="text-align:right;"> 1.03 </td>
    <td style="text-align:right;"> 0.70 </td>
@@ -922,7 +895,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> tibble </td>
    <td style="text-align:right;"> 1.48 </td>
    <td style="text-align:right;"> 1.01 </td>
@@ -932,7 +904,6 @@ the time of a `data.frame`.
    <td style="text-align:right;"> 0.99 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;background-color: rgba(217, 217, 217, 255) !important;" rowspan="3"> 20,000 </td>
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.frame </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 3.08 </td>
@@ -944,7 +915,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.table </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 2.07 </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.67 </td>
@@ -955,7 +925,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> tibble </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 3.12 </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.02 </td>
@@ -965,7 +934,6 @@ the time of a `data.frame`.
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.78 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;" rowspan="3"> 50,000 </td>
    <td style="text-align:center;"> data.frame </td>
    <td style="text-align:right;"> 7.74 </td>
@@ -977,7 +945,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> data.table </td>
    <td style="text-align:right;"> 4.95 </td>
    <td style="text-align:right;"> 0.64 </td>
@@ -988,7 +955,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> tibble </td>
    <td style="text-align:right;"> 7.90 </td>
    <td style="text-align:right;"> 1.03 </td>
@@ -998,7 +964,6 @@ the time of a `data.frame`.
    <td style="text-align:right;"> 4.12 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;background-color: rgba(217, 217, 217, 255) !important;" rowspan="3"> 100,000 </td>
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.frame </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 14.49 </td>
@@ -1010,7 +975,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.table </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 8.75 </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.61 </td>
@@ -1021,7 +985,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> tibble </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 14.84 </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.03 </td>
@@ -1031,7 +994,6 @@ the time of a `data.frame`.
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 7.78 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;" rowspan="3"> 200,000 </td>
    <td style="text-align:center;"> data.frame </td>
    <td style="text-align:right;"> 27.48 </td>
@@ -1043,7 +1005,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> data.table </td>
    <td style="text-align:right;"> 15.71 </td>
    <td style="text-align:right;"> 0.58 </td>
@@ -1054,7 +1015,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> tibble </td>
    <td style="text-align:right;"> 28.19 </td>
    <td style="text-align:right;"> 1.04 </td>
@@ -1064,7 +1024,6 @@ the time of a `data.frame`.
    <td style="text-align:right;"> 15.08 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;background-color: rgba(217, 217, 217, 255) !important;" rowspan="3"> 500,000 </td>
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.frame </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 67.15 </td>
@@ -1076,7 +1035,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.table </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 36.16 </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.55 </td>
@@ -1087,7 +1045,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> tibble </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 68.68 </td>
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.03 </td>
@@ -1097,7 +1054,6 @@ the time of a `data.frame`.
    <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 37.76 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;" rowspan="3"> 1,000,000 </td>
    <td style="text-align:center;"> data.frame </td>
    <td style="text-align:right;"> 134.46 </td>
@@ -1109,7 +1065,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> data.table </td>
    <td style="text-align:right;"> 69.70 </td>
    <td style="text-align:right;"> 0.53 </td>
@@ -1120,7 +1075,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> tibble </td>
    <td style="text-align:right;"> 136.95 </td>
    <td style="text-align:right;"> 1.03 </td>
@@ -1129,41 +1083,64 @@ the time of a `data.frame`.
    <td style="text-align:right;"> 1.01 </td>
    <td style="text-align:right;"> 77.17 </td>
   </tr>
+</tbody>
+</table>
+
+
+### Benchmarking PCCC v3.1 (with subconditions)
+
+<table>
+<caption>Expected time (seconds), relative time (with respect to data.frame), and expected memory use, by flagging method (current or cumulative), number of encounters, and input data storage format.</caption>
+ <thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1"></th>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1"></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">flag.method = 'current'</div></th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">flag.method = 'cumulative'</div></th>
+</tr>
   <tr>
-   <td style="text-align:center;vertical-align: middle !important;background-color: rgba(185, 185, 185, 255) !important;" rowspan="30"> <div class="rotated-text"> pccc_v3.1 (with subconditions) </div> </td>
-   <td style="text-align:center;vertical-align: middle !important;background-color: rgba(185, 185, 185, 255) !important;" rowspan="3"> 1,000 </td>
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> data.frame </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.18 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.00 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.29 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.36 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.00 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.33 </td>
+   <th style="text-align:center;"> Encounters </th>
+   <th style="text-align:center;"> Data Class </th>
+   <th style="text-align:right;"> Time (seconds) </th>
+   <th style="text-align:right;"> Relative time </th>
+   <th style="text-align:right;"> Memory (GB) </th>
+   <th style="text-align:right;"> Time (seconds) </th>
+   <th style="text-align:right;"> Relative time </th>
+   <th style="text-align:right;"> Memory (GB) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:center;vertical-align: middle !important;background-color: rgba(217, 217, 217, 255) !important;" rowspan="3"> 1,000 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.frame </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.18 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.00 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.29 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.36 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.00 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.33 </td>
   </tr>
   <tr>
    
-   
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> data.table </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.17 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.97 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.30 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.05 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.78 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.33 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.table </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.17 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.97 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.30 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.05 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.78 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.33 </td>
   </tr>
   <tr>
    
-   
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> tibble </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.18 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.00 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.29 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.39 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.02 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.33 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> tibble </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.18 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.00 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.29 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.39 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.02 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.33 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;" rowspan="3"> 2,000 </td>
    <td style="text-align:center;"> data.frame </td>
    <td style="text-align:right;"> 0.32 </td>
@@ -1175,7 +1152,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> data.table </td>
    <td style="text-align:right;"> 0.28 </td>
    <td style="text-align:right;"> 0.89 </td>
@@ -1186,7 +1162,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> tibble </td>
    <td style="text-align:right;"> 0.32 </td>
    <td style="text-align:right;"> 1.00 </td>
@@ -1196,40 +1171,36 @@ the time of a `data.frame`.
    <td style="text-align:right;"> 0.41 </td>
   </tr>
   <tr>
-   
-   <td style="text-align:center;vertical-align: middle !important;background-color: rgba(185, 185, 185, 255) !important;" rowspan="3"> 5,000 </td>
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> data.frame </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.75 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.00 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.32 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 6.60 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.00 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.63 </td>
+   <td style="text-align:center;vertical-align: middle !important;background-color: rgba(217, 217, 217, 255) !important;" rowspan="3"> 5,000 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.frame </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.75 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.00 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.32 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 6.60 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.00 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.63 </td>
   </tr>
   <tr>
    
-   
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> data.table </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.60 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.80 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.32 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 4.12 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.62 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.60 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.table </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.60 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.80 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.32 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 4.12 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.62 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.60 </td>
   </tr>
   <tr>
    
-   
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> tibble </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.75 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.99 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.32 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 6.59 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.00 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.64 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> tibble </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.75 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.99 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.32 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 6.59 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.00 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.64 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;" rowspan="3"> 10,000 </td>
    <td style="text-align:center;"> data.frame </td>
    <td style="text-align:right;"> 1.61 </td>
@@ -1241,7 +1212,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> data.table </td>
    <td style="text-align:right;"> 1.21 </td>
    <td style="text-align:right;"> 0.75 </td>
@@ -1252,7 +1222,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> tibble </td>
    <td style="text-align:right;"> 1.61 </td>
    <td style="text-align:right;"> 1.00 </td>
@@ -1262,40 +1231,36 @@ the time of a `data.frame`.
    <td style="text-align:right;"> 1.04 </td>
   </tr>
   <tr>
-   
-   <td style="text-align:center;vertical-align: middle !important;background-color: rgba(185, 185, 185, 255) !important;" rowspan="3"> 20,000 </td>
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> data.frame </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 3.35 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.00 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.40 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 26.90 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.00 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.87 </td>
+   <td style="text-align:center;vertical-align: middle !important;background-color: rgba(217, 217, 217, 255) !important;" rowspan="3"> 20,000 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.frame </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 3.35 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.00 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.40 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 26.90 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.00 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.87 </td>
   </tr>
   <tr>
    
-   
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> data.table </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 2.41 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.72 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.42 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 14.85 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.55 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.65 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.table </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 2.41 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.72 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.42 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 14.85 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.55 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.65 </td>
   </tr>
   <tr>
    
-   
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> tibble </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 3.34 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.00 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.40 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 26.42 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.99 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.86 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> tibble </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 3.34 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.00 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.40 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 26.42 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.99 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.86 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;" rowspan="3"> 50,000 </td>
    <td style="text-align:center;"> data.frame </td>
    <td style="text-align:right;"> 8.40 </td>
@@ -1307,7 +1272,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> data.table </td>
    <td style="text-align:right;"> 5.77 </td>
    <td style="text-align:right;"> 0.69 </td>
@@ -1318,7 +1282,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> tibble </td>
    <td style="text-align:right;"> 8.38 </td>
    <td style="text-align:right;"> 1.01 </td>
@@ -1328,40 +1291,36 @@ the time of a `data.frame`.
    <td style="text-align:right;"> 4.35 </td>
   </tr>
   <tr>
-   
-   <td style="text-align:center;vertical-align: middle !important;background-color: rgba(185, 185, 185, 255) !important;" rowspan="3"> 100,000 </td>
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> data.frame </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 15.67 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.00 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.06 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 128.19 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.00 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 8.61 </td>
+   <td style="text-align:center;vertical-align: middle !important;background-color: rgba(217, 217, 217, 255) !important;" rowspan="3"> 100,000 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.frame </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 15.67 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.00 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.06 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 128.19 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.00 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 8.61 </td>
   </tr>
   <tr>
    
-   
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> data.table </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 10.22 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.66 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.99 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 63.92 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.51 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 7.44 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.table </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 10.22 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.66 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.99 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 63.92 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.51 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 7.44 </td>
   </tr>
   <tr>
    
-   
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> tibble </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 15.63 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.01 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.05 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 126.29 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.00 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 8.46 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> tibble </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 15.63 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.01 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.05 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 126.29 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.00 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 8.46 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;" rowspan="3"> 200,000 </td>
    <td style="text-align:center;"> data.frame </td>
    <td style="text-align:right;"> 29.85 </td>
@@ -1373,7 +1332,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> data.table </td>
    <td style="text-align:right;"> 18.36 </td>
    <td style="text-align:right;"> 0.63 </td>
@@ -1384,7 +1342,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> tibble </td>
    <td style="text-align:right;"> 29.60 </td>
    <td style="text-align:right;"> 1.01 </td>
@@ -1394,40 +1351,36 @@ the time of a `data.frame`.
    <td style="text-align:right;"> 16.72 </td>
   </tr>
   <tr>
-   
-   <td style="text-align:center;vertical-align: middle !important;background-color: rgba(185, 185, 185, 255) !important;" rowspan="3"> 500,000 </td>
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> data.frame </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 74.48 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.00 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 4.37 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 642.84 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.00 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 40.35 </td>
+   <td style="text-align:center;vertical-align: middle !important;background-color: rgba(217, 217, 217, 255) !important;" rowspan="3"> 500,000 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.frame </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 74.48 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.00 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 4.37 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 642.84 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.00 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 40.35 </td>
   </tr>
   <tr>
    
-   
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> data.table </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 42.11 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.58 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 4.24 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 300.39 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.47 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 35.40 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> data.table </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 42.11 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.58 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 4.24 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 300.39 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.47 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 35.40 </td>
   </tr>
   <tr>
    
-   
-   <td style="text-align:center;background-color: rgba(185, 185, 185, 255) !important;"> tibble </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 72.35 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 0.99 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 4.31 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 642.18 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 1.01 </td>
-   <td style="text-align:right;background-color: rgba(185, 185, 185, 255) !important;"> 41.82 </td>
+   <td style="text-align:center;background-color: rgba(217, 217, 217, 255) !important;"> tibble </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 72.35 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 0.99 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 4.31 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 642.18 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 1.01 </td>
+   <td style="text-align:right;background-color: rgba(217, 217, 217, 255) !important;"> 41.82 </td>
   </tr>
   <tr>
-   
    <td style="text-align:center;vertical-align: middle !important;" rowspan="3"> 1,000,000 </td>
    <td style="text-align:center;"> data.frame </td>
    <td style="text-align:right;"> 152.98 </td>
@@ -1439,7 +1392,6 @@ the time of a `data.frame`.
   </tr>
   <tr>
    
-   
    <td style="text-align:center;"> data.table </td>
    <td style="text-align:right;"> 81.12 </td>
    <td style="text-align:right;"> 0.54 </td>
@@ -1449,7 +1401,6 @@ the time of a `data.frame`.
    <td style="text-align:right;"> 69.18 </td>
   </tr>
   <tr>
-   
    
    <td style="text-align:center;"> tibble </td>
    <td style="text-align:right;"> 145.63 </td>
