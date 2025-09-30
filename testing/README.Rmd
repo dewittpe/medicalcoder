@@ -94,16 +94,22 @@ kableExtra::kbl(
   ) |>
 kableExtra::pack_rows(index = table(DT$suggests))
 
-cat("* Errors:",
-  paste("  * Error", seq_len(nlevels(DT$errors)), levels(DT$errors)),
-  sep = "\n")
+cat(
+  "* Errors:",
+  if (nlevels(DT$errors)) { paste0("  ", seq_len(nlevels(DT$errors)), ". ", levels(DT$errors)) },
+  sep = "\n"
+)
 
-cat("* Warnings:",
-  paste("  * Warning", seq_len(nlevels(DT$warnings)), levels(DT$warnings)),
-  sep = "\n")
+cat(
+  "* Warnings:",
+  if (nlevels(DT$warnings)) { paste0("  ", seq_len(nlevels(DT$warnings)), ". ", levels(DT$warnings)) },
+  sep = "\n"
+)
 
-cat("* Notes:",
-  paste("  * Note", seq_len(nlevels(DT$notes)), levels(DT$notes)),
-  sep = "\n")
+cat(
+  "* Notes:",
+  if (nlevels(DT$notes)) { paste0("  ", seq_len(nlevels(DT$notes)), ". ", levels(DT$notes)) },
+  sep = "\n"
+)
 ```
 
