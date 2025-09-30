@@ -178,7 +178,7 @@ for (mt in unique(bench2_summary$method)) {
                   method = mt, subconditions = sc, data_class = dc, flag.method = fm, encounters = 10^(3:6),
                   time_seconds  = 10^(predict(ats_loess, newdata = data.frame(encounters = 10^(3:6)))),
                   memory        = 10^(predict(mem_loess, newdata = data.frame(encounters = 10^(3:6)))),
-                  relative_time = if (dc != "data.table") {predict(rts_loess, newdata = data.frame(encounters = 10^(3:6)))} else {1.0}
+                  relative_time = if (dc != "data.frame") {predict(rts_loess, newdata = data.frame(encounters = 10^(3:6)))} else {1.0}
                 )
               )
           )
