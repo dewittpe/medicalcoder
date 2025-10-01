@@ -366,7 +366,7 @@ comorbidities.data.frame <- function(data,
 
   ##############################################################################
   # Now determine if the id.vars, poa.var, and primarydx.var need to be
-  # constructed and added to the the on_full and on_comp sets
+  # constructed and added to the on_full and on_comp sets
   id.vars.created <- is.null(id.vars)
 
   build_name <- function(stem, names) {
@@ -449,6 +449,7 @@ comorbidities.data.frame <- function(data,
   keep <- !mdcr_duplicated(cmrb, by = names(cmrb)[names(cmrb) != poa.var], fromLast = TRUE)
   cmrb <- mdcr_subset(cmrb, keep)
 
+  ##############################################################################
   # create a data.frame with one unique row for the id.vars
   if (!id.vars.created) {
     iddf <- unique(mdcr_select(data, cols = id.vars))
@@ -521,6 +522,7 @@ comorbidities.data.frame <- function(data,
     cmrb <- unique(cmrb)
   }
 
+  ##############################################################################
   # retain only the row for present on admission for pccc and charlson.
   # elixhauser conditions may or may not need poa, so do not subset in that
   # case.
