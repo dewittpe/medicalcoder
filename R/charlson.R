@@ -55,15 +55,16 @@
   #    both are present
   # 2. points for complicated dm, zero for uncomplicated dm, if both are present
   # 3. points for metastatic, zero for other cancer, if both are present
-  over_count_adjustment <- function(a, b, drop) {
+  over_count_adjustment <- function(cci, a, b, drop) {
     if (all(c(a, b) %in% colnames(X))) {
       idx <- (X[, a] * X[, b]) == 1L
-      cci[idx] <<- cci[idx] - cci_wt[[drop]]
+      cci[idx] <- cci[idx] - cci_wt[[drop]]
     }
+    cci
   }
-  over_count_adjustment(a = "mld", b = "msld", drop = "mld")
-  over_count_adjustment(a = "dm",  b = "dmc",  drop = "dm")
-  over_count_adjustment(a = "mst", b = "mal",  drop = "mal")
+  cci <- over_count_adjustment(cci = cci, a = "mld", b = "msld", drop = "mld")
+  cci <- over_count_adjustment(cci = cci, a = "dm",  b = "dmc",  drop = "dm")
+  cci <- over_count_adjustment(cci = cci, a = "mst", b = "mal",  drop = "mal")
 
   # build the return object
   rtn <- cbind(iddf, as.data.frame(X, check.names = FALSE))
