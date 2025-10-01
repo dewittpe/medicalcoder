@@ -142,29 +142,37 @@ mdcr_duplicated <- function(x, by = seq_along(x), ...) {
 
 ################################################################################
 
-#' Is True or False
+#' Assert
 #'
-#' A helpful wrapper inspired by data.table to check that the input `x` is a
-#' scalar value of either TRUE or FALSE.
+#' A set of functions used to check function arguments.
 #'
 #' @details
+#'
+#' ## assert_scalar_logical
+#' tests if the input is a length-1, non-missing logical.
+#'
 #' **Developer example (not executed):**
 #' ```
-#' medicalcoder:::isTRUEorFALSE(TRUE) # TRUE
-#' medicalcoder:::isTRUEorFALSE(FALSE) # TRUE
-#' medicalcoder:::isTRUEorFALSE(c("A", "B")) # FALSE, vector length > 1
-#' medicalcoder:::isTRUEorFALSE(c(TRUE, TRUE, NA, FALSE)) # FALSE, vector length > 1
-#' medicalcoder:::isTRUEorFALSE(NA) # FALSE, Not TRUE or FALSE
+#' medicalcoder:::assert_scalar_logical(TRUE)          # pass, return TRUE
+#' medicalcoder:::assert_scalar_logical(FALSE)         # pass, return TRUE
+#' medicalcoder:::assert_scalar_logical(NA)            # fail, throw error
+#' medicalcoder:::assert_scalar_logical(1L)            # fail, throw error
+#' medicalcoder:::assert_scalar_logical(c(TRUE, TRUE)) # fail, throw error
 #' ```
 #'
 #' @param x a R object
 #'
-#' @return a logical of length 1
+#' @return `TRUE`, invisibly if the assertion is TRUE, otherwise an error is
+#' thrown.
 #'
 #' @noRd
 #' @keywords internal
-isTRUEorFALSE <- function(x) {
-  is.logical(x) && length(x) == 1L && !is.na(x)
+assert_scalar_logical <- function(x) {
+  z <- is.logical(x) && length(x) == 1L && !is.na(x)
+  if (!z) {
+    stop(sprintf("The value passed to '%s' is expected to be a length-1 non-missing logical.", deparse(substitute(x))), call. = FALSE)
+  }
+  invisible(z)
 }
 
 ################################################################################

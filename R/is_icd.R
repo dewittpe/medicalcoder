@@ -49,11 +49,11 @@ is_icd <- function(x, icdv = c(9L, 10L), dx = c(1L, 0L),
   stopifnot(all(icdv %in% c(9L, 10L)))
   stopifnot(all(dx %in% c(1L, 0L)))
   src <- match.arg(src, several.ok = TRUE)
-  stopifnot(isTRUEorFALSE(headerok))
-  stopifnot(isTRUEorFALSE(ever.assignable))
-  stopifnot(isTRUEorFALSE(warn.ambiguous))
-  stopifnot(isTRUEorFALSE(full.codes))
-  stopifnot(isTRUEorFALSE(compact.codes))
+  assert_scalar_logical(headerok)
+  assert_scalar_logical(ever.assignable)
+  assert_scalar_logical(warn.ambiguous)
+  assert_scalar_logical(full.codes)
+  assert_scalar_logical(compact.codes)
   stopifnot(full.codes | compact.codes)
 
   if (missing(year)) {

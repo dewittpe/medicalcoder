@@ -34,10 +34,13 @@
 #' @family ICD tools
 #' @export
 lookup_icd_codes <- function(x, regex = FALSE, full.codes = TRUE, compact.codes = TRUE, ...) {
+  if (is.factor(x)) {
+    x <- as.character(x)
+  }
   stopifnot(inherits(x, "character"))
-  stopifnot(isTRUEorFALSE(regex))
-  stopifnot(isTRUEorFALSE(full.codes))
-  stopifnot(isTRUEorFALSE(compact.codes))
+  assert_scalar_logical(regex)
+  assert_scalar_logical(full.codes)
+  assert_scalar_logical(compact.codes)
   stopifnot(isTRUE(full.codes | compact.codes))
 
   ICDCODES <- get_icd_codes(with.descriptions = FALSE, with.hierarchy = FALSE)

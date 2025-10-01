@@ -95,8 +95,8 @@
 #'
 #' @export
 get_icd_codes <- function(with.descriptions = FALSE, with.hierarchy = FALSE) {
-  stopifnot(isTRUEorFALSE(with.descriptions))
-  stopifnot(isTRUEorFALSE(with.hierarchy))
+  assert_scalar_logical(with.descriptions)
+  assert_scalar_logical(with.hierarchy)
 
   column_order <-
     c("icdv", "dx", "full_code", "code", "src",

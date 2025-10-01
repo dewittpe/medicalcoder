@@ -215,11 +215,7 @@ comorbidities.data.frame <- function(data,
   # verify input arguments
   assert_scalar_logical(full.codes)
   assert_scalar_logical(compact.codes)
-  stopifnot(
-    #isTRUEorFALSE(full.codes),
-    #isTRUEorFALSE(compact.codes),
-    full.codes | compact.codes
-  )
+  stopifnot(full.codes | compact.codes)
 
   is_a_column <- function(x, cols) {
     stopifnot(is.character(x) && length(x) == 1L && x %in% cols)
@@ -244,7 +240,7 @@ comorbidities.data.frame <- function(data,
     is_a_column(age.var, names(data))
   }
 
-  stopifnot(isTRUEorFALSE(subconditions))
+  assert_scalar_logical(subconditions)
   if (subconditions & !startsWith(method, "pccc")) {
     warning("subconditions only implemented for PCCC")
     subconditions <- FALSE
@@ -600,6 +596,7 @@ comorbidities.data.frame <- function(data,
 print.medicalcoder_comorbidities <- function(x, ...) {
   cat(sprintf("\nComorbidities via %s\n\n", attr(x, "method")))
   NextMethod(generic = "print", object = x, ...)
+  invisible(x)
 }
 
 #' @export
@@ -609,7 +606,6 @@ print.medicalcoder_comorbidities_with_subconditions <- function(x, ...) {
   l2 <- utils::capture.output(utils::str(x$subconditions, max.level = 1, give.attr = FALSE))
   l2 <- sub("^\\s\\$", "  ..$", l2)
   cat(c(l1, l2[-1], "\n"), sep = "\n")
-
   invisible(x)
 }
 
