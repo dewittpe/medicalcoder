@@ -1,5 +1,5 @@
 Package: medicalcoder
-Title: Medical Coder
+Title: Tools For Working With ICD Codes and Comorbidity Algorithms
 Version: 0.0.0.9044
 Authors@R: c(
     person(given = "Peter", family = "DeWitt",    email = "peter.dewitt@cuanschutz.edu", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-6391-0795")),
@@ -7,10 +7,10 @@ Authors@R: c(
     person(given = "Seth",  family = "Russell",   email = "seth.russell@cuanschutz.edu", role = c("ctb"),        comment = c(ORCID = "0000-0002-2436-1367")),
     person(given = "Meg",   family = "Rebull",    email = "meg.rebull@cuanschutz.edu",   role = c("ctb"),        comment = c(ORCID = "0000-0003-0334-4223"))
     )
-Description: Tools for working with medical coding schema such as the
-    International Classification of Diseases (ICD) and methods to identify
-    comorbidities such as the Pediatric Complex Chronic Conditions, Charlson
-    comorbidities, and Elixhauser comorbidities.
+Description: Provides tools for working with medical coding schemas such as the
+  International Classification of Diseases (ICD). Includes functions for
+  comorbidity classification algorithms such as the Pediatric Complex Chronic
+  Conditions (PCCC), Charlson, and Elixhauser indices.
 Depends: R (>= 3.5.0)
 License: GPL-2
 Language: en-US
