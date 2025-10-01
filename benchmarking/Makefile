@@ -4,7 +4,7 @@ include ../Makevars
 
 .PHONY: all clean
 
-all: benchmark2.svg
+all: benchmark2.svg README.md
 
 grid%.tsv: make_grid%.sh
 	./$<
@@ -15,6 +15,9 @@ grid%.tsv: make_grid%.sh
 
 benchmark%.svg: benchmark%-summary.R .bench%
 	$(RSCRIPT) $<
+
+README.md: README.Rmd outtable.rds
+	$(R) -e "knitr::knit('$<', output = '$@')"
 
 clean:
 	$(RM) .bench*
