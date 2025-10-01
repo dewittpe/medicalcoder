@@ -213,9 +213,11 @@ comorbidities.data.frame <- function(data,
 
   ##############################################################################
   # verify input arguments
+  assert_scalar_logical(full.codes)
+  assert_scalar_logical(compact.codes)
   stopifnot(
-    isTRUEorFALSE(full.codes),
-    isTRUEorFALSE(compact.codes),
+    #isTRUEorFALSE(full.codes),
+    #isTRUEorFALSE(compact.codes),
     full.codes | compact.codes
   )
 
@@ -244,7 +246,7 @@ comorbidities.data.frame <- function(data,
 
   stopifnot(isTRUEorFALSE(subconditions))
   if (subconditions & !startsWith(method, "pccc")) {
-    warning("subconditions only implimented for PCCC")
+    warning("subconditions only implemented for PCCC")
     subconditions <- FALSE
   }
 
