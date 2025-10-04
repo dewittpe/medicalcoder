@@ -2,7 +2,7 @@
 
 
 
-# `medicalcoder`: An R package for working with ICD codes and Comorbidity Algorithms <img src="man/figures/medicalcoder_600x600_hex.png" width="150px" align="right" alt = "medicalcoder hex logo"/>
+# `medicalcoder`: An R package for working with ICD codes and Comorbidity Algorithms <img src="man/figures/medicalcoder_600x600_hex.png" width="200px" align="right" alt = "medicalcoder hex logo"/>
 
 `medicalcoder` is a lightweight, base-R package for working with ICD-9 and
 ICD-10 diagnosis and procedure codes. It provides fast, dependency-free tools to
