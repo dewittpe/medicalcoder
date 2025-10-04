@@ -33,6 +33,64 @@ rtn <- # length(id.vars) = 1
   )
 stopifnot(inherits(rtn, "error"))
 
+
+################################################################################
+# verify errors are thrown if a "protected" name is used for the id.vars,
+# poa.var, or primarydx.var
+mdcr2 <- mdcr
+mdcr2[["condition"]] <- 1L
+
+x <-
+  tryCatch(
+    comorbidities(
+      data = mdcr2,
+      icd.codes = "code",
+      id.vars = c("patid", "condition"),
+      method = "pccc_v3.1"
+    ),
+  error = function(e) e
+)
+stopifnot(inherits(x, "error"))
+
+x <-
+  tryCatch(
+    comorbidities(
+      data = mdcr2,
+      icd.codes = "code",
+      id.vars = c("condition"),
+      method = "pccc_v3.1"
+    ),
+  error = function(e) e
+)
+stopifnot(inherits(x, "error"))
+
+x <-
+  tryCatch(
+    comorbidities(
+      data = mdcr2,
+      icd.codes = "code",
+      poa.vars = c("condition"),
+      method = "pccc_v3.1"
+    ),
+  error = function(e) e
+)
+stopifnot(inherits(x, "error"))
+
+# this calls be "valid" as primarydx.var is ignored when method is not
+# elixhauser_*
+x <-
+  tryCatch(
+    comorbidities(
+      data = mdcr2,
+      icd.codes = "code",
+      primarydx.var = "condition",
+      method = "elixhauser_ahrq2025"
+    ),
+  error = function(e) e
+)
+stopifnot(inherits(x, "error"))
+
+
 ################################################################################
 # Test: check_and_set_*
 #
@@ -159,14 +217,26 @@ stopifnot(identical(names(OUT2), c("..medicalcoder_id..", expected_names)))
 #      undefined columns selected
 #
 # Expect that the following calls should work without error
+#
+# between 0.0.0.9044 and 0.0.0.9045 it was determined that there are some names
+# that should not be used in the id.vars, poa.var, or the primarydx.var.  Tests
+# for those are above.  The tests below would have passed for 0.0.0.9039 -
+# 0.0.0.9044, but will error for 0.0.0.9045 with a useful error message.
 mdcr$full_code <- "just a test"
 mdcr$icd_code <- mdcr$code
 
 args <- list(data = mdcr, icd.code = "icd_code", method = "pccc_v3.0", poa = 1)
-out <- do.call(comorbidities, c(args, list(id.vars = c("patid", "full_code"))))
-out <- do.call(comorbidities, c(args, list(id.vars = c("patid", "icdv"))))
-out <- do.call(comorbidities, c(args, list(id.vars = c("patid", "dx"))))
-out <- do.call(comorbidities, c(args, list(id.vars = c("patid", "code"))))
+
+out1 <- tryCatch(do.call(comorbidities, c(args, list(id.vars = c("patid", "full_code")))), error = function(e) e)
+out2 <- tryCatch(do.call(comorbidities, c(args, list(id.vars = c("patid", "icdv")))), error = function(e) e)
+out3 <- tryCatch(do.call(comorbidities, c(args, list(id.vars = c("patid", "dx")))), error = function(e) e)
+out4 <- tryCatch(do.call(comorbidities, c(args, list(id.vars = c("patid", "code")))), error = function(e) e)
+stopifnot(
+  inherits(out1, "error"),
+  inherits(out2, "error"),
+  inherits(out3, "error"),
+  inherits(out4, "error")
+)
 
 ################################################################################
 #                                 End of File                                  #

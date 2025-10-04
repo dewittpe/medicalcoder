@@ -217,11 +217,59 @@ comorbidities.data.frame <- function(data,
   assert_scalar_logical(compact.codes)
   stopifnot(full.codes | compact.codes)
 
+  method <-
+    match.arg(
+      method,
+      choices = comorbidities_methods(),
+      several.ok = FALSE
+    )
+
   is_a_column <- function(x, cols) {
     stopifnot(is.character(x) && length(x) == 1L && x %in% cols)
   }
 
   is_a_column(icd.codes, names(data))
+
+  if (!is.null(id.vars)) {
+    for (x in id.vars) {
+      is_a_column(x, names(data))
+    }
+    pn <- which(id.vars %in% ..protected_names..)
+    if (length(pn)) {
+      stop(sprintf("The value(s) \"%s\" in 'id.vars', are protected names.  It is ill-advised to use a protected name as medicalcoder is exptecting to use them internally to apply the comorbidity algorithms.  Sorry for the inconvience, but you will need to rename the column(s) in your data set.  Protected names that you should not use for 'id.vars' are: %s.",
+        paste(id.vars[pn], collapse = ", "),
+        paste(..protected_names.., collapse = ", ")
+        )
+      )
+    }
+  }
+
+  if (!is.null(poa.var)) {
+    is_a_column(poa.var, names(data))
+    pn <- poa.var %in% ..protected_names..
+    if (pn) {
+      stop(
+        sprintf("The value \"%s\" in 'poa.var', is a protected name.  It is ill-advised to use a protected names as medicalcoder is exptecting to use them internally to apply the comorbidity algorithms.  Sorry for the inconvience, but you will need to rename the column in your data set.  Protected names that you should not use for 'poa.var' are: %s.",
+          poa.var,
+          paste(..protected_names.., collapse = ", ")
+        )
+      )
+    }
+  }
+
+
+  if (startsWith(method, "elixhauser") & !is.null(primarydx.var)) {
+    is_a_column(primarydx.var, names(data))
+    pn <- primarydx.var %in% ..protected_names..
+    if (pn) {
+      stop(
+        sprintf("The value \"%s\" in 'primarydx.var', is a protected name.  It is ill-advised to use a protected names as medicalcoder is exptecting to use them internally to apply the comorbidity algorithms.  Sorry for the inconvience, but you will need to rename the column in your data set.  Protected names that you should not use for 'primarydx.var' are: %s.",
+          primarydx.var,
+          paste(..protected_names.., collapse = ", ")
+        )
+      )
+    }
+  }
 
   flag.method <-
     match.arg(
@@ -229,12 +277,6 @@ comorbidities.data.frame <- function(data,
       several.ok = FALSE
     )
 
-  method <-
-    match.arg(
-      method,
-      choices = comorbidities_methods(),
-      several.ok = FALSE
-    )
 
   if (startsWith(method, "charlson") && !is.null(age.var)) {
     is_a_column(age.var, names(data))
@@ -622,3 +664,17 @@ comorbidities_methods <- function() {
       "elixhauser_ahrq2022", "elixhauser_ahrq2023", "elixhauser_ahrq2024",
       "elixhauser_ahrq2025")
 }
+
+
+# protected names... throw and error and tell end users that it is ill-advised
+# to use these names for id.vars, poa.var, primarydx.var
+# dput(unique( c( names(get_icd_codes()), names(get_pccc_codes()), names(get_elixhauser_codes()), names(get_charlson_codes()))))
+..protected_names.. <-
+  c("icdv", "dx", "full_code", "code", "src", "known_start", "known_end",
+    "assignable_start", "assignable_end", "condition", "subcondition",
+    "transplant_flag", "tech_dep_flag", "pccc_v3.1", "pccc_v3.0",
+    "pccc_v2.1", "pccc_v2.0", "elixhauser_ahrq_web", "elixhauser_elixhauser1988",
+    "elixhauser_quan2005", "elixhauser_ahrq2022", "elixhauser_ahrq2023",
+    "elixhauser_ahrq2024", "elixhauser_ahrq2025", "charlson_cdmf2019",
+    "charlson_deyo1992", "charlson_quan2005", "charlson_quan2011"
+  )
