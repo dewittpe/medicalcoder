@@ -282,8 +282,8 @@ Filter(f = function(x) x > 0, pat2_pccc_v3.1)
 The expected input data format for `comorbidities` is a "long" format.  The only
 mandatory column is one column of ICD codes.  These codes can be full codes
 (include the decimal point) or compact codes (omitting the decimal point).
-Additionally, column(s) for identifying a patient and encounters or other
-identifying, or grouping, data are useful.  A column to indicate the ICD version
+Additionally, column(s) for identifying patients, encounters, and any other 
+important groups are encouraged.  A column to indicate the ICD version
 (9 or 10), and another column for identifying the code as a diagnostic or
 procedure code are also encouraged.  The example `mdcr` data set has three
 columns, a patient id (patid), the ICD compact codes (code), and a column to

@@ -315,16 +315,16 @@ str(get_charlson_codes())
 str(get_elixhauser_codes())
 ```
 
-End users should be aware that just because an ICD code is in one of these data
-sets does not mean that the patient has the condition.  For Elixhauser, the
-presence on admission is important to consider.  For PCCC version 3.0 and 3.1
-tech dependencies on its own is insufficient to flag a condition (see
+End users should be aware that just because an ICD code exists in a data
+set does not mean that the patient has the condition.  For Elixhauser, the
+presence on admission is important to consider.  For PCCC version 3.0 and 3.1,
+tech dependencies on their own are insufficient to flag a condition (see
 `vignette(topic = "pccc", package = "medicalcoder")`).
 
-For the `charlson_cdmf2019` method [@glasheen2019] the AIDS categories is
+For the `charlson_cdmf2019` method [@glasheen2019], the AIDS categories are
 defined by the presence of HIV and an opportunistic infection.  In the
 following example, if only considering ICD codes which flag 'aids',
-there would be several thousand cases of aids.  At the same time only six cases
+there would be several thousand cases of AIDS, but only six cases
 of HIV.
 
 <!-- NOTE: the following example is also in tests/test-charlson_cdmf2019.R -->
