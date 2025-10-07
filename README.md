@@ -68,8 +68,8 @@ The primary objectives of `medicalcoder` are:
 There are several tools for working with ICD codes and comorbidity algorithms.
 `medicalcoder` provides novel features:
 
-- Unified access to multiple comorbidity algorithms through a single function
-  (`comorbidities()`).
+- Unified access to multiple comorbidity algorithms through a single function:
+  `comorbidities()`.
 - Support for both ICD-9 and ICD-10 diagnostic and procedure codes.
 - Longitudinal patient-level comorbidity flagging using present-on-admission indicators.
 - Fully self-contained package (no external dependencies).
@@ -154,7 +154,7 @@ R CMD INSTALL medicalcoder_X.Y.Z.tar.gz
     * [For ICD-9 codes](https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp)
     * [For ICD-10 codes](https://www.hcup-us.ahrq.gov/toolssoftware/comorbidityicd10/comorbidity_icd10.jsp)
 
-All of the methods are available from the same function call `comorbidities`.
+All of the methods are available from the same function call `comorbidities()`.
 There is support for age scores in Charlson, present on admission flags for all
 methods, and support for longitudinal data.
 
@@ -260,7 +260,7 @@ The columns are:
 Additionally, the `get_icd_codes()` method can provide descriptions and the ICD
 hierarchy by using the `with.descriptions` and/or `with.hierarchy` arguments.
 
-Functions `lookup_icd_codes`, `is_icd`, and `icd_compact_to_full` are also
+Functions `lookup_icd_codes()`, `is_icd()`, and `icd_compact_to_full()` are also
 provided for working with ICD codes.
 
 More details and examples are in the vignette:
