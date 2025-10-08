@@ -106,13 +106,13 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
 
   conditions <- get_pccc_conditions()[c("condition", "condition_label")]
   conditions <- unique(conditions)
-  conditions <- conditions[order(conditions$condition), ]
+  conditions <- conditions[order(conditions[["condition"]]), ]
 
   cols <- conditions[["condition"]]
   if (startsWith(attr(object, "method"), "pccc_v3")) {
     cols <- paste0(cols, "_dxpr_or_tech")
   }
-  counts <- colSums(mdcr_select(object$conditions, cols))
+  counts <- colSums(mdcr_select(object[["conditions"]], cols))
   names(counts) <- conditions[["condition"]]
 
   scounts <-
@@ -155,19 +155,19 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
 
   conditions <- get_pccc_conditions()[c("condition", "condition_label")]
   conditions <- unique(conditions)
-  conditions <- conditions[order(conditions$condition), ]
+  conditions <- conditions[order(conditions[["condition"]]), ]
 
-  cnds <- mdcr_select(object, c(conditions$condition, "any_tech_dep", "any_transplant", "cmrb_flag"))
+  cnds <- mdcr_select(object, c(conditions[["condition"]], "any_tech_dep", "any_transplant", "cmrb_flag"))
 
   # Track running counts for patients meeting at least N conditions
   # so the summary can report distribution thresholds (>=2, >=3, ...).
-  tlts <- sapply(2:11, function(x) { as.integer(object$num_cmrb >= x)})
+  tlts <- sapply(2:11, function(x) { as.integer(object[["num_cmrb"]] >= x)})
   colnames(tlts) <- paste(">=", 2:11, "conditions")
 
   rtn <-
     data.frame(
       condition = c(names(cnds), rep("num_cmrb", ncol(tlts))),
-      label     = c(conditions$condition_label, "Any Technology Dependence", "Any Transplantation", "Any Condition", colnames(tlts)),
+      label     = c(conditions[["condition_label"]], "Any Technology Dependence", "Any Transplantation", "Any Condition", colnames(tlts)),
       count     = as.integer(c(colSums(cnds), colSums(tlts))),
       percent   = 100 * c(colMeans(cnds), colMeans(tlts))
     )
@@ -184,19 +184,19 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
 
   conditions <- get_pccc_conditions()[c("condition", "condition_label")]
   conditions <- unique(conditions)
-  conditions <- conditions[order(conditions$condition), ]
+  conditions <- conditions[order(conditions[["condition"]]), ]
 
   # Track running counts for patients meeting at least N conditions
   # so the summary can report distribution thresholds (>=2, >=3, ...).
-  tlts <- sapply(2:11, function(x) { as.integer(object$num_cmrb >= x)})
+  tlts <- sapply(2:11, function(x) { as.integer(object[["num_cmrb"]] >= x)})
   colnames(tlts) <- paste(">=", 2:11, "conditions")
 
   sets <-
     list(
-      dxpr_or_tech  = mdcr_select(object, paste0(conditions$condition, "_dxpr_or_tech")),
-      dxpr_only     = mdcr_select(object, paste0(conditions$condition, "_dxpr_only"   )),
-      tech_only     = mdcr_select(object, paste0(conditions$condition, "_tech_only"   )),
-      dxpr_and_tech = mdcr_select(object, paste0(conditions$condition, "_dxpr_and_tech")),
+      dxpr_or_tech  = mdcr_select(object, paste0(conditions[["condition"]], "_dxpr_or_tech")),
+      dxpr_only     = mdcr_select(object, paste0(conditions[["condition"]], "_dxpr_only"   )),
+      tech_only     = mdcr_select(object, paste0(conditions[["condition"]], "_tech_only"   )),
+      dxpr_and_tech = mdcr_select(object, paste0(conditions[["condition"]], "_dxpr_and_tech")),
       flags         = mdcr_select(object, c("any_tech_dep", "any_transplant", "cmrb_flag")),
       totals        = tlts
     )
@@ -207,25 +207,25 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
 
   rtn <-
     cbind(
-          condition = conditions$condition,
-          label = conditions$condition_label,
-          data.frame(dxpr_or_tech_count = as.integer(counts$dxpr_or_tech),
-                     dxpr_or_tech_percent = percents$dxpr_or_tech),
-          data.frame(dxpr_only_count = as.integer(counts$dxpr_only),
-                     dxpr_only_percent = percents$dxpr_only),
-          data.frame(tech_only_count = as.integer(counts$tech_only),
-                     tech_only_percent = percents$tech_only),
-          data.frame(dxpr_and_tech_count = as.integer(counts$dxpr_and_tech),
-                     dxpr_and_tech_percent = percents$dxpr_and_tech)
+          condition = conditions[["condition"]],
+          label = conditions[["condition_label"]],
+          data.frame(dxpr_or_tech_count = as.integer(counts[["dxpr_or_tech"]]),
+                     dxpr_or_tech_percent = percents[["dxpr_or_tech"]]),
+          data.frame(dxpr_only_count = as.integer(counts[["dxpr_only"]]),
+                     dxpr_only_percent = percents[["dxpr_only"]]),
+          data.frame(tech_only_count = as.integer(counts[["tech_only"]]),
+                     tech_only_percent = percents[["tech_only"]]),
+          data.frame(dxpr_and_tech_count = as.integer(counts[["dxpr_and_tech"]]),
+                     dxpr_and_tech_percent = percents[["dxpr_and_tech"]])
     )
 
   rtn <-
     rbind(rtn,
       data.frame(
-        condition = c(names(counts$flags), rep("num_cmrb", length(counts$totals))),
-        label = c("Any Technology Dependence", "Any Transplantation", "Any Condition", names(counts$totals)),
-        dxpr_or_tech_count = as.integer(c(counts$flag, counts$totals)),
-        dxpr_or_tech_percent = c(percents$flag, percents$totals),
+        condition = c(names(counts[["flags"]]), rep("num_cmrb", length(counts[["totals"]]))),
+        label = c("Any Technology Dependence", "Any Transplantation", "Any Condition", names(counts[["totals"]])),
+        dxpr_or_tech_count = as.integer(c(counts[["flags"]], counts[["totals"]])),
+        dxpr_or_tech_percent = c(percents[["flags"]], percents[["totals"]]),
         dxpr_only_count = NA_integer_,
         dxpr_only_percent = NA_real_,
         tech_only_count = NA_integer_,
