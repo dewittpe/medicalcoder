@@ -9,11 +9,11 @@ PKG_NAME    := $(shell awk '/^Package:/{print $$2}' $(PKG_ROOT)/DESCRIPTION)
 
 # Sources
 RFILES     := $(wildcard $(PKG_ROOT)/R/*.R)
-MANROXYGEN := $(wildcard $(PKG_ROOT)/man-roxygen)
+MANROXYGEN := $(wildcard $(PKG_ROOT)/man-roxygen/*.R)
 TESTS      := $(wildcard $(PKG_ROOT)/tests/*.R)
 EXAMPLES   := $(wildcard $(PKG_ROOT)/examples/*.R)
 VIGNETTES  := $(wildcard $(PKG_ROOT)/vignettes/*.Rmd)
-DATA       := $(wildcard $(PKG_ROOT)/data/*.rda) $(PKG_ROOT)/R/sysdata.rda
+DATA       := $(PKG_ROOT)/data/mdcr.rda $(PKG_ROOT)/data/mdcr_longitudinal.rda $(PKG_ROOT)/R/sysdata.rda
 
 TARBALL   := $(PKG_NAME)_$(PKG_VERSION).tar.gz
 
@@ -64,6 +64,9 @@ data-raw:
 $(PKG_ROOT)/README.md: $(PKG_ROOT)/README.Rmd .install_dev_deps.Rout benchmarking/outtable.rds
 	$(RSCRIPT) -e "devtools::load_all('$(PKG_ROOT)')" \
 	  -e "knitr::knit('$(PKG_ROOT)/README.Rmd', output='README.md')"
+
+$(PKG_ROOT)/R/sysdata.rda:
+	$(MAKE) -C data-raw ../R/sysdata.rda
 
 # =============================================================================
 # Check / Install
