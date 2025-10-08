@@ -28,9 +28,11 @@ setDT(icd_codes)
 ################################################################################
 # Import the regex patters for finding all relevant codes
 regex_patterns <-
-  list("./deyo1992.txt",
-       "./cdmf2019.txt",
-       "./quan2005.txt") |>
+  list(
+    "./deyo1992.txt",
+    "./cdmf2019.txt",
+    "./quan2005.txt"
+  ) |>
   lapply(fread, header = TRUE) |>
   rbindlist()
 regex_patterns <- split(regex_patterns, f = 1:nrow(regex_patterns))
@@ -51,12 +53,15 @@ get_codes <- function(pattern, dx, icdv) {
 
 # get the set of ever billable codes that match the regex
 codes <-
-  pblapply(regex_patterns,
-           function(x) {
-             data.table(x,
-                        full_code = get_codes(pattern = x[["pattern"]], dx = x[["dx"]], icdv = x[["icdv"]])
-             )
-           }, cl = 8L)
+  pblapply(
+    regex_patterns,
+    function(x) {
+      data.table(x,
+        full_code = get_codes(pattern = x[["pattern"]], dx = x[["dx"]], icdv = x[["icdv"]])
+      )
+    },
+    cl = min(parallel::detectCores(logical = FALSE), length(regex_patterns))
+  )
 
 if (any(sapply(codes, nrow) == 0)) {
   print(regex_patterns[which(sapply(codes, nrow) == 0L)])
