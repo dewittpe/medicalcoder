@@ -214,7 +214,7 @@ elixhauser_codes <-
 elixhauser_codes <- elixhauser_codes[, .SD, .SDcols = patterns("code_id|condition|ahrq")]
 
 ################################################################################
-# import codes from the sas format files
+# Import codes from the SAS format files
 sas_format <-
   list(
     "ahrq22" = scan(file = paste0(tmpdir, "/CMR_Format_Program_v2022-1.sas"), what = character(), sep = "\n", quiet = !interactive()),

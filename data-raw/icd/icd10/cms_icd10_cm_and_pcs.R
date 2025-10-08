@@ -26,7 +26,7 @@ library(pbapply)
 source("utilities.R")
 
 ################################################################################
-# Data from CSM
+# Data from CMS
 cms_files <- list.files(path = "cms", pattern = "cms_.*\\.zip", full.name = TRUE)
 cms_tempdir <- paste0(tempdir(), "/cms")
 dir.create(cms_tempdir, showWarnings = FALSE)

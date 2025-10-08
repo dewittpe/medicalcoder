@@ -94,7 +94,7 @@ codes <-
         fill = 0L)
 
 ################################################################################
-# Weights for these methods will be based on ahrq refernce data
+# Weights for these methods will be based on AHRQ reference data
 index_scores <-
   list("ahrq_web" = scan(file = "./ahrq/comindex2012-2015.txt",  what = character(), sep = "\n", quiet = !interactive())) |>
   lapply(grep, pattern = "^\\s*(r|m)w\\w+.*\\d\\s;", value = TRUE) |>

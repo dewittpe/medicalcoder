@@ -115,13 +115,13 @@ c("acquired immunodeficiency", "amino acid metabolism", "aplastic anemias",
 "spinal cord injury at birth", "storage disorders", "transplantation"
 ))))
 
-# set the subcondtions to syntax valid
+# Set the subconditions to syntax-valid names
 pccc_codes[, subcondition := gsub(" ", "_", subcondition)]
 pccc_codes[, subcondition := gsub("-", "_", subcondition)]
 pccc_codes[, subcondition := gsub("/", "_", subcondition)]
 stopifnot(all(make.names(pccc_codes$subcondition)  == pccc_codes$subcondition))
 
-# build one data.frame for these
+# Build one data.frame for these mappings
 pccc_conditions <- unique(pccc_codes[, .(condition, subcondition)])
 
 pccc_conditions[, condition_label :=

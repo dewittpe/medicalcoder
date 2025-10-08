@@ -23,7 +23,7 @@
 ################################################################################
 
 ################################################################################
-# create one data.frame for icd codes
+# Create a single data.frame for ICD codes
 library(data.table)
 source("../../R/icd_compact_to_full.R")
 
@@ -63,7 +63,7 @@ icd_descs <- unique(icd_descs)
 icd_descs <- icd_descs[!is.na(desc)]
 icd_descs[, desc_id := 1:.N]
 
-# Extract just the CM and PCS version
+# Extract the CM and PCS variants
 cms <- icd[ , .(code_id, year = fcoalesce(fiscal_year, calendar_year), header = cm_pcs_header, desc = cm_pcs_desc)]
 cms <- cms[!is.na(desc)]
 cms <- cms[, .(start = min(year, na.rm = TRUE), end = max(year, na.rm = TRUE)), by = .(code_id, desc, header)]
@@ -72,7 +72,7 @@ cms[, desc := NULL]
 cms[, src := "cms"]
 setkey(cms, code_id, desc_id)
 
-# Extract just the WHO
+# Extract the WHO releases
 who <- icd[ , .(code_id, year = calendar_year,   header = who_header, desc = who_desc)]
 who <- who[!is.na(desc)]
 who <- who[, .(start = min(year), end = max(year)), by = .(code_id, desc, header)]
@@ -81,7 +81,7 @@ who[, desc := NULL]
 who[, src := "who"]
 setkey(who, code_id, desc_id)
 
-# Extract just the CDC Mortality Codes
+# Extract the CDC mortality codes
 cdc <- icd[ , .(code_id, year = calendar_year,   header = cdc_mortality_header, desc = cdc_mortality_desc)]
 cdc <- cdc[!is.na(desc)]
 cdc <- cdc[, .(start = min(year), end = max(year)), by = .(code_id, desc, header)]

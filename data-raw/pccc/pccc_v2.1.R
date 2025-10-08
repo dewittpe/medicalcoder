@@ -51,9 +51,9 @@ setDT(subconditions)
 rss_codes <- readRDS("pccc_v2_r_sas_stata.rds")
 setDT(rss_codes)
 
-# the R, SAS, and Stata codes only report conditions and mapped transplant and
-# tech_dep to a condition.  This really should be condition = 'misc' with
-# subcondtions of 'transplant' or 'device and technology use'.  Create the
+# The R, SAS, and Stata codes only report conditions and mapped transplant and
+# tech_dep to a condition. This really should be condition = 'misc' with
+# subconditions of 'transplant' or 'device and technology use'. Create the
 # subcondition column in the rss_codes object.  This will create several
 # redundant columns which we will clean up in the next section of this script.
 rss_codes[condition == "transplant",

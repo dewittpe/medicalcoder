@@ -18,7 +18,7 @@
 ################################################################################
 
 ################################################################################
-# build a data.table from the order files
+# Build a data.table from the order files
 orderfile_to_DT <- function(x) {
   stopifnot(inherits(x, "character"))
   data.table(

@@ -182,7 +182,7 @@ if (interactive()) {
 # 2022
 if (interactive()) {
   dir(paste0(cdc_icd10cm_dir, "/2022"))
-  # nothing to unzrip
+  # nothing to unzip
 }
 
 ######

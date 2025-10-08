@@ -131,9 +131,9 @@ pccc_v2.0 <-
         by = "code_id")
 
 # ICD-9-CM V53.91 "Fitting and adjustment of insulin pump"
-# This is listed in the documentation as metabolic (devices) by has been
+# This is listed in the documentation as metabolic (devices) but has been
 # implanted in R as metabolic (transplant).  One major issue with this error is
-# that there are no codes for metabolic (transplant). It doesn't make since to
+# that there are no codes for metabolic (transplant). It doesn't make sense to
 # retain this error so, method=pccc_v2.0 will differ from the R package
 # pccc_1.0.6 for this code.
 
@@ -142,7 +142,7 @@ pccc_v2.0 <-
 # V2 documentation has 235.9 listed as metabolic
 # V2 documentation does not map 253.9.
 # However, in the documentation the codes 253.[2,5,6] and then 235.9 are listed
-# for metabolic which suggests that 235.9 is a typeo.
+# for metabolic which suggests that 235.9 is a typo.
 #
 # Then again, 253.9 is listed in the R code for metabolic and 235.9 is not in
 # the R code.  The opposite is true for SAS and Stata sources.
@@ -174,7 +174,7 @@ pccc_v2.0[full_code == "277.4", subcondition := "other metabolic disorders"]
 
 # ICD-9-CM 331
 #
-# This header code was flagged.  It's not explicitly in the V2 documenation.
+# This header code was flagged. It's not explicitly in the V2 documentation.
 # Due to partial string matching 331 and all descendant codes are flagged.  The
 # only place in the V2 docs were 331 appear is in the 'neuromusc' condition with
 # 'cns degeneration and diseases' subcondition
@@ -192,7 +192,7 @@ pccc_v2.0[full_code == "333.4", subcondition := "movement diseases"]
 #
 # This is a header code. It is set up in match exactly in the R code.  That is
 # important because the documentation only flags neuromusc, muscular dystrophies
-# and myopathies, for 359.0-359.3 were code 359.4-359.9 (some with fifth digits)
+# and myopathies for 359.0-359.3 where code 359.4-359.9 (some with fifth digits)
 # are all valid ICD-9-CM codes.  Add the subcondition for this header code here
 
 if (interactive()) {

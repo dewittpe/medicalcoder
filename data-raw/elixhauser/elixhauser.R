@@ -40,7 +40,7 @@ codes <-
 poa <- readRDS("./elixhauser_poa_ahrq_icd10.rds")
 
 ################################################################################
-# preface all the methods with elixhauser_
+# Prefix all method columns with elixhauser_
 names(index)[which(grepl("ahrq|elixhauser|quan", names(index)))] <-
   paste0("elixhauser_",
          names(index)[which(grepl("ahrq|elixhauser|quan", names(index)))])

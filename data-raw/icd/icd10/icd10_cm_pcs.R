@@ -22,7 +22,7 @@
 ################################################################################
 
 ################################################################################
-# create one data.frame for icd codes
+# Create a single data.frame for ICD codes
 library(data.table)
 cdc_icd10 <- readRDS("./cdc_icd10.rds")
 cms_icd10 <- readRDS("./cms_icd10.rds")

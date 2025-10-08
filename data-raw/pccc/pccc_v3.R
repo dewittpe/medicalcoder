@@ -33,11 +33,11 @@
 #
 # SAS imports codes from the file ./pccc_v3/final-v3-with-rev-code-list-02282023.xlsx
 #
-# A simple example of a problem.  ICD-10-CMS E75.00 should map to both metabolic
-# and neuromusc.  That mapping would be consisitent with the documentation for
-# verion 2 and, depending on the srouce, for version 3 as well. In supp3.xlsx
-# from the 2024 publication we see E7500 reported for both conditions.  E7500 is
-# only mapping to metabolic in SAS code source file.
+# A simple example of a problem. ICD-10-CMS E75.00 should map to both metabolic
+# and neuromusc. That mapping would be consistent with the documentation for
+# version 2 and, depending on the source, for version 3 as well. In supp3.xlsx
+# from the 2024 publication we see E7500 reported for both conditions. E7500 is
+# only mapping to metabolic in the SAS code source file.
 #
 # This is a problem with the v2.0 as well.  v2.1 has the extended codes.
 #
@@ -127,8 +127,8 @@ setnames(pccc_v3.0,
 
 set(pccc_v3.0, j = "desc", value = NULL)
 
-# look at setting the condition and subcondition to be consisitent with other
-# sets.  there should be a misc condition with only tech_dep and transplant
+# look at setting the condition and subcondition to be consistent with other
+# sets. There should be a misc condition with only tech_dep and transplant
 # subconditions
 if (interactive()) {
   pccc_v3.0[, .N, keyby = .(condition)] |> print(nrow = Inf)
@@ -156,8 +156,8 @@ pccc_v3.0[condition == "hemato_immu" & subcondition == "other hematologic/immuno
           subcondition := "other"]
 
 # remove the non-misc
-# Codes which are device and tech in misc should only be retained if not in
-# another conidtion.  same for transplant.
+# Codes that are device and tech in misc should only be retained if not in
+# another condition. Same for transplant.
 non_misc_tech <- pccc_v3.0[condition != "misc" & subcondition == "device and technology use"]
 non_misc_tran <- pccc_v3.0[condition != "misc" & subcondition == "transplantation"]
 

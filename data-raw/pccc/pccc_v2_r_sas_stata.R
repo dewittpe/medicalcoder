@@ -25,7 +25,7 @@ library(pbapply)
 # import known ICD codes.
 #
 # New implementations for v2 within the medicalcoder package will use exact
-# codes and data-base like joins to improve speed and accuracy.  Having a set of
+# codes and database-like joins to improve speed and accuracy. Having a set of
 # the known codes is need to build the set of icd codes needed for this
 # conceptual transition.
 #

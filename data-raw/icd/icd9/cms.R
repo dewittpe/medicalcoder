@@ -31,7 +31,7 @@
 ################################################################################
 
 ################################################################################
-# helper functions
+# Helper functions
 read_cms_zip <- function(zip_path, dx_file, pr_file, fy) {
   #' @param zip_path character string, file path to source zip file
   #' @param dx_file,pr_file character string, the name of the diagnosis file and

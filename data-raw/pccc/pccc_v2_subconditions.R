@@ -16,8 +16,8 @@
 #   Cleans transcription artefacts, expands code ranges with regex, and aligns
 #     terminology with internal naming.
 #
-#   The source file .pccc_v2?subconditions.txt is the result of a copy and paste
-#     from Word to Excel to tab delim file.
+#   The source file .pccc_v2?subconditions.txt is the result of copying from
+#     Word to Excel and exporting as a tab-delimited file.
 #
 # idempotent: yes (deterministic transformations)
 ################################################################################
@@ -42,8 +42,8 @@ subconditions[, subcondition := tolower(trimws(subcondition))]
 subconditions[, condition    := zoo::na.locf(condition)]
 subconditions[, subcondition := zoo::na.locf(subcondition)]
 
-# split the data and "explode" it so each code is on one row.  The codes are
-# expected to be in comma seperated lists.  There are some edits to make for
+# split the data and "explode" it so each code is on one row. The codes are
+# expected to be in comma-separated lists. There are some edits to make for
 # that to be valid.
 # subconditions[grep("03.72. 03.79", icd9)]
 # subconditions[grep("V46.2 81.00", icd9)]
@@ -68,7 +68,7 @@ subconditions <-
 subconditions <- subconditions[orig_code != "N/A"]
 subconditions <- subconditions[orig_code != ""]
 
-# Add dx flag
+# Add a dx flag
 subconditions[, dx := fcase(icdv == 10 & grepl("^\\D", orig_code), 1,
                             icdv ==  9 & grepl("^\\d{3}(\\.|$)", orig_code), 1,
                             icdv ==  9 & grepl("^\\d{3}-\\d{3}$", orig_code), 1,

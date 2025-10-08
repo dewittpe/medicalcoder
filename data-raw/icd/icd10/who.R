@@ -6,8 +6,7 @@
 #
 # inputs:
 #   who/icd10_who_*.txt (WHO ICD-10 code listings exported to text files by
-#   manually copying all the codes from the website provided by the world health
-#   organization)
+#   manually copying codes from the World Health Organization website)
 #
 # output: who_icd10.rds (data.frame with code, full_code, desc, calendar_year,
 #         header)
@@ -35,7 +34,7 @@ who <-
          simplify = FALSE)
 
 # verify some simple assumptions about the structure.
-# the 8th column is a space
+# The 8th column is a space
 lapply(who, substr, start = 8, stop = 8) |>
   lapply(function(x) all(x == " ")) |>
   do.call(c, args = _) |>
@@ -65,10 +64,10 @@ who[, code := sub("\\.", "", full_code)]
 who[, calendar_year := as.integer(sub("^(.+)(\\d{4})\\.txt$", "\\2", file))]
 who[, file := NULL]
 
-# 2017 and 2018 didn't have a published set of codes.  Likely due to not having
-# a lot of changes from 2016.  copy 2016 and update the year for 2017 and 2018
-# for ease of use when combining with CDC and CMS CM and PCS data.  Do the same
-# for 2008 to 2009; 2010 to 2013;
+# 2017 and 2018 do not have published code lists, likely because they mirror
+# the 2016 release. Copy the 2016 list and adjust the year for 2017 and 2018 for
+# easier merges with CDC and CMS CM/PCS data. Do the same for 2008–2009 and
+# 2010–2013.
 stopifnot(sort(unique(who$calendar_year)) == c(2008L, 2010L, 2014L, 2015L, 2016L, 2019L))
 a09 <- who[calendar_year == 2008L]
 a11 <- who[calendar_year == 2010L]

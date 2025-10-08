@@ -50,8 +50,8 @@ if (interactive()) {
 #
 # NOTE:
 #   All files claim to include both 3-digit and 4-digit codes and titles. This
-#   is not true.  2020 2023 do not have all the 3-digit codes.  A check for A00
-#   will provide that.
+#   is not true. The 2020 and 2023 releases do not list every 3-digit code. A
+#   quick check for A00 confirms this.
 #
 #   This will need to be cleaned up before saving the data, that is the last
 #   step in this script.
@@ -147,7 +147,7 @@ cdc_allvalid_2020      <- cdc_allvalid_2020[!cdc_allvalid_2020_sets]
 cdc_allvalid_2023_sets <- cdc_allvalid_2023[grepl("-", full_code)]
 cdc_allvalid_2023      <- cdc_allvalid_2023[!cdc_allvalid_2023_sets]
 
-# copy the data so there is a version for each calendar
+# Copy the data so there is a version for each calendar year
 cdc_allvalid_2001 <- copy(cdc_allvalid_2009)
 cdc_allvalid_2002 <- copy(cdc_allvalid_2009)
 cdc_allvalid_2003 <- copy(cdc_allvalid_2009)
@@ -202,7 +202,7 @@ cdc_allvalid_2024[, year := 2024L]
 cdc_allvalid_2025[, year := 2025L]
 
 ################################################################################
-# As one data set
+# Combine all years into a single data set
 cdc_allvalid <-
   rbind(
     cdc_allvalid_2001,
@@ -240,7 +240,7 @@ cdc_allvalid[, full_code := gsub("^\\*", "", full_code)]
 ################################################################################
 # Clean up codes
 
-# Look for an remove codes which have been deleted "in" a year.  My
+# Look for and remove codes that have been deleted "in" a year. My
 # understanding is "deleted in 2009" means the code was valid to use in 2009, it
 # was deleted during the year and thus not valid in 2010.
 if (interactive()) {

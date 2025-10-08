@@ -33,7 +33,7 @@ setDT(cms)
 cdc_codes <- cdc[, .(code, dxpr, fiscal_year, src = "cdc", dummy = 1L)]
 cms_codes <- cms[, .(code, dxpr, fiscal_year, src = "cms", dummy = 1L)]
 
-# if there are dupliated codes dcast will give a warning.  For this work that
+# If there are duplicated codes dcast will give a warning. For this work that
 # needs to be an error
 old_warn <- options()$warn
 options(warn = 2)
@@ -107,7 +107,7 @@ stopifnot(nrow(test2012) == 0L)
 #stopifnot(nrow(test2015) == 0L)
 
 ################################################################################
-# As one data set
+# Combine CDC and CMS tables
 icd9 <-
   merge(x = cdc,
         y = cms,
@@ -125,19 +125,18 @@ icd9 <-
 # 003 is header because 0032 exists
 # 0032 is a header because 00320, 00321, ... exists
 #
-# For procedure codes you
+# For procedure codes:
 #   10   - header
 #   102  - header
 #   1021 - non-header
 #
-# Header status can chage from year to year
+# Header status can change from year to year
 #
-# Denote header.  codes from the WHO may not have the same level of granulatity.
-# Header is a reasonable name for the column.  All codes (ICD-10) include things
-# for reporting mortality which are not non-header codes the way CMS might
-# consider them.
+# Denote header rows. Codes from the WHO may not have the same level of
+# granularity. Header is a reasonable column name: ICD-10 adds entries for
+# mortality reporting that do not align with CMS non-header usage.
 
-# verify that the codes are the lenght expected
+# verify that the codes are the length expected
 stopifnot(icd9[dxpr == "pr", all(nchar(code) %in% 2:4)])
 stopifnot(icd9[dxpr == "dx", all(nchar(code) %in% 3:5)])
 
@@ -168,7 +167,7 @@ setnames(icd9, old = "long_desc", new = "cms_desc")
 setnames(icd9, old = "desc", new = "cdc_desc")
 icd9[, short_desc := NULL]
 
-# For conveniece, especially with header codes which are listed in the CDC but
+# For convenience, especially with header codes that are listed in the CDC but
 # not CMS, any code that does not have a cdc_desc will get a
 stopifnot("all codes with missing desc are headers" = icd9[is.na(cdc_desc) & is.na(cms_desc), sum(header) == .N])
 
@@ -192,7 +191,7 @@ icd9[code == "148" & dxpr == "pr", cms_desc := "Operations on epiretinal visual 
 stopifnot("all codes have a desc" = icd9[is.na(cdc_desc) & is.na(cms_desc), .N == 0L])
 
 ################################################################################
-# Special edits??
+# Special edits
 #
 # 043 and 044 were retired in FY 1994 but are listed as part of the
 # Carlson comorbidities
