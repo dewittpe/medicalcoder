@@ -28,6 +28,10 @@ Retrieve a copy of internal lookup tables for the ICD codes mapping to the
 Pediatric Complex Chronic Conditions (PCCC) conditions and subconditions by
 variant.
 }
+\examples{
+head(get_pccc_codes())
+str(get_pccc_codes())
+}
 \seealso{
 \itemize{
 \item \code{\link[=get_pccc_conditions]{get_pccc_conditions()}} for a reference of the PCCC conditions and
