@@ -34,7 +34,7 @@ if (length(to_install)) {
 }
 
 if (!(("pccc" %in% rownames(installed.packages())) && (packageVersion("pccc") == "1.0.6"))) {
-  install.packages(pkgs = "pccc/pccc_v2/pccc_1.0.6.tar.gz", repos = NULL, tyep = "source")
+  install.packages(pkgs = "pccc/pccc_v2/pccc_1.0.6.tar.gz", repos = NULL, type = "source")
 }
 
 ################################################################################
