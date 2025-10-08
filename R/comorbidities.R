@@ -551,7 +551,7 @@ comorbidities.data.frame <- function(data,
       lapply(foc,
              function(y) {
                rtn <- merge(x = iddf, y = y, all.x = TRUE, by = c(id.vars2), allow.cartesian = TRUE, sort = FALSE)
-               rtn <- mdcr_subset(rtn, i = !is.na(rtn$condition))
+               rtn <- mdcr_subset(rtn, i = !is.na(rtn[["condition"]]))
                i <- rtn[[encid]] >= rtn[["first_occurrance"]]
                mdcr_subset(rtn, i = i)
              })
@@ -598,14 +598,14 @@ comorbidities.data.frame <- function(data,
   # Remove the id.vars if it was created
   if (id.vars.created) {
     if (subconditions) {
-      ccc$conditions <- mdcr_set(ccc$conditions, j = id.vars, value = NULL)
+      ccc[["conditions"]] <- mdcr_set(ccc[["conditions"]], j = id.vars, value = NULL)
         if (nrow(data) == 0) {
-          ccc$conditions <- ccc$conditions[0, ]
+          ccc[["conditions"]] <- ccc[["conditions"]][0, ]
         }
-      for (i in seq_along(ccc$subcondition)) {
-        ccc$subconditions[[i]] <- mdcr_set(ccc$subconditions[[i]], j = id.vars, value = NULL)
+      for (i in seq_along(ccc[["subconditions"]])) {
+        ccc[["subconditions"]][[i]] <- mdcr_set(ccc[["subconditions"]][[i]], j = id.vars, value = NULL)
         if (nrow(data) == 0) {
-          ccc$subconditions[[i]] <- ccc$subconditions[[i]][0, ]
+          ccc[["subconditions"]][[i]] <- ccc[["subconditions"]][[i]][0, ]
         }
       }
     } else {
@@ -625,9 +625,9 @@ comorbidities.data.frame <- function(data,
 
   if (subconditions) {
     class(ccc) <- c("medicalcoder_comorbidities_with_subconditions", class(ccc))
-    rownames(ccc$conditions) <- NULL
-    for (i in seq_along(ccc$subconditions)) {
-      rownames(ccc$subconditions[[i]]) <- NULL
+    rownames(ccc[["conditions"]]) <- NULL
+    for (i in seq_along(ccc[["subconditions"]])) {
+      rownames(ccc[["subconditions"]][[i]]) <- NULL
     }
   } else {
     rownames(ccc) <- NULL
@@ -647,7 +647,7 @@ print.medicalcoder_comorbidities <- function(x, ...) {
 print.medicalcoder_comorbidities_with_subconditions <- function(x, ...) {
   cat(sprintf("\nComorbidities and Subconditions via %s\n\n", attr(x, "method")))
   l1 <- utils::capture.output(utils::str(x, max.level = 1, give.attr = FALSE))
-  l2 <- utils::capture.output(utils::str(x$subconditions, max.level = 1, give.attr = FALSE))
+  l2 <- utils::capture.output(utils::str(x[["subconditions"]], max.level = 1, give.attr = FALSE))
   l2 <- sub("^\\s\\$", "  ..$", l2)
   cat(c(l1, l2[-1], "\n"), sep = "\n")
   invisible(x)
