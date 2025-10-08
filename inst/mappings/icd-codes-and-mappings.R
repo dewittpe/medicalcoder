@@ -19,7 +19,7 @@ compare_symbols_html <- function(x, y) {
 ################################################################################
 # build an icd_codes data.table for use in the articles.  this will require one
 # description per code
-icd_codes <- get_icd_codes(with.description = TRUE)
+icd_codes <- get_icd_codes(with.descriptions = TRUE)
 setDT(icd_codes)
 
 # retain the most recent description
