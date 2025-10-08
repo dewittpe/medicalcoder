@@ -26,7 +26,7 @@ icd_codes <- readRDS("../icd/icd_codes.rds")
 setDT(icd_codes)
 
 ################################################################################
-# Import the regex patters for finding all relevant codes
+# Import the regex patterns for finding all relevant codes
 regex_patterns <-
   list(
     "./deyo1992.txt",
@@ -112,7 +112,7 @@ charlson_codes[, code := NULL]
 #   In the format as built above:   1325144 bytes
 #   After widening:                 1146704 bytes
 #   After adding additional column: 1184208 bytes
-#   After factor(condition):        1147544 bytes -- Not worth the head ache
+#   After factor(condition):        1147544 bytes -- Not worth the headache
 #   refactor, 28 May 2025            205304 bytes
 #   4 June 2025                      210824 bytes -- with the copy of quan2011
 
@@ -141,7 +141,7 @@ charlson_index_scores <-
 # object.size(charlson_index_scores)
 #
 # Asis:                    5800 bytes
-# after factor(condition): 6376 bytes -- bigger and not worth the head ache
+# after factor(condition): 6376 bytes -- bigger and not worth the headache
 #
 # charlson_index_scores[, condition := factor(condition, levels = levels(charlson_codes$condition))]
 
