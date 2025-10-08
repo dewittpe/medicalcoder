@@ -83,6 +83,7 @@ is_icd <- function(x, icdv = c(9L, 10L), dx = c(1L, 0L),
   }
   codes <- codes[keep, , drop = FALSE]
 
+  # known_start / known_end are guaranteed populated; see tests/test-get_icd.R
   min_known_start <- min(codes[["known_start"]])
   max_known_end   <- max(codes[["known_end"]])
 
@@ -105,7 +106,33 @@ is_icd <- function(x, icdv = c(9L, 10L), dx = c(1L, 0L),
         ". The input of `year` = ", year, " results in no possible positive match."
       )
     warning(msg, call. = FALSE)
+    return(return_false(x))
   }
+
+
+  keep <- rep_len(TRUE, nrow(codes))
+  if (!headerok) {
+    # require assignable rows, either ever or at the given year
+    keep <- keep & !is.na(codes[["assignable_start"]])
+  }
+  if (!ever.assignable) {
+    keep <- keep &
+      codes[["assignable_start"]] <= year &
+      codes[["assignable_end"]] >= year
+  }
+  if (!any(keep)) {
+    msg <-
+      paste0(
+        "The combination of ", icdv_dx_src_msg,
+        " along with `headerok` = ", toString(headerok),
+        " and `ever.assignable` = ", toString(ever.assignable),
+        " results in no possible positive match."
+      )
+    warning(msg, call. = FALSE)
+    return(return_false(x))
+  }
+
+  codes <- codes[keep, , drop = FALSE]
 
 
   # unique codes to match on
@@ -122,29 +149,9 @@ is_icd <- function(x, icdv = c(9L, 10L), dx = c(1L, 0L),
 
   codes <- codes[union(kf, kc), , drop = FALSE]
 
-  keep <-
-    (codes[["icdv"]] %in% icdv) &
-    (codes[["dx"]]  %in% dx) &
-    (codes[["src"]] %in% src)
-
-  if (!headerok) {
-    # require assignable rows, either ever or at the given year
-    keep <- keep & !is.na(codes[["assignable_start"]])
-    if (!ever.assignable) {
-      keep <- keep &
-        codes[["assignable_start"]] <= year &
-        codes[["assignable_end"]] >= year
-    }
+  if (nrow(codes) == 0L) {
+    return(return_false(x))
   }
-
-  # if there are no valid look ups return FALSE and warn
-  if (!any(keep)) {
-    rtn <- rep_len(FALSE, length(x))
-    rtn[is.na(x)] <- NA
-    return(rtn)
-  }
-
-  codes <- codes[keep, , drop = FALSE]
 
   # If you are here, there are possible valid ICD to compare to
 

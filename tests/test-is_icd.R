@@ -135,33 +135,78 @@ warn <-
 stopifnot(inherits(warn, "warning"))
 
 ################################################################################
-# Warn and set year to the first known year if user provides a year before the
-# earliest known year
-w <-
-  tryCatch(
-    is_icd("516.3", year = 1876),
-    warning = function(w) w
-  )
+# Warn if user provides a year before the earliest known year.  Note: ICD-9 in
+# the United states went into effect for
+# fiscal year 1980 (Oct 1, 1979 - Sept 30, 1980).  Any year before 1980 will
+# generate this error no matter how much data is in the internal lookup tables
+# for ICD-9, at least based on the US version.  As of Oct 2025 and pre public
+# release of medicalcoder, the earliest known year is 1997.
+#
+# This should work based on different sets of codes too.  For example, using the
+# data in medicalcoder 0.0.0.9045, the warning should be thrown based on the
+# version and source.
+#
+#   > as.data.table(get_icd_codes())[, min(known_start), by = .(src, icdv)]
+#         src  icdv    V1
+#      <char> <int> <int>
+#   1:    cms     9  1997
+#   2:    cms    10  2014
+#   3:    cdc    10  2001
+#   4:    who    10  2008
+w1 <- tryCatch(is_icd("516.3", year = 1979), warning = function(w) w)
+w2 <- tryCatch(is_icd("516.3", year = 1979, icdv = 9), warning = function(w) w)
+w3 <- tryCatch(is_icd("516.3", year = 2000, icdv = 9), warning = function(w) w)
+w4 <- tryCatch(is_icd("516.3", year = 2000, icdv = 10), warning = function(w) w)
+w5 <- tryCatch(is_icd("516.3", year = 2009, icdv = 10), warning = function(w) w)
+w6 <- tryCatch(is_icd("516.3", year = 2009, icdv = 10, src = "cms"), warning = function(w) w)
 
 stopifnot(
-  "TODO: Year before first known year generates an warning" = inherits(w, "warning")
+  "Year before first known year generates an warning: w1" = inherits(w1, "warning"),
+  "Year before first known year generates an warning: w2" = inherits(w2, "warning"),
+  "year = 2000 does not generate a warning for icdv 9"    = !inherits(w3, "warning"),
+  "year = 2000 generates a warning for icdv 10"           = inherits(w4, "warning"),
+  "year = 2009 does not generate a warning for icdv 10"   = !inherits(w5, "warning"),
+  "year = 2009 does generate a warning for icdv 10 with src = cms" = inherits(w6, "warning")
 )
 
-is_icd("NOT A CODE", dx = 0, src = c("who", "hg"))
 
 ################################################################################
 # ICD-9 516.3 is a good test for ever.assignable and year.  It was assignable
 # from 1997 through 2011, and then a header code through the end of ICD-9 in
 # 2015.
+#
+# t1:
+#   default call to is_icd for code 516.3 is TRUE becuase year is missing and
+#   thus treated as most current, and ever.billable is TRUE because year was
+#   missing
+#
+# t2:
+#   explicitly use ever.assignable = TRUE
+#
+# t3:
+#   with ever.assignable = FALSE and year missing the return should be FALSE as
+#   the code was not assignable in the most current year.
+#
+# t4:
+#   with ever.assignable = FALSE and year = 2012 the return will be FALSE
+#   becuase 516.3 was not assignable in 2012
+#
+# t5:
+#   with ever.assignable = TRUE and year = 2012 the return will be TRUE
+#   becuase 516.3 was billable prior to 2012
+#
+# t6:
+#   with ever.assignable = FALSE and year = 2011 the return will be TRUE becuase
+#   516.3 was assignable in 2011
 
 stopifnot(
-  "Default call to is_icd for 516.3 is TRUE" = is_icd("516.3")
+  "t1" =  is_icd("516.3"),
+  "t2" =  is_icd("516.3", ever.assignable = TRUE),
+  "t3" = !is_icd("516.3", ever.assignable = FALSE),
+  "t4" = !is_icd("516.3", ever.assignable = FALSE, year = 2012),
+  "t5" =  is_icd("516.3", ever.assignable = TRUE, year = 2012),
+  "t6" =  is_icd("516.3", ever.assignable = FALSE, year = 2011)
   )
-
-is_icd("516.3", ever.assignable = TRUE)
-is_icd("516.3", ever.assignable = TRUE, year = 1832)
-is_icd("516.3", ever.assignable = FALSE, year = 1832)
-
 
 ################################################################################
 #                                 End of File                                  #

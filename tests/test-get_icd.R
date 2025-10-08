@@ -95,12 +95,16 @@ stopifnot(all(Negate(is.na)(ICDCODES[["icdv"]])))
 stopifnot(all(Negate(is.na)(ICDCODES[["dx"]])))
 stopifnot(all(Negate(is.na)(ICDCODES[["full_code"]])))
 stopifnot(all(Negate(is.na)(ICDCODES[["code"]])))
+stopifnot(all(Negate(is.na)(ICDCODES[["known_start"]])))
+stopifnot(all(Negate(is.na)(ICDCODES[["known_end"]])))
 
 stopifnot(all(Negate(is.na)(ICDHIER[["icdv"]])))
 stopifnot(all(Negate(is.na)(ICDHIER[["dx"]])))
 stopifnot(all(Negate(is.na)(ICDHIER[["full_code"]])))
 stopifnot(all(Negate(is.na)(ICDHIER[["code"]])))
 stopifnot(all(Negate(is.na)(ICDHIER[["chapter"]])))
+stopifnot(all(Negate(is.na)(ICDHIER[["known_start"]])))
+stopifnot(all(Negate(is.na)(ICDHIER[["known_end"]])))
 
 # Verify that the src column is as expected
 stopifnot(
