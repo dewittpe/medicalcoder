@@ -2,6 +2,8 @@
 
 .onLoad <- function(libname, pkgname) {
   # Build icd_codes
+  # NOTE: code_id is a distinct key mapping to: icdv, dx, full_code, code.
+  # See data-raw/icd/icd_codes.R
   idx <- match(..mdcr_internal_known_and_assignable_start_stop..[["code_id"]],
                ..mdcr_internal_icd_codes..[["code_id"]])
   cols <- c("icdv","dx","full_code","code","chap_id","subchap_id")
