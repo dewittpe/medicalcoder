@@ -135,5 +135,34 @@ warn <-
 stopifnot(inherits(warn, "warning"))
 
 ################################################################################
+# Warn and set year to the first known year if user provides a year before the
+# earliest known year
+w <-
+  tryCatch(
+    is_icd("516.3", year = 1876),
+    warning = function(w) w
+  )
+
+stopifnot(
+  "TODO: Year before first known year generates an warning" = inherits(w, "warning")
+)
+
+is_icd("NOT A CODE", dx = 0, src = c("who", "hg"))
+
+################################################################################
+# ICD-9 516.3 is a good test for ever.assignable and year.  It was assignable
+# from 1997 through 2011, and then a header code through the end of ICD-9 in
+# 2015.
+
+stopifnot(
+  "Default call to is_icd for 516.3 is TRUE" = is_icd("516.3")
+  )
+
+is_icd("516.3", ever.assignable = TRUE)
+is_icd("516.3", ever.assignable = TRUE, year = 1832)
+is_icd("516.3", ever.assignable = FALSE, year = 1832)
+
+
+################################################################################
 #                                 End of File                                  #
 ################################################################################

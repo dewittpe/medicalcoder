@@ -21,7 +21,7 @@
 #' @template params-icd-year
 #' @template params-icd-form
 #'
-#' @seealso 
+#' @seealso
 #' * [`get_icd_codes()`] to retrieve the internal lookup table of ICD codes.
 #' * [`lookup_icd_codes()`] for retrieving details on a specific set of ICD
 #'   codes.
@@ -55,15 +55,60 @@ is_icd <- function(x, icdv = c(9L, 10L), dx = c(1L, 0L),
   assert_scalar_logical(full.codes)
   assert_scalar_logical(compact.codes)
   stopifnot(full.codes | compact.codes)
+  stopifnot(missing(year) || (length(year) == 1L & is.numeric(year)))
 
-  if (missing(year)) {
-    year <- Inf
-  } else {
-    stopifnot(length(year) == 1L, is.numeric(year))
+  # return_false will generate a vector of equal length to x and is all FALSE or
+  # NA.  this is used  then there are no possible codes to check and the return
+  # should just be FALSE
+  return_false <- function(x) {
+    rtn <- rep_len(FALSE, length(x))
+    rtn[is.na(x)] <- NA
+    rtn
   }
 
   # get the known icd codes and filter to relevent codes
   codes <- get_icd_codes(with.descriptions = FALSE, with.hierarchy = FALSE)
+
+  # keep based on icdv, dx, and src
+  keep <- (codes[["icdv"]] %in% icdv) & (codes[["dx"]] %in% dx) & (codes[["src"]] %in% src)
+  icdv_dx_src_msg <-
+    sprintf("`icdv` = %s; `dx` = %s; and `src` = %s;",
+      toString(icdv), toString(dx), toString(src)
+    )
+  if (!any(keep)) {
+    msg <-
+      paste0("The combination of ", icdv_dx_src_msg, " does not match any ICD codes in the internal medicalcoder lookup tables.")
+    warning(msg, call. = FALSE)
+    return(return_false(x))
+  }
+  codes <- codes[keep, , drop = FALSE]
+
+  min_known_start <- min(codes[["known_start"]])
+  max_known_end   <- max(codes[["known_end"]])
+
+  if (missing(year)) {
+    year <- max_known_end
+  } else if (year < min_known_start) {
+    msg <-
+      paste0(
+        "The combination of ", icdv_dx_src_msg,
+        " has ICD codes with a first known_start year of ", min_known_start,
+        ". The input of `year` = ", year, " results in no possible positive match."
+      )
+    warning(msg, call. = FALSE)
+    return(return_false(x))
+  } else if (year > max_known_end) {
+    msg <-
+      paste0(
+        "The combination of ", icdv_dx_src_msg,
+        " has ICD codes with a max known_end year of ", max_known_end,
+        ". The input of `year` = ", year, " results in no possible positive match."
+      )
+    warning(msg, call. = FALSE)
+  }
+
+
+  # unique codes to match on
   ux <- unique(x)
 
   kf <- integer(0L)
