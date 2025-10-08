@@ -47,13 +47,13 @@ lookup_icd_codes <- function(x, regex = FALSE, full.codes = TRUE, compact.codes 
 
   if (regex) {
     if(full.codes) {
-      fcmatches <- lapply(x, grep, x = ICDCODES$full_code, value = TRUE, ...)
+      fcmatches <- lapply(x, grep, x = ICDCODES[["full_code"]], value = TRUE, ...)
       fcmatches <- data.frame(input_seq   = rep(seq_along(x), times = sapply(fcmatches, length)),
                               input_regex = rep(x, times = sapply(fcmatches, length)),
                               input_code  = do.call(c, fcmatches))
     }
     if (compact.codes) {
-      ccmatches <- lapply(x, grep, x = ICDCODES$code, value = TRUE, ...)
+      ccmatches <- lapply(x, grep, x = ICDCODES[["code"]], value = TRUE, ...)
       ccmatches <- data.frame(input_seq   = rep(seq_along(x), times = sapply(ccmatches, length)),
                               input_regex = rep(x, times = sapply(ccmatches, length)),
                               input_code  = do.call(c, ccmatches))
@@ -134,7 +134,7 @@ lookup_icd_codes <- function(x, regex = FALSE, full.codes = TRUE, compact.codes 
     rtn[["input_code"]] <- NULL
   }
 
-  rtn <- rtn[order(rtn$input_seq), , drop = FALSE]
+  rtn <- rtn[order(rtn[["input_seq"]]), , drop = FALSE]
   rtn[["input_seq"]] <- NULL
 
   unique(rtn)

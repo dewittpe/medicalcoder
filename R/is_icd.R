@@ -178,21 +178,21 @@ is_icd <- function(x, icdv = c(9L, 10L), dx = c(1L, 0L),
     dccs <- DF[0, , drop = FALSE]
 
     if (full.codes) {
-      dfcs <- DF[DF$full_code %in% ux, c("full_code", "icdv", "dx"), drop = FALSE]
-      dfcs <- dfcs[duplicated(dfcs$full_code) | duplicated(dfcs$full_code, fromLast = TRUE), ]
+      dfcs <- DF[DF[["full_code"]] %in% ux, c("full_code", "icdv", "dx"), drop = FALSE]
+      dfcs <- dfcs[duplicated(dfcs[["full_code"]]) | duplicated(dfcs[["full_code"]], fromLast = TRUE), ]
       dfcs[["msg"]] <- sprintf("ICD %d %s full", dfcs[["icdv"]],
                                c("pr", "dx")[1L + dfcs[["dx"]]])
     }
 
     if (compact.codes) {
-      dccs <- DF[DF$code %in% ux, c("code", "icdv", "dx"), drop = FALSE]
-      dccs <- dccs[duplicated(dccs$code) | duplicated(dccs$code, fromLast = TRUE), ]
+      dccs <- DF[DF[["code"]] %in% ux, c("code", "icdv", "dx"), drop = FALSE]
+      dccs <- dccs[duplicated(dccs[["code"]]) | duplicated(dccs[["code"]], fromLast = TRUE), ]
       dccs[["msg"]] <- sprintf("ICD %d %s compact", dccs[["icdv"]],
                                c("pr", "dx")[1L + dccs[["dx"]]])
     }
 
-    dfcs <- split(dfcs, dfcs$full_code)
-    dccs <- split(dccs, dccs$code)
+    dfcs <- split(dfcs, dfcs[["full_code"]])
+    dccs <- split(dccs, dccs[["code"]])
 
 
     for (u in ux) {

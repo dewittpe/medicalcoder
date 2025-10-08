@@ -56,7 +56,7 @@
                 i = (cmrb[["tech_dep_flag"]] == 1L),
                 cols = c(id.vars, "condition"))
 
-  conditions <- sort(unique(..mdcr_internal_pccc_conditions..$condition))
+  conditions <- sort(unique(..mdcr_internal_pccc_conditions..[["condition"]]))
 
   # build indicator matrix for conditions
   dxpr_X      <- matrix(0L, nrow = nrow(iddf), ncol = length(conditions))
@@ -147,8 +147,8 @@
       scnd <- unique(mdcr_subset(cmrb, i = cmrb[["condition"]] == cnd, cols = c(id.vars, "subcondition")))
 
       # subset the uiddf to the set of those with the condition
-      uiddf <- mdcr_subset(rtn$conditions,
-                           i = rtn$conditions[[paste0(cnd, "_dxpr_or_tech")]] == 1,
+      uiddf <- mdcr_subset(rtn[["conditions"]],
+                           i = rtn[["conditions"]][[paste0(cnd, "_dxpr_or_tech")]] == 1,
                            cols = id.vars)
 
       key_uiddf <- do.call(paste, c(uiddf, sep = "\r"))
@@ -156,7 +156,7 @@
       key_ciddf <- do.call(paste, c(mdcr_select(scnd, id.vars), sep = "\r"))
       ri <- match(key_ciddf, key_uiddf)
 
-      scnds <- sort(unique(..mdcr_internal_pccc_conditions..[..mdcr_internal_pccc_conditions..$condition == cnd, "subcondition"]))
+      scnds <- sort(unique(..mdcr_internal_pccc_conditions..[..mdcr_internal_pccc_conditions..[["condition"]] == cnd, "subcondition"]))
       ci <- match(scnd[["subcondition"]], scnds)
       X <- matrix(0L, nrow = nrow(uiddf), ncol = length(scnds))
       colnames(X) <- scnds
@@ -166,7 +166,7 @@
         X[cbind(ri[keep], ci[keep])] <- 1L
       }
 
-      rtn$subconditions[[cnd]] <- cbind(uiddf, as.data.frame(X, check.names = FALSE))
+      rtn[["subconditions"]][[cnd]] <- cbind(uiddf, as.data.frame(X, check.names = FALSE))
     }
   }
 
@@ -183,7 +183,7 @@
   CMRB <- mdcr_select(cmrb, cols = c(id.vars, "condition"))
   CMRB <- unique(CMRB)
 
-  conditions <- sort(unique(..mdcr_internal_pccc_conditions..$condition))
+  conditions <- sort(unique(..mdcr_internal_pccc_conditions..[["condition"]]))
 
   # build indicator matrix for conditions
   X <- matrix(0L, nrow = nrow(iddf), ncol = length(conditions))
@@ -217,15 +217,15 @@
       scnd <- unique(mdcr_subset(cmrb, i = cmrb[["condition"]] == cnd, cols = c(id.vars, "subcondition")))
 
       # subset the uiddf to the set of those with the condition
-      uiddf <- mdcr_subset(rtn$conditions,
-                           i = rtn$conditions[[cnd]] == 1,
+      uiddf <- mdcr_subset(rtn[["conditions"]],
+                           i = rtn[["conditions"]][[cnd]] == 1,
                            cols = id.vars)
       key_uiddf <- do.call(paste, c(uiddf, sep = "\r"))
 
       key_ciddf <- do.call(paste, c(mdcr_select(scnd, id.vars), sep = "\r"))
       ri <- match(key_ciddf, key_uiddf)
 
-      scnds <- sort(unique(..mdcr_internal_pccc_conditions..[..mdcr_internal_pccc_conditions..$condition == cnd, "subcondition"]))
+      scnds <- sort(unique(..mdcr_internal_pccc_conditions..[..mdcr_internal_pccc_conditions..[["condition"]] == cnd, "subcondition"]))
       ci <- match(scnd[["subcondition"]], scnds)
       X <- matrix(0L, nrow = nrow(uiddf), ncol = length(scnds))
       colnames(X) <- scnds
@@ -235,7 +235,7 @@
         X[cbind(ri[keep], ci[keep])] <- 1L
       }
 
-      rtn$subconditions[[cnd]] <- cbind(uiddf, as.data.frame(X, check.names = FALSE))
+      rtn[["subconditions"]][[cnd]] <- cbind(uiddf, as.data.frame(X, check.names = FALSE))
     }
   }
 
