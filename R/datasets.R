@@ -5,10 +5,10 @@
 #' diagnostic codes and 41 possible procedure codes.  Each row is for one
 #' patient id.
 #'
-#' * patid: patient identifier, integer values
-#' * icdv: ICD version; integer values, 9 or 10
-#' * dx: indicator column for ICD diagnostic (1) or procedure (0) codes
-#' * code: ICD code; character values
+#' * `patid`: patient identifier, integer values
+#' * `icdv`: ICD version; integer values, 9 or 10
+#' * `dx`: indicator column for ICD diagnostic (1) or procedure (0) codes
+#' * `code`: ICD code; character values
 #'
 #' @family datasets
 #'
@@ -21,10 +21,10 @@
 #' expected to be treated as diagnostic codes but there are a few ICD-9 codes
 #' which could match to procedure codes as well.
 #'
-#' * patid: patient identifier, integer values
-#' * date: date the diagnostic code was recorded
-#' * icdv: ICD version 9 or 10, integer valued
-#' * code: ICD codes; character values
+#' * `patid`: patient identifier, integer values
+#' * `date`: date the diagnostic code was recorded
+#' * `icdv`: ICD version 9 or 10, integer valued
+#' * `code`: ICD codes; character values
 #"
 #' @family datasets
 #'

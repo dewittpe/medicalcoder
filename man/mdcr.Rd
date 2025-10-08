@@ -9,10 +9,10 @@
 diagnostic codes and 41 possible procedure codes.  Each row is for one
 patient id.
 \itemize{
-\item patid: patient identifier, integer values
-\item icdv: ICD version; integer values, 9 or 10
-\item dx: indicator column for ICD diagnostic (1) or procedure (0) codes
-\item code: ICD code; character values
+\item \code{patid}: patient identifier, integer values
+\item \code{icdv}: ICD version; integer values, 9 or 10
+\item \code{dx}: indicator column for ICD diagnostic (1) or procedure (0) codes
+\item \code{code}: ICD code; character values
 }
 }
 \usage{

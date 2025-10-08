@@ -48,7 +48,7 @@ The primary objectives of `medicalcoder` are:
      - Suggested packages are needed only for development work and building
        vignettes. They are not required for installation or use.
      - That said, there are non-trivial performance gains when passing a
-       [`data.table](https://cran.r-project.org/package=data.table) to the
+       [`data.table`](https://cran.r-project.org/package=data.table) to the
        `comorbidities()` function compared to a base `data.frame` or the
        Tidyverse's `tibble`.  (See benchmarking section).
 
@@ -95,8 +95,10 @@ comorbidity algorithm to a data set are:
    use and reduce computation time.
 3. flag.method: "current" will take less time than the "cumulative" method.
 
-Details on the benchmarking method, summary graphics, and tables,  can be found on the
-[`medicalcoder` GitHub](https://github.com/dewittpe/medicalcoder/tree/main/benchmarking).
+Details on the benchmarking method, summary graphics, and tables,  can be found
+on the `medicalcoder` GitHub
+[benchmarking](https://github.com/dewittpe/medicalcoder/tree/main/benchmarking)
+directory.
 
 ## Install
 

@@ -236,7 +236,7 @@ comorbidities.data.frame <- function(data,
     }
     pn <- which(id.vars %in% ..protected_names..)
     if (length(pn)) {
-      stop(sprintf("The value(s) \"%s\" in 'id.vars', are protected names.  It is ill-advised to use a protected name as medicalcoder is exptecting to use them internally to apply the comorbidity algorithms.  Sorry for the inconvience, but you will need to rename the column(s) in your data set.  Protected names that you should not use for 'id.vars' are: %s.",
+      stop(sprintf("The value(s) \"%s\" in 'id.vars' are protected name(s).  It is ill-advised to use a protected name as medicalcoder is expecting to use them internally to apply the comorbidity algorithms.  Sorry for the inconvenience, but you will need to rename the column(s) in your data set.  Protected names that you should not use for 'id.vars' are: %s.",
         paste(id.vars[pn], collapse = ", "),
         paste(..protected_names.., collapse = ", ")
         )
@@ -249,7 +249,7 @@ comorbidities.data.frame <- function(data,
     pn <- poa.var %in% ..protected_names..
     if (pn) {
       stop(
-        sprintf("The value \"%s\" in 'poa.var', is a protected name.  It is ill-advised to use a protected names as medicalcoder is exptecting to use them internally to apply the comorbidity algorithms.  Sorry for the inconvience, but you will need to rename the column in your data set.  Protected names that you should not use for 'poa.var' are: %s.",
+        sprintf("The value \"%s\" in 'poa.var' is a protected name.  It is ill-advised to use a protected name as medicalcoder is expecting to use them internally to apply the comorbidity algorithms.  Sorry for the inconvenience, but you will need to rename the column in your data set.  Protected names that you should not use for 'poa.var' are: %s.",
           poa.var,
           paste(..protected_names.., collapse = ", ")
         )
@@ -263,7 +263,7 @@ comorbidities.data.frame <- function(data,
     pn <- primarydx.var %in% ..protected_names..
     if (pn) {
       stop(
-        sprintf("The value \"%s\" in 'primarydx.var', is a protected name.  It is ill-advised to use a protected names as medicalcoder is exptecting to use them internally to apply the comorbidity algorithms.  Sorry for the inconvience, but you will need to rename the column in your data set.  Protected names that you should not use for 'primarydx.var' are: %s.",
+        sprintf("The value \"%s\" in 'primarydx.var' is a protected name.  It is ill-advised to use a protected name as medicalcoder is expecting to use them internally to apply the comorbidity algorithms.  Sorry for the inconvenience, but you will need to rename the column in your data set.  Protected names that you should not use for 'primarydx.var' are: %s.",
           primarydx.var,
           paste(..protected_names.., collapse = ", ")
         )
@@ -458,7 +458,7 @@ comorbidities.data.frame <- function(data,
         stopifnot(primarydx %in% c(0L, 1L))
       } else {
         if (grepl("^elixhauser", method)) {
-          warning("Assuming all codes provided are seconday diagnostic codes.  Define `primarydx.var` or `primarydx` if this assumption is incorrect.", call. = FALSE)
+          warning("Assuming all codes provided are secondary diagnostic codes.  Define `primarydx.var` or `primarydx` if this assumption is incorrect.", call. = FALSE)
         }
         primarydx <- 0L
       }

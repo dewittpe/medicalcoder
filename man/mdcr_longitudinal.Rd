@@ -9,10 +9,10 @@
 expected to be treated as diagnostic codes but there are a few ICD-9 codes
 which could match to procedure codes as well.
 \itemize{
-\item patid: patient identifier, integer values
-\item date: date the diagnostic code was recorded
-\item icdv: ICD version 9 or 10, integer valued
-\item code: ICD codes; character values
+\item \code{patid}: patient identifier, integer values
+\item \code{date}: date the diagnostic code was recorded
+\item \code{icdv}: ICD version 9 or 10, integer valued
+\item \code{code}: ICD codes; character values
 }
 }
 \usage{

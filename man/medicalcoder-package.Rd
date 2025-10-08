@@ -24,7 +24,7 @@ The package balances performance with elegance: its internal caching,
 efficient joins, and compact data structures make it practical for
 large-scale health data analyses, while its clean design makes it easy to
 extend or audit. Whether you need to flag comorbidities, explore ICD
-hierarchies, or standardize clinical coding workflows, medicalcoder provides
+hierarchies, or standardize clinical coding workflows, \code{medicalcoder} provides
 a robust, transparent foundation for research and applied work in biomedical
 informatics.
 }

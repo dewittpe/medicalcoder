@@ -169,7 +169,7 @@ cdc[, fiscal_year := as.integer(fiscal_year)]
 cdc[, file := NULL]
 
 ################################################################################
-# the documentation includes alot of sections were a fourth and/or fifth digit
+# the documentation includes a lot of sections were a fourth and/or fifth digit
 # is to be added.
 
 add_rows <- function(pattern, suffixes, data) {
