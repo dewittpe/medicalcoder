@@ -50,7 +50,8 @@ The primary objectives of `medicalcoder` are:
      - That said, there are non-trivial performance gains when passing a
        [`data.table`](https://cran.r-project.org/package=data.table) to the
        `comorbidities()` function compared to a base `data.frame` or the
-       Tidyverse's `tibble`.  (See benchmarking section).
+       Tidyverse's `tibble`.
+       (See [benchmarking](https://github.com/dewittpe/medicalcoder/tree/main/benchmarking)).
 
    - Internal lookup tables
      - All required data are included in the package. If you have the .tar.gz

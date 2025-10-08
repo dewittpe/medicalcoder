@@ -42,7 +42,8 @@ The primary objectives of `medicalcoder` are:
      - That said, there are non-trivial performance gains when passing a
        [`data.table`](https://cran.r-project.org/package=data.table) to the
        `comorbidities()` function compared to a base `data.frame` or the
-       Tidyverse's `tibble`.  (See benchmarking section).
+       Tidyverse's `tibble`.
+       (See [benchmarking](https://github.com/dewittpe/medicalcoder/tree/main/benchmarking)).
 
    - Internal lookup tables
      - All required data are included in the package. If you have the .tar.gz
@@ -177,16 +178,28 @@ is one code with additional columns for patient and/or encounter id.
 
 ``` r
 data(mdcr, mdcr_longitudinal, package = "medicalcoder")
-#> Warning in data(mdcr, mdcr_longitudinal, package = "medicalcoder"): data set
-#> 'mdcr' not found
-#> Warning in data(mdcr, mdcr_longitudinal, package = "medicalcoder"): data set
-#> 'mdcr_longitudinal' not found
 str(mdcr)
-#> Error: object 'mdcr' not found
+#> 'data.frame':	319856 obs. of  4 variables:
+#>  $ patid: int  71412 71412 71412 71412 71412 17087 64424 64424 84361 84361 ...
+#>  $ icdv : int  9 9 9 9 9 10 9 9 9 9 ...
+#>  $ code : chr  "99931" "75169" "99591" "V5865" ...
+#>  $ dx   : int  1 1 1 1 1 1 1 0 1 1 ...
 head(mdcr)
-#> Error: object 'mdcr' not found
+#>   patid icdv  code dx
+#> 1 71412    9 99931  1
+#> 2 71412    9 75169  1
+#> 3 71412    9 99591  1
+#> 4 71412    9 V5865  1
+#> 5 71412    9  V427  1
+#> 6 17087   10  V441  1
 head(mdcr_longitudinal)
-#> Error: object 'mdcr_longitudinal' not found
+#>     patid       date icdv     code
+#> 1 9663901 2016-03-18   10   Z77.22
+#> 2 9663901 2016-03-24   10  IMO0002
+#> 3 9663901 2016-03-24   10 V87.7XXA
+#> 4 9663901 2016-03-25   10  J95.851
+#> 5 9663901 2016-03-30   10  IMO0002
+#> 6 9663901 2016-03-30   10    Z93.0
 ```
 
 ### ICD
