@@ -44,7 +44,7 @@ This design choice was made for several reasons.
 \item Works well with different data paradigms
 \itemize{
 \item Base R \code{data.frames},
-\item \href{https://www.tidyverse.org/}{Tidyverse} \code{tibble}s, and
+\item \href{https://www.tidyverse.org/}{tidyverse} \code{tibble}s, and
 \item \code{data.table}s from the \href{https://rdatatable.gitlab.io/data.table/}{data.table} package.
 }
 }

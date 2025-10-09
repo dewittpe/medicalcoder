@@ -245,7 +245,7 @@ and complex medical technology dependence and transplantation. BMC
 Pediatr 14, 199 (2014). https://doi.org/10.1186/1471-2431-14-199
 \item Feinstein JA, Hall M, Davidson A, Feudtner C. Pediatric Complex Chronic
 Condition System Version 3. JAMA Netw Open. 2024;7(7):e2420579.
-doi:10.1001/jamanetworkopen.2024.20579
+https://doi.org/10.1001/jamanetworkopen.2024.20579
 }
 \item Charlson Comorbidities:
 \itemize{
@@ -256,17 +256,17 @@ Diseases, Volume 40, Issue 5, 1987, Pages 373-383, ISSN 0021-9681,
 https://doi.org/10.1016/0021-9681(87)90171-8.
 \item Deyo RA, Cherkin DC, Ciol MA. Adapting a clinical comorbidity index
 for use with ICD-9-CM administrative databases. J Clin Epidemiol. 1992
-Jun;45(6):613-9. doi: 10.1016/0895-4356(92)90133-8. PMID: 1607900.
+Jun;45(6):613-9. https://doi.org/10.1016/0895-4356(92)90133-8. PMID: 1607900.
 \item Quan H, Sundararajan V, Halfon P, Fong A, Burnand B, Luthi JC,
 Saunders LD, Beck CA, Feasby TE, Ghali WA. Coding algorithms for defining
 comorbidities in ICD-9-CM and ICD-10 administrative data. Med Care. 2005
-Nov;43(11):1130-9. doi: 10.1097/01.mlr.0000182534.19832.83. PMID:
+Nov;43(11):1130-9. https://doi.org/10.1097/01.mlr.0000182534.19832.83. PMID:
 16224307.
 \item Quan H, Li B, Couris CM, Fushimi K, Graham P, Hider P, Januel JM,
-Sundararajan V. Updating and validating the Charlson comorbidity index and
-score for risk adjustment in hospital discharge abstracts using data from 6
-countries. Am J Epidemiol. 2011 Mar 15;173(6):676-82. doi:
-10.1093/aje/kwq433. Epub 2011 Feb 17. PMID: 21330339.
+Sundararajan V. Updating and validating the Charlson comorbidity index
+and score for risk adjustment in hospital discharge abstracts using
+data from 6 countries. Am J Epidemiol. 2011 Mar 15;173(6):676-82.
+https://doi.org/10.1093/aje/kwq433. Epub 2011 Feb 17. PMID: 21330339.
 \item Glasheen WP, Cordier T, Gumpina R, Haugh G, Davis J, Renda A.
 Charlson Comorbidity Index: ICD-9 Update and ICD-10 Translation. Am Health
 Drug Benefits. 2019 Jun-Jul;12(4):188-197. PMID: 31428236; PMCID:

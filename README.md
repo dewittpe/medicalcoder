@@ -47,12 +47,12 @@ The primary objectives of `medicalcoder` are:
        vignettes. They are not required for installation or use.
      - That said, there are non-trivial performance gains when passing a
        [`data.table`](https://cran.r-project.org/package=data.table) to the
-       `comorbidities()` function compared to a base `data.frame` or the
-       Tidyverse's `tibble`.
+       `comorbidities()` function compared to passing a base `data.frame` or a
+       `tibble` from the tidyverse.
        (See [benchmarking](https://github.com/dewittpe/medicalcoder/tree/main/benchmarking)).
 
    - Internal lookup tables
-     - All required data are included in the package. If you have the .tar.gz
+     - All required data are included in the package. If you have the `.tar.gz`
        source file and R ≥ 3.5.0, that is all you need to install and use the
        package.
 
@@ -92,7 +92,7 @@ comorbidity algorithm to a data set are:
    `comorbidities()` and the `data.table` namespace is available, then S3
    dispatch for `merge` is used, along with some other methods, to reduce memory
    use and reduce computation time.
-3. flag.method: "current" will take less time than the "cumulative" method.
+3. `flag.method`: "current" will take less time than the "cumulative" method.
 
 Details on the benchmarking method, summary graphics, and tables,  can be found
 on the `medicalcoder` GitHub
@@ -101,9 +101,13 @@ directory.
 
 ## Install
 
-### CRAN - Coming soon!
+### CRAN
 
-### From Github
+``` r
+install.packages("medicalcoder")
+```
+
+### From GitHub
 
 
 ``` r
@@ -137,14 +141,14 @@ R CMD INSTALL medicalcoder_X.Y.Z.tar.gz
 * Pediatric Complex Chronic Conditions (PCCC)
 
   * Version 2.0
-    - BMC Pediatrics: [Feudtner et.al. (2014)](https://doi.org/10.1186/1471-2431-14-199)
+    - BMC Pediatrics: [Feudtner et al. (2014)](https://doi.org/10.1186/1471-2431-14-199)
     - Consistent with R package [pccc](https://cran.r-project.org/package=pccc)
 
   * Version 2.1
     - Updated code base with the same assessment algorithm as version 2.0.
 
   * Version 3.0
-    - JAMA Network Open: [Feinstein et.al. (2024)](https://doi.org/10.1001/jamanetworkopen.2024.20579)
+    - JAMA Network Open: [Feinstein et al. (2024)](https://doi.org/10.1001/jamanetworkopen.2024.20579)
     - Children's Hospital Association [Toolkit](https://www.childrenshospitals.org/content/analytics/toolkit/complex-chronic-conditions)
 
   * Version 3.1
@@ -152,13 +156,13 @@ R CMD INSTALL medicalcoder_X.Y.Z.tar.gz
 
 * Charlson Comorbidities
   * [Deyo, Cherkin, and Ciol (1992)](https://doi.org/10.1016/0895-4356(92)90133-8)
-  * [Quan et.al. (2005)](https://doi.org/10.1097/01.mlr.0000182534.19832.83)
-  * [Quan et.al. (2011)](https://doi.org/10.1093/aje/kwq433)
+  * [Quan et al. (2005)](https://doi.org/10.1097/01.mlr.0000182534.19832.83)
+  * [Quan et al. (2011)](https://doi.org/10.1093/aje/kwq433)
   * [Glasheen (2019)](https://pubmed.ncbi.nlm.nih.gov/31428236/)
 
 * Elixhauser Comorbidities
-  * [Elixhauser et.al. (1998)](https://doi.org/10.1097/00005650-199801000-00004)
-  * [Quan et.al. (2005)](https://doi.org/10.1097/01.mlr.0000182534.19832.83)
+  * [Elixhauser et al. (1998)](https://doi.org/10.1097/00005650-199801000-00004)
+  * [Quan et al. (2005)](https://doi.org/10.1097/01.mlr.0000182534.19832.83)
   * AHRQ (2017, 2022, 2023, 2024, 2025)
     * [For ICD-9 codes](https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp)
     * [For ICD-10 codes](https://hcup-us.ahrq.gov/toolssoftware/comorbidityicd10/comorbidity_icd10.jsp)
@@ -254,8 +258,13 @@ The columns are:
   United States fiscal year starts October 1 and concludes September 30.  For
   example, fiscal year 2013 started October 1 2012 and concluded September 30 2013.
 
+  To reemphasize that the year is for the data within `medicalcoder`.  For
+  ICD-9-CM, the codes went into effect for fiscal year 1980.  The source code
+  only has documented source files for the codes dating back to
+  1997.
+
 * `known_end`: The latest (fiscal) year when the code was part of the ICD
-  system.
+  system and/or known within the `medicalcoder` lookup tables.
 
 * Assignable codes.  Some codes are header codes, e.g., ICD-10-CM three-digit
   code Z94 is a header code because the four-digit codes Z94.0, Z94.1, Z94.2,
@@ -265,6 +274,32 @@ The columns are:
   Z94.83, Z94.84, and Z94.89 exist.
     * `assignable_start`: Earliest (fiscal) year when the code was assignable.
     * `assignable_end`: Latest (fiscal) year when the code was assignable.
+
+
+``` r
+subset(
+  x = lookup_icd_codes("^Z94", regex = TRUE, full.codes = TRUE, compact.codes = FALSE),
+  subset = src == "cms",
+  select = c("full_code", "known_start", "known_end", "assignable_start", "assignable_end")
+)
+#>    full_code known_start known_end assignable_start assignable_end
+#> 1        Z94        2014      2026               NA             NA
+#> 5      Z94.0        2014      2026             2014           2026
+#> 9      Z94.1        2014      2026             2014           2026
+#> 14     Z94.2        2014      2026             2014           2026
+#> 17     Z94.3        2014      2026             2014           2026
+#> 22     Z94.4        2014      2026             2014           2026
+#> 25     Z94.5        2014      2026             2014           2026
+#> 29     Z94.6        2014      2026             2014           2026
+#> 33     Z94.7        2014      2026             2014           2026
+#> 38     Z94.8        2014      2026               NA             NA
+#> 41    Z94.81        2014      2026             2014           2026
+#> 42    Z94.82        2014      2026             2014           2026
+#> 43    Z94.83        2014      2026             2014           2026
+#> 44    Z94.84        2014      2026             2014           2026
+#> 45    Z94.89        2014      2026             2014           2026
+#> 46     Z94.9        2014      2026             2014           2026
+```
 
 Additionally, the `get_icd_codes()` method can provide descriptions and the ICD
 hierarchy by using the `with.descriptions` and/or `with.hierarchy` arguments.

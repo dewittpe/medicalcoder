@@ -33,7 +33,7 @@
   key_ccc  <- do.call(paste, c(mdcr_select(ccc, id.vars), sep = "\r"))
   ri <- match(key_ccc, key_iddf)
   ci <- match(ccc[["condition"]], needed)
-  
+
   keep <- !(is.na(ri) | is.na(ci))
   if (any(keep)) {
     X[cbind(ri[keep], ci[keep])] <- 1L

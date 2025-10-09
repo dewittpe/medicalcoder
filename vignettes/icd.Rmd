@@ -35,7 +35,7 @@ the `medicalcoder` package.  The sources for these look up tables come from the
 Centers for Disease Control (CDC) and from the Centers for Medicare & Medicaid
 Services (CMS).  The specific links to the source data sets can be found in the
 source code for the `medicalcoder` package on
-[Github](https://github.com/dewittpe/medicalcoder).
+[GitHub](https://github.com/dewittpe/medicalcoder).
 ```{r label = "medicalcoder-url"}
 cat(packageDescription('medicalcoder')$URL)
 ```

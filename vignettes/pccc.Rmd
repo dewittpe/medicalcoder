@@ -282,7 +282,7 @@ Filter(f = function(x) x > 0, pat2_pccc_v3.1)
 The expected input data format for `comorbidities` is a "long" format.  The only
 mandatory column is one column of ICD codes.  These codes can be full codes
 (include the decimal point) or compact codes (omitting the decimal point).
-Additionally, column(s) for identifying patients, encounters, and any other 
+Additionally, column(s) for identifying patients, encounters, and any other
 important groups are encouraged.  A column to indicate the ICD version
 (9 or 10), and another column for identifying the code as a diagnostic or
 procedure code are also encouraged.  The example `mdcr` data set has three
@@ -494,7 +494,7 @@ merge(x = subset(mdcr, patid == "87420"),
 ```
 
 Using full codes can prevent false positives too.  Here are several different
-ways that pccc could be called resulting in different outcomes.
+ways that `comorbidities()` could be called resulting in different outcomes.
 
 Note: this is a good example of how `medicalcoder` can handle full and compact
 codes within a single record.
@@ -565,12 +565,12 @@ can cause.  "E030" matches ICD-9 dx compact and full code E030 (no decimal
 point), and matches the ICD-10 dx compact code for full code E03.0 with only the
 ICD-10 version being related to a chronic complex condition.
 
-Inputs to the pccc call for the ICD version will impact the output. When calling
-pccc with a variable to indicate the ICD version NA values will not be joined
-against and the codes are ignored resulting in no ccc being flagged.  If we know
-that we only want to compare against ICD-9 or ICD-10 values then using the icdv
-argument can simplify the call and in this case, no ccc for ICD-9 and a ccc is
-flagged for ICD-10.
+Inputs to the `comorbidities()` call for the ICD version will impact the output.
+When calling `comorbidities()` with a variable to indicate the ICD version `NA`
+values will not be joined against and the codes are ignored resulting in no
+condition being flagged.  If we know that we only want to compare against ICD-9
+or ICD-10 values then using the `icdv` argument can simplify the call and in
+this case, no condition for ICD-9 and a condition is flagged for ICD-10.
 
 ```{r, label = "patid95471"}
 subset(mdcr, patid == "95471")
@@ -645,7 +645,7 @@ compact_only[,  c("id", "cmrb_flag")]
 With no information about the "E030" being ICD-9 or ICD-10, full or compact,
 (can only be a diagnostic code in either ICD-9 or ICD-10) we get different
 flags.  The default, the most liberal approach flags this example patient as
-having a ccc in all cases.  When only considering the code to be a full code,
+having a condition in all cases.  When only considering the code to be a full code,
 then only the ICD-10 version matches.  When only considering the compact codes
 the flag is true for the ambiguous version and the ICD-9 full version since
 ICD-9 E030 is a full code with the same compact form.
@@ -699,7 +699,7 @@ kableExtra::kbl(
 ```
 
 Looking at patid 9663901 at an encounter level we see that the conditions occur
-at different moments in time and the ccc the patient has change overtime.
+at different moments in time and the condition the patient has change overtime.
 Because these are chronic conditions, once the condition is observed, it should
 be considered to exist in perpetuity.
 

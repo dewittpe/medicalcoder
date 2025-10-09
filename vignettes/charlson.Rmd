@@ -53,8 +53,8 @@ str(get_charlson_index_scores())
 
 # Applying Charlson
 
-Example, applying the @quan2005 variant of the Charlson comorbidities to the
-`mdcr` data is can be done thusly.
+Example: applying the @quan2005 variant of the Charlson comorbidities to the
+`mdcr` data is be done as follows.
 
 ```{r}
 mdcr_results <-
