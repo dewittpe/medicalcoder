@@ -55,13 +55,13 @@ data-raw:
 	  -e "devtools::install_dev_deps(pkg='$(PKG_ROOT)')" \
 	  > $@ 2>&1
 
-.document.Rout: $(RFILES) $(MANROXYGEN) $(EXAMPLES) $(PKG_ROOT)/DESCRIPTION $(PKG_ROOT)/README.md .install_dev_deps.Rout
+.document.Rout: $(RFILES) $(MANROXYGEN) $(EXAMPLES) $(PKG_ROOT)/DESCRIPTION README.md .install_dev_deps.Rout
 	$(RSCRIPT) --quiet -e "options(warn=2)" \
 	  -e "devtools::document('$(PKG_ROOT)')" \
 	  > $@ 2>&1
 
 # README depends on dev deps because it uses devtools::load_all()
-$(PKG_ROOT)/README.md: $(PKG_ROOT)/README.Rmd .install_dev_deps.Rout benchmarking/outtable.rds
+README.md: $(PKG_ROOT)/README.Rmd .install_dev_deps.Rout benchmarking/outtable.rds
 	$(RSCRIPT) -e "devtools::load_all('$(PKG_ROOT)')" \
 	  -e "knitr::knit('$(PKG_ROOT)/README.Rmd', output='README.md')"
 

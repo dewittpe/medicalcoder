@@ -14,6 +14,7 @@ suppressPackageStartupMessages(library(data.table))
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/dewittpe/medicalcoder/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dewittpe/medicalcoder/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/dewittpe/medicalcoder/graph/badge.svg)](https://app.codecov.io/gh/dewittpe/medicalcoder)
 <!-- badges: end -->
 
 `medicalcoder` is a lightweight, base-R package for working with ICD-9 and
