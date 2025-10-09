@@ -64,7 +64,7 @@ jobs:
         with:
           token: ${{ secrets.RHUB_TOKEN }}
           job-config: ${{ matrix.config.job-config }}
-          build-args: "--resave-data"
+          build-args: "--resave-data=best"
 
   other-platforms:
     needs: setup
