@@ -15,6 +15,7 @@ suppressPackageStartupMessages(library(data.table))
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/dewittpe/medicalcoder/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dewittpe/medicalcoder/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/dewittpe/medicalcoder/graph/badge.svg)](https://app.codecov.io/gh/dewittpe/medicalcoder)
+[![CRAN status](https://www.r-pkg.org/badges/version/medicalcoder)](https://CRAN.R-project.org/package=medicalcoder)
 <!-- badges: end -->
 
 `medicalcoder` is a lightweight, base-R package for working with ICD-9 and
@@ -159,14 +160,14 @@ R CMD INSTALL medicalcoder_X.Y.Z.tar.gz
   * [Deyo, Cherkin, and Ciol (1992)](https://doi.org/10.1016/0895-4356(92)90133-8)
   * [Quan et.al. (2005)](https://doi.org/10.1097/01.mlr.0000182534.19832.83)
   * [Quan et.al. (2011)](https://doi.org/10.1093/aje/kwq433)
-  * [Glasheen (2019)](https://pmc.ncbi.nlm.nih.gov/articles/PMC6684052/)
+  * [Glasheen (2019)](https://pubmed.ncbi.nlm.nih.gov/31428236/)
 
 * Elixhauser Comorbidities
   * [Elixhauser et.al. (1998)](https://doi.org/10.1097/00005650-199801000-00004)
   * [Quan et.al. (2005)](https://doi.org/10.1097/01.mlr.0000182534.19832.83)
   * AHRQ (2017, 2022, 2023, 2024, 2025)
     * [For ICD-9 codes](https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp)
-    * [For ICD-10 codes](https://www.hcup-us.ahrq.gov/toolssoftware/comorbidityicd10/comorbidity_icd10.jsp)
+    * [For ICD-10 codes](https://hcup-us.ahrq.gov/toolssoftware/comorbidityicd10/comorbidity_icd10.jsp)
 
 All of the methods are available from the same function call `comorbidities()`.
 There is support for age scores in Charlson, present on admission flags for all

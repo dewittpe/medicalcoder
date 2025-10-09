@@ -12,3 +12,4 @@
 ^man-roxygen/*
 ^testing/*
 ^\.github$
+^cran-comments\.md$
