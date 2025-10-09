@@ -11,3 +11,4 @@
 ^lib/*
 ^man-roxygen/*
 ^testing/*
+^\.github$

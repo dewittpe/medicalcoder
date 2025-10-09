@@ -12,6 +12,10 @@ suppressPackageStartupMessages(library(data.table))
 
 # `medicalcoder`: An R package for working with ICD codes and Comorbidity Algorithms <img src="man/figures/medicalcoder_600x600_hex.png" width="200px" align="right" alt = "medicalcoder hex logo"/>
 
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/dewittpe/medicalcoder/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dewittpe/medicalcoder/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+
 `medicalcoder` is a lightweight, base-R package for working with ICD-9 and
 ICD-10 diagnosis and procedure codes. It provides fast, dependency-free tools to
 look up, validate, and manipulate ICD codes, while also implementing widely used
