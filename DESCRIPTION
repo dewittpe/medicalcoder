@@ -1,5 +1,5 @@
 Package: medicalcoder
-Title: Tools For Working With ICD Codes and Comorbidity Algorithms
+Title: Tools for Working with ICD Codes and Comorbidity Algorithms
 Version: 0.0.0.9045
 Authors@R: c(
     person(given = "Peter", family = "DeWitt",    email = "peter.dewitt@cuanschutz.edu", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-6391-0795")),
