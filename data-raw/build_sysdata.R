@@ -74,6 +74,8 @@ usethis::use_data(
   , overwrite = TRUE
 )
 
+tools::resaveRdaFiles("../R/sysdata.rda", compress = "xz", compression_level = 9)
+
 ################################################################################
 #                                 End of File                                  #
 ################################################################################

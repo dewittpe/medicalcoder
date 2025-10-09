@@ -36,7 +36,7 @@ all:
 # =============================================================================
 
 $(TARBALL): .install_dev_deps.Rout .document.Rout $(VIGNETTES) $(TESTS) $(DATA)
-	$(R) CMD build --resave-data --md5 "$(PKG_ROOT)"
+	$(R) CMD build --md5 "$(PKG_ROOT)"
 
 # Run data-raw with parallelism you can override
 data-raw:

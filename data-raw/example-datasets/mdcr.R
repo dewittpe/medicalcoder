@@ -41,6 +41,11 @@ mdcr[, patid2 := NULL]
 
 setDF(mdcr)
 save(mdcr, file = "../../data/mdcr.rda")
+tools::resaveRdaFiles(
+  "../../data/mdcr.rda",
+  compress = "xz",
+  compression_level = 9
+)
 
 ################################################################################
 #                                 End of File                                  #
