@@ -1,21 +1,35 @@
 library(medicalcoder)
 
-# a code of length 1 should not be a valid code for either ICD-9 or ICD-10
-x <- is_icd(c(LETTERS, as.character(0:9)))
-stopifnot(length(x) == 36L, !any(x))
+################################################################################
+# a code of length 1 should not be a valid code for either ICD-9 or ICD-10, that
+# is because the minimum number of characters for ICD-9-CM ICD-10-CM is three,
+# ICD-10-PCS is seven, and ICD-9-PCS is two.  The folowing tests verify that
+# is_icd will return FALSE any reasonable one characters string.
+#
+# tests:
+#
+#   code_length_one_default: use the default call to is_icd
+#   code_length_one_icd9dx:  test against just ICD-9 diagnostic codes
+#   code_length_one_icd9pr:  test against just ICD-9 procedure codes
+#   code_length_one_icd10dx: test against just ICD-10 diagnostic codes
+#   code_length_one_icd10pr: test against just ICD-10 procedure codes
+#
+one_char_codes <- c(LETTERS, as.character(0:9))
+default <- is_icd(one_char_codes)
+icd9dx  <- is_icd(one_char_codes, icdv =  9L, dx = 1L)
+icd9pr  <- is_icd(one_char_codes, icdv =  9L, dx = 0L)
+icd10dx <- is_icd(one_char_codes, icdv = 10L, dx = 1L)
+icd10pr <- is_icd(one_char_codes, icdv = 10L, dx = 0L)
 
-x <- is_icd(c(LETTERS, as.character(0:9)), icdv = 9, dx = 1L)
-stopifnot(length(x) == 36L, !any(x))
+stopifnot(
+  code_length_one_default = length(default) == 36L && !any(default),
+  code_length_one_icd9dx  = length(icd9dx)  == 36L && !any(icd9dx),
+  code_length_one_icd9pr  = length(icd9pr)  == 36L && !any(icd9pr),
+  code_length_one_icd10dx = length(icd10dx) == 36L && !any(icd10dx),
+  code_length_one_icd10pr = length(icd10pr) == 36L && !any(icd10pr)
+)
 
-x <- is_icd(c(LETTERS, as.character(0:9)), icdv = 9, dx = 0L)
-stopifnot(length(x) == 36L, !any(x))
-
-x <- is_icd(c(LETTERS, as.character(0:9)), icdv = 10, dx = 1L)
-stopifnot(length(x) == 36L, !any(x))
-
-x <- is_icd(c(LETTERS, as.character(0:9)), icdv = 10, dx = 0L)
-stopifnot(length(x) == 36L, !any(x))
-
+################################################################################
 # For ICD-9 test that the presense of a dot is considered when testing.
 # Example 7993 is the simplified version of the proper ICD-9 DX code 799.3 and
 # PR code 79.93.  Becuase the look up tables use 7993, the input of 7993 will be
