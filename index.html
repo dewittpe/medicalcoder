@@ -107,12 +107,12 @@
 <li>
 <code>medicalcoder</code> does not import any non-base namespaces. This improves ease of maintenance and usability.</li>
 <li>Suggested packages are needed only for development work and building vignettes. They are not required for installation or use.</li>
-<li>That said, there are non-trivial performance gains when passing a <a href="https://cran.r-project.org/package=data.table" class="external-link"><code>data.table</code></a> to the <code><a href="reference/comorbidities.html">comorbidities()</a></code> function compared to a base <code>data.frame</code> or the Tidyverse’s <code>tibble</code>. (See <a href="https://github.com/dewittpe/medicalcoder/tree/main/benchmarking" class="external-link">benchmarking</a>).</li>
+<li>That said, there are non-trivial performance gains when passing a <a href="https://cran.r-project.org/package=data.table" class="external-link"><code>data.table</code></a> to the <code><a href="reference/comorbidities.html">comorbidities()</a></code> function compared to passing a base <code>data.frame</code> or a <code>tibble</code> from the tidyverse. (See <a href="https://github.com/dewittpe/medicalcoder/tree/main/benchmarking" class="external-link">benchmarking</a>).</li>
 </ul>
 </li>
 <li>Internal lookup tables
 <ul>
-<li>All required data are included in the package. If you have the .tar.gz source file and R ≥ 3.5.0, that is all you need to install and use the package.</li>
+<li>All required data are included in the package. If you have the <code>.tar.gz</code> source file and R ≥ 3.5.0, that is all you need to install and use the package.</li>
 </ul>
 </li>
 </ul>
@@ -152,7 +152,8 @@
 <ol style="list-style-type: decimal">
 <li>Data size: number of subjects/encounters.</li>
 <li>Data storage class: <code>medicalcoder</code> has been built such that no imports of other namespaces is required. That said, when a <code>data.table</code> is passed to <code><a href="reference/comorbidities.html">comorbidities()</a></code> and the <code>data.table</code> namespace is available, then S3 dispatch for <code>merge</code> is used, along with some other methods, to reduce memory use and reduce computation time.</li>
-<li>flag.method: “current” will take less time than the “cumulative” method.</li>
+<li>
+<code>flag.method</code>: “current” will take less time than the “cumulative” method.</li>
 </ol>
 <p>Details on the benchmarking method, summary graphics, and tables, can be found on the <code>medicalcoder</code> GitHub <a href="https://github.com/dewittpe/medicalcoder/tree/main/benchmarking" class="external-link">benchmarking</a> directory.</p>
 </div>
@@ -160,20 +161,22 @@
 <h2 id="install">Install<a class="anchor" aria-label="anchor" href="#install"></a>
 </h2>
 <div class="section level3">
-<h3 id="cran---coming-soon">CRAN - Coming soon!<a class="anchor" aria-label="anchor" href="#cran---coming-soon"></a>
-</h3>
-</div>
-<div class="section level3">
-<h3 id="from-github">From Github<a class="anchor" aria-label="anchor" href="#from-github"></a>
+<h3 id="cran">CRAN<a class="anchor" aria-label="anchor" href="#cran"></a>
 </h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"medicalcoder"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="from-github">From GitHub<a class="anchor" aria-label="anchor" href="#from-github"></a>
+</h3>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"dewittpe/medicalcoder"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="from-source">From source<a class="anchor" aria-label="anchor" href="#from-source"></a>
 </h3>
 <p>If you have the .tar.gz file for version X.Y.Z, e.g., <code>medicalcoder_X.Y.Z.tar.gz</code> you can install from within R via:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span></span>
 <span>  pkgs <span class="op">=</span> <span class="st">"medicalcoder_X.Y.Z.tar.gz"</span>, <span class="co"># replace file name with the file you have</span></span>
 <span>  repos <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -195,7 +198,7 @@
 <ul>
 <li>Version 2.0
 <ul>
-<li>BMC Pediatrics: <a href="https://doi.org/10.1186/1471-2431-14-199" class="external-link">Feudtner et.al. (2014)</a>
+<li>BMC Pediatrics: <a href="https://doi.org/10.1186/1471-2431-14-199" class="external-link">Feudtner et al. (2014)</a>
 </li>
 <li>Consistent with R package <a href="https://cran.r-project.org/package=pccc" class="external-link">pccc</a>
 </li>
@@ -208,7 +211,7 @@
 </li>
 <li>Version 3.0
 <ul>
-<li>JAMA Network Open: <a href="https://doi.org/10.1001/jamanetworkopen.2024.20579" class="external-link">Feinstein et.al. (2024)</a>
+<li>JAMA Network Open: <a href="https://doi.org/10.1001/jamanetworkopen.2024.20579" class="external-link">Feinstein et al. (2024)</a>
 </li>
 <li>Children’s Hospital Association <a href="https://www.childrenshospitals.org/content/analytics/toolkit/complex-chronic-conditions" class="external-link">Toolkit</a>
 </li>
@@ -225,16 +228,16 @@
 <p>Charlson Comorbidities</p>
 <ul>
 <li><a href="https://doi.org/10.1016/0895-4356(92)90133-8" class="external-link">Deyo, Cherkin, and Ciol (1992)</a></li>
-<li><a href="https://doi.org/10.1097/01.mlr.0000182534.19832.83" class="external-link">Quan et.al. (2005)</a></li>
-<li><a href="https://doi.org/10.1093/aje/kwq433" class="external-link">Quan et.al. (2011)</a></li>
+<li><a href="https://doi.org/10.1097/01.mlr.0000182534.19832.83" class="external-link">Quan et al. (2005)</a></li>
+<li><a href="https://doi.org/10.1093/aje/kwq433" class="external-link">Quan et al. (2011)</a></li>
 <li><a href="https://pubmed.ncbi.nlm.nih.gov/31428236/" class="external-link">Glasheen (2019)</a></li>
 </ul>
 </li>
 <li>
 <p>Elixhauser Comorbidities</p>
 <ul>
-<li><a href="https://doi.org/10.1097/00005650-199801000-00004" class="external-link">Elixhauser et.al. (1998)</a></li>
-<li><a href="https://doi.org/10.1097/01.mlr.0000182534.19832.83" class="external-link">Quan et.al. (2005)</a></li>
+<li><a href="https://doi.org/10.1097/00005650-199801000-00004" class="external-link">Elixhauser et al. (1998)</a></li>
+<li><a href="https://doi.org/10.1097/01.mlr.0000182534.19832.83" class="external-link">Quan et al. (2005)</a></li>
 <li>AHRQ (2017, 2022, 2023, 2024, 2025)
 <ul>
 <li><a href="https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp" class="external-link">For ICD-9 codes</a></li>
@@ -246,7 +249,7 @@
 </ul>
 <p>All of the methods are available from the same function call <code><a href="reference/comorbidities.html">comorbidities()</a></code>. There is support for age scores in Charlson, present on admission flags for all methods, and support for longitudinal data.</p>
 <p>See more examples in the vignettes.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"comorbidities"</span>, package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"pccc"</span>, package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"charlson"</span>, package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span></span>
@@ -256,7 +259,7 @@
 <h3 id="example-data">Example Data<a class="anchor" aria-label="anchor" href="#example-data"></a>
 </h3>
 <p>Input data for <code><a href="reference/comorbidities.html">comorbidities()</a></code> is expected to be in a ‘long’ format. Each row is one code with additional columns for patient and/or encounter id.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">mdcr</span>, <span class="va">mdcr_longitudinal</span>, package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mdcr</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 'data.frame':    319856 obs. of  4 variables:</span></span>
@@ -286,7 +289,7 @@
 </h3>
 <p>The package contains internal data sets with references for ICD-9 and ICD-10 US based diagnostic and procedure codes. These codes are supplemented with additional codes from the World Health Organization.</p>
 <p>You can get a table of ICD codes via <code><a href="reference/get_icd_codes.html">get_icd_codes()</a></code>.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">medicalcoder</span><span class="fu">::</span><span class="fu"><a href="reference/get_icd_codes.html">get_icd_codes</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 'data.frame':    227534 obs. of  9 variables:</span></span>
 <span><span class="co">#&gt;  $ icdv            : int  9 9 9 9 9 9 9 9 9 9 ...</span></span>
@@ -315,8 +318,13 @@
 <code>who</code>: World Health Organization.</li>
 </ul>
 </li>
-<li><p><code>known_start</code>: The earliest (fiscal) year when source data for the code was available in the source code for <code>medicalcoder</code>. Codes from CMS are for the United States fiscal year. Codes from CDC and WHO are calendar year. The United States fiscal year starts October 1 and concludes September 30. For example, fiscal year 2013 started October 1 2012 and concluded September 30 2013.</p></li>
-<li><p><code>known_end</code>: The latest (fiscal) year when the code was part of the ICD system.</p></li>
+<li>
+<p><code>known_start</code>: The earliest (fiscal) year when source data for the code was available in the source code for <code>medicalcoder</code>. Codes from CMS are for the United States fiscal year. Codes from CDC and WHO are calendar year. The United States fiscal year starts October 1 and concludes September 30. For example, fiscal year 2013 started October 1 2012 and concluded September 30 2013.</p>
+<p>To reemphasize that the year is for the data within <code>medicalcoder</code>. For ICD-9-CM, the codes went into effect for fiscal year 1980. The source code only has documented source files for the codes dating back to</p>
+<ol start="1997" style="list-style-type: decimal"><li>
+</li></ol>
+</li>
+<li><p><code>known_end</code>: The latest (fiscal) year when the code was part of the ICD system and/or known within the <code>medicalcoder</code> lookup tables.</p></li>
 <li>
 <p>Assignable codes. Some codes are header codes, e.g., ICD-10-CM three-digit code Z94 is a header code because the four-digit codes Z94.0, Z94.1, Z94.2, Z94.3, Z94.4, Z94.5, Z94.6, Z94.7, Z94.8, and Z94.9 exist. All but Z94.8 are assignable codes because no five-digit codes with the same initial four-digits exist. Z94.8 is a header code because the five-digit codes Z94.81, Z94.82, Z94.83, Z94.84, and Z94.89 exist.</p>
 <ul>
@@ -327,10 +335,33 @@
 </ul>
 </li>
 </ul>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="fu"><a href="reference/lookup_icd_codes.html">lookup_icd_codes</a></span><span class="op">(</span><span class="st">"^Z94"</span>, regex <span class="op">=</span> <span class="cn">TRUE</span>, full.codes <span class="op">=</span> <span class="cn">TRUE</span>, compact.codes <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
+<span>  subset <span class="op">=</span> <span class="va">src</span> <span class="op">==</span> <span class="st">"cms"</span>,</span>
+<span>  select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"full_code"</span>, <span class="st">"known_start"</span>, <span class="st">"known_end"</span>, <span class="st">"assignable_start"</span>, <span class="st">"assignable_end"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt;    full_code known_start known_end assignable_start assignable_end</span></span>
+<span><span class="co">#&gt; 1        Z94        2014      2026               NA             NA</span></span>
+<span><span class="co">#&gt; 5      Z94.0        2014      2026             2014           2026</span></span>
+<span><span class="co">#&gt; 9      Z94.1        2014      2026             2014           2026</span></span>
+<span><span class="co">#&gt; 14     Z94.2        2014      2026             2014           2026</span></span>
+<span><span class="co">#&gt; 17     Z94.3        2014      2026             2014           2026</span></span>
+<span><span class="co">#&gt; 22     Z94.4        2014      2026             2014           2026</span></span>
+<span><span class="co">#&gt; 25     Z94.5        2014      2026             2014           2026</span></span>
+<span><span class="co">#&gt; 29     Z94.6        2014      2026             2014           2026</span></span>
+<span><span class="co">#&gt; 33     Z94.7        2014      2026             2014           2026</span></span>
+<span><span class="co">#&gt; 38     Z94.8        2014      2026               NA             NA</span></span>
+<span><span class="co">#&gt; 41    Z94.81        2014      2026             2014           2026</span></span>
+<span><span class="co">#&gt; 42    Z94.82        2014      2026             2014           2026</span></span>
+<span><span class="co">#&gt; 43    Z94.83        2014      2026             2014           2026</span></span>
+<span><span class="co">#&gt; 44    Z94.84        2014      2026             2014           2026</span></span>
+<span><span class="co">#&gt; 45    Z94.89        2014      2026             2014           2026</span></span>
+<span><span class="co">#&gt; 46     Z94.9        2014      2026             2014           2026</span></span></code></pre></div>
 <p>Additionally, the <code><a href="reference/get_icd_codes.html">get_icd_codes()</a></code> method can provide descriptions and the ICD hierarchy by using the <code>with.descriptions</code> and/or <code>with.hierarchy</code> arguments.</p>
 <p>Functions <code><a href="reference/lookup_icd_codes.html">lookup_icd_codes()</a></code>, <code><a href="reference/is_icd.html">is_icd()</a></code>, and <code><a href="reference/icd_compact_to_full.html">icd_compact_to_full()</a></code> are also provided for working with ICD codes.</p>
 <p>More details and examples are in the vignette:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"icd"</span>, package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>

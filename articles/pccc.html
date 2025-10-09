@@ -1693,8 +1693,8 @@ structures can lead to false positives.</p>
 <span><span class="co">##   pccc_v2.1 pccc_v2.0</span></span>
 <span><span class="co">## 1         1         1</span></span></code></pre></div>
 <p>Using full codes can prevent false positives too. Here are several
-different ways that pccc could be called resulting in different
-outcomes.</p>
+different ways that <code><a href="../reference/comorbidities.html">comorbidities()</a></code> could be called
+resulting in different outcomes.</p>
 <p>Note: this is a good example of how <code>medicalcoder</code> can
 handle full and compact codes within a single record.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
@@ -1785,12 +1785,14 @@ compact code can cause. “E030” matches ICD-9 dx compact and full code
 E030 (no decimal point), and matches the ICD-10 dx compact code for full
 code E03.0 with only the ICD-10 version being related to a chronic
 complex condition.</p>
-<p>Inputs to the pccc call for the ICD version will impact the output.
-When calling pccc with a variable to indicate the ICD version NA values
-will not be joined against and the codes are ignored resulting in no ccc
-being flagged. If we know that we only want to compare against ICD-9 or
-ICD-10 values then using the icdv argument can simplify the call and in
-this case, no ccc for ICD-9 and a ccc is flagged for ICD-10.</p>
+<p>Inputs to the <code><a href="../reference/comorbidities.html">comorbidities()</a></code> call for the ICD version
+will impact the output. When calling <code><a href="../reference/comorbidities.html">comorbidities()</a></code> with a
+variable to indicate the ICD version <code>NA</code> values will not be
+joined against and the codes are ignored resulting in no condition being
+flagged. If we know that we only want to compare against ICD-9 or ICD-10
+values then using the <code>icdv</code> argument can simplify the call
+and in this case, no condition for ICD-9 and a condition is flagged for
+ICD-10.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">mdcr</span>, <span class="va">patid</span> <span class="op">==</span> <span class="st">"95471"</span><span class="op">)</span></span>
 <span><span class="co">##        patid icdv code dx</span></span>
@@ -1894,11 +1896,11 @@ nor the diagnostic/procedure status of the code.</p>
 <p>With no information about the “E030” being ICD-9 or ICD-10, full or
 compact, (can only be a diagnostic code in either ICD-9 or ICD-10) we
 get different flags. The default, the most liberal approach flags this
-example patient as having a ccc in all cases. When only considering the
-code to be a full code, then only the ICD-10 version matches. When only
-considering the compact codes the flag is true for the ambiguous version
-and the ICD-9 full version since ICD-9 E030 is a full code with the same
-compact form.</p>
+example patient as having a condition in all cases. When only
+considering the code to be a full code, then only the ICD-10 version
+matches. When only considering the compact codes the flag is true for
+the ambiguous version and the ICD-9 full version since ICD-9 E030 is a
+full code with the same compact form.</p>
 </div>
 <div class="section level2">
 <h2 id="longitudinal-conditions">Longitudinal Conditions<a class="anchor" aria-label="anchor" href="#longitudinal-conditions"></a>
@@ -2686,9 +2688,9 @@ cmrb_flag
 </tbody>
 </table>
 <p>Looking at patid 9663901 at an encounter level we see that the
-conditions occur at different moments in time and the ccc the patient
-has change overtime. Because these are chronic conditions, once the
-condition is observed, it should be considered to exist in
+conditions occur at different moments in time and the condition the
+patient has change overtime. Because these are chronic conditions, once
+the condition is observed, it should be considered to exist in
 perpetuity.</p>
 <p>For <code>pccc_v2.1</code> a simple carry-forward method can be
 applied to the data set to mark the presence of a condition at the time
