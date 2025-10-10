@@ -1,3 +1,4 @@
+source('utilities.R')
 ################################################################################
 # objective - the pccc_v2.0 in medicalcoder should reproduce the results from
 # pccc version 1.0.6 _almost_ identically.
@@ -95,6 +96,7 @@ old_vs_mdcr <-
   )
 
 stopifnot(!any(is.na(old_vs_mdcr)))
+stopifnot(nrow(old_vs_mdcr) == nrow(icd_codes))
 
 # expect no difference in the following conditions:
 #   neuromusc
@@ -129,42 +131,46 @@ stopifnot(
 # we _do_ expect differences in the tech_dep flag
 #
 # ICD-9-CM 349.1 - not in the v2 document, but in the software for neuromusc
-# only. This raises an problem that the subcondtion is not defined.  To allow
-# for the methods in medicalcoder to work, a non missing subcondition is needed.
-# device and technology use was seems appropriate
+# only. This raises a problem that the subcondition is not defined.  To allow
+# for the methods in medicalcoder to work, a non-missing subcondition is needed.
+# device and technology use seems appropriate
 #
 # ICD-9-CM V56 - same, not in v2 documents, in the software
 #
 # ICD-10-CM Z49 - same, not in v2 documents, in the software
 #
 # ICD-9-PCS 86.06 - this is in the document as metabolic (devices) but is only
-# listed under metabolic in the software.  Again, becuase of the use of the
-# subconditions in the implimentation in medicalcoder the corrected mapping is
+# listed under metabolic in the software.  Again, because of the use of the
+# subconditions in the implementation in medicalcoder the corrected mapping is
 # needed in medicalcoder and thus the difference.
 #
 # ICD-9-CM V45.85 - same as ICD-9-PCS 86.06
 #
-# ICD-9-CM V53.3 - great, this is a header code using in cvd, the assignable
+# ICD-9-CM V53.3 - great, this is a header code used in cvd, the assignable
 # codes, V53.31, V53.32, V53.39 are explicitly mapped to tech dep.  The result,
 # the V53.3 needs to also have a tech dep flag
 # subset(get_icd_codes(), grepl("^V53\\.3", full_code) & icdv == 9)
 #
 # ICD-9-CM V53.91 "Fitting and adjustment of insulin pump"
-# This is listed in the documentation as metabolic (devices) by has been
-# implanted in R as metabolic (transplant).  One major issue with this error is
-# that there are no codes for metabolic (transplant). It doesn't make since to
+# This is listed in the documentation as metabolic (devices) but has been
+# implemented in R as metabolic (transplant).  One major issue with this error is
+# that there are no codes for metabolic (transplant). It doesn't make sense to
 # retain this error so, method=pccc_v2.0 will differ from the R package
 # pccc_1.0.6 for this code.
 #
 # subset(get_icd_codes(with.descriptions = TRUE), grepl("^V53\\.9", full_code) & icdv == 9)
 #
 # ICD-9-CM V65, and specifically V65.46 (encounter for insulin pump training),
-# is not in the documentation but is in the R pccc_v1.0.6 implimentation as
-# metabolic.  The device flag as been added to this code.
+# is not in the documentation but is in the R pccc_v1.0.6 implementation as
+# metabolic.  The device flag has been added to this code.
 # subset(get_icd_codes(with.descriptions = TRUE), grepl("^V65\\.4", full_code) & icdv == 9)
 
 mismatch_tech_dep <- old_vs_mdcr[old_vs_mdcr$tech_dep != old_vs_mdcr$any_tech_dep, ]
 stopifnot(nrow(mismatch_tech_dep) == 18L)
+stopifnot(
+  all(mismatch_tech_dep$tech_dep == 0L),
+  all(mismatch_tech_dep$any_tech_dep == 1L)
+)
 stopifnot(
           isTRUE(identical(sort(mismatch_tech_dep$full_code),
                            c("349.1",
@@ -179,9 +185,9 @@ stopifnot(
           )
 )
 
-# we expect there are some difference in the transplant flag
+# we expect there are some differences in the transplant flag
 #
-# ICD-9-PCS 37.52 -- documented as cvd (device) implimented as cvd and
+# ICD-9-PCS 37.52 -- documented as cvd (device) implemented as cvd and
 # transplant.
 
 #subset(get_pccc_codes(), grepl("^37\\.52", full_code))
@@ -197,15 +203,18 @@ stopifnot(
 # ICD-10-CM Z94
 # specifically Z94.1, Z94.2, Z94.4, Z94.81, Z94.82, Z94.83, Z94.84
 # All documented as subcondition transplant but are missing from the transplant
-# set in the pccc_1.0.6/srs/pccc.cpp
+# set in the pccc_1.0.6/src/pccc.cpp
 #
 #subset(get_pccc_codes(), grepl("^Z94", full_code))
 #subset(get_icd_codes(with.descriptions = TRUE), grepl("^Z94", full_code) & icdv == 10)
 
 #
 mismatch_transplant <- old_vs_mdcr[old_vs_mdcr$transplant != old_vs_mdcr$any_transplant, ]
-mismatch_transplant[, c("full_code", "transplant", "any_transplant")]
 stopifnot(nrow(mismatch_transplant) == 15L)
+stopifnot(
+  all(mismatch_transplant$transplant == 0L),
+  all(mismatch_transplant$any_transplant == 1L)
+)
 
 stopifnot(
           isTRUE(identical(sort(unique(mismatch_transplant$full_code)),
