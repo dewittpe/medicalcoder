@@ -1,3 +1,4 @@
+source('utilities.R')
 ################################################################################
 library(medicalcoder)
 set.seed(42)
@@ -7,20 +8,19 @@ set.seed(42)
 # "cumulative"
 
 rtn <- # length(id.vars) = 0
-  tryCatch(
+  tryCatchError(
     comorbidities(
       data = mdcr,
       icd.codes = "code",
       poa = 1,
       flag.method = 'cumulative',
       method = "pccc_v3.1"
-    ),
-    error = function(e) e
+    )
   )
 stopifnot(inherits(rtn, "error"))
 
 rtn <- # length(id.vars) = 1
-  tryCatch(
+  tryCatchError(
     comorbidities(
       data = mdcr,
       id.vars = "patid",
@@ -28,8 +28,7 @@ rtn <- # length(id.vars) = 1
       poa = 1,
       flag.method = 'cumulative',
       method = "pccc_v3.1"
-    ),
-    error = function(e) e
+    )
   )
 stopifnot(inherits(rtn, "error"))
 
@@ -41,53 +40,49 @@ mdcr2 <- mdcr
 mdcr2[["condition"]] <- 1L
 
 x <-
-  tryCatch(
+  tryCatchError(
     comorbidities(
       data = mdcr2,
       icd.codes = "code",
       id.vars = c("patid", "condition"),
       method = "pccc_v3.1"
-    ),
-  error = function(e) e
-)
+    )
+  )
 stopifnot(inherits(x, "error"))
 
 x <-
-  tryCatch(
+  tryCatchError(
     comorbidities(
       data = mdcr2,
       icd.codes = "code",
       id.vars = c("condition"),
       method = "pccc_v3.1"
-    ),
-  error = function(e) e
-)
+    )
+  )
 stopifnot(inherits(x, "error"))
 
 x <-
-  tryCatch(
+  tryCatchError(
     comorbidities(
       data = mdcr2,
       icd.codes = "code",
       poa.vars = c("condition"),
       method = "pccc_v3.1"
-    ),
-  error = function(e) e
-)
+    )
+  )
 stopifnot(inherits(x, "error"))
 
 # this calls be "valid" as primarydx.var is ignored when method is not
 # elixhauser_*
 x <-
-  tryCatch(
+  tryCatchError(
     comorbidities(
       data = mdcr2,
       icd.codes = "code",
       primarydx.var = "condition",
       method = "elixhauser_ahrq2025"
-    ),
-  error = function(e) e
-)
+    )
+  )
 stopifnot(inherits(x, "error"))
 
 
@@ -227,10 +222,10 @@ mdcr$icd_code <- mdcr$code
 
 args <- list(data = mdcr, icd.code = "icd_code", method = "pccc_v3.0", poa = 1)
 
-out1 <- tryCatch(do.call(comorbidities, c(args, list(id.vars = c("patid", "full_code")))), error = function(e) e)
-out2 <- tryCatch(do.call(comorbidities, c(args, list(id.vars = c("patid", "icdv")))), error = function(e) e)
-out3 <- tryCatch(do.call(comorbidities, c(args, list(id.vars = c("patid", "dx")))), error = function(e) e)
-out4 <- tryCatch(do.call(comorbidities, c(args, list(id.vars = c("patid", "code")))), error = function(e) e)
+out1 <- tryCatchError(do.call(comorbidities, c(args, list(id.vars = c("patid", "full_code")))))
+out2 <- tryCatchError(do.call(comorbidities, c(args, list(id.vars = c("patid", "icdv")))))
+out3 <- tryCatchError(do.call(comorbidities, c(args, list(id.vars = c("patid", "dx")))))
+out4 <- tryCatchError(do.call(comorbidities, c(args, list(id.vars = c("patid", "code")))))
 stopifnot(
   inherits(out1, "error"),
   inherits(out2, "error"),

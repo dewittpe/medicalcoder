@@ -1,3 +1,4 @@
+source('utilities.R')
 library(medicalcoder)
 
 stopifnot(is.data.frame(medicalcoder:::..mdcr_internal_pccc_conditions..))

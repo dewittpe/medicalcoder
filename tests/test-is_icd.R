@@ -1,3 +1,4 @@
+source('utilities.R')
 library(medicalcoder)
 
 ################################################################################
@@ -45,7 +46,7 @@ stopifnot(
 )
 
 # expect a warning that 7993 is ambiguous
-x <- tryCatch(is_icd("7993"), warning = function(w) w)
+x <- tryCatchWarning(is_icd("7993"))
 stopifnot(inherits(x, "warning"))
 
 # For ICD-10 dx, if there is a dot, it need be the fourth character
@@ -143,9 +144,9 @@ default_rtn <-
 stopifnot(identical(default_rtn, c(TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, NA, TRUE, TRUE)))
 
 warn <-
-  tryCatch(
-    is_icd(x, headerok = TRUE, ever.assignable = TRUE, warn.ambiguous = TRUE),
-    warning = function(w) w)
+  tryCatchWarning(
+    is_icd(x, headerok = TRUE, ever.assignable = TRUE, warn.ambiguous = TRUE)
+  )
 stopifnot(inherits(warn, "warning"))
 
 ################################################################################
@@ -167,12 +168,12 @@ stopifnot(inherits(warn, "warning"))
 #   2:    cms    10  2014
 #   3:    cdc    10  2001
 #   4:    who    10  2008
-w1 <- tryCatch(is_icd("516.3", year = 1979), warning = function(w) w)
-w2 <- tryCatch(is_icd("516.3", year = 1979, icdv = 9), warning = function(w) w)
-w3 <- tryCatch(is_icd("516.3", year = 2000, icdv = 9), warning = function(w) w)
-w4 <- tryCatch(is_icd("516.3", year = 2000, icdv = 10), warning = function(w) w)
-w5 <- tryCatch(is_icd("516.3", year = 2009, icdv = 10), warning = function(w) w)
-w6 <- tryCatch(is_icd("516.3", year = 2009, icdv = 10, src = "cms"), warning = function(w) w)
+w1 <- tryCatchWarning(is_icd("516.3", year = 1979))
+w2 <- tryCatchWarning(is_icd("516.3", year = 1979, icdv = 9))
+w3 <- tryCatchWarning(is_icd("516.3", year = 2000, icdv = 9))
+w4 <- tryCatchWarning(is_icd("516.3", year = 2000, icdv = 10))
+w5 <- tryCatchWarning(is_icd("516.3", year = 2009, icdv = 10))
+w6 <- tryCatchWarning(is_icd("516.3", year = 2009, icdv = 10, src = "cms"))
 
 stopifnot(
   "Year before first known year generates an warning: w1" = inherits(w1, "warning"),

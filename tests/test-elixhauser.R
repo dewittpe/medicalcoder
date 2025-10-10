@@ -1,3 +1,4 @@
+source('utilities.R')
 ################################################################################
 # Tests for the elixhauser comorbidities
 

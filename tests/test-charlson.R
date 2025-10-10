@@ -1,3 +1,4 @@
+source('utilities.R')
 ################################################################################
 # Tests for the charlson comorbidities
 library(medicalcoder)

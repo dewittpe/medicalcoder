@@ -1,3 +1,4 @@
+source('utilities.R')
 library(medicalcoder)
 
 # lookup exact vs regex consistency
@@ -9,7 +10,7 @@ stopifnot(all(lx$full_code %in% lr$full_code),
 # the following used to give an error:
 #   Error in merge.data.frame(x = input, y = matches, all.x = TRUE, by = c(ifelse(regex,  :
 #     negative length vectors are not allowed
-m <- tryCatch(lookup_icd_codes(x = "", regex = TRUE), error = function(e) e)
+m <- tryCatchError(lookup_icd_codes(x = "", regex = TRUE))
 stopifnot(inherits(m, "error"))
 
 # out of the data.frame should be the same columns with or without matches

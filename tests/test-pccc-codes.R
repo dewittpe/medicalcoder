@@ -1,3 +1,4 @@
+source('utilities.R')
 library(medicalcoder)
 ################################################################################
 # check the internal data set

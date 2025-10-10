@@ -1,3 +1,4 @@
+source('utilities.R')
 library(medicalcoder)
 
 ICDCODES     <- get_icd_codes()

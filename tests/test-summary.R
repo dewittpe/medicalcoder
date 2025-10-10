@@ -1,3 +1,4 @@
+source('utilities.R')
 library(medicalcoder)
 
 ################################################################################
@@ -30,7 +31,7 @@ stopifnot(
 ################################################################################
 # Verify the summary table output for pccc_v3.0 with flag.method = cumulative is as expected
 cmb <- comorbidities(data = mdcr_longitudinal, id.vars = c("patid", "date"), icd.codes = "code", poa = 1, flag.method = 'cumulative', method = "pccc_v3.0")
-rtn <- tryCatch(summary(cmb), warning = function(w) w)
+rtn <- tryCatchWarning(summary(cmb))
 stopifnot(inherits(rtn, "warning"))
 
 rtn <- suppressWarnings(summary(cmb))

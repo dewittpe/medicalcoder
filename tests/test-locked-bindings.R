@@ -1,3 +1,4 @@
+source('utilities.R')
 if (!requireNamespace("data.table", quietly = TRUE)) {
   message("SKIP: data.table not available; skipping test-locked-bindings.R")
   quit(save = "no", status = 0, runLast = FALSE)
@@ -40,15 +41,15 @@ library(medicalcoder)
 stopifnot(medicalcoder:::..mdcr_internal_icd_codes..[, all(icdv == 8L)])  # still bad, but...
 
 # the environment is hard to get to
-x <- tryCatch(..mdcr_data_env.., error = function(e) e)
+x <- tryCatchError(..mdcr_data_env..)
 stopifnot(inherits(x, "error"))
-x <- tryCatch(medicalcoder::..mdcr_data_env.., error = function(e) e)
+x <- tryCatchError(medicalcoder::..mdcr_data_env..)
 stopifnot(inherits(x, "error"))
 
 x <- medicalcoder:::..mdcr_data_env..
 stopifnot(is.environment(x))
 # and modifing the data will error
-t <- tryCatch(x$icd_codes[["icdv"]] <- 11L, error = function(e) e)
+t <- tryCatchError(x$icd_codes[["icdv"]] <- 11L)
 stopifnot(inherits(t, "error"))
 
 # data.table will also fail, at first.  Note that accessing the icd_codes right
@@ -59,7 +60,7 @@ stopifnot(
 )
 
 # an error is thrown, but the class has been modified and it is now a data.table
-t <- tryCatch(setDT(x$icd_codes), error = function(e) e)
+t <- tryCatchError(setDT(x$icd_codes))
 stopifnot(inherits(t, "error"))
 stopifnot(
    is.data.frame(medicalcoder:::..mdcr_data_env..$icd_codes),

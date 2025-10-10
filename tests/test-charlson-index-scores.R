@@ -1,4 +1,5 @@
 library(medicalcoder)
+source('utilities.R')
 
 stopifnot(is.data.frame(medicalcoder:::..mdcr_internal_charlson_index_scores..))
 

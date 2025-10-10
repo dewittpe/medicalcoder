@@ -1,3 +1,4 @@
+source('utilities.R')
 ################################################################################
 library(medicalcoder)
 # build and test the longitudinal flagging of conditions.  The renal code will
