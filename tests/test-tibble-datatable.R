@@ -1,3 +1,4 @@
+source('utilities.R')
 ################################################################################
 # test that the output when using a data.frame, tibble, or data.table are all
 # the same.
@@ -14,10 +15,17 @@ if (!requireNamespace("tibble", quietly = TRUE)) {
 library(medicalcoder)
 library(tibble)
 library(data.table)
+old_threads <- getDTthreads()
 setDTthreads(threads = 1L) # to prevent CPU time exceeding elapsed time on CRAN
+on.exit(setDTthreads(old_threads), add = TRUE)
 mdcrDF  <- mdcr
 mdcrTBL <- as_tibble(mdcr)
 mdcrDT  <- as.data.table(copy(mdcr))
+
+stopifnot(is.data.frame(mdcrDF))
+stopifnot(is_tibble(mdcrTBL))
+stopifnot(is.data.table(mdcrDT))
+
 
 ################################################################################
 common_args <-
@@ -30,27 +38,26 @@ DTS  <- new.env()
 
 methods <- medicalcoder:::comorbidities_methods()
 
+set_results <- function(target_env, method, data, subconditions = FALSE) {
+  assign(
+    x = if (subconditions) paste0(method, "_with_subconditions") else method,
+    value = do.call(
+      comorbidities,
+      c(common_args, list(data = data, method = method, subconditions = subconditions))
+    ),
+    envir = target_env
+  )
+}
+
 for (m in methods) {
-  assign(x = m,
-         value = do.call(comorbidities, c(common_args, list(data = mdcrDF, method = m))),
-         envir = DFS)
-  assign(x = m,
-         value = do.call(comorbidities, c(common_args, list(data = mdcrDT, method = m))),
-         envir = DTS)
-  assign(x = m,
-         value = do.call(comorbidities, c(common_args, list(data = mdcrTBL, method = m))),
-         envir = TBLS)
+  set_results(DFS,  m, mdcrDF)
+  set_results(DTS,  m, mdcrDT)
+  set_results(TBLS, m, mdcrTBL)
 
   if (grepl("pccc", m)) {
-    assign(x = paste0(m, "_with_subconditions"),
-           value = do.call(comorbidities, c(common_args, list(data = mdcrDF, method = m, subconditions = TRUE))),
-           envir = DFS)
-    assign(x = paste0(m, "_with_subconditions"),
-           value = do.call(comorbidities, c(common_args, list(data = mdcrDT, method = m, subconditions = TRUE))),
-           envir = DTS)
-    assign(x = paste0(m, "_with_subconditions"),
-           value = do.call(comorbidities, c(common_args, list(data = mdcrTBL, method = m, subconditions = TRUE))),
-           envir = TBLS)
+    set_results(DFS,  m, mdcrDF,  subconditions = TRUE)
+    set_results(DTS,  m, mdcrDT,  subconditions = TRUE)
+    set_results(TBLS, m, mdcrTBL, subconditions = TRUE)
   }
 }
 
@@ -86,7 +93,7 @@ for (obj in ls(envir = DFS, all.names = TRUE)) {
   stopifnot(identical(xDF, xTBL))
 }
 
-# All the DTS results would be different becuase of the data.table specific
+# All the DTS results would be different because of the data.table specific
 # attributes.  So, check that everything is a data.table and then set to a
 # data.frame
 
@@ -110,6 +117,7 @@ for (obj in ls(envir = DTS, all.names = TRUE)) {
 for (obj in ls(envir = DFS, all.names = TRUE)) {
   xDF <- DFS[[obj]]
   xDT <- DTS[[obj]]
+  stopifnot(identical(class(xDT), class(xDF)))
   stopifnot(identical(xDF, xDT))
 }
 
