@@ -1,0 +1,22 @@
+url: http://www.peteredewitt.com/medicalcoder/
+template:
+  bootstrap: 5
+
+navbar:
+  components:
+    articles:
+      text: Articles
+      menu:
+        - text: Comorbidities
+        - text: Overview
+          href: articles/comorbidities.html
+        - text: Charlson
+          href: articles/charlson.html
+        - text: Elixhauser
+          href: articles/elixhauser.html
+        - text: Pediatric Complex Chronic Conditions
+          href: articles/pccc.html
+        - text: -------
+        - text: ICD Codes
+        - text: ICD Utilities
+          href: articles/icd.html
