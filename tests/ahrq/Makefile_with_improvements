@@ -1,0 +1,95 @@
+include ../../Makevars
+
+YEARS := 2022 2023 2024 2025
+PROGRAM_TYPES := Format Index Mapping
+INPUTDATA := $(foreach y,$(YEARS),$(y)/mdcr_for_sas_$(y).csv)
+
+SASPATH := /home/u63793206
+POAFLAG :=0
+
+define REGISTER_YEAR
+SAS_VERSION_$(1) := $(2)
+SAS_ZIP_$(1) := $(3)
+SAS_UNZIP_FLAGS_$(1) := $(4)
+SAS_ENTRY_PREFIX_$(1) := $(5)
+endef
+
+$(eval $(call REGISTER_YEAR,2022,v2022-1,CMR_v2022-1.zip,-o,))
+$(eval $(call REGISTER_YEAR,2023,v2023-1,CMR_v2023-1.zip,-o,))
+$(eval $(call REGISTER_YEAR,2024,v2024-1,CMR_v2024-1.zip,-o,))
+$(eval $(call REGISTER_YEAR,2025,v2025-1,CMR_v2025.1.zip,-jo,CMR_v2025.1/))
+
+SAS := $(foreach y,$(YEARS),$(foreach type,$(PROGRAM_TYPES),$(y)/CMR_$(type)_Program_$(SAS_VERSION_$(y)).sas))
+
+.PHONY: all clean purge
+.ONESHELL:
+
+all: $(SAS) $(INPUTDATA)
+
+define build_one
+$(1)/mdcr_for_sas_$(1).csv: prepare-mdcr-cmr.R
+	@mkdir -p $$(@D)
+	$(RSCRIPT) $$< $(1)
+endef
+
+$(foreach y,$(YEARS),$(eval $(call build_one,$(y))))
+
+define adjust_sas_libs
+	sed "s|\(LIBNAME LIBRARY '\)[^']*\('.*\)|\1$(SASPATH)/AHRQ$(1)\2|" $$@ > $$@.tmp1
+	sed "s|\(LIBNAME[[:space:]]\{1,\}IN1[[:space:]]\{1,\}'\)[^']*\('.*\)|\1$(SASPATH)/AHRQ$(1)\2|" $$@.tmp1 > $$@.tmp2
+	sed "s|\(LIBNAME[[:space:]]\{1,\}OUT1[[:space:]]\{1,\}'\)[^']*\('.*\)|\1$(SASPATH)/AHRQ$(1)\2|" $$@.tmp2 > $$@.tmp1
+endef
+
+define mapping_block
+	sed "s|\(POAPREFIX=\).*\(;\)|\1 \2|" $$@.tmp1 > $$@.tmp2
+	sed "s|\(NUMDX[[:space:]]*=\).*\(;\)|\141\2|" $$@.tmp2 > $$@.tmp1
+	sed "s|\(POA[[:space:]]*=\).*\(;\)|\1$(POAFLAG)\2|" $$@.tmp1 > $$@.tmp2
+	sed "s|\(CORE[[:space:]]*=\).*\(;\)|\1mdcr_for_sas_$(1)\2|" $$@.tmp2 > $$@.tmp1
+	sed "s|\(OUT[[:space:]]*=\).*\(;\)|\1mdcr_sas_result_$(1)\2|" $$@.tmp1 > $$@
+	head -n 79 $$@ > $$@.tmp1
+	{
+		echo "proc import datafile='$(SASPATH)/AHRQ$(1)/mdcr_for_sas_$(1).csv'"
+		echo "  out=in1.mdcr_for_sas_$(1)"
+		echo "  dbms=csv replace;"
+		echo "  guessingrows=MAX;"
+		echo "run;"
+	} >> $$@.tmp1
+	tail -n +80 $$@ > $$@.tmp2
+	{
+		echo "proc export data=out1.mdcr_sas_result_$(1)"
+		echo "  outfile='$(SASPATH)/AHRQ$(1)/mdcr_sas_result_$(1).csv'"
+		echo "  dbms=csv replace;"
+		echo "run;"
+	} >> $$@.tmp2
+	cat $$@.tmp1 $$@.tmp2 > $$@
+endef
+
+define index_block
+	sed "s|\(CORE[[:space:]]*=\).*\(;\)|\1mdcr_sas_result_$(1)\2|" $$@.tmp1 > $$@.tmp2
+	sed "s|\(OUT[[:space:]]*=\).*\(;\)|\1mdcr_sas_result_index_$(1)\2|" $$@.tmp2 > $$@
+	{
+		echo "proc export data=out1.&OUT"
+		echo "  outfile='$(SASPATH)/AHRQ$(1)/mdcr_sas_result_index_$(1).csv'"
+		echo "  dbms=csv replace;"
+		echo "run;"
+	} >> $$@
+endef
+
+define sas_rule
+$(1)/CMR_%_Program_$(2).sas: ../../data-raw/elixhauser/ahrq/$(3)
+	unzip $(4) $$< $(5)$$(@F) -d $$(@D)
+$(call adjust_sas_libs,$(1))
+	if [ "$$*" = "Mapping" ]; then
+$(call mapping_block,$(1))
+	elif [ "$$*" = "Index" ]; then
+$(call index_block,$(1))
+	fi
+	$(RM) $$@.tmp1 $$@.tmp2
+endef
+
+$(foreach y,$(YEARS),$(eval $(call sas_rule,$(y),$(SAS_VERSION_$(y)),$(SAS_ZIP_$(y)),$(SAS_UNZIP_FLAGS_$(y)),$(SAS_ENTRY_PREFIX_$(y)))))
+
+clean:
+
+purge: clean
+	$(RM) -rf $(YEARS)

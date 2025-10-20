@@ -19,15 +19,6 @@ ifeq ($(shell printf '%s\n%s\n' $(PANDOC_MIN_VERSION) $(PANDOC_VERSION) | sort -
 endif
 
 # =============================================================================
-# platform independent sed inplace option
-# =============================================================================
-ifeq ($(shell uname), Darwin)
-	SED_INPLACE = -i .bak
-else
-	SED_INPLACE = -i.bak
-endif
-
-# =============================================================================
 # =============================================================================
 # The files lised in CMS_SOURCES are downloaded via download.sh
 CMS_SOURCES := cms/cms_v32.zip cms/cms_v31.zip cms/cms_v30.zip cms/cms_v29.zip cms/cms_v28.zip cms/cms_v27.zip cms/cms_v26.zip cms/cms_v25.zip cms/cms_v24.zip cms/cms_v23.zip

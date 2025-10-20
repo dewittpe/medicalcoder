@@ -37,3 +37,12 @@ PANDOC_MIN_VERSION ?= 3.7
 CRAN     ?= https://cran.rstudio.com
 REPOS    := "options(repos=c(CRAN='$(CRAN)'))"
 
+# =============================================================================
+# platform independent sed inplace option
+# =============================================================================
+ifeq ($(shell uname), Darwin)
+	SED_INPLACE = -i .bak
+else
+	SED_INPLACE = -i.bak
+endif
+
