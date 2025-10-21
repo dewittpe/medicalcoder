@@ -5,9 +5,12 @@
 # `medicalcoder`: An R package for working with ICD codes and Comorbidity Algorithms <img src="man/figures/medicalcoder_600x600_hex.png" width="200px" align="right" alt = "medicalcoder hex logo"/>
 
 <!-- badges: start -->
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R-CMD-check](https://github.com/dewittpe/medicalcoder/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dewittpe/medicalcoder/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/dewittpe/medicalcoder/graph/badge.svg)](https://app.codecov.io/gh/dewittpe/medicalcoder)
-[![CRAN status](https://www.r-pkg.org/badges/version/medicalcoder)](https://CRAN.R-project.org/package=medicalcoder)
+[![CRAN status](https://www.r-pkg.org/badges/version-last-release/medicalcoder)](https://CRAN.R-project.org/package=medicalcoder)
+[![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/medicalcoder)](https://www.r-pkg.org/pkg/medicalcoder)
+[![downloads](https://cranlogs.r-pkg.org/badges/grand-total/medicalcoder)](https://www.r-pkg.org/pkg/medicalcoder)
 <!-- badges: end -->
 
 `medicalcoder` is a lightweight, base-R package for working with ICD-9 and
