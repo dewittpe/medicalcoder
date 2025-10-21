@@ -60,6 +60,17 @@
     X[cbind(ri[keep], ci[keep])] <- 1L
   }
 
+  if (startsWith(method, "elixhauser_ahrq202")) {
+    X[X[, "DIAB_CX"] == 1, "DIAB_UNCX"] <- 0L
+    X[X[, "HTN_CX"] == 1, "HTN_UNCX"] <- 0L
+    mets <- which(X[, "CANCER_METS"] == 1L)
+    X[mets, "CANCER_SOLID"] <- 0L
+    X[mets, "CANCER_NSITU"] <- 0L
+    X[X[, "CANCER_SOLID"] == 1, "CANCER_NSITU"] <- 0L
+    X[X[, "LIVER_SEV"] == 1, "LIVER_MLD"] <- 0L
+    X[X[, "RENLFL_SEV"] == 1, "RENLFL_MOD"] <- 0L
+  }
+
   mortality_weights <-
     stats::setNames(
       ..mdcr_internal_elixhauser_index_scores..[[method]],
