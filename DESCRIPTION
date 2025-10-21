@@ -15,7 +15,7 @@ Depends: R (>= 3.5.0)
 License: GPL-2
 Language: en-US
 Encoding: UTF-8
-URL: https://peteredewitt.com/medicalcoder/, https://github.com/dewittpe/medicalcoder/
+URL: http://www.peteredewitt.com/medicalcoder/, https://github.com/dewittpe/medicalcoder/
 BugReports: https://github.com/dewittpe/medicalcoder/issues
 LazyData: true
 Suggests:

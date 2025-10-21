@@ -37,7 +37,7 @@
 #'
 #' 2. Works well with different data paradigms
 #'    * Base R `data.frames`,
-#'    * [tidyverse](https://www.tidyverse.org/) `tibble`s, and
+#'    * [tidyverse](https://tidyverse.org/) `tibble`s, and
 #'    * `data.table`s from the [data.table](https://rdatatable.gitlab.io/data.table/) package.
 #'
 #' One of the reasons for focusing on building a self-contained package with no
