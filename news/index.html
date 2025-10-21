@@ -49,6 +49,13 @@
 <h3 id="bug-fixes-0-6-0-9000">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-6-0-9000"></a></h3>
 <ul><li>Elixhauser AHRQ 2022 - 2025 exclusions for less severer conditions when more severer conditions are flagged</li>
 </ul></div>
+<div class="section level3">
+<h3 id="new-features-0-6-0-9000">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-6-0-9000"></a></h3>
+<ul><li>
+<p><code><a href="../reference/comorbidities.html">comorbidities()</a></code> will return a <code>tibble</code> with the input data is a <code>tbl_df</code> (<a href="https://github.com/dewittpe/medicalcoder/issues/9" class="external-link">#9</a>). Assumming the <code>data.table</code> and/or <code>tibble</code> namespaces are available, then the initial release (v0.6.0) would return a <code>data.table</code> if a <code>data.table</code> was passed to a <code><a href="../reference/comorbidities.html">comorbidities()</a></code> due to the S3 method dispatches. If a <code>tibble</code> (<code>tdl_df</code>) or a <code>data.frame</code> was passed to <code><a href="../reference/comorbidities.html">comorbidities()</a></code> then the return would be a <code>data.frame</code>. In this release we have added logic to determine if the input is a <code>tibble</code> and if the <code>tibble</code> namespaces is available, then the return from <code><a href="../reference/comorbidities.html">comorbidities()</a></code> will be a <code>tibble</code> (or list of <code>tibble</code>s when <code>subconditions = TRUE</code>).</p>
+<p>The tests were extended to consider the cases of passing in a data.table or tibble to comorbidities when the associated namespaces are not available.</p>
+</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.6.0" id="medicalcoder-060">medicalcoder 0.6.0<a class="anchor" aria-label="anchor" href="#medicalcoder-060"></a></h2><p class="text-muted">CRAN release: 2025-10-15</p>
