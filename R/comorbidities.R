@@ -618,6 +618,17 @@ comorbidities.data.frame <- function(data,
 
   ##############################################################################
   # set attributes and return
+  if (requireNamespace("tibble", quietly = TRUE) && inherits(data, "tbl_df")) {
+    if (subconditions) {
+      ccc[["conditions"]] <- getExportedValue(name = "as_tibble", ns = "tibble")(x = ccc[["conditions"]])
+      for (i in seq_len(length(ccc[["subconditions"]]))) {
+        ccc[["subconditions"]][[i]] <- getExportedValue(name = "as_tibble", ns = "tibble")(x = ccc[["subconditions"]][[i]])
+      }
+    } else {
+      ccc <- getExportedValue(name = "as_tibble", ns = "tibble")(x = ccc)
+    }
+  }
+
   attr(ccc, "method") <- method
   attr(ccc, "id.vars") <- id.vars
   attr(ccc, "flag.method") <- flag.method

@@ -1,33 +1,51 @@
 source('utilities.R')
-################################################################################
-# test that the output when using a data.frame, tibble, or data.table are all
-# the same.
-if (!requireNamespace("data.table", quietly = TRUE)) {
-  message("SKIP: data.table not available; skipping test-tibble-datatable.R")
-  quit(save = "no", status = 0, runLast = FALSE)
-}
-
-if (!requireNamespace("tibble", quietly = TRUE)) {
-  message("SKIP: tibble not available; skipping test-tibble-datatable.R")
-  quit(save = "no", status = 0, runLast = FALSE)
-}
-
 library(medicalcoder)
-library(tibble)
-library(data.table)
-old_threads <- getDTthreads()
-setDTthreads(threads = 1L) # to prevent CPU time exceeding elapsed time on CRAN
-on.exit(setDTthreads(old_threads), add = TRUE)
-mdcrDF  <- mdcr
-mdcrTBL <- as_tibble(mdcr)
-mdcrDT  <- as.data.table(copy(mdcr))
-
-stopifnot(is.data.frame(mdcrDF))
-stopifnot(is_tibble(mdcrTBL))
-stopifnot(is.data.table(mdcrDT))
-
 
 ################################################################################
+# Prep data I want to test the output with out loading or attaching the
+# data.table or the tibble namespaces.  So, the following commented out code is
+# run once, and only run when needed to update the data, so that a data.frame,
+# data.table, and tibble are all available.
+#
+# To keep the disk space use down, use only a subset of the mdcr data set
+
+### c1 <- comorbidities(data = mdcr, id.vars = "patid", icd.codes = "code", icdv.var = "icdv", dx.var = "dx", poa = 1, method = "charlson_quan2005")
+### c2 <- comorbidities(data = mdcr, id.vars = "patid", icd.codes = "code", icdv.var = "icdv", dx.var = "dx", poa = 1, primarydx = 0, method = "elixhauser_quan2005")
+### c3 <- comorbidities(data = mdcr, id.vars = "patid", icd.codes = "code", icdv.var = "icdv", dx.var = "dx", poa = 1, method = "pccc_v3.1")
+###
+### set.seed(42)
+### foo <- function(n, size = 100) {
+###   if (n <= 2) {
+###     x <-
+###       intersect(
+###         intersect(which(c1$num_cmrb == n), which(c2$num_cmrb == n)),
+###         intersect(which(c1$num_cmrb == n), which(c3$num_cmrb == n))
+###       )
+###   } else {
+###     x <-
+###       intersect(
+###         intersect(which(c1$num_cmrb >= n), which(c2$num_cmrb >= n)),
+###         intersect(which(c1$num_cmrb >= n), which(c3$num_cmrb >= n))
+###       )
+###   }
+###   sample(x, size = min(c(size, length(x))))
+### }
+###
+### x <- mdcr[mdcr$patid %in% c1[c(foo(0), foo(1), foo(2), foo(3), foo(4)), "patid"], ]
+###
+### saveRDS(x, file = "mdcr_subset_DF.rds")
+### saveRDS(tibble::as_tibble(x), file = "mdcr_subset_TBL.rds")
+### data.table::setDT(x)
+### saveRDS(x, file = "mdcr_subset_DT.rds")
+
+################################################################################
+# load the data from disk
+mdcrDT  <- readRDS(file = "mdcr_subset_DT.rds")
+mdcrDF  <- readRDS(file = "mdcr_subset_DF.rds")
+mdcrTBL <- readRDS(file = "mdcr_subset_TBL.rds")
+
+################################################################################
+# apply the comorbidities_methods to the three data sets
 common_args <-
   list(id.vars = "patid", icdv.var = "icdv", icd.codes = "code",
        dx.var = "dx", poa = 1, primarydx = 0)
@@ -86,39 +104,79 @@ for (obj in ls(envir = DFS, all.names = TRUE)) {
   stopifnot(identical(sbcnd, inherits(get(x = obj, envir = TBLS), "medicalcoder_comorbidities_with_subconditions")))
 }
 
-# All the DF and TBL results should be identical.
+# All the results should be identical save the attributes (class).
 for (obj in ls(envir = DFS, all.names = TRUE)) {
   xDF  <- DFS[[obj]]
   xTBL <- TBLS[[obj]]
-  stopifnot(identical(xDF, xTBL))
+  xDT  <- DTS[[obj]]
+  stopifnot(all.equal(xDF, xTBL, check.attributes = FALSE))
+  stopifnot(all.equal(xDF, xDT, check.attributes = FALSE))
 }
 
-# All the DTS results would be different because of the data.table specific
-# attributes.  So, check that everything is a data.table and then set to a
-# data.frame
+################################################################################
+# Now, if the data.table namespace is available, then test that the elements in
+# DTS are data.tables and after setting to data.frames, then the objects are
+# identical.
 
-for (obj in ls(envir = DTS, all.names = TRUE)) {
-  if (grepl("_with_subconditions", obj)) {
-    stopifnot(data.table::is.data.table(DTS[[obj]][["conditions"]]))
-    setDF(DTS[[obj]][["conditions"]])
-    for (sc in names(DTS[[obj]][["subconditions"]])) {
-      stopifnot(data.table::is.data.table(DTS[[obj]][["subconditions"]][[sc]]))
-      setDF(DTS[[obj]][["subconditions"]][[sc]])
+if (requireNamespace("data.table", quietly = TRUE)) {
+  stopifnot(is.data.frame(mdcrDF))
+  stopifnot(is.data.frame(mdcrDT))
+  stopifnot(data.table::is.data.table(mdcrDT))
+  for (obj in ls(envir = DTS, all.names = TRUE)) {
+    if (grepl("_with_subconditions", obj)) {
+      stopifnot(data.table::is.data.table(DTS[[obj]][["conditions"]]))
+      data.table::setDF(DTS[[obj]][["conditions"]])
+      for (sc in names(DTS[[obj]][["subconditions"]])) {
+        stopifnot(data.table::is.data.table(DTS[[obj]][["subconditions"]][[sc]]))
+        data.table::setDF(DTS[[obj]][["subconditions"]][[sc]])
+      }
+    } else {
+      stopifnot(data.table::is.data.table(DTS[[obj]]))
+      data.table::setDF(DTS[[obj]])
+      class(DTS[[obj]]) <- c("medicalcoder_comorbidities", class(DTS[[obj]]))
     }
-  } else {
-    stopifnot(data.table::is.data.table(DTS[[obj]]))
-    setDF(DTS[[obj]])
-    class(DTS[[obj]]) <- c("medicalcoder_comorbidities", class(DTS[[obj]]))
   }
 }
 
-# now that the outputs are data.frames, not data.tables, the results should all
-# be identical to the DFs
+# regardless of having data.table available, the elements should be identical to
+# the results for a data.frame
+
 for (obj in ls(envir = DFS, all.names = TRUE)) {
   xDF <- DFS[[obj]]
   xDT <- DTS[[obj]]
   stopifnot(identical(class(xDT), class(xDF)))
   stopifnot(identical(xDF, xDT))
+}
+
+
+################################################################################
+# For tibbles
+
+if (requireNamespace("tibble", quietly = TRUE)) {
+  stopifnot(is.data.frame(mdcrDF))
+  stopifnot(is.data.frame(mdcrTBL))
+  stopifnot(tibble::is_tibble(mdcrTBL))
+  for (obj in ls(envir = TBLS, all.names = TRUE)) {
+    if (grepl("_with_subconditions", obj)) {
+      stopifnot(tibble::is_tibble(TBLS[[obj]][["conditions"]]))
+      TBLS[[obj]][["conditions"]] <- as.data.frame(TBLS[[obj]][["conditions"]])
+      for (sc in names(TBLS[[obj]][["subconditions"]])) {
+        stopifnot(tibble::is_tibble(TBLS[[obj]][["subconditions"]][[sc]]))
+        TBLS[[obj]][["subconditions"]][[sc]] <- as.data.frame(TBLS[[obj]][["subconditions"]][[sc]])
+      }
+    } else {
+      stopifnot(tibble::is_tibble(TBLS[[obj]]))
+      TBLS[[obj]] <- as.data.frame(TBLS[[obj]])
+      class(TBLS[[obj]]) <- c("medicalcoder_comorbidities", class(TBLS[[obj]]))
+    }
+  }
+}
+
+for (obj in ls(envir = DFS, all.names = TRUE)) {
+  xDF <- DFS[[obj]]
+  xTBL <- TBLS[[obj]]
+  stopifnot(identical(class(xTBL), class(xDF)))
+  stopifnot(identical(xTBL, xDF))
 }
 
 ################################################################################

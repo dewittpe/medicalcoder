@@ -4,6 +4,18 @@
 * Elixhauser AHRQ 2022 - 2025 exclusions for less severer conditions when more
   severer conditions are flagged
 
+## New Features
+
+* `comorbidities()` will return a `tibble` with the input data is a `tbl_df`
+  (#9).  Assumming the `data.table` and/or `tibble` namespaces are available,
+  then the initial release (v0.6.0) would return a `data.table` if a
+  `data.table` was passed to a `comorbidities()` due to the S3 method
+  dispatches.  If a `tibble` (`tdl_df`) or a `data.frame` was passed to
+  `comorbidities()` then the return would be a `data.frame`.  In this release we
+  have added logic to determine if the input is a `tibble` and if the `tibble`
+  namespaces is available, then the return from `comorbidities()` will be a
+  `tibble` (or list of `tibble`s when `subconditions = TRUE`).
+
 # medicalcoder 0.6.0
 
 * Initial CRAN submission, providing a dependency-free toolkit for ICD-9/10 code
