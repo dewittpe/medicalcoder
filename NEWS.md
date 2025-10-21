@@ -1,3 +1,9 @@
+# medicalcoder 0.6.0.9000
+
+## Bug Fixes
+* Elixhauser AHRQ 2022 - 2025 exclusions for less severer conditions when more
+  severer conditions are flagged
+
 # medicalcoder 0.6.0
 
 * Initial CRAN submission, providing a dependency-free toolkit for ICD-9/10 code
