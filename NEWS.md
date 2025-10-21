@@ -16,6 +16,9 @@
   namespaces is available, then the return from `comorbidities()` will be a
   `tibble` (or list of `tibble`s when `subconditions = TRUE`).
 
+  The tests were extended to consider the cases of passing in a data.table or
+  tibble to comorbidities when the associated namespaces are not available.
+
 # medicalcoder 0.6.0
 
 * Initial CRAN submission, providing a dependency-free toolkit for ICD-9/10 code
