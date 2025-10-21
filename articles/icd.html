@@ -49,6 +49,7 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
 </form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/dewittpe/medicalcoder/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
@@ -65,7 +66,7 @@
       <h1>ICD Codes</h1>
             
       
-
+      <small class="dont-index">Source: <a href="https://github.com/dewittpe/medicalcoder/blob/main/vignettes/icd.Rmd" class="external-link"><code>vignettes/icd.Rmd</code></a></small>
       <div class="d-none name"><code>icd.Rmd</code></div>
     </div>
 
@@ -103,11 +104,13 @@ the Centers for Medicare &amp; Medicaid Services (CMS). The specific
 links to the source data sets can be found in the source code for the
 <code>medicalcoder</code> package on <a href="https://github.com/dewittpe/medicalcoder" class="external-link">GitHub</a>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageDescription</a></span><span class="op">(</span><span class="st">'medicalcoder'</span><span class="op">)</span><span class="op">$</span><span class="va">URL</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageDescription</a></span><span class="op">(</span><span class="st">'medicalcoder'</span><span class="op">)</span><span class="op">$</span><span class="va">URL</span><span class="op">)</span></span>
+<span><span class="co">## http://www.peteredewitt.com/medicalcoder/,</span></span>
+<span><span class="co">## https://github.com/dewittpe/medicalcoder/</span></span></code></pre></div>
 <p>End users can get a <code>data.frame</code> with ICD-9 diagnostic,
 ICD-9 procedure, ICD-10 diagnostic, and ICD-10 procedure codes.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">medicalcoder</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.peteredewitt.com/medicalcoder/">medicalcoder</a></span><span class="op">)</span></span>
 <span><span class="va">icd_codes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_icd_codes.html">get_icd_codes</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">icd_codes</span><span class="op">)</span></span>
 <span><span class="co">## 'data.frame':    227534 obs. of  9 variables:</span></span>
