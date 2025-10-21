@@ -33,10 +33,10 @@ library(medicalcoder)
 ###
 ### x <- mdcr[mdcr$patid %in% c1[c(foo(0), foo(1), foo(2), foo(3), foo(4)), "patid"], ]
 ###
-### saveRDS(x, file = "mdcr_subset_DF.rds", compress = "xz")
-### saveRDS(tibble::as_tibble(x), file = "mdcr_subset_TBL.rds", compress = "xz")
+### saveRDS(x, file = "mdcr_subset_DF.rds")
+### saveRDS(tibble::as_tibble(x), file = "mdcr_subset_TBL.rds")
 ### data.table::setDT(x)
-### saveRDS(x, file = "mdcr_subset_DT.rds", compress = "xz")
+### saveRDS(x, file = "mdcr_subset_DT.rds")
 
 ################################################################################
 # load the data from disk

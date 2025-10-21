@@ -55,7 +55,7 @@ icd_codes[["code_id"]] <- seq_len(nrow(icd_codes))
 ###   )
 ### )
 ###
-### saveRDS(oldpccc, file = "results_pccc_1.0.6.rds", compress = "xz")
+### saveRDS(oldpccc, file = "results_pccc_1.0.6.rds")
 
 oldpccc <- readRDS(file = "results_pccc_1.0.6.rds")
 

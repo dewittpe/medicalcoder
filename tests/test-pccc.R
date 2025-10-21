@@ -125,15 +125,6 @@ current <-
     pccc_cumulative_v2.1 = do.call(comorbidities, c(args, list(flag.method = "cumulative", method = "pccc_v2.0")))
 )
 
-# if the expected results need to be updated:
-### for (i in seq_along(current)) {
-###   saveRDS(
-###     object = current[[i]],
-###     file = file.path("expected-results-for-test-pccc", paste0(names(current)[i], ".rds")),
-###     compress = "xz"
-###   )
-### }
-
 expected <- list.files(path = "expected-results-for-test-pccc", pattern = "\\.rds$", full.name = TRUE)
 names(expected) <- sub("\\.rds", "", basename(expected))
 expected <- sapply(expected, readRDS, simplify = FALSE)
