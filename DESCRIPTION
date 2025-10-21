@@ -20,6 +20,7 @@ Suggests:
     data.table,
     kableExtra,
     knitr,
+    R.utils,
     rmarkdown,
     tibble (>= 2.0.0)
 RoxygenNote: 7.3.3

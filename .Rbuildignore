@@ -15,11 +15,4 @@
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
 ^pkgdown$
-^tests/ahrq/2022/*\.sas
-^tests/ahrq/2022/*\.csv
-^tests/ahrq/2023/*\.sas
-^tests/ahrq/2023/*\.csv
-^tests/ahrq/2024/*\.sas
-^tests/ahrq/2024/*\.csv
-^tests/ahrq/2025/*\.sas
-^tests/ahrq/2025/*\.csv
+^tests/build-expected-ahrq-results/*

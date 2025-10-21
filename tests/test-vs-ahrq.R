@@ -8,14 +8,17 @@
 #
 ################################################################################
 source('utilities.R')
-library(medicalcoder)
-library(data.table)
+suppressPackageStartupMessages({
+  library(medicalcoder)
+  library(data.table)
+  library(R.utils) #needed for data.table::fread to read the .gz files
+})
 
 # ahrq results
-ahrq_2022 <- fread("ahrq/2022/mdcr_sas_result_index_2022.csv")
-ahrq_2023 <- fread("ahrq/2023/mdcr_sas_result_index_2023.csv")
-ahrq_2024 <- fread("ahrq/2024/mdcr_sas_result_index_2024.csv")
-ahrq_2025 <- fread("ahrq/2025/mdcr_sas_result_index_2025.csv")
+ahrq_2022 <- fread("expected-ahrq-results/mdcr_sas_result_index_2022.csv.gz")
+ahrq_2023 <- fread("expected-ahrq-results/mdcr_sas_result_index_2023.csv.gz")
+ahrq_2024 <- fread("expected-ahrq-results/mdcr_sas_result_index_2024.csv.gz")
+ahrq_2025 <- fread("expected-ahrq-results/mdcr_sas_result_index_2025.csv.gz")
 
 fill_zero <- function(data) {
   for (j in names(data)) {
@@ -29,6 +32,7 @@ fill_zero <- function(data) {
     }
   }
 }
+
 fill_zero(ahrq_2022)
 fill_zero(ahrq_2023)
 fill_zero(ahrq_2024)
@@ -93,19 +97,15 @@ cnds_2024 <- unique(cnds_2024)
 cnds_2025 <- subset(get_elixhauser_index_scores(), !is.na(elixhauser_ahrq2025), select = "condition", drop = TRUE)
 cnds_2025 <- unique(cnds_2025)
 
-
 for (j in cnds_2022) {
   t <- identical(mdcr_vs_ahrq_2022[[j]], mdcr_vs_ahrq_2022[[paste0("CMR_", j)]])
-  #if (!t & !(j %in% c("CANCER_SOLID", "DIAB_UNCX", "HTN_UNCX"))) {
   if (!t) {
     stop(sprintf('identical(mdcr_vs_ahrq_2022[["%s"]], mdcr_vs_ahrq_2022[["%s"]]) is not true', j, paste0("CMR_", j)))
   }
 }
 
-
 for (j in cnds_2023) {
   t <- identical(mdcr_vs_ahrq_2023[[j]], mdcr_vs_ahrq_2023[[paste0("CMR_", j)]])
-  #if (!t & !(j %in% c("CANCER_SOLID", "DIAB_UNCX", "HTN_UNCX"))) {
   if (!t) {
     stop(sprintf('identical(mdcr_vs_ahrq_2023[["%s"]], mdcr_vs_ahrq_2023[["%s"]]) is not true', j, paste0("CMR_", j)))
   }
@@ -113,7 +113,6 @@ for (j in cnds_2023) {
 
 for (j in cnds_2024) {
   t <- identical(mdcr_vs_ahrq_2024[[j]], mdcr_vs_ahrq_2024[[paste0("CMR_", j)]])
-  #if (!t & !(j %in% c("CANCER_SOLID", "DIAB_UNCX", "HTN_UNCX"))) {
   if (!t) {
     stop(sprintf('identical(mdcr_vs_ahrq_2024[["%s"]], mdcr_vs_ahrq_2024[["%s"]]) is not true', j, paste0("CMR_", j)))
   }
@@ -121,15 +120,22 @@ for (j in cnds_2024) {
 
 for (j in cnds_2025) {
   t <- identical(mdcr_vs_ahrq_2025[[j]], mdcr_vs_ahrq_2025[[paste0("CMR_", j)]])
-  #if (!t & !(j %in% c("CANCER_SOLID", "DIAB_UNCX", "HTN_UNCX"))) {
   if (!t) {
     stop(sprintf('identical(mdcr_vs_ahrq_2025[["%s"]], mdcr_vs_ahrq_2025[["%s"]]) is not true', j, paste0("CMR_", j)))
   }
 }
 
-data.table::as.data.table(mdcr_vs_ahrq_2022)[CANCER_SOLID != CMR_CANCER_SOLID]
-data.table::as.data.table(mdcr_vs_ahrq_2022)[DIAB_UNCX != CMR_DIAB_UNCX]
-data.table::as.data.table(mdcr_vs_ahrq_2022)[HTN_UNCX != CMR_HTN_UNCX]
+stopifnot(mdcr_vs_ahrq_2022[["mortality_index"]]   == mdcr_vs_ahrq_2022[["CMR_Index_Mortality"]])
+stopifnot(mdcr_vs_ahrq_2022[["readmission_index"]] == mdcr_vs_ahrq_2022[["CMR_Index_Readmission"]])
+
+stopifnot(mdcr_vs_ahrq_2023[["mortality_index"]]   == mdcr_vs_ahrq_2023[["CMR_Index_Mortality"]])
+stopifnot(mdcr_vs_ahrq_2023[["readmission_index"]] == mdcr_vs_ahrq_2023[["CMR_Index_Readmission"]])
+
+stopifnot(mdcr_vs_ahrq_2024[["mortality_index"]]   == mdcr_vs_ahrq_2024[["CMR_Index_Mortality"]])
+stopifnot(mdcr_vs_ahrq_2024[["readmission_index"]] == mdcr_vs_ahrq_2024[["CMR_Index_Readmission"]])
+
+stopifnot(mdcr_vs_ahrq_2025[["mortality_index"]]   == mdcr_vs_ahrq_2025[["CMR_Index_Mortality"]])
+stopifnot(mdcr_vs_ahrq_2025[["readmission_index"]] == mdcr_vs_ahrq_2025[["CMR_Index_Readmission"]])
 
 ################################################################################
 #                                 End of File                                  #
