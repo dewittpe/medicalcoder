@@ -7,15 +7,6 @@
 #   against the official AHRQ SAS mapping results when fixtures are available.
 #
 ################################################################################
-
-# DO NOT RUN THIS TEST ON CRAN
-#
-# The input files are too large so only run this test on local machines and
-# github.  NOTE: CRAN sets the NOT_CRAN to "true"
-if (identical(Sys.getenv("NOT_CRAN"), "true")) {
-  quit(status = 0)
-}
-
 source('utilities.R')
 library(medicalcoder)
 library(data.table)
