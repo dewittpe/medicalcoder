@@ -1,49 +1,33 @@
-collect_sas_output <- function(path) {
-  if (!file.exists(path)) {
-    return(NULL)
+library(data.table)
+
+# ahrq results
+ahrq_results <-
+  list(
+    "2022/mdcr_sas_result_index_2022.csv.gz",
+    "2023/mdcr_sas_result_index_2023.csv.gz",
+    "2024/mdcr_sas_result_index_2024.csv.gz",
+    "2025/mdcr_sas_result_index_2025.csv.gz"
+  )
+ahrq_results <- lapply(ahrq_results, data.table::fread)
+
+fill_zero <- function(data) {
+  for (j in names(data)) {
+    if (startsWith(j, "CMR_")) {
+      if (is.logical(data[[j]])) {
+        if (all(is.na(data[[j]]))) {
+          set(data, j = j, value = as.integer(data[[j]]))
+          set(data, j = j, value = as.integer(0L))
+        }
+      }
+    }
   }
-  sas_df <- utils::read.csv(path, stringsAsFactors = FALSE, check.names = FALSE)
-  required_cols <- grep("^CMR_", names(sas_df), value = TRUE)
-  if (!length(required_cols)) {
-    warning(sprintf("%s does not contain any 'CMR_' columns; is this the correct exported file?", path), call. = FALSE)
-    return(NULL)
-  }
-  if (!"PATID" %in% names(sas_df)) {
-    warning(sprintf("%s is missing the PATID column expected in the SAS output.", path), call. = FALSE)
-    return(NULL)
-  }
-  out <- sas_df[c("PATID", required_cols)]
-  names(out) <- sub("^CMR_", "", names(out))
-  names(out)[1] <- "patid"
-  out$patid <- as.integer(out$patid)
-  out[order(out$patid), ]
+  data
 }
 
+ahrq_results <- lapply(ahrq_results, fill_zero)
 
-# Build the mdcr-wide dataset once; reused across years
-input_df <- reshape_mdcr_for_sas(medicalcoder::mdcr)
-num_dx_cols <- ncol(input_df) - 4L
+ahrq_results <- rbindlist(ahrq_results)
 
-fixture_dir <- file.path("tests", "ahrq", "expected")
-dir.create(fixture_dir, showWarnings = FALSE, recursive = TRUE)
+setDF(ahrq_results)
 
-for (yr in years) {
-  release <- sprintf("%d-1", yr)
-  input_csv <- file.path("tests", "ahrq", sprintf("mdcr_icd10_for_cmr_input_v%s.csv", release))
-  output_csv <- file.path("tests", "ahrq", sprintf("mdcr_icd10_with_cmr_v%s.csv", release))
-  fixture_path <- file.path(fixture_dir, sprintf("mdcr_elixhauser_ahrq%d_expected.rds", yr))
-
-  write_sas_input_csv(input_df, input_csv)
-  message(sprintf("[%d] SAS mapping input written to: %s", yr, input_csv))
-  message(sprintf("[%d] Set DXPREFIX=I10_DX, NUMDX=%d, and NDXVAR=I10_NDX in the SAS mapping program.", yr, num_dx_cols))
-
-  res <- collect_sas_output(output_csv)
-  if (!is.null(res)) {
-    saveRDS(res, fixture_path)
-    message(sprintf("[%d] SAS mapping output ingested and saved to: %s", yr, fixture_path))
-  } else {
-    message(sprintf("[%d] To build the comparison fixture, export the SAS mapping results to %s and rerun this script.", yr, output_csv))
-  }
-}
-
-
+saveRDS(ahrq_results, file = "../expected-ahrq-results.rds", compress = "xz")
