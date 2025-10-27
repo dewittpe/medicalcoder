@@ -129,7 +129,7 @@ tables.
 summary(mdcr_results)
 ```
 
-```{r, results = "asis"}
+```{r echo = FALSE, results = "asis"}
 x <- summary(mdcr_results)$conditions
 tab <-
   kableExtra::kbl(
@@ -139,7 +139,8 @@ tab <-
     col.names = c("", "Count", "Percentage"),
     digits = 3
   )
-tab <- kableExtra::pack_rows(tab, group_label = "Comorbidity", start_row = 1, end_row = 39)
+tab <- kableExtra::kable_styling(tab, bootstrap_options = c("striped"), font_size = 10)
+tab <- kableExtra::pack_rows(tab, group_label = "Comorbidity", start_row = 1, end_row = 38)
 tab <- kableExtra::pack_rows(tab, group_label = "Total Comorbidities", start_row = 39, end_row = nrow(x))
 tab
 ```

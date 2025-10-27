@@ -84,12 +84,10 @@ Call `summary()` on the return object for a list of summary objects.  These can 
 used to generate output tables to the end user's liking.
 
 ```{r}
-str(
-  summary(mdcr_results)
-)
+str(summary(mdcr_results))
 ```
 
-```{r, results = "asis"}
+```{r echo = FALSE, results = "asis"}
 x <- summary(mdcr_results)$conditions[, c("condition_description", "count", "percent")]
 tab <-
   kableExtra::kbl(
@@ -99,6 +97,7 @@ tab <-
     col.names = c("", "Count", "Percentage"),
     digits = 3
   )
+tab <- kableExtra::kable_styling(tab, bootstrap_options = c("striped"), font_size = 10)
 tab <- kableExtra::pack_rows(tab, group_label = "Comorbidity", start_row = 1, end_row = 17)
 tab <- kableExtra::pack_rows(tab, group_label = "Total Comorbidities", start_row = 18, end_row = nrow(x))
 tab
