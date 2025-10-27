@@ -36,9 +36,6 @@ Centers for Disease Control (CDC) and from the Centers for Medicare & Medicaid
 Services (CMS).  The specific links to the source data sets can be found in the
 source code for the `medicalcoder` package on
 [GitHub](https://github.com/dewittpe/medicalcoder).
-```{r label = "medicalcoder-url"}
-cat(packageDescription('medicalcoder')$URL)
-```
 
 End users can get a `data.frame` with
 ICD-9 diagnostic, ICD-9 procedure, ICD-10 diagnostic, and ICD-10 procedure codes.
@@ -96,6 +93,8 @@ d4
 
 * `assignable_end`: The last year the code was assignable.
 
+## with.descriptions
+
 To get the descriptions of the ICD codes call `get_icd_codes()` with
 `with.descriptions = TRUE`.
 ```{r, label = "icd-codes-with-descriptions"}
@@ -108,28 +107,49 @@ The return has the additional columns:
 * `desc_end`: the last fiscal_year that the description was documented
 
 Over time the descriptions for some ICD codes were modified within sources.
-There are also many differences between sources.  The table below has several
+There are also many differences between sources.  The tables below have several
 examples.
 
 ```{r, label = "deltas-in-desc", results = "hide"}
 delta_in_desc <-
-  subset(get_icd_codes(with.descriptions = TRUE),
-         subset = full_code %in% c("Z88.7", "010.93", "V76.49"),
-         select = c("full_code", "src", "desc", "desc_start", "desc_end"))
+  subset(
+    get_icd_codes(with.descriptions = TRUE),
+    subset = full_code %in% c("Z88.7", "010.93", "V76.49"),
+    select = c("full_code", "src", "desc", "desc_start", "desc_end")
+  )
 ```
 
-```{r, label = "deltas-in-desc-show", echo = FALSE, results = "asis"}
-knitr::kable(delta_in_desc, row.names = FALSE)
+The only difference in the description for 010.93 is a comma.
+
+```{r, label = "deltas-in-desc-show-010.93", echo = FALSE, results = "asis"}
+knitr::kable(
+  subset(delta_in_desc, subset = full_code == "010.93"),
+  row.names = FALSE
+)
 ```
 
-* Z88.7 has differences in the description over time within `cms` source and
-  between `cms` and `who`.
+ICD-10-CM Z88.7 has differences in the description over time within `cms` source
+and between `cms` and `who`.
 
-* The only difference in the description for 010.93 is a comma.
+```{r, label = "deltas-in-desc-show-Z88.7", echo = FALSE, results = "asis"}
+knitr::kable(
+  subset(delta_in_desc, subset = full_code == "Z88.7"),
+  row.names = FALSE
+)
+```
 
-* ICD-9-CM V79.49 had the description of 'other' which would require exploration
-  of the header codes to understand. Even when the most verbose description may
-  still require consideration of the header codes to fully understand.
+ICD-9-CM V79.49 had the description of 'other' which would require exploration
+of the header codes to understand. Even when the most verbose description may
+still require consideration of the header codes to fullye understand.
+
+```{r, label = "deltas-in-desc-show-v79.49", echo = FALSE, results = "asis"}
+knitr::kable(
+  subset(delta_in_desc, subset = full_code == "V76.49"),
+  row.names = FALSE
+)
+```
+
+## with.hierarchy
 
 Lastly, the `get_icd_codes()` function includes the argument `with.hierarchy`
 which will provide additional details for the codes.
