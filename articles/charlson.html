@@ -181,9 +181,7 @@ comorbidity, and <code>cci</code> the Charlson Comorbidity Index.</p>
 summary objects. These can be used to generate output tables to the end
 user’s liking.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mdcr_results</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mdcr_results</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">## List of 3</span></span>
 <span><span class="co">##  $ conditions   :'data.frame':   22 obs. of  4 variables:</span></span>
 <span><span class="co">##   ..$ condition_description: chr [1:22] "AIDS/HIV" "Any malignancy" "Cerebrovascular disease" "Chronic pulmonary disease" ...</span></span>
@@ -200,21 +198,8 @@ user’s liking.</p>
 <span><span class="co">##   ..$ median: num 0</span></span>
 <span><span class="co">##   ..$ q3    : num 1</span></span>
 <span><span class="co">##   ..$ max   : int 12</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mdcr_results</span><span class="op">)</span><span class="op">$</span><span class="va">conditions</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"condition_description"</span>, <span class="st">"count"</span>, <span class="st">"percent"</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">tab</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html" class="external-link">kbl</a></span><span class="op">(</span></span>
-<span>    x <span class="op">=</span> <span class="va">x</span>,</span>
-<span>    format <span class="op">=</span> <span class="st">"html"</span>,</span>
-<span>    caption <span class="op">=</span> <span class="st">"Counts and percentages of patients in the mdcr example data sets with the @quan2005 comorbidities."</span>,</span>
-<span>    col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="st">"Count"</span>, <span class="st">"Percentage"</span><span class="op">)</span>,</span>
-<span>    digits <span class="op">=</span> <span class="fl">3</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/group_rows.html" class="external-link">pack_rows</a></span><span class="op">(</span><span class="va">tab</span>, group_label <span class="op">=</span> <span class="st">"Comorbidity"</span>, start_row <span class="op">=</span> <span class="fl">1</span>, end_row <span class="op">=</span> <span class="fl">17</span><span class="op">)</span></span>
-<span><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/group_rows.html" class="external-link">pack_rows</a></span><span class="op">(</span><span class="va">tab</span>, group_label <span class="op">=</span> <span class="st">"Total Comorbidities"</span>, start_row <span class="op">=</span> <span class="fl">18</span>, end_row <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">tab</span></span></code></pre></div>
-<table class="table">
-<caption>
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
 Counts and percentages of patients in the mdcr example data sets with
 the <span class="citation">Quan et al. (2005)</span> comorbidities.
 </caption>

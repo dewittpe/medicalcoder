@@ -222,9 +222,7 @@ general expected form of the <code>data</code>.</p>
 <span><span class="co">## 5 9663901 2016-03-30   10  IMO0002</span></span>
 <span><span class="co">## 6 9663901 2016-03-30   10    Z93.0</span></span></code></pre></div>
 <p>A great level of detail for each of the comorbidity algorithms are
-provided in dedicated vignettes:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span><span class="op">$</span><span class="va">results</span></span></code></pre></div>
+provided in dedicated vignettes.</p>
 </div>
 <div class="section level2">
 <h2 id="when-are-conditions-flag">When are conditions flag?<a class="anchor" aria-label="anchor" href="#when-are-conditions-flag"></a>
@@ -236,8 +234,8 @@ of the current hospitalization.</p>
 <p>Implementation of Elixhauser comorbidities for 2022 and beyond <span class="citation">(Healthcare Research and (AHRQ) 2025)</span> explicitly
 define the use of present on admission flags for specific conditions
 (see the <code>poa_required</code> flag reported in the data set
-returned by <code>get_elixhauser_poa</code>).</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+returned by <code><a href="../reference/get_elixhauser_poa.html">get_elixhauser_poa()</a></code>).</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_elixhauser_poa.html">get_elixhauser_poa</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">## 'data.frame':    43 obs. of  7 variables:</span></span>
 <span><span class="co">##  $ condition          : chr  "AIDS" "ALCOHOL" "ANEMDEF" "ANEMDEF" ...</span></span>
@@ -293,7 +291,7 @@ maps to a cancer and heart failure (cardiovascular disease) comorbidity
 respectively for PCCC, Charlson, and Elixhauser. For demonstration, we
 also flag POA with the second report of I50.40 intentionally marked as
 not present on admission.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/lookup_icd_codes.html">lookup_icd_codes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"C78.4"</span>, <span class="st">"I50.40"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">##   input_code match_type icdv dx full_code  code src known_start known_end</span></span>
 <span><span class="co">## 1      C78.4  full_code   10  1     C78.4  C784 cms        2014      2026</span></span>
@@ -306,42 +304,51 @@ not present on admission.</p>
 <span><span class="co">## 3             2008           2019</span></span>
 <span><span class="co">## 4             2014           2026</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_pccc_codes.html">get_pccc_codes</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>       subset <span class="op">=</span> <span class="va">full_code</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"C78.4"</span>, <span class="st">"I50.40"</span><span class="op">)</span>,</span>
-<span>       select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"icdv"</span>, <span class="st">"dx"</span>, <span class="st">"code"</span>, <span class="st">"full_code"</span>, <span class="st">"condition"</span>, <span class="st">"pccc_v3.0"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">codes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"C78.4"</span>, <span class="st">"I50.40"</span><span class="op">)</span></span>
+<span><span class="va">cols</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"icdv"</span>, <span class="st">"dx"</span>, <span class="st">"code"</span>, <span class="st">"full_code"</span>, <span class="st">"condition"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/get_pccc_codes.html">get_pccc_codes</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  subset <span class="op">=</span> <span class="va">full_code</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">codes</span>,</span>
+<span>  select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">cols</span>, <span class="st">"pccc_v3.0"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">##      icdv dx  code full_code  condition pccc_v3.0</span></span>
 <span><span class="co">## 4523   10  1  C784     C78.4 malignancy         1</span></span>
 <span><span class="co">## 6570   10  1 I5040    I50.40        cvd         1</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_charlson_codes.html">get_charlson_codes</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>       subset <span class="op">=</span> <span class="va">full_code</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"C78.4"</span>, <span class="st">"I50.40"</span><span class="op">)</span>,</span>
-<span>       select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"icdv"</span>, <span class="st">"dx"</span>, <span class="st">"code"</span>, <span class="st">"full_code"</span>, <span class="st">"condition"</span>, <span class="st">"charlson_quan2011"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/get_charlson_codes.html">get_charlson_codes</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  subset <span class="op">=</span> <span class="va">full_code</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">codes</span>,</span>
+<span>  select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">cols</span>, <span class="st">"charlson_quan2011"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">##      icdv dx  code full_code condition charlson_quan2011</span></span>
 <span><span class="co">## 3500   10  1  C784     C78.4       mst                 1</span></span>
 <span><span class="co">## 5776   10  1 I5040    I50.40       chf                 1</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_elixhauser_codes.html">get_elixhauser_codes</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>       subset <span class="op">=</span> <span class="va">full_code</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"C78.4"</span>, <span class="st">"I50.40"</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va">elixhauser_ahrq2025</span> <span class="op">==</span> <span class="fl">1L</span>,</span>
-<span>       select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"icdv"</span>, <span class="st">"dx"</span>, <span class="st">"code"</span>, <span class="st">"full_code"</span>, <span class="st">"condition"</span>, <span class="st">"elixhauser_ahrq2025"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/get_elixhauser_codes.html">get_elixhauser_codes</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  subset <span class="op">=</span> <span class="va">full_code</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">codes</span> <span class="op">&amp;</span> <span class="va">elixhauser_ahrq2025</span> <span class="op">==</span> <span class="fl">1L</span>,</span>
+<span>  select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">cols</span>, <span class="st">"elixhauser_ahrq2025"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">##      icdv dx  code full_code   condition elixhauser_ahrq2025</span></span>
 <span><span class="co">## 3394   10  1  C784     C78.4 CANCER_METS                   1</span></span>
 <span><span class="co">## 7647   10  1 I5040    I50.40          HF                   1</span></span>
 <span></span>
 <span><span class="va">record</span> <span class="op">&lt;-</span></span>
-<span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">fread</a></span><span class="op">(</span>text <span class="op">=</span> <span class="st">"</span></span>
-<span><span class="st">patid | encid | code   | poa</span></span>
-<span><span class="st">A     | 1     | NA     | NA</span></span>
-<span><span class="st">A     | 2     | C78.4  | 0</span></span>
-<span><span class="st">A     | 3     | I50.40 | 1</span></span>
-<span><span class="st">A     | 4     | NA     | NA</span></span>
-<span><span class="st">A     | 5     | C78.4  | 1</span></span>
-<span><span class="st">A     | 5     | I50.40 | 0</span></span>
-<span><span class="st">A     | 6     | NA     | NA</span></span>
-<span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
-<p>We will call <code>comorbidities</code> for the three methods using
-static POA flags and dynamic POA flags, and both flag methods.</p>
-<table style="NAborder-bottom: 0;" class="table">
-<caption>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/structure.html" class="external-link">structure</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      patid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span><span class="op">)</span>, </span>
+<span>      encid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1L</span>, <span class="fl">2L</span>, <span class="fl">3L</span>, <span class="fl">4L</span>, <span class="fl">5L</span>, <span class="fl">5L</span>, <span class="fl">6L</span><span class="op">)</span>,</span>
+<span>      code <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="st">"C78.4"</span>, <span class="st">"I50.40"</span>, <span class="cn">NA</span>, <span class="st">"C78.4"</span>, <span class="st">"I50.40"</span>, <span class="cn">NA</span><span class="op">)</span>,</span>
+<span>      poa <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">0L</span>, <span class="fl">1L</span>, <span class="cn">NA</span>, <span class="fl">1L</span>, <span class="fl">0L</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    row.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="op">-</span><span class="fl">7L</span><span class="op">)</span>,</span>
+<span>    class <span class="op">=</span> <span class="st">"data.frame"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>We will call <code><a href="../reference/comorbidities.html">comorbidities()</a></code> for the three methods using
+static POA flags and dynamic POA flags, and both flag methods. Results
+are shown in the following table.</p>
+<table style="NAborder-bottom: 0; font-size: 8px; width: auto !important; margin-left: auto; margin-right: auto;" class="table table table-striped table-bordered">
+<caption style="font-size: initial !important;">
 Indicators for when a comorbidity is flagged based on the algorithm,
 present on admission (poa), and flag.method. The two ICD codes,C78.4 and
 I50.40, map to cancer and cardiovascular disease respectively.
@@ -416,64 +423,64 @@ Elixhauser
 </th>
 </tr>
 <tr>
-<th style="text-align:left;">
+<th style="text-align:center;">
 encid
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 ICD
 </th>
-<th style="text-align:right;">
+<th style="text-align:center;">
 CVD
 </th>
-<th style="text-align:right;">
+<th style="text-align:center;">
 CANCER
 </th>
-<th style="text-align:right;">
+<th style="text-align:center;">
 CVD
 </th>
-<th style="text-align:right;">
+<th style="text-align:center;">
 CANCER
 </th>
-<th style="text-align:right;">
+<th style="text-align:center;">
 CVD
 </th>
-<th style="text-align:right;">
+<th style="text-align:center;">
 CANCER
 </th>
-<th style="text-align:right;">
+<th style="text-align:center;">
 CVD
 </th>
-<th style="text-align:right;">
+<th style="text-align:center;">
 CANCER
 </th>
-<th style="text-align:right;">
+<th style="text-align:center;">
 CVD
 </th>
-<th style="text-align:right;">
+<th style="text-align:center;">
 CANCER
 </th>
-<th style="text-align:right;">
+<th style="text-align:center;">
 CVD
 </th>
-<th style="text-align:right;">
+<th style="text-align:center;">
 CANCER
 </th>
-<th style="text-align:right;">
+<th style="text-align:center;">
 CVD
 </th>
-<th style="text-align:right;">
+<th style="text-align:center;">
 CANCER
 </th>
-<th style="text-align:right;">
+<th style="text-align:center;">
 CVD
 </th>
-<th style="text-align:right;">
+<th style="text-align:center;">
 CANCER
 </th>
-<th style="text-align:right;">
+<th style="text-align:center;">
 CVD
 </th>
-<th style="text-align:right;">
+<th style="text-align:center;">
 CANCER
 </th>
 </tr>
@@ -485,371 +492,371 @@ CANCER
 </td>
 </tr>
 <tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<td style="text-align:center;padding-left: 2em;" indentlevel="1">
 1
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
 </tr>
 <tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<td style="text-align:center;padding-left: 2em;" indentlevel="1">
 2
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 C78.4
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<td style="text-align:center;padding-left: 2em;" indentlevel="1">
 3
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 I50.40<sup>*</sup>
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
 </tr>
 <tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<td style="text-align:center;padding-left: 2em;" indentlevel="1">
 4
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
 </tr>
 <tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<td style="text-align:center;padding-left: 2em;" indentlevel="1">
 5
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 C78.4<sup>*</sup>; I50.40
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<td style="text-align:center;padding-left: 2em;" indentlevel="1">
 6
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
 </tr>
@@ -859,371 +866,371 @@ C78.4<sup>*</sup>; I50.40
 </td>
 </tr>
 <tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<td style="text-align:center;padding-left: 2em;" indentlevel="1">
 1
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
 </tr>
 <tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<td style="text-align:center;padding-left: 2em;" indentlevel="1">
 2
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 C78.4
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<td style="text-align:center;padding-left: 2em;" indentlevel="1">
 3
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 I50.40<sup>*</sup>
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 0
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<td style="text-align:center;padding-left: 2em;" indentlevel="1">
 4
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<td style="text-align:center;padding-left: 2em;" indentlevel="1">
 5
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 C78.4<sup>*</sup>; I50.40
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
 <tr>
-<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+<td style="text-align:center;padding-left: 2em;" indentlevel="1">
 6
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 1
 </td>
 </tr>
@@ -1258,7 +1265,7 @@ associated with a comorbidity algorithm using the
 procedure flag, the compact code, and the full code. A column for the
 condition and other method specific flags are provided. Lastly, there
 are indicator columns for the variant of each method</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_pccc_codes.html">get_pccc_codes</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">## 'data.frame':    7913 obs. of  12 variables:</span></span>
 <span><span class="co">##  $ icdv           : int  9 9 9 9 9 9 9 9 9 9 ...</span></span>
@@ -1310,7 +1317,7 @@ following example, if only considering ICD codes which flag ‘aids’,
 there would be several thousand cases of AIDS, but only six cases of
 HIV.</p>
 <!-- NOTE: the following example is also in tests/test-charlson_cdmf2019.R -->
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cdmf_eg</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">mdcr</span>,</span>
 <span>        y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_charlson_codes.html">get_charlson_codes</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -1334,7 +1341,7 @@ HIV.</p>
 <span><span class="co">## 3:     1     1     1</span></span></code></pre></div>
 <p>When calling <code>comorbidities</code> we get the expected
 result.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cmdf_mdcr</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mdcr</span>,</span>
 <span>                icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>

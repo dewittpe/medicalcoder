@@ -320,21 +320,8 @@ used to generate summary tables.</p>
 <span><span class="co">##         index min q1 median q3 max</span></span>
 <span><span class="co">## 1 readmission  -2  0      0  0  35</span></span>
 <span><span class="co">## 2   mortality -24  0      0  0  75</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mdcr_results</span><span class="op">)</span><span class="op">$</span><span class="va">conditions</span></span>
-<span><span class="va">tab</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html" class="external-link">kbl</a></span><span class="op">(</span></span>
-<span>    x <span class="op">=</span> <span class="va">x</span>,</span>
-<span>    format <span class="op">=</span> <span class="st">"html"</span>,</span>
-<span>    caption <span class="op">=</span> <span class="st">"Counts and percentages of patients in the mdcr example data sets with the Elixhauser @quan2005 comorbidities."</span>,</span>
-<span>    col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="st">"Count"</span>, <span class="st">"Percentage"</span><span class="op">)</span>,</span>
-<span>    digits <span class="op">=</span> <span class="fl">3</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/group_rows.html" class="external-link">pack_rows</a></span><span class="op">(</span><span class="va">tab</span>, group_label <span class="op">=</span> <span class="st">"Comorbidity"</span>, start_row <span class="op">=</span> <span class="fl">1</span>, end_row <span class="op">=</span> <span class="fl">39</span><span class="op">)</span></span>
-<span><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/group_rows.html" class="external-link">pack_rows</a></span><span class="op">(</span><span class="va">tab</span>, group_label <span class="op">=</span> <span class="st">"Total Comorbidities"</span>, start_row <span class="op">=</span> <span class="fl">39</span>, end_row <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">tab</span></span></code></pre></div>
-<table class="table">
-<caption>
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
 Counts and percentages of patients in the mdcr example data sets with
 the Elixhauser <span class="citation">Quan et al. (2005)</span>
 comorbidities.
@@ -350,7 +337,7 @@ Percentage
 </th>
 </tr></thead>
 <tbody>
-<tr grouplength="39">
+<tr grouplength="38">
 <td colspan="3" style="border-bottom: 1px solid;">
 <strong>Comorbidity</strong>
 </td>
@@ -779,7 +766,7 @@ WGHTLOSS
 </td>
 </tr>
 <tr>
-<td style="text-align:left;padding-left: 4em;" indentlevel="2">
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
 &gt;= 1
 </td>
 <td style="text-align:right;">

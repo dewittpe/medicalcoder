@@ -73,9 +73,7 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.peteredewitt.com/medicalcoder/">medicalcoder</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"medicalcoder"</span><span class="op">)</span></span>
-<span><span class="co">## [1] '0.6.0.9000'</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.peteredewitt.com/medicalcoder/">medicalcoder</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -83,8 +81,8 @@
 2 was published in 2014 <span class="citation">(Feudtner et al.
 2014)</span> and updated to version 3 in 2024 <span class="citation">(Feinstein et al. 2024)</span>. Both versions identify
 11 conditions, each with multiple subconditions.</p>
-<table class="table">
-<caption>
+<table class="table table table-striped" style="font-size: 10px; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
 Syntactically valid names for complex chronic conditions
 </caption>
 <thead><tr>
@@ -327,9 +325,11 @@ associated with technology dependence, 0L otherwise.</li>
 procedure ICD-9 codes:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pat1</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
-<span>             icdv <span class="op">=</span> <span class="fl">9L</span>,</span>
-<span>             code <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"34590"</span>, <span class="st">"78065"</span>, <span class="st">"3432"</span>, <span class="st">"78065"</span>, <span class="st">"9929"</span>, <span class="st">"8606"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>    dx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>    icdv <span class="op">=</span> <span class="fl">9L</span>,</span>
+<span>    code <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"34590"</span>, <span class="st">"78065"</span>, <span class="st">"3432"</span>, <span class="st">"78065"</span>, <span class="st">"9929"</span>, <span class="st">"8606"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <p>An inner join between the <code>pccc_codes</code> and
 <code>pat1</code> will yield the conditions this patient has.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -351,31 +351,31 @@ use.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pat1_pccc_v2.0</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>       data <span class="op">=</span> <span class="va">pat1</span>,</span>
-<span>       icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>       dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
-<span>       icdv <span class="op">=</span> <span class="fl">9</span>,</span>
-<span>       method <span class="op">=</span> <span class="st">"pccc_v2.0"</span>,</span>
-<span>       flag.method <span class="op">=</span> <span class="st">"current"</span>, <span class="co"># default</span></span>
-<span>       poa <span class="op">=</span> <span class="fl">1</span>                  <span class="co"># default for flag.method = 'current'</span></span>
+<span>    data <span class="op">=</span> <span class="va">pat1</span>,</span>
+<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>    icdv <span class="op">=</span> <span class="fl">9</span>,</span>
+<span>    method <span class="op">=</span> <span class="st">"pccc_v2.0"</span>,</span>
+<span>    flag.method <span class="op">=</span> <span class="st">"current"</span>, <span class="co"># default</span></span>
+<span>    poa <span class="op">=</span> <span class="fl">1</span>                  <span class="co"># default for flag.method = 'current'</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="va">pat1_pccc_v2.1</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>       data <span class="op">=</span> <span class="va">pat1</span>,</span>
-<span>       icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>       dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
-<span>       icdv <span class="op">=</span> <span class="fl">9</span>,</span>
-<span>       method <span class="op">=</span> <span class="st">"pccc_v2.1"</span>,</span>
-<span>       flag.method <span class="op">=</span> <span class="st">"current"</span>,</span>
-<span>       poa <span class="op">=</span> <span class="fl">1</span></span>
+<span>    data <span class="op">=</span> <span class="va">pat1</span>,</span>
+<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>    icdv <span class="op">=</span> <span class="fl">9</span>,</span>
+<span>    method <span class="op">=</span> <span class="st">"pccc_v2.1"</span>,</span>
+<span>    flag.method <span class="op">=</span> <span class="st">"current"</span>,</span>
+<span>    poa <span class="op">=</span> <span class="fl">1</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">pat1_pccc_v2.0</span>, <span class="va">pat1_pccc_v2.1</span>, check.attributes <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">## [1] TRUE</span></span>
-<span><span class="va">pat1_pccc_v2.0</span></span>
+<span><span class="va">pat1_pccc_v2.1</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## Comorbidities via pccc_v2.0</span></span>
+<span><span class="co">## Comorbidities via pccc_v2.1</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">##   congeni_genetic cvd gi hemato_immu malignancy metabolic misc neonatal</span></span>
 <span><span class="co">## 1               0   0  0           0          0         1    0        0</span></span>
@@ -387,23 +387,25 @@ for this patient, but are not counted in the total number of
 conditions.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pat1_pccc_v3.0</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pat1</span>,</span>
-<span>       icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>       dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
-<span>       icdv <span class="op">=</span> <span class="fl">9</span>,</span>
-<span>       method <span class="op">=</span> <span class="st">"pccc_v3.0"</span>,</span>
-<span>       flag.method <span class="op">=</span> <span class="st">'current'</span>,</span>
-<span>       poa <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">pat1</span>,</span>
+<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>    icdv <span class="op">=</span> <span class="fl">9</span>,</span>
+<span>    method <span class="op">=</span> <span class="st">"pccc_v3.0"</span>,</span>
+<span>    flag.method <span class="op">=</span> <span class="st">'current'</span>,</span>
+<span>    poa <span class="op">=</span> <span class="fl">1</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="va">pat1_pccc_v3.1</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pat1</span>,</span>
-<span>       icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>       dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
-<span>       icdv <span class="op">=</span> <span class="fl">9</span>,</span>
-<span>       method <span class="op">=</span> <span class="st">"pccc_v3.1"</span>,</span>
-<span>       flag.method <span class="op">=</span> <span class="st">'current'</span>,</span>
-<span>       poa <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">pat1</span>,</span>
+<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>    icdv <span class="op">=</span> <span class="fl">9</span>,</span>
+<span>    method <span class="op">=</span> <span class="st">"pccc_v3.1"</span>,</span>
+<span>    flag.method <span class="op">=</span> <span class="st">'current'</span>,</span>
+<span>    poa <span class="op">=</span> <span class="fl">1</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">pat1_pccc_v3.0</span>, <span class="va">pat1_pccc_v3.1</span>, check.attributes <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -449,97 +451,232 @@ with the <code>&lt;condition&gt;_dxpr_only</code>,
 <code>&lt;condition&gt;_dxpr_and_tech</code> columns set to
 <code>NA</code>. When at least one condition is flagged, all the columns
 will be populated as 0/1.</p>
-<table style="width:100%;" class="table">
-<colgroup>
-<col width="14%">
-<col width="14%">
-<col width="14%">
-<col width="14%">
-<col width="14%">
-<col width="14%">
-<col width="14%">
-</colgroup>
-<thead><tr class="header">
-<th align="center"><code>cmrb_flag</code></th>
-<th align="center"><code>num_cmrb</code></th>
-<th align="center"><code>&lt;condition&gt;_dxpr_or_tech</code></th>
-<th align="center"><code>&lt;condition&gt;_dxpr_only</code></th>
-<th align="center"><code>&lt;condition&gt;_tech_only | &lt;condition&gt;_dxpr_and_tech | &lt;other condition(s)&gt;_dxpr_or_tech</code></th>
-<th align="center"></th>
-<th align="center"></th>
-</tr></thead>
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="4">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+&lt;condition&gt;
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+&lt;other condition(s)&gt;
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:center;">
+cmrb flag
+</th>
+<th style="text-align:center;">
+num cmrb
+</th>
+<th style="text-align:center;">
+_dxpr_or_tech
+</th>
+<th style="text-align:center;">
+_dxpr_only
+</th>
+<th style="text-align:center;">
+_tech_only
+</th>
+<th style="text-align:center;">
+_dxpr_and_tech
+</th>
+<th style="text-align:center;">
+_dxpr_or_tech
+</th>
+</tr>
+</thead>
 <tbody>
-<tr class="odd">
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
+<tr>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+0
+</td>
 </tr>
-<tr class="even">
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
+<tr>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
 </tr>
-<tr class="odd">
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
+<tr>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+0
+</td>
 </tr>
-<tr class="even">
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
+<tr>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+0
+</td>
 </tr>
-<tr class="odd">
-<td align="center">1</td>
-<td align="center">&gt;1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
+<tr>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+&gt;1
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
 </tr>
-<tr class="even">
-<td align="center">1</td>
-<td align="center">&gt;1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
+<tr>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+&gt;1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
 </tr>
-<tr class="odd">
-<td align="center">1</td>
-<td align="center">&gt;1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">1</td>
+<tr>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+&gt;1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+1
+</td>
 </tr>
-<tr class="even">
-<td align="center">1</td>
-<td align="center">&gt;1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
+<tr>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+&gt;1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
 </tr>
 </tbody>
 </table>
@@ -619,33 +756,45 @@ column to indicate if the ICD code is a diagnostic or procedure code,
 <span><span class="co">##  $ icdv : int  9 9 9 9 9 10 9 9 9 9 ...</span></span>
 <span><span class="co">##  $ code : chr  "99931" "75169" "99591" "V5865" ...</span></span>
 <span><span class="co">##  $ dx   : int  1 1 1 1 1 1 1 0 1 1 ...</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="assessing-pccc">Assessing PCCC<a class="anchor" aria-label="anchor" href="#assessing-pccc"></a>
+</h2>
+<div class="section level3">
+<h3 id="ignoring-icd-version-and-diagnosticprocedure-codes">Ignoring ICD Version and diagnostic/procedure codes<a class="anchor" aria-label="anchor" href="#ignoring-icd-version-and-diagnosticprocedure-codes"></a>
+</h3>
 <p>Applying <code>pccc_v2.1</code> and <code>pccc_v3.1</code> methods to
-<code>mdcr</code> could be as simple as:</p>
+<code>mdcr</code> without accounting for ICD version or the
+diagnostic/procedure status of the code can be done as follows:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mdcr_results_v2.1_01</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mdcr</span>,</span>
-<span>       icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>       id.vars <span class="op">=</span> <span class="st">"patid"</span>,</span>
-<span>       poa <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>       flag.method <span class="op">=</span> <span class="st">'current'</span>,</span>
-<span>       method <span class="op">=</span> <span class="st">"pccc_v2.1"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">mdcr</span>,</span>
+<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    id.vars <span class="op">=</span> <span class="st">"patid"</span>,</span>
+<span>    poa <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    flag.method <span class="op">=</span> <span class="st">'current'</span>,</span>
+<span>    method <span class="op">=</span> <span class="st">"pccc_v2.1"</span></span>
+<span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="va">mdcr_results_v3.1_01</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mdcr</span>,</span>
-<span>       icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>       id.vars <span class="op">=</span> <span class="st">"patid"</span>,</span>
-<span>       poa <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>       flag.method <span class="op">=</span> <span class="st">'current'</span>,</span>
-<span>       method <span class="op">=</span> <span class="st">"pccc_v3.1"</span><span class="op">)</span></span></code></pre></div>
-<p>and a useful summary of the object returned from
-<code>comorbidities</code> is gained by calling <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>.
-The return is a <code>data.table</code> with columns for the count and
-percentages. For <code>pccc_v2.0</code> and <code>pccc_v2.1</code> the
-condition, label, count, and percentage, are reported. For
-<code>pccc_v3.0</code> and <code>pccc_v3.1</code> the columns are
-extended to provide the counts and percentages for
-<code>dxpr_or_tech</code>, <code>dxpr_only</code>,
-<code>tech_only</code>, and <code>dxpr_and_tech</code>.</p>
+<span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">mdcr</span>,</span>
+<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    id.vars <span class="op">=</span> <span class="st">"patid"</span>,</span>
+<span>    poa <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    flag.method <span class="op">=</span> <span class="st">'current'</span>,</span>
+<span>    method <span class="op">=</span> <span class="st">"pccc_v3.1"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>A useful summary of the object returned from
+<code><a href="../reference/comorbidities.html">comorbidities()</a></code> is gained by calling
+<code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>. The return is a <code>data.frame</code> with
+columns for the count and percentages. For <code>pccc_v2.0</code> and
+<code>pccc_v2.1</code> the condition, label, count, and percentage, are
+reported. For <code>pccc_v3.0</code> and <code>pccc_v3.1</code> the
+columns are extended to provide the counts and percentages for
+<code>_dxpr_or_tech</code>, <code>_dxpr_only</code>,
+<code>_tech_only</code>, and <code>_dxpr_and_tech</code>.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mdcr_results_v2.1_01</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">## 'data.frame':    24 obs. of  4 variables:</span></span>
@@ -665,9 +814,9 @@ extended to provide the counts and percentages for
 <span><span class="co">##  $ tech_only_percent    : num  0 0.831 10.185 0 0 ...</span></span>
 <span><span class="co">##  $ dxpr_and_tech_count  : int  0 341 391 0 0 11 1 0 953 362 ...</span></span>
 <span><span class="co">##  $ dxpr_and_tech_percent: num  0 0.891 1.022 0 0 ...</span></span></code></pre></div>
-<p>The summary tables are <code>data.frame</code>s and can be
-manipulated by the end user for reporting as they want, see the
-following table.</p>
+<p>Since the summary tables are <code>data.frame</code>s the end user
+may manipulate the results for reporting as they want, see the following
+table.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge</a></span><span class="op">(</span></span>
@@ -678,8 +827,8 @@ following table.</p>
 <span>    sort <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="va">x</span><span class="op">[[</span><span class="st">"condition"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span></code></pre></div>
-<table class="table">
-<caption>
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
 Summary Table for <code>mdcr_results_v2.1_01</code> and
 <code>mdcr_results_v3.1_01</code>.
 </caption>
@@ -1541,6 +1690,10 @@ Any Condition
 </tr>
 </tbody>
 </table>
+</div>
+<div class="section level3">
+<h3 id="accounting-for-diagnosticprocedure">Accounting for Diagnostic/Procedure<a class="anchor" aria-label="anchor" href="#accounting-for-diagnosticprocedure"></a>
+</h3>
 <p>There are additional details we should consider with respect to the
 ICD codes. The ICD version, 9 or 10, and if the code is a diagnostic or
 a procedure code. For example, code ICD-9 diagnostic code 332.1 has the
@@ -1659,11 +1812,12 @@ procedure code in the pccc lookup table. By not accounting for
 diagnostic and procedure codes, the overlaps between the two coding
 structures can lead to false positives.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">mdcr</span>, <span class="va">patid</span> <span class="op">==</span> <span class="st">"87420"</span><span class="op">)</span>,</span>
-<span>      y <span class="op">=</span> <span class="va">pccc_codes</span>,</span>
-<span>      by.x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"code"</span><span class="op">)</span>,</span>
-<span>      by.y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"code"</span><span class="op">)</span>,</span>
-<span>      suffixes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">".mdcr"</span>, <span class="st">".pccc_codes"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">mdcr</span>, <span class="va">patid</span> <span class="op">==</span> <span class="st">"87420"</span><span class="op">)</span>,</span>
+<span>  y <span class="op">=</span> <span class="va">pccc_codes</span>,</span>
+<span>  by.x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"code"</span><span class="op">)</span>,</span>
+<span>  by.y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"code"</span><span class="op">)</span>,</span>
+<span>  suffixes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">".mdcr"</span>, <span class="st">".pccc_codes"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">##   code patid icdv.mdcr dx.mdcr icdv.pccc_codes dx.pccc_codes full_code</span></span>
 <span><span class="co">## 1 5641 87420         9       1               9             0     56.41</span></span>
@@ -1671,15 +1825,22 @@ structures can lead to false positives.</p>
 <span><span class="co">## 1     renal        other               0             0         1         1</span></span>
 <span><span class="co">##   pccc_v2.1 pccc_v2.0</span></span>
 <span><span class="co">## 1         1         1</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="full-and-compact-icd-codes">Full and Compact ICD codes<a class="anchor" aria-label="anchor" href="#full-and-compact-icd-codes"></a>
+</h3>
 <p>Using full codes can prevent false positives too. Here are several
 different ways that <code><a href="../reference/comorbidities.html">comorbidities()</a></code> could be called
 resulting in different outcomes.</p>
 <p>Note: this is a good example of how <code>medicalcoder</code> can
 handle full and compact codes within a single record.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">DF</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"full dx"</span>, <span class="st">"full pr"</span>, <span class="st">"compact dx"</span>, <span class="st">"compact pr"</span><span class="op">)</span>,</span>
-<span>                 code <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"564.1"</span>, <span class="st">"56.41"</span>, <span class="st">"5641"</span>, <span class="st">"5641"</span><span class="op">)</span>,</span>
-<span>                 dx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">DF</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>    id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"full dx"</span>, <span class="st">"full pr"</span>, <span class="st">"compact dx"</span>, <span class="st">"compact pr"</span><span class="op">)</span>,</span>
+<span>    code <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"564.1"</span>, <span class="st">"56.41"</span>, <span class="st">"5641"</span>, <span class="st">"5641"</span><span class="op">)</span>,</span>
+<span>    dx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="co"># ideal: using the dx/pr status and matching on full and compact codes.</span></span>
 <span><span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
@@ -1758,6 +1919,10 @@ handle full and compact codes within a single record.</p>
 <span><span class="co">## 2 compact pr         1                  1</span></span>
 <span><span class="co">## 3    full dx         0                  0</span></span>
 <span><span class="co">## 4    full pr         0                  0</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="accounting-for-icd-version">Accounting for ICD Version<a class="anchor" aria-label="anchor" href="#accounting-for-icd-version"></a>
+</h3>
 <p>Another consideration is the version of ICD, 9 or 10.</p>
 <p>The record for patid 95471 is a great example of the problem that a
 compact code can cause. “E030” matches ICD-9 dx compact and full code
@@ -1881,6 +2046,7 @@ matches. When only considering the compact codes the flag is true for
 the ambiguous version and the ICD-9 full version since ICD-9 E030 is a
 full code with the same compact form.</p>
 </div>
+</div>
 <div class="section level2">
 <h2 id="longitudinal-conditions">Longitudinal Conditions<a class="anchor" aria-label="anchor" href="#longitudinal-conditions"></a>
 </h2>
@@ -1897,6 +2063,9 @@ synthetic patients with multiple encounters. Each row has a date
 <span><span class="co">## 4 9663901 2016-03-25   10  J95.851</span></span>
 <span><span class="co">## 5 9663901 2016-03-30   10  IMO0002</span></span>
 <span><span class="co">## 6 9663901 2016-03-30   10    Z93.0</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="pccc-v2">PCCC V2<a class="anchor" aria-label="anchor" href="#pccc-v2"></a>
+</h3>
 <p>Let’s look at the <code>pccc_v2.1</code> flags for each patient,
 using all the information from all the encounters. This can easily by
 done by specifying <code>id.vars = c("patid")</code> such that the
@@ -1904,16 +2073,19 @@ done by specifying <code>id.vars = c("patid")</code> such that the
 one encounter.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">longitudinal_v2_patid</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mdcr_longitudinal</span>,</span>
-<span>       icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>       id.vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"patid"</span><span class="op">)</span>,</span>
-<span>       icdv.var <span class="op">=</span> <span class="st">"icdv"</span>,</span>
-<span>       method <span class="op">=</span> <span class="st">"pccc_v2.1"</span>,</span>
-<span>       flag.method <span class="op">=</span> <span class="st">"current"</span>,</span>
-<span>       poa <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">mdcr_longitudinal</span>,</span>
+<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    id.vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"patid"</span><span class="op">)</span>,</span>
+<span>    icdv.var <span class="op">=</span> <span class="st">"icdv"</span>,</span>
+<span>    method <span class="op">=</span> <span class="st">"pccc_v2.1"</span>,</span>
+<span>    flag.method <span class="op">=</span> <span class="st">"current"</span>,</span>
+<span>    poa <span class="op">=</span> <span class="fl">1</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html" class="external-link">kbl</a></span><span class="op">(</span><span class="va">longitudinal_v2_patid</span><span class="op">)</span></span></code></pre></div>
-<table class="table">
+<span><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html" class="external-link">kbl</a></span><span class="op">(</span><span class="va">longitudinal_v2_patid</span><span class="op">)</span></span>
+<span><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html" class="external-link">kable_styling</a></span><span class="op">(</span><span class="va">tab</span>, bootstrap_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"striped"</span><span class="op">)</span>, font_size <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">tab</span></span></code></pre></div>
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:right;">
 patid
@@ -2122,17 +2294,14 @@ the <code>id.vars = c("patid", "date")</code>.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">longitudinal_v2_patid_date</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mdcr_longitudinal</span>,</span>
-<span>       icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>       id.vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"patid"</span>, <span class="st">"date"</span><span class="op">)</span>,</span>
-<span>       icdv.var <span class="op">=</span> <span class="st">"icdv"</span>,</span>
-<span>       method <span class="op">=</span> <span class="st">"pccc_v2.1"</span>,</span>
-<span>       flag.method <span class="op">=</span> <span class="st">"current"</span>,</span>
-<span>       poa <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html" class="external-link">kbl</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">longitudinal_v2_patid_date</span>, <span class="va">patid</span> <span class="op">==</span> <span class="st">"9663901"</span><span class="op">)</span>,</span>
-<span>  row.names <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<table class="table">
+<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    id.vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"patid"</span>, <span class="st">"date"</span><span class="op">)</span>,</span>
+<span>    icdv.var <span class="op">=</span> <span class="st">"icdv"</span>,</span>
+<span>    method <span class="op">=</span> <span class="st">"pccc_v2.1"</span>,</span>
+<span>    flag.method <span class="op">=</span> <span class="st">"current"</span>,</span>
+<span>    poa <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:right;">
 patid
@@ -2684,13 +2853,8 @@ of reporting and thereafter.</p>
 <span>    method <span class="op">=</span> <span class="st">"pccc_v2.1"</span>,</span>
 <span>    flag.method <span class="op">=</span> <span class="st">"cumulative"</span>,</span>
 <span>    poa <span class="op">=</span> <span class="fl">0</span></span>
-<span>  <span class="op">)</span></span>
-<span></span>
-<span><span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html" class="external-link">kbl</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">longitudinal_v2_patid_date_cumulative_poa0</span>, <span class="va">patid</span> <span class="op">==</span> <span class="st">"9663901"</span><span class="op">)</span>,</span>
-<span>  row.names <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<table class="table">
+<span>  <span class="op">)</span></span></code></pre></div>
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:right;">
 patid
@@ -3234,12 +3398,8 @@ cmrb_flag
 <span>    method <span class="op">=</span> <span class="st">"pccc_v2.1"</span>,</span>
 <span>    flag.method <span class="op">=</span> <span class="st">"cumulative"</span>,</span>
 <span>    poa <span class="op">=</span> <span class="fl">1</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html" class="external-link">kbl</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">longitudinal_v2_patid_date_cumulative_poa1</span>, <span class="va">patid</span> <span class="op">==</span> <span class="st">"9663901"</span><span class="op">)</span>,</span>
-<span>  row.names <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<table class="table">
+<span>  <span class="op">)</span></span></code></pre></div>
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
 <thead><tr>
 <th style="text-align:right;">
 patid
@@ -3773,6 +3933,10 @@ cmrb_flag
 </tr>
 </tbody>
 </table>
+</div>
+<div class="section level3">
+<h3 id="pccc-v3">PCCC V3<a class="anchor" aria-label="anchor" href="#pccc-v3"></a>
+</h3>
 <p>For <code>pccc_v3.0</code> and <code>pccc_v3.1</code> a simple
 carry-forward method would not be easy to use as information about
 technology dependent codes is omitted when non-technology dependent
@@ -3781,9 +3945,12 @@ codes do not exist.</p>
 explore all six possible permutations of the codes. We’ll generate a
 data set with seven encounters and one code appearing on each of
 encounters 2, 4, and 6.</p>
-<p>The codes we’ll use are: * H49.811: metabolic (other metabolic
-disorders), * J84.111: respiratory (chronic respiratory diseases), and *
-Z96.41: metabolic (device and technology use).</p>
+<p>The codes we’ll use are:</p>
+<ul>
+<li>H49.811: metabolic (other metabolic disorders),</li>
+<li>J84.111: respiratory (chronic respiratory diseases), and</li>
+<li>Z96.41: metabolic (device and technology use).</li>
+</ul>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">codes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"H49.811"</span>, <span class="st">"J84.111"</span>, <span class="st">"Z96.41"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_pccc_codes.html">get_pccc_codes</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">full_code</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">codes</span><span class="op">)</span></span>
@@ -3844,7 +4011,7 @@ present-on-admission.</p>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p>Let’s walk through the results for each permutation.</p>
 <p><strong>Permutation 1</strong></p>
-<table class="table">
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
@@ -4171,7 +4338,7 @@ non-tech code appearing on encounter 4 and should flag as
 <code>tech_only = 0</code>, and <code>dxpr_and_tech = 0</code> for
 encounters 4 through 7.</p>
 <strong>Permutation 2</strong>
-<table class="table">
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
@@ -4492,7 +4659,7 @@ encounters 2 through 7. What should differ is that
 the non-tech code J84.111 for respiratory condition flagging as
 <code>dxpr_or_tech = dxpr_only = 1</code> for encounters 6 and 7.</p>
 <strong>Permutation 3</strong>
-<table class="table">
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
@@ -4809,7 +4976,7 @@ num ccc
 The non-tech metabolic code on encounter 4 results in the flagging of
 metabolic for encounters 4 through 7.</p>
 <strong>Permutation 4</strong>
-<table class="table">
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
@@ -5127,7 +5294,7 @@ encounters 2 through 7 means that when the technology dependent
 metabolic code appears on encounter 4, a metabolic is flagged for
 encounters 4 through 7. Compare this with permutations 5 and 6.</p>
 <strong>Permutation 5</strong>
-<table class="table">
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
@@ -5448,7 +5615,7 @@ is a technology dependent code the PCCC version 3 algorithm results in
 is flagged and the past history of the technology dependent code
 persists.</p>
 <strong>Permutation 6</strong>
-<table class="table">
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
@@ -5769,6 +5936,7 @@ respiratory condition is reported then the respiratory condition
 Note that technology only conditions are flagged if at least one other
 condition is flagged.</p>
 </div>
+</div>
 <div class="section level2">
 <h2 id="subconditions">Subconditions<a class="anchor" aria-label="anchor" href="#subconditions"></a>
 </h2>
@@ -5779,12 +5947,13 @@ conditions. However, to our knowledge, no software prior to
 <code>medicalcoder</code> implemented flagging for the
 subconditions.</p>
 <p>The subconditions for each condition are shown in the next table.</p>
-<table class="table">
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
 <thead><tr>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;">
 subcondition
 </th>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;">
 subcondition_label
 </th>
 </tr></thead>
@@ -6414,6 +6583,7 @@ Transplantation
 </tr>
 </tbody>
 </table>
+</div>
 <p>To get the subconditions all you need to do is use the
 <code>subconditions = TRUE</code> argument in the
 <code>comorbidities</code> call. For this example we will apply
@@ -6466,9 +6636,11 @@ identical to the results of calling <code><a href="../reference/comorbidities.ht
 <span><span class="co">##   ..$ renal          :'data.frame':  2768 obs. of  7 variables:</span></span>
 <span><span class="co">##   ..$ respiratory    :'data.frame':  3200 obs. of  7 variables:</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">with_subconditions</span><span class="op">$</span><span class="va">conditions</span>,</span>
-<span>          <span class="va">without_subconditions</span>,</span>
-<span>          check.attributes <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span></span>
+<span>  <span class="va">with_subconditions</span><span class="op">$</span><span class="va">conditions</span>,</span>
+<span>  <span class="va">without_subconditions</span>,</span>
+<span>  check.attributes <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">## [1] TRUE</span></span></code></pre></div>
 <p>The second element of <code>with_subconditions</code> is list of
 <code>data.frame</code>s, one for each condition, with indicators for
@@ -6476,9 +6648,7 @@ only those with the condition.</p>
 <p>A quick and easy way to get a summary of the subconditions is to call
 <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>.</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">with_subconditions</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">with_subconditions</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">## 'data.frame':    82 obs. of  5 variables:</span></span>
 <span><span class="co">##  $ condition                      : chr  "congeni_genetic" "congeni_genetic" "congeni_genetic" "congeni_genetic" ...</span></span>
 <span><span class="co">##  $ subcondition                   : chr  NA "bone_and_joint_anomalies" "chromosomal_anomalies" "diaphragm_and_abdominal_wall_anomalies" ...</span></span>
@@ -6486,8 +6656,11 @@ only those with the condition.</p>
 <span><span class="co">##  $ percent_of_cohort              : num  8.429 2.156 4.035 0.784 1.971 ...</span></span>
 <span><span class="co">##  $ percent_of_those_with_condition: num  NA 25.6 47.9 9.3 23.4 ...</span></span></code></pre></div>
 <p>The subconditions are available for all pccc variants. A summary is
-presented in the following table.</p>
-<table class="table table table-striped" style="margin-left: auto; margin-right: auto;">
+presented in the following tables.</p>
+<div class="section level3">
+<h3 id="congenital-or-genetic">Congenital or Genetic<a class="anchor" aria-label="anchor" href="#congenital-or-genetic"></a>
+</h3>
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
@@ -6756,6 +6929,80 @@ Other Congenital Anomalies
 23.4
 </td>
 </tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="cardiovascular">Cardiovascular<a class="anchor" aria-label="anchor" href="#cardiovascular"></a>
+</h3>
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v2.0
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v2.1
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v3.0
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v3.1
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+</tr>
+</thead>
+<tbody>
 <tr>
 <td style="text-align:left;font-weight: bold;">
 Cardiovascular
@@ -7121,6 +7368,80 @@ Transplantation
 4.8
 </td>
 </tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="gastrointestinal">Gastrointestinal<a class="anchor" aria-label="anchor" href="#gastrointestinal"></a>
+</h3>
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v2.0
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v2.1
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v3.0
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v3.1
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+</tr>
+</thead>
+<tbody>
 <tr>
 <td style="text-align:left;font-weight: bold;">
 Gastrointestinal
@@ -7404,6 +7725,80 @@ Transplantation
 5.6
 </td>
 </tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="hematologic">Hematologic<a class="anchor" aria-label="anchor" href="#hematologic"></a>
+</h3>
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v2.0
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v2.1
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v3.0
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v3.1
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+</tr>
+</thead>
+<tbody>
 <tr>
 <td style="text-align:left;font-weight: bold;">
 Hematologic or Immunologic
@@ -7933,6 +8328,80 @@ Transplantation
 6.4
 </td>
 </tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="malignancy">Malignancy<a class="anchor" aria-label="anchor" href="#malignancy"></a>
+</h3>
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v2.0
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v2.1
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v3.0
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v3.1
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+</tr>
+</thead>
+<tbody>
 <tr>
 <td style="text-align:left;font-weight: bold;">
 Malignancy
@@ -8052,6 +8521,80 @@ Transplantation
 11.9
 </td>
 </tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="metabolic">Metabolic<a class="anchor" aria-label="anchor" href="#metabolic"></a>
+</h3>
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v2.0
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v2.1
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v3.0
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v3.1
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+</tr>
+</thead>
+<tbody>
 <tr>
 <td style="text-align:left;font-weight: bold;">
 Metabolic
@@ -8376,6 +8919,80 @@ Storage Disorders
 2.3
 </td>
 </tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="miscellaneous">Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous"></a>
+</h3>
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v2.0
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v2.1
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v3.0
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v3.1
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+</tr>
+</thead>
+<tbody>
 <tr>
 <td style="text-align:left;font-weight: bold;">
 Miscellaneous, Not Elsewhere Classified
@@ -8495,6 +9112,80 @@ Transplantation
 15.9
 </td>
 </tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="neonatal">Neonatal<a class="anchor" aria-label="anchor" href="#neonatal"></a>
+</h3>
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v2.0
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v2.1
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v3.0
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v3.1
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+</tr>
+</thead>
+<tbody>
 <tr>
 <td style="text-align:left;font-weight: bold;">
 Premature &amp; Neonatal
@@ -8860,6 +9551,80 @@ Spinal Cord Injury At Birth
 0.0
 </td>
 </tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="neuromuscular">Neuromuscular<a class="anchor" aria-label="anchor" href="#neuromuscular"></a>
+</h3>
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v2.0
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v2.1
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v3.0
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v3.1
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+</tr>
+</thead>
+<tbody>
 <tr>
 <td style="text-align:left;font-weight: bold;">
 Neurologic or Neuromuscular
@@ -9307,6 +10072,80 @@ Other Neurologic Disorders
 14.6
 </td>
 </tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="renal">Renal<a class="anchor" aria-label="anchor" href="#renal"></a>
+</h3>
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v2.0
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v2.1
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v3.0
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v3.1
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+</tr>
+</thead>
+<tbody>
 <tr>
 <td style="text-align:left;font-weight: bold;">
 Renal Urologic
@@ -9590,6 +10429,80 @@ Transplantation
 10.9
 </td>
 </tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="respiratory">Respiratory<a class="anchor" aria-label="anchor" href="#respiratory"></a>
+</h3>
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v2.0
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v2.1
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v3.0
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+v3.1
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+<th style="text-align:right;">
+count
+</th>
+<th style="text-align:right;">
+% of cohort
+</th>
+<th style="text-align:right;">
+% of those with condition
+</th>
+</tr>
+</thead>
+<tbody>
 <tr>
 <td style="text-align:left;font-weight: bold;">
 Respiratory
@@ -9875,6 +10788,10 @@ Transplantation
 </tr>
 </tbody>
 </table>
+</div>
+<div class="section level3">
+<h3 id="longitudinal">Longitudinal<a class="anchor" aria-label="anchor" href="#longitudinal"></a>
+</h3>
 <p>The longitudinal assessment for subconditions work as well. Using the
 same <code>permutations</code> data set from above we will look at the
 metabolic and respiratory conditions and subconditions.</p>
@@ -9925,8 +10842,8 @@ flagged.</p>
 <span>    <span class="fu">.</span><span class="op">(</span>sencid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">encounter_id</span>, collapse <span class="op">=</span> <span class="st">", "</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    by <span class="op">=</span> <span class="fu">.</span><span class="op">(</span><span class="va">plabel</span><span class="op">)</span></span>
 <span>  <span class="op">]</span></span></code></pre></div>
-<table class="table">
-<caption>
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
 Encounters flagging for respiratory condition and the chronic
 respiratory disease subcondition.
 </caption>
@@ -10054,8 +10971,8 @@ device and technology use, and 2) other metabolic disorders.</p>
 <span>    <span class="va">plabel</span> <span class="op">~</span> <span class="va">subcondition</span>,</span>
 <span>    value.var <span class="op">=</span> <span class="st">"sencid"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<table class="table">
-<caption>
+<table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
 Encounters flagging for a metabolic condition and the encounters
 flagging for subconidtions device and technology use and/or other
 metabolic disorders.
@@ -10171,6 +11088,7 @@ Permutation 6: Z96.41, J84.111, H49.811
 </tr>
 </tbody>
 </table>
+</div>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>

@@ -103,13 +103,9 @@ look up tables come from the Centers for Disease Control (CDC) and from
 the Centers for Medicare &amp; Medicaid Services (CMS). The specific
 links to the source data sets can be found in the source code for the
 <code>medicalcoder</code> package on <a href="https://github.com/dewittpe/medicalcoder" class="external-link">GitHub</a>.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageDescription</a></span><span class="op">(</span><span class="st">'medicalcoder'</span><span class="op">)</span><span class="op">$</span><span class="va">URL</span><span class="op">)</span></span>
-<span><span class="co">## http://www.peteredewitt.com/medicalcoder/,</span></span>
-<span><span class="co">## https://github.com/dewittpe/medicalcoder/</span></span></code></pre></div>
 <p>End users can get a <code>data.frame</code> with ICD-9 diagnostic,
 ICD-9 procedure, ICD-10 diagnostic, and ICD-10 procedure codes.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.peteredewitt.com/medicalcoder/">medicalcoder</a></span><span class="op">)</span></span>
 <span><span class="va">icd_codes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_icd_codes.html">get_icd_codes</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">icd_codes</span><span class="op">)</span></span>
@@ -175,10 +171,13 @@ the case.</p></li>
 <li><p><code>assignable_end</code>: The last year the code was
 assignable.</p></li>
 </ul>
+<div class="section level3">
+<h3 id="with-descriptions">with.descriptions<a class="anchor" aria-label="anchor" href="#with-descriptions"></a>
+</h3>
 <p>To get the descriptions of the ICD codes call
 <code><a href="../reference/get_icd_codes.html">get_icd_codes()</a></code> with
 <code>with.descriptions = TRUE</code>.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_icd_codes.html">get_icd_codes</a></span><span class="op">(</span>with.descriptions <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">## 'data.frame':    241988 obs. of  12 variables:</span></span>
 <span><span class="co">##  $ icdv            : int  9 9 9 9 9 9 9 9 9 9 ...</span></span>
@@ -205,13 +204,16 @@ was documented</li>
 documented</li>
 </ul>
 <p>Over time the descriptions for some ICD codes were modified within
-sources. There are also many differences between sources. The table
-below has several examples.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+sources. There are also many differences between sources. The tables
+below have several examples.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">delta_in_desc</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_icd_codes.html">get_icd_codes</a></span><span class="op">(</span>with.descriptions <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>         subset <span class="op">=</span> <span class="va">full_code</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Z88.7"</span>, <span class="st">"010.93"</span>, <span class="st">"V76.49"</span><span class="op">)</span>,</span>
-<span>         select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"full_code"</span>, <span class="st">"src"</span>, <span class="st">"desc"</span>, <span class="st">"desc_start"</span>, <span class="st">"desc_end"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="../reference/get_icd_codes.html">get_icd_codes</a></span><span class="op">(</span>with.descriptions <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    subset <span class="op">=</span> <span class="va">full_code</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Z88.7"</span>, <span class="st">"010.93"</span>, <span class="st">"V76.49"</span><span class="op">)</span>,</span>
+<span>    select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"full_code"</span>, <span class="st">"src"</span>, <span class="st">"desc"</span>, <span class="st">"desc_start"</span>, <span class="st">"desc_end"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>The only difference in the description for 010.93 is a comma.</p>
 <table class="table">
 <colgroup>
 <col width="7%">
@@ -244,6 +246,70 @@ bacilli found (in sputum) by microscopy</td>
 <td align="right">2010</td>
 <td align="right">2015</td>
 </tr>
+</tbody>
+</table>
+<p>ICD-10-CM Z88.7 has differences in the description over time within
+<code>cms</code> source and between <code>cms</code> and
+<code>who</code>.</p>
+<table class="table">
+<colgroup>
+<col width="12%">
+<col width="4%">
+<col width="59%">
+<col width="13%">
+<col width="10%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">full_code</th>
+<th align="left">src</th>
+<th align="left">desc</th>
+<th align="right">desc_start</th>
+<th align="right">desc_end</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Z88.7</td>
+<td align="left">cms</td>
+<td align="left">Allergy status to serum and vaccine status</td>
+<td align="right">2014</td>
+<td align="right">2020</td>
+</tr>
+<tr class="even">
+<td align="left">Z88.7</td>
+<td align="left">cms</td>
+<td align="left">Allergy status to serum and vaccine</td>
+<td align="right">2021</td>
+<td align="right">2026</td>
+</tr>
+<tr class="odd">
+<td align="left">Z88.7</td>
+<td align="left">who</td>
+<td align="left">Personal history of allergy to serum and vaccine</td>
+<td align="right">2008</td>
+<td align="right">2019</td>
+</tr>
+</tbody>
+</table>
+<p>ICD-9-CM V79.49 had the description of ‘other’ which would require
+exploration of the header codes to understand. Even when the most
+verbose description may still require consideration of the header codes
+to fullye understand.</p>
+<table class="table">
+<colgroup>
+<col width="10%">
+<col width="4%">
+<col width="62%">
+<col width="12%">
+<col width="9%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">full_code</th>
+<th align="left">src</th>
+<th align="left">desc</th>
+<th align="right">desc_start</th>
+<th align="right">desc_end</th>
+</tr></thead>
+<tbody>
 <tr class="odd">
 <td align="left">V76.49</td>
 <td align="left">cms</td>
@@ -266,44 +332,16 @@ sites</td>
 <td align="right">2010</td>
 <td align="right">2015</td>
 </tr>
-<tr class="even">
-<td align="left">Z88.7</td>
-<td align="left">cms</td>
-<td align="left">Allergy status to serum and vaccine status</td>
-<td align="right">2014</td>
-<td align="right">2020</td>
-</tr>
-<tr class="odd">
-<td align="left">Z88.7</td>
-<td align="left">cms</td>
-<td align="left">Allergy status to serum and vaccine</td>
-<td align="right">2021</td>
-<td align="right">2026</td>
-</tr>
-<tr class="even">
-<td align="left">Z88.7</td>
-<td align="left">who</td>
-<td align="left">Personal history of allergy to serum and vaccine</td>
-<td align="right">2008</td>
-<td align="right">2019</td>
-</tr>
 </tbody>
 </table>
-<ul>
-<li><p>Z88.7 has differences in the description over time within
-<code>cms</code> source and between <code>cms</code> and
-<code>who</code>.</p></li>
-<li><p>The only difference in the description for 010.93 is a
-comma.</p></li>
-<li><p>ICD-9-CM V79.49 had the description of ‘other’ which would
-require exploration of the header codes to understand. Even when the
-most verbose description may still require consideration of the header
-codes to fully understand.</p></li>
-</ul>
+</div>
+<div class="section level3">
+<h3 id="with-hierarchy">with.hierarchy<a class="anchor" aria-label="anchor" href="#with-hierarchy"></a>
+</h3>
 <p>Lastly, the <code><a href="../reference/get_icd_codes.html">get_icd_codes()</a></code> function includes the
 argument <code>with.hierarchy</code> which will provide additional
 details for the codes.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_icd_codes.html">get_icd_codes</a></span><span class="op">(</span>with.hierarchy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">## 'data.frame':    227534 obs. of  16 variables:</span></span>
 <span><span class="co">##  $ icdv                : int  10 10 10 10 10 10 10 10 10 10 ...</span></span>
@@ -338,6 +376,7 @@ joins and other operations are need to have a data set that is end user
 friendly. Several data sets are generated and cached when the namespace
 is loaded.</p>
 </div>
+</div>
 <div class="section level2">
 <h2 id="lookup_icd_codes">
 <code>lookup_icd_codes()</code><a class="anchor" aria-label="anchor" href="#lookup_icd_codes"></a>
@@ -348,7 +387,7 @@ The columns report the input code, if it was matched as a full code
 (with an applicable decimal point) or a compact code (applicable decimal
 point omitted) along with the ICD version ,type, and when the code was
 assignable.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">codes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0011"</span>, <span class="st">"7329"</span>, <span class="st">"732"</span>, <span class="st">"73291"</span>, <span class="st">"not a code"</span>, <span class="st">"001.1"</span>, <span class="st">"A9248"</span>, <span class="st">"A924"</span>, <span class="st">"Z00"</span><span class="op">)</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="../reference/lookup_icd_codes.html">lookup_icd_codes</a></span><span class="op">(</span><span class="va">codes</span><span class="op">)</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
@@ -567,7 +606,7 @@ assignable.</p>
 The default, as shown above, is to consider full and compact codes. Set
 <code>full.codes = FALSE</code> so only compact codes are
 considered.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="../reference/lookup_icd_codes.html">lookup_icd_codes</a></span><span class="op">(</span><span class="va">codes</span>, full.codes <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
 <span>  row.names <span class="op">=</span> <span class="cn">FALSE</span></span>
@@ -786,7 +825,7 @@ considered.</p>
 </table>
 <p>And set <code>compact.codes = FALSE</code> to only consider full
 codes.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="../reference/lookup_icd_codes.html">lookup_icd_codes</a></span><span class="op">(</span><span class="va">codes</span>, compact.codes <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
 <span>  row.names <span class="op">=</span> <span class="cn">FALSE</span></span>
@@ -956,7 +995,7 @@ a string and a direct match to the internal lookup table is made.</p>
 <p><code><a href="../reference/lookup_icd_codes.html">lookup_icd_codes()</a></code> can also accept regular expressions.
 By providing a vector of regular expression patterns for the codes
 (passed to <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep()</a></code>)</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="../reference/lookup_icd_codes.html">lookup_icd_codes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"^C84\\.6[0-1A-Z]"</span>, regex <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  row.names <span class="op">=</span> <span class="cn">FALSE</span></span>
@@ -1043,7 +1082,7 @@ code could not be an ICD-10 procedure code, and all ICD-10 diagnostic
 codes start with a letter, not a number. So this string could only be a
 ICD-9 code. It is a valid ICD-9 diagnostic code, and a valid ICD-9
 procedure code.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"7993"</span><span class="op">)</span></span>
 <span><span class="co">## Warning: Input '7993' is a: ICD 9 dx compact; ICD 9 pr compact</span></span>
 <span><span class="co">## [1] TRUE</span></span>
@@ -1063,7 +1102,7 @@ procedure code.</p>
 <span><span class="co">## 1             1997           2015</span></span>
 <span><span class="co">## 2             1997           2015</span></span></code></pre></div>
 <p>A vector of possible codes:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"7993"</span>, <span class="st">"A924"</span>, <span class="st">"7993"</span>, <span class="st">"A924"</span>, <span class="st">"no"</span>, <span class="st">"A92"</span>, <span class="st">"516"</span>, <span class="st">"5163"</span>, <span class="st">"51631"</span>, <span class="st">"A00"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">## Warning: Input '7993' is a: ICD 9 dx compact; ICD 9 pr compact</span></span>
@@ -1071,7 +1110,7 @@ procedure code.</p>
 <span><span class="co">##  [1]  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE  TRUE  TRUE FALSE</span></span></code></pre></div>
 <p>If you have codes with decimal points then discriminating between
 ICD-9 diagnostic and procedure codes can be done.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"7993"</span>,  <span class="co"># valid dx and pr code</span></span>
 <span>       <span class="st">".7993"</span>, <span class="co"># not a valid code</span></span>
 <span>       <span class="st">"7.993"</span>, <span class="co"># not a valid code</span></span>
@@ -1102,7 +1141,7 @@ if these strings are valid ICD-9 dx codes.</p>
 <p>By default, if no year is provided in the <code><a href="../reference/is_icd.html">is_icd()</a></code> call
 then return will be <code>TRUE</code> if the code was ever
 assignable.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"516.3"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="fl">0</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">tab</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
@@ -1269,7 +1308,7 @@ assignable.</p>
 </table>
 <p>Similar information can be quickly and easily retrieved via
 <code><a href="../reference/lookup_icd_codes.html">lookup_icd_codes()</a></code>.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="../reference/lookup_icd_codes.html">lookup_icd_codes</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
@@ -1460,7 +1499,7 @@ seen below, the code “516” is a header, it was never assignable in
 ICD-9-CM. By setting <code>headerok = TRUE</code> “516” will be flagged
 as a valid code. A ICD-10 header “A00” will be FALSE in the following
 checks of ICD-9 codes.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"516"</span>, <span class="st">"5163"</span>, <span class="st">"51631"</span>, <span class="st">"A00"</span><span class="op">)</span></span>
 <span><span class="va">tab</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
@@ -1510,7 +1549,7 @@ codes were assignable codes through FY 2004. Starting in FY 2004 the
 five digit codes were removed from the standard and the four digit code
 became assignable. This is a rare example of a header code becoming
 assignable.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"719.7"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="st">"0"</span>, <span class="fl">5</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">tab</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
@@ -1626,7 +1665,7 @@ ICD-9 diagnostic code or ICD-10 diagnostic code. It could not be a
 procedure code as ICD-9 procedure codes are all numeric values and
 ICD-10 procedure codes are seven characters long. The actual code E1234
 is not a valid ICD code. We use this string as an example.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/icd_compact_to_full.html">icd_compact_to_full</a></span><span class="op">(</span><span class="st">"E1234"</span>, icdv <span class="op">=</span>  <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">## [1] "E123.4"</span></span>
 <span><span class="fu"><a href="../reference/icd_compact_to_full.html">icd_compact_to_full</a></span><span class="op">(</span><span class="st">"E1234"</span>, icdv <span class="op">=</span> <span class="fl">10</span>, dx <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
@@ -1639,7 +1678,7 @@ is not a valid ICD code. We use this string as an example.</p>
 <span><span class="co">## 1     E12.34       &lt;NA&gt;</span></span></code></pre></div>
 <p>Notice that no change to the string is made when trying to convert to
 a full procedure code.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/icd_compact_to_full.html">icd_compact_to_full</a></span><span class="op">(</span><span class="st">"E1234"</span>, icdv <span class="op">=</span>  <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="co">## [1] "E1234"</span></span>
 <span><span class="fu"><a href="../reference/icd_compact_to_full.html">icd_compact_to_full</a></span><span class="op">(</span><span class="st">"E1234"</span>, icdv <span class="op">=</span> <span class="fl">10</span>, dx <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
