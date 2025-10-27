@@ -16,3 +16,4 @@
 ^CRAN-SUBMISSION$
 ^pkgdown$
 ^tests/build-expected-ahrq-results/*
+^logo/*
