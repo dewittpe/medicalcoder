@@ -2,7 +2,7 @@
 
 
 
-# `medicalcoder`: An R package for working with ICD codes and Comorbidity Algorithms <img src="man/figures/medicalcoder_600x600_hex.png" width="200px" align="right" alt = "medicalcoder hex logo"/>
+# `medicalcoder`: An R package for working with ICD codes and Comorbidity Algorithms <img src="man/figures/hex.svg" width="200px" align="right" alt = "medicalcoder hex logo"/>
 
 <!-- badges: start -->
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
