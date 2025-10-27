@@ -12,6 +12,13 @@ stopifnot(identical(
   c("E912.0","250.0","I21.4")
 ))
 
+# ICD-9 procedure codes gain a decimal after the second character; scalars for
+# icdv/dx are recycled across the input vector.
+stopifnot(identical(
+  icd_compact_to_full(c("0309","1712"), icdv = 9, dx = 0),
+  c("03.09","17.12")
+))
+
 ################################################################################
 #                                 End of File                                  #
 ################################################################################
