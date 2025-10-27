@@ -31,6 +31,25 @@ stopifnot(
 )
 
 ################################################################################
+# check for early return if the input combination of icdv, dx, src excludes all
+# possible codes
+x <- c("7993", ".7993", "7.993", "79.93", "799.3", "7993.")
+y <- rep_len(FALSE, length(x))
+
+stopifnot(
+  "failed to stop on bad icdv" = inherits(tryCatchError(is_icd(x, icdv = 8)), "error"),
+  "failed to stop on bad src"  = inherits(tryCatchError(is_icd(x, src = "a")), "error"),
+  "failed to stop on bad dx"   = inherits(tryCatchError(is_icd(x, dx = 2)), "error"),
+  "warning for WHO and ICD 9"   = inherits(tryCatchWarning(is_icd(x, icdv = 9, src = "who")), "warning"),
+  "all FALSE for WHO and ICD 9" = identical(suppressWarnings(is_icd(x, icdv = 9, src = "who")), y),
+  "warning for CDC and ICD 9"   = inherits(tryCatchWarning(is_icd(x, icdv = 9, src = "cdc")), "warning"),
+  "all FALSE for CDC and ICD 9" = identical(suppressWarnings(is_icd(x, icdv = 9, src = "cdc")), y),
+  "warning for WHO, ICD-10, pr" = inherits(tryCatchWarning(is_icd(x, icdv = 10, src = "who", dx = 0)), "warning"),
+  "all FLASE for WHO, ICD-10, pr" = identical(suppressWarnings(is_icd(x, icdv = 10, src = "who", dx = 0)), y)
+)
+
+
+################################################################################
 # For ICD-9 test that the presense of a dot is considered when testing.
 # Example 7993 is the simplified version of the proper ICD-9 DX code 799.3 and
 # PR code 79.93.  Becuase the look up tables use 7993, the input of 7993 will be
