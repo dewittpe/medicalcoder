@@ -28,7 +28,6 @@ knitr::opts_chunk$set(collapse = TRUE, fig.align = "center")
 
 ```{r, label = 'medicalcoder-namespace'}
 library(medicalcoder)
-packageVersion("medicalcoder")
 ```
 
 # Introduction
@@ -44,9 +43,14 @@ data.table::setDT(CNDS)
 data.table::setkey(CNDS, condition)
 CNDS <- unique(CNDS)
 
-kbl(CNDS,
+tab <-
+  kbl(
+    CNDS,
     caption = "Syntactically valid names for complex chronic conditions",
-    row.names = TRUE)
+    row.names = TRUE
+  )
+tab <- kable_styling(tab, bootstrap_options = c("striped"), full_width = FALSE, font_size = 10)
+tab
 ```
 
 The PCCC system provides a standardized approach to identifying children with
@@ -124,9 +128,11 @@ Example: Consider a patient with following four diagnostic and two procedure
 ICD-9 codes:
 ```{r, label = "define-pat1"}
 pat1 <-
-  data.frame(dx = c(1, 1, 1, 1, 0, 0),
-             icdv = 9L,
-             code = c("34590", "78065", "3432", "78065", "9929", "8606"))
+  data.frame(
+    dx = c(1, 1, 1, 1, 0, 0),
+    icdv = 9L,
+    code = c("34590", "78065", "3432", "78065", "9929", "8606")
+  )
 ```
 
 An inner join between the `pccc_codes` and `pat1` will yield the conditions
@@ -146,28 +152,28 @@ device and technology use.
 ```{r, label = "pat1-pccc-v2"}
 pat1_pccc_v2.0 <-
   comorbidities(
-       data = pat1,
-       icd.codes = "code",
-       dx.var = "dx",
-       icdv = 9,
-       method = "pccc_v2.0",
-       flag.method = "current", # default
-       poa = 1                  # default for flag.method = 'current'
+    data = pat1,
+    icd.codes = "code",
+    dx.var = "dx",
+    icdv = 9,
+    method = "pccc_v2.0",
+    flag.method = "current", # default
+    poa = 1                  # default for flag.method = 'current'
   )
 
 pat1_pccc_v2.1 <-
   comorbidities(
-       data = pat1,
-       icd.codes = "code",
-       dx.var = "dx",
-       icdv = 9,
-       method = "pccc_v2.1",
-       flag.method = "current",
-       poa = 1
+    data = pat1,
+    icd.codes = "code",
+    dx.var = "dx",
+    icdv = 9,
+    method = "pccc_v2.1",
+    flag.method = "current",
+    poa = 1
   )
 
 all.equal(pat1_pccc_v2.0, pat1_pccc_v2.1, check.attributes = FALSE)
-pat1_pccc_v2.0
+pat1_pccc_v2.1
 ```
 
 Under version 3 of the PCCC, this patient has two conditions: neuromuscular and
@@ -176,23 +182,25 @@ not counted in the total number of conditions.
 
 ```{r, label = "pat1-pccc-v3"}
 pat1_pccc_v3.0 <-
-  comorbidities(data = pat1,
-       icd.codes = "code",
-       dx.var = "dx",
-       icdv = 9,
-       method = "pccc_v3.0",
-       flag.method = 'current',
-       poa = 1
+  comorbidities(
+    data = pat1,
+    icd.codes = "code",
+    dx.var = "dx",
+    icdv = 9,
+    method = "pccc_v3.0",
+    flag.method = 'current',
+    poa = 1
   )
 
 pat1_pccc_v3.1 <-
-  comorbidities(data = pat1,
-       icd.codes = "code",
-       dx.var = "dx",
-       icdv = 9,
-       method = "pccc_v3.1",
-       flag.method = 'current',
-       poa = 1
+  comorbidities(
+    data = pat1,
+    icd.codes = "code",
+    dx.var = "dx",
+    icdv = 9,
+    method = "pccc_v3.1",
+    flag.method = 'current',
+    poa = 1
   )
 
 all.equal(pat1_pccc_v3.0, pat1_pccc_v3.1, check.attributes = FALSE)
@@ -227,16 +235,28 @@ possible sets.  In the case of no conditions, only the
 `<condition>_dxpr_and_tech` columns set to `NA`.  When at least one condition
 is flagged, all the columns will be populated as 0/1.
 
- | `cmrb_flag` | `num_cmrb` | `<condition>_dxpr_or_tech` | `<condition>_dxpr_only` | `<condition>_tech_only | <condition>_dxpr_and_tech | <other condition(s)>_dxpr_or_tech` |
- | :---:       | :---:      | :---:                      | :---:                   | :---:                  | :---:                     | :---:                              |
- | 0           | 0          | 0                          | 0                       | 0                      | 0                         | 0                                  |
- | 1           | 1          | 0                          | 0                       | 0                      | 0                         | 1                                  |
- | 1           | 1          | 1                          | 1                       | 0                      | 0                         | 0                                  |
- | 1           | 1          | 1                          | 1                       | 1                      | 1                         | 0                                  |
- | 1           | >1         | 0                          | 0                       | 0                      | 0                         | 1                                  |
- | 1           | >1         | 1                          | 0                       | 1                      | 0                         | 1                                  |
- | 1           | >1         | 1                          | 1                       | 0                      | 0                         | 1                                  |
- | 1           | >1         | 1                          | 1                       | 1                      | 1                         | 1                                  |
+```{r, echo = FALSE, results = "asis"}
+tab <- data.table::fread(colClass = character(), text = "
+cmrb_flag | num_cmrb | <condition>_dxpr_or_tech | <condition>_dxpr_only | <condition>_tech_only | <condition>_dxpr_and_tech | <other condition(s)>_dxpr_or_tech
+0         | 0        | 0                        | 0                     | 0                     | 0                         | 0
+1         | 1        | 0                        | 0                     | 0                     | 0                         | 1
+1         | 1        | 1                        | 1                     | 0                     | 0                         | 0
+1         | 1        | 1                        | 1                     | 1                     | 1                         | 0
+1         | >1       | 0                        | 0                     | 0                     | 0                         | 1
+1         | >1       | 1                        | 0                     | 1                     | 0                         | 1
+1         | >1       | 1                        | 1                     | 0                     | 0                         | 1
+1         | >1       | 1                        | 1                     | 1                     | 1                         | 1                                  ")
+
+tab <-
+  kbl(
+    x = tab,
+    align = rep("c", ncol(tab)),
+    col.names = c("cmrb flag", "num cmrb", "_dxpr_or_tech", "_dxpr_only", "_tech_only", "_dxpr_and_tech", "_dxpr_or_tech")
+  )
+tab <- kable_styling(tab, bootstrap_options = c("striped"), font_size = 10)
+tab <- add_header_above(tab, c("", "", "<condition>" = 4, "<other condition(s)>" = 1))
+tab
+```
 
 Now, consider another patient, pat2, with the same codes as pat1 except for
 3432, the code mapping to a neuromuscular condition.
@@ -263,6 +283,7 @@ Filter(f = function(x) x > 0, pat2_pccc_v2.1)
 Under version 3 of the PCCC, this patient will have no conditions. This is
 because no condition was identified based on non-technology dependent codes and
 thus the one technology dependent code is ignored.
+
 ```{r, label = "pat2-pccc-v3"}
 pat2_pccc_v3.1 <-
   comorbidities(
@@ -302,38 +323,49 @@ head(mdcr)
 str(mdcr)
 ```
 
-Applying `pccc_v2.1` and `pccc_v3.1` methods to `mdcr` could be as simple as:
+# Assessing PCCC
+
+## Ignoring ICD Version and diagnostic/procedure codes
+
+Applying `pccc_v2.1` and `pccc_v3.1` methods to `mdcr` without accounting for
+ICD version or the diagnostic/procedure status of the code can be done as follows:
+
 ```{r, label = "mdcr-results-01"}
 mdcr_results_v2.1_01 <-
-  comorbidities(data = mdcr,
-       icd.codes = "code",
-       id.vars = "patid",
-       poa = 1,
-       flag.method = 'current',
-       method = "pccc_v2.1")
+  comorbidities(
+    data = mdcr,
+    icd.codes = "code",
+    id.vars = "patid",
+    poa = 1,
+    flag.method = 'current',
+    method = "pccc_v2.1"
+  )
 
 mdcr_results_v3.1_01 <-
-  comorbidities(data = mdcr,
-       icd.codes = "code",
-       id.vars = "patid",
-       poa = 1,
-       flag.method = 'current',
-       method = "pccc_v3.1")
+  comorbidities(
+    data = mdcr,
+    icd.codes = "code",
+    id.vars = "patid",
+    poa = 1,
+    flag.method = 'current',
+    method = "pccc_v3.1"
+  )
 ```
-and a useful summary of the object returned from `comorbidities` is gained by
-calling `summary()`. The return is a `data.table` with columns for the count
+
+A useful summary of the object returned from `comorbidities()` is gained by
+calling `summary()`. The return is a `data.frame` with columns for the count
 and percentages.  For `pccc_v2.0` and `pccc_v2.1` the condition, label, count,
 and percentage, are reported.  For `pccc_v3.0` and `pccc_v3.1` the columns are
-extended to provide the counts and percentages for `dxpr_or_tech`, `dxpr_only`,
-`tech_only`, and `dxpr_and_tech`.
+extended to provide the counts and percentages for `_dxpr_or_tech`, `_dxpr_only`,
+`_tech_only`, and `_dxpr_and_tech`.
 
 ```{r, label = "comorbidities-summary-table-str"}
 str(summary(mdcr_results_v2.1_01))
 str(summary(mdcr_results_v3.1_01))
 ```
 
-The summary tables are `data.frame`s and can be manipulated by the end user for
-reporting as they want, see the following table.
+Since the summary tables are `data.frame`s the end user may manipulate the
+results for reporting as they want, see the following table.
 
 ```{r, label = "mdcr-results-01-summary"}
 x <-
@@ -356,6 +388,8 @@ tab <-
     caption = "Summary Table for `mdcr_results_v2.1_01` and `mdcr_results_v3.1_01`."
   )
 tab <-
+  kableExtra::kable_styling(tab, bootstrap_options = c("striped"), font_size = 10)
+tab <-
   kableExtra::pack_rows(tab, group_label = c("Conditions"), start_row = 1, end_row = 11)
 tab <-
   kableExtra::pack_rows(tab, group_label = c("Flags"), start_row = 12, end_row = 13)
@@ -367,6 +401,8 @@ tab <-
   kableExtra::add_header_above(tab, c("", "", "", "v3.1" = 8))
 tab
 ```
+
+## Accounting for Diagnostic/Procedure
 
 There are additional details we should consider with respect to the ICD codes.
 The ICD version, 9 or 10, and if the code is a diagnostic or a procedure code.
@@ -383,6 +419,7 @@ table(mdcr[mdcr$code == "3321", "dx"])
 
 To account for the diagnostic or procedure status of the codes specify a value
 for the `dx.var` argument.
+
 ```{r, label = "mdcr-results-02"}
 mdcr_results_v2.1_02 <-
   comorbidities(
@@ -485,13 +522,16 @@ lookup table.  By not accounting for diagnostic and procedure codes, the
 overlaps between the two coding structures can lead to false positives.
 
 ```{r}
-merge(x = subset(mdcr, patid == "87420"),
-      y = pccc_codes,
-      by.x = c("code"),
-      by.y = c("code"),
-      suffixes = c(".mdcr", ".pccc_codes")
+merge(
+  x = subset(mdcr, patid == "87420"),
+  y = pccc_codes,
+  by.x = c("code"),
+  by.y = c("code"),
+  suffixes = c(".mdcr", ".pccc_codes")
 )
 ```
+
+## Full and Compact ICD codes
 
 Using full codes can prevent false positives too.  Here are several different
 ways that `comorbidities()` could be called resulting in different outcomes.
@@ -500,9 +540,12 @@ Note: this is a good example of how `medicalcoder` can handle full and compact
 codes within a single record.
 
 ```{r}
-DF <- data.frame(id = c("full dx", "full pr", "compact dx", "compact pr"),
-                 code = c("564.1", "56.41", "5641", "5641"),
-                 dx = c(1, 0, 1, 0))
+DF <-
+  data.frame(
+    id = c("full dx", "full pr", "compact dx", "compact pr"),
+    code = c("564.1", "56.41", "5641", "5641"),
+    dx = c(1, 0, 1, 0)
+  )
 
 # ideal: using the dx/pr status and matching on full and compact codes.
 comorbidities(
@@ -557,6 +600,8 @@ comorbidities(
   method = "pccc_v3.1"
 )[, c("id", "cmrb_flag", "renal_dxpr_or_tech")]
 ```
+
+## Accounting for ICD Version
 
 Another consideration is the version of ICD, 9 or 10.
 
@@ -662,6 +707,8 @@ when the ICD code was reported.
 head(mdcr_longitudinal)
 ```
 
+## PCCC V2
+
 Let's look at the `pccc_v2.1` flags for each patient, using all the information from
 all the encounters.  This can easily by done by specifying `id.vars =
 c("patid")` such that the `comorbidities` method considers call codes as
@@ -669,33 +716,43 @@ occurring on one encounter.
 
 ```{r, results = 'asis'}
 longitudinal_v2_patid <-
-  comorbidities(data = mdcr_longitudinal,
-       icd.codes = "code",
-       id.vars = c("patid"),
-       icdv.var = "icdv",
-       method = "pccc_v2.1",
-       flag.method = "current",
-       poa = 1
+  comorbidities(
+    data = mdcr_longitudinal,
+    icd.codes = "code",
+    id.vars = c("patid"),
+    icdv.var = "icdv",
+    method = "pccc_v2.1",
+    flag.method = "current",
+    poa = 1
   )
-kableExtra::kbl(longitudinal_v2_patid)
+tab <- kableExtra::kbl(longitudinal_v2_patid)
+tab <- kableExtra::kable_styling(tab, bootstrap_options = c("striped"), font_size = 10)
+tab
 ```
 
 We can look at the conditions flagged at each encounter by specifying the
 `id.vars = c("patid", "date")`.
 
-```{r, results = 'asis'}
+```{r}
 longitudinal_v2_patid_date <-
   comorbidities(data = mdcr_longitudinal,
-       icd.codes = "code",
-       id.vars = c("patid", "date"),
-       icdv.var = "icdv",
-       method = "pccc_v2.1",
-       flag.method = "current",
-       poa = 1)
-kableExtra::kbl(
-  subset(longitudinal_v2_patid_date, patid == "9663901"),
-  row.names = FALSE
-)
+    icd.codes = "code",
+    id.vars = c("patid", "date"),
+    icdv.var = "icdv",
+    method = "pccc_v2.1",
+    flag.method = "current",
+    poa = 1
+  )
+```
+
+```{r, echo = FALSE, results = 'asis'}
+tab <-
+  kableExtra::kbl(
+    subset(longitudinal_v2_patid_date, patid == "9663901"),
+    row.names = FALSE
+  )
+tab <- kableExtra::kable_styling(tab, bootstrap_options = c("striped"), font_size = 10)
+tab
 ```
 
 Looking at patid 9663901 at an encounter level we see that the conditions occur
@@ -718,14 +775,19 @@ longitudinal_v2_patid_date_cumulative_poa0 <-
     flag.method = "cumulative",
     poa = 0
   )
-
-kableExtra::kbl(
-  subset(longitudinal_v2_patid_date_cumulative_poa0, patid == "9663901"),
-  row.names = FALSE
-)
 ```
 
-```{r, results="asis"}
+```{r, echo = FALSE, results = 'asis'}
+tab <-
+  kableExtra::kbl(
+    subset(longitudinal_v2_patid_date_cumulative_poa0, patid == "9663901"),
+    row.names = FALSE
+  )
+tab <- kableExtra::kable_styling(tab, bootstrap_options = c("striped"), font_size = 10)
+tab
+```
+
+```{r}
 longitudinal_v2_patid_date_cumulative_poa1 <-
   comorbidities(
     data = mdcr_longitudinal,
@@ -736,11 +798,19 @@ longitudinal_v2_patid_date_cumulative_poa1 <-
     flag.method = "cumulative",
     poa = 1
   )
-kableExtra::kbl(
-  subset(longitudinal_v2_patid_date_cumulative_poa1, patid == "9663901"),
-  row.names = FALSE
-)
 ```
+
+```{r, echo = FALSE, results = 'asis'}
+tab <-
+  kableExtra::kbl(
+    subset(longitudinal_v2_patid_date_cumulative_poa1, patid == "9663901"),
+    row.names = FALSE
+  )
+tab <- kableExtra::kable_styling(tab, bootstrap_options = c("striped"), font_size = 10)
+tab
+```
+
+## PCCC V3
 
 For `pccc_v3.0` and `pccc_v3.1` a simple carry-forward method would not be easy
 to use as information about technology dependent codes is omitted when
@@ -751,6 +821,7 @@ all six possible permutations of the codes.  We'll generate a data set with
 seven encounters and one code appearing on each of encounters 2, 4, and 6.
 
 The codes we'll use are:
+
 * H49.811: metabolic (other metabolic disorders),
 * J84.111: respiratory (chronic respiratory diseases), and
 * Z96.41:  metabolic (device and technology use).
@@ -759,7 +830,9 @@ The codes we'll use are:
 codes <- c("H49.811", "J84.111", "Z96.41")
 subset(get_pccc_codes(), full_code %in% codes)
 ```
+
 The constructed data and permutations are:
+
 ```{r}
 permutations <-
   data.table::data.table(
@@ -785,6 +858,7 @@ cat(paste("*", permutations[, unique(plabel)]), sep = "\n")
 
 We'll apply the `pccc_v3.1` to this code set with `flag.method = "cumulative"`
 and all codes considered to be present-on-admission.
+
 ```{r}
 rtn <-
   comorbidities(
@@ -830,6 +904,7 @@ pkbl <- function(permutation = 1) {
       x,
       col.names = c("encounter_id", rep(c("dxpr or tech", "dxpr only", "tech only", "dxpr and tech"), times = 2), "ccc flag", "num ccc")
     )
+  tab <- kableExtra::kable_styling(kable_input = tab, bootstrap_options = c("striped"), font_size = 10)
   tab <- kableExtra::add_header_above(kable_input = tab, header = c("", c("Metabolic" = 4, "Respiratory" = 4), "", ""))
   tab <- kableExtra::add_header_above(kable_input = tab, header = c("", setNames(10, pl)))
   tab
@@ -918,7 +993,7 @@ implemented flagging for the subconditions.
 
 The subconditions for each condition are shown in the next table.
 
-```{r, label = "tbl-syntactically-valid-subconditions", echo = FALSE, results="asis"}
+```{r "tbl-syntactically-valid-subconditions", echo = FALSE, results = "asis"}
 SCNDS <- get_pccc_conditions()
 data.table::setDT(SCNDS)
 data.table::setkey(SCNDS, condition, subcondition)
@@ -931,6 +1006,10 @@ tab <-
   )
 tab <-
   kableExtra::pack_rows(tab, index = table(SCNDS$condition))
+tab <-
+  kableExtra::kable_styling(tab, bootstrap_options = c('striped'), fixed_thead = TRUE, font_size = 10)
+tab <-
+  kableExtra::scroll_box(tab, height = "300px")
 tab
 ```
 
@@ -971,9 +1050,11 @@ of calling `comorbidities()` with `subconditions = FALSE`.
 ```{r}
 with_subconditions
 
-all.equal(with_subconditions$conditions,
-          without_subconditions,
-          check.attributes = FALSE)
+all.equal(
+  with_subconditions$conditions,
+  without_subconditions,
+  check.attributes = FALSE
+)
 ```
 
 The second element of `with_subconditions` is list of `data.frame`s, one for
@@ -983,15 +1064,13 @@ A quick and easy way to get a summary of the subconditions is to call
 `summary()`.
 
 ```{r}
-str(
-  summary(with_subconditions)
-)
+str(summary(with_subconditions))
 ```
 
 The subconditions are available for all pccc variants.  A summary is presented
-in the following table.
+in the following tables.
 
-```{r, include = FALSE}
+```{r include = FALSE}
 args <-
   list(
     data = mdcr,
@@ -1008,7 +1087,7 @@ with_subconditions_v3.0 <- do.call(comorbidities, c(args, list(method = "pccc_v3
 with_subconditions_v3.1 <- do.call(comorbidities, c(args, list(method = "pccc_v3.1")))
 ```
 
-```{r, echo = FALSE, results = "asis"}
+```{r include = FALSE}
 rslts <-
   merge(
     merge(
@@ -1047,40 +1126,106 @@ rslts$lab <- rslts$subcondition_label
 rslts$lab[is.na(rslts$subcondition)] <- rslts$condition_label[is.na(rslts$subcondition)]
 rslts <- rslts[order(rslts$idx), ]
 
-tab <-
-  rslts[,
-    c(
-      "lab",
-      "count_v2.0",
-      "percent_of_cohort_v2.0",
-      "percent_of_those_with_condition_v2.0",
-      "count_v2.1",
-      "percent_of_cohort_v2.1",
-      "percent_of_those_with_condition_v2.1",
-      "count_v3.0",
-      "percent_of_cohort_v3.0",
-      "percent_of_those_with_condition_v3.0",
-      "count_v3.1",
-      "percent_of_cohort_v3.1",
-      "percent_of_those_with_condition_v3.1"
-    )
-  ]
+rslts <- split(rslts, f = rslts[["condition"]])
 
-tab <-
-  kableExtra::kbl(
-    tab,
+cols_to_keep <-
+  c(
+    "lab",
+    "count_v2.0",
+    "percent_of_cohort_v2.0",
+    "percent_of_those_with_condition_v2.0",
+    "count_v2.1",
+    "percent_of_cohort_v2.1",
+    "percent_of_those_with_condition_v2.1",
+    "count_v3.0",
+    "percent_of_cohort_v3.0",
+    "percent_of_those_with_condition_v3.0",
+    "count_v3.1",
+    "percent_of_cohort_v3.1",
+    "percent_of_those_with_condition_v3.1"
+  )
+
+tabs <- lapply(rslts, function(x) {x[, cols_to_keep]})
+
+tabs <-
+  lapply(tabs,
+    kableExtra::kbl,
     col.names = c("", rep(c("count", "% of cohort", "% of those with condition"), 4)),
     row.names = FALSE,
     digits = 1
   )
-tab <- kableExtra::column_spec(tab, column = 1, bold = is.na(rslts$subcondition))
-tab <- kableExtra::kable_styling(tab, "striped")
-tab <- kableExtra::add_indent(tab, which(!is.na(rslts$subcondition)))
-tab <- kableExtra::add_header_above(tab, c("", "v2.0" = 3, "v2.1" = 3, "v3.0" = 3, "v3.1" = 3))
-
-tab
+tabs <-
+  Map(
+    f = function(t,r) {
+          x <- kableExtra::column_spec(t, column = 1, bold = is.na(r$subcondition))
+          kableExtra::add_indent(x, which(!is.na(r$subcondition)))
+        },
+    t = tabs,
+    r = rslts
+  )
+tabs <-
+  lapply(tabs, kableExtra::kable_styling, bootstrap_options = "striped", font_size = 10)
+tabs <-
+  lapply(tabs, kableExtra::add_header_above, header = c("", "v2.0" = 3, "v2.1" = 3, "v3.0" = 3, "v3.1" = 3))
+tabs
 ```
 
+## Congenital or Genetic
+```{r echo = FALSE, results = "asis"}
+tabs[["congeni_genetic"]]
+```
+
+## Cardiovascular
+```{r echo = FALSE, results = "asis"}
+tabs[["cvd"]]
+```
+
+## Gastrointestinal
+```{r echo = FALSE, results = "asis"}
+tabs[["gi"]]
+```
+
+## Hematologic
+```{r echo = FALSE, results = "asis"}
+tabs[["hemato_immu"]]
+```
+
+## Malignancy
+```{r echo = FALSE, results = "asis"}
+tabs[["malignancy"]]
+```
+
+## Metabolic
+```{r echo = FALSE, results = "asis"}
+tabs[["metabolic"]]
+```
+
+## Miscellaneous
+```{r echo = FALSE, results = "asis"}
+tabs[["misc"]]
+```
+
+## Neonatal
+```{r echo = FALSE, results = "asis"}
+tabs[["neonatal"]]
+```
+
+## Neuromuscular
+```{r echo = FALSE, results = "asis"}
+tabs[["neuromusc"]]
+```
+
+## Renal
+```{r echo = FALSE, results = "asis"}
+tabs[["renal"]]
+```
+
+## Respiratory
+```{r echo = FALSE, results = "asis"}
+tabs[["respiratory"]]
+```
+
+## Longitudinal
 The longitudinal assessment for subconditions work as well.  Using the same
 `permutations` data set from above we will look at the metabolic and respiratory
 conditions and subconditions.
@@ -1099,6 +1244,7 @@ rslts <-
     subconditions = TRUE
   )
 ```
+
 Let's start by looking at the respiratory results.  The only subcondition that
 should be, and is, flagged is chronic respiratory diseases.  A reminder: the
 `data.frame` for a subcondition only report rows for when the primary condition
@@ -1127,6 +1273,7 @@ scnd <-
     by = .(plabel)
   ]
 ```
+
 ```{r, echo = FALSE, results = "asis"}
 tab <-
   kableExtra::kbl(
@@ -1134,6 +1281,7 @@ tab <-
     caption = "Encounters flagging for respiratory condition and the chronic respiratory disease subcondition.",
     col.names = c("", "Condition", "Subcondition")
   )
+tab <- kableExtra::kable_styling(tab, bootstrap_options = c("striped"), font_size = 10)
 tab <- kableExtra::add_header_above(tab, c("", "Encounters" = 2))
 tab
 ```
@@ -1182,11 +1330,11 @@ tab <-
     caption = "Encounters flagging for a metabolic condition and the encounters flagging for subconidtions device and technology use and/or other metabolic disorders.",
     col.names = c("", "Condition", "Device and Technology Use", "Other Metabolic Disorders")
   )
+tab <- kableExtra::kable_styling(tab, bootstrap_options = c("striped"), font_size = 10)
 tab <-
   kableExtra::add_header_above(tab, c("", "Encounters" = 3))
 tab
 ```
-
 
 # References
 
