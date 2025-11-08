@@ -21,7 +21,6 @@
 #
 # idempotent: yes (deterministic merges)
 ################################################################################
-
 index <-
   list("./elixhauser_index_scores_quan2005.rds",
        "./elixhauser_index_scores_ahrq_icd10.rds") |>

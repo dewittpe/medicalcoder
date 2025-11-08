@@ -5,6 +5,7 @@ DATASETS := ./charlson/charlson_codes.rds\
 						./elixhauser/elixhauser_codes.rds\
 						./elixhauser/elixhauser_index_scores.rds\
 						./elixhauser/elixhauser_poa.rds\
+						./elixhauser/elixhauser_poaexempt_ahrq_icd10.rds\
 						./icd/icd_chapters.rds\
 						./icd/icd_codes.rds\
 						./icd/icd_descs.rds\

@@ -9,6 +9,7 @@
 #   ahrq/CMR_v2023-1.zip
 #   ahrq/CMR_v2024-1.zip
 #   ahrq/CMR_v2025.1.zip
+#   ../icd/icd_codes.rds
 #
 # output:
 #
@@ -33,6 +34,8 @@
 # idempotent: yes (deterministic once source archives are fixed)
 ################################################################################
 library(data.table)
+icd_codes <- readRDS("../icd/icd_codes.rds")
+setDT(icd_codes)
 
 ################################################################################
 # unzip the elixhauser source files into a temp directory
@@ -165,6 +168,16 @@ elixhauser_codes <-
 
 elixhauser_codes[, icdv := 10L]
 elixhauser_codes[, dx := 1L]
+elixhauser_codes <-
+  merge(x = elixhauser_codes,
+    y = icd_codes,
+    all.x = TRUE,
+    all.y = FALSE,
+    by = c("code", "icdv", "dx")
+  )
+
+elixhauser_codes <-
+  elixhauser_codes[, .SD, .SDcols = patterns("code_id|condition|ahrq")]
 
 # poa exempt
 elixhauser_poaexempt <- values[value != "COMFMT"]

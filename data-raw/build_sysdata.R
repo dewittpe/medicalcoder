@@ -50,6 +50,7 @@
 # Elixhauser Data Sets
 ..mdcr_internal_elixhauser_index_scores.. <- readRDS("./elixhauser/elixhauser_index_scores.rds")
 ..mdcr_internal_elixhauser_poa..          <- readRDS("./elixhauser/elixhauser_poa.rds")
+..mdcr_internal_elixhauser_poaexempt..    <- readRDS("./elixhauser/elixhauser_poaexempt_ahrq_icd10.rds")
 ..mdcr_internal_elixhauser_codes..        <- readRDS("./elixhauser/elixhauser_codes.rds")
 
 usethis::use_data(
@@ -68,6 +69,7 @@ usethis::use_data(
 
   , ..mdcr_internal_elixhauser_index_scores..
   , ..mdcr_internal_elixhauser_poa..
+  , ..mdcr_internal_elixhauser_poaexempt..
   , ..mdcr_internal_elixhauser_codes..
 
   , internal  = TRUE
