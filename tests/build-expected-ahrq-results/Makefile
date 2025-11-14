@@ -3,7 +3,8 @@ include ../../Makevars
 YEARS := 2022 2023 2024 2025
 INPUTDATA := $(foreach y,$(YEARS),$(y)/mdcr_for_sas_$(y).csv)
 
-POAFLAG :=0
+POAFLAG :=1
+POAPREFIX :=DXPOA
 
 # SASODAPATH - these scripts are going to be evaluated in SAS Studio via SAS
 # OnDemand for Academics (https://welcome.oda.sas.com/). Expect the path to look
@@ -33,9 +34,9 @@ $(foreach y,$(YEARS),$(eval $(call build_one,$(y))))
 	sed "s|\(LIBNAME[[:space:]]\{1,\}IN1[[:space:]]\{1,\}'\)[^']*\('.*\)|\1$(SASODAPATH)/AHRQ2022\2|" $@.tmp1 > $@.tmp2
 	sed "s|\(LIBNAME[[:space:]]\{1,\}OUT1[[:space:]]\{1,\}'\)[^']*\('.*\)|\1$(SASODAPATH)/AHRQ2022\2|" $@.tmp2 > $@.tmp1
 	if [ "$*" = "Mapping" ]; then \
-		sed "s|\(POAPREFIX=\).*\(;\)|\1 \2|" $@.tmp1 > $@.tmp2; \
+		sed "s|\(POAPREFIX=\).*\(;\)|\1$(POAPREFIX)\2|" $@.tmp1 > $@.tmp2; \
 		sed "s|\(NUMDX[[:space:]]*=\).*\(;\)|\141\2|" $@.tmp2 > $@.tmp1; \
-		sed "s|\(POA[[:space:]]*=\).*\(;\)|\1$(POAFLAG)\2|" $@.tmp1 > $@.tmp2; \
+		sed "s|\(\sPOA[[:space:]]*=\).*\(;\)|\1$(POAFLAG)\2|" $@.tmp1 > $@.tmp2; \
 		sed "s|\(CORE[[:space:]]*=\).*\(;\)|\1mdcr_for_sas_2022\2|" $@.tmp2 > $@.tmp1; \
 		sed "s|\(OUT[[:space:]]*=\).*\(;\)|\1mdcr_sas_result_2022\2|" $@.tmp1 > $@; \
 		head -n 79 $@ > $@.tmp1; \
@@ -68,9 +69,9 @@ $(foreach y,$(YEARS),$(eval $(call build_one,$(y))))
 	sed "s|\(LIBNAME[[:space:]]\{1,\}IN1[[:space:]]\{1,\}'\)[^']*\('.*\)|\1$(SASODAPATH)/AHRQ2023\2|" $@.tmp1 > $@.tmp2
 	sed "s|\(LIBNAME[[:space:]]\{1,\}OUT1[[:space:]]\{1,\}'\)[^']*\('.*\)|\1$(SASODAPATH)/AHRQ2023\2|" $@.tmp2 > $@.tmp1
 	if [ "$*" = "Mapping" ]; then \
-		sed "s|\(POAPREFIX=\).*\(;\)|\1 \2|" $@.tmp1 > $@.tmp2; \
+		sed "s|\(POAPREFIX=\).*\(;\)|\1$(POAPREFIX)\2|" $@.tmp1 > $@.tmp2; \
 		sed "s|\(NUMDX[[:space:]]*=\).*\(;\)|\141\2|" $@.tmp2 > $@.tmp1; \
-		sed "s|\(POA[[:space:]]*=\).*\(;\)|\1$(POAFLAG)\2|" $@.tmp1 > $@.tmp2; \
+		sed "s|\(\sPOA[[:space:]]*=\).*\(;\)|\1$(POAFLAG)\2|" $@.tmp1 > $@.tmp2; \
 		sed "s|\(CORE[[:space:]]*=\).*\(;\)|\1mdcr_for_sas_2023\2|" $@.tmp2 > $@.tmp1; \
 		sed "s|\(OUT[[:space:]]*=\).*\(;\)|\1mdcr_sas_result_2023\2|" $@.tmp1 > $@; \
 		head -n 79 $@ > $@.tmp1; \
@@ -103,9 +104,9 @@ $(foreach y,$(YEARS),$(eval $(call build_one,$(y))))
 	sed "s|\(LIBNAME[[:space:]]\{1,\}IN1[[:space:]]\{1,\}'\)[^']*\('.*\)|\1$(SASODAPATH)/AHRQ2024\2|" $@.tmp1 > $@.tmp2
 	sed "s|\(LIBNAME[[:space:]]\{1,\}OUT1[[:space:]]\{1,\}'\)[^']*\('.*\)|\1$(SASODAPATH)/AHRQ2024\2|" $@.tmp2 > $@.tmp1
 	if [ "$*" = "Mapping" ]; then \
-		sed "s|\(POAPREFIX=\).*\(;\)|\1 \2|" $@.tmp1 > $@.tmp2; \
+		sed "s|\(POAPREFIX=\).*\(;\)|\1$(POAPREFIX)\2|" $@.tmp1 > $@.tmp2; \
 		sed "s|\(NUMDX[[:space:]]*=\).*\(;\)|\141\2|" $@.tmp2 > $@.tmp1; \
-		sed "s|\(POA[[:space:]]*=\).*\(;\)|\1$(POAFLAG)\2|" $@.tmp1 > $@.tmp2; \
+		sed "s|\(\sPOA[[:space:]]*=\).*\(;\)|\1$(POAFLAG)\2|" $@.tmp1 > $@.tmp2; \
 		sed "s|\(CORE[[:space:]]*=\).*\(;\)|\1mdcr_for_sas_2024\2|" $@.tmp2 > $@.tmp1; \
 		sed "s|\(OUT[[:space:]]*=\).*\(;\)|\1mdcr_sas_result_2024\2|" $@.tmp1 > $@; \
 		head -n 79 $@ > $@.tmp1; \
@@ -138,9 +139,9 @@ $(foreach y,$(YEARS),$(eval $(call build_one,$(y))))
 	sed "s|\(LIBNAME[[:space:]]\{1,\}IN1[[:space:]]\{1,\}'\)[^']*\('.*\)|\1$(SASODAPATH)/AHRQ2025\2|" $@.tmp1 > $@.tmp2
 	sed "s|\(LIBNAME[[:space:]]\{1,\}OUT1[[:space:]]\{1,\}'\)[^']*\('.*\)|\1$(SASODAPATH)/AHRQ2025\2|" $@.tmp2 > $@.tmp1
 	if [ "$*" = "Mapping" ]; then \
-		sed "s|\(POAPREFIX=\).*\(;\)|\1 \2|" $@.tmp1 > $@.tmp2; \
+		sed "s|\(POAPREFIX=\).*\(;\)|\1$(POAPREFIX)\2|" $@.tmp1 > $@.tmp2; \
 		sed "s|\(NUMDX[[:space:]]*=\).*\(;\)|\141\2|" $@.tmp2 > $@.tmp1; \
-		sed "s|\(POA[[:space:]]*=\).*\(;\)|\1$(POAFLAG)\2|" $@.tmp1 > $@.tmp2; \
+		sed "s|\(\sPOA[[:space:]]*=\).*\(;\)|\1$(POAFLAG)\2|" $@.tmp1 > $@.tmp2; \
 		sed "s|\(CORE[[:space:]]*=\).*\(;\)|\1mdcr_for_sas_2025\2|" $@.tmp2 > $@.tmp1; \
 		sed "s|\(OUT[[:space:]]*=\).*\(;\)|\1mdcr_sas_result_2025\2|" $@.tmp1 > $@; \
 		head -n 79 $@ > $@.tmp1; \
@@ -171,5 +172,4 @@ clean:
 
 purge: clean
 	$(RM) -rf $(YEARS)
-
 

@@ -40,15 +40,20 @@ stopifnot("all compact codes" = !any(grepl("\\.", mdcr10cm$code)))
 mdcr10cm <- split(mdcr10cm[["code"]], f = mdcr10cm[["patid"]])
 max_dx <- max(lengths(mdcr10cm))
 dx_mat <- matrix("", nrow = length(mdcr10cm), ncol = max_dx)
+poa_mat <- matrix("", nrow = length(mdcr10cm), ncol = max_dx)
 
 for (i in seq_along(mdcr10cm)) {
   codes <- mdcr10cm[[i]]
-  if (length(codes)) {
-    dx_mat[i, seq_along(codes)] <- codes
+  n_codes <- length(codes)
+  if (n_codes) {
+    idx <- seq_len(n_codes)
+    dx_mat[i, idx] <- codes
+    poa_mat[i, idx] <- "N"
   }
 }
 
 colnames(dx_mat) <- sprintf("I10_DX%d", seq_len(max_dx))
+colnames(poa_mat) <- sprintf("DXPOA%d", seq_len(max_dx))
 
 
 out <-
@@ -60,7 +65,11 @@ out <-
     stringsAsFactors = FALSE
   )
 
-out <- cbind(out, as.data.frame(dx_mat, stringsAsFactors = FALSE))
+out <- cbind(
+  out,
+  as.data.frame(dx_mat, stringsAsFactors = FALSE),
+  as.data.frame(poa_mat, stringsAsFactors = FALSE)
+)
 out <- out[order(out$PATID), ]
 
 utils::write.csv(
