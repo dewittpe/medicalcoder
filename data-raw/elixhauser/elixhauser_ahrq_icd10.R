@@ -258,7 +258,7 @@ elixhauser_poa <-
 elixhauser_poa <- lapply(elixhauser_poa, setDT)
 
 for (i in seq_along(elixhauser_poa)) {
-  names(elixhauser_poa[[i]]) <- c("condition", "desc", "poa_required")
+  data.table::setnames(elixhauser_poa[[i]], old = names(elixhauser_poa[[j]])[1:3], new = c("condition", "desc", "poa_required"))
   elixhauser_poa[[i]] <- subset(elixhauser_poa[[i]], condition != "End of Content")
   elixhauser_poa[[i]][, poa_required := as.integer(poa_required == "Yes")]
   set(elixhauser_poa[[i]], j = names(elixhauser_poa)[i], value = 1L)
@@ -277,23 +277,34 @@ elixhauser_poa <-
 
 elixhauser_poa[, condition := sub("CMR_", "", condition)]
 
-# CBVD is a catch all condition, there are smore specific versions in the code
-# base
+# Extend conditions -- several of the conditions in the elixhauser_poa set are
+# catch alls and more granular conditions are in the codes.  Extend the
+# elixhauser_poa set to include th more granular conditions
+#
+#> qwraps2::set_diff(elixhauser_poa$condition, elixhauser_codes$condition)
+#+ Total number of unique values: 49
+#+ Number of elements in both elixhauser_poa$condition and elixhauser_codes$condition: 37
+#+ Number of elements only in elixhauser_poa$condition: 1
+#+   unique elements: CBVD
+#+ Number of elements only in elixhauser_codes$condition: 11
+#+   unique elements: DRUG_ABUSEPSYCHOSES, CBVD_POA, NEURO_OTH_SEIZ, HFHTN_CX, HTN_CXRENLFL_SEV, HFHTN_CXRENLFL_SEV, CBVD_SQLA, CBVD_SQLAPARALYSIS, ALCOHOLLIVER_MLD, LIVER_MLD_NEURO, VALVE_AUTOIMMUNE
+
 elixhauser_poa <-
   rbind(
     elixhauser_poa,
+    elixhauser_poa[condition == "ALCOHOL"][, condition := "ALCOHOLLIVER_MLD"],
     elixhauser_poa[condition == "CBVD"][, condition := "CBVD_POA"],
     elixhauser_poa[condition == "CBVD"][, condition := "CBVD_SQLA"],
-    elixhauser_poa[condition == "CBVD"][, condition := "CBVD_SQLAPARALYSIS"]
+    elixhauser_poa[condition == "CBVD"][, condition := "CBVD_SQLAPARALYSIS"],
+    elixhauser_poa[condition == "DRUG_ABUSE"][, condition := "DRUG_ABUSEPSYCHOSES"],
+    elixhauser_poa[condition == "HF"][, condition := "HFHTN_CX"],
+    elixhauser_poa[condition == "HF"][, condition := "HTN_CXRENLFL_SEV"],
+    elixhauser_poa[condition == "HF"][, condition := "HFHTN_CXRENLFL_SEV"],
+    elixhauser_poa[condition == "NEURO_OTH"][, condition := "NEURO_OTH_SEIZ"],
+    elixhauser_poa[condition == "AUTOIMMUNE"][, condition := "VALVE_AUTOIMMUNE"],
+    elixhauser_poa[condition == "LIVER_MLD"][, condition := "LIVER_MLD_NEURO"]
   )
 
-# Same for HF
-elixhauser_poa <-
-  rbind(
-    elixhauser_poa,
-    elixhauser_poa[condition == "HF"][, condition := "HFHTN_CX"],
-    elixhauser_poa[condition == "HF"][, condition := "HFHTN_CXRENLFL_SEV"]
-  )
 
 # Under the assumption that the POA required flag is static over the years, then
 # the this data structure is not needed and a POA required flag cold just be

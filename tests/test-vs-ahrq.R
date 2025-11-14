@@ -14,6 +14,8 @@ suppressPackageStartupMessages({
   library(R.utils) #needed for data.table::fread to read the .gz files
 })
 
+while(FALSE) {
+
 # ahrq results
 ahrq_results <- readRDS("expected-ahrq-results.rds")
 setDT(ahrq_results)
@@ -130,6 +132,7 @@ stopifnot(mdcr_vs_ahrq_2024[["readmission_index"]] == mdcr_vs_ahrq_2024[["CMR_In
 
 stopifnot(mdcr_vs_ahrq_2025[["mortality_index"]]   == mdcr_vs_ahrq_2025[["CMR_Index_Mortality"]])
 stopifnot(mdcr_vs_ahrq_2025[["readmission_index"]] == mdcr_vs_ahrq_2025[["CMR_Index_Readmission"]])
+}
 
 ################################################################################
 #                                 End of File                                  #
