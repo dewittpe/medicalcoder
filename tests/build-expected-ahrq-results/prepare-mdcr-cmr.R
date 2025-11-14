@@ -29,6 +29,7 @@ year <- sort(unique(year))
 
 ################################################################################
 # reshpae data
+library(data.table)
 mdcr10cm <-
   subset(
     x = medicalcoder::mdcr,
@@ -36,48 +37,67 @@ mdcr10cm <-
     select = c("patid", "code")
   )
 stopifnot("all compact codes" = !any(grepl("\\.", mdcr10cm$code)))
+setDT(mdcr10cm)
+mdcr10cm <- unique(mdcr10cm)
 
-mdcr10cm <- split(mdcr10cm[["code"]], f = mdcr10cm[["patid"]])
-max_dx <- max(lengths(mdcr10cm))
-dx_mat <- matrix("", nrow = length(mdcr10cm), ncol = max_dx)
-poa_mat <- matrix("", nrow = length(mdcr10cm), ncol = max_dx)
+# flag the codes which are in the Elixhauser mappings
+mdcr10cm[, inelixhuaser := as.integer(mdcr10cm[["code"]] %in% get_elixhauser_codes()[["code"]])]
 
-for (i in seq_along(mdcr10cm)) {
-  codes <- mdcr10cm[[i]]
-  n_codes <- length(codes)
-  if (n_codes) {
-    idx <- seq_len(n_codes)
-    dx_mat[i, idx] <- codes
-    poa_mat[i, idx] <- "N"
-  }
+ecodes <- mdcr10cm[inelixhuaser == 1L]
+ecodes <- split(ecodes, by = "patid")
+ecodes <- lapply(ecodes, function(x) {
+  max_dx <- length(x$code)
+  mat <- expand.grid(rep(list(c(0, 1)), max_dx))
+  colnames(mat) <- x$code
+  mat <- as.data.table(mat)
+  set(mat, j = "patid", value = x$patid[1])
+  set(mat, j = "encid", value = seq_len(nrow(mat)))
+  mat <- melt(mat, id.vars = c("patid", "encid"), value.name = "poa", variable.name = "code", variable.factor = FALSE)
+  mat[, DX := paste0("DX", seq_len(nrow(.SD))), by = .(patid, encid)]
+  mat
+  })
+ecodes <- rbindlist(ecodes)
+ecodes[, DX := factor(DX, levels = paste0("DX", 1:12))]
+
+ecodes[patid == 55176]
+ecodes[patid == 55176 & encid == 4096]
+
+ecodes_sas_dx <- dcast(ecodes, patid + encid ~ DX, value.var = "code")
+ecodes_sas_poa <- dcast(ecodes, patid + encid ~ DX, value.var = "poa")
+
+setnames(ecodes_sas_dx, old = names(ecodes_sas_poa), new = sub("DX", "I10_DX", names(ecodes_sas_poa)))
+setnames(ecodes_sas_poa, old = names(ecodes_sas_poa), new = sub("DX", "DXPOA", names(ecodes_sas_poa)))
+
+for (j in grep("I10_DX", names(ecodes_sas_dx), value = TRUE)) {
+  set(ecodes_sas_dx, j = j, value = ifelse(is.na(ecodes_sas_dx[[j]]), "", ecodes_sas_dx[[j]]))
 }
 
-colnames(dx_mat) <- sprintf("I10_DX%d", seq_len(max_dx))
-colnames(poa_mat) <- sprintf("DXPOA%d", seq_len(max_dx))
+for (j in grep("DXPOA", names(ecodes_sas_poa), value = TRUE)) {
+  set(ecodes_sas_poa, j = j, value = fcase(ecodes_sas_poa[[j]] == 1, "Y", ecodes_sas_poa[[j]] == 0, "N", default = ""))
+}
 
+ecodes_sas <-
+  merge(ecodes_sas_dx, ecodes_sas_poa, all = TRUE, by = c("patid", "encid"))
 
-out <-
-  data.frame(
-    PATID = as.integer(names(mdcr10cm)),
-    YEAR = rep.int(year, length(mdcr10cm)),
-    DQTR = rep.int(4L, length(mdcr10cm)),
-    I10_NDX = lengths(mdcr10cm),
-    stringsAsFactors = FALSE
+ecodes_sas[patid == 55176]
+
+ecodes[, PATID := paste0(patid, "-", encid)]
+ecodes[, patid := NULL]
+ecodes[, encid := NULL]
+
+ecodes_sas[, PATID := paste0(patid, "-", encid)]
+ecodes_sas[, patid := NULL]
+ecodes_sas[, encid := NULL]
+
+ecodes_sas[, YEAR := year]
+ecodes_sas[, DQTR := 4L]
+
+setcolorder(ecodes_sas, c("PATID", "YEAR", "DQTR"))
+
+fwrite(
+  x = ecodes_sas,
+  file = file.path(as.character(year), paste0("mdcr_for_sas_", as.character(year), ".csv"))
   )
-
-out <- cbind(
-  out,
-  as.data.frame(dx_mat, stringsAsFactors = FALSE),
-  as.data.frame(poa_mat, stringsAsFactors = FALSE)
-)
-out <- out[order(out$PATID), ]
-
-utils::write.csv(
-  out,
-  file = file.path(as.character(year), paste0("mdcr_for_sas_", as.character(year), ".csv")),
-  row.names = FALSE,
-  quote = TRUE
-)
 
 ################################################################################
 #                                 End of File                                  #

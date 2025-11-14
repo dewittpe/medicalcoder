@@ -14,7 +14,7 @@ suppressPackageStartupMessages({
   library(R.utils) #needed for data.table::fread to read the .gz files
 })
 
-while(FALSE) {
+#while(FALSE) {
 
 # ahrq results
 ahrq_results <- readRDS("expected-ahrq-results.rds")
@@ -74,7 +74,7 @@ cnds_2025 <- unique(cnds_2025)
 
 for (j in cnds_2022) {
   t <- identical(mdcr_vs_ahrq_2022[[j]], mdcr_vs_ahrq_2022[[paste0("CMR_", j)]])
-  if (!t & !(j %in% c("CBVD", "HF"))) {
+  if (!t) {# & !(j %in% c("CBVD", "HF"))) {
     stop(sprintf('identical(mdcr_vs_ahrq_2022[["%s"]], mdcr_vs_ahrq_2022[["%s"]]) is not true', j, paste0("CMR_", j)))
   }
 }
@@ -87,10 +87,10 @@ mdcr_vs_ahrq_2022[HTN_CX != CMR_HTN_CX, .SD, .SDcols = patterns("PATID|HTN")]
 
 merge(
   x = 
-    codes[CMR_VERSION == 2022.1 & PATID == 16373][, unique(code)]
+    codes[CMR_VERSION == 2022.1 & PATID == 10966]
   ,
   y = 
-    subset(get_elixhauser_codes(), elixhauser_ahrq2022 == 1 & startsWith(condition, "HTN"))
+    subset(get_elixhauser_codes(), elixhauser_ahrq2022 == 1 & startsWith(condition, "CBVD"))
   ,
   all = FALSE,
   by = "code"
@@ -132,7 +132,7 @@ stopifnot(mdcr_vs_ahrq_2024[["readmission_index"]] == mdcr_vs_ahrq_2024[["CMR_In
 
 stopifnot(mdcr_vs_ahrq_2025[["mortality_index"]]   == mdcr_vs_ahrq_2025[["CMR_Index_Mortality"]])
 stopifnot(mdcr_vs_ahrq_2025[["readmission_index"]] == mdcr_vs_ahrq_2025[["CMR_Index_Readmission"]])
-}
+#}
 
 ################################################################################
 #                                 End of File                                  #
