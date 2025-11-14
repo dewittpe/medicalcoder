@@ -22,7 +22,7 @@
 #' @noRd
 #' @keywords internal
 .elixhauser <- function(id.vars, iddf, cmrb, poa.var, primarydx.var, method) {
-  ccc <- mdcr_select(cmrb, cols = c(id.vars, "condition", poa.var, primarydx.var))
+  ccc <- mdcr_select(cmrb, cols = c(id.vars, "condition", "poaexempt", poa.var, primarydx.var))
   ccc <- unique(ccc)
 
   # omit primary dx
@@ -37,7 +37,7 @@
   if (length(idx)) {
     poa <- mdcr_subset(..mdcr_internal_elixhauser_poa.., i = idx)
 
-    idx <- ( (ccc[["condition"]] %in% poa[["condition"]]) & (ccc[[poa.var]] == 1L)) |
+    idx <- ( (ccc[["condition"]] %in% poa[["condition"]]) & (ccc[[poa.var]] == 1L | ccc[["poaexempt"]] == 1)) |
            (!(ccc[["condition"]] %in% poa[["condition"]]))
 
     ccc <- mdcr_subset(ccc, i = idx)
@@ -45,7 +45,7 @@
 
   # what are the relevent coniditions
   conditions <-
-    unique(..mdcr_internal_elixhauser_index_scores..[["condition"]][ which(!is.na(..mdcr_internal_elixhauser_index_scores..[[method]])) ])
+    unique(..mdcr_internal_elixhauser_codes..[["condition"]][which(..mdcr_internal_elixhauser_codes..[[method]] == 1L)])
 
   # build indicator matrix
   X <- matrix(0L, nrow = nrow(iddf), ncol = length(conditions))
@@ -60,7 +60,30 @@
     X[cbind(ri[keep], ci[keep])] <- 1L
   }
 
-  if (startsWith(method, "elixhauser_ahrq202")) {
+  if (startsWith(x = method, prefix = "elixhauser_ahrq20") | startsWith(x = method, prefix = "elixhauser_ahrq_icd10")) {
+
+    X[X[, "DRUG_ABUSEPSYCHOSES"] == 1L,  "DRUG_ABUSE"] <- 1
+    X[X[, "HFHTN_CX"] == 1L,             "HTN_CX"]     <- 1
+    X[X[, "HTN_CXRENLFL_SEV"] == 1L,     "HTN_CX"]     <- 1
+    X[X[, "HFHTN_CXRENLFL_SEV"] == 1L,   "HTN_CX"]     <- 1
+    X[X[, "ALCOHOLLIVER_MLD"] == 1L,     "ALCOHOL"]    <- 1
+    X[X[, "VALVE_AUTOIMMUNE"] == 1L,     "AUTOIMMUNE"] <- 1         
+
+    X[X[, "DRUG_ABUSEPSYCHOSES"] == 1L,  "PSYCHOSES"]  <- 1
+    X[X[, "HFHTN_CX"] == 1L,             "HF"]         <- 1
+    X[X[, "HTN_CXRENLFL_SEV"] == 1L,     "RENLFL_SEV"] <- 1
+    X[X[, "HFHTN_CXRENLFL_SEV"] == 1L,   "HF"]         <- 1
+    X[X[, "HFHTN_CXRENLFL_SEV"] == 1L,   "RENLFL_SEV"] <- 1
+
+    idx <- which(X[, "CBVD_SQLAPARALYSIS"] == 1L)
+    X[idx, "PARALYSIS"] <- 1
+    X[idx, "CBVD_SQLA"] <- 1
+
+    X[X[, "ALCOHOLLIVER_MLD"] == 1L,     "LIVER_MLD"] <- 1
+    X[X[, "VALVE_AUTOIMMUNE"] == 1L,     "VALVE"]     <- 1
+    #X[X[, "CBVD_POA"] == 1L,             "CBVD_NPOA"] <- 1
+
+    # exlcusions
     X[X[, "DIAB_CX"] == 1, "DIAB_UNCX"] <- 0L
     X[X[, "HTN_CX"] == 1, "HTN_UNCX"] <- 0L
     mets <- which(X[, "CANCER_METS"] == 1L)
@@ -69,26 +92,42 @@
     X[X[, "CANCER_SOLID"] == 1, "CANCER_NSITU"] <- 0L
     X[X[, "LIVER_SEV"] == 1, "LIVER_MLD"] <- 0L
     X[X[, "RENLFL_SEV"] == 1, "RENLFL_MOD"] <- 0L
+
+    idx <- which(
+      (X[, "CBVD_POA"] == 1L) |
+      #(X[, "CBVD_POA"] == 0L & X[, "CBVD_NPOA"] == 0L & X[, "CBVD_SQLA"] == 1L)
+      (X[, "CBVD_SQLA"] == 1L)
+    )
+    X <- cbind(X, "CBVD" = 0L)
+    X[idx, "CBVD"] <- 1L
+  } else {
+    X <- cbind(X, "HTN_C" = 0L)
+    X[X[, "HTN_UNCX"] == 1L | X[, "HTN_CX"] == 1L, "HTN_C"] <- 1L
+    X[X[, "DMCX"] == 1, "DM"] <- 0L
   }
+
 
   mortality_weights <-
     stats::setNames(
       ..mdcr_internal_elixhauser_index_scores..[[method]],
       ..mdcr_internal_elixhauser_index_scores..[["condition"]]
-    )[..mdcr_internal_elixhauser_index_scores..[["index"]] == "mortality"][conditions]
+    )[..mdcr_internal_elixhauser_index_scores..[["index"]] == "mortality"]
 
   readmission_weights <-
     stats::setNames(
       ..mdcr_internal_elixhauser_index_scores..[[method]],
       ..mdcr_internal_elixhauser_index_scores..[["condition"]]
-    )[..mdcr_internal_elixhauser_index_scores..[["index"]] == "readmission"][conditions]
+    )[..mdcr_internal_elixhauser_index_scores..[["index"]] == "readmission"]
+
+  mortality_weights <- mortality_weights[!is.na(mortality_weights)]
+  readmission_weights <- readmission_weights[!is.na(readmission_weights)]
 
   # Set counts, flags, and index scores
   storage.mode(X) <- "integer"
-  num_cmrb <- as.integer(rowSums(X))
+  num_cmrb <- as.integer(rowSums(X[, names(mortality_weights)]))
   cmrb_flag <- as.integer(num_cmrb > 0L)
-  mortality_index <- as.integer(as.vector(X %*% mortality_weights))
-  readmission_index <- as.integer(as.vector(X %*% readmission_weights))
+  mortality_index <- as.integer(as.vector(X[, names(mortality_weights)] %*% mortality_weights))
+  readmission_index <- as.integer(as.vector(X[, names(readmission_weights)] %*% readmission_weights))
 
   # build the return object
   rtn <- cbind(iddf, as.data.frame(X, check.names = FALSE))
@@ -98,6 +137,7 @@
   rtn <- mdcr_set(rtn, j = "readmission_index", value = readmission_index)
   rownames(rtn) <- NULL
   rtn
+
 }
 
 ################################################################################

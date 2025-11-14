@@ -257,7 +257,6 @@ comorbidities.data.frame <- function(data,
     }
   }
 
-
   if (startsWith(method, "elixhauser") & !is.null(primarydx.var)) {
     is_a_column(primarydx.var, names(data))
     pn <- primarydx.var %in% ..protected_names..
@@ -276,7 +275,6 @@ comorbidities.data.frame <- function(data,
       flag.method,
       several.ok = FALSE
     )
-
 
   if (startsWith(method, "charlson") && !is.null(age.var)) {
     is_a_column(age.var, names(data))
@@ -367,7 +365,7 @@ comorbidities.data.frame <- function(data,
     lookup_to_keep <- c(lookup_to_keep)
   } else if (startsWith(method, "elixhauser")) {
     lookup <- get_elixhauser_codes()
-    lookup_to_keep <- c(lookup_to_keep)
+    lookup_to_keep <- c(lookup_to_keep, "poaexempt")
   }
 
   idx <- lookup[[method]] == 1L
@@ -673,7 +671,7 @@ comorbidities_methods <- function() {
       "charlson_cdmf2019",
       "elixhauser_elixhauser1988", "elixhauser_ahrq_web", "elixhauser_quan2005",
       "elixhauser_ahrq2022", "elixhauser_ahrq2023", "elixhauser_ahrq2024",
-      "elixhauser_ahrq2025")
+      "elixhauser_ahrq2025", "elixhauser_ahrq_icd10")
 }
 
 

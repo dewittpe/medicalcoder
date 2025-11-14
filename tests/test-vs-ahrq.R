@@ -77,6 +77,25 @@ for (j in cnds_2022) {
   }
 }
 
+
+#mdcr_vs_ahrq_2022[CBVD != CMR_CBVD, .SD, .SDcols = patterns("PATID|CBVD")]
+#
+#qwraps2::set_diff(poa$condition,
+#    subset(get_elixhauser_codes(), elixhauser_ahrq2022 == 1)$condition)
+#
+#merge(
+#  x = codes[CMR_VERSION == 2022.1 & PATID == 13205],
+#  y = 
+#    subset(get_elixhauser_codes(), elixhauser_ahrq2022 == 1 & startsWith(condition, "CBVD"))
+#  ,
+#  all = FALSE,
+#  by = "code"
+#  )
+
+
+
+
+
 for (j in cnds_2023) {
   t <- identical(mdcr_vs_ahrq_2023[[j]], mdcr_vs_ahrq_2023[[paste0("CMR_", j)]])
   if (!t) {

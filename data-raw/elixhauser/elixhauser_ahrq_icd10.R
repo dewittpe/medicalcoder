@@ -34,6 +34,7 @@
 # idempotent: yes (deterministic once source archives are fixed)
 ################################################################################
 library(data.table)
+requireNamespace("readxl")
 icd_codes <- readRDS("../icd/icd_codes.rds")
 setDT(icd_codes)
 
@@ -139,7 +140,6 @@ for (i in seq_len(nrow(values))) {
   }
 }
 
-
 # build a data.table for the elixhauser_codes
 elixhauser_codes <-
   setNames(
@@ -166,19 +166,6 @@ elixhauser_codes <-
     fill = 0L
   )
 
-elixhauser_codes[, icdv := 10L]
-elixhauser_codes[, dx := 1L]
-elixhauser_codes <-
-  merge(x = elixhauser_codes,
-    y = icd_codes,
-    all.x = TRUE,
-    all.y = FALSE,
-    by = c("code", "icdv", "dx")
-  )
-
-elixhauser_codes <-
-  elixhauser_codes[, .SD, .SDcols = patterns("code_id|condition|ahrq")]
-
 # poa exempt
 elixhauser_poaexempt <- values[value != "COMFMT"]
 elixhauser_poaexempt[, strings := NULL]
@@ -198,6 +185,25 @@ elixhauser_poaexempt <-
   rbindlist()
 
 elixhauser_poaexempt <- unique(elixhauser_poaexempt$code)
+
+# add a poaexmpt column to elixhauser_codes
+elixhauser_codes[, poaexempt := as.integer(code %in% elixhauser_poaexempt)]
+
+# add a "ever" column, that is, ahrq_icd10, which is 1 if the icd was every part
+# of the standard
+elixhauser_codes[, ahrq_icd10 := as.integer(rowSums(.SD) > 0), .SDcols = patterns("^ahrq\\d{4}$")]
+
+# use the code_id for the ICD codes
+elixhauser_codes <-
+  merge(x = elixhauser_codes,
+    y = icd_codes[icdv == 10L & dx == 1L],
+    all.x = TRUE,
+    all.y = FALSE,
+    by = c("code")
+  )
+
+elixhauser_codes <-
+  elixhauser_codes[, .SD, .SDcols = patterns("code_id|poaexempt|condition|ahrq")]
 
 ################################################################################
 # find the LABELS for the conditions
@@ -242,6 +248,52 @@ elixhauser_conditions <-
   )
 
 ################################################################################
+# POA Required - conditions that require a POA flag
+elixhauser_poa <-
+  list("ahrq2022" = readxl::read_xlsx(paste0(tmpdir, "/CMR-Reference-File-v2022-1.xlsx"), sheet = 2, skip = 1),
+       "ahrq2023" = readxl::read_xlsx(paste0(tmpdir, "/CMR-Reference-File-v2023-1.xlsx"), sheet = 2, skip = 1),
+       "ahrq2024" = readxl::read_xlsx(paste0(tmpdir, "/CMR-Reference-File-v2024-1.xlsx"), sheet = 2, skip = 1),
+       "ahrq2025" = readxl::read_xlsx(paste0(tmpdir, "/CMR-Reference-File-v2025-1.xlsx"), sheet = 2, skip = 1))
+
+elixhauser_poa <- lapply(elixhauser_poa, setDT)
+
+for (i in seq_along(elixhauser_poa)) {
+  names(elixhauser_poa[[i]]) <- c("condition", "desc", "poa_required")
+  elixhauser_poa[[i]] <- subset(elixhauser_poa[[i]], condition != "End of Content")
+  elixhauser_poa[[i]][, poa_required := as.integer(poa_required == "Yes")]
+  set(elixhauser_poa[[i]], j = names(elixhauser_poa)[i], value = 1L)
+  set(elixhauser_poa[[i]], j = "desc", value = NULL)
+}
+
+if (interactive()) {
+  lapply(elixhauser_poa, names)
+}
+
+elixhauser_poa <-
+  Reduce(function(x,y) {
+           merge(x, y, all = TRUE, by = c('condition', 'poa_required'))
+       },
+       x = elixhauser_poa)
+
+elixhauser_poa[, condition := sub("CMR_", "", condition)]
+
+# CBVD is a catch all condition, there are smore specific versions in the code
+# base
+elixhauser_poa <-
+  rbind(
+    elixhauser_poa,
+    elixhauser_poa[condition == "CBVD", condition := "CBVD_POA"],
+    elixhauser_poa[condition == "CBVD", condition := "CBVD_SQLA"],
+    elixhauser_poa[condition == "CBVD", condition := "CBVD_SQLAPARALYSIS"]
+  )
+
+# Under the assumption that the POA required flag is static over the years, then
+# the this data structure is not needed and a POA required flag cold just be
+# added to the elixhauser_conditions data.frame.  Keep the elixhauser_poa
+# data.frame incase there is a change that comes in the in the future.
+elixhauser_poa[, ahrq_icd10 := as.integer(rowSums(.SD) > 0), .SDcols = patterns("^ahrq\\d{4}$")]
+
+################################################################################
 # Index scores
 elixhauser_index_scores <-
   index_programs |>
@@ -273,36 +325,7 @@ for (j in grep("^ahrq\\d{4}", names(elixhauser_index_scores))) {
   set(elixhauser_index_scores, j = j, value = as.integer(elixhauser_index_scores[[j]]))
 }
 
-
-################################################################################
-# POA
-elixhauser_poa <-
-  list("ahrq2022" = readxl::read_xlsx(paste0(tmpdir, "/CMR-Reference-File-v2022-1.xlsx"), sheet = 2, skip = 1),
-       "ahrq2023" = readxl::read_xlsx(paste0(tmpdir, "/CMR-Reference-File-v2023-1.xlsx"), sheet = 2, skip = 1),
-       "ahrq2024" = readxl::read_xlsx(paste0(tmpdir, "/CMR-Reference-File-v2024-1.xlsx"), sheet = 2, skip = 1),
-       "ahrq2025" = readxl::read_xlsx(paste0(tmpdir, "/CMR-Reference-File-v2025-1.xlsx"), sheet = 2, skip = 1))
-
-elixhauser_poa <- lapply(elixhauser_poa, setDT)
-
-for (i in seq_along(elixhauser_poa)) {
-  names(elixhauser_poa[[i]]) <- c("condition", "desc", "poa_required")
-  elixhauser_poa[[i]] <- subset(elixhauser_poa[[i]], condition != "End of Content")
-  elixhauser_poa[[i]][, poa_required := as.integer(poa_required == "Yes")]
-  set(elixhauser_poa[[i]], j = names(elixhauser_poa)[i], value = 1L)
-  set(elixhauser_poa[[i]], j = "desc", value = NULL)
-}
-
-if (interactive()) {
-  lapply(elixhauser_poa, names)
-}
-
-elixhauser_poa <-
-  Reduce(function(x,y) {
-           merge(x, y, all = TRUE, by = c('condition', 'poa_required'))
-       },
-       x = elixhauser_poa)
-
-elixhauser_poa[, condition := sub("CMR_", "", condition)]
+elixhauser_index_scores[, ahrq_icd10 := get(max(grep("ahrq", names(elixhauser_index_scores), value = TRUE)))]
 
 ################################################################################
 # save to disk
@@ -314,10 +337,6 @@ saveRDS(elixhauser_poa, "./elixhauser_poa_ahrq_icd10.rds")
 
 setDF(elixhauser_codes)
 saveRDS(elixhauser_codes, "./elixhauser_codes_ahrq_icd10.rds")
-
-# elixhauser_poaexempt is just a character vector
-stopifnot(is.vector(elixhauser_poaexempt), is.character(elixhauser_poaexempt))
-saveRDS(elixhauser_poaexempt, "./elixhauser_poaexempt_ahrq_icd10.rds")
 
 ################################################################################
 #                                 End of File                                  #
