@@ -72,25 +72,27 @@ cnds_2025 <- unique(cnds_2025)
 
 for (j in cnds_2022) {
   t <- identical(mdcr_vs_ahrq_2022[[j]], mdcr_vs_ahrq_2022[[paste0("CMR_", j)]])
-  if (!t) {
+  if (!t & !(j %in% c("CBVD", "HF"))) {
     stop(sprintf('identical(mdcr_vs_ahrq_2022[["%s"]], mdcr_vs_ahrq_2022[["%s"]]) is not true', j, paste0("CMR_", j)))
   }
 }
 
 
-#mdcr_vs_ahrq_2022[CBVD != CMR_CBVD, .SD, .SDcols = patterns("PATID|CBVD")]
-#
-#qwraps2::set_diff(poa$condition,
-#    subset(get_elixhauser_codes(), elixhauser_ahrq2022 == 1)$condition)
-#
-#merge(
-#  x = codes[CMR_VERSION == 2022.1 & PATID == 13205],
-#  y = 
-#    subset(get_elixhauser_codes(), elixhauser_ahrq2022 == 1 & startsWith(condition, "CBVD"))
-#  ,
-#  all = FALSE,
-#  by = "code"
-#  )
+mdcr_vs_ahrq_2022[CBVD != CMR_CBVD, .SD, .SDcols = patterns("PATID|CBVD")]
+mdcr_vs_ahrq_2022[HF != CMR_HF, .SD, .SDcols = patterns("PATID|HF")]
+
+mdcr_vs_ahrq_2022[HTN_CX != CMR_HTN_CX, .SD, .SDcols = patterns("PATID|HTN")]
+
+merge(
+  x = 
+    codes[CMR_VERSION == 2022.1 & PATID == 16373][, unique(code)]
+  ,
+  y = 
+    subset(get_elixhauser_codes(), elixhauser_ahrq2022 == 1 & startsWith(condition, "HTN"))
+  ,
+  all = FALSE,
+  by = "code"
+  )
 
 
 

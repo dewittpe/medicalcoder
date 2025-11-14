@@ -282,9 +282,17 @@ elixhauser_poa[, condition := sub("CMR_", "", condition)]
 elixhauser_poa <-
   rbind(
     elixhauser_poa,
-    elixhauser_poa[condition == "CBVD", condition := "CBVD_POA"],
-    elixhauser_poa[condition == "CBVD", condition := "CBVD_SQLA"],
-    elixhauser_poa[condition == "CBVD", condition := "CBVD_SQLAPARALYSIS"]
+    elixhauser_poa[condition == "CBVD"][, condition := "CBVD_POA"],
+    elixhauser_poa[condition == "CBVD"][, condition := "CBVD_SQLA"],
+    elixhauser_poa[condition == "CBVD"][, condition := "CBVD_SQLAPARALYSIS"]
+  )
+
+# Same for HF
+elixhauser_poa <-
+  rbind(
+    elixhauser_poa,
+    elixhauser_poa[condition == "HF"][, condition := "HFHTN_CX"],
+    elixhauser_poa[condition == "HF"][, condition := "HFHTN_CXRENLFL_SEV"]
   )
 
 # Under the assumption that the POA required flag is static over the years, then
@@ -292,6 +300,8 @@ elixhauser_poa <-
 # added to the elixhauser_conditions data.frame.  Keep the elixhauser_poa
 # data.frame incase there is a change that comes in the in the future.
 elixhauser_poa[, ahrq_icd10 := as.integer(rowSums(.SD) > 0), .SDcols = patterns("^ahrq\\d{4}$")]
+
+elixhauser_poa <- unique(elixhauser_poa)
 
 ################################################################################
 # Index scores
