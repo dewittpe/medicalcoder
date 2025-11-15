@@ -14,8 +14,6 @@ suppressPackageStartupMessages({
   library(R.utils) #needed for data.table::fread to read the .gz files
 })
 
-#while(FALSE) {
-
 # ahrq results
 ahrq_results <- readRDS("expected-ahrq-results.rds")
 setDT(ahrq_results)
@@ -24,13 +22,12 @@ codes <-
   melt(
     data = ahrq_results,
     id.vars = c("CMR_VERSION", "PATID"),
-    measure.vars = paste0("I10_DX", as.character(1:41)),
-    value.name = "code"
+    measure.vars = patterns("I10_DX", "DXPOA"),
+    variable.factor = FALSE,
+    value.name = c("code", "poa")
   )
-codes[, primarydx := as.integer(variable == "I10_DX1")]
-
-
-
+codes[, primarydx := as.integer(variable == "1")]
+codes[, poa := as.integer(poa == "Y")]
 
 # apply medicalcoder::comorbidities
 common_args <-
@@ -39,7 +36,7 @@ common_args <-
     id.vars = c("CMR_VERSION", "PATID"),
     dx = 1,
     icdv = 10,
-    poa = 0,
+    poa.var = "poa",
     primarydx.var = "primarydx",
     flag.method = "current"
   )
@@ -79,27 +76,6 @@ for (j in cnds_2022) {
   }
 }
 
-
-mdcr_vs_ahrq_2022[CBVD != CMR_CBVD, .SD, .SDcols = patterns("PATID|CBVD")]
-mdcr_vs_ahrq_2022[HF != CMR_HF, .SD, .SDcols = patterns("PATID|HF")]
-
-mdcr_vs_ahrq_2022[HTN_CX != CMR_HTN_CX, .SD, .SDcols = patterns("PATID|HTN")]
-
-merge(
-  x = 
-    codes[CMR_VERSION == 2022.1 & PATID == 10966]
-  ,
-  y = 
-    subset(get_elixhauser_codes(), elixhauser_ahrq2022 == 1 & startsWith(condition, "CBVD"))
-  ,
-  all = FALSE,
-  by = "code"
-  )
-
-
-
-
-
 for (j in cnds_2023) {
   t <- identical(mdcr_vs_ahrq_2023[[j]], mdcr_vs_ahrq_2023[[paste0("CMR_", j)]])
   if (!t) {
@@ -132,7 +108,6 @@ stopifnot(mdcr_vs_ahrq_2024[["readmission_index"]] == mdcr_vs_ahrq_2024[["CMR_In
 
 stopifnot(mdcr_vs_ahrq_2025[["mortality_index"]]   == mdcr_vs_ahrq_2025[["CMR_Index_Mortality"]])
 stopifnot(mdcr_vs_ahrq_2025[["readmission_index"]] == mdcr_vs_ahrq_2025[["CMR_Index_Readmission"]])
-#}
 
 ################################################################################
 #                                 End of File                                  #
