@@ -30,8 +30,6 @@ stopifnot(
   t01b = !("assert_scalar_logical" %in% getNamespaceExports("medicalcoder"))
 )
 
-# the method should only be used within methods and the error messages are
-# controlled:
 common_args <- list(data = mdcr, method = "pccc_v3.1", icd.codes = "code", poa = 1L)
 
 t02a <- tryCatchError(do.call(comorbidities, args = c(common_args, list(full.codes = TRUE))))
