@@ -120,11 +120,12 @@ is consistent with the way these methods were implemented in <span class="citati
 variants.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_elixhauser_codes.html">get_elixhauser_codes</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## 'data.frame':    10679 obs. of  12 variables:</span></span>
+<span><span class="co">## 'data.frame':    10549 obs. of  14 variables:</span></span>
 <span><span class="co">##  $ icdv                     : int  9 9 9 9 9 9 9 9 9 9 ...</span></span>
 <span><span class="co">##  $ dx                       : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
 <span><span class="co">##  $ full_code                : chr  "042" "070.22" "070.23" "070.32" ...</span></span>
 <span><span class="co">##  $ code                     : chr  "042" "07022" "07023" "07032" ...</span></span>
+<span><span class="co">##  $ poaexempt                : int  NA NA NA NA NA NA NA NA NA NA ...</span></span>
 <span><span class="co">##  $ condition                : chr  "AIDS" "LIVER" "LIVER" "LIVER" ...</span></span>
 <span><span class="co">##  $ elixhauser_ahrq_web      : int  1 1 1 1 1 1 1 0 0 0 ...</span></span>
 <span><span class="co">##  $ elixhauser_elixhauser1988: int  1 0 0 1 1 0 1 0 0 0 ...</span></span>
@@ -133,8 +134,9 @@ variants.</p>
 <span><span class="co">##  $ elixhauser_ahrq2023      : int  NA NA NA NA NA NA NA NA NA NA ...</span></span>
 <span><span class="co">##  $ elixhauser_ahrq2024      : int  NA NA NA NA NA NA NA NA NA NA ...</span></span>
 <span><span class="co">##  $ elixhauser_ahrq2025      : int  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">##  $ elixhauser_ahrq_icd10    : int  NA NA NA NA NA NA NA NA NA NA ...</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_elixhauser_index_scores.html">get_elixhauser_index_scores</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## 'data.frame':    112 obs. of  9 variables:</span></span>
+<span><span class="co">## 'data.frame':    112 obs. of  10 variables:</span></span>
 <span><span class="co">##  $ condition                : chr  "AIDS" "AIDS" "ALCOHOL" "ALCOHOL" ...</span></span>
 <span><span class="co">##  $ index                    : chr  "mortality" "readmission" "mortality" "readmission" ...</span></span>
 <span><span class="co">##  $ elixhauser_ahrq_web      : int  0 19 -1 6 -2 9 0 4 NA NA ...</span></span>
@@ -144,15 +146,16 @@ variants.</p>
 <span><span class="co">##  $ elixhauser_ahrq2023      : int  -4 5 -1 3 -3 5 NA NA 0 2 ...</span></span>
 <span><span class="co">##  $ elixhauser_ahrq2024      : int  -4 5 -1 3 -3 5 NA NA 0 2 ...</span></span>
 <span><span class="co">##  $ elixhauser_ahrq2025      : int  -4 5 -1 3 -3 5 NA NA 0 2 ...</span></span>
+<span><span class="co">##  $ elixhauser_ahrq_icd10    : int  -4 5 -1 3 -3 5 NA NA 0 2 ...</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_elixhauser_poa.html">get_elixhauser_poa</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## 'data.frame':    43 obs. of  7 variables:</span></span>
-<span><span class="co">##  $ condition          : chr  "AIDS" "ALCOHOL" "ANEMDEF" "ANEMDEF" ...</span></span>
-<span><span class="co">##  $ desc               : chr  "Acquired immune deficiency syndrome" "Alcohol abuse" "Anemias due to other nutritional deficiencies" "Deficiency anemias" ...</span></span>
-<span><span class="co">##  $ poa_required       : int  0 0 1 1 0 1 1 0 0 0 ...</span></span>
-<span><span class="co">##  $ elixhauser_ahrq2022: int  1 1 NA 1 1 NA 1 1 1 1 ...</span></span>
-<span><span class="co">##  $ elixhauser_ahrq2023: int  1 1 1 NA 1 1 NA 1 1 1 ...</span></span>
-<span><span class="co">##  $ elixhauser_ahrq2024: int  1 1 1 NA 1 1 NA 1 1 1 ...</span></span>
-<span><span class="co">##  $ elixhauser_ahrq2025: int  1 1 1 NA 1 1 NA 1 1 1 ...</span></span></code></pre></div>
+<span><span class="co">## 'data.frame':    49 obs. of  7 variables:</span></span>
+<span><span class="co">##  $ condition            : chr  "AIDS" "ALCOHOL" "ANEMDEF" "AUTOIMMUNE" ...</span></span>
+<span><span class="co">##  $ poa_required         : int  0 0 1 0 1 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ elixhauser_ahrq2022  : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span><span class="co">##  $ elixhauser_ahrq2023  : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span><span class="co">##  $ elixhauser_ahrq2024  : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span><span class="co">##  $ elixhauser_ahrq2025  : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span><span class="co">##  $ elixhauser_ahrq_icd10: int  1 1 1 1 1 1 1 1 1 1 ...</span></span></code></pre></div>
 <ul>
 <li><p><code><a href="../reference/get_elixhauser_codes.html">get_elixhauser_codes()</a></code> returns a
 <code>data.frame</code> of the ICD codes mapping to each condition with
@@ -216,50 +219,61 @@ applicable), <code>num_cmrb</code> the number of comorbidities,
 comorbidity, and the mortality and readmission index scores.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mdcr_results</span><span class="op">)</span></span>
-<span><span class="co">## Classes 'medicalcoder_comorbidities' and 'data.frame':   38262 obs. of  43 variables:</span></span>
-<span><span class="co">##  $ patid            : int  10000 10002 10005 10006 10008 10010 10014 10015 10017 10018 ...</span></span>
-<span><span class="co">##  $ AIDS             : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ ALCOHOL          : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ ANEMDEF          : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ AUTOIMMUNE       : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ BLDLOSS          : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ CANCER_LEUK      : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ CANCER_LYMPH     : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ CANCER_METS      : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ CANCER_NSITU     : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ CANCER_SOLID     : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ CBVD             : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ COAG             : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ DEMENTIA         : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ DEPRESS          : int  0 1 0 0 0 0 0 0 0 1 ...</span></span>
-<span><span class="co">##  $ DIAB_CX          : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ DIAB_UNCX        : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ DRUG_ABUSE       : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ HF               : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ HTN_CX           : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ HTN_UNCX         : int  0 0 0 0 0 0 1 0 0 0 ...</span></span>
-<span><span class="co">##  $ LIVER_MLD        : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ LIVER_SEV        : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ LUNG_CHRONIC     : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ NEURO_MOVT       : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ NEURO_OTH        : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ NEURO_SEIZ       : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ OBESE            : int  0 1 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ PARALYSIS        : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ PERIVASC         : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ PSYCHOSES        : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ PULMCIRC         : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ RENLFL_MOD       : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ RENLFL_SEV       : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ THYROID_HYPO     : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ THYROID_OTH      : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ ULCER_PEPTIC     : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ VALVE            : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ WGHTLOSS         : int  0 0 0 0 0 0 1 0 0 0 ...</span></span>
-<span><span class="co">##  $ num_cmrb         : int  0 2 0 0 0 0 2 0 0 1 ...</span></span>
-<span><span class="co">##  $ cmrb_flag        : int  0 1 0 0 0 0 1 0 0 1 ...</span></span>
-<span><span class="co">##  $ mortality_index  : int  0 -15 0 0 0 0 13 0 0 -8 ...</span></span>
-<span><span class="co">##  $ readmission_index: int  0 0 0 0 0 0 6 0 0 2 ...</span></span>
+<span><span class="co">## Classes 'medicalcoder_comorbidities' and 'data.frame':   38262 obs. of  54 variables:</span></span>
+<span><span class="co">##  $ patid              : int  10000 10002 10005 10006 10008 10010 10014 10015 10017 10018 ...</span></span>
+<span><span class="co">##  $ AIDS               : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ ALCOHOL            : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ ALCOHOLLIVER_MLD   : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ ANEMDEF            : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ AUTOIMMUNE         : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ BLDLOSS            : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ CANCER_LEUK        : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ CANCER_LYMPH       : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ CANCER_METS        : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ CANCER_NSITU       : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ CANCER_SOLID       : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ CBVD_POA           : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ CBVD_SQLA          : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ CBVD_SQLAPARALYSIS : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ COAG               : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ DEMENTIA           : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ DEPRESS            : int  0 1 0 0 0 0 0 0 0 1 ...</span></span>
+<span><span class="co">##  $ DIAB_CX            : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ DIAB_UNCX          : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ DRUG_ABUSE         : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ DRUG_ABUSEPSYCHOSES: int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ HF                 : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ HFHTN_CX           : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ HFHTN_CXRENLFL_SEV : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ HTN_CX             : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ HTN_CXRENLFL_SEV   : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ HTN_UNCX           : int  0 0 0 0 0 0 1 0 0 0 ...</span></span>
+<span><span class="co">##  $ LIVER_MLD          : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ LIVER_MLD_NEURO    : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ LIVER_SEV          : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ LUNG_CHRONIC       : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ NEURO_MOVT         : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ NEURO_OTH          : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ NEURO_OTH_SEIZ     : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ NEURO_SEIZ         : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ OBESE              : int  0 1 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ PARALYSIS          : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ PERIVASC           : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ PSYCHOSES          : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ PULMCIRC           : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ RENLFL_MOD         : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ RENLFL_SEV         : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ THYROID_HYPO       : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ THYROID_OTH        : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ ULCER_PEPTIC       : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ VALVE              : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ VALVE_AUTOIMMUNE   : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ WGHTLOSS           : int  0 0 0 0 0 0 1 0 0 0 ...</span></span>
+<span><span class="co">##  $ CBVD               : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ num_cmrb           : int  0 2 0 0 0 0 2 0 0 1 ...</span></span>
+<span><span class="co">##  $ cmrb_flag          : int  0 1 0 0 0 0 1 0 0 1 ...</span></span>
+<span><span class="co">##  $ mortality_index    : int  0 -15 0 0 0 0 13 0 0 -8 ...</span></span>
+<span><span class="co">##  $ readmission_index  : int  0 0 0 0 0 0 6 0 0 2 ...</span></span>
 <span><span class="co">##  - attr(*, "method")= chr "elixhauser_ahrq2025"</span></span>
 <span><span class="co">##  - attr(*, "id.vars")= chr "patid"</span></span>
 <span><span class="co">##  - attr(*, "flag.method")= chr "current"</span></span></code></pre></div>
@@ -279,7 +293,7 @@ used to generate summary tables.</p>
 <span><span class="co">## 8   CANCER_METS   213  0.556688098</span></span>
 <span><span class="co">## 9  CANCER_NSITU     0  0.000000000</span></span>
 <span><span class="co">## 10 CANCER_SOLID   477  1.246667712</span></span>
-<span><span class="co">## 11         CBVD     0  0.000000000</span></span>
+<span><span class="co">## 11         CBVD   117  0.305786420</span></span>
 <span><span class="co">## 12         COAG   877  2.292091370</span></span>
 <span><span class="co">## 13     DEMENTIA    35  0.091474570</span></span>
 <span><span class="co">## 14      DEPRESS   321  0.838952485</span></span>
@@ -307,13 +321,13 @@ used to generate summary tables.</p>
 <span><span class="co">## 36 ULCER_PEPTIC    23  0.060111860</span></span>
 <span><span class="co">## 37        VALVE   572  1.494955831</span></span>
 <span><span class="co">## 38     WGHTLOSS   616  1.609952433</span></span>
-<span><span class="co">## 39         &gt;= 1  7850 20.516439287</span></span>
-<span><span class="co">## 40         &gt;= 2  3150  8.232711306</span></span>
-<span><span class="co">## 41         &gt;= 3  1108  2.895823532</span></span>
-<span><span class="co">## 42         &gt;= 4   329  0.859860959</span></span>
-<span><span class="co">## 43         &gt;= 5   110  0.287491506</span></span>
-<span><span class="co">## 44         &gt;= 6    21  0.054884742</span></span>
-<span><span class="co">## 45         &gt;= 7     4  0.010454237</span></span>
+<span><span class="co">## 39         &gt;= 1  7869 20.566096911</span></span>
+<span><span class="co">## 40         &gt;= 2  3186  8.326799435</span></span>
+<span><span class="co">## 41         &gt;= 3  1135  2.966389629</span></span>
+<span><span class="co">## 42         &gt;= 4   347  0.906905023</span></span>
+<span><span class="co">## 43         &gt;= 5   120  0.313627097</span></span>
+<span><span class="co">## 44         &gt;= 6    25  0.065338979</span></span>
+<span><span class="co">## 45         &gt;= 7     7  0.018294914</span></span>
 <span><span class="co">## 46         &gt;= 8     1  0.002613559</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $index_summary</span></span>
@@ -457,10 +471,10 @@ CANCER_SOLID
 CBVD
 </td>
 <td style="text-align:right;">
-0
+117
 </td>
 <td style="text-align:right;">
-0.000
+0.306
 </td>
 </tr>
 <tr>
@@ -770,10 +784,10 @@ WGHTLOSS
 &gt;= 1
 </td>
 <td style="text-align:right;">
-7850
+7869
 </td>
 <td style="text-align:right;">
-20.516
+20.566
 </td>
 </tr>
 <tr>
@@ -781,10 +795,10 @@ WGHTLOSS
 &gt;= 2
 </td>
 <td style="text-align:right;">
-3150
+3186
 </td>
 <td style="text-align:right;">
-8.233
+8.327
 </td>
 </tr>
 <tr>
@@ -792,10 +806,10 @@ WGHTLOSS
 &gt;= 3
 </td>
 <td style="text-align:right;">
-1108
+1135
 </td>
 <td style="text-align:right;">
-2.896
+2.966
 </td>
 </tr>
 <tr>
@@ -803,10 +817,10 @@ WGHTLOSS
 &gt;= 4
 </td>
 <td style="text-align:right;">
-329
+347
 </td>
 <td style="text-align:right;">
-0.860
+0.907
 </td>
 </tr>
 <tr>
@@ -814,10 +828,10 @@ WGHTLOSS
 &gt;= 5
 </td>
 <td style="text-align:right;">
-110
+120
 </td>
 <td style="text-align:right;">
-0.287
+0.314
 </td>
 </tr>
 <tr>
@@ -825,10 +839,10 @@ WGHTLOSS
 &gt;= 6
 </td>
 <td style="text-align:right;">
-21
+25
 </td>
 <td style="text-align:right;">
-0.055
+0.065
 </td>
 </tr>
 <tr>
@@ -836,10 +850,10 @@ WGHTLOSS
 &gt;= 7
 </td>
 <td style="text-align:right;">
-4
+7
 </td>
 <td style="text-align:right;">
-0.010
+0.018
 </td>
 </tr>
 <tr>
@@ -897,7 +911,7 @@ Data.”</span> <em>Medical Care</em> 43 (11): 1130–39. <a href="https://doi.o
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
