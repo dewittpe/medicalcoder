@@ -17,7 +17,8 @@ stopifnot(
       elixhauser_ahrq2022       = "integer",
       elixhauser_ahrq2023       = "integer",
       elixhauser_ahrq2024       = "integer",
-      elixhauser_ahrq2025       = "integer"
+      elixhauser_ahrq2025       = "integer",
+      elixhauser_ahrq_icd10     = "integer"
      )
   )
 )

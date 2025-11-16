@@ -21,7 +21,6 @@
 #
 # idempotent: yes (deterministic merges)
 ################################################################################
-
 index <-
   list("./elixhauser_index_scores_quan2005.rds",
        "./elixhauser_index_scores_ahrq_icd10.rds") |>
@@ -36,7 +35,20 @@ codes <-
   Reduce(function(x, y) { merge(x, y, all = TRUE, by = c("code_id", "condition")) },
          x = _)
 
-# a POA required flag isn't needed for the codes defined in Quan (2005).
+# setcolumn order
+codes <- codes[,
+  c("code_id", "poaexempt", "condition",
+  "ahrq_web",
+  "elixhauser1988",
+  "quan2005",
+  "ahrq2022",
+  "ahrq2023",
+  "ahrq2024",
+  "ahrq2025",
+  "ahrq_icd10")]
+
+# Which conditions require a POA required flag?
+# isn't needed for the codes defined in Quan (2005).
 poa <- readRDS("./elixhauser_poa_ahrq_icd10.rds")
 
 ################################################################################

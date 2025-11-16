@@ -18,6 +18,7 @@ For each year requested the script will:
 
 * filter the packaged `mdcr` data to ICD-10-CM;
 * spread codes to the wide layout expected by the SAS mapping program;
+* create matching `DXPOA1`-`DXPOA{NUMDX}` columns (defaulting to `"N"`) so SAS can apply POA logic and POA-exempt handling the same way medicalcoder does; and
 * write `{YEAR}/mdcr_for_sas_{YEAR}.csv`;
 
 ## 2. Unzip and modify the SAS scripts
@@ -61,10 +62,10 @@ libname in1     '/full/path/to/tests/ahrq';
 libname out1    '/full/path/to/tests/ahrq';
 
 %let DXPREFIX = I10_DX;
-%let POAPREFIX = ;        * leave blank; POA indicators are unavailable;
+%let POAPREFIX = DXPOA;   * DXPOA columns come from prepare-mdcr-cmr.R;
 %let NUMDX = 41;          * use the value reported by the prep script;
 %let NDXVAR = I10_NDX;
-%let POA = 0;
+%let POA = 1;
 %let OBS = MAX;
 
 %let CORE = mdcr_icd10_for_cmr_input_v{YEAR}-1;
@@ -107,4 +108,3 @@ Re-run the preparation script so it detects the exported CSV(s) and produces RDS
 ## 8. Optional: SAS index program
 
 If you need the additional mortality/readmission indices supplied by AHRQ, execute `CMR_Index_Program_v{YEAR}-1.sas` after the mapping step. The current regression test only asserts the comorbidity indicator flags.
-

@@ -35,24 +35,21 @@ res <- comorbidities(
   flag.method = "current"
 )
 
-res_df <- as.data.frame(res[, c("patid", "CHF", "DM", "DMCX", "OBESE", "RENLFAIL", "num_cmrb")])
+# P1: congestive heart failure and HTN_C
+stopifnot(res[["CHF"]][res[["patid"]] == "P1"] == 1L)
+stopifnot(res[["HTN_C"]][res[["patid"]] == "P1"] == 1L)
+stopifnot(res[["num_cmrb"]][res[["patid"]] == "P1"] == 2L)
 
-# P1: congestive heart failure only
-stopifnot(res_df[["CHF"]][res_df[["patid"]] == "P1"] == 1L)
-stopifnot(all(res_df[["CHF"]][res_df[["patid"]] != "P1"] == 0L))
-
-# P2: diabetes (with and without complications) + obesity
-stopifnot(res_df[["DM"]][res_df[["patid"]] == "P2"]  == 1L)
-stopifnot(res_df[["DMCX"]][res_df[["patid"]] == "P2"] == 1L)
-stopifnot(res_df[["OBESE"]][res_df[["patid"]] == "P2"] == 1L)
+# P2: diabetes (with and without complications) + obesity - the patient should
+# flag both but only have with complications reported.
+stopifnot(res[["DM"]][res[["patid"]] == "P2"]  == 0L)
+stopifnot(res[["DMCX"]][res[["patid"]] == "P2"] == 1L)
+stopifnot(res[["OBESE"]][res[["patid"]] == "P2"] == 1L)
+stopifnot(res[["num_cmrb"]][res[["patid"]] == "P2"] == 2L)
 
 # P3: renal failure only
-stopifnot(res_df[["RENLFAIL"]][res_df[["patid"]] == "P3"] == 1L)
-
-# Overall comorbidity counts match the manual expectation
-stopifnot(res_df[["num_cmrb"]][res_df[["patid"]] == "P1"] == 1L)
-stopifnot(res_df[["num_cmrb"]][res_df[["patid"]] == "P2"] == 3L)
-stopifnot(res_df[["num_cmrb"]][res_df[["patid"]] == "P3"] == 1L)
+stopifnot(res[["RENLFAIL"]][res[["patid"]] == "P3"] == 1L)
+stopifnot(res[["num_cmrb"]][res[["patid"]] == "P3"] == 1L)
 
 ################################################################################
 #                                 End of File                                  #

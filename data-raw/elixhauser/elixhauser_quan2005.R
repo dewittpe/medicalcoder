@@ -21,7 +21,6 @@
 #
 # idempotent: yes (deterministic pipeline)
 ################################################################################
-
 library(pbapply)
 library(data.table)
 icd_codes <- readRDS("../icd/icd_codes.rds")

@@ -22,13 +22,12 @@ codes <-
   melt(
     data = ahrq_results,
     id.vars = c("CMR_VERSION", "PATID"),
-    measure.vars = paste0("I10_DX", as.character(1:41)),
-    value.name = "code"
+    measure.vars = patterns("I10_DX", "DXPOA"),
+    variable.factor = FALSE,
+    value.name = c("code", "poa")
   )
-codes[, primarydx := as.integer(variable == "I10_DX1")]
-
-
-
+codes[, primarydx := as.integer(variable == "1")]
+codes[, poa := as.integer(poa == "Y")]
 
 # apply medicalcoder::comorbidities
 common_args <-
@@ -37,7 +36,7 @@ common_args <-
     id.vars = c("CMR_VERSION", "PATID"),
     dx = 1,
     icdv = 10,
-    poa = 0,
+    poa.var = "poa",
     primarydx.var = "primarydx",
     flag.method = "current"
   )
@@ -72,7 +71,7 @@ cnds_2025 <- unique(cnds_2025)
 
 for (j in cnds_2022) {
   t <- identical(mdcr_vs_ahrq_2022[[j]], mdcr_vs_ahrq_2022[[paste0("CMR_", j)]])
-  if (!t) {
+  if (!t) {# & !(j %in% c("CBVD", "HF"))) {
     stop(sprintf('identical(mdcr_vs_ahrq_2022[["%s"]], mdcr_vs_ahrq_2022[["%s"]]) is not true', j, paste0("CMR_", j)))
   }
 }
