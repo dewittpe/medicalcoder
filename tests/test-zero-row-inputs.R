@@ -7,128 +7,113 @@ source('utilities.R')
 # comorbidities().
 
 # build a zero-row data.frame for
-DF <- data.frame(code = c("B", "A"), patid = 1:2)[0, ]
-common_args <-
-  list(
-    data = DF,
-    icd.codes = "code",
-    poa = 1,
-    primarydx = 0
-  )
+DF <- data.frame(code = c("B", "A"), patid = 1:2)
+common_args <- list(data = DF[0, ], id.vars = "patid", icd.codes = "code", poa = 1, primarydx = 0)
 
-rtn_charlson <-
-  do.call(comorbidities, c(common_args, list(method = "charlson_quan2005")))
+# fit all methods without subconditions
+methods <- medicalcoder:::comorbidities_methods()
+args <- lapply(methods, function(x) c(common_args, list(method = x)))
+args <- setNames(args, methods)
+rtns <- lapply(args, do.call, what = comorbidities)
 
-rtn_elixhauser <-
-  do.call(comorbidities, c(common_args, list(method = "elixhauser_ahrq2025")))
+# pccc with subconditions
+common_args[["subconditions"]] <- TRUE
+args <- lapply(methods[startsWith(methods, "pccc")], function(x) c(common_args, list(method = x)))
+args <- setNames(args, paste0(methods[startsWith(methods, "pccc")], "s"))
+rtns <- c(rtns, lapply(args, do.call, what = comorbidities))
 
-rtn_pccc_v2.1 <-
-  do.call(comorbidities, c(common_args, list(method = "pccc_v2.1")))
+# build rtns1 with nrow = nrow(DF), this will be used to check that the names
+# and general structure of the returns are the same with zero input rows or more
+# than zero input rows
+common_args[["data"]] <- DF
+common_args[["subconditions"]] <- FALSE
+args <- lapply(methods, function(x) c(common_args, list(method = x)))
+args <- setNames(args, methods)
+rtns1 <- lapply(args, do.call, what = comorbidities)
 
-rtn_pccc_v2.1s <-
-  do.call(comorbidities, c(common_args, list(method = "pccc_v2.1", subconditions = TRUE)))
+# pccc with subconditions
+common_args[["subconditions"]] <- TRUE
+args <- lapply(methods[startsWith(methods, "pccc")], function(x) c(common_args, list(method = x)))
+args <- setNames(args, paste0(methods[startsWith(methods, "pccc")], "s"))
+rtns1 <- c(rtns1, lapply(args, do.call, what = comorbidities))
 
-rtn_pccc_v3.1 <-
-  do.call(comorbidities, c(common_args, list(method = "pccc_v3.1")))
 
-rtn_pccc_v3.1s <-
-  do.call(comorbidities, c(common_args, list(method = "pccc_v3.1", subconditions = TRUE)))
+################################################################################
+# verify that all the returned elements inherit the expected classes
+for (m in names(rtns)) {
+  if (!inherits(rtns[[m]], "medicalcoder_comorbidities")) {
+    stop(sprintf("rtns[[%s]] does not inherit `medicalcoder_comorbidities`", m))
+  }
 
-stopifnot(
-   inherits(rtn_charlson, "medicalcoder_comorbidities"),
-  !inherits(rtn_charlson, "medicalcoder_comorbidities_with_subconditions"),
-   inherits(rtn_elixhauser, "medicalcoder_comorbidities"),
-  !inherits(rtn_elixhauser, "medicalcoder_comorbidities_with_subconditions"),
-   inherits(rtn_pccc_v2.1, "medicalcoder_comorbidities"),
-  !inherits(rtn_pccc_v2.1, "medicalcoder_comorbidities_with_subconditions"),
-   inherits(rtn_pccc_v2.1s, "medicalcoder_comorbidities"),
-   inherits(rtn_pccc_v2.1s, "medicalcoder_comorbidities_with_subconditions"),
-   inherits(rtn_pccc_v3.1, "medicalcoder_comorbidities"),
-  !inherits(rtn_pccc_v3.1, "medicalcoder_comorbidities_with_subconditions"),
-   inherits(rtn_pccc_v3.1s, "medicalcoder_comorbidities"),
-   inherits(rtn_pccc_v3.1s, "medicalcoder_comorbidities_with_subconditions"),
-   inherits(rtn_charlson, "data.frame"),
-   inherits(rtn_elixhauser, "data.frame"),
-   inherits(rtn_pccc_v2.1, "data.frame"),
-   inherits(rtn_pccc_v2.1s[[1]], "data.frame"),
-   inherits(rtn_pccc_v2.1s[[2]], "list"),
-   inherits(rtn_pccc_v3.1, "data.frame"),
-   inherits(rtn_pccc_v3.1s[[1]], "data.frame"),
-   inherits(rtn_pccc_v3.1s[[2]], "list"),
-   identical(nrow(rtn_charlson), 0L),
-   identical(nrow(rtn_elixhauser), 0L),
-   identical(nrow(rtn_pccc_v2.1), 0L),
-   identical(nrow(rtn_pccc_v2.1s[[1]]), 0L),
-   identical(unname(sapply(rtn_pccc_v2.1s[[2]], nrow)), rep_len(0L, 11L)),
-   identical(nrow(rtn_pccc_v3.1), 0L),
-   identical(nrow(rtn_pccc_v3.1s[[1]]), 0L),
-   identical(unname(sapply(rtn_pccc_v3.1s[[2]], nrow)), rep_len(0L, 11L))
-)
+  if (!startsWith(m, "pccc") & inherits(rtns[[m]], "medicalcoder_comorbidities_with_subconditions")) {
+    stop(sprintf("rtns[[%s]] incorrectly inherits `medicalcoder_comorbidities_with_subconditions`", m))
+  } else {
+    if (endsWith(m, "s") & !inherits(rtns[[m]], "medicalcoder_comorbidities_with_subconditions")) {
+      stop(sprintf("rtns[[%s]] does not inherit `medicalcoder_comorbidities_with_subconditions`", m))
+    } else if (!endsWith(m, "s") & inherits(rtns[[m]], "medicalcoder_comorbidities_with_subconditions")) {
+      stop(sprintf("rtns[[%s]] incorrectly inherits `medicalcoder_comorbidities_with_subconditions`", m))
+    }
+  }
+}
 
-expected_charlson_names <-
-  c("aidshiv", "mal", "cebvd", "copd", "chf", "dem", "dmc", "dm", "hp", "mld",
-    "msld", "mst", "mi", "pud", "pvd", "rnd", "rhd", "num_cmrb", "cmrb_flag",
-    "cci", "age_score")
+# verify that all the non subcondition rtns are data.frames
+for (m in names(rtns)) {
+  if (!startsWith(m, "pccc")) {
+    if (!inherits(rtns[[m]], "data.frame")) {
+      stop(sprintf("rtns[[%s]] is not a data.frame", m))
+    }
+    if (nrow(rtns[[m]]) != 0L) {
+      stop(sprintf("nrow(rtns[[%s]]) != 0", m))
+    }
+  } else {
+    if (endsWith(m, "s")) {
 
-# TODO: THIS NEEDS TO BE UPDATED AND TEST UNCOMMENTED OUT
-expected_elixhauser_names <-
-  c("AIDS", "ALCOHOL", "ANEMDEF", "AUTOIMMUNE", "BLDLOSS", "CANCER_LEUK",
-    "CANCER_LYMPH", "CANCER_METS", "CANCER_NSITU", "CANCER_SOLID", "CBVD",
-    "COAG", "DEMENTIA", "DEPRESS", "DIAB_CX", "DIAB_UNCX", "DRUG_ABUSE", "HF",
-    "HTN_CX", "HTN_UNCX", "LIVER_MLD", "LIVER_SEV", "LUNG_CHRONIC",
-    "NEURO_MOVT", "NEURO_OTH", "NEURO_SEIZ", "OBESE", "PARALYSIS", "PERIVASC",
-    "PSYCHOSES", "PULMCIRC", "RENLFL_MOD", "RENLFL_SEV", "THYROID_HYPO",
-    "THYROID_OTH", "ULCER_PEPTIC", "VALVE", "WGHTLOSS", "num_cmrb", "cmrb_flag",
-    "mortality_index", "readmission_index")
+      if (!inherits(rtns[[m]], "list")) {
+        stop(sprintf("rtns[[%s]] is not a list", m))
+      }
 
-expected_pccc_v2.1_names <-
-  c("congeni_genetic", "cvd", "gi", "hemato_immu", "malignancy",
-    "metabolic", "misc", "neonatal", "neuromusc", "renal", "respiratory",
-    "any_tech_dep", "any_transplant", "num_cmrb", "cmrb_flag")
+      if (length(rtns[[m]]) != 2L) {
+        stop(sprintf("length(rtns[[%s]]) != 2L", m))
+      }
 
-expected_pccc_v3.1_names <-
-  c("congeni_genetic_dxpr_only", "congeni_genetic_tech_only",
-    "congeni_genetic_dxpr_and_tech", "congeni_genetic_dxpr_or_tech",
-    "cvd_dxpr_only", "cvd_tech_only", "cvd_dxpr_and_tech", "cvd_dxpr_or_tech",
-    "gi_dxpr_only", "gi_tech_only", "gi_dxpr_and_tech", "gi_dxpr_or_tech",
-    "hemato_immu_dxpr_only", "hemato_immu_tech_only",
-    "hemato_immu_dxpr_and_tech", "hemato_immu_dxpr_or_tech",
-    "malignancy_dxpr_only", "malignancy_tech_only", "malignancy_dxpr_and_tech",
-    "malignancy_dxpr_or_tech", "metabolic_dxpr_only", "metabolic_tech_only",
-    "metabolic_dxpr_and_tech", "metabolic_dxpr_or_tech", "misc_dxpr_only",
-    "misc_tech_only", "misc_dxpr_and_tech", "misc_dxpr_or_tech",
-    "neonatal_dxpr_only", "neonatal_tech_only", "neonatal_dxpr_and_tech",
-    "neonatal_dxpr_or_tech", "neuromusc_dxpr_only", "neuromusc_tech_only",
-    "neuromusc_dxpr_and_tech", "neuromusc_dxpr_or_tech", "renal_dxpr_only",
-    "renal_tech_only", "renal_dxpr_and_tech", "renal_dxpr_or_tech",
-    "respiratory_dxpr_only", "respiratory_tech_only",
-    "respiratory_dxpr_and_tech", "respiratory_dxpr_or_tech", "any_tech_dep",
-    "any_transplant", "num_cmrb", "cmrb_flag")
+      if (!inherits(rtns[[m]][['conditions']], "data.frame")) {
+        stop(sprintf("rtns[[%s]][['conditions']] is not a data.frame", m))
+      }
 
-expected_pccc_subcondition_names <-
-  list(
-    congeni_genetic = c("bone_and_joint_anomalies", "chromosomal_anomalies", "diaphragm_and_abdominal_wall_anomalies", "other_congenital_anomalies"),
-    cvd = c("cardiomyopathies", "conduction_disorder", "device_and_technology_use", "dysrhythmias", "endocardium_diseases", "heart_and_great_vessel_malformations", "other", "transplantation"),
-    gi = c("chronic_liver_disease_and_cirrhosis", "congenital_anomalies", "device_and_technology_use", "inflammatory_bowel_disease", "other", "transplantation"),
-    hemato_immu = c("acquired_immunodeficiency", "aplastic_anemias", "coagulation_hemorrhagic", "diffuse_diseases_of_connective_tissue", "hemophagocytic_syndromes", "hereditary_anemias", "hereditary_immunodeficiency", "leukopenia", "other", "polyarteritis_nodosa_and_related_conditions", "sarcoidosis", "transplantation"),
-    malignancy = c("neoplasms", "transplantation"),
-    metabolic = c("amino_acid_metabolism", "carbohydrate_metabolism", "device_and_technology_use", "endocrine_disorders", "lipid_metabolism", "other_metabolic_disorders", "storage_disorders"),
-    misc = c("device_and_technology_use", "transplantation"),
-    neonatal = c("birth_asphyxia", "cerebral_hemorrhage_at_birth", "extreme_immaturity", "fetal_malnutrition", "hypoxic_ischemic_encephalopathy", "other", "respiratory_diseases", "spinal_cord_injury_at_birth"),
-    neuromusc = c("brain_and_spinal_cord_malformations", "cns_degeneration_and_diseases", "device_and_technology_use", "epilepsy", "infantile_cerebral_palsy", "intellectual_disabilities", "movement_diseases", "muscular_dystrophies_and_myopathies", "occlusion_of_cerebral_arteries", "other_neurologic_disorders"),
-    renal = c("chronic_bladder_diseases", "chronic_renal_failure", "congenital_anomalies", "device_and_technology_use", "other", "transplantation"),
-    respiratory = c("chronic_respiratory_diseases", "cystic_fibrosis", "device_and_technology_use", "other", "respiratory_malformations", "transplantation")
-  )
+      if (nrow(rtns[[m]][['conditions']]) != 0L) {
+        stop(sprintf("nrow(rtns[[%s]][['conditions']]) != 0", m))
+      }
+
+      if (!inherits(rtns[[m]][['subconditions']], "list")) {
+        stop(sprintf("rtns[[%s]][['subconditions']] is not a list", m))
+      }
+
+      if (length(rtns[[m]][['subconditions']]) != 11L) {
+        stop(sprintf("length(rtns[[%s]][['subconditions']]) != 11L", m))
+      }
+
+      if (!all(sapply(rtns[[m]][['subconditions']], nrow) == 0L)) {
+        stop(sprintf("!all(sapply(rtns[[%s]][['subconditions']], nrow) == 0L)", m))
+      }
+
+    } else {
+      if (!inherits(rtns[[m]], "data.frame")) {
+        stop(sprintf("rtns[[%s]] is not a data.frame", m))
+      }
+      if (nrow(rtns[[m]]) != 0L) {
+        stop(sprintf("nrow(rtns[[%s]]) != 0", m))
+      }
+    }
+  }
+}
+
+stopifnot(identical(lapply(rtns, names), lapply(rtns1, names)))
 
 stopifnot(
-  identical(names(rtn_charlson), expected_charlson_names),
-  #identical(names(rtn_elixhauser), expected_elixhauser_names),
-  identical(names(rtn_pccc_v2.1), expected_pccc_v2.1_names),
-  identical(names(rtn_pccc_v2.1s[[1]]), expected_pccc_v2.1_names),
-  identical(lapply(rtn_pccc_v2.1s[[2]], names), expected_pccc_subcondition_names),
-  identical(names(rtn_pccc_v3.1), expected_pccc_v3.1_names),
-  identical(names(rtn_pccc_v3.1s[[1]]), expected_pccc_v3.1_names),
-  identical(lapply(rtn_pccc_v3.1s[[2]], names), expected_pccc_subcondition_names)
+  identical(
+    lapply(rtns[grep("pccc_v.+s$", names(rtns))], lapply, names),
+    lapply(rtns1[grep("pccc_v.+s$", names(rtns))], lapply, names)
+  )
 )
 
 ################################################################################
