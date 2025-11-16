@@ -134,7 +134,7 @@
   }
 
   # CBVD_NPOA is unique in that it requires that the condition is not POA
-  XNPOA <- cbind(XNPOA, "CBVD_NPOA" = 0L)
+  XNPOA <- cbind(XNPOA, "CBVD_NPOA" = rep(0L, nrow(XNPOA)))
   XNPOA[XNPOA[, "CBVD_POA"] == 1L, "CBVD_NPOA"] <- 1L
 
   ##############################################################################
@@ -151,7 +151,7 @@
   idx <-
     (X[, "CBVD_POA"]) |
     (!X[, "CBVD_POA"] & X[, "CBVD_SQLA"] == 1L & XNPOA[, "CBVD_NPOA"] == 0L)
-  X <- cbind(X, "CBVD" = 0L)
+  X <- cbind(X, "CBVD" = rep(0L, nrow(X)))
   X[idx, "CBVD"] <- 1L
 
   storage.mode(X) <- "integer"
