@@ -1,8 +1,10 @@
 # medicalcoder 0.6.0.9000
 
 ## Bug Fixes
-* Elixhauser AHRQ 2022 - 2025 exclusions for less severer conditions when more
-  severer conditions are flagged
+* Elixhauser AHRQ 2022 - 2025
+
+  * exclusions for less severer conditions when more severer conditions are flagged
+  * Improved POA, NPOA, and EXEMPTPOA.  This came about from #20.
 
 ## New Features
 
@@ -18,6 +20,9 @@
 
   The tests were extended to consider the cases of passing in a `data.table` or
   `tibble` to comorbidities when the associated namespaces are not available.
+
+* Added `elixhauser_ahrq_icd10` to use all the ICD codes ever defined from 2022
+  to 2025.  This will capture any furture years as well.
 
 ## Other Changes
 
