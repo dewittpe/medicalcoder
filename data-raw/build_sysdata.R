@@ -52,6 +52,9 @@
 ..mdcr_internal_elixhauser_poa..          <- readRDS("./elixhauser/elixhauser_poa.rds")
 ..mdcr_internal_elixhauser_codes..        <- readRDS("./elixhauser/elixhauser_codes.rds")
 
+
+# All internl data sets need to have the ..mdcr_internal_ prefix and .. suffix.
+# This is expected in tests and in use within the package.
 usethis::use_data(
     ..mdcr_internal_pccc_codes..
   , ..mdcr_internal_pccc_conditions..
