@@ -113,6 +113,25 @@ for (obj in ls(envir = DFS, all.names = TRUE)) {
   stopifnot(all.equal(xDF, xDT, check.attributes = FALSE))
 }
 
+# check that the print method returns the input object
+for (obj in ls(envir = DFS, all.names = TRUE)) {
+  x <- print(DFS[[obj]])
+  z <- identical(x, DFS[[obj]])
+  if (!z) {
+    stop(sprintf("print(DFS[['%s']]) does not return identical %s", obj, obj))
+  }
+  x <- print(TBLS[[obj]])
+  z <- identical(x, TBLS[[obj]])
+  if (!z) {
+    stop(sprintf("print(TBLS[['%s']]) does not return identical %s", obj, obj))
+  }
+  x <- print(DTS[[obj]])
+  z <- identical(x, DTS[[obj]])
+  if (!z) {
+    stop(sprintf("print(DTS[['%s']]) does not return identical %s", obj, obj))
+  }
+}
+
 ################################################################################
 # Now, if the data.table namespace is available, then test that the elements in
 # DTS are data.tables and after setting to data.frames, then the objects are
@@ -178,6 +197,8 @@ for (obj in ls(envir = DFS, all.names = TRUE)) {
   stopifnot(identical(class(xTBL), class(xDF)))
   stopifnot(identical(xTBL, xDF))
 }
+
+
 
 ################################################################################
 #                                 End of File                                  #
