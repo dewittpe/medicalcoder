@@ -121,21 +121,11 @@ stopifnot(
 expected <- rep(FALSE, 10)
 expected[7] <- TRUE
 stopifnot(
-  identical(getFromNamespace(x = "mdcr_duplicated", ns = "medicalcoder")(DF, by = "D"), expected)
-  ,
-  identical(getFromNamespace(x = "mdcr_duplicated", ns = "medicalcoder")(TBL, by = "D"), expected)
-  ,
-  identical(
-    getFromNamespace(x = "mdcr_duplicated", ns = "medicalcoder")(DT, by = "D")
-    #duplicated(DT, by = "D")
-    #medicalcoder:::mdcr_duplicated.data.table(DT)
-    , expected)
+  identical(getFromNamespace(x = "mdcr_duplicated", ns = "medicalcoder")(DF, by = "D"), expected),
+  identical(getFromNamespace(x = "mdcr_duplicated", ns = "medicalcoder")(TBL, by = "D"), expected),
+  identical(getFromNamespace(x = "mdcr_duplicated", ns = "medicalcoder")(DT, by = "D"), expected)
 )
 
-x <- DT
-base::duplicated(x, by = "D")
-getFromNamespace(x = 'duplicated.data.table', ns = "data.table")(x, by = "D")
-medicalcoder:::mdcr_duplicated(DT, by = "D")
 
 ################################################################################
 #                                 End of File                                  #
