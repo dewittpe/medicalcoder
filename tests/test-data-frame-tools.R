@@ -126,6 +126,14 @@ stopifnot(
   identical(getFromNamespace(x = "mdcr_duplicated", ns = "medicalcoder")(DT, by = "D"), expected)
 )
 
+# check fromLast
+expected[6:7] <- !expected[6:7]
+stopifnot(
+  identical(getFromNamespace(x = "mdcr_duplicated", ns = "medicalcoder")(DF, by = "D", fromLast = TRUE), expected),
+  identical(getFromNamespace(x = "mdcr_duplicated", ns = "medicalcoder")(TBL, by = "D", fromLast = TRUE), expected),
+  identical(getFromNamespace(x = "mdcr_duplicated", ns = "medicalcoder")(DT, by = "D", fromLast = TRUE), expected)
+)
+
 
 ################################################################################
 #                                 End of File                                  #
