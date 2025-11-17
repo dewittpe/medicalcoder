@@ -6,6 +6,8 @@
   * exclusions for less severer conditions when more severer conditions are flagged
   * Improved POA, NPOA, and EXEMPTPOA.  This came about from #20.
 
+* Make internal data.frame tool `mdcr_duplicated` data.table aware.
+
 ## New Features
 
 * `comorbidities()` will return a `tibble` with the input data is a `tbl_df`
