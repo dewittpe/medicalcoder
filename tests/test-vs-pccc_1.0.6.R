@@ -1,3 +1,4 @@
+library(medicalcoder)
 source('utilities.R')
 ################################################################################
 # objective - the pccc_v2.0 in medicalcoder should reproduce the results from
@@ -7,7 +8,6 @@ source('utilities.R')
 # pccc package only mapped to conditions and did not map subconditions.  this
 # creates a problem with a few codes that were not documented but in the
 # software.  Those will be noted in this script.
-library(medicalcoder)
 
 # get the ICD codes from the medicalcoder package and add a code_id column
 icd_codes <- get_icd_codes()
