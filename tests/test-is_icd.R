@@ -45,7 +45,7 @@ stopifnot(
   "warning for CDC and ICD 9"   = inherits(tryCatchWarning(is_icd(x, icdv = 9, src = "cdc")), "warning"),
   "all FALSE for CDC and ICD 9" = identical(suppressWarnings(is_icd(x, icdv = 9, src = "cdc")), y),
   "warning for WHO, ICD-10, pr" = inherits(tryCatchWarning(is_icd(x, icdv = 10, src = "who", dx = 0)), "warning"),
-  "all FLASE for WHO, ICD-10, pr" = identical(suppressWarnings(is_icd(x, icdv = 10, src = "who", dx = 0)), y)
+  "all FALSE for WHO, ICD-10, pr" = identical(suppressWarnings(is_icd(x, icdv = 10, src = "who", dx = 0)), y)
 )
 
 

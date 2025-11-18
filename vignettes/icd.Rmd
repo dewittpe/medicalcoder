@@ -20,7 +20,7 @@ with International Classification of Diseases (ICD) codes.
 
 1. `get_icd_codes()`: returns a look up table of ICD codes as a `data.frame`.
 2. `lookup_icd_codes()`: returns details on specific ICD codes.
-3. `is_icd()`: returns `TRUE` or `FLASE` for a vector of codes while considering
+3. `is_icd()`: returns `TRUE` or `FALSE` for a vector of codes while considering
    ICD version, type, and billable status.
 4. `icd_compact_to_full()`: insert a decimal point into a string to be
    consistent with ICD-9 diagnostic, ICD-9 procedure, or ICD-10 diagnostic

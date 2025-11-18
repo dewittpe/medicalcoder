@@ -36,7 +36,7 @@ packageVersion("medicalcoder")
 The `medicalcoder` package implements several variants of the Charlson
 comorbidities algorithm.
 
-* `charslon_deyo1992`: Deyo's original set of codes [@deyo1992adapting;@quan2005]
+* `charlson_deyo1992`: Deyo's original set of codes [@deyo1992adapting;@quan2005]
 * `charlson_quan2005` and `charlson_quan2011`: Codes and index scoring [@quan2005;@quan2011]
 * `charlson_cdmf2019`: [@glasheen2019]
 

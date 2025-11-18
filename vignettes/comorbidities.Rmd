@@ -45,7 +45,7 @@ implemented in the `medicalcoder` package:
        ii. `pccc_v3.1` modifies the set of ICD codes to be more consistent with documentation.
 
 2. Charlson
-   a. `charslon_deyo1992`: Deyo's original set of codes [@deyo1992adapting;@quan2005]
+   a. `charlson_deyo1992`: Deyo's original set of codes [@deyo1992adapting;@quan2005]
    b. `charlson_quan2005` and `charlson_quan2011`: Codes and index scoring [@quan2005;@quan2011]
    c. `charlson_cdmf2019`: [@glasheen2019]
 
