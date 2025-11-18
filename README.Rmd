@@ -92,24 +92,6 @@ There are several tools for working with ICD codes and comorbidity algorithms.
 - Longitudinal patient-level comorbidity flagging using present-on-admission indicators.
 - Fully self-contained package (no external dependencies).
 
-## Benchmarking
-
-The major factors impacting the expected computation time for applying a
-comorbidity algorithm to a data set are:
-
-1. Data size: number of subjects/encounters.
-2. Data storage class: `medicalcoder` has been built such that no imports of
-   other namespaces is required.  That said, when a `data.table` is passed to
-   `comorbidities()` and the `data.table` namespace is available, then S3
-   dispatch for `merge` is used, along with some other methods, to reduce memory
-   use and reduce computation time.
-3. `flag.method`: "current" will take less time than the "cumulative" method.
-
-Details on the benchmarking method, summary graphics, and tables,  can be found
-on the `medicalcoder` GitHub
-[benchmarking](https://github.com/dewittpe/medicalcoder/tree/main/benchmarking)
-directory.
-
 ## Install
 
 ### CRAN
@@ -144,7 +126,23 @@ R CMD INSTALL medicalcoder_X.Y.Z.tar.gz
 
 ## Tools:
 
+### Example Data
+
+Input data for `comorbidities()` is expected to be in a 'long' format.  Each row
+is one code with additional columns for patient and/or encounter id.
+
+```{r}
+data(mdcr, mdcr_longitudinal, package = "medicalcoder")
+str(mdcr)
+head(mdcr)
+str(mdcr_longitudinal)
+head(mdcr_longitudinal)
+```
+
 ### Comorbidity Algorithms
+
+There are three comorbidity methods, each with several variants, available in
+`medicalcoder`.
 
 * Pediatric Complex Chronic Conditions (PCCC)
 
@@ -162,11 +160,51 @@ R CMD INSTALL medicalcoder_X.Y.Z.tar.gz
   * Version 3.1
     - Updated code base with same assessment algorithm as version 3.0.
 
+  * All variants can flag conditions and subconditions.
+
+```{r}
+# PCCC v3.1 example
+cmrbs <-
+  comorbidities(
+    data = mdcr,
+    id.vars = "patid",
+    icd.codes = "code",
+    dx.var = "dx",
+    poa = 1,
+    method = "pccc_v3.1"
+  )
+str(cmrbs, max.level = 0)
+```
+```{r echo = FALSE, results = "asis"}
+knitr::kable(summary(cmrbs))
+```
+
 * Charlson Comorbidities
   * [Deyo, Cherkin, and Ciol (1992)](https://doi.org/10.1016/0895-4356(92)90133-8)
   * [Quan et al. (2005)](https://doi.org/10.1097/01.mlr.0000182534.19832.83)
   * [Quan et al. (2011)](https://doi.org/10.1093/aje/kwq433)
   * [Glasheen (2019)](https://pubmed.ncbi.nlm.nih.gov/31428236/)
+
+```{r}
+# Charlson example
+cmrbs <-
+  comorbidities(
+    data = mdcr,
+    id.vars = "patid",
+    icd.codes = "code",
+    dx.var = "dx",
+    poa = 1,
+    primarydx = 0L,
+    method = "charlson_quan2005"
+  )
+str(cmrbs, max.level = 0)
+```
+```{r echo = TRUE, results = "hide"}
+summary(cmrbs)
+```
+```{r echo = FALSE, results = "asis"}
+knitr::kable(summary(cmrbs))
+```
 
 * Elixhauser Comorbidities
   * [Elixhauser et al. (1998)](https://doi.org/10.1097/00005650-199801000-00004)
@@ -175,28 +213,33 @@ R CMD INSTALL medicalcoder_X.Y.Z.tar.gz
     * [For ICD-9 codes](https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp)
     * [For ICD-10 codes](https://hcup-us.ahrq.gov/toolssoftware/comorbidityicd10/comorbidity_icd10.jsp)
 
-All of the methods are available from the same function call `comorbidities()`.
-There is support for age scores in Charlson, present on admission flags for all
-methods, and support for longitudinal data.
+```{r}
+# Elixhauser example
+cmrbs <-
+  comorbidities(
+    data = mdcr,
+    id.vars = "patid",
+    icd.codes = "code",
+    dx.var = "dx",
+    poa = 1,
+    primarydx = 0L,
+    method = "elixhauser_ahrq_icd10"
+  )
+str(cmrbs, max.level = 0)
+```
+```{r echo = TRUE, results = "hide"}
+summary(cmrbs)
+```
+```{r echo = FALSE, results = "asis"}
+knitr::kable(summary(cmrbs))
+```
 
 See more examples in the vignettes.
 ```{r, eval = FALSE}
 vignette(topic = "comorbidities", package = "medicalcoder")
-vignette(topic = "pccc", package = "medicalcoder")
-vignette(topic = "charlson", package = "medicalcoder")
-vignette(topic = "elixhauser", package = "medicalcoder")
-```
-
-### Example Data
-
-Input data for `comorbidities()` is expected to be in a 'long' format.  Each row
-is one code with additional columns for patient and/or encounter id.
-
-```{r}
-data(mdcr, mdcr_longitudinal, package = "medicalcoder")
-str(mdcr)
-head(mdcr)
-head(mdcr_longitudinal)
+vignette(topic = "pccc",          package = "medicalcoder")
+vignette(topic = "charlson",      package = "medicalcoder")
+vignette(topic = "elixhauser",    package = "medicalcoder")
 ```
 
 ### ICD
@@ -269,3 +312,23 @@ More details and examples are in the vignette:
 ```{r, eval = FALSE}
 vignette(topic = "icd", package = "medicalcoder")
 ```
+
+## Benchmarking
+
+The major factors impacting the expected computation time for applying a
+comorbidity algorithm to a data set are:
+
+1. Data size: number of subjects/encounters.
+2. Data storage class: `medicalcoder` has been built such that no imports of
+   other namespaces is required.  That said, when a `data.table` is passed to
+   `comorbidities()` and the `data.table` namespace is available, then S3
+   dispatch for `merge` is used, along with some other methods, to reduce memory
+   use and reduce computation time.
+3. `flag.method`: "current" will take less time than the "cumulative" method.
+
+Details on the benchmarking method, summary graphics, and tables,  can be found
+on the `medicalcoder` GitHub
+[benchmarking](https://github.com/dewittpe/medicalcoder/tree/main/benchmarking)
+directory.
+
+## Testing
