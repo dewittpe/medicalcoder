@@ -114,7 +114,8 @@ clean:
 	$(MAKE) -C data-raw clean
 	$(RM) -r $(PKG_NAME).Rcheck
 	$(RM) .*.Rout *.Rout
-	$(RM) -r lib/*
-	$(RM) -r doc/*
+	$(RM) -r lib
+	$(RM) -r doc
+	$(RM) -r docs
 	$(RM) vignettes/*.html
 	$(RM) *.html
