@@ -5,9 +5,11 @@
 #'   diagnostic flags, or age.
 #'
 #' @param icd.codes Character scalar naming the column in `data` that contains
-#'   ICD codes.  The codes can be full (with applicable dots, e.g., C84.2),
-#'   compact (dots omitted, e.g., C842), or a mix of both full and compact
-#'   codes.
+#'   ICD codes (character strings). Codes may be provided in full form (with
+#'   decimal points, e.g., C84.2), compact form (dots omitted, e.g., C842), or
+#'   any mix of the two. Matching against lookup tables is governed by
+#'   `icdv.var`/`icdv`, `dx.var`/`dx`, and the `full.codes` / `compact.codes`
+#'   flags.
 #'
 #' @param id.vars Optional character vector of column names. When
 #'   missing, the entire input `data` is treated as a single encounter from a

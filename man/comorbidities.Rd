@@ -32,9 +32,11 @@ diagnostic/procedure status, present-on-admission flags, primary
 diagnostic flags, or age.}
 
 \item{icd.codes}{Character scalar naming the column in \code{data} that contains
-ICD codes.  The codes can be full (with applicable dots, e.g., C84.2),
-compact (dots omitted, e.g., C842), or a mix of both full and compact
-codes.}
+ICD codes (character strings). Codes may be provided in full form (with
+decimal points, e.g., C84.2), compact form (dots omitted, e.g., C842), or
+any mix of the two. Matching against lookup tables is governed by
+\code{icdv.var}/\code{icdv}, \code{dx.var}/\code{dx}, and the \code{full.codes} / \code{compact.codes}
+flags.}
 
 \item{method}{Character string indicating the comorbidity algorithm to
 apply to \code{data}.}
