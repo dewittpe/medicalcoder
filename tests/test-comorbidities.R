@@ -12,7 +12,7 @@ rtn <- # length(id.vars) = 0
     comorbidities(
       data = mdcr,
       icd.codes = "code",
-      poa = 1,
+      poa = 1L,
       flag.method = 'cumulative',
       method = "pccc_v3.1"
     )
@@ -25,7 +25,7 @@ rtn <- # length(id.vars) = 1
       data = mdcr,
       id.vars = "patid",
       icd.codes = "code",
-      poa = 1,
+      poa = 1L,
       flag.method = 'cumulative',
       method = "pccc_v3.1"
     )
@@ -72,8 +72,6 @@ x <-
   )
 stopifnot(inherits(x, "error"))
 
-# this calls be "valid" as primarydx.var is ignored when method is not
-# elixhauser_*
 x <-
   tryCatchError(
     comorbidities(
@@ -237,16 +235,42 @@ stopifnot(
 # when a primarydx.var was passed to comorbidities when not needed an error was
 # thrown.  https://github.com/dewittpe/medicalcoder/issues/16
 #
-# This has been corrected to be a warning - ignore primarydx.var unless
-# elixhauser_ahrq2022 or newer
-comorbidities(
-  data = mdcr,
-  id.var = "patid",
-  #primarydx.var = "full_code",
-  method = "charlson_quan2005",
-  icd.codes = "code",
-  poa = 1
-)
+# This has been corrected to be a warning
+x <-
+  tryCatchWarning(
+    comorbidities(
+      data = mdcr,
+      id.var = "patid",
+      method = "charlson_quan2005",
+      icd.codes = "code",
+      poa = 1
+    )
+  )
+stopifnot("warning for missing primarydx" = inherits(x, "warning"))
+
+################################################################################
+# Subconditions are only applicable to PCCC, so a warning should be given when
+# subconditions = TRUE for any other method
+args <- list(
+  data = mdcr[1:10, ],
+  icd.codes = "icd_code",
+  icdv.var = "icdv",
+  dx.var = "dx",
+  poa = 1,
+  subconditions = TRUE
+  )
+ms <- medicalcoder:::comorbidities_methods()
+ms <- ms[!startsWith(ms, "pccc")]
+for (m in ms) {
+  x <- tryCatchWarning(do.call(comorbidities, c(args, list(method = m))))
+  z <- inherits(x, "warning")
+  if (!z) {
+    stop(sprintf("no warning given for subconditions = TRUE with method = '%s'", m))
+  }
+  if (x$message != "subconditions only implemented for PCCC") {
+    stop(sprintf("unexpected warning message for subcondtions = TRUE with method = '%s'", m))
+  }
+}
 
 ################################################################################
 #                                 End of File                                  #

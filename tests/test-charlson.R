@@ -17,17 +17,17 @@ stopifnot(
 # add an age variable
 mdcr$age <- as.integer(substr(as.character(mdcr$patid), 1, 2))
 
-cdmf         <- comorbidities(data = mdcr, id.vars = "patid", icdv.var = "icdv", icd.codes = "code", dx.var = "dx", method = "charlson_cdmf2019", poa = 1)
-cdmf_withage <- comorbidities(data = mdcr, id.vars = "patid", icdv.var = "icdv", icd.codes = "code", dx.var = "dx", method = "charlson_cdmf2019", poa = 1, age.var = "age")
+cdmf         <- comorbidities(data = mdcr, id.vars = "patid", icdv.var = "icdv", icd.codes = "code", dx.var = "dx", method = "charlson_cdmf2019", poa = 1, primarydx = 0L)
+cdmf_withage <- comorbidities(data = mdcr, id.vars = "patid", icdv.var = "icdv", icd.codes = "code", dx.var = "dx", method = "charlson_cdmf2019", poa = 1, age.var = "age", primarydx = 0L)
 
-deyo         <- comorbidities(data = mdcr, id.vars = "patid", icdv.var = "icdv", icd.codes = "code", dx.var = "dx", method = "charlson_deyo1992", poa = 1)
-deyo_withage <- comorbidities(data = mdcr, id.vars = "patid", icdv.var = "icdv", icd.codes = "code", dx.var = "dx", method = "charlson_deyo1992", poa = 1, age.var = "age")
+deyo         <- comorbidities(data = mdcr, id.vars = "patid", icdv.var = "icdv", icd.codes = "code", dx.var = "dx", method = "charlson_deyo1992", poa = 1, primarydx = 0L)
+deyo_withage <- comorbidities(data = mdcr, id.vars = "patid", icdv.var = "icdv", icd.codes = "code", dx.var = "dx", method = "charlson_deyo1992", poa = 1, age.var = "age", primarydx = 0L)
 
-quan2005         <- comorbidities(data = mdcr, id.vars = "patid", icdv.var = "icdv", icd.codes = "code", dx.var = "dx", method = "charlson_quan2005", poa = 1)
-quan2005_withage <- comorbidities(data = mdcr, id.vars = "patid", icdv.var = "icdv", icd.codes = "code", dx.var = "dx", method = "charlson_quan2005", poa = 1, age.var = "age")
+quan2005         <- comorbidities(data = mdcr, id.vars = "patid", icdv.var = "icdv", icd.codes = "code", dx.var = "dx", method = "charlson_quan2005", poa = 1, primarydx = 0L)
+quan2005_withage <- comorbidities(data = mdcr, id.vars = "patid", icdv.var = "icdv", icd.codes = "code", dx.var = "dx", method = "charlson_quan2005", poa = 1, age.var = "age", primarydx = 0L)
 
-quan2011         <- comorbidities(data = mdcr, id.vars = "patid", icdv.var = "icdv", icd.codes = "code", dx.var = "dx", method = "charlson_quan2011", poa = 1)
-quan2011_withage <- comorbidities(data = mdcr, id.vars = "patid", icdv.var = "icdv", icd.codes = "code", dx.var = "dx", method = "charlson_quan2011", poa = 1, age.var = "age")
+quan2011         <- comorbidities(data = mdcr, id.vars = "patid", icdv.var = "icdv", icd.codes = "code", dx.var = "dx", method = "charlson_quan2011", poa = 1, primarydx = 0L)
+quan2011_withage <- comorbidities(data = mdcr, id.vars = "patid", icdv.var = "icdv", icd.codes = "code", dx.var = "dx", method = "charlson_quan2011", poa = 1, age.var = "age", primarydx = 0L)
 
 # verify that a row is returned for each and every id.var
 npatid <- length(unique(mdcr[["patid"]]))
@@ -120,14 +120,17 @@ stopifnot(
 )
 
 cmdf_mdcr <-
-  comorbidities(data = mdcr,
-                icd.codes = "code",
-                id.vars = "patid",
-                icdv.var = "icdv",
-                dx.var = "dx",
-                method = "charlson_cdmf2019",
-                flag.method = "current",
-                poa = 1)
+  comorbidities(
+    data = mdcr,
+    icd.codes = "code",
+    id.vars = "patid",
+    icdv.var = "icdv",
+    dx.var = "dx",
+    method = "charlson_cdmf2019",
+    flag.method = "current",
+    poa = 1L,
+    primarydx = 0L
+  )
 
 stopifnot(
   identical(
@@ -173,7 +176,8 @@ cargs <-
     data = data.frame(patid = 0, icdv = 9, code = "5829", dx = 0L, age = 42),
     id.vars = "patid",
     icd.codes = "code",
-    poa = 1,
+    poa = 1L,
+    primarydx = 0L,
     method = "charlson_quan2005"
   )
 
@@ -214,7 +218,8 @@ cargs <-
     data = mdcr2,
     id.vars = "patid",
     icd.codes = "code",
-    poa = 1,
+    poa = 1L,
+    primarydx = 0L,
     method = "charlson_quan2005"
   )
 

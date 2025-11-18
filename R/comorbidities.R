@@ -269,7 +269,7 @@ comorbidities.data.frame <- function(data,
       )
     }
   } else if (startsWith(method, "pccc") & (!is.null(primarydx.var) | !is.null(primarydx))) {
-    warning("primarydx.var and primarydx are ignored when method = '%s'", method)
+    warning(sprintf("primarydx.var and primarydx are ignored when method = '%s'", method), call. = FALSE)
     primarydx.var <- primarydx <- NULL
   }
 
@@ -285,7 +285,7 @@ comorbidities.data.frame <- function(data,
 
   assert_scalar_logical(subconditions)
   if (subconditions & !startsWith(method, "pccc")) {
-    warning("subconditions only implemented for PCCC")
+    warning("subconditions only implemented for PCCC", call. = FALSE)
     subconditions <- FALSE
   }
 
@@ -445,7 +445,7 @@ comorbidities.data.frame <- function(data,
     on_comp <- mdcr_set(on_comp, j = poa.var, value = rep(poa, nrow(on_comp)))
   } else {
     if (!is.null(poa)) {
-      warning("'poa.var' and 'poa' were both specified; ignoring 'poa'")
+      warning("'poa.var' and 'poa' were both specified; ignoring 'poa'", call. = FALSE)
     }
     is_a_column(poa.var, nms)
   }
@@ -469,7 +469,7 @@ comorbidities.data.frame <- function(data,
 
     } else {
       if (!is.null(primarydx)) {
-        warning("'primarydx.var' and 'primarydx' were both specified; ignoring 'primarydx'")
+        warning("'primarydx.var' and 'primarydx' were both specified; ignoring 'primarydx'", call. = FALSE)
       }
       is_a_column(primarydx.var, nms)
     }

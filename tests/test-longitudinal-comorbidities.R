@@ -77,22 +77,21 @@ args <-
        data = record,
        icd.codes = "code",
        id.vars = c("patid", "encid"),
-       icdv = 10,
-       dx = 1,
+       icdv = 10L,
+       dx = 1L,
        full.codes = TRUE,
-       compact.codes = FALSE,
-       primarydx = 0
+       compact.codes = FALSE
   )
 
 CMRBS <-
   list(
-       charlson_current_0 = do.call(comorbidities, c(args, list(method = "charlson_quan2005", flag.method = "current", poa = 0))),
-       charlson_current_1 = do.call(comorbidities, c(args, list(method = "charlson_quan2005", flag.method = "current", poa = 1))),
-       charlson_current_v = do.call(comorbidities, c(args, list(method = "charlson_quan2005", flag.method = "current", poa.var = "poa"))),
+       charlson_current_0 = do.call(comorbidities, c(args, list(method = "charlson_quan2005", flag.method = "current", primarydx = 0L, poa = 0))),
+       charlson_current_1 = do.call(comorbidities, c(args, list(method = "charlson_quan2005", flag.method = "current", primarydx = 0L, poa = 1))),
+       charlson_current_v = do.call(comorbidities, c(args, list(method = "charlson_quan2005", flag.method = "current", primarydx = 0L, poa.var = "poa"))),
 
-       charlson_cumulative_0 = do.call(comorbidities, c(args, list(method = "charlson_quan2005", flag.method = "cumulative", poa = 0))),
-       charlson_cumulative_1 = do.call(comorbidities, c(args, list(method = "charlson_quan2005", flag.method = "cumulative", poa = 1))),
-       charlson_cumulative_v = do.call(comorbidities, c(args, list(method = "charlson_quan2005", flag.method = "cumulative", poa.var = "poa"))),
+       charlson_cumulative_0 = do.call(comorbidities, c(args, list(method = "charlson_quan2005", flag.method = "cumulative", primarydx = 0L, poa = 0))),
+       charlson_cumulative_1 = do.call(comorbidities, c(args, list(method = "charlson_quan2005", flag.method = "cumulative", primarydx = 0L, poa = 1))),
+       charlson_cumulative_v = do.call(comorbidities, c(args, list(method = "charlson_quan2005", flag.method = "cumulative", primarydx = 0L, poa.var = "poa"))),
 
        pccc_current_0 = do.call(comorbidities, c(args, list(method = "pccc_v3.1", flag.method = "current", poa = 0))),
        pccc_current_1 = do.call(comorbidities, c(args, list(method = "pccc_v3.1", flag.method = "current", poa = 1))),
@@ -110,13 +109,13 @@ CMRBS <-
        spccc_cumulative_1 = do.call(comorbidities, c(args, list(method = "pccc_v3.1", flag.method = "cumulative", poa = 1, subconditions = TRUE))),
        spccc_cumulative_v = do.call(comorbidities, c(args, list(method = "pccc_v3.1", flag.method = "cumulative", poa.var = "poa", subconditions = TRUE))),
 
-       elixhauser_current_0 = do.call(comorbidities, c(args, list(method = "elixhauser_ahrq2025", flag.method = "current", poa = 0))),
-       elixhauser_current_1 = do.call(comorbidities, c(args, list(method = "elixhauser_ahrq2025", flag.method = "current", poa = 1))),
-       elixhauser_current_v = do.call(comorbidities, c(args, list(method = "elixhauser_ahrq2025", flag.method = "current", poa.var = "poa"))),
+       elixhauser_current_0 = do.call(comorbidities, c(args, list(method = "elixhauser_ahrq2025", flag.method = "current", primarydx = 0L, poa = 0))),
+       elixhauser_current_1 = do.call(comorbidities, c(args, list(method = "elixhauser_ahrq2025", flag.method = "current", primarydx = 0L, poa = 1))),
+       elixhauser_current_v = do.call(comorbidities, c(args, list(method = "elixhauser_ahrq2025", flag.method = "current", primarydx = 0L, poa.var = "poa"))),
 
-       elixhauser_cumulative_0 = do.call(comorbidities, c(args, list(method = "elixhauser_ahrq2025", flag.method = "cumulative", poa = 0))),
-       elixhauser_cumulative_1 = do.call(comorbidities, c(args, list(method = "elixhauser_ahrq2025", flag.method = "cumulative", poa = 1))),
-       elixhauser_cumulative_v = do.call(comorbidities, c(args, list(method = "elixhauser_ahrq2025", flag.method = "cumulative", poa.var = "poa")))
+       elixhauser_cumulative_0 = do.call(comorbidities, c(args, list(method = "elixhauser_ahrq2025", flag.method = "cumulative", primarydx = 0L, poa = 0))),
+       elixhauser_cumulative_1 = do.call(comorbidities, c(args, list(method = "elixhauser_ahrq2025", flag.method = "cumulative", primarydx = 0L, poa = 1))),
+       elixhauser_cumulative_v = do.call(comorbidities, c(args, list(method = "elixhauser_ahrq2025", flag.method = "cumulative", primarydx = 0L, poa.var = "poa")))
 )
 
 ################################################################################

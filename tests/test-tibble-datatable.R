@@ -47,8 +47,7 @@ mdcrTBL <- readRDS(file = "mdcr_subset_TBL.rds")
 ################################################################################
 # apply the comorbidities_methods to the three data sets
 common_args <-
-  list(id.vars = "patid", icdv.var = "icdv", icd.codes = "code",
-       dx.var = "dx", poa = 1, primarydx = 0)
+  list(id.vars = "patid", icdv.var = "icdv", icd.codes = "code", dx.var = "dx", poa = 1)
 
 DFS  <- new.env()
 TBLS <- new.env()
@@ -57,20 +56,22 @@ DTS  <- new.env()
 methods <- medicalcoder:::comorbidities_methods()
 
 set_results <- function(target_env, method, data, subconditions = FALSE) {
+  if (startsWith(method, "pccc")) {
+    v <- do.call(comorbidities, c(common_args, list(data = data, method = method, subconditions = subconditions)))
+  } else {
+    v <- do.call(comorbidities, c(common_args, list(data = data, method = method, subconditions = subconditions, primarydx = 0L)))
+  }
   assign(
     x = if (subconditions) paste0(method, "_with_subconditions") else method,
-    value = do.call(
-      comorbidities,
-      c(common_args, list(data = data, method = method, subconditions = subconditions))
-    ),
+    value = v,
     envir = target_env
   )
 }
 
 for (m in methods) {
-  set_results(DFS,  m, mdcrDF)
-  set_results(DTS,  m, mdcrDT)
-  set_results(TBLS, m, mdcrTBL)
+  set_results(DFS,  method = m, data = mdcrDF,  subconditions = FALSE)
+  set_results(DTS,  method = m, data = mdcrDT,  subconditions = FALSE)
+  set_results(TBLS, method = m, data = mdcrTBL, subconditions = FALSE)
 
   if (grepl("pccc", m)) {
     set_results(DFS,  m, mdcrDF,  subconditions = TRUE)

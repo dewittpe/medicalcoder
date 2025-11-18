@@ -3,7 +3,7 @@ library(medicalcoder)
 
 ################################################################################
 # Regression test: selected ICD-10 codes should map to specific Elixhauser
-# comorbidities under the Quan (2005) implementation. 
+# comorbidities under the Quan (2005) implementation.
 ################################################################################
 
 example_codes <-

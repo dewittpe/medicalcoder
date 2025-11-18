@@ -15,7 +15,8 @@ charlson <- comorbidities(
   dx.var     = "dx",
   method     = "charlson_quan2011",
   flag.method = "current",
-  poa        = 1,
+  poa        = 1L,
+  primarydx  = 0L,
   age.var    = "age"
 )
 

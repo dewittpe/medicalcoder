@@ -8,11 +8,11 @@ source('utilities.R')
 
 # build a zero-row data.frame for
 DF <- data.frame(code = c("B", "A"), patid = 1:2)
-common_args <- list(data = DF[0, ], id.vars = "patid", icd.codes = "code", poa = 1, primarydx = 0)
+common_args <- list(data = DF[0, ], id.vars = "patid", icd.codes = "code", poa = 1)
 
 # fit all methods without subconditions
 methods <- medicalcoder:::comorbidities_methods()
-args <- lapply(methods, function(x) c(common_args, list(method = x)))
+args <- lapply(methods, function(x) { if (startsWith(x, "pccc")) {c(common_args, list(method = x))} else {c(common_args, list(method = x, primarydx = 0L))} } )
 args <- setNames(args, methods)
 rtns <- lapply(args, do.call, what = comorbidities)
 
@@ -25,9 +25,8 @@ rtns <- c(rtns, lapply(args, do.call, what = comorbidities))
 # build rtns1 with nrow = nrow(DF), this will be used to check that the names
 # and general structure of the returns are the same with zero input rows or more
 # than zero input rows
-common_args[["data"]] <- DF
-common_args[["subconditions"]] <- FALSE
-args <- lapply(methods, function(x) c(common_args, list(method = x)))
+common_args <- list(data = DF, id.vars = "patid", icd.codes = "code", poa = 1)
+args <- lapply(methods, function(x) { if (startsWith(x, "pccc")) {c(common_args, list(method = x))} else {c(common_args, list(method = x, primarydx = 0L))} } )
 args <- setNames(args, methods)
 rtns1 <- lapply(args, do.call, what = comorbidities)
 
@@ -36,7 +35,6 @@ common_args[["subconditions"]] <- TRUE
 args <- lapply(methods[startsWith(methods, "pccc")], function(x) c(common_args, list(method = x)))
 args <- setNames(args, paste0(methods[startsWith(methods, "pccc")], "s"))
 rtns1 <- c(rtns1, lapply(args, do.call, what = comorbidities))
-
 
 ################################################################################
 # verify that all the returned elements inherit the expected classes
