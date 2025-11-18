@@ -11,6 +11,10 @@
   - Improved POA, NPOA, and EXEMPTPOA. This came about from
     [\#20](https://github.com/dewittpe/medicalcoder/issues/20).
 
+- Make internal data.frame tool `mdcr_duplicated` data.table aware.
+
+- Elixhauser (Quan 2005) - added missing ICD-10 codes to the mappings
+
 ### New Features
 
 - [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)

@@ -246,7 +246,7 @@ subset(
 )
 ##      icdv dx  code full_code   condition elixhauser_ahrq2025
 ## 3394   10  1  C784     C78.4 CANCER_METS                   1
-## 7584   10  1 I5040    I50.40          HF                   1
+## 7610   10  1 I5040    I50.40          HF                   1
 
 record <-
   structure(
@@ -308,7 +308,7 @@ str(get_charlson_codes())
 ##  $ charlson_quan2005: int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ charlson_quan2011: int  0 0 0 0 0 0 0 0 0 0 ...
 str(get_elixhauser_codes())
-## 'data.frame':    10549 obs. of  14 variables:
+## 'data.frame':    10575 obs. of  14 variables:
 ##  $ icdv                     : int  9 9 9 9 9 9 9 9 9 9 ...
 ##  $ dx                       : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ full_code                : chr  "042" "070.22" "070.23" "070.32" ...
