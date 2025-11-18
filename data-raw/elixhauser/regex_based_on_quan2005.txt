@@ -196,6 +196,7 @@ HTN_UNCX            | 9    | 1  | ahrq_web       | ^642\.0
 HTN_UNCX            | 9    | 1  | elixhauser1988 | ^401\.[1,9]
 HTN_UNCX            | 9    | 1  | quan2005       | ^401
 HYPOTHY             | 10   | 1  | quan2005       | ^E0[0-3]
+HYPOTHY             | 10   | 1  | quan2005       | ^E89\.0
 HYPOTHY             | 9    | 1  | ahrq_web       | ^243
 HYPOTHY             | 9    | 1  | ahrq_web       | ^244\.[0-2,8,9]
 HYPOTHY             | 9    | 1  | elixhauser1988 | ^243
