@@ -7,7 +7,7 @@
 #' @param icd.codes Character scalar naming the column in `data` that contains
 #'   ICD codes.  The codes can be full (with applicable dots, e.g., C84.2),
 #'   compact (dots omitted, e.g., C842), or a mix of both full and compact
-#'   codes.  Use
+#'   codes.
 #'
 #' @param id.vars Optional character vector of column names. When
 #'   missing, the entire input `data` is treated as a single encounter from a

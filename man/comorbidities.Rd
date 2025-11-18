@@ -34,7 +34,7 @@ diagnostic flags, or age.}
 \item{icd.codes}{Character scalar naming the column in \code{data} that contains
 ICD codes.  The codes can be full (with applicable dots, e.g., C84.2),
 compact (dots omitted, e.g., C842), or a mix of both full and compact
-codes.  Use}
+codes.}
 
 \item{method}{Character string indicating the comorbidity algorithm to
 apply to \code{data}.}
