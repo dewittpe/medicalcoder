@@ -121,6 +121,7 @@ charlson_results <-
                 method = "charlson_quan2011",
                 flag.method = 'current',
                 poa = 1)
+#> Warning: Assuming all codes provided are secondary diagnostic codes.  Define `primarydx.var` or `primarydx` if this assumption is incorrect.
 summary(charlson_results)
 #> $conditions
 #>                     condition_description condition count      percent

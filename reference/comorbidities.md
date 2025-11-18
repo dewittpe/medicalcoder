@@ -106,9 +106,10 @@ comorbidities(
 
   Character scalar naming the column in `data` that indicates whether
   `data[[icd.codes]]` are primary diagnostic codes (`1L`) or not (`0L`).
-  Primary diagnosis is used only for Elixhauser comorbidities and is
-  ignored when the method is PCCC or Charlson. `primarydx.var` takes
-  precedence over `primarydx` if both are provided.
+  Primary diagnosis is used only for Elixhauser and Charlson
+  comorbidities and is ignored when the method is a PCCC variant.
+  `primarydx.var` takes precedence over `primarydx` if both are
+  provided.
 
 - primarydx:
 
@@ -571,6 +572,7 @@ charlson_results <-
                 method = "charlson_quan2011",
                 flag.method = 'current',
                 poa = 1)
+#> Warning: Assuming all codes provided are secondary diagnostic codes.  Define `primarydx.var` or `primarydx` if this assumption is incorrect.
 summary(charlson_results)
 #> $conditions
 #>                     condition_description condition count      percent

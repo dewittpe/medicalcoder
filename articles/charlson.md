@@ -64,6 +64,7 @@ mdcr_results <-
     dx.var = "dx",
     flag.method = "current",
     poa = 1,
+    primarydx = 0,
     method = "charlson_quan2005"
   )
 ```

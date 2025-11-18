@@ -157,9 +157,9 @@ patient age in years. Only applicable to Charlson comorbidities.</p></dd>
 <dt id="arg-primarydx-var">primarydx.var<a class="anchor" aria-label="anchor" href="#arg-primarydx-var"></a></dt>
 <dd><p>Character scalar naming the column in <code>data</code> that
 indicates whether <code>data[[icd.codes]]</code> are primary diagnostic codes (<code>1L</code>)
-or not (<code>0L</code>). Primary diagnosis is used only for Elixhauser comorbidities
-and is ignored when the method is PCCC or Charlson. <code>primarydx.var</code> takes
-precedence over <code>primarydx</code> if both are provided.</p></dd>
+or not (<code>0L</code>). Primary diagnosis is used only for Elixhauser and Charlson
+comorbidities and is ignored when the method is a PCCC variant.
+<code>primarydx.var</code> takes precedence over <code>primarydx</code> if both are provided.</p></dd>
 
 
 <dt id="arg-primarydx">primarydx<a class="anchor" aria-label="anchor" href="#arg-primarydx"></a></dt>
@@ -571,6 +571,7 @@ https://www.hcup-us.ahrq.gov/toolssoftware/comorbidityicd10/comorbidity_icd10.js
 <span class="r-in"><span>                method <span class="op">=</span> <span class="st">"charlson_quan2011"</span>,</span></span>
 <span class="r-in"><span>                flag.method <span class="op">=</span> <span class="st">'current'</span>,</span></span>
 <span class="r-in"><span>                poa <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Assuming all codes provided are secondary diagnostic codes.  Define `primarydx.var` or `primarydx` if this assumption is incorrect.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">charlson_results</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $conditions</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     condition_description condition count      percent</span>

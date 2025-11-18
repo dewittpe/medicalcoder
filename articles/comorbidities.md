@@ -251,7 +251,7 @@ subset(
 record <-
   structure(
     list(
-      patid = c("A", "A", "A", "A", "A", "A", "A"), 
+      patid = c("A", "A", "A", "A", "A", "A", "A"),
       encid = c(1L, 2L, 3L, 4L, 5L, 5L, 6L),
       code = c(NA, "C78.4", "I50.40", NA, "C78.4", "I50.40", NA),
       poa = c(NA, 0L, 1L, NA, 1L, 0L, NA)),
@@ -373,7 +373,8 @@ cmdf_mdcr <-
                 dx.var = "dx",
                 method = "charlson_cdmf2019",
                 flag.method = "current",
-                poa = 1)
+                primarydx = 0L,
+                poa = 1L)
 data.table::setDT(cmdf_mdcr)
 
 cmdf_mdcr[, .N, keyby = .(hiv, aids)]
