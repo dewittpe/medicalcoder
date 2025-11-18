@@ -8,6 +8,8 @@
 
 * Make internal data.frame tool `mdcr_duplicated` data.table aware.
 
+* Elixhauser (Quan 2005) - added missing ICD-10 codes to the mappings
+
 ## New Features
 
 * `comorbidities()` will return a `tibble` with the input data is a `tbl_df`
