@@ -234,5 +234,20 @@ stopifnot(
 )
 
 ################################################################################
+# when a primarydx.var was passed to comorbidities when not needed an error was
+# thrown.  https://github.com/dewittpe/medicalcoder/issues/16
+#
+# This has been corrected to be a warning - ignore primarydx.var unless
+# elixhauser_ahrq2022 or newer
+comorbidities(
+  data = mdcr,
+  id.var = "patid",
+  #primarydx.var = "full_code",
+  method = "charlson_quan2005",
+  icd.codes = "code",
+  poa = 1
+)
+
+################################################################################
 #                                 End of File                                  #
 ################################################################################

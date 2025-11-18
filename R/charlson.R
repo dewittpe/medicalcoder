@@ -7,6 +7,8 @@
 #' @param iddf A `data.frame` of unique IDs
 #' @param cmrb A `data.frame` containing at least `id.vars` and
 #' `condition` columns; i.e., the 'comorbidity' `data.frame`.
+#' @param primarydx.var Character (scalar) with the name of the column in
+#' `cmrb` denoting if the condition was flaged as a primary diagnostic or not.
 #' @param method Character scalar; name of the Charlson variant to assess
 #'
 #' @return A `data.frame` with `id.vars`, per-condition 0/1
@@ -15,8 +17,12 @@
 #' @family internal comorbidity functions
 #' @noRd
 #' @keywords internal
-.charlson <- function(id.vars, iddf, cmrb, method) {
-  ccc <- unique(mdcr_select(cmrb, cols = c(id.vars, "condition")))
+.charlson <- function(id.vars, iddf, cmrb, primarydx.var, method) {
+  ccc <- unique(mdcr_select(cmrb, cols = c(id.vars, "condition", primarydx.var)))
+
+  # omit primary dx
+  idx <- which(ccc[[primarydx.var]] == 0L)
+  ccc <- mdcr_subset(ccc, i = idx)
 
   # get the method weights and conditions
   conditions <- mdcr_subset(..mdcr_internal_charlson_index_scores..,

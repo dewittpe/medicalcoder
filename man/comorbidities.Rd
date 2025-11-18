@@ -78,9 +78,9 @@ patient age in years. Only applicable to Charlson comorbidities.}
 
 \item{primarydx.var}{Character scalar naming the column in \code{data} that
 indicates whether \code{data[[icd.codes]]} are primary diagnostic codes (\code{1L})
-or not (\code{0L}). Primary diagnosis is used only for Elixhauser comorbidities
-and is ignored when the method is PCCC or Charlson. \code{primarydx.var} takes
-precedence over \code{primarydx} if both are provided.}
+or not (\code{0L}). Primary diagnosis is used only for Elixhauser and Charlson
+comorbidities and is ignored when the method is a PCCC variant.
+\code{primarydx.var} takes precedence over \code{primarydx} if both are provided.}
 
 \item{primarydx}{An integer value of \code{0} or \code{1}. If \code{0},
 treat all codes as non-primary diagnoses; if \code{1}, treat all codes as
