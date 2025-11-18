@@ -216,7 +216,7 @@ subset(
 record <-
   structure(
     list(
-      patid = c("A", "A", "A", "A", "A", "A", "A"), 
+      patid = c("A", "A", "A", "A", "A", "A", "A"),
       encid = c(1L, 2L, 3L, 4L, 5L, 5L, 6L),
       code = c(NA, "C78.4", "I50.40", NA, "C78.4", "I50.40", NA),
       poa = c(NA, 0L, 1L, NA, 1L, 0L, NA)),
@@ -236,12 +236,11 @@ args <-
        icd.codes = "code",
        id.vars = c("patid", "encid"),
        icdv = 10L,
-       dx = 1,
-       primarydx = 0L
+       dx = 1
   )
-args_current_poa0 <- c(args, poa = 0L,        flag.method = "current")
-args_current_poa1 <- c(args, poa = 1L,        flag.method = "current")
-args_current_poav <- c(args, poa.var = "poa", flag.method = "current")
+args_current_poa0    <- c(args, poa = 0L,        flag.method = "current")
+args_current_poa1    <- c(args, poa = 1L,        flag.method = "current")
+args_current_poav    <- c(args, poa.var = "poa", flag.method = "current")
 args_cumulative_poa0 <- c(args, poa = 0L,        flag.method = "cumulative")
 args_cumulative_poa1 <- c(args, poa = 1L,        flag.method = "cumulative")
 args_cumulative_poav <- c(args, poa.var = "poa", flag.method = "cumulative")
@@ -256,29 +255,29 @@ rtn <-
     do.call(cbind,
             list(
               left_cols,
-              do.call(comorbidities, c(args_current_poa0, method = "pccc_v3.0"))[,           .(CVD = cvd_dxpr_or_tech, CANCER = malignancy_dxpr_or_tech)],
-              do.call(comorbidities, c(args_current_poa0, method = "charlson_quan2011"))[,   .(CVD = chf,              CANCER = mst)],
-              do.call(comorbidities, c(args_current_poa0, method = "elixhauser_ahrq2025"))[, .(CVD = HF,               CANCER = CANCER_METS)],
-              do.call(comorbidities, c(args_current_poa1, method = "pccc_v3.0"))[,           .(CVD = cvd_dxpr_or_tech, CANCER = malignancy_dxpr_or_tech)],
-              do.call(comorbidities, c(args_current_poa1, method = "charlson_quan2011"))[,   .(CVD = chf,              CANCER = mst)],
-              do.call(comorbidities, c(args_current_poa1, method = "elixhauser_ahrq2025"))[, .(CVD = HF,               CANCER = CANCER_METS)],
-              do.call(comorbidities, c(args_current_poav, method = "pccc_v3.0"))[,           .(CVD = cvd_dxpr_or_tech, CANCER = malignancy_dxpr_or_tech)],
-              do.call(comorbidities, c(args_current_poav, method = "charlson_quan2011"))[,   .(CVD = chf,              CANCER = mst)],
-              do.call(comorbidities, c(args_current_poav, method = "elixhauser_ahrq2025"))[, .(CVD = HF,               CANCER = CANCER_METS)]
+              do.call(comorbidities, c(args_current_poa0,                 method = "pccc_v3.0"))[,           .(CVD = cvd_dxpr_or_tech, CANCER = malignancy_dxpr_or_tech)],
+              do.call(comorbidities, c(args_current_poa0, primarydx = 0L, method = "charlson_quan2011"))[,   .(CVD = chf,              CANCER = mst)],
+              do.call(comorbidities, c(args_current_poa0, primarydx = 0L, method = "elixhauser_ahrq2025"))[, .(CVD = HF,               CANCER = CANCER_METS)],
+              do.call(comorbidities, c(args_current_poa1,                 method = "pccc_v3.0"))[,           .(CVD = cvd_dxpr_or_tech, CANCER = malignancy_dxpr_or_tech)],
+              do.call(comorbidities, c(args_current_poa1, primarydx = 0L, method = "charlson_quan2011"))[,   .(CVD = chf,              CANCER = mst)],
+              do.call(comorbidities, c(args_current_poa1, primarydx = 0L, method = "elixhauser_ahrq2025"))[, .(CVD = HF,               CANCER = CANCER_METS)],
+              do.call(comorbidities, c(args_current_poav,                 method = "pccc_v3.0"))[,           .(CVD = cvd_dxpr_or_tech, CANCER = malignancy_dxpr_or_tech)],
+              do.call(comorbidities, c(args_current_poav, primarydx = 0L, method = "charlson_quan2011"))[,   .(CVD = chf,              CANCER = mst)],
+              do.call(comorbidities, c(args_current_poav, primarydx = 0L, method = "elixhauser_ahrq2025"))[, .(CVD = HF,               CANCER = CANCER_METS)]
     ))
   ,
     do.call(cbind,
             list(
               left_cols,
-              do.call(comorbidities, c(args_cumulative_poa0, method = "pccc_v3.0"))[,           .(CVD = cvd_dxpr_or_tech, CANCER = malignancy_dxpr_or_tech)],
-              do.call(comorbidities, c(args_cumulative_poa0, method = "charlson_quan2011"))[,   .(CVD = chf,              CANCER = mst)],
-              do.call(comorbidities, c(args_cumulative_poa0, method = "elixhauser_ahrq2025"))[, .(CVD = HF,               CANCER = CANCER_METS)],
-              do.call(comorbidities, c(args_cumulative_poa1, method = "pccc_v3.0"))[,           .(CVD = cvd_dxpr_or_tech, CANCER = malignancy_dxpr_or_tech)],
-              do.call(comorbidities, c(args_cumulative_poa1, method = "charlson_quan2011"))[,   .(CVD = chf,              CANCER = mst)],
-              do.call(comorbidities, c(args_cumulative_poa1, method = "elixhauser_ahrq2025"))[, .(CVD = HF,               CANCER = CANCER_METS)],
-              do.call(comorbidities, c(args_cumulative_poav, method = "pccc_v3.0"))[,           .(CVD = cvd_dxpr_or_tech, CANCER = malignancy_dxpr_or_tech)],
-              do.call(comorbidities, c(args_cumulative_poav, method = "charlson_quan2011"))[,   .(CVD = chf,              CANCER = mst)],
-              do.call(comorbidities, c(args_cumulative_poav, method = "elixhauser_ahrq2025"))[, .(CVD = HF,               CANCER = CANCER_METS)]
+              do.call(comorbidities, c(args_cumulative_poa0,                 method = "pccc_v3.0"))[,           .(CVD = cvd_dxpr_or_tech, CANCER = malignancy_dxpr_or_tech)],
+              do.call(comorbidities, c(args_cumulative_poa0, primarydx = 0L, method = "charlson_quan2011"))[,   .(CVD = chf,              CANCER = mst)],
+              do.call(comorbidities, c(args_cumulative_poa0, primarydx = 0L, method = "elixhauser_ahrq2025"))[, .(CVD = HF,               CANCER = CANCER_METS)],
+              do.call(comorbidities, c(args_cumulative_poa1,                 method = "pccc_v3.0"))[,           .(CVD = cvd_dxpr_or_tech, CANCER = malignancy_dxpr_or_tech)],
+              do.call(comorbidities, c(args_cumulative_poa1, primarydx = 0L, method = "charlson_quan2011"))[,   .(CVD = chf,              CANCER = mst)],
+              do.call(comorbidities, c(args_cumulative_poa1, primarydx = 0L, method = "elixhauser_ahrq2025"))[, .(CVD = HF,               CANCER = CANCER_METS)],
+              do.call(comorbidities, c(args_cumulative_poav,                 method = "pccc_v3.0"))[,           .(CVD = cvd_dxpr_or_tech, CANCER = malignancy_dxpr_or_tech)],
+              do.call(comorbidities, c(args_cumulative_poav, primarydx = 0L, method = "charlson_quan2011"))[,   .(CVD = chf,              CANCER = mst)],
+              do.call(comorbidities, c(args_cumulative_poav, primarydx = 0L, method = "elixhauser_ahrq2025"))[, .(CVD = HF,               CANCER = CANCER_METS)]
     ))
   )
 ```
@@ -366,7 +365,8 @@ cmdf_mdcr <-
                 dx.var = "dx",
                 method = "charlson_cdmf2019",
                 flag.method = "current",
-                poa = 1)
+                primarydx = 0L,
+                poa = 1L)
 data.table::setDT(cmdf_mdcr)
 
 cmdf_mdcr[, .N, keyby = .(hiv, aids)]

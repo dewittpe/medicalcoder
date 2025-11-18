@@ -257,7 +257,7 @@ comorbidities.data.frame <- function(data,
     }
   }
 
-  if (startsWith(method, "elixhauser") & !is.null(primarydx.var)) {
+  if ((startsWith(method, "elixhauser") | startsWith(method, "charlson")) & !is.null(primarydx.var)) {
     is_a_column(primarydx.var, names(data))
     pn <- primarydx.var %in% ..protected_names..
     if (pn) {
@@ -268,6 +268,9 @@ comorbidities.data.frame <- function(data,
         )
       )
     }
+  } else if (startsWith(method, "pccc") & (!is.null(primarydx.var) | !is.null(primarydx))) {
+    warning("primarydx.var and primarydx are ignored when method = '%s'", method)
+    primarydx.var <- primarydx <- NULL
   }
 
   flag.method <-
@@ -447,7 +450,7 @@ comorbidities.data.frame <- function(data,
     is_a_column(poa.var, nms)
   }
 
-  if (startsWith(method, "elixhauser")) {
+  if (startsWith(method, "elixhauser") | startsWith(method, "charlson")) {
     if (is.null(primarydx.var)) {
       if (!is.null(primarydx)) {
         stopifnot(inherits(primarydx, "numeric") | inherits(primarydx, "integer"))
@@ -455,18 +458,14 @@ comorbidities.data.frame <- function(data,
         primarydx <- as.integer(primarydx)
         stopifnot(primarydx %in% c(0L, 1L))
       } else {
-        if (grepl("^elixhauser", method)) {
-          warning("Assuming all codes provided are secondary diagnostic codes.  Define `primarydx.var` or `primarydx` if this assumption is incorrect.", call. = FALSE)
-        }
+        warning("Assuming all codes provided are secondary diagnostic codes.  Define `primarydx.var` or `primarydx` if this assumption is incorrect.", call. = FALSE)
         primarydx <- 0L
       }
 
       primarydx.var <- build_name("..medicalcoder_primarydx..", nms)
 
-      if (grepl("^elixhauser", method)) {
-        on_full <- mdcr_set(on_full, j = primarydx.var, value = rep(primarydx, nrow(on_full)))
-        on_comp <- mdcr_set(on_comp, j = primarydx.var, value = rep(primarydx, nrow(on_comp)))
-      }
+      on_full <- mdcr_set(on_full, j = primarydx.var, value = rep(primarydx, nrow(on_full)))
+      on_comp <- mdcr_set(on_comp, j = primarydx.var, value = rep(primarydx, nrow(on_comp)))
 
     } else {
       if (!is.null(primarydx)) {
@@ -556,7 +555,12 @@ comorbidities.data.frame <- function(data,
 
     cmrb <- do.call(rbind, foc)
 
-    cmrb[[poa.var]][cmrb[[encid]] > cmrb[["first_occurrance"]]] <- 1L
+    # set poa to 1 and primarydx to 0 for prior conditions
+    idx <- cmrb[[encid]] > cmrb[["first_occurrance"]]
+    cmrb[[poa.var]][idx] <- 1L
+    if (!is.null(primarydx.var)) {
+      cmrb[[primarydx.var]][cmrb[[encid]] > cmrb[["first_occurrance"]]] <- 0L
+    }
     cmrb <- mdcr_set(cmrb, j = "first_occurrance", value =  NULL)
 
     cmrb <- unique(cmrb)
@@ -577,7 +581,7 @@ comorbidities.data.frame <- function(data,
   } else if (startsWith(method, "pccc_v3")) {
     ccc <- .pccc_v3(id.vars = id.vars, iddf = iddf, cmrb = cmrb, subconditions = subconditions)
   } else if (startsWith(method, "charlson")) {
-    ccc <- .charlson(id.vars = id.vars, iddf = iddf, cmrb = cmrb, method)
+    ccc <- .charlson(id.vars = id.vars, iddf = iddf, cmrb = cmrb, primarydx.var = primarydx.var, method = method)
     if (!is.null(age.var)) {
       ages <- unique(mdcr_select(data, cols = c(id.vars, age.var)))
       ages[["age_score"]] <- as.integer(cut(ages[[age.var]], breaks = c(-Inf, 50, 60, 70, 80, Inf), right = FALSE)) - 1L
@@ -587,7 +591,7 @@ comorbidities.data.frame <- function(data,
       ccc[["age_score"]] <- rep(NA_integer_, nrow(ccc))
     }
   } else if (startsWith(method, "elixhauser")) {
-    ccc <- .elixhauser(id.vars = id.vars, iddf = iddf, cmrb = cmrb, poa.var = poa.var, primarydx.var = primarydx.var, method)
+    ccc <- .elixhauser(id.vars = id.vars, iddf = iddf, cmrb = cmrb, poa.var = poa.var, primarydx.var = primarydx.var, method = method)
   } else {
     stop(sprintf("method '%s' has not yet been implemented", method))
   }

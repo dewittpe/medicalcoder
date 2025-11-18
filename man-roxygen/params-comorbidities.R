@@ -45,9 +45,9 @@
 #'
 #' @param primarydx.var Character scalar naming the column in `data` that
 #'   indicates whether `data[[icd.codes]]` are primary diagnostic codes (`1L`)
-#'   or not (`0L`). Primary diagnosis is used only for Elixhauser comorbidities
-#'   and is ignored when the method is PCCC or Charlson. `primarydx.var` takes
-#'   precedence over `primarydx` if both are provided.
+#'   or not (`0L`). Primary diagnosis is used only for Elixhauser and Charlson
+#'   comorbidities and is ignored when the method is a PCCC variant.
+#'   `primarydx.var` takes precedence over `primarydx` if both are provided.
 #'
 #' @param primarydx An integer value of `0` or `1`. If `0`,
 #'   treat all codes as non-primary diagnoses; if `1`, treat all codes as
