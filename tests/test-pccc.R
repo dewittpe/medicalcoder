@@ -2,17 +2,6 @@ source('utilities.R')
 library(medicalcoder)
 
 ################################################################################
-# Verify that the pccc codes are retrievable as a data.frame
-pccc_codes <- get_pccc_codes()
-stopifnot("pccc_codes are a data.frame" = identical(class(pccc_codes), "data.frame"))
-stopifnot(
-  identical(
-    names(pccc_codes),
-    c("icdv", "dx", "full_code", "code", "condition", "subcondition", "transplant_flag", "tech_dep_flag", "pccc_v3.1", "pccc_v3.0", "pccc_v2.1", "pccc_v2.0")
-  )
-)
-
-################################################################################
 # verify that there is not going to be an error if no matches are found
 dat <- data.frame(patid = 1:26,
                   icd = c(letters, LETTERS),
@@ -219,6 +208,31 @@ stopifnot(
   !identical(out00$num_cmrb, out06$num_cmrb),
   !identical(out00$num_cmrb, out07$num_cmrb)
 )
+
+################################################################################
+# looking for the case in v3.1 where the code is a tech and transplant
+techtrans <-
+  subset(get_pccc_codes(), pccc_v3.1 == 1 & transplant_flag == 1 & tech_dep_flag == 1)
+techtrans[["rid"]] <- seq_len(nrow(techtrans))
+
+techtrans_results <-
+  comorbidities(
+    data = techtrans,
+    icd.codes = "code",
+    id.vars = "rid",
+    method = "pccc_v3.1",
+    poa = 1
+  )
+
+for (j in colnames(techtrans_results)) {
+  if (j == "rid") {
+    stopifnot(techtrans_results[[j]] == 1:6)
+  } else if (j %in% c("cvd_tech_only", "cvd_dxpr_or_tech", "any_tech_dep", "any_transplant", "num_cmrb", "cmrb_flag")) {
+    stopifnot(techtrans_results[[j]] == rep(1L, 6))
+  } else {
+    stopifnot(techtrans_results[[j]] == rep(0L, 6))
+  }
+}
 
 ################################################################################
 #                                 End of File                                  #

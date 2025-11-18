@@ -152,6 +152,11 @@ DEPRESS             | 9    | 1  | quan2005       | ^296\.[2,3,5]
 DEPRESS             | 9    | 1  | quan2005       | ^300\.4
 DEPRESS             | 9    | 1  | quan2005       | ^309
 DEPRESS             | 9    | 1  | quan2005       | ^311
+DEPRESS             | 10   | 1  | quan2005       | ^F20\.4
+DEPRESS             | 10   | 1  | quan2005       | ^F31\.[3-5]
+DEPRESS             | 10   | 1  | quan2005       | ^F3[2-3]
+DEPRESS             | 10   | 1  | quan2005       | ^F34\.1
+DEPRESS             | 10   | 1  | quan2005       | ^F4[1-3]\.2
 DM                  | 10   | 1  | quan2005       | ^E1[0-4]\.[0,1,9]
 DM                  | 9    | 1  | ahrq_web       | ^250\.[0-3]
 DM                  | 9    | 1  | ahrq_web       | ^648\.0
@@ -191,6 +196,7 @@ HTN_UNCX            | 9    | 1  | ahrq_web       | ^642\.0
 HTN_UNCX            | 9    | 1  | elixhauser1988 | ^401\.[1,9]
 HTN_UNCX            | 9    | 1  | quan2005       | ^401
 HYPOTHY             | 10   | 1  | quan2005       | ^E0[0-3]
+HYPOTHY             | 10   | 1  | quan2005       | ^E89\.0
 HYPOTHY             | 9    | 1  | ahrq_web       | ^243
 HYPOTHY             | 9    | 1  | ahrq_web       | ^244\.[0-2,8,9]
 HYPOTHY             | 9    | 1  | elixhauser1988 | ^243

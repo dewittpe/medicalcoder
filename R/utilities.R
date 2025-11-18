@@ -132,7 +132,10 @@ mdcr_setnames <- function(x, old, new, ...) {
 mdcr_duplicated <- function(x, by = seq_along(x), ...) {
   stopifnot(is.data.frame(x))
   if (requireNamespace("data.table", quietly = TRUE) && inherits(x, "data.table")) {
-    rtn <- duplicated(x, by = by, ...)
+    # Flag this frame as data.table-aware so duplicated.data.table uses its
+    # optimized path instead of falling back to duplicated.data.frame.
+    .datatable.aware <- TRUE
+    rtn <- utils::getFromNamespace(x = 'duplicated.data.table', ns = "data.table")(x, by = by, ...)
   } else {
     rtn <- duplicated(x[, by, drop = FALSE], ...)
   }

@@ -8,8 +8,12 @@ codes <-
     "J84.111", # respiratory (chronic respiratory disease)
     "Z96.41"   # metabolic (device and technology use)
   )
-subset(get_pccc_codes(), full_code %in% codes)
 
+# verify that these codes are as expected
+x <- subset(get_pccc_codes(), full_code %in% codes)
+rownames(x) <- NULL
+expected <- structure(list(icdv = c(10L, 10L, 10L), dx = c(1L, 1L, 1L), full_code = c("H49.811", "J84.111", "Z96.41"), code = c("H49811", "J84111", "Z9641"), condition = c("metabolic", "respiratory", "metabolic"), subcondition = c("other_metabolic_disorders", "chronic_respiratory_diseases", "device_and_technology_use"), transplant_flag = c(0L, 0L, 0L), tech_dep_flag = c(0L, 0L, 1L), pccc_v3.1 = c(1L, 1L, 1L), pccc_v3.0 = c(1L, 1L, 1L), pccc_v2.1 = c(1L, 0L, 1L), pccc_v2.0 = c(1L, 0L, 1L)), row.names = c(NA, -3L), class = "data.frame")
+stopifnot(identical(x, expected))
 
 # build six permutations of these codes.  The codes will be considered poa on
 # encounters 2, 4, and 6.  There will be seven encounters for each permutation.

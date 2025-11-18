@@ -122,5 +122,25 @@ stopifnot(
 )
 
 ################################################################################
+# PCCC Version 2.1 with flag.method = "cumulative"
+
+cmb <- comorbidities(data = mdcr_longitudinal, id.vars = c("patid", "date"), icd.codes = "code", poa = 1, flag.method = 'cumulative', method = "pccc_v2.1")
+rtn <- tryCatchWarning(summary(cmb))
+stopifnot(inherits(rtn, "warning"))
+rtn <- suppressWarnings(summary(cmb))
+
+stopifnot(
+  inherits(rtn, "data.frame"),
+  identical(
+    names(rtn),
+    c("condition", "label", "count", "percent")
+  ),
+  is.character(rtn[["condition"]]),
+  is.character(rtn[["label"]]),
+  is.integer(rtn[["count"]]),
+  is.numeric(rtn[["percent"]])
+)
+
+################################################################################
 #                                 End of File                                  #
 ################################################################################
