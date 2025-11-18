@@ -119,16 +119,25 @@ From the command line:
 R CMD INSTALL medicalcoder_X.Y.Z.tar.gz
 ```
 
-## Tools:
+## Quick Start:
 
 ### Example Data
 
 Input data for `comorbidities()` is expected to be in a 'long' format.  Each row
-is one code with additional columns for patient and/or encounter id.
-
+is one code with additional columns for patient and/or encounter id. There are
+two example data sets in the package: `mdcr` and `mdcr_longitudinal`.
 
 ``` r
 data(mdcr, mdcr_longitudinal, package = "medicalcoder")
+```
+
+The `mdcr` data set consists of 319 856 rows.
+Each row contains one ICD code (`code`). The column `icdv` denotes
+each code as ICD-9 or ICD-10, and the `dx` column denotes diagnostic (1) or
+procedure (0) code. This data set contains diagnostic and procedure codes for
+38 262 patients.
+
+``` r
 str(mdcr)
 #> 'data.frame':	319856 obs. of  4 variables:
 #>  $ patid: int  71412 71412 71412 71412 71412 17087 64424 64424 84361 84361 ...
@@ -143,6 +152,15 @@ head(mdcr)
 #> 4 71412    9 V5865  1
 #> 5 71412    9  V427  1
 #> 6 17087   10  V441  1
+```
+
+The `mdcr_longitudinal` data set is distinct from the `mdcr` data set.  The major
+difference is that this set are all diagnostic codes and there are only
+3 patients.  The `date` column denote
+the date of the diagnosis and allows for us to look at the change in
+comorbidities over time.
+
+``` r
 str(mdcr_longitudinal)
 #> 'data.frame':	60 obs. of  4 variables:
 #>  $ patid: int  9663901 9663901 9663901 9663901 9663901 9663901 9663901 9663901 9663901 9663901 ...
@@ -162,9 +180,17 @@ head(mdcr_longitudinal)
 ### Comorbidity Algorithms
 
 There are three comorbidity methods, each with several variants, available in
-`medicalcoder`.
+`medicalcoder`.  All of which are accessible through the `comorbidities()`
+method by specifying the `method` argument.
 
-* Pediatric Complex Chronic Conditions (PCCC)
+General examples and explanations for when conditions are flagged are in the
+vignette
+
+``` r
+vignette(topic = "comorbidities", package = "medicalcoder")
+```
+
+#### Pediatric Complex Chronic Conditions (PCCC)
 
   * Version 2.0
     - BMC Pediatrics: [Feudtner et al. (2014)](https://doi.org/10.1186/1471-2431-14-199)
@@ -185,57 +211,70 @@ There are three comorbidity methods, each with several variants, available in
 
 ``` r
 # PCCC v3.1 example
-cmrbs <-
+library(medicalcoder)
+cmrbs2 <-
+  comorbidities(
+    data = mdcr,
+    id.vars = "patid", # can use more than one column, e.g., site, patient, encounter
+    icd.codes = "code",
+    dx.var = "dx",
+    poa = 1,  # consider all codes to be present on admission
+    method = "pccc_v2.1"
+  )
+cmrbs3 <-
   comorbidities(
     data = mdcr,
     id.vars = "patid",
     icd.codes = "code",
     dx.var = "dx",
-    poa = 1,
+    poa = 1,  # consider all codes to be present on admission
     method = "pccc_v3.1"
   )
-str(cmrbs, max.level = 0)
+str(cmrbs2, max.level = 0)
+#> Classes 'medicalcoder_comorbidities' and 'data.frame':	38262 obs. of  16 variables:
+#>  - attr(*, "method")= chr "pccc_v2.1"
+#>  - attr(*, "id.vars")= chr "patid"
+#>  - attr(*, "flag.method")= chr "current"
+str(cmrbs3, max.level = 0)
 #> Classes 'medicalcoder_comorbidities' and 'data.frame':	38262 obs. of  49 variables:
 #>  - attr(*, "method")= chr "pccc_v3.1"
 #>  - attr(*, "id.vars")= chr "patid"
 #>  - attr(*, "flag.method")= chr "current"
 ```
 
+A summary of the flagged conditions is generated with a call to `summary()`.
 
-|condition       |label                                   | dxpr_or_tech_count| dxpr_or_tech_percent| dxpr_only_count| dxpr_only_percent| tech_only_count| tech_only_percent| dxpr_and_tech_count| dxpr_and_tech_percent|
-|:---------------|:---------------------------------------|------------------:|--------------------:|---------------:|-----------------:|---------------:|-----------------:|-------------------:|---------------------:|
-|congeni_genetic |Other Congenital or Genetic Defect      |               3225|            8.4287282|            3225|         8.4287282|               0|         0.0000000|                   0|             0.0000000|
-|cvd             |Cardiovascular                          |               5147|           13.4519889|            4560|        11.9178297|             283|         0.7396372|                 304|             0.7945220|
-|gi              |Gastrointestinal                        |               5652|           14.7718363|            1420|         3.7112540|            3855|        10.0752705|                 377|             0.9853118|
-|hemato_immu     |Hematologic or Immunologic              |               2832|            7.4015995|            2832|         7.4015995|               0|         0.0000000|                   0|             0.0000000|
-|malignancy      |Malignancy                              |               3784|            9.8897078|            3784|         9.8897078|               0|         0.0000000|                   0|             0.0000000|
-|metabolic       |Metabolic                               |               3407|            8.9043960|            3356|         8.7711045|              40|         0.1045424|                  11|             0.0287492|
-|misc            |Miscellaneous, Not Elsewhere Classified |                764|            1.9967592|             121|         0.3162407|             643|         1.6805185|                   0|             0.0000000|
-|neonatal        |Premature & Neonatal                    |               1516|            3.9621557|            1516|         3.9621557|               0|         0.0000000|                   0|             0.0000000|
-|neuromusc       |Neurologic or Neuromuscular             |               5828|           15.2318227|            4564|        11.9282839|             316|         0.8258847|                 948|             2.4776541|
-|renal           |Renal Urologic                          |               2787|            7.2839893|            1876|         4.9030370|             555|         1.4505253|                 356|             0.9304271|
-|respiratory     |Respiratory                             |               3260|            8.5202028|            1848|         4.8298573|             755|         1.9732372|                 657|             1.7171084|
-|any_tech_dep    |Any Technology Dependence               |               7012|           18.3262767|              NA|                NA|              NA|                NA|                  NA|                    NA|
-|any_transplant  |Any Transplantation                     |               1585|            4.1424912|              NA|                NA|              NA|                NA|                  NA|                    NA|
-|cmrb_flag       |Any Condition                           |              20871|           54.5475929|              NA|                NA|              NA|                NA|                  NA|                    NA|
-|num_cmrb        |>= 2 conditions                         |              10657|           27.8526998|              NA|                NA|              NA|                NA|                  NA|                    NA|
-|num_cmrb        |>= 3 conditions                         |               4582|           11.9753280|              NA|                NA|              NA|                NA|                  NA|                    NA|
-|num_cmrb        |>= 4 conditions                         |               1571|            4.1059014|              NA|                NA|              NA|                NA|                  NA|                    NA|
-|num_cmrb        |>= 5 conditions                         |                418|            1.0924677|              NA|                NA|              NA|                NA|                  NA|                    NA|
-|num_cmrb        |>= 6 conditions                         |                 88|            0.2299932|              NA|                NA|              NA|                NA|                  NA|                    NA|
-|num_cmrb        |>= 7 conditions                         |                 13|            0.0339763|              NA|                NA|              NA|                NA|                  NA|                    NA|
-|num_cmrb        |>= 8 conditions                         |                  2|            0.0052271|              NA|                NA|              NA|                NA|                  NA|                    NA|
-|num_cmrb        |>= 9 conditions                         |                  0|            0.0000000|              NA|                NA|              NA|                NA|                  NA|                    NA|
-|num_cmrb        |>= 10 conditions                        |                  0|            0.0000000|              NA|                NA|              NA|                NA|                  NA|                    NA|
-|num_cmrb        |>= 11 conditions                        |                  0|            0.0000000|              NA|                NA|              NA|                NA|                  NA|                    NA|
+``` r
+s2 <- summary(cmrbs2)
+str(s2)
+```
+
+For `pccc_v2.0` and `pccc_v2.1` the `data.frame` returned by `summary()`
+reports the count (unique `id.vars` with the condition) and percentage.
 
 
+``` r
+s3 <- summary(cmrbs3)
+str(s3)
+```
+For `pccc_v3.0` and `pccc_v3.1` the returned `data.frame` reports counts and
+percentages for how the condition was flagged based on diagnosis/procedure codes
+only, technology dependent codes only, or both.  The `dxpr_or_tech` columns
+answer the question "did this patient have the condition".
 
-* Charlson Comorbidities
-  * [Deyo, Cherkin, and Ciol (1992)](https://doi.org/10.1016/0895-4356(92)90133-8)
-  * [Quan et al. (2005)](https://doi.org/10.1097/01.mlr.0000182534.19832.83)
-  * [Quan et al. (2011)](https://doi.org/10.1093/aje/kwq433)
-  * [Glasheen (2019)](https://pubmed.ncbi.nlm.nih.gov/31428236/)
+Further detail, examples, and explanations are in the vignette.
+
+``` r
+vignette(topic = "pccc", package = "medicalcoder")
+```
+
+#### Charlson Comorbidities
+There are four variants of Charlson comorbidities implemented in `medicalcoder`
+
+* [Deyo, Cherkin, and Ciol (1992)](https://doi.org/10.1016/0895-4356(92)90133-8)
+* [Quan et al. (2005)](https://doi.org/10.1097/01.mlr.0000182534.19832.83)
+* [Quan et al. (2011)](https://doi.org/10.1093/aje/kwq433)
+* [Glasheen (2019)](https://pubmed.ncbi.nlm.nih.gov/31428236/)
 
 
 ``` r
@@ -246,79 +285,42 @@ cmrbs <-
     id.vars = "patid",
     icd.codes = "code",
     dx.var = "dx",
-    poa = 1,
-    primarydx = 0L,
+    poa = 1,        # assume all codes are present on admission
+    primarydx = 0L, # assume all codes are secondary diagnosis codes
     method = "charlson_quan2005"
   )
-str(cmrbs, max.level = 0)
-#> Classes 'medicalcoder_comorbidities' and 'data.frame':	38262 obs. of  22 variables:
-#>  - attr(*, "method")= chr "charlson_quan2005"
-#>  - attr(*, "id.vars")= chr "patid"
-#>  - attr(*, "flag.method")= chr "current"
 ```
+A summary of the flagged conditions can be generated by calling `summary()`.
+Where the summary for the PCCC method was a `data.frame` the return for the
+Charlson comorbidities is a list of data frames summarizing the conditions, age
+category, and the index score.
 
 ``` r
-summary(cmrbs)
+s <- summary(cmrbs)
+str(s, max.level = 1)
 ```
 
+More details and examples are provided in the vignette:
 
-<table class="kable_wrapper">
-<tbody>
-  <tr>
-   <td> 
+``` r
+vignette(topic = "charlson", package = "medicalcoder")
+```
 
-|condition_description                  |condition | count|    percent|
-|:--------------------------------------|:---------|-----:|----------:|
-|AIDS/HIV                               |aidshiv   |     7|  0.0182949|
-|Any malignancy                         |mal       |  2577|  6.7351419|
-|Cerebrovascular disease                |cebvd     |   411|  1.0741728|
-|Chronic pulmonary disease              |copd      |  3415|  8.9253045|
-|Congestive heart failure               |chf       |   684|  1.7876745|
-|Dementia                               |dem       |    13|  0.0339763|
-|Diabetes with chronic complications    |dmc       |    13|  0.0339763|
-|Diabetes without chronic complications |dm        |   445|  1.1630338|
-|Hemiplegia or paraplegia               |hp        |  1177|  3.0761591|
-|Liver disease, mild                    |mld       |   663|  1.7327897|
-|Liver disease, moderate to severe      |msld      |   206|  0.5383932|
-|Metastatic solid tumor                 |mst       |   453|  1.1839423|
-|Myocardial infarction                  |mi        |    10|  0.0261356|
-|Peptic ulcer disease                   |pud       |    45|  0.1176102|
-|Peripheral vascular disease            |pvd       |   217|  0.5671423|
-|Renal disease                          |rnd       |   898|  2.3469761|
-|Rheumatic disease                      |rhd       |   136|  0.3554440|
-|>= 1                                   |NA        |  9841| 25.7200355|
-|>= 2                                   |NA        |  1368|  3.5753489|
-|>= 3                                   |NA        |   138|  0.3606712|
-|>= 4                                   |NA        |    20|  0.0522712|
-|>= 5                                   |NA        |     3|  0.0078407|
+#### Elixhauser Comorbidities
 
- </td>
-   <td> 
-
-|age_score | count| percent|
-|:---------|-----:|-------:|
-|NA        | 38262|     100|
-
- </td>
-   <td> 
-
-| min| q1| median| q3| max|
-|---:|--:|------:|--:|---:|
-|   0|  0|      0|  1|  12|
-
- </td>
-  </tr>
-</tbody>
-</table>
-
-
-
-* Elixhauser Comorbidities
-  * [Elixhauser et al. (1998)](https://doi.org/10.1097/00005650-199801000-00004)
-  * [Quan et al. (2005)](https://doi.org/10.1097/01.mlr.0000182534.19832.83)
-  * AHRQ (2017, 2022, 2023, 2024, 2025)
-    * [For ICD-9 codes](https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp)
-    * [For ICD-10 codes](https://hcup-us.ahrq.gov/toolssoftware/comorbidityicd10/comorbidity_icd10.jsp)
+* [Elixhauser et al. (1998)](https://doi.org/10.1097/00005650-199801000-00004)
+  * `method = elixhauser_elixhauser1988`
+* [Quan et al. (2005)](https://doi.org/10.1097/01.mlr.0000182534.19832.83)
+  * `method = elixhauser_quan2005`
+* AHRQ (2017, 2022, 2023, 2024, 2025, ICD10)
+  * [For ICD-9 codes](https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp)
+    * `method = elixhauser_ahrq_web`
+  * [For ICD-10 codes](https://hcup-us.ahrq.gov/toolssoftware/comorbidityicd10/comorbidity_icd10.jsp)
+    * `method = elixhauser_ahrq2022`
+    * `method = elixhauser_ahrq2023`
+    * `method = elixhauser_ahrq2024`
+    * `method = elixhauser_ahrq2025`
+    * `method = elixhauser_ahrq_icd10`
 
 
 ``` r
@@ -333,94 +335,20 @@ cmrbs <-
     primarydx = 0L,
     method = "elixhauser_ahrq_icd10"
   )
-str(cmrbs, max.level = 0)
-#> Classes 'medicalcoder_comorbidities' and 'data.frame':	38262 obs. of  54 variables:
-#>  - attr(*, "method")= chr "elixhauser_ahrq_icd10"
-#>  - attr(*, "id.vars")= chr "patid"
-#>  - attr(*, "flag.method")= chr "current"
 ```
+The summary for the results from elixhauser_ahrq_icd10 are similar to those for
+Charlson. A `data.frame` with the counts and percentages of distinct
+`data[id.vars]` with the noted condition, and a summary of the index scores.
 
 ``` r
-summary(cmrbs)
+s <- summary(cmrbs)
+str(s, max.level = 1)
 ```
 
-
-<table class="kable_wrapper">
-<tbody>
-  <tr>
-   <td> 
-
-|condition    | count|    percent|
-|:------------|-----:|----------:|
-|AIDS         |     3|  0.0078407|
-|ALCOHOL      |    11|  0.0287492|
-|ANEMDEF      |   700|  1.8294914|
-|AUTOIMMUNE   |   170|  0.4443051|
-|BLDLOSS      |    33|  0.0862475|
-|CANCER_LEUK  |   381|  0.9957660|
-|CANCER_LYMPH |    76|  0.1986305|
-|CANCER_METS  |   213|  0.5566881|
-|CANCER_NSITU |     0|  0.0000000|
-|CANCER_SOLID |   477|  1.2466677|
-|CBVD         |   117|  0.3057864|
-|COAG         |   877|  2.2920914|
-|DEMENTIA     |    35|  0.0914746|
-|DEPRESS      |   321|  0.8389525|
-|DIAB_CX      |   123|  0.3214678|
-|DIAB_UNCX    |   184|  0.4808949|
-|DRUG_ABUSE   |    77|  0.2012441|
-|HF           |   246|  0.6429355|
-|HTN_CX       |   286|  0.7474779|
-|HTN_UNCX     |   395|  1.0323559|
-|LIVER_MLD    |   179|  0.4678271|
-|LIVER_SEV    |   159|  0.4155559|
-|LUNG_CHRONIC |  1359|  3.5518269|
-|NEURO_MOVT   |   139|  0.3632847|
-|NEURO_OTH    |   948|  2.4776541|
-|NEURO_SEIZ   |  1490|  3.8942031|
-|OBESE        |   315|  0.8232711|
-|PARALYSIS    |   767|  2.0045999|
-|PERIVASC     |   209|  0.5462339|
-|PSYCHOSES    |    96|  0.2509017|
-|PULMCIRC     |   332|  0.8677016|
-|RENLFL_MOD   |   107|  0.2796508|
-|RENLFL_SEV   |   247|  0.6455491|
-|THYROID_HYPO |   393|  1.0271287|
-|THYROID_OTH  |    36|  0.0940881|
-|ULCER_PEPTIC |    23|  0.0601119|
-|VALVE        |   572|  1.4949558|
-|WGHTLOSS     |   616|  1.6099524|
-|>= 1         |  7891| 20.6235952|
-|>= 2         |  3186|  8.3267994|
-|>= 3         |  1135|  2.9663896|
-|>= 4         |   347|  0.9069050|
-|>= 5         |   120|  0.3136271|
-|>= 6         |    25|  0.0653390|
-|>= 7         |     7|  0.0182949|
-|>= 8         |     1|  0.0026136|
-
- </td>
-   <td> 
-
-|index       | min| q1| median| q3| max|
-|:-----------|---:|--:|------:|--:|---:|
-|readmission |  -2|  0|      0|  0|  35|
-|mortality   | -24|  0|      0|  0|  75|
-
- </td>
-  </tr>
-</tbody>
-</table>
-
-
-
-See more examples in the vignettes.
+More details and examples are provided in the vignette:
 
 ``` r
-vignette(topic = "comorbidities", package = "medicalcoder")
-vignette(topic = "pccc",          package = "medicalcoder")
-vignette(topic = "charlson",      package = "medicalcoder")
-vignette(topic = "elixhauser",    package = "medicalcoder")
+vignette(topic = "elixhauser", package = "medicalcoder")
 ```
 
 ### ICD
