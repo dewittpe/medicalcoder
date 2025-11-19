@@ -33,7 +33,10 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::pkgdown, local::.
+          extra-packages: |
+            any::pkgdown
+            any::comprbidity
+            local::.
           needs: website
 
       - name: Build site
@@ -47,3 +50,6 @@ jobs:
           clean: false
           branch: gh-pages
           folder: docs
+
+- name: Build site
+  run: pkgdown::build_site()
