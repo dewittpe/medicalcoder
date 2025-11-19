@@ -21,7 +21,8 @@ comorbidity algorithm.
 - Codes from Table 2 of Quan et al. (2005)
   - `elixhauser_elixhauser1988`: (Elixhauser et al. 1998; Quan et al.
     2005)
-  - `elixhauser_ahrq_web`: (Quan et al. 2005; Cost and (HCUP) 2017)
+  - `elixhauser_ahrq_web`: (Quan et al. 2005; Healthcare Cost and
+    Utilization Project (HCUP) 2017)
   - `elixhauser_quan2005`: (Quan et al. 2005)
 
 **IMPORTANT NOTE:** Elixhauser 1998 and AHRQ Web used diagnostic related
@@ -36,7 +37,7 @@ variants.
 
 ``` r
 str(get_elixhauser_codes())
-## 'data.frame':    10575 obs. of  14 variables:
+## 'data.frame':    10428 obs. of  14 variables:
 ##  $ icdv                     : int  9 9 9 9 9 9 9 9 9 9 ...
 ##  $ dx                       : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ full_code                : chr  "042" "070.22" "070.23" "070.32" ...
@@ -314,14 +315,14 @@ the Elixhauser Quan et al. (2005) comorbidities.
 
 ## References
 
-Cost, Healthcare, and Utilization Project (HCUP). 2017. “Elixhauser
-Comorbidity Software for ICD-9-CM.”
-<https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp>.
-
 Elixhauser, Anne, Claudia Steiner, D Robert Harris, and Rosanna M
 Coffey. 1998. “Comorbidity Measures for Use with Administrative Data.”
 *Medical Care* 36 (1): 8–27.
 <https://doi.org/10.1097/00005650-199801000-00004>.
+
+Healthcare Cost and Utilization Project (HCUP). 2017. “Elixhauser
+Comorbidity Software for ICD-9-CM.”
+<https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp>.
 
 Healthcare Research, Agency for, and Quality (AHRQ). 2025. “Elixhauser
 Comorbidity Software Refined for ICD-10-CM Healthcare Cost and

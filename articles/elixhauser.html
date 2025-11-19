@@ -41,6 +41,9 @@
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>ICD Codes</h6></li>
     <li><a class="dropdown-item" href="../articles/icd.html">ICD Utilities</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>medicalcoder versus ...</h6></li>
+    <li><a class="dropdown-item" href="../articles/medicalcoder-vs-comorbidity.html">R package comorbidity</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -99,7 +102,8 @@ Quality (AHRQ) for fiscal years 2022 through 2025 <span class="citation">(Health
 </li>
 <li>
 <code>elixhauser_ahrq_web</code>: <span class="citation">(Quan et
-al. 2005; Cost and (HCUP) 2017)</span>
+al. 2005; Healthcare Cost and Utilization Project (HCUP)
+2017)</span>
 </li>
 <li>
 <code>elixhauser_quan2005</code>: <span class="citation">(Quan et
@@ -120,7 +124,7 @@ is consistent with the way these methods were implemented in <span class="citati
 variants.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_elixhauser_codes.html">get_elixhauser_codes</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## 'data.frame':    10575 obs. of  14 variables:</span></span>
+<span><span class="co">## 'data.frame':    10428 obs. of  14 variables:</span></span>
 <span><span class="co">##  $ icdv                     : int  9 9 9 9 9 9 9 9 9 9 ...</span></span>
 <span><span class="co">##  $ dx                       : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
 <span><span class="co">##  $ full_code                : chr  "042" "070.22" "070.23" "070.32" ...</span></span>
@@ -877,14 +881,14 @@ WGHTLOSS
 <!--                              End of File                                -->
 <!-- ----------------------------------------------------------------------- -->
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
-<div id="ref-ahrq2017" class="csl-entry">
-Cost, Healthcare, and Utilization Project (HCUP). 2017.
-<span>“Elixhauser Comorbidity Software for ICD-9-CM.”</span> <a href="https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp" class="external-link uri">https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp</a>.
-</div>
 <div id="ref-elixhauser1998" class="csl-entry">
 Elixhauser, Anne, Claudia Steiner, D Robert Harris, and Rosanna M
 Coffey. 1998. <span>“Comorbidity Measures for Use with Administrative
 Data.”</span> <em>Medical Care</em> 36 (1): 8–27. <a href="https://doi.org/10.1097/00005650-199801000-00004" class="external-link">https://doi.org/10.1097/00005650-199801000-00004</a>.
+</div>
+<div id="ref-ahrq2017" class="csl-entry">
+Healthcare Cost and Utilization Project (HCUP). 2017. <span>“Elixhauser
+Comorbidity Software for ICD-9-CM.”</span> <a href="https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp" class="external-link uri">https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp</a>.
 </div>
 <div id="ref-ahrq2025" class="csl-entry">
 Healthcare Research, Agency for, and Quality (AHRQ). 2025.

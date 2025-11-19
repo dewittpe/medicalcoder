@@ -8,5 +8,7 @@
 - [Elixhauser
   Comorbidities](http://www.peteredewitt.com/medicalcoder/articles/elixhauser.md):
 - [ICD Codes](http://www.peteredewitt.com/medicalcoder/articles/icd.md):
+- [medicalcoder vs
+  comorbidity](http://www.peteredewitt.com/medicalcoder/articles/medicalcoder-vs-comorbidity.md):
 - [Pediatric Complex Chronic
   Conditions](http://www.peteredewitt.com/medicalcoder/articles/pccc.md):

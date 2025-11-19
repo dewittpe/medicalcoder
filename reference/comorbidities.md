@@ -40,10 +40,12 @@ comorbidities(
 
 - icd.codes:
 
-  Character scalar naming the column in `data` that contains ICD codes.
-  The codes can be full (with applicable dots, e.g., C84.2), compact
-  (dots omitted, e.g., C842), or a mix of both full and compact codes.
-  Use
+  Character scalar naming the column in `data` that contains ICD codes
+  (character strings). Codes may be provided in full form (with decimal
+  points, e.g., C84.2), compact form (dots omitted, e.g., C842), or any
+  mix of the two. Matching against lookup tables is governed by
+  `icdv.var`/`icdv`, `dx.var`/`dx`, and the `full.codes` /
+  `compact.codes` flags.
 
 - method:
 
@@ -577,15 +579,15 @@ summary(charlson_results)
 #> $conditions
 #>                     condition_description condition count      percent
 #> 1                                AIDS/HIV   aidshiv     7  0.018294914
-#> 2                          Any malignancy       mal  2577  6.735141916
+#> 2                          Any malignancy       mal  2301  6.013799592
 #> 3                 Cerebrovascular disease     cebvd   411  1.074172809
 #> 4               Chronic pulmonary disease      copd  3415  8.925304480
 #> 5                Congestive heart failure       chf   684  1.787674455
 #> 6                                Dementia       dem    13  0.033976269
 #> 7     Diabetes with chronic complications       dmc    13  0.033976269
-#> 8  Diabetes without chronic complications        dm   445  1.163033819
+#> 8  Diabetes without chronic complications        dm   441  1.152579583
 #> 9                Hemiplegia or paraplegia        hp  1177  3.076159113
-#> 10                    Liver disease, mild       mld   663  1.732789713
+#> 10                    Liver disease, mild       mld   593  1.549840573
 #> 11      Liver disease, moderate to severe      msld   206  0.538393184
 #> 12                 Metastatic solid tumor       mst   453  1.183942293
 #> 13                  Myocardial infarction        mi    10  0.026135591
@@ -594,10 +596,10 @@ summary(charlson_results)
 #> 16                          Renal disease       rnd   898  2.346976112
 #> 17                      Rheumatic disease       rhd   136  0.355444044
 #> 18                                   >= 1      <NA>  9841 25.720035544
-#> 19                                   >= 2      <NA>  1368  3.575348910
-#> 20                                   >= 3      <NA>   138  0.360671162
-#> 21                                   >= 4      <NA>    20  0.052271183
-#> 22                                   >= 5      <NA>     3  0.007840677
+#> 19                                   >= 2      <NA>  1075  2.809576081
+#> 20                                   >= 3      <NA>    94  0.245674560
+#> 21                                   >= 4      <NA>     9  0.023522032
+#> 22                                   >= 5      <NA>     1  0.002613559
 #> 
 #> $age_summary
 #>   age_score count percent

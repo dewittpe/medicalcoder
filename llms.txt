@@ -76,27 +76,6 @@ algorithms. `medicalcoder` provides novel features:
   present-on-admission indicators.
 - Fully self-contained package (no external dependencies).
 
-## Benchmarking
-
-The major factors impacting the expected computation time for applying a
-comorbidity algorithm to a data set are:
-
-1.  Data size: number of subjects/encounters.
-2.  Data storage class: `medicalcoder` has been built such that no
-    imports of other namespaces is required. That said, when a
-    `data.table` is passed to
-    [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
-    and the `data.table` namespace is available, then S3 dispatch for
-    `merge` is used, along with some other methods, to reduce memory use
-    and reduce computation time.
-3.  `flag.method`: “current” will take less time than the “cumulative”
-    method.
-
-Details on the benchmarking method, summary graphics, and tables, can be
-found on the `medicalcoder` GitHub
-[benchmarking](https://github.com/dewittpe/medicalcoder/tree/main/benchmarking)
-directory.
-
 ## Install
 
 ### CRAN
@@ -128,72 +107,26 @@ From the command line:
 
     R CMD INSTALL medicalcoder_X.Y.Z.tar.gz
 
-## Tools:
-
-### Comorbidity Algorithms
-
-- Pediatric Complex Chronic Conditions (PCCC)
-
-  - Version 2.0
-    - BMC Pediatrics: [Feudtner et
-      al. (2014)](https://doi.org/10.1186/1471-2431-14-199)
-    - Consistent with R package
-      [pccc](https://cran.r-project.org/package=pccc)
-  - Version 2.1
-    - Updated code base with the same assessment algorithm as version
-      2.0.
-  - Version 3.0
-    - JAMA Network Open: [Feinstein et
-      al. (2024)](https://doi.org/10.1001/jamanetworkopen.2024.20579)
-    - Children’s Hospital Association
-      [Toolkit](https://www.childrenshospitals.org/content/analytics/toolkit/complex-chronic-conditions)
-  - Version 3.1
-    - Updated code base with same assessment algorithm as version 3.0.
-
-- Charlson Comorbidities
-
-  - [Deyo, Cherkin, and Ciol
-    (1992)](https://doi.org/10.1016/0895-4356(92)90133-8)
-  - [Quan et
-    al. (2005)](https://doi.org/10.1097/01.mlr.0000182534.19832.83)
-  - [Quan et al. (2011)](https://doi.org/10.1093/aje/kwq433)
-  - [Glasheen (2019)](https://pubmed.ncbi.nlm.nih.gov/31428236/)
-
-- Elixhauser Comorbidities
-
-  - [Elixhauser et
-    al. (1998)](https://doi.org/10.1097/00005650-199801000-00004)
-  - [Quan et
-    al. (2005)](https://doi.org/10.1097/01.mlr.0000182534.19832.83)
-  - AHRQ (2017, 2022, 2023, 2024, 2025)
-    - [For ICD-9
-      codes](https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp)
-    - [For ICD-10
-      codes](https://hcup-us.ahrq.gov/toolssoftware/comorbidityicd10/comorbidity_icd10.jsp)
-
-All of the methods are available from the same function call
-[`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md).
-There is support for age scores in Charlson, present on admission flags
-for all methods, and support for longitudinal data.
-
-See more examples in the vignettes.
-
-``` r
-vignette(topic = "comorbidities", package = "medicalcoder")
-vignette(topic = "pccc", package = "medicalcoder")
-vignette(topic = "charlson", package = "medicalcoder")
-vignette(topic = "elixhauser", package = "medicalcoder")
-```
+## Quick Start:
 
 ### Example Data
 
 Input data for
 [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
 is expected to be in a ‘long’ format. Each row is one code with
-additional columns for patient and/or encounter id.
+additional columns for patient and/or encounter id. There are two
+example data sets in the package: `mdcr` and `mdcr_longitudinal`.
 
 ``` r
 data(mdcr, mdcr_longitudinal, package = "medicalcoder")
+```
+
+The `mdcr` data set consists of 319 856 rows. Each row contains one ICD
+code (`code`). The column `icdv` denotes each code as ICD-9 or ICD-10,
+and the `dx` column denotes diagnostic (1) or procedure (0) code. This
+data set contains diagnostic and procedure codes for 38 262 patients.
+
+``` r
 str(mdcr)
 #> 'data.frame':    319856 obs. of  4 variables:
 #>  $ patid: int  71412 71412 71412 71412 71412 17087 64424 64424 84361 84361 ...
@@ -208,6 +141,20 @@ head(mdcr)
 #> 4 71412    9 V5865  1
 #> 5 71412    9  V427  1
 #> 6 17087   10  V441  1
+```
+
+The `mdcr_longitudinal` data set is distinct from the `mdcr` data set.
+The major difference is that this set are all diagnostic codes and there
+are only 3 patients. The `date` column denote the date of the diagnosis
+and allows for us to look at the change in comorbidities over time.
+
+``` r
+str(mdcr_longitudinal)
+#> 'data.frame':    60 obs. of  4 variables:
+#>  $ patid: int  9663901 9663901 9663901 9663901 9663901 9663901 9663901 9663901 9663901 9663901 ...
+#>  $ date : IDate, format: "2016-03-18" "2016-03-24" ...
+#>  $ icdv : int  10 10 10 10 10 10 10 10 10 10 ...
+#>  $ code : chr  "Z77.22" "IMO0002" "V87.7XXA" "J95.851" ...
 head(mdcr_longitudinal)
 #>     patid       date icdv     code
 #> 1 9663901 2016-03-18   10   Z77.22
@@ -216,6 +163,193 @@ head(mdcr_longitudinal)
 #> 4 9663901 2016-03-25   10  J95.851
 #> 5 9663901 2016-03-30   10  IMO0002
 #> 6 9663901 2016-03-30   10    Z93.0
+```
+
+### Comorbidity Algorithms
+
+There are three comorbidity methods, each with several variants,
+available in `medicalcoder`. All of which are accessible through the
+[`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+method by specifying the `method` argument.
+
+General examples and explanations for when conditions are flagged are in
+the vignette
+
+``` r
+vignette(topic = "comorbidities", package = "medicalcoder")
+```
+
+#### Pediatric Complex Chronic Conditions (PCCC)
+
+- Version 2.0
+  - BMC Pediatrics: [Feudtner et
+    al. (2014)](https://doi.org/10.1186/1471-2431-14-199)
+  - Consistent with R package
+    [pccc](https://cran.r-project.org/package=pccc)
+- Version 2.1
+  - Updated code base with the same assessment algorithm as version 2.0.
+- Version 3.0
+  - JAMA Network Open: [Feinstein et
+    al. (2024)](https://doi.org/10.1001/jamanetworkopen.2024.20579)
+  - Children’s Hospital Association
+    [Toolkit](https://www.childrenshospitals.org/content/analytics/toolkit/complex-chronic-conditions)
+- Version 3.1
+  - Updated code base with same assessment algorithm as version 3.0.
+- All variants can flag conditions and subconditions.
+
+``` r
+# PCCC v3.1 example
+library(medicalcoder)
+cmrbs2 <-
+  comorbidities(
+    data = mdcr,
+    id.vars = "patid", # can use more than one column, e.g., site, patient, encounter
+    icd.codes = "code",
+    dx.var = "dx",
+    poa = 1,  # consider all codes to be present on admission
+    method = "pccc_v2.1"
+  )
+cmrbs3 <-
+  comorbidities(
+    data = mdcr,
+    id.vars = "patid",
+    icd.codes = "code",
+    dx.var = "dx",
+    poa = 1,  # consider all codes to be present on admission
+    method = "pccc_v3.1"
+  )
+str(cmrbs2, max.level = 0)
+#> Classes 'medicalcoder_comorbidities' and 'data.frame':   38262 obs. of  16 variables:
+#>  - attr(*, "method")= chr "pccc_v2.1"
+#>  - attr(*, "id.vars")= chr "patid"
+#>  - attr(*, "flag.method")= chr "current"
+str(cmrbs3, max.level = 0)
+#> Classes 'medicalcoder_comorbidities' and 'data.frame':   38262 obs. of  49 variables:
+#>  - attr(*, "method")= chr "pccc_v3.1"
+#>  - attr(*, "id.vars")= chr "patid"
+#>  - attr(*, "flag.method")= chr "current"
+```
+
+A summary of the flagged conditions is generated with a call to
+[`summary()`](https://rdrr.io/r/base/summary.html).
+
+``` r
+s2 <- summary(cmrbs2)
+str(s2)
+```
+
+For `pccc_v2.0` and `pccc_v2.1` the `data.frame` returned by
+[`summary()`](https://rdrr.io/r/base/summary.html) reports the count
+(unique `id.vars` with the condition) and percentage.
+
+``` r
+s3 <- summary(cmrbs3)
+str(s3)
+```
+
+For `pccc_v3.0` and `pccc_v3.1` the returned `data.frame` reports counts
+and percentages for how the condition was flagged based on
+diagnosis/procedure codes only, technology dependent codes only, or
+both. The `dxpr_or_tech` columns answer the question “did this patient
+have the condition”.
+
+Further detail, examples, and explanations are in the vignette.
+
+``` r
+vignette(topic = "pccc", package = "medicalcoder")
+```
+
+#### Charlson Comorbidities
+
+There are four variants of Charlson comorbidities implemented in
+`medicalcoder`
+
+- [Deyo, Cherkin, and Ciol
+  (1992)](https://doi.org/10.1016/0895-4356(92)90133-8)
+- [Quan et
+  al. (2005)](https://doi.org/10.1097/01.mlr.0000182534.19832.83)
+- [Quan et al. (2011)](https://doi.org/10.1093/aje/kwq433)
+- [Glasheen (2019)](https://pubmed.ncbi.nlm.nih.gov/31428236/)
+
+``` r
+# Charlson example
+cmrbs <-
+  comorbidities(
+    data = mdcr,
+    id.vars = "patid",
+    icd.codes = "code",
+    dx.var = "dx",
+    poa = 1,        # assume all codes are present on admission
+    primarydx = 0L, # assume all codes are secondary diagnosis codes
+    method = "charlson_quan2005"
+  )
+```
+
+A summary of the flagged conditions can be generated by calling
+[`summary()`](https://rdrr.io/r/base/summary.html). Where the summary
+for the PCCC method was a `data.frame` the return for the Charlson
+comorbidities is a list of data frames summarizing the conditions, age
+category, and the index score.
+
+``` r
+s <- summary(cmrbs)
+str(s, max.level = 1)
+```
+
+More details and examples are provided in the vignette:
+
+``` r
+vignette(topic = "charlson", package = "medicalcoder")
+```
+
+#### Elixhauser Comorbidities
+
+- [Elixhauser et
+  al. (1998)](https://doi.org/10.1097/00005650-199801000-00004)
+  - `method = elixhauser_elixhauser1988`
+- [Quan et
+  al. (2005)](https://doi.org/10.1097/01.mlr.0000182534.19832.83)
+  - `method = elixhauser_quan2005`
+- AHRQ (2017, 2022, 2023, 2024, 2025, ICD10)
+  - [For ICD-9
+    codes](https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp)
+    - `method = elixhauser_ahrq_web`
+  - [For ICD-10
+    codes](https://hcup-us.ahrq.gov/toolssoftware/comorbidityicd10/comorbidity_icd10.jsp)
+    - `method = elixhauser_ahrq2022`
+    - `method = elixhauser_ahrq2023`
+    - `method = elixhauser_ahrq2024`
+    - `method = elixhauser_ahrq2025`
+    - `method = elixhauser_ahrq_icd10`
+
+``` r
+# Elixhauser example
+cmrbs <-
+  comorbidities(
+    data = mdcr,
+    id.vars = "patid",
+    icd.codes = "code",
+    dx.var = "dx",
+    poa = 1,
+    primarydx = 0L,
+    method = "elixhauser_ahrq_icd10"
+  )
+```
+
+The summary for the results from elixhauser_ahrq_icd10 are similar to
+those for Charlson. A `data.frame` with the counts and percentages of
+distinct `data[id.vars]` with the noted condition, and a summary of the
+index scores.
+
+``` r
+s <- summary(cmrbs)
+str(s, max.level = 1)
+```
+
+More details and examples are provided in the vignette:
+
+``` r
+vignette(topic = "elixhauser", package = "medicalcoder")
 ```
 
 ### ICD
@@ -334,6 +468,29 @@ More details and examples are in the vignette:
 vignette(topic = "icd", package = "medicalcoder")
 ```
 
+## Benchmarking
+
+The major factors impacting the expected computation time for applying a
+comorbidity algorithm to a data set are:
+
+1.  Data size: number of subjects/encounters.
+2.  Data storage class: `medicalcoder` has been built such that no
+    imports of other namespaces is required. That said, when a
+    `data.table` is passed to
+    [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+    and the `data.table` namespace is available, then S3 dispatch for
+    `merge` is used, along with some other methods, to reduce memory use
+    and reduce computation time.
+3.  `flag.method`: “current” will take less time than the “cumulative”
+    method.
+
+Details on the benchmarking method, summary graphics, and tables, can be
+found on the `medicalcoder` GitHub
+[benchmarking](https://github.com/dewittpe/medicalcoder/tree/main/benchmarking)
+directory.
+
+## Testing
+
 # Package index
 
 ## All functions
@@ -381,5 +538,7 @@ vignette(topic = "icd", package = "medicalcoder")
 - [Elixhauser
   Comorbidities](http://www.peteredewitt.com/medicalcoder/articles/elixhauser.md):
 - [ICD Codes](http://www.peteredewitt.com/medicalcoder/articles/icd.md):
+- [medicalcoder vs
+  comorbidity](http://www.peteredewitt.com/medicalcoder/articles/medicalcoder-vs-comorbidity.md):
 - [Pediatric Complex Chronic
   Conditions](http://www.peteredewitt.com/medicalcoder/articles/pccc.md):

@@ -41,6 +41,9 @@
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>ICD Codes</h6></li>
     <li><a class="dropdown-item" href="../articles/icd.html">ICD Utilities</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>medicalcoder versus ...</h6></li>
+    <li><a class="dropdown-item" href="../articles/medicalcoder-vs-comorbidity.html">R package comorbidity</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -83,7 +86,7 @@
 the Charlson comorbidities algorithm.</p>
 <ul>
 <li>
-<code>charslon_deyo1992</code>: Deyo’s original set of codes <span class="citation">(Deyo, Cherkin, and Ciol 1992; Quan et al.
+<code>charlson_deyo1992</code>: Deyo’s original set of codes <span class="citation">(Deyo, Cherkin, and Ciol 1992; Quan et al.
 2005)</span>
 </li>
 <li>
@@ -155,7 +158,7 @@ comorbidity, and <code>cci</code> the Charlson Comorbidity Index.</p>
 <span><span class="co">## Classes 'medicalcoder_comorbidities' and 'data.frame':   38262 obs. of  22 variables:</span></span>
 <span><span class="co">##  $ patid    : int  10000 10002 10005 10006 10008 10010 10014 10015 10017 10018 ...</span></span>
 <span><span class="co">##  $ aidshiv  : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ mal      : int  0 0 1 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ mal      : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span><span class="co">##  $ cebvd    : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span><span class="co">##  $ copd     : int  1 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span><span class="co">##  $ chf      : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
@@ -171,7 +174,7 @@ comorbidity, and <code>cci</code> the Charlson Comorbidity Index.</p>
 <span><span class="co">##  $ pvd      : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span><span class="co">##  $ rnd      : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span><span class="co">##  $ rhd      : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ num_cmrb : int  1 0 2 0 0 0 0 1 0 0 ...</span></span>
+<span><span class="co">##  $ num_cmrb : int  1 0 1 0 0 0 0 1 0 0 ...</span></span>
 <span><span class="co">##  $ cmrb_flag: int  1 0 1 0 0 0 0 1 0 0 ...</span></span>
 <span><span class="co">##  $ cci      : int  1 0 6 0 0 0 0 2 0 0 ...</span></span>
 <span><span class="co">##  $ age_score: int  NA NA NA NA NA NA NA NA NA NA ...</span></span>
@@ -187,8 +190,8 @@ user’s liking.</p>
 <span><span class="co">##  $ conditions   :'data.frame':   22 obs. of  4 variables:</span></span>
 <span><span class="co">##   ..$ condition_description: chr [1:22] "AIDS/HIV" "Any malignancy" "Cerebrovascular disease" "Chronic pulmonary disease" ...</span></span>
 <span><span class="co">##   ..$ condition            : chr [1:22] "aidshiv" "mal" "cebvd" "copd" ...</span></span>
-<span><span class="co">##   ..$ count                : num [1:22] 7 2577 411 3415 684 ...</span></span>
-<span><span class="co">##   ..$ percent              : num [1:22] 0.0183 6.7351 1.0742 8.9253 1.7877 ...</span></span>
+<span><span class="co">##   ..$ count                : num [1:22] 7 2301 411 3415 684 ...</span></span>
+<span><span class="co">##   ..$ percent              : num [1:22] 0.0183 6.0138 1.0742 8.9253 1.7877 ...</span></span>
 <span><span class="co">##  $ age_summary  :'data.frame':   1 obs. of  3 variables:</span></span>
 <span><span class="co">##   ..$ age_score: Factor w/ 0 levels: NA</span></span>
 <span><span class="co">##   ..$ count    : int 38262</span></span>
@@ -236,10 +239,10 @@ AIDS/HIV
 Any malignancy
 </td>
 <td style="text-align:right;">
-2577
+2301
 </td>
 <td style="text-align:right;">
-6.735
+6.014
 </td>
 </tr>
 <tr>
@@ -302,10 +305,10 @@ Diabetes with chronic complications
 Diabetes without chronic complications
 </td>
 <td style="text-align:right;">
-445
+441
 </td>
 <td style="text-align:right;">
-1.163
+1.153
 </td>
 </tr>
 <tr>
@@ -324,10 +327,10 @@ Hemiplegia or paraplegia
 Liver disease, mild
 </td>
 <td style="text-align:right;">
-632
+562
 </td>
 <td style="text-align:right;">
-1.652
+1.469
 </td>
 </tr>
 <tr>
@@ -428,10 +431,10 @@ Rheumatic disease
 &gt;= 2
 </td>
 <td style="text-align:right;">
-1368
+1075
 </td>
 <td style="text-align:right;">
-3.575
+2.810
 </td>
 </tr>
 <tr>
@@ -439,10 +442,10 @@ Rheumatic disease
 &gt;= 3
 </td>
 <td style="text-align:right;">
-138
+94
 </td>
 <td style="text-align:right;">
-0.361
+0.246
 </td>
 </tr>
 <tr>
@@ -450,10 +453,10 @@ Rheumatic disease
 &gt;= 4
 </td>
 <td style="text-align:right;">
-20
+9
 </td>
 <td style="text-align:right;">
-0.052
+0.024
 </td>
 </tr>
 <tr>
@@ -461,10 +464,10 @@ Rheumatic disease
 &gt;= 5
 </td>
 <td style="text-align:right;">
-3
+1
 </td>
 <td style="text-align:right;">
-0.008
+0.003
 </td>
 </tr>
 </tbody>

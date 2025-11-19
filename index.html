@@ -43,6 +43,9 @@
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>ICD Codes</h6></li>
     <li><a class="dropdown-item" href="articles/icd.html">ICD Utilities</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>medicalcoder versus ...</h6></li>
+    <li><a class="dropdown-item" href="articles/medicalcoder-vs-comorbidity.html">R package comorbidity</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
@@ -123,18 +126,6 @@
 </ul>
 </div>
 <div class="section level2">
-<h2 id="benchmarking">Benchmarking<a class="anchor" aria-label="anchor" href="#benchmarking"></a>
-</h2>
-<p>The major factors impacting the expected computation time for applying a comorbidity algorithm to a data set are:</p>
-<ol style="list-style-type: decimal">
-<li>Data size: number of subjects/encounters.</li>
-<li>Data storage class: <code>medicalcoder</code> has been built such that no imports of other namespaces is required. That said, when a <code>data.table</code> is passed to <code><a href="reference/comorbidities.html">comorbidities()</a></code> and the <code>data.table</code> namespace is available, then S3 dispatch for <code>merge</code> is used, along with some other methods, to reduce memory use and reduce computation time.</li>
-<li>
-<code>flag.method</code>: “current” will take less time than the “cumulative” method.</li>
-</ol>
-<p>Details on the benchmarking method, summary graphics, and tables, can be found on the <code>medicalcoder</code> GitHub <a href="https://github.com/dewittpe/medicalcoder/tree/main/benchmarking" class="external-link">benchmarking</a> directory.</p>
-</div>
-<div class="section level2">
 <h2 id="install">Install<a class="anchor" aria-label="anchor" href="#install"></a>
 </h2>
 <div class="section level3">
@@ -164,14 +155,57 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="tools">Tools:<a class="anchor" aria-label="anchor" href="#tools"></a>
+<h2 id="quick-start">Quick Start:<a class="anchor" aria-label="anchor" href="#quick-start"></a>
 </h2>
+<div class="section level3">
+<h3 id="example-data">Example Data<a class="anchor" aria-label="anchor" href="#example-data"></a>
+</h3>
+<p>Input data for <code><a href="reference/comorbidities.html">comorbidities()</a></code> is expected to be in a ‘long’ format. Each row is one code with additional columns for patient and/or encounter id. There are two example data sets in the package: <code>mdcr</code> and <code>mdcr_longitudinal</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">mdcr</span>, <span class="va">mdcr_longitudinal</span>, package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span></span></code></pre></div>
+<p>The <code>mdcr</code> data set consists of 319 856 rows. Each row contains one ICD code (<code>code</code>). The column <code>icdv</code> denotes each code as ICD-9 or ICD-10, and the <code>dx</code> column denotes diagnostic (1) or procedure (0) code. This data set contains diagnostic and procedure codes for 38 262 patients.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mdcr</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 'data.frame':    319856 obs. of  4 variables:</span></span>
+<span><span class="co">#&gt;  $ patid: int  71412 71412 71412 71412 71412 17087 64424 64424 84361 84361 ...</span></span>
+<span><span class="co">#&gt;  $ icdv : int  9 9 9 9 9 10 9 9 9 9 ...</span></span>
+<span><span class="co">#&gt;  $ code : chr  "99931" "75169" "99591" "V5865" ...</span></span>
+<span><span class="co">#&gt;  $ dx   : int  1 1 1 1 1 1 1 0 1 1 ...</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mdcr</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   patid icdv  code dx</span></span>
+<span><span class="co">#&gt; 1 71412    9 99931  1</span></span>
+<span><span class="co">#&gt; 2 71412    9 75169  1</span></span>
+<span><span class="co">#&gt; 3 71412    9 99591  1</span></span>
+<span><span class="co">#&gt; 4 71412    9 V5865  1</span></span>
+<span><span class="co">#&gt; 5 71412    9  V427  1</span></span>
+<span><span class="co">#&gt; 6 17087   10  V441  1</span></span></code></pre></div>
+<p>The <code>mdcr_longitudinal</code> data set is distinct from the <code>mdcr</code> data set. The major difference is that this set are all diagnostic codes and there are only 3 patients. The <code>date</code> column denote the date of the diagnosis and allows for us to look at the change in comorbidities over time.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mdcr_longitudinal</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 'data.frame':    60 obs. of  4 variables:</span></span>
+<span><span class="co">#&gt;  $ patid: int  9663901 9663901 9663901 9663901 9663901 9663901 9663901 9663901 9663901 9663901 ...</span></span>
+<span><span class="co">#&gt;  $ date : IDate, format: "2016-03-18" "2016-03-24" ...</span></span>
+<span><span class="co">#&gt;  $ icdv : int  10 10 10 10 10 10 10 10 10 10 ...</span></span>
+<span><span class="co">#&gt;  $ code : chr  "Z77.22" "IMO0002" "V87.7XXA" "J95.851" ...</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mdcr_longitudinal</span><span class="op">)</span></span>
+<span><span class="co">#&gt;     patid       date icdv     code</span></span>
+<span><span class="co">#&gt; 1 9663901 2016-03-18   10   Z77.22</span></span>
+<span><span class="co">#&gt; 2 9663901 2016-03-24   10  IMO0002</span></span>
+<span><span class="co">#&gt; 3 9663901 2016-03-24   10 V87.7XXA</span></span>
+<span><span class="co">#&gt; 4 9663901 2016-03-25   10  J95.851</span></span>
+<span><span class="co">#&gt; 5 9663901 2016-03-30   10  IMO0002</span></span>
+<span><span class="co">#&gt; 6 9663901 2016-03-30   10    Z93.0</span></span></code></pre></div>
+</div>
 <div class="section level3">
 <h3 id="comorbidity-algorithms">Comorbidity Algorithms<a class="anchor" aria-label="anchor" href="#comorbidity-algorithms"></a>
 </h3>
-<ul>
-<li>
-<p>Pediatric Complex Chronic Conditions (PCCC)</p>
+<p>There are three comorbidity methods, each with several variants, available in <code>medicalcoder</code>. All of which are accessible through the <code><a href="reference/comorbidities.html">comorbidities()</a></code> method by specifying the <code>method</code> argument.</p>
+<p>General examples and explanations for when conditions are flagged are in the vignette</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"comorbidities"</span>, package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span></span></code></pre></div>
+<div class="section level4">
+<h4 id="pediatric-complex-chronic-conditions-pccc">Pediatric Complex Chronic Conditions (PCCC)<a class="anchor" aria-label="anchor" href="#pediatric-complex-chronic-conditions-pccc"></a>
+</h4>
 <ul>
 <li>Version 2.0
 <ul>
@@ -199,74 +233,146 @@
 <li>Updated code base with same assessment algorithm as version 3.0.</li>
 </ul>
 </li>
+<li>All variants can flag conditions and subconditions.</li>
 </ul>
-</li>
-<li>
-<p>Charlson Comorbidities</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># PCCC v3.1 example</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.peteredewitt.com/medicalcoder/">medicalcoder</a></span><span class="op">)</span></span>
+<span><span class="va">cmrbs2</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">mdcr</span>,</span>
+<span>    id.vars <span class="op">=</span> <span class="st">"patid"</span>, <span class="co"># can use more than one column, e.g., site, patient, encounter</span></span>
+<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>    poa <span class="op">=</span> <span class="fl">1</span>,  <span class="co"># consider all codes to be present on admission</span></span>
+<span>    method <span class="op">=</span> <span class="st">"pccc_v2.1"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="va">cmrbs3</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">mdcr</span>,</span>
+<span>    id.vars <span class="op">=</span> <span class="st">"patid"</span>,</span>
+<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>    poa <span class="op">=</span> <span class="fl">1</span>,  <span class="co"># consider all codes to be present on admission</span></span>
+<span>    method <span class="op">=</span> <span class="st">"pccc_v3.1"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">cmrbs2</span>, max.level <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Classes 'medicalcoder_comorbidities' and 'data.frame':   38262 obs. of  16 variables:</span></span>
+<span><span class="co">#&gt;  - attr(*, "method")= chr "pccc_v2.1"</span></span>
+<span><span class="co">#&gt;  - attr(*, "id.vars")= chr "patid"</span></span>
+<span><span class="co">#&gt;  - attr(*, "flag.method")= chr "current"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">cmrbs3</span>, max.level <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Classes 'medicalcoder_comorbidities' and 'data.frame':   38262 obs. of  49 variables:</span></span>
+<span><span class="co">#&gt;  - attr(*, "method")= chr "pccc_v3.1"</span></span>
+<span><span class="co">#&gt;  - attr(*, "id.vars")= chr "patid"</span></span>
+<span><span class="co">#&gt;  - attr(*, "flag.method")= chr "current"</span></span></code></pre></div>
+<p>A summary of the flagged conditions is generated with a call to <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">s2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cmrbs2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">s2</span><span class="op">)</span></span></code></pre></div>
+<p>For <code>pccc_v2.0</code> and <code>pccc_v2.1</code> the <code>data.frame</code> returned by <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> reports the count (unique <code>id.vars</code> with the condition) and percentage.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">s3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cmrbs3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">s3</span><span class="op">)</span></span></code></pre></div>
+<p>For <code>pccc_v3.0</code> and <code>pccc_v3.1</code> the returned <code>data.frame</code> reports counts and percentages for how the condition was flagged based on diagnosis/procedure codes only, technology dependent codes only, or both. The <code>dxpr_or_tech</code> columns answer the question “did this patient have the condition”.</p>
+<p>Further detail, examples, and explanations are in the vignette.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"pccc"</span>, package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="charlson-comorbidities">Charlson Comorbidities<a class="anchor" aria-label="anchor" href="#charlson-comorbidities"></a>
+</h4>
+<p>There are four variants of Charlson comorbidities implemented in <code>medicalcoder</code></p>
 <ul>
 <li><a href="https://doi.org/10.1016/0895-4356(92)90133-8" class="external-link">Deyo, Cherkin, and Ciol (1992)</a></li>
 <li><a href="https://doi.org/10.1097/01.mlr.0000182534.19832.83" class="external-link">Quan et al. (2005)</a></li>
 <li><a href="https://doi.org/10.1093/aje/kwq433" class="external-link">Quan et al. (2011)</a></li>
 <li><a href="https://pubmed.ncbi.nlm.nih.gov/31428236/" class="external-link">Glasheen (2019)</a></li>
 </ul>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Charlson example</span></span>
+<span><span class="va">cmrbs</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">mdcr</span>,</span>
+<span>    id.vars <span class="op">=</span> <span class="st">"patid"</span>,</span>
+<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>    poa <span class="op">=</span> <span class="fl">1</span>,        <span class="co"># assume all codes are present on admission</span></span>
+<span>    primarydx <span class="op">=</span> <span class="fl">0L</span>, <span class="co"># assume all codes are secondary diagnosis codes</span></span>
+<span>    method <span class="op">=</span> <span class="st">"charlson_quan2005"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>A summary of the flagged conditions can be generated by calling <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>. Where the summary for the PCCC method was a <code>data.frame</code> the return for the Charlson comorbidities is a list of data frames summarizing the conditions, age category, and the index score.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cmrbs</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">s</span>, max.level <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<p>More details and examples are provided in the vignette:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"charlson"</span>, package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="elixhauser-comorbidities">Elixhauser Comorbidities<a class="anchor" aria-label="anchor" href="#elixhauser-comorbidities"></a>
+</h4>
+<ul>
+<li>
+<a href="https://doi.org/10.1097/00005650-199801000-00004" class="external-link">Elixhauser et al. (1998)</a>
+<ul>
+<li><code>method = elixhauser_elixhauser1988</code></li>
+</ul>
 </li>
 <li>
-<p>Elixhauser Comorbidities</p>
+<a href="https://doi.org/10.1097/01.mlr.0000182534.19832.83" class="external-link">Quan et al. (2005)</a>
 <ul>
-<li><a href="https://doi.org/10.1097/00005650-199801000-00004" class="external-link">Elixhauser et al. (1998)</a></li>
-<li><a href="https://doi.org/10.1097/01.mlr.0000182534.19832.83" class="external-link">Quan et al. (2005)</a></li>
-<li>AHRQ (2017, 2022, 2023, 2024, 2025)
+<li><code>method = elixhauser_quan2005</code></li>
+</ul>
+</li>
+<li>AHRQ (2017, 2022, 2023, 2024, 2025, ICD10)
 <ul>
-<li><a href="https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp" class="external-link">For ICD-9 codes</a></li>
-<li><a href="https://hcup-us.ahrq.gov/toolssoftware/comorbidityicd10/comorbidity_icd10.jsp" class="external-link">For ICD-10 codes</a></li>
+<li>
+<a href="https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp" class="external-link">For ICD-9 codes</a>
+<ul>
+<li><code>method = elixhauser_ahrq_web</code></li>
+</ul>
+</li>
+<li>
+<a href="https://hcup-us.ahrq.gov/toolssoftware/comorbidityicd10/comorbidity_icd10.jsp" class="external-link">For ICD-10 codes</a>
+<ul>
+<li><code>method = elixhauser_ahrq2022</code></li>
+<li><code>method = elixhauser_ahrq2023</code></li>
+<li><code>method = elixhauser_ahrq2024</code></li>
+<li><code>method = elixhauser_ahrq2025</code></li>
+<li><code>method = elixhauser_ahrq_icd10</code></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<p>All of the methods are available from the same function call <code><a href="reference/comorbidities.html">comorbidities()</a></code>. There is support for age scores in Charlson, present on admission flags for all methods, and support for longitudinal data.</p>
-<p>See more examples in the vignettes.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"comorbidities"</span>, package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"pccc"</span>, package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"charlson"</span>, package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"elixhauser"</span>, package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Elixhauser example</span></span>
+<span><span class="va">cmrbs</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">mdcr</span>,</span>
+<span>    id.vars <span class="op">=</span> <span class="st">"patid"</span>,</span>
+<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>    poa <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    primarydx <span class="op">=</span> <span class="fl">0L</span>,</span>
+<span>    method <span class="op">=</span> <span class="st">"elixhauser_ahrq_icd10"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>The summary for the results from elixhauser_ahrq_icd10 are similar to those for Charlson. A <code>data.frame</code> with the counts and percentages of distinct <code>data[id.vars]</code> with the noted condition, and a summary of the index scores.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cmrbs</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">s</span>, max.level <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<p>More details and examples are provided in the vignette:</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"elixhauser"</span>, package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="example-data">Example Data<a class="anchor" aria-label="anchor" href="#example-data"></a>
-</h3>
-<p>Input data for <code><a href="reference/comorbidities.html">comorbidities()</a></code> is expected to be in a ‘long’ format. Each row is one code with additional columns for patient and/or encounter id.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">mdcr</span>, <span class="va">mdcr_longitudinal</span>, package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mdcr</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'data.frame':    319856 obs. of  4 variables:</span></span>
-<span><span class="co">#&gt;  $ patid: int  71412 71412 71412 71412 71412 17087 64424 64424 84361 84361 ...</span></span>
-<span><span class="co">#&gt;  $ icdv : int  9 9 9 9 9 10 9 9 9 9 ...</span></span>
-<span><span class="co">#&gt;  $ code : chr  "99931" "75169" "99591" "V5865" ...</span></span>
-<span><span class="co">#&gt;  $ dx   : int  1 1 1 1 1 1 1 0 1 1 ...</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mdcr</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   patid icdv  code dx</span></span>
-<span><span class="co">#&gt; 1 71412    9 99931  1</span></span>
-<span><span class="co">#&gt; 2 71412    9 75169  1</span></span>
-<span><span class="co">#&gt; 3 71412    9 99591  1</span></span>
-<span><span class="co">#&gt; 4 71412    9 V5865  1</span></span>
-<span><span class="co">#&gt; 5 71412    9  V427  1</span></span>
-<span><span class="co">#&gt; 6 17087   10  V441  1</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mdcr_longitudinal</span><span class="op">)</span></span>
-<span><span class="co">#&gt;     patid       date icdv     code</span></span>
-<span><span class="co">#&gt; 1 9663901 2016-03-18   10   Z77.22</span></span>
-<span><span class="co">#&gt; 2 9663901 2016-03-24   10  IMO0002</span></span>
-<span><span class="co">#&gt; 3 9663901 2016-03-24   10 V87.7XXA</span></span>
-<span><span class="co">#&gt; 4 9663901 2016-03-25   10  J95.851</span></span>
-<span><span class="co">#&gt; 5 9663901 2016-03-30   10  IMO0002</span></span>
-<span><span class="co">#&gt; 6 9663901 2016-03-30   10    Z93.0</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="icd">ICD<a class="anchor" aria-label="anchor" href="#icd"></a>
 </h3>
 <p>The package contains internal data sets with references for ICD-9 and ICD-10 US based diagnostic and procedure codes. These codes are supplemented with additional codes from the World Health Organization.</p>
 <p>You can get a table of ICD codes via <code><a href="reference/get_icd_codes.html">get_icd_codes()</a></code>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">medicalcoder</span><span class="fu">::</span><span class="fu"><a href="reference/get_icd_codes.html">get_icd_codes</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 'data.frame':    227534 obs. of  9 variables:</span></span>
 <span><span class="co">#&gt;  $ icdv            : int  9 9 9 9 9 9 9 9 9 9 ...</span></span>
@@ -312,7 +418,7 @@
 </ul>
 </li>
 </ul>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="fu"><a href="reference/lookup_icd_codes.html">lookup_icd_codes</a></span><span class="op">(</span><span class="st">"^Z94"</span>, regex <span class="op">=</span> <span class="cn">TRUE</span>, full.codes <span class="op">=</span> <span class="cn">TRUE</span>, compact.codes <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
 <span>  subset <span class="op">=</span> <span class="va">src</span> <span class="op">==</span> <span class="st">"cms"</span>,</span>
@@ -338,9 +444,25 @@
 <p>Additionally, the <code><a href="reference/get_icd_codes.html">get_icd_codes()</a></code> method can provide descriptions and the ICD hierarchy by using the <code>with.descriptions</code> and/or <code>with.hierarchy</code> arguments.</p>
 <p>Functions <code><a href="reference/lookup_icd_codes.html">lookup_icd_codes()</a></code>, <code><a href="reference/is_icd.html">is_icd()</a></code>, and <code><a href="reference/icd_compact_to_full.html">icd_compact_to_full()</a></code> are also provided for working with ICD codes.</p>
 <p>More details and examples are in the vignette:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"icd"</span>, package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span></span></code></pre></div>
 </div>
+</div>
+<div class="section level2">
+<h2 id="benchmarking">Benchmarking<a class="anchor" aria-label="anchor" href="#benchmarking"></a>
+</h2>
+<p>The major factors impacting the expected computation time for applying a comorbidity algorithm to a data set are:</p>
+<ol style="list-style-type: decimal">
+<li>Data size: number of subjects/encounters.</li>
+<li>Data storage class: <code>medicalcoder</code> has been built such that no imports of other namespaces is required. That said, when a <code>data.table</code> is passed to <code><a href="reference/comorbidities.html">comorbidities()</a></code> and the <code>data.table</code> namespace is available, then S3 dispatch for <code>merge</code> is used, along with some other methods, to reduce memory use and reduce computation time.</li>
+<li>
+<code>flag.method</code>: “current” will take less time than the “cumulative” method.</li>
+</ol>
+<p>Details on the benchmarking method, summary graphics, and tables, can be found on the <code>medicalcoder</code> GitHub <a href="https://github.com/dewittpe/medicalcoder/tree/main/benchmarking" class="external-link">benchmarking</a> directory.</p>
+</div>
+<div class="section level2">
+<h2 id="testing">Testing<a class="anchor" aria-label="anchor" href="#testing"></a>
+</h2>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

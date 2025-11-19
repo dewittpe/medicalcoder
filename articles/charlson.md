@@ -11,7 +11,7 @@ packageVersion("medicalcoder")
 The `medicalcoder` package implements several variants of the Charlson
 comorbidities algorithm.
 
-- `charslon_deyo1992`: Deyo’s original set of codes (Deyo, Cherkin, and
+- `charlson_deyo1992`: Deyo’s original set of codes (Deyo, Cherkin, and
   Ciol 1992; Quan et al. 2005)
 - `charlson_quan2005` and `charlson_quan2011`: Codes and index scoring
   (Quan et al. 2005, 2011)
@@ -80,7 +80,7 @@ str(mdcr_results)
 ## Classes 'medicalcoder_comorbidities' and 'data.frame':   38262 obs. of  22 variables:
 ##  $ patid    : int  10000 10002 10005 10006 10008 10010 10014 10015 10017 10018 ...
 ##  $ aidshiv  : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ mal      : int  0 0 1 0 0 0 0 0 0 0 ...
+##  $ mal      : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ cebvd    : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ copd     : int  1 0 0 0 0 0 0 0 0 0 ...
 ##  $ chf      : int  0 0 0 0 0 0 0 0 0 0 ...
@@ -96,7 +96,7 @@ str(mdcr_results)
 ##  $ pvd      : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ rnd      : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ rhd      : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ num_cmrb : int  1 0 2 0 0 0 0 1 0 0 ...
+##  $ num_cmrb : int  1 0 1 0 0 0 0 1 0 0 ...
 ##  $ cmrb_flag: int  1 0 1 0 0 0 0 1 0 0 ...
 ##  $ cci      : int  1 0 6 0 0 0 0 2 0 0 ...
 ##  $ age_score: int  NA NA NA NA NA NA NA NA NA NA ...
@@ -115,8 +115,8 @@ str(summary(mdcr_results))
 ##  $ conditions   :'data.frame':   22 obs. of  4 variables:
 ##   ..$ condition_description: chr [1:22] "AIDS/HIV" "Any malignancy" "Cerebrovascular disease" "Chronic pulmonary disease" ...
 ##   ..$ condition            : chr [1:22] "aidshiv" "mal" "cebvd" "copd" ...
-##   ..$ count                : num [1:22] 7 2577 411 3415 684 ...
-##   ..$ percent              : num [1:22] 0.0183 6.7351 1.0742 8.9253 1.7877 ...
+##   ..$ count                : num [1:22] 7 2301 411 3415 684 ...
+##   ..$ percent              : num [1:22] 0.0183 6.0138 1.0742 8.9253 1.7877 ...
 ##  $ age_summary  :'data.frame':   1 obs. of  3 variables:
 ##   ..$ age_score: Factor w/ 0 levels: NA
 ##   ..$ count    : int 38262
@@ -133,15 +133,15 @@ str(summary(mdcr_results))
 |----------------------------------------|-------|------------|
 | **Comorbidity**                        |       |            |
 | AIDS/HIV                               | 7     | 0.018      |
-| Any malignancy                         | 2577  | 6.735      |
+| Any malignancy                         | 2301  | 6.014      |
 | Cerebrovascular disease                | 411   | 1.074      |
 | Chronic pulmonary disease              | 3415  | 8.925      |
 | Congestive heart failure               | 684   | 1.788      |
 | Dementia                               | 13    | 0.034      |
 | Diabetes with chronic complications    | 13    | 0.034      |
-| Diabetes without chronic complications | 445   | 1.163      |
+| Diabetes without chronic complications | 441   | 1.153      |
 | Hemiplegia or paraplegia               | 1177  | 3.076      |
-| Liver disease, mild                    | 632   | 1.652      |
+| Liver disease, mild                    | 562   | 1.469      |
 | Liver disease, moderate to severe      | 206   | 0.538      |
 | Metastatic solid tumor                 | 453   | 1.184      |
 | Myocardial infarction                  | 10    | 0.026      |
@@ -151,10 +151,10 @@ str(summary(mdcr_results))
 | Rheumatic disease                      | 136   | 0.355      |
 | **Total Comorbidities**                |       |            |
 | \>= 1                                  | 9789  | 25.584     |
-| \>= 2                                  | 1368  | 3.575      |
-| \>= 3                                  | 138   | 0.361      |
-| \>= 4                                  | 20    | 0.052      |
-| \>= 5                                  | 3     | 0.008      |
+| \>= 2                                  | 1075  | 2.810      |
+| \>= 3                                  | 94    | 0.246      |
+| \>= 4                                  | 9     | 0.024      |
+| \>= 5                                  | 1     | 0.003      |
 
 Counts and percentages of patients in the mdcr example data sets with
 the Quan et al. (2005) comorbidities.

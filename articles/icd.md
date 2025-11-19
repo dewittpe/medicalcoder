@@ -8,7 +8,7 @@ working with International Classification of Diseases (ICD) codes.
 2.  [`lookup_icd_codes()`](http://www.peteredewitt.com/medicalcoder/reference/lookup_icd_codes.md):
     returns details on specific ICD codes.
 3.  [`is_icd()`](http://www.peteredewitt.com/medicalcoder/reference/is_icd.md):
-    returns `TRUE` or `FLASE` for a vector of codes while considering
+    returns `TRUE` or `FALSE` for a vector of codes while considering
     ICD version, type, and billable status.
 4.  [`icd_compact_to_full()`](http://www.peteredewitt.com/medicalcoder/reference/icd_compact_to_full.md):
     insert a decimal point into a string to be consistent with ICD-9
