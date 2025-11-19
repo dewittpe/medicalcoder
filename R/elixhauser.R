@@ -225,9 +225,11 @@
     X[cbind(ri[keep], ci[keep])] <- 1L
   }
 
+  # severity corrections
   X[X[, "HTN_UNCX"] == 1L | X[, "HTN_CX"] == 1L, "HTN_C"] <- 1L
+  X[X[, "HTN_CX"] == 1L, "HTN_UNCX"] <- 0L
   X[X[, "DMCX"] == 1, "DM"] <- 0L
-
+  X[X[, "METS"] == 1, "TUMOR"] <- 0L
 
   mortality_weights <-
     stats::setNames(
