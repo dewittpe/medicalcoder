@@ -1,0 +1,534 @@
+---
+title: "medicalcoder vs comorbidity"
+output:
+ rmarkdown::html_vignette:
+   toc: true
+   number_sections: false
+bibliography: ../references.bib
+vignette: >
+ %\VignetteIndexEntry{medicalcoder vs comorbidity}
+ %\VignetteEngine{knitr::rmarkdown}
+ %\VignetteEncoding{UTF-8}
+---
+
+```{r, label = "setup", include = FALSE}
+# IMPORTANT SYNTAX NOTE:
+# Vignettes cannot use the pipeOp `|>` so the package can depend on R >= 3.5.0
+# The _articles_ (website only) can use the pipeOp as since these are not part of the source package.
+
+library(kableExtra)
+options(qwraps2_markup = "markdown")
+options(knitr.kable.NA = '')
+knitr::opts_chunk$set(collapse = TRUE, fig.align = "center")
+```
+
+# Introduction
+
+The purpose of this article is to compare the API and results between
+`medicalcoder` and the R package
+[comorbidity](https://cran.r-project.org/package=comorbidity)
+[@r-comorbidity].
+
+```{r}
+library(medicalcoder)
+library(comorbidity)
+packageVersion("comorbidity")
+packageDescription("comorbidity")$Title
+cat(packageDescription("comorbidity")$Description)
+```
+
+The following table is a partical list of similarities and differences between
+`medicalcoder` and `comorbidity`.
+
+```{r, echo = FALSE, results = "asis"}
+x <- data.table::fread(text ="
+feature | `comorbidity` | `medicalcoder`
+Charlson [@quan2005]                     | &#9989;       | &#9989;
+Charlson [@quan2011]                     | &#10060;      | &#9989;
+Charlson [@deyo1992adapting]             | &#10060;      | &#9989;
+Charlson [@glasheen2019]                 | &#10060;      | &#9989;
+Charlson (Ludvigsson et al., 2021)       | &#9989;       | &#10060;
+Charlson (Sundararajan et al., 2004)     | &#9989;       | &#10060;
+Elixhauser [@quan2005]                   | &#9989;       | &#9989;
+Elixhauser [@elixhauser1998]             | &#10060;      | &#9989;
+Elixhauser (ICD-9-CM AHRQ)               | &#10060;      | &#9989;
+Elixhauser (ICD-10-CM AHRQ)              | &#10060;      | &#9989;
+PCCC version 2 [@feudtner2014pediatric]  | &#10060;      | &#9989;
+PCCC version 3 [@feinstein2024pediatric] | &#10060;      | &#9989;
+Allows for full ICD codes | &#10060; | &#9989;
+Allows for compact ICD codes | &#9989; | &#9989;
+Applys algorithms to ICD-9 and ICD-10 simulataneously | &#10060 | &#9989;
+Diagnosis and Procedure codes simulataneously | <sup>*</sup> | &#9989;
+Look up tables <sup>**</sup>              | &#9989;       | &#9989;
+Prcoedure codes                          | &#10060;      | &#9989;
+Disagnostic codes                        | &#9989;       | &#9989;
+Functions for looking up/testing ICD Codes | &#10060;    | &#9989;
+")
+
+y <- data.table::as.data.table(get_icd_codes())[
+  , .(min(known_start), max(known_end), length(unique(c(known_start, known_end))))
+  , keyby = .(icdv, factor(dx, 0:1, c("Procedure", "Diagnosis")), toupper(src))]
+y <-
+kbl(
+  y,
+  col.names = c("Version", "Type", "Source", "First", "Last", "Distinct"),
+  align = "cccccc"
+  ) |>
+  kable_styling(bootstrap_options = c("striped"), font_size = 8) |>
+  add_header_above(c("ICD" = 2, "", "Years" = 3)) |>
+  add_header_above(c("`medicalcoder` known ICD codes" = 6)) |>
+  as.character()
+
+kbl(
+  x,
+  escape = FALSE,
+  col.names = c("", "`comorbidity`", "`medicalcoder`"),
+  align = "lcc"
+) |>
+kable_styling(bootstrap_options = c("striped")) |>
+pack_rows("Comorbidity Algorithm and/or Scoring", start_row = 1, end_row = 12) |>
+pack_rows("Comorbidity ICD Code Inputs", start_row = 13, end_row = 16) |>
+pack_rows("ICD Utilities", start_row = 17, end_row = nrow(x)) |>
+footnote(symbol_manual = c("*", "**"),
+  symbol = c("Procedure codes are not relevent to Charlson and Elixhauser, not
+    needed in `comorbidity`.",
+  paste(
+"<small>`comorbidity` contains look up tables for ICD-10 years 2009, 2011,
+  ICD-10-CM 2018, 2022, and ICD-9 for 2015.  `medicalcoder` has a more
+  extensive internal ICD code database.</small>", y)), escape = FALSE)
+```
+
+# Prepare Data for `comorbidity`
+The example data set `mdcr` within `medicalcoder` is in a format that is ideal
+for `medicalcoder`.  To prepare that data set for use in the
+`comorbidity::comorbidity()` call we need to split the data in ICD-9 and ICD-10
+version. Also, `medicalcoder` can handle diagnostic and procedure codes
+simulataneously; a nessecary feature for PCCC.  `comorbidity` only applies
+comorbidity algorithms based on diagnostic codes and thus does not expect to see
+any procedure codes.
+
+```{r}
+mdcr_icd9dx  <- subset(mdcr, icdv ==  9L & dx == 1L)
+mdcr_icd10dx <- subset(mdcr, icdv == 10L & dx == 1L)
+```
+To make sure we have a fair comparison, we will add rows without a code for each
+patid not in the subsets.
+```{r}
+mdcr_icd9dx <-
+  rbind(
+    mdcr_icd9dx,
+    data.frame(patid = setdiff(mdcr$patid, mdcr_icd9dx$patid), icdv = 9L, code = "", dx = 1L)
+  )
+mdcr_icd10dx <-
+  rbind(
+    mdcr_icd10dx,
+    data.frame(patid = setdiff(mdcr$patid, mdcr_icd10dx$patid), icdv = 10L, code = "", dx = 1L)
+  )
+```
+
+# Charlson Comorbidities
+
+Appling the Charlson comorbidities to the `mdcr` data set via `medicalcoder` is
+done as follows.  Imporant note: the ICD codes used to assess the Charlson
+comorbidities between @quan2005 and @quan2011 are the same. The scoring is not.
+To match the scoring used in `comorbidity` we need to use the
+`charlson_quan2011` method in `medicalcoder`.
+
+```{r}
+medicalcoder_charlson_results <-
+  medicalcoder::comorbidities(
+    data = mdcr,
+    id.vars = "patid",
+    icd.codes = "code",
+    dx.var = "dx",
+    icdv.var = "icdv",
+    poa = 1L, # assume all codes are present on admission
+    primarydx = 0L, # assume all codes are secondary diagnoses
+    method = "charlson_quan2011"
+  )
+```
+
+For `comorbidity`, we will need to make two calls, one for the ICD-9 codes and
+one for the ICD-10 codes.  We will then need to combine the results and then
+apply a scoring function.
+
+```{r}
+comorbidity_charlson_icd9_results <-
+  comorbidity::comorbidity(
+    x = mdcr_icd9dx,
+    id = "patid",
+    code = "code",
+    map = "charlson_icd9_quan",
+    assign0 = TRUE # set less severe comorbidities flags to 0 when more severe comorbidities is also flagged
+  )
+
+comorbidity_charlson_icd10_results <-
+  comorbidity::comorbidity(
+    x = mdcr_icd10dx,
+    id = "patid",
+    code = "code",
+    map = "charlson_icd10_quan",
+    assign0 = TRUE
+  )
+
+# combine the ICD-9 and ICD-10 results into one set
+comorbidity_charlson_results <-
+  rbind(comorbidity_charlson_icd9_results, comorbidity_charlson_icd10_results)
+
+comorbidity_charlson_results <-
+  aggregate(. ~ patid, data = comorbidity_charlson_results, FUN = max)
+
+# add the attributes to the combine set
+attributes(comorbidity_charlson_results)[c("class", "variable.labels", "map")] <-
+  attributes(comorbidity_charlson_icd9_results)[c("class", "variable.labels", "map")]
+
+comorbidity_charlson_results[["score"]] <-
+  comorbidity::score(
+    x = comorbidity_charlson_results,
+    weights = "quan",
+    assign0 = TRUE
+  )
+
+# the score return is a numeric value, setting to integer to match the storage
+# mode of medicalcoder
+comorbidity_charlson_results[["score"]] <-
+  as.integer(comorbidity_charlson_results[["score"]])
+```
+
+We can now compare the comorbidity flags between the two packages.  First we
+check that we have the same number of rows and all the patid are accounted for.
+
+```{r}
+nrow(medicalcoder_charlson_results) == nrow(comorbidity_charlson_results)
+
+all(mdcr$patid %in% medicalcoder_charlson_results$patid)
+all(medicalcoder_charlson_results$patid %in% mdcr$patid)
+
+all(mdcr$patid %in% comorbidity_charlson_results$patid)
+all(comorbidity_charlson_results$patid %in% mdcr$patid)
+```
+
+There are differences in the results in terms of the names and numbers of
+columns returned.
+
+```{r}
+dim(medicalcoder_charlson_results)
+names(medicalcoder_charlson_results)
+
+dim(comorbidity_charlson_results)
+names(comorbidity_charlson_results)
+```
+
+We will compare results column by column.  First, we merge the data sets
+together by patid.
+
+```{r}
+charlson_delta <-
+  merge(
+    x = comorbidity_charlson_results,
+    y = medicalcoder_charlson_results,
+    all = TRUE,
+    by = "patid"
+  )
+```
+
+The relevent columns:
+
+```{r, include = FALSE}
+charlson_columns <- data.table::fread(text = "
+Condition                          | comorbidity | medicalcoder
+AIDS                               | aids        | aidshiv
+Cancer (Any malignancy)            | canc        | mal
+Cancer (Metastatic solid tumor)    | metacanc    | mst
+Cerebrovascular disease            | cevd        | cebvd
+Chronic pulmonary disease          | cpd         | copd
+Congestive heart failure           | chf         | chf
+Dementia                           | dementia    | dem
+Hemiplegia or paraplegia           | hp          | hp
+Myocardial infarction              | mi          | mi
+Peripheral vascular disease        | pvd         | pvd
+Peptic ulcer disease               | pud         | pud
+Rheumatic disease                  | rheumd      | rhd
+Diabetes (uncomplicated)           | diab        | dm
+Diabetes (complicated)             | diabwc      | dmc
+Renal disease                      | rend        | rnd
+Liver disease (mild)               | mld         | mld
+Liver disease (moderate or severe) | msld        | msld
+Score (based on Quan 2011)         | score       | cci
+  ")
+data.table::setDF(charlson_columns)
+```
+
+The following data.frame reports the condition and the corresponding column from
+`comorbidity` and from `medicalcoder`.
+```{r}
+charlson_columns
+```
+
+For each row in `charlson_columns` we will verify that the results are
+identical in `charlson_delta` and remove the columns.
+
+```{r, echo = TRUE, results = "markup"}
+for (i in seq_len(nrow(charlson_columns))) {
+  x <- charlson_columns[["comorbidity"]][i]
+  y <- charlson_columns[["medicalcoder"]][i]
+  if (x == y) {
+    x <- paste0(x, ".x")
+    y <- paste0(y, ".y")
+  }
+  e <- base::substitute(identical(charlson_delta[[X]], charlson_delta[[Y]]), list(X = x, Y = y))
+  print(e)
+  r <- eval(e)
+  print(r)
+  stopifnot(r)
+  charlson_delta[[x]] <- NULL
+  charlson_delta[[y]] <- NULL
+}
+```
+
+The only columns left in the `charlson_delta` object are from `medicalcoder`
+
+```{r}
+str(charlson_delta)
+```
+
+* `num_cmrb`: number of comorbidities flagged
+* `cmrb_flag`: a 0/1 indicator for any comorbidity
+* `age_score`: a score adjustment based on age _if_ age is provided.
+
+```{r}
+stopifnot(
+  identical(
+    names(charlson_delta),
+    c("patid", "num_cmrb", "cmrb_flag", "age_score")
+  )
+)
+```
+
+An addition feature `medicalcoder` provides that `comorbidity` does not is a
+summary method for the results, which can be used to build nice tables via
+[kableExtra](https://CRAN.R-project.org/package=kableExtra).
+
+```{r}
+x <- summary(medicalcoder_charlson_results)[[1]][, c("condition_description", "count", "percent")]
+
+kbl(
+  x = x,
+  digits = 2,
+  col.names = c("", "Count", "Percentage")
+) |>
+pack_rows("Comorbidity", start_row = 1, end_row = 17) |>
+pack_rows("Number of Comorbidities", start_row = 18, end_row = nrow(x))
+```
+
+# Elixhauser Comorbidities
+
+Appling the Elixhauser comorbidities to the `mdcr` data set via `medicalcoder` is
+done as follows.
+
+```{r}
+medicalcoder_elixhauser_results <-
+  medicalcoder::comorbidities(
+    data = mdcr,
+    id.vars = "patid",
+    icd.codes = "code",
+    dx.var = "dx",
+    icdv.var = "icdv",
+    poa = 1L,       # assume all codes are present on admission
+    primarydx = 0L, # assume all codes are secondary diagnoses
+    method = "elixhauser_quan2005"
+  )
+```
+
+For `comorbidity`, we will need to make two calls, one for the ICD-9 codes and
+one for the ICD-10 codes.  We will then need to combine the results and then
+apply a scoring function.
+
+```{r}
+comorbidity_elixhauser_icd9_results <-
+  comorbidity::comorbidity(
+    x = mdcr_icd9dx,
+    id = "patid",
+    code = "code",
+    map = "elixhauser_icd9_quan",
+    assign0 = TRUE # set less severe comorbidities flags to 0 when more severe comorbidities is also flagged
+  )
+
+comorbidity_elixhauser_icd10_results <-
+  comorbidity::comorbidity(
+    x = mdcr_icd10dx,
+    id = "patid",
+    code = "code",
+    map = "elixhauser_icd10_quan",
+    assign0 = TRUE
+  )
+
+# combine the ICD-9 and ICD-10 results into one set
+comorbidity_elixhauser_results <-
+  rbind(comorbidity_elixhauser_icd9_results, comorbidity_elixhauser_icd10_results)
+
+comorbidity_elixhauser_results <-
+  aggregate(. ~ patid, data = comorbidity_elixhauser_results, FUN = max)
+```
+
+We can now compare the comorbidity flags between the two packages.  First we
+check that we have the same number of rows and all the patid are accounted for.
+
+```{r}
+nrow(medicalcoder_elixhauser_results) == nrow(comorbidity_elixhauser_results)
+
+all(mdcr$patid %in% medicalcoder_elixhauser_results$patid)
+all(medicalcoder_elixhauser_results$patid %in% mdcr$patid)
+
+all(mdcr$patid %in% comorbidity_elixhauser_results$patid)
+all(comorbidity_elixhauser_results$patid %in% mdcr$patid)
+```
+
+There are differences in the results in terms of the names and numbers of
+columns returned.
+
+```{r}
+dim(medicalcoder_elixhauser_results)
+names(medicalcoder_elixhauser_results)
+
+dim(comorbidity_elixhauser_results)
+names(comorbidity_elixhauser_results)
+```
+
+We will compare results column by column.  First, we merge the data sets
+together by patid.
+
+```{r}
+elixhauser_delta <-
+  merge(
+    x = comorbidity_elixhauser_results,
+    y = medicalcoder_elixhauser_results,
+    all = TRUE,
+    by = "patid"
+  )
+```
+
+The relevent columns:
+
+```{r, include = FALSE}
+#Hypertension (Uncomplicated or Complicated)   |             | HTN_C
+elixhauser_columns <- data.table::fread(text = "
+Condition                                     | comorbidity | medicalcoder
+AIDS/HIV                                      | aids        | AIDS
+Alcohol abuse                                 | alcohol     | ALCOHOL
+Anemias (Blood loss anaemia)                  | blane       | BLDLOSS
+Anemias (Deficiency anaemia)                  | dane        | ANEMDEF
+Cardiac Arrhythmias                           | carit       | CARDIAC_ARRHYTHMIAS
+Cancer (Solid tummor without metastasis)      | solidtum    | TUMOR
+Cancer (Metastatic)                           | metacanc    | METS
+Chronic pulmonary disease                     | cpd         | CHRNLUNG
+Coagulopathy                                  | coag        | COAG
+Congestive Heart Failure                      | chf         | CHF
+Depression                                    | depre       | DEPRESS
+Diabetes (Complicated)                        | diabc       | DMCX
+Diabetes (Uncomplicated)                      | diabunc     | DM
+Drug abuse                                    | drug        | DRUG
+Fluid and electrolyte disorders               | fed         | LYTES
+Hypertension (Complicated)                    | hypc        | HTN_CX
+Hypertension (Uncomplicated)                  | hypunc      | HTN_UNCX
+Hypothyroidism                                | hypothy     | HYPOTHY
+Liver disease                                 | ld          | LIVER
+Lymphoma                                      | lymph       | LYMPH
+Obesity                                       | obes        | OBESE
+Other neurological disease                    | ond         | NEURO
+Paralysis                                     | para        | PARA
+Peptic ulcer disease excluding bleeding       | pud         | ULCER
+Peripheral Vascular Disorders                 | pvd         | PERIVASC
+Psychoses                                     | psycho      | PSYCH
+Pulmonary Circulation Disorders               | pcd         | PULMCIRC
+Renal Failure                                 | rf          | RENLFAIL
+Rheumatoid artritis/collaged vascular disease | rheumd      | ARTH
+Valvular disease                              | valv        | VALVE
+Weight loss                                   | wloss       | WGHTLOSS
+  ")
+data.table::setDF(elixhauser_columns)
+```
+
+The following data.frame reports the condition and the corresponding column from
+`comorbidity` and from `medicalcoder`.
+```{r}
+elixhauser_columns
+```
+
+For each row in `elixhauser_columns` we will verify that the results are
+identical in `elixhauser_delta` and remove the columns.
+
+
+```{r, include = FALSE}
+# the HTN_C is only in the medicalcoder results
+stopifnot(
+  identical(
+    medicalcoder_elixhauser_results[["HTN_C"]],
+    as.integer(
+      medicalcoder_elixhauser_results[["HTN_UNCX"]] |
+        medicalcoder_elixhauser_results[["HTN_CX"]]
+    )
+  )
+)
+```
+
+```{r, echo = TRUE, results = "markup"}
+for (i in seq_len(nrow(elixhauser_columns))) {
+  x <- elixhauser_columns[["comorbidity"]][i]
+  y <- elixhauser_columns[["medicalcoder"]][i]
+  if (x == y) {
+    x <- paste0(x, ".x")
+    y <- paste0(y, ".y")
+  }
+  e <- base::substitute(identical(elixhauser_delta[[X]], elixhauser_delta[[Y]]), list(X = x, Y = y))
+  print(e)
+  r <- eval(e)
+  print(r)
+  stopifnot(r)
+  elixhauser_delta[[x]] <- NULL
+  elixhauser_delta[[y]] <- NULL
+}
+```
+
+The remaining columns in the `elixhauser_delta` object are specific to
+`medicalcoder`, save patid.
+
+```{r}
+str(elixhauser_delta)
+```
+
+```{r, inlcude = FALSE}
+stopifnot(identical(names(elixhauser_delta), c("patid", "HTN_C", "num_cmrb", "cmrb_flag", "mortality_index", "readmission_index")))
+```
+
+* `HTN_C`: _any_ hypertension - added to simplify the cacluation of the
+  mortality and readmission indices based on weights from AHRQ.
+
+* `num_cmrb`:  Number of comorbidities flagged
+
+* `cmrb_flag`: a 0/1 indicator for _any_ comorbidity being flagged
+
+* `mortality_index` and `readmission_index`: index scores based on the AHRQ
+  weights [@ahrq2017].
+
+An addition feature `medicalcoder` provides that `comorbidity` does not is a
+summary method for the results, which can be used to build nice tables via
+[kableExtra](https://CRAN.R-project.org/package=kableExtra).
+
+```{r}
+x <- summary(medicalcoder_elixhauser_results)[[1]][, c("condition", "count", "percent")]
+
+kbl(
+  x = x,
+  digits = 2,
+  col.names = c("", "Count", "Percentage")
+) |>
+pack_rows("Comorbidity", start_row = 1, end_row = which(x$condition == ">= 1") - 1L) |>
+pack_rows("Number of Comorbidities", start_row = which(x$condition == ">= 1"), end_row = nrow(x))
+```
+
+# References
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                              End of File                                -->
+<!-- ----------------------------------------------------------------------- -->

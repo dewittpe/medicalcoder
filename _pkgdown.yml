@@ -20,3 +20,7 @@ navbar:
         - text: ICD Codes
         - text: ICD Utilities
           href: articles/icd.html
+        - text: -------
+        - text: medicalcoder versus ...
+        - text: R package comorbidity
+          href: articles/medicalcoder-vs-comorbidity.html
