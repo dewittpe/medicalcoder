@@ -383,7 +383,7 @@ RENLFAIL            | 9    | 1  | quan2005       | ^V45\.1
 RENLFAIL            | 9    | 1  | quan2005       | ^V56
 TUMOR               | 10   | 1  | quan2005       | ^C2[0-6]
 TUMOR               | 10   | 1  | quan2005       | ^C3[0-4,7-9]
-TUMOR               | 10   | 1  | quan2005       | ^C4[0-1,3-9]
+TUMOR               | 10   | 1  | quan2005       | ^C4[0-1,3,5-9]
 TUMOR               | 10   | 1  | quan2005       | ^C5[0-8]
 TUMOR               | 10   | 1  | quan2005       | ^C6
 TUMOR               | 10   | 1  | quan2005       | ^C7[0-6]
