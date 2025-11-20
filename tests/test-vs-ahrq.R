@@ -6,28 +6,33 @@
 #   compare medicalcoder::comorbidities(..., method = "elixhauser_ahrqYYYY")
 #   against the official AHRQ SAS mapping results when fixtures are available.
 #
+# Note: using stats::reshape instead of data.table::melt so that this test can
+# run when no-suggests is TRUE.
+#
 ################################################################################
+library(medicalcoder)
 source('utilities.R')
-suppressPackageStartupMessages({
-  library(medicalcoder)
-  library(data.table)
-  library(R.utils) #needed for data.table::fread to read the .gz files
-})
 
 # ahrq results
 ahrq_results <- readRDS("expected-ahrq-results.rds")
-setDT(ahrq_results)
 
 codes <-
-  melt(
+  stats::reshape(
     data = ahrq_results,
-    id.vars = c("CMR_VERSION", "PATID"),
-    measure.vars = patterns("I10_DX", "DXPOA"),
-    variable.factor = FALSE,
-    value.name = c("code", "poa")
+    direction = "long",
+    idvar = c("CMR_VERSION", "PATID"),
+    varying = list(
+      grep("^I10_DX", names(ahrq_results), value = TRUE),
+      grep("^DXPOA",  names(ahrq_results), value = TRUE)
+      ),
+    v.names = c("code", "poa"),
+    times = seq_along(grep("^I10_DX", names(ahrq_results)))
   )
-codes[, primarydx := as.integer(variable == "1")]
-codes[, poa := as.integer(poa == "Y")]
+
+codes[["primarydx"]] <- as.integer(codes[["time"]] == "1")
+codes[["poa"]] <- as.integer(codes[["poa"]] == "Y")
+
+
 
 # apply medicalcoder::comorbidities
 common_args <-
@@ -51,10 +56,10 @@ mdcr_vs_ahrq_2023 <- merge(x = mdcr_2023, y = ahrq_results, all.x = TRUE, by = c
 mdcr_vs_ahrq_2024 <- merge(x = mdcr_2024, y = ahrq_results, all.x = TRUE, by = c("CMR_VERSION", "PATID"))
 mdcr_vs_ahrq_2025 <- merge(x = mdcr_2025, y = ahrq_results, all.x = TRUE, by = c("CMR_VERSION", "PATID"))
 
-stopifnot("same number of rows" = nrow(mdcr_2022) == nrow(ahrq_results[CMR_VERSION == 2022.1]) & nrow(mdcr_2022) == nrow(mdcr_vs_ahrq_2022))
-stopifnot("same number of rows" = nrow(mdcr_2023) == nrow(ahrq_results[CMR_VERSION == 2022.1]) & nrow(mdcr_2023) == nrow(mdcr_vs_ahrq_2023))
-stopifnot("same number of rows" = nrow(mdcr_2024) == nrow(ahrq_results[CMR_VERSION == 2022.1]) & nrow(mdcr_2024) == nrow(mdcr_vs_ahrq_2024))
-stopifnot("same number of rows" = nrow(mdcr_2025) == nrow(ahrq_results[CMR_VERSION == 2022.1]) & nrow(mdcr_2025) == nrow(mdcr_vs_ahrq_2025))
+stopifnot("same number of rows" = nrow(mdcr_2022) == nrow(subset(ahrq_results, CMR_VERSION == 2022.1)) & nrow(mdcr_2022) == nrow(mdcr_vs_ahrq_2022))
+stopifnot("same number of rows" = nrow(mdcr_2023) == nrow(subset(ahrq_results, CMR_VERSION == 2022.1)) & nrow(mdcr_2023) == nrow(mdcr_vs_ahrq_2023))
+stopifnot("same number of rows" = nrow(mdcr_2024) == nrow(subset(ahrq_results, CMR_VERSION == 2022.1)) & nrow(mdcr_2024) == nrow(mdcr_vs_ahrq_2024))
+stopifnot("same number of rows" = nrow(mdcr_2025) == nrow(subset(ahrq_results, CMR_VERSION == 2022.1)) & nrow(mdcr_2025) == nrow(mdcr_vs_ahrq_2025))
 
 # check each condition - this can change year to year
 cnds_2022 <- subset(get_elixhauser_index_scores(), !is.na(elixhauser_ahrq2022), select = "condition", drop = TRUE)
