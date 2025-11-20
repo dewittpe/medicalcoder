@@ -1,0 +1,160 @@
+---
+title: "medicalcoder vs icdcomorbid"
+output:
+ rmarkdown::html_vignette:
+   toc: true
+   number_sections: false
+bibliography: ../references.bib
+vignette: >
+ %\VignetteIndexEntry{medicalcoder vs icdcomorbid}
+ %\VignetteEngine{knitr::rmarkdown}
+ %\VignetteEncoding{UTF-8}
+---
+
+```{r, label = "setup", include = FALSE}
+# IMPORTANT SYNTAX NOTE:
+# Vignettes cannot use the pipeOp `|>` so the package can depend on R >= 3.5.0
+# The _articles_ (website only) can use the pipeOp as since these are not part of the source package.
+
+library(kableExtra)
+options(qwraps2_markup = "markdown")
+options(knitr.kable.NA = '')
+knitr::opts_chunk$set(collapse = TRUE, fig.align = "center")
+```
+
+# Introduction
+
+The purpose of this article is to compare the API and results between
+`medicalcoder` and the R package
+[icdcomorbid](https://cran.r-project.org/package=icdcomorbid)
+[@r-icdcomorbid].
+
+```{r}
+library(medicalcoder)
+library(icdcomorbid)
+packageVersion("icdcomorbid")
+packageDescription("icdcomorbid")$Title
+cat(packageDescription("icdcomorbid")$Description)
+```
+
+`icdcomorbid` provides [@quan2005] Charlson and Elixhauser comorbidities.  A
+nice feature of `icdcomorbid` is the abbility to use custom mappings between
+ICD codes and comorbidities.
+
+# Prepare Data for `icdcomorbid`
+The example data set `mdcr` within `medicalcoder` is in a format that is ideal
+for `medicalcoder::comorbidities()`.  To prepare that data set for use in the
+`icdcomorbid::icd9_to_comorbid()`  and `icd9_to_comorbid::icd10_to_comorbid()`,
+the data needs to be in a "wide" format instead of the provided long format.
+
+We start by spliting the data into ICD-9 and ICD-10 sets and add rows for any
+missing patids.
+
+```{r}
+mdcr_icd9dx  <- subset(mdcr, icdv ==  9L & dx == 1L)
+mdcr_icd10dx <- subset(mdcr, icdv == 10L & dx == 1L)
+mdcr_icd9dx <-
+  rbind(
+    mdcr_icd9dx,
+    data.frame(patid = setdiff(mdcr$patid, mdcr_icd9dx$patid), icdv = 9L, code = "", dx = 1L)
+  )
+mdcr_icd10dx <-
+  rbind(
+    mdcr_icd10dx,
+    data.frame(patid = setdiff(mdcr$patid, mdcr_icd10dx$patid), icdv = 10L, code = "", dx = 1L)
+  )
+```
+
+`icdcomorbid::long_to_wide()` is provided to transform data sets, but it is very
+slow.  I waited about fifteen seconds for the following and then stopped the
+process because there are more efficient ways.
+
+```{r}
+#  mdcr_icd9dx_wide <-
+#    icdcomorbid::long_to_wide(
+#      df = mdcr_icd9dx,
+#      idx = "patid",
+#      icd_cols = "code"
+#    )
+#
+# killed process after 15 seconds
+```
+
+```{r}
+tic <- Sys.time()
+
+library(data.table)
+setDT(mdcr_icd9dx)
+setDT(mdcr_icd10dx)
+mdcr_icd9dx[, DX := paste0("DX", seq_along(code)), by = .(patid)]
+mdcr_icd10dx[, DX := paste0("DX", seq_along(code)), by = .(patid)]
+
+mdcr_icd9dx_wide <-
+  data.table::dcast(mdcr_icd9dx, patid ~ DX, value.var = "code")
+
+mdcr_icd10dx_wide <-
+  data.table::dcast(mdcr_icd10dx, patid ~ DX, value.var = "code")
+
+toc <- Sys.time()
+difftime(toc, tic, units = "secs")
+```
+
+# Charlson Comorbidities
+
+A detailed comparison between `medicalcoder::comorbidities()` and the methods in
+the `icdcomorbid` package will not be presented here. Note the time required to
+apply the Charlson comorbidities to the `mdcr` data set via
+`medicalcoder::comorbidities()`.
+
+```{r}
+tic <- Sys.time()
+
+medicalcoder_charlson_results <-
+  medicalcoder::comorbidities(
+    data = mdcr,
+    id.vars = "patid",
+    icd.codes = "code",
+    dx.var = "dx",
+    icdv.var = "icdv",
+    poa = 1L, # assume all codes are present on admission
+    primarydx = 0L, # assume all codes are secondary diagnoses
+    method = "charlson_quan2011"
+  )
+
+toc <- Sys.time()
+
+difftime(toc, tic, units = "secs")
+```
+
+Compare that to the amount of time required to process just the first 1,000
+patids via `icdcomorbid::icd9_to_comorbid()`.
+
+```{r}
+tic <- Sys.time()
+
+icd9_to_comorbid_results <-
+  icdcomorbid::icd9_to_comorbid(
+    df = mdcr_icd9dx_wide[1:1000, ],
+    idx = "patid",
+    icd_cols = grep("^DX", names(mdcr_icd9dx_wide), value = TRUE),
+    mapping = "charlson9"
+  )
+
+toc <- Sys.time()
+
+difftime(toc, tic, units = "secs")
+```
+
+There are `r length(unique(mdcr$patid))` patids to assess.  To compare the
+results between `medicalcoder::comorbidities()` and the results from the R
+package `icdcomorbid` would require calling `icdcomorbid::icd9_to_comorbid()`,
+`icd10_to_comorbid()`, aggregating the results, and scoring.
+
+Based just on the time required to compute the results, `medicalcoder` is
+superior to `icdcomorbid`.
+
+# References
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                              End of File                                -->
+<!-- ----------------------------------------------------------------------- -->

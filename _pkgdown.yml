@@ -24,3 +24,5 @@ navbar:
         - text: medicalcoder versus ...
         - text: R package comorbidity
           href: articles/medicalcoder-vs-comorbidity.html
+        - text: R package icdcomorbid
+          href: articles/medicalcoder-vs-icdcomorbid.html
