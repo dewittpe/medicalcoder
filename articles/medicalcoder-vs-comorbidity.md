@@ -33,13 +33,17 @@ between `medicalcoder` and `comorbidity`.
 ## Prepare Data for `comorbidity`
 
 The example data set `mdcr` within `medicalcoder` is in a format that is
-ideal for `medicalcoder`. To prepare that data set for use in the
+ideal for
+[`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md).
+To prepare that data set for use in the
 [`comorbidity::comorbidity()`](https://ellessenne.github.io/comorbidity/reference/comorbidity.html)
 call we need to split the data in ICD-9 and ICD-10 version. Also,
-`medicalcoder` can handle diagnostic and procedure codes
-simulataneously; a nessecary feature for PCCC. `comorbidity` only
-applies comorbidity algorithms based on diagnostic codes and thus does
-not expect to see any procedure codes.
+[`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+can handle diagnostic and procedure codes simulataneously; a nessecary
+feature for PCCC.
+[`comorbidity::comorbidity()`](https://ellessenne.github.io/comorbidity/reference/comorbidity.html)
+only applies comorbidity algorithms based on diagnostic codes and thus
+does not expect to see any procedure codes.
 
 ``` r
 mdcr_icd9dx  <- subset(mdcr, icdv ==  9L & dx == 1L)
@@ -65,11 +69,13 @@ mdcr_icd10dx <-
 ## Charlson Comorbidities
 
 Appling the Charlson comorbidities to the `mdcr` data set via
-`medicalcoder` is done as follows. Imporant note: the ICD codes used to
-assess the Charlson comorbidities between Quan et al. (2005) and Quan et
-al. (2011) are the same. The scoring is not. To match the scoring used
-in `comorbidity` we need to use the `charlson_quan2011` method in
-`medicalcoder`.
+[`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+is done as follows. Imporant note: the ICD codes used to assess the
+Charlson comorbidities between Quan et al. (2005) and Quan et al. (2011)
+are the same. The scoring is not. To match the scoring used in
+[`comorbidity::comorbidity()`](https://ellessenne.github.io/comorbidity/reference/comorbidity.html)
+we need to use the `method = "charlson_quan2011"` in
+[`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md).
 
 ``` r
 medicalcoder_charlson_results <-
@@ -85,9 +91,11 @@ medicalcoder_charlson_results <-
   )
 ```
 
-For `comorbidity`, we will need to make two calls, one for the ICD-9
-codes and one for the ICD-10 codes. We will then need to combine the
-results and then apply a scoring function.
+For
+[`comorbidity::comorbidity()`](https://ellessenne.github.io/comorbidity/reference/comorbidity.html),
+we will need to make two calls, one for the ICD-9 codes and one for the
+ICD-10 codes. We will then need to combine the results and then apply a
+scoring function.
 
 ``` r
 comorbidity_charlson_icd9_results <-
@@ -188,7 +196,10 @@ charlson_delta <-
 The relevent columns:
 
 The following data.frame reports the condition and the corresponding
-column from `comorbidity` and from `medicalcoder`.
+column from
+[`comorbidity::comorbidity()`](https://ellessenne.github.io/comorbidity/reference/comorbidity.html)
+and from
+[`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md).
 
 ``` r
 charlson_columns
@@ -295,9 +306,10 @@ stopifnot(
 )
 ```
 
-An addition feature `medicalcoder` provides that `comorbidity` does not
-is a summary method for the results, which can be used to build nice
-tables via [kableExtra](https://CRAN.R-project.org/package=kableExtra).
+An addition feature the `medicalcoder` package provides that the
+`comorbidity` package does not, is a summary method for the results,
+which can be used to build nice tables via
+[kableExtra](https://CRAN.R-project.org/package=kableExtra).
 
 ``` r
 x <- summary(medicalcoder_charlson_results)[[1]][, c("condition_description", "count", "percent")]
@@ -341,7 +353,8 @@ pack_rows("Number of Comorbidities", start_row = 18, end_row = nrow(x))
 ## Elixhauser Comorbidities
 
 Appling the Elixhauser comorbidities to the `mdcr` data set via
-`medicalcoder` is done as follows.
+[`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+is done as follows.
 
 ``` r
 medicalcoder_elixhauser_results <-
@@ -357,9 +370,11 @@ medicalcoder_elixhauser_results <-
   )
 ```
 
-For `comorbidity`, we will need to make two calls, one for the ICD-9
-codes and one for the ICD-10 codes. We will then need to combine the
-results and then apply a scoring function.
+For
+[`comorbidity::comorbidity()`](https://ellessenne.github.io/comorbidity/reference/comorbidity.html),
+we will need to make two calls, one for the ICD-9 codes and one for the
+ICD-10 codes. We will then need to combine the results and then apply a
+scoring function.
 
 ``` r
 comorbidity_elixhauser_icd9_results <-
@@ -455,7 +470,10 @@ elixhauser_delta <-
 The relevent columns:
 
 The following data.frame reports the condition and the corresponding
-column from `comorbidity` and from `medicalcoder`.
+column from
+[`comorbidity::comorbidity()`](https://ellessenne.github.io/comorbidity/reference/comorbidity.html)
+and from
+[`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md).
 
 ``` r
 elixhauser_columns
@@ -636,9 +654,10 @@ stopifnot(identical(names(elixhauser_delta), c("patid", "HTN_C", "num_cmrb", "cm
 - `mortality_index` and `readmission_index`: index scores based on the
   AHRQ weights (Healthcare Cost and Utilization Project (HCUP) 2017).
 
-An addition feature `medicalcoder` provides that `comorbidity` does not
-is a summary method for the results, which can be used to build nice
-tables via [kableExtra](https://CRAN.R-project.org/package=kableExtra).
+An addition feature of the `medicalcoder` package provides that the
+`comorbidity` package does not, is a summary method for the results,
+which can be used to build nice tables via
+[kableExtra](https://CRAN.R-project.org/package=kableExtra).
 
 ``` r
 x <- summary(medicalcoder_elixhauser_results)[[1]][, c("condition", "count", "percent")]
@@ -694,6 +713,204 @@ pack_rows("Number of Comorbidities", start_row = which(x$condition == ">= 1"), e
 | \>= 7                       | 14    | 0.04       |
 | \>= 8                       | 4     | 0.01       |
 | \>= 9                       | 2     | 0.01       |
+
+## Benchmarking
+
+The `medicalcoder` package was built to use base R methods and has zero
+imports. That said, if the input data set to
+[`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+is a [`data.table`](https://cran.r-project.org/package=data.table) and
+the `data.table` namespace is available, the S3 methods for `data.table`
+will be used and there will be a performance improvement.
+
+`comorbidity` imports several namespaces, including `data.table`, and
+uses `data.table` for efficiency.
+
+In the following benchmark we will look at the time required to apply
+the Charlson comorbidity method to the `mdcr` data set via
+[`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+and
+[`comorbidity::comorbidity()`](https://ellessenne.github.io/comorbidity/reference/comorbidity.html).
+We will consider the cases when inputting a data.frame and when
+inputting a data.table. To support that work we make some copies of the
+input data and set the copies to be `data.tables`.
+
+Code (click to toggle view/fold)
+
+``` r
+mdcrDT <- data.table::copy(mdcr)
+data.table::setDT(mdcrDT)
+mdcr_icd9dxDT <- data.table::copy(mdcr_icd9dx)
+mdcr_icd10dxDT <- data.table::copy(mdcr_icd10dx)
+data.table::setDT(mdcr_icd9dxDT)
+data.table::setDT(mdcr_icd10dxDT)
+```
+
+Next we define four functions to simplify calling the code multiple
+times.
+
+Code (click to toggle view/fold)
+
+``` r
+medicalcoder_charlson_results <- function() {
+  medicalcoder::comorbidities(
+    data = mdcr,
+    id.vars = "patid",
+    icd.codes = "code",
+    dx.var = "dx",
+    icdv.var = "icdv",
+    poa = 1L,
+    primarydx = 0L,
+    method = "charlson_quan2011"
+  )
+}
+
+medicalcoder_charlson_results_DT <- function() {
+  medicalcoder::comorbidities(
+    data = mdcrDT,
+    id.vars = "patid",
+    icd.codes = "code",
+    dx.var = "dx",
+    icdv.var = "icdv",
+    poa = 1L,
+    primarydx = 0L,
+    method = "charlson_quan2011"
+  )
+}
+
+comorbidity_charlson_results <- function() {
+  comorbidity_charlson_icd9_results <-
+    comorbidity::comorbidity(
+      x = mdcr_icd9dx,
+      id = "patid",
+      code = "code",
+      map = "charlson_icd9_quan",
+      assign0 = TRUE # set less severe comorbidities flags to 0 when more severe comorbidities is also flagged
+    )
+
+  comorbidity_charlson_icd10_results <-
+    comorbidity::comorbidity(
+      x = mdcr_icd10dx,
+      id = "patid",
+      code = "code",
+      map = "charlson_icd10_quan",
+      assign0 = TRUE
+    )
+
+# combine the ICD-9 and ICD-10 results into one set
+  comorbidity_charlson_results <-
+    rbind(comorbidity_charlson_icd9_results, comorbidity_charlson_icd10_results)
+
+  comorbidity_charlson_results <-
+    aggregate(. ~ patid, data = comorbidity_charlson_results, FUN = max)
+
+# add the attributes to the combine set
+  attributes(comorbidity_charlson_results)[c("class", "variable.labels", "map")] <-
+    attributes(comorbidity_charlson_icd9_results)[c("class", "variable.labels", "map")]
+
+  comorbidity_charlson_results[["score"]] <-
+    comorbidity::score(
+      x = comorbidity_charlson_results,
+      weights = "quan",
+      assign0 = TRUE
+    )
+
+# the score return is a numeric value, setting to integer to match the storage
+# mode of medicalcoder
+  comorbidity_charlson_results[["score"]] <-
+    as.integer(comorbidity_charlson_results[["score"]])
+}
+
+comorbidity_charlson_results_DT <- function() {
+  comorbidity_charlson_icd9_results <-
+    comorbidity::comorbidity(
+      x = mdcr_icd9dxDT,
+      id = "patid",
+      code = "code",
+      map = "charlson_icd9_quan",
+      assign0 = TRUE # set less severe comorbidities flags to 0 when more severe comorbidities is also flagged
+    )
+
+  comorbidity_charlson_icd10_results <-
+    comorbidity::comorbidity(
+      x = mdcr_icd10dxDT,
+      id = "patid",
+      code = "code",
+      map = "charlson_icd10_quan",
+      assign0 = TRUE
+    )
+
+# combine the ICD-9 and ICD-10 results into one set
+  comorbidity_charlson_results <-
+    rbind(comorbidity_charlson_icd9_results, comorbidity_charlson_icd10_results)
+
+  comorbidity_charlson_results <-
+    aggregate(. ~ patid, data = comorbidity_charlson_results, FUN = max)
+
+# add the attributes to the combine set
+  attributes(comorbidity_charlson_results)[c("class", "variable.labels", "map")] <-
+    attributes(comorbidity_charlson_icd9_results)[c("class", "variable.labels", "map")]
+
+  comorbidity_charlson_results[["score"]] <-
+    comorbidity::score(
+      x = comorbidity_charlson_results,
+      weights = "quan",
+      assign0 = TRUE
+    )
+
+# the score return is a numeric value, setting to integer to match the storage
+# mode of medicalcoder
+  comorbidity_charlson_results[["score"]] <-
+    as.integer(comorbidity_charlson_results[["score"]])
+}
+```
+
+Next we evaluate each function 20 times and record the total execution
+time, in seconds, for each evaluation.
+
+Code (click to toggle view/fold)
+
+``` r
+medicalcoder_times <- numeric(0)
+medicalcoder_times_DT <- numeric(0)
+comorbidity_times <- numeric(0)
+comorbidity_times_DT <- numeric(0)
+
+for (i in 1:20) {
+  tic <- Sys.time()
+  x <- medicalcoder_charlson_results()
+  toc <- Sys.time()
+  medicalcoder_times <- c(medicalcoder_times, as.numeric(difftime(toc, tic, units = "secs")))
+
+  tic <- Sys.time()
+  x <- medicalcoder_charlson_results_DT()
+  toc <- Sys.time()
+  medicalcoder_times_DT <- c(medicalcoder_times_DT, as.numeric(difftime(toc, tic, units = "secs")))
+
+  tic <- Sys.time()
+  x <- comorbidity_charlson_results()
+  toc <- Sys.time()
+  comorbidity_times <- c(comorbidity_times, as.numeric(difftime(toc, tic, units = "secs")))
+
+  tic <- Sys.time()
+  x <- comorbidity_charlson_results_DT()
+  toc <- Sys.time()
+  comorbidity_times_DT <- c(comorbidity_times_DT, as.numeric(difftime(toc, tic, units = "secs")))
+}
+```
+
+The table below reports the summary of the time required to run each
+method.
+[`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+with a `data.table` input requires the least time to compute. Due in
+part to the need to aggregate multiple calls for
+[`comorbidity::comorbidity()`](https://ellessenne.github.io/comorbidity/reference/comorbidity.html),
+the call to
+[`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+with a `data.frame` is still much faster than
+[`comorbidity::comorbidity()`](https://ellessenne.github.io/comorbidity/reference/comorbidity.html).
+
+[TABLE]
 
 ## References
 
