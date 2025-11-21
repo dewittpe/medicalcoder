@@ -48,15 +48,21 @@ lookup_icd_codes <- function(x, regex = FALSE, full.codes = TRUE, compact.codes 
   if (regex) {
     if(full.codes) {
       fcmatches <- lapply(x, grep, x = ICDCODES[["full_code"]], value = TRUE, ...)
-      fcmatches <- data.frame(input_seq   = rep(seq_along(x), times = sapply(fcmatches, length)),
-                              input_regex = rep(x, times = sapply(fcmatches, length)),
-                              input_code  = do.call(c, fcmatches))
+      fcmatches <- data.frame(
+        input_seq   = rep(seq_along(x), times = sapply(fcmatches, length)),
+        input_regex = rep(x, times = sapply(fcmatches, length)),
+        input_code  = do.call(c, fcmatches),
+        stringsAsFactors = FALSE
+      )
     }
     if (compact.codes) {
       ccmatches <- lapply(x, grep, x = ICDCODES[["code"]], value = TRUE, ...)
-      ccmatches <- data.frame(input_seq   = rep(seq_along(x), times = sapply(ccmatches, length)),
-                              input_regex = rep(x, times = sapply(ccmatches, length)),
-                              input_code  = do.call(c, ccmatches))
+      ccmatches <- data.frame(
+        input_seq   = rep(seq_along(x), times = sapply(ccmatches, length)),
+        input_regex = rep(x, times = sapply(ccmatches, length)),
+        input_code  = do.call(c, ccmatches),
+        stringsAsFactors = FALSE
+      )
     }
     if (full.codes & compact.codes) {
       input <- rbind(fcmatches, ccmatches)
@@ -66,7 +72,11 @@ lookup_icd_codes <- function(x, regex = FALSE, full.codes = TRUE, compact.codes 
       input <- ccmatches
     }
   } else {
-    input <- data.frame(input_seq = seq_along(x), input_code = x)
+    input <- data.frame(
+      input_seq = seq_along(x),
+      input_code = x,
+      stringsAsFactors = FALSE
+    )
   }
 
   if (full.codes) {
@@ -125,7 +135,10 @@ lookup_icd_codes <- function(x, regex = FALSE, full.codes = TRUE, compact.codes 
   } else if (!ofc & occ) {
     matches <- on_compact_code
   } else {
-    matches <- as.data.frame(matrix(NA_character_, nrow = 1L, ncol = length(col_order), dimnames = list("", col_order)))
+    matches <- as.data.frame(
+      matrix(NA_character_, nrow = 1L, ncol = length(col_order), dimnames = list("", col_order)),
+      stringsAsFactors = FALSE
+    )
   }
 
   rtn <- merge(x = input, y = matches, all.x = TRUE, by = col_order[1:2])

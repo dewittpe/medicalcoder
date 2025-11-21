@@ -36,7 +36,7 @@
   }
 
   # build the return object
-  rtn <- cbind(iddf, as.data.frame(results$X, check.names = FALSE))
+  rtn <- cbind(iddf, as.data.frame(results$X, check.names = FALSE, stringsAsFactors = FALSE))
   rtn <- mdcr_set(rtn, j = "num_cmrb", value = results$num_cmrb)
   rtn <- mdcr_set(rtn, j = "cmrb_flag", value = results$cmrb_flag)
   rtn <- mdcr_set(rtn, j = "mortality_index", value = results$mortality_index)

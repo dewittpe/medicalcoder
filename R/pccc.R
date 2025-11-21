@@ -139,7 +139,7 @@
 
   X <- X[, colorder, drop = FALSE]
 
-  rtn <- cbind(iddf, as.data.frame(X, check.names = FALSE))
+  rtn <- cbind(iddf, as.data.frame(X, check.names = FALSE, stringsAsFactors = FALSE))
 
   if (subconditions) {
     rtn <- list(conditions = rtn, subconditions = list())

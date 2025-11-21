@@ -126,16 +126,22 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
   rtn <-
     lapply(conditions[["condition"]],
            function(cnd) {
-             x1 <- data.frame(condition = cnd,
-                              subcondition = NA_character_,
-                              count = counts[cnd],
-                              percent_of_cohort = 100 * counts[cnd] / N,
-                              percent_of_those_with_condition = NA_real_)
-             x2 <- data.frame(condition = cnd,
-                              subcondition = names(scounts[[cnd]]),
-                              count = scounts[[cnd]],
-                              percent_of_cohort = 100 * scounts[[cnd]] / N,
-                              percent_of_those_with_condition = 100 * scounts[[cnd]] / counts[cnd])
+             x1 <- data.frame(
+               condition = cnd,
+               subcondition = NA_character_,
+               count = counts[cnd],
+               percent_of_cohort = 100 * counts[cnd] / N,
+               percent_of_those_with_condition = NA_real_,
+               stringsAsFactors = FALSE
+             )
+             x2 <- data.frame(
+               condition = cnd,
+               subcondition = names(scounts[[cnd]]),
+               count = scounts[[cnd]],
+               percent_of_cohort = 100 * scounts[[cnd]] / N,
+               percent_of_those_with_condition = 100 * scounts[[cnd]] / counts[cnd],
+               stringsAsFactors = FALSE
+             )
              rbind(x1, x2)
            }
            )
@@ -169,7 +175,8 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
       condition = c(names(cnds), rep("num_cmrb", ncol(tlts))),
       label     = c(conditions[["condition_label"]], "Any Technology Dependence", "Any Transplantation", "Any Condition", colnames(tlts)),
       count     = as.integer(c(colSums(cnds), colSums(tlts))),
-      percent   = 100 * c(colMeans(cnds), colMeans(tlts))
+      percent   = 100 * c(colMeans(cnds), colMeans(tlts)),
+      stringsAsFactors = FALSE
     )
 
   rownames(rtn) <- NULL
@@ -209,14 +216,26 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
     cbind(
           condition = conditions[["condition"]],
           label = conditions[["condition_label"]],
-          data.frame(dxpr_or_tech_count = as.integer(counts[["dxpr_or_tech"]]),
-                     dxpr_or_tech_percent = percents[["dxpr_or_tech"]]),
-          data.frame(dxpr_only_count = as.integer(counts[["dxpr_only"]]),
-                     dxpr_only_percent = percents[["dxpr_only"]]),
-          data.frame(tech_only_count = as.integer(counts[["tech_only"]]),
-                     tech_only_percent = percents[["tech_only"]]),
-          data.frame(dxpr_and_tech_count = as.integer(counts[["dxpr_and_tech"]]),
-                     dxpr_and_tech_percent = percents[["dxpr_and_tech"]])
+          data.frame(
+            dxpr_or_tech_count = as.integer(counts[["dxpr_or_tech"]]),
+            dxpr_or_tech_percent = percents[["dxpr_or_tech"]],
+            stringsAsFactors = FALSE
+          ),
+          data.frame(
+            dxpr_only_count = as.integer(counts[["dxpr_only"]]),
+            dxpr_only_percent = percents[["dxpr_only"]],
+            stringsAsFactors = FALSE
+          ),
+          data.frame(
+            tech_only_count = as.integer(counts[["tech_only"]]),
+            tech_only_percent = percents[["tech_only"]],
+            stringsAsFactors = FALSE
+          ),
+          data.frame(
+            dxpr_and_tech_count = as.integer(counts[["dxpr_and_tech"]]),
+            dxpr_and_tech_percent = percents[["dxpr_and_tech"]],
+            stringsAsFactors = FALSE
+          )
     )
 
   rtn <-
@@ -231,7 +250,8 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
         tech_only_count = NA_integer_,
         tech_only_percent = NA_real_,
         dxpr_and_tech_count = NA_integer_,
-        dxpr_and_tech_percent = NA_real_
+        dxpr_and_tech_percent = NA_real_,
+        stringsAsFactors = FALSE
       )
   )
 
@@ -254,7 +274,13 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
     lapply(seq_len(max(object[["num_cmrb"]])),
       function(x) {
         y <- object[["num_cmrb"]] >= x
-        data.frame(condition_description = paste(">=", x), condition = NA_character_, count = sum(y), percent = 100 * mean(y))
+        data.frame(
+          condition_description = paste(">=", x),
+          condition = NA_character_,
+          count = sum(y),
+          percent = 100 * mean(y),
+          stringsAsFactors = FALSE
+        )
       })
   num_cmrbs <- do.call(rbind, num_cmrbs)
   cmrbs <- rbind(cmrbs, num_cmrbs)
@@ -267,7 +293,8 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
       median    = stats::median(object[["cci"]]),
       q3        = stats::quantile(object[["cci"]], prob = 0.75),
       max       = max(object[["cci"]]),
-      row.names = NULL
+      row.names = NULL,
+      stringsAsFactors = FALSE
     )
 
   age_summary <-
@@ -299,7 +326,7 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
     lapply(seq_len(max(object[["num_cmrb"]])),
       function(x) {
         y <- object[["num_cmrb"]] >= x
-        data.frame(condition = paste(">=", x), count = sum(y), percent = 100 * mean(y))
+        data.frame(condition = paste(">=", x), count = sum(y), percent = 100 * mean(y), stringsAsFactors = FALSE)
       })
   num_cmrbs <- do.call(rbind, num_cmrbs)
   cmrbs <- rbind(cmrbs, num_cmrbs)
@@ -318,7 +345,8 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
                  stats::quantile(object[["mortality_index"]], prob = 0.75)),
       max    = c(max(object[["readmission_index"]]),
                  max(object[["mortality_index"]])),
-      row.names = NULL
+      row.names = NULL,
+      stringsAsFactors = FALSE
     )
 
   list(
