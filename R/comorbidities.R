@@ -495,7 +495,7 @@ comorbidities.data.frame <- function(data,
   } else {
     iddf <- unique(mdcr_select(cmrb, cols = id.vars))
     if (nrow(iddf) == 0) {
-      iddf <- stats::setNames(data.frame(1L), id.vars)
+      iddf <- stats::setNames(data.frame(1L, stringsAsFactors = FALSE), id.vars)
     }
   }
 

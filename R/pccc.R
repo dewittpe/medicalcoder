@@ -166,7 +166,7 @@
         X[cbind(ri[keep], ci[keep])] <- 1L
       }
 
-      rtn[["subconditions"]][[cnd]] <- cbind(uiddf, as.data.frame(X, check.names = FALSE))
+      rtn[["subconditions"]][[cnd]] <- cbind(uiddf, as.data.frame(X, check.names = FALSE, stringsAsFactors = FALSE))
     }
   }
 
@@ -209,7 +209,7 @@
   X[match(key_tran, key_iddf), "any_transplant"] <- 1L
   X <- cbind(X, num_cmrb, cmrb_flag)
 
-  rtn <- cbind(iddf, as.data.frame(X, check.names = FALSE))
+  rtn <- cbind(iddf, as.data.frame(X, check.names = FALSE, stringsAsFactors = FALSE))
 
   if (subconditions) {
     rtn <- list(conditions = rtn, subconditions = list())
@@ -235,7 +235,7 @@
         X[cbind(ri[keep], ci[keep])] <- 1L
       }
 
-      rtn[["subconditions"]][[cnd]] <- cbind(uiddf, as.data.frame(X, check.names = FALSE))
+      rtn[["subconditions"]][[cnd]] <- cbind(uiddf, as.data.frame(X, check.names = FALSE, stringsAsFactors = FALSE))
     }
   }
 

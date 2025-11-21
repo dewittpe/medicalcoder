@@ -94,7 +94,8 @@ expected_index_summary <-
                stats::quantile(elixhauser$mortality_index, prob = 0.75)),
     max    = c(max(elixhauser$readmission_index),
                max(elixhauser$mortality_index)),
-    row.names = NULL
+    row.names = NULL,
+    stringsAsFactors = FALSE
   )
 
 stopifnot(identical(summary_current$index_summary, expected_index_summary))

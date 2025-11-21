@@ -81,18 +81,22 @@ lookup_icd_codes <- function(x, regex = FALSE, full.codes = TRUE, compact.codes 
 
   if (full.codes) {
     on_full_code <-
-      merge(x = input,
-            y = cbind(ICDCODES, "matched_full_code" = ICDCODES[["full_code"]], zzz = 1L),
-            by.x = "input_code",
-            by.y = "full_code")
+      merge(
+        x = input,
+        y = data.frame(ICDCODES, matched_full_code = ICDCODES[["full_code"]], zzz = 1L, stringsAsFactors = FALSE),
+        by.x = "input_code",
+        by.y = "full_code"
+      )
   }
 
   if (compact.codes) {
     on_compact_code <-
-      merge(x = input,
-            y = cbind(ICDCODES, "matched_code" = ICDCODES[["code"]], zzz = 1L),
-            by.x = "input_code",
-            by.y = "code")
+      merge(
+        x = input,
+        y = data.frame(ICDCODES, matched_code = ICDCODES[["code"]], zzz = 1L, stringsAsFactors = FALSE),
+        by.x = "input_code",
+        by.y = "code"
+      )
   }
 
   if (full.codes & compact.codes) {
