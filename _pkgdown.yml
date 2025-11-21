@@ -26,3 +26,5 @@ navbar:
           href: articles/medicalcoder-vs-comorbidity.html
         - text: R package icdcomorbid
           href: articles/medicalcoder-vs-icdcomorbid.html
+        - text: R package multimorbidity
+          href: articles/medicalcoder-vs-multimorbidity.html

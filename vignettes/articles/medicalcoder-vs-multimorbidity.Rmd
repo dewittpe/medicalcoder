@@ -1,0 +1,256 @@
+---
+title: "medicalcoder vs multimorbidity"
+output:
+ rmarkdown::html_vignette:
+   toc: true
+   number_sections: false
+bibliography: ../references.bib
+vignette: >
+ %\VignetteIndexEntry{medicalcoder vs multimorbidity}
+ %\VignetteEngine{knitr::rmarkdown}
+ %\VignetteEncoding{UTF-8}
+---
+
+```{r, label = "setup", include = FALSE}
+# IMPORTANT SYNTAX NOTE:
+# Vignettes cannot use the pipeOp `|>` so the package can depend on R >= 3.5.0
+# The _articles_ (website only) can use the pipeOp as since these are not part of the source package.
+
+library(kableExtra)
+options(qwraps2_markup = "markdown")
+options(knitr.kable.NA = '')
+knitr::opts_chunk$set(collapse = TRUE, fig.align = "center")
+```
+
+# Introduction
+
+The purpose of this article is to compare the API and results between
+`medicalcoder` and the R package
+[multimorbidity](https://cran.r-project.org/package=multimorbidity)
+[@r-multimorbidity].
+
+```{r}
+library(data.table)
+library(medicalcoder)
+library(multimorbidity)
+packageVersion("multimorbidity")
+packageDescription("multimorbidity")$Title
+cat(packageDescription("multimorbidity")$Description)
+```
+
+# Prepare Data for `multimorbidity`
+The example data set `mdcr` within `medicalcoder` is in a format that is ideal
+for `medicalcoder::comorbidities()` and for the `multimorbidity::charlson()`
+call.  The only issue that needs to be addressed is that
+`multimorbidity::charlson()` is expecting to only see diagnostic codes so we
+will omit the procedure codes from `mdcr`.
+
+```{r}
+mdcr_dx <- subset(mdcr, dx == 1)
+
+# add any patid omit
+mdcr_dx <-
+  rbind(
+    mdcr_dx,
+    data.frame(
+      patid = setdiff(mdcr$patid, mdcr_dx$patid),
+      icdv = 10L, code = "", dx = 1L
+    )
+  )
+```
+
+# Charlson Comorbidities
+
+A detailed comparison between `medicalcoder::comorbidities()` and the methods in
+the `multimorbidity::charlson()` call is presented here.
+
+```{r}
+tic <- Sys.time()
+
+medicalcoder_charlson_results <-
+  medicalcoder::comorbidities(
+    data = mdcr,
+    id.vars = "patid",
+    icd.codes = "code",
+    dx.var = "dx",
+    icdv.var = "icdv",
+    poa = 1L, # assume all codes are present on admission
+    primarydx = 0L, # assume all codes are secondary diagnoses
+    method = "charlson_quan2011"
+  )
+
+toc <- Sys.time()
+
+difftime(toc, tic, units = "secs")
+```
+
+Calling `multimorbidity::charlson()`
+```{r}
+tic <- Sys.time()
+
+multimorbidity_charlson_results <-
+  multimorbidity::charlson(
+    dat = mdcr_dx,
+    id  = patid,
+    version = 19, # default - both ICD-9 and ICD-10 data
+    version_var = icdv
+  )
+
+toc <- Sys.time()
+
+difftime(toc, tic, units = "secs")
+```
+
+## Differences in the results
+
+We build a `data.frame` `detlas` to explore the differences in the results between
+`medicalcoder::comorbidities()` and `multimorbidity::charlson()`.  One import
+difference is that `medicalcoder::comorbidities()` returns a `data.frame` with
+the id variable names as passed to the function whereas
+`multimorbidity::charlson()` returns a `data.frame` with the id column named id.
+
+Also, there is a difference in the storage mode for the indicator columns.
+`multimorbidity::charlson()` returns numeric columns whereas
+whereas `medicalcoder::comorbidities()` return integer columns.
+
+```{r}
+multimorbidity_charlson_results <-
+  multimorbidity_charlson_results |>
+  dplyr::mutate_if(is.numeric, as.integer)
+
+deltas <-
+  merge(
+    x = medicalcoder_charlson_results,
+    y = multimorbidity_charlson_results,
+    all = TRUE,
+    by.x = "patid",
+    by.y = "id"
+  )
+setDT(deltas)
+```
+
+We will compare the columns between the two methods.  None of the results are
+the same.
+```{r}
+dcolumns <- data.table::fread(text = "
+medicalcoder | multimorbidity
+aidshiv | charlson_hiv
+mal | charlson_malig
+cebvd |charlson_cerebro
+copd | charlson_chronic_pulm
+chf | charlson_chf
+dem | charlson_dementia
+dmc | charlson_diab_c
+dm | charlson_diab_uc
+hp | charlson_hemi_para
+mld | charlson_mild_liv
+msld | charlson_mod_sev_liv
+mst | charlson_met_solid
+mi | charlson_myocar
+pud | charlson_peptic_ulcer
+pvd | charlson_periph_vasc
+rnd | charlson_renal
+rhd | charlson_rheum")
+
+Map(
+  f = function (x, y) {
+    z <- identical(deltas[[x]], deltas[[y]])
+    z
+  },
+  x = dcolumns$medicalcoder,
+  y = dcolumns$multimorbidity
+) |>
+do.call(c, args = _)
+```
+
+```{r, include = FALSE}
+# expect all identical() to return FALSE
+Map(
+  f = function (x, y) {
+    z <- identical(deltas[[x]], deltas[[y]])
+    stopifnot(!z)
+  },
+  x = dcolumns$medicalcoder,
+  y = dcolumns$multimorbidity
+) |>
+do.call(c, args = _)
+```
+
+Let's dig into one of the conditions: Rheumatic disease ("rhd" in
+`medicalcoder::comorbidities()`, "charlson_rheum" in
+`multimorbidity::charlson()`).
+
+```{r}
+deltas[rhd != charlson_rheum, .(patid, rhd, charlson_rheum)]
+deltas[rhd != charlson_rheum, .N, keyby = .(rhd, charlson_rheum)]
+```
+```{r, include = FALSE}
+stopifnot(
+  deltas[rhd != charlson_rheum, .N, keyby = .(rhd, charlson_rheum)] == c(1, 0, 136)
+)
+```
+
+All the differences appear to be from `medicalcoder::comorbidities()` flagging
+the condition and `multimorbidity::charlson()` not flagging the condition.
+Let's look at the ICD codes `medicalcoder::comorbidities()` flagged in the
+records
+
+```{r}
+missingcodes <-
+  merge(
+    x = subset(mdcr, patid %in% deltas[rhd != charlson_rheum, patid]),
+    y = subset(medicalcoder::get_charlson_codes(), charlson_quan2005 == 1L),
+    by = c("code", "icdv", "dx")
+  )
+missingcodes <- subset(missingcodes, condition == "rhd")
+missingcodes <- unique(missingcodes[, c("icdv", "dx", "code", "full_code")])
+setDT(missingcodes)
+missingcodes[, codeid := 1:.N]
+
+missingcodes
+```
+As we see below, all these codes are flagged by `medicalcoder::comorbidities()`
+and not flagged by `multimorbidity::charlson()`.
+```{r}
+medicalcoder::comorbidities(
+  data = missingcodes,
+  id.vars = "codeid",
+  icd.codes = "code",
+  icdv.var = "icdv",
+  dx.var = "dx",
+  method = "charlson_quan2005",
+  poa = 1L,
+  primarydx = 0L
+)$rhd
+
+multimorbidity::charlson(
+  dat = missingcodes,
+  id = codeid,
+  version = 19,
+  version_var = icdv
+)$charlson_rheum
+```
+
+Referencing Table 1 of @quan2005, we see that the ICD-10 codes for Rheumatic
+disease are:
+
+> M05.x, M06.x, M31.5, M32.x–M34.x, M35.1, M35.3, M36.0
+
+And the enhanced ICD-9-CM codes are:
+
+> 446.5, 710.0–710.4, 714.0–714.2, 714.8, 725.x
+
+
+# Conclusions
+
+`multimorbidity::charlson()` takes more time to evaluate the same data set than
+`medicalcoder::comorbidities()` and `multimorbidity::charlson()` reports several
+false negatives.
+
+`medicalcoder::comorbidities()` is a preferable utility.
+
+# References
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                              End of File                                -->
+<!-- ----------------------------------------------------------------------- -->
