@@ -710,7 +710,7 @@ head(mdcr_longitudinal)
 ## PCCC V2
 
 Let's look at the `pccc_v2.1` flags for each patient, using all the information from
-all the encounters.  This can easily by done by specifying `id.vars =
+all the encounters.  This can easily be done by specifying `id.vars =
 c("patid")` such that the `comorbidities()` method considers all codes as
 occurring on one encounter.
 

@@ -18,7 +18,7 @@ knitr::opts_chunk$set(collapse = TRUE, fig.align = "center")
 There are four functions in the medicalcoder package specifically for working
 with International Classification of Diseases (ICD) codes.
 
-1. `get_icd_codes()`: returns a look up table of ICD codes as a `data.frame`.
+1. `get_icd_codes()`: returns a lookup table of ICD codes as a `data.frame`.
 2. `lookup_icd_codes()`: returns details on specific ICD codes.
 3. `is_icd()`: returns `TRUE` or `FALSE` for a vector of codes while considering
    ICD version, type, and billable status.
@@ -31,7 +31,7 @@ with International Classification of Diseases (ICD) codes.
 # `get_icd_codes()`
 
 A lookup table for the ICD codes has been built as internal data sets within
-the medicalcoder package.  The sources for these look up tables come from the
+the medicalcoder package.  The sources for these lookup tables come from the
 Centers for Disease Control (CDC) and from the Centers for Medicare & Medicaid
 Services (CMS).  The specific links to the source data sets can be found in the
 source code for the medicalcoder package on

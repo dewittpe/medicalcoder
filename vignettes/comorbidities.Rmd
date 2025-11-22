@@ -129,11 +129,11 @@ head(mdcr_longitudinal)
 ```
 
 
-# When are conditions flag?
+# When are conditions flagged?
 
 Whether or not the code is present on admission (POA) is useful when applying
 the comorbidity algorithms and considering if the patient has a comorbidity at
-time of encounter start of if the condition is a result of the current
+the start of an encounter, or if the condition is a result of the current
 hospitalization.
 
 Implementation of Elixhauser comorbidities for 2022 and beyond [@ahrq2025]
@@ -290,7 +290,7 @@ tab <-
     row.names = FALSE,
     escape = FALSE,
     align = rep("c", nrow(rtn)),
-    caption = "Indicators for when a comorbidity is flagged based on the algorithm, present on admission (poa), and flag.method. The two ICD codes,C78.4 and I50.40, map to cancer and cardiovascular disease respectively."
+    caption = "Indicators for when a comorbidity is flagged based on the algorithm, present on admission (poa), and flag.method. The two ICD codes, C78.4 and I50.40, map to cancer and cardiovascular disease respectively."
   )
 tab <-
   footnote(
