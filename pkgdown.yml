@@ -8,8 +8,10 @@ articles:
   icd: icd.html
   articles/medicalcoder-vs-comorbidity: medicalcoder-vs-comorbidity.html
   articles/medicalcoder-vs-icdcomorbid: medicalcoder-vs-icdcomorbid.html
+  articles/medicalcoder-vs-mimic: medicalcoder-vs-mimic.html
+  articles/medicalcoder-vs-multimorbidity: medicalcoder-vs-multimorbidity.html
   pccc: pccc.html
-last_built: 2025-11-20T01:23Z
+last_built: 2025-11-22T04:04Z
 urls:
   reference: http://www.peteredewitt.com/medicalcoder/reference
   article: http://www.peteredewitt.com/medicalcoder/articles

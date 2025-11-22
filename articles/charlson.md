@@ -3,7 +3,7 @@
 ``` r
 library(medicalcoder)
 packageVersion("medicalcoder")
-## [1] '0.6.0.9000'
+## [1] '0.7.0'
 ```
 
 ## Introduction
@@ -118,7 +118,7 @@ str(summary(mdcr_results))
 ##   ..$ count                : num [1:22] 7 2301 411 3415 684 ...
 ##   ..$ percent              : num [1:22] 0.0183 6.0138 1.0742 8.9253 1.7877 ...
 ##  $ age_summary  :'data.frame':   1 obs. of  3 variables:
-##   ..$ age_score: Factor w/ 0 levels: NA
+##   ..$ age_score: chr NA
 ##   ..$ count    : int 38262
 ##   ..$ percent  : num 100
 ##  $ index_summary:'data.frame':   1 obs. of  5 variables:

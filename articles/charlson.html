@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,7 +44,9 @@
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>medicalcoder versus ...</h6></li>
     <li><a class="dropdown-item" href="../articles/medicalcoder-vs-comorbidity.html">R package comorbidity</a></li>
+    <li><a class="dropdown-item" href="../articles/medicalcoder-vs-mimic.html">MIMIC-IV Charlson SQL</a></li>
     <li><a class="dropdown-item" href="../articles/medicalcoder-vs-icdcomorbid.html">R package icdcomorbid</a></li>
+    <li><a class="dropdown-item" href="../articles/medicalcoder-vs-multimorbidity.html">R package multimorbidity</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -79,7 +81,7 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.peteredewitt.com/medicalcoder/">medicalcoder</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"medicalcoder"</span><span class="op">)</span></span>
-<span><span class="co">## [1] '0.6.0.9000'</span></span></code></pre></div>
+<span><span class="co">## [1] '0.7.0'</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -194,7 +196,7 @@ user’s liking.</p>
 <span><span class="co">##   ..$ count                : num [1:22] 7 2301 411 3415 684 ...</span></span>
 <span><span class="co">##   ..$ percent              : num [1:22] 0.0183 6.0138 1.0742 8.9253 1.7877 ...</span></span>
 <span><span class="co">##  $ age_summary  :'data.frame':   1 obs. of  3 variables:</span></span>
-<span><span class="co">##   ..$ age_score: Factor w/ 0 levels: NA</span></span>
+<span><span class="co">##   ..$ age_score: chr NA</span></span>
 <span><span class="co">##   ..$ count    : int 38262</span></span>
 <span><span class="co">##   ..$ percent  : num 100</span></span>
 <span><span class="co">##  $ index_summary:'data.frame':   1 obs. of  5 variables:</span></span>
