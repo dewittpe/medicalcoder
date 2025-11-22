@@ -103,11 +103,11 @@ just format the input string appropriately.</li>
 <h2 id="get_icd_codes">
 <code>get_icd_codes()</code><a class="anchor" aria-label="anchor" href="#get_icd_codes"></a>
 </h2>
-<p>A look up table for the ICD codes have been built as internal data
-sets within the <code>medicalcoder</code> package. The sources for these
-look up tables come from the Centers for Disease Control (CDC) and from
-the Centers for Medicare &amp; Medicaid Services (CMS). The specific
-links to the source data sets can be found in the source code for the
+<p>A lookup table for the ICD codes has been built as internal data sets
+within the <code>medicalcoder</code> package. The sources for these look
+up tables come from the Centers for Disease Control (CDC) and from the
+Centers for Medicare &amp; Medicaid Services (CMS). The specific links
+to the source data sets can be found in the source code for the
 <code>medicalcoder</code> package on <a href="https://github.com/dewittpe/medicalcoder" class="external-link">GitHub</a>.</p>
 <p>End users can get a <code>data.frame</code> with ICD-9 diagnostic,
 ICD-9 procedure, ICD-10 diagnostic, and ICD-10 procedure codes.</p>
@@ -143,7 +143,7 @@ been omitted.</p></li>
 information.</p></li>
 <li>
 <p><code>known_start</code>: The first year that the
-<code>medicalcoder</code> package as data for this code.</p>
+<code>medicalcoder</code> package has data for this code.</p>
 <ul>
 <li><p>For codes based on the ICD-9-CM, ICD-9-PCS, ICD-10-CM, ICD-10-PCS
 standards the year is the <em>fiscal year</em> for the United States
@@ -297,9 +297,9 @@ bacilli found (in sputum) by microscopy</td>
 </tbody>
 </table>
 <p>ICD-9-CM V79.49 had the description of ‘other’ which would require
-exploration of the header codes to understand. Even when the most
-verbose description may still require consideration of the header codes
-to fullye understand.</p>
+exploration of the header codes to understand. Even the most verbose
+description may still require consideration of the header codes to fully
+understand.</p>
 <table class="table">
 <colgroup>
 <col width="10%">
@@ -378,9 +378,9 @@ details for the codes.</p>
 </ul>
 <p>To keep the install size of <code>medicalcoder</code> under the size
 limits for CRAN, the stored data is structured in a way that several
-joins and other operations are need to have a data set that is end user
-friendly. Several data sets are generated and cached when the namespace
-is loaded.</p>
+joins and other operations are needed to have a data set that is end
+user friendly. Several data sets are generated and cached when the
+namespace is loaded.</p>
 </div>
 </div>
 <div class="section level2">
@@ -391,7 +391,7 @@ is loaded.</p>
 to look up specific ICD codes. The return is a <code>data.frame</code>.
 The columns report the input code, if it was matched as a full code
 (with an applicable decimal point) or a compact code (applicable decimal
-point omitted) along with the ICD version ,type, and when the code was
+point omitted) along with the ICD version, type, and when the code was
 assignable.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">codes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0011"</span>, <span class="st">"7329"</span>, <span class="st">"732"</span>, <span class="st">"73291"</span>, <span class="st">"not a code"</span>, <span class="st">"001.1"</span>, <span class="st">"A9248"</span>, <span class="st">"A924"</span>, <span class="st">"Z00"</span><span class="op">)</span></span>
@@ -608,7 +608,7 @@ assignable.</p>
 </tr>
 </tbody>
 </table>
-<p>It is possible to restrict the look up to just full or compact codes.
+<p>It is possible to restrict the lookup to just full or compact codes.
 The default, as shown above, is to consider full and compact codes. Set
 <code>full.codes = FALSE</code> so only compact codes are
 considered.</p>
@@ -1503,7 +1503,7 @@ valid codes.</p>
 <p>There is also an option to considering header codes to be valid. As
 seen below, the code “516” is a header, it was never assignable in
 ICD-9-CM. By setting <code>headerok = TRUE</code> “516” will be flagged
-as a valid code. A ICD-10 header “A00” will be FALSE in the following
+as a valid code. An ICD-10 header “A00” will be FALSE in the following
 checks of ICD-9 codes.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"516"</span>, <span class="st">"5163"</span>, <span class="st">"51631"</span>, <span class="st">"A00"</span><span class="op">)</span></span>

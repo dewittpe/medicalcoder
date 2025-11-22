@@ -144,9 +144,10 @@ head(mdcr)
 ```
 
 The `mdcr_longitudinal` data set is distinct from the `mdcr` data set.
-The major difference is that this set are all diagnostic codes and there
-are only 3 patients. The `date` column denote the date of the diagnosis
-and allows for us to look at the change in comorbidities over time.
+The major difference is that this data set contains only diagnostic
+codes and there are only 3 patients. The `date` column denotes the date
+of the diagnosis and allows us to look at changes in comorbidities over
+time.
 
 ``` r
 str(mdcr_longitudinal)
@@ -384,7 +385,7 @@ The columns are:
 - `full_code`: character string for the ICD code with any appropriate
   decimal point.
 
-- `code`: characters string for the compact ICD code, that is, the ICD
+- `code`: character string for the compact ICD code, that is, the ICD
   code without any decimal point, e.g., the full code C00.1 has the
   compact code form C001.
 

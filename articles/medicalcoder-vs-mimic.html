@@ -81,10 +81,10 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>The purpose of article is to compare the results for the Charlson
-comorbidity flags returned by <code><a href="../reference/comorbidities.html">medicalcoder::comorbidities()</a></code>
-vs the SQL code provided by <span class="citation">Johnson et al.
-(2018)</span>.</p>
+<p>The purpose of this article is to compare the results for the
+Charlson comorbidity flags returned by
+<code><a href="../reference/comorbidities.html">medicalcoder::comorbidities()</a></code> vs the SQL code provided by
+<span class="citation">Johnson et al. (2018)</span>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.peteredewitt.com/medicalcoder/">medicalcoder</a></span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -93,8 +93,8 @@ vs the SQL code provided by <span class="citation">Johnson et al.
 </h2>
 <p>SQL code for applying a Charlson comorbidity algorithm to the
 MIMIC-IV data is available from MIT Laboratory for Computational
-Physilogy (MIT_LCP) on GitHub. The code is expected to run on Google Big
-Query on the MIMIC-IV data. We make a few small modifications to the
+Physiology (MIT_LCP) on GitHub. The code is expected to run on Google
+Big Query on the MIMIC-IV data. We make a few small modifications to the
 code so we can evaluate the SQL locally via RSQLite and on a local data
 set.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -159,7 +159,7 @@ set.</p>
 <span><span class="co"># get the charlson results via MIMIC-IV</span></span>
 <span><span class="va">mimic_charlson_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dbi.r-dbi.org/reference/dbGetQuery.html" class="external-link">dbGetQuery</a></span><span class="op">(</span><span class="va">con</span>, <span class="va">mimic_charson_query</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># close DB conection</span></span>
+<span><span class="co"># close DB connection</span></span>
 <span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbDisconnect.html" class="external-link">dbDisconnect</a></span><span class="op">(</span>conn <span class="op">=</span> <span class="va">con</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/setDT.html" class="external-link">setDT</a></span><span class="op">(</span><span class="va">mimic_charlson_results</span><span class="op">)</span></span></code></pre></div>
@@ -250,8 +250,8 @@ two methods.</p>
 <span><span class="co">## [1] TRUE</span></span>
 <span><span class="co">## identical(delta[["cci"]], delta[["charlson_comorbidity_index"]])</span></span>
 <span><span class="co">## [1] TRUE</span></span></code></pre></div>
-<p>There are there comorbidities were there is are different levels of
-severify. <code><a href="../reference/comorbidities.html">medicalcoder::comorbidities()</a></code> will set the less
+<p>There are three comorbidities where there are different levels of
+severity. <code><a href="../reference/comorbidities.html">medicalcoder::comorbidities()</a></code> will set the less
 severe condition indicator to 0 when the more severe condition is
 flagged. Both methods only consider the more severe case in the index
 scoring.</p>
@@ -352,7 +352,7 @@ disease (msld) is flagged. MIMIC retains both flags.</p>
 are the id.vars and the <code>num_cmrb</code>, and
 <code>cmrb_flag</code>. These columns are from
 <code><a href="../reference/comorbidities.html">medicalcoder::comorbidities()</a></code> and report the number of
-comorbidities flagged and indicator for any comorbiditiy.</p>
+comorbidities flagged and indicator for any comorbidity.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">delta</span><span class="op">)</span></span>
 <span><span class="co">## Classes 'medicalcoder_comorbidities', 'data.table' and 'data.frame': 38262 obs. of  4 variables:</span></span>

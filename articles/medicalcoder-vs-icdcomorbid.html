@@ -97,7 +97,7 @@
 <span><span class="co">##     enabling the identification and analysis of various medical conditions within healthcare data.</span></span></code></pre></div>
 <p><code>icdcomorbid</code> provides <span class="citation">(Quan et al.
 2005)</span> Charlson and Elixhauser comorbidities. A nice feature of
-<code>icdcomorbid</code> is the abbility to use custom mappings between
+<code>icdcomorbid</code> is the ability to use custom mappings between
 ICD codes and comorbidities.</p>
 </div>
 <div class="section level2">
@@ -109,8 +109,8 @@ ICD codes and comorbidities.</p>
 use in the <code><a href="https://rdrr.io/pkg/icdcomorbid/man/icd9_to_comorbid.html" class="external-link">icdcomorbid::icd9_to_comorbid()</a></code> and
 <code>icd9_to_comorbid::icd10_to_comorbid()</code>, the data needs to be
 in a “wide” format instead of the provided long format.</p>
-<p>We start by spliting the data into ICD-9 and ICD-10 sets and add rows
-for any missing patids.</p>
+<p>We start by splitting the data into ICD-9 and ICD-10 sets and add
+rows for any missing patids.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mdcr_icd9dx</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">mdcr</span>, <span class="va">icdv</span> <span class="op">==</span>  <span class="fl">9L</span> <span class="op">&amp;</span> <span class="va">dx</span> <span class="op">==</span> <span class="fl">1L</span><span class="op">)</span></span>
 <span><span class="va">mdcr_icd10dx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">mdcr</span>, <span class="va">icdv</span> <span class="op">==</span> <span class="fl">10L</span> <span class="op">&amp;</span> <span class="va">dx</span> <span class="op">==</span> <span class="fl">1L</span><span class="op">)</span></span>
@@ -154,7 +154,7 @@ ways.</p>
 <span></span>
 <span><span class="va">toc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/difftime.html" class="external-link">difftime</a></span><span class="op">(</span><span class="va">toc</span>, <span class="va">tic</span>, units <span class="op">=</span> <span class="st">"secs"</span><span class="op">)</span></span>
-<span><span class="co">## Time difference of 0.465539 secs</span></span></code></pre></div>
+<span><span class="co">## Time difference of 0.4605751 secs</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="charlson-comorbidities">Charlson Comorbidities<a class="anchor" aria-label="anchor" href="#charlson-comorbidities"></a>
@@ -183,7 +183,7 @@ time required to apply the Charlson comorbidities to the
 <span><span class="va">toc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/difftime.html" class="external-link">difftime</a></span><span class="op">(</span><span class="va">toc</span>, <span class="va">tic</span>, units <span class="op">=</span> <span class="st">"secs"</span><span class="op">)</span></span>
-<span><span class="co">## Time difference of 0.6010392 secs</span></span></code></pre></div>
+<span><span class="co">## Time difference of 0.608048 secs</span></span></code></pre></div>
 <p>Compare that to the amount of time required to process just the first
 1,000 patids via <code><a href="https://rdrr.io/pkg/icdcomorbid/man/icd9_to_comorbid.html" class="external-link">icdcomorbid::icd9_to_comorbid()</a></code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -200,7 +200,7 @@ time required to apply the Charlson comorbidities to the
 <span><span class="va">toc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/difftime.html" class="external-link">difftime</a></span><span class="op">(</span><span class="va">toc</span>, <span class="va">tic</span>, units <span class="op">=</span> <span class="st">"secs"</span><span class="op">)</span></span>
-<span><span class="co">## Time difference of 5.394966 secs</span></span></code></pre></div>
+<span><span class="co">## Time difference of 5.396775 secs</span></span></code></pre></div>
 <p>There are 38262 patids to assess. To compare the results between
 <code><a href="../reference/comorbidities.html">medicalcoder::comorbidities()</a></code> and the results from the R
 package <code>icdcomorbid</code> would require calling

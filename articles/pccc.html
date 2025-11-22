@@ -266,7 +266,7 @@ conditions.</p>
 <p>Example: ICD-10 Z46.81 (Encounter for fitting and adjustment of
 insulin pump) is a metabolic and technology dependence code. If a
 patient had this code in their medical records then they would be
-classified has having a metabolic condition and a tech dependence. Under
+classified as having a metabolic condition and a tech dependence. Under
 version 2, this patient would be flagged as having a metabolic condition
 and technology dependence. Under version 3, the patient would only be
 flagged with a metabolic condition and technology dependence if at least
@@ -327,8 +327,8 @@ associated with technology dependence, 0L otherwise.</li>
 <div class="section level3">
 <h3 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h3>
-<p>Example: Consider a patient with following four diagnostic and two
-procedure ICD-9 codes:</p>
+<p>Example: Consider a patient with the following four diagnostic and
+two procedure ICD-9 codes:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pat1</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
@@ -347,12 +347,12 @@ procedure ICD-9 codes:</p>
 <span><span class="co">## 1             1         1         1         1         1</span></span>
 <span><span class="co">## 2             0         1         1         1         1</span></span></code></pre></div>
 <p>For all PCCC variants, there is one matching dx code, 343.2, for
-infantile cerebral palsy, matches for a neuromuscular condition. The
-procedure code 86.06 matches for a technology dependent metabolic
+infantile cerebral palsy, which matches a neuromuscular condition. The
+procedure code 86.06 matches a technology-dependent metabolic
 condition.</p>
 <p>Under version 2.0 of PCCC (variants <code>pccc_v2.0</code> and
-<code>pccc_v2.1</code>), this patient has two conditions, neuromuscular,
-metabolic. This patient also has a flag for device and technology
+<code>pccc_v2.1</code>), this patient has two conditions: neuromuscular
+and metabolic. This patient also has a flag for device and technology
 use.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pat1_pccc_v2.0</span> <span class="op">&lt;-</span></span>

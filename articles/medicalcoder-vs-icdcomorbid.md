@@ -21,7 +21,7 @@ cat(packageDescription("icdcomorbid")$Description)
 ```
 
 `icdcomorbid` provides (Quan et al. 2005) Charlson and Elixhauser
-comorbidities. A nice feature of `icdcomorbid` is the abbility to use
+comorbidities. A nice feature of `icdcomorbid` is the ability to use
 custom mappings between ICD codes and comorbidities.
 
 ## Prepare Data for `icdcomorbid`
@@ -34,7 +34,7 @@ To prepare that data set for use in the
 and `icd9_to_comorbid::icd10_to_comorbid()`, the data needs to be in a
 “wide” format instead of the provided long format.
 
-We start by spliting the data into ICD-9 and ICD-10 sets and add rows
+We start by splitting the data into ICD-9 and ICD-10 sets and add rows
 for any missing patids.
 
 ``` r
@@ -85,7 +85,7 @@ mdcr_icd10dx_wide <-
 
 toc <- Sys.time()
 difftime(toc, tic, units = "secs")
-## Time difference of 0.465539 secs
+## Time difference of 0.4605751 secs
 ```
 
 ## Charlson Comorbidities
@@ -115,7 +115,7 @@ medicalcoder_charlson_results <-
 toc <- Sys.time()
 
 difftime(toc, tic, units = "secs")
-## Time difference of 0.6010392 secs
+## Time difference of 0.608048 secs
 ```
 
 Compare that to the amount of time required to process just the first
@@ -136,7 +136,7 @@ icd9_to_comorbid_results <-
 toc <- Sys.time()
 
 difftime(toc, tic, units = "secs")
-## Time difference of 5.394966 secs
+## Time difference of 5.396775 secs
 ```
 
 There are 38262 patids to assess. To compare the results between

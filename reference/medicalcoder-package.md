@@ -52,7 +52,7 @@ This design choice was made for several reasons.
 
 One of the reasons for focusing on building a self-contained package
 with no need for additional namespaces is to make installation and use
-in an pseudo-air-gapped system easier. The author of this package
+in a pseudo-air-gapped system easier. The author of this package
 routinely works on machines with extremely limited, access to the
 world-wide-web. As such, relying on any system dependencies or other R
 packages can become difficult as the machine may or may not have the
@@ -62,7 +62,7 @@ work.
 A great deal of thought went into performance of the methods and the
 size of the package. The internal data sets, for example, are not stored
 in a structure that is easy to use by end user. When the package
-namespaces is loaded the needed internal lookup tables are generated and
+namespace is loaded, the needed internal lookup tables are generated and
 cached.
 
 ## See also

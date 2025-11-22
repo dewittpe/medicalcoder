@@ -66,7 +66,7 @@ conditionally, recognizing that many do not reflect chronic conditions.
 
 Example: ICD-10 Z46.81 (Encounter for fitting and adjustment of insulin
 pump) is a metabolic and technology dependence code. If a patient had
-this code in their medical records then they would be classified has
+this code in their medical records then they would be classified as
 having a metabolic condition and a tech dependence. Under version 2,
 this patient would be flagged as having a metabolic condition and
 technology dependence. Under version 3, the patient would only be
@@ -120,7 +120,7 @@ The columns are:
 
 ### Examples
 
-Example: Consider a patient with following four diagnostic and two
+Example: Consider a patient with the following four diagnostic and two
 procedure ICD-9 codes:
 
 ``` r
@@ -146,13 +146,12 @@ merge(x = pccc_codes, y = pat1, all = FALSE, by = c("icdv", "dx", "code"))
 ```
 
 For all PCCC variants, there is one matching dx code, 343.2, for
-infantile cerebral palsy, matches for a neuromuscular condition. The
-procedure code 86.06 matches for a technology dependent metabolic
-condition.
+infantile cerebral palsy, which matches a neuromuscular condition. The
+procedure code 86.06 matches a technology-dependent metabolic condition.
 
 Under version 2.0 of PCCC (variants `pccc_v2.0` and `pccc_v2.1`), this
-patient has two conditions, neuromuscular, metabolic. This patient also
-has a flag for device and technology use.
+patient has two conditions: neuromuscular and metabolic. This patient
+also has a flag for device and technology use.
 
 ``` r
 pat1_pccc_v2.0 <-

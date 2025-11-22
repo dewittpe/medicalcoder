@@ -116,7 +116,7 @@ al. 2005)</span>
 </li>
 </ul>
 <p><strong>IMPORTANT NOTE:</strong> Elixhauser 1998 and AHRQ Web used
-diagnostic related group (DRG) codes as part of the methods. The
+diagnosis-related group (DRG) codes as part of the methods. The
 <code>medicalcoder</code> package <em>does not</em> use DRG codes. This
 is consistent with the way these methods were implemented in <span class="citation">Quan et al. (2005)</span>.</p>
 </div>
@@ -221,8 +221,8 @@ argument.</p>
 <span><span class="co">## [1] TRUE</span></span></code></pre></div>
 <p>The return object is a <code>data.frame</code> with 0/1 integer
 indicator columns for the relevant conditions, the id.vars (if
-applicable), <code>num_cmrb</code> the number of comorbidities,
-<code>cmrb_flag</code> a 0/1 indicator for presence of at least one
+applicable), <code>num_cmrb</code>, the number of comorbidities,
+<code>cmrb_flag</code>, a 0/1 indicator for presence of at least one
 comorbidity, and the mortality and readmission index scores.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mdcr_results</span><span class="op">)</span></span>

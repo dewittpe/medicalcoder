@@ -52,7 +52,7 @@ str(get_charlson_index_scores())
 ## Applying Charlson
 
 Example: applying the Quan et al. (2005) variant of the Charlson
-comorbidities to the `mdcr` data is be done as follows.
+comorbidities to the `mdcr` data can be done as follows.
 
 ``` r
 mdcr_results <-

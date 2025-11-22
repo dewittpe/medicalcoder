@@ -86,7 +86,7 @@ medicalcoder_charlson_results <-
 toc <- Sys.time()
 
 difftime(toc, tic, units = "secs")
-## Time difference of 0.6471078 secs
+## Time difference of 0.6411629 secs
 ```
 
 Calling
@@ -106,17 +106,17 @@ multimorbidity_charlson_results <-
 toc <- Sys.time()
 
 difftime(toc, tic, units = "secs")
-## Time difference of 12.57418 secs
+## Time difference of 12.29468 secs
 ```
 
 ### Differences in the results
 
-We build a `data.frame` `detlas` to explore the differences in the
+We build a `data.frame` `deltas` to explore the differences in the
 results between
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
 and
 [`multimorbidity::charlson()`](https://rdrr.io/pkg/multimorbidity/man/charlson.html).
-One import difference is that
+One important difference is that
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
 returns a `data.frame` with the id variable names as passed to the
 function whereas
@@ -126,7 +126,7 @@ returns a `data.frame` with the id column named id.
 Also, there is a difference in the storage mode for the indicator
 columns.
 [`multimorbidity::charlson()`](https://rdrr.io/pkg/multimorbidity/man/charlson.html)
-returns numeric columns whereas whereas
+returns numeric columns whereas
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
 return integer columns.
 

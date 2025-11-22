@@ -100,9 +100,8 @@
 <span><span class="co">##   as well (Sundararajan, 2004 &lt;doi:10.1016/j.jclinepi.2004.03.012&gt; and Ludvigsson, 2021 </span></span>
 <span><span class="co">##   &lt;doi:10.2147/CLEP.S282475&gt;), together with different weighting algorithms for both</span></span>
 <span><span class="co">##   the Charlson and Elixhauser comorbidity scores.</span></span></code></pre></div>
-<p>The following table is a partical list of similarities and
-differences between <code>medicalcoder</code> and
-<code>comorbidity</code>.</p>
+<p>The following table is a partial list of similarities and differences
+between <code>medicalcoder</code> and <code>comorbidity</code>.</p>
 <table class="table table table-striped" style="margin-left: auto; margin-right: auto;border-bottom: 0;">
 <thead><tr>
 <th style="text-align:left;">
@@ -281,7 +280,7 @@ Allows for compact ICD codes
 </tr>
 <tr>
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
-Applys algorithms to ICD-9 and ICD-10 simulataneously
+Applies algorithms to ICD-9 and ICD-10 simultaneously
 </td>
 <td style="text-align:center;">
 ❌
@@ -292,7 +291,7 @@ Applys algorithms to ICD-9 and ICD-10 simulataneously
 </tr>
 <tr>
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
-Diagnosis and Procedure codes simulataneously
+Diagnosis and Procedure codes simultaneously
 </td>
 <td style="text-align:center;">
 <sup>*</sup>
@@ -308,7 +307,7 @@ Diagnosis and Procedure codes simulataneously
 </tr>
 <tr>
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
-Look up tables <sup>**</sup>
+Lookup tables <sup>**</sup>
 </td>
 <td style="text-align:center;">
 ✅
@@ -319,7 +318,7 @@ Look up tables <sup>**</sup>
 </tr>
 <tr>
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
-Prcoedure codes
+Procedure codes
 </td>
 <td style="text-align:center;">
 ❌
@@ -330,7 +329,7 @@ Prcoedure codes
 </tr>
 <tr>
 <td style="text-align:left;padding-left: 2em;" indentlevel="1">
-Disagnostic codes
+Diagnostic codes
 </td>
 <td style="text-align:center;">
 ✅
@@ -354,7 +353,7 @@ Functions for looking up/testing ICD Codes
 <tfoot>
 <tr>
 <td style="padding: 0; " colspan="100%">
-<sup>*</sup> Procedure codes are not relevent to Charlson and
+<sup>*</sup> Procedure codes are not relevant to Charlson and
 Elixhauser, not needed in <code>comorbidity</code>.
 </td>
 </tr>
@@ -545,7 +544,7 @@ WHO
 use in the <code><a href="https://ellessenne.github.io/comorbidity/reference/comorbidity.html" class="external-link">comorbidity::comorbidity()</a></code> call we need to split
 the data in ICD-9 and ICD-10 version. Also,
 <code><a href="../reference/comorbidities.html">medicalcoder::comorbidities()</a></code> can handle diagnostic and
-procedure codes simulataneously; a nessecary feature for PCCC.
+procedure codes simultaneously; a necessary feature for PCCC.
 <code><a href="https://ellessenne.github.io/comorbidity/reference/comorbidity.html" class="external-link">comorbidity::comorbidity()</a></code> only applies comorbidity
 algorithms based on diagnostic codes and thus does not expect to see any
 procedure codes.</p>
@@ -569,9 +568,9 @@ code for each patid not in the subsets.</p>
 <div class="section level2">
 <h2 id="charlson-comorbidities">Charlson Comorbidities<a class="anchor" aria-label="anchor" href="#charlson-comorbidities"></a>
 </h2>
-<p>Appling the Charlson comorbidities to the <code>mdcr</code> data set
+<p>Applying the Charlson comorbidities to the <code>mdcr</code> data set
 via <code><a href="../reference/comorbidities.html">medicalcoder::comorbidities()</a></code> is done as follows.
-Imporant note: the ICD codes used to assess the Charlson comorbidities
+Important note: the ICD codes used to assess the Charlson comorbidities
 between <span class="citation">Quan et al. (2005)</span> and <span class="citation">Quan et al. (2011)</span> are the same. The scoring is
 not. To match the scoring used in
 <code><a href="https://ellessenne.github.io/comorbidity/reference/comorbidity.html" class="external-link">comorbidity::comorbidity()</a></code> we need to use the
@@ -1065,7 +1064,7 @@ Rheumatic disease
 <div class="section level2">
 <h2 id="elixhauser-comorbidities">Elixhauser Comorbidities<a class="anchor" aria-label="anchor" href="#elixhauser-comorbidities"></a>
 </h2>
-<p>Appling the Elixhauser comorbidities to the <code>mdcr</code> data
+<p>Applying the Elixhauser comorbidities to the <code>mdcr</code> data
 set via <code><a href="../reference/comorbidities.html">medicalcoder::comorbidities()</a></code> is done as
 follows.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
@@ -2017,19 +2016,19 @@ Max.
 medicalcoder_times_DT
 </td>
 <td style="text-align:right;">
-0.104
+0.102
 </td>
 <td style="text-align:right;">
-0.123
+0.125
 </td>
 <td style="text-align:right;">
 0.151
 </td>
 <td style="text-align:right;">
-0.145
+0.147
 </td>
 <td style="text-align:right;">
-0.153
+0.155
 </td>
 <td style="text-align:right;">
 0.262
@@ -2040,22 +2039,22 @@ medicalcoder_times_DT
 medicalcoder_times
 </td>
 <td style="text-align:right;">
-0.329
+0.338
 </td>
 <td style="text-align:right;">
-0.367
+0.372
 </td>
 <td style="text-align:right;">
-0.368
+0.376
 </td>
 <td style="text-align:right;">
-0.374
+0.381
 </td>
 <td style="text-align:right;">
-0.371
+0.379
 </td>
 <td style="text-align:right;">
-0.485
+0.496
 </td>
 </tr>
 <tr>
@@ -2063,22 +2062,22 @@ medicalcoder_times
 comorbidity_times_DT
 </td>
 <td style="text-align:right;">
-1.497
+1.494
 </td>
 <td style="text-align:right;">
-1.521
+1.511
 </td>
 <td style="text-align:right;">
-1.539
+1.533
 </td>
 <td style="text-align:right;">
-1.557
+1.553
 </td>
 <td style="text-align:right;">
-1.608
+1.610
 </td>
 <td style="text-align:right;">
-1.649
+1.654
 </td>
 </tr>
 <tr>
@@ -2086,22 +2085,22 @@ comorbidity_times_DT
 comorbidity_times
 </td>
 <td style="text-align:right;">
-1.452
+1.459
 </td>
 <td style="text-align:right;">
-1.508
+1.499
 </td>
 <td style="text-align:right;">
-1.534
+1.530
 </td>
 <td style="text-align:right;">
-1.552
+1.550
 </td>
 <td style="text-align:right;">
-1.623
+1.620
 </td>
 <td style="text-align:right;">
-1.655
+1.638
 </td>
 </tr>
 </tbody>

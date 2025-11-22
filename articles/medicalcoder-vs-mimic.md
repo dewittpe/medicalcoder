@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The purpose of article is to compare the results for the Charlson
+The purpose of this article is to compare the results for the Charlson
 comorbidity flags returned by
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
 vs the SQL code provided by Johnson et al. (2018).
@@ -14,7 +14,7 @@ library(medicalcoder)
 ## MIMIC SQL
 
 SQL code for applying a Charlson comorbidity algorithm to the MIMIC-IV
-data is available from MIT Laboratory for Computational Physilogy
+data is available from MIT Laboratory for Computational Physiology
 (MIT_LCP) on GitHub. The code is expected to run on Google Big Query on
 the MIMIC-IV data. We make a few small modifications to the code so we
 can evaluate the SQL locally via RSQLite and on a local data set.
@@ -85,7 +85,7 @@ dbWriteTable(conn = con, name = "ages",       value = mdcr_for_mimic[, unique(.S
 # get the charlson results via MIMIC-IV
 mimic_charlson_results <- dbGetQuery(con, mimic_charson_query)
 
-# close DB conection
+# close DB connection
 dbDisconnect(conn = con)
 
 setDT(mimic_charlson_results)
@@ -189,8 +189,8 @@ for (i in seq_len(nrow(dcolumns))) {
 ## [1] TRUE
 ```
 
-There are there comorbidities were there is are different levels of
-severify.
+There are three comorbidities where there are different levels of
+severity.
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
 will set the less severe condition indicator to 0 when the more severe
 condition is flagged. Both methods only consider the more severe case in
@@ -305,7 +305,7 @@ All that is left in the `delta` `data.frame` are the id.vars and the
 `num_cmrb`, and `cmrb_flag`. These columns are from
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
 and report the number of comorbidities flagged and indicator for any
-comorbiditiy.
+comorbidity.
 
 ``` r
 str(delta)

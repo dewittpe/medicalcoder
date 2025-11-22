@@ -25,7 +25,7 @@ comorbidity algorithm.
     Utilization Project (HCUP) 2017)
   - `elixhauser_quan2005`: (Quan et al. 2005)
 
-**IMPORTANT NOTE:** Elixhauser 1998 and AHRQ Web used diagnostic related
+**IMPORTANT NOTE:** Elixhauser 1998 and AHRQ Web used diagnosis-related
 group (DRG) codes as part of the methods. The `medicalcoder` package
 *does not* use DRG codes. This is consistent with the way these methods
 were implemented in Quan et al. (2005).
@@ -133,9 +133,10 @@ identical(mdcr_results, mdcr_results0)
 ```
 
 The return object is a `data.frame` with 0/1 integer indicator columns
-for the relevant conditions, the id.vars (if applicable), `num_cmrb` the
-number of comorbidities, `cmrb_flag` a 0/1 indicator for presence of at
-least one comorbidity, and the mortality and readmission index scores.
+for the relevant conditions, the id.vars (if applicable), `num_cmrb`,
+the number of comorbidities, `cmrb_flag`, a 0/1 indicator for presence
+of at least one comorbidity, and the mortality and readmission index
+scores.
 
 ``` r
 str(mdcr_results)

@@ -182,7 +182,7 @@
 <span><span class="co">#&gt; 4 71412    9 V5865  1</span></span>
 <span><span class="co">#&gt; 5 71412    9  V427  1</span></span>
 <span><span class="co">#&gt; 6 17087   10  V441  1</span></span></code></pre></div>
-<p>The <code>mdcr_longitudinal</code> data set is distinct from the <code>mdcr</code> data set. The major difference is that this set are all diagnostic codes and there are only 3 patients. The <code>date</code> column denote the date of the diagnosis and allows for us to look at the change in comorbidities over time.</p>
+<p>The <code>mdcr_longitudinal</code> data set is distinct from the <code>mdcr</code> data set. The major difference is that this data set contains only diagnostic codes and there are only 3 patients. The <code>date</code> column denotes the date of the diagnosis and allows us to look at changes in comorbidities over time.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mdcr_longitudinal</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 'data.frame':    60 obs. of  4 variables:</span></span>
@@ -392,7 +392,7 @@
 <li><p><code>icdv</code>: integer value 9 or 10; for ICD-9 or ICD-10</p></li>
 <li><p><code>dx</code>: integer 0 or 1; 0 = procedure code, 1 = diagnostic code</p></li>
 <li><p><code>full_code</code>: character string for the ICD code with any appropriate decimal point.</p></li>
-<li><p><code>code</code>: characters string for the compact ICD code, that is, the ICD code without any decimal point, e.g., the full code C00.1 has the compact code form C001.</p></li>
+<li><p><code>code</code>: character string for the compact ICD code, that is, the ICD code without any decimal point, e.g., the full code C00.1 has the compact code form C001.</p></li>
 <li>
 <p><code>src</code>: character string denoting the source of the ICD code information.</p>
 <ul>

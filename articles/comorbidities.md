@@ -201,12 +201,12 @@ summary(ecmrb)
 ## 2   mortality -24  0      0  0  75
 ```
 
-## When are conditions flag?
+## When are conditions flagged?
 
 Whether or not the code is present on admission (POA) is useful when
 applying the comorbidity algorithms and considering if the patient has a
-comorbidity at time of encounter start of if the condition is a result
-of the current hospitalization.
+comorbidity at the time of encounter start or if the condition is a
+result of the current hospitalization.
 
 Implementation of Elixhauser comorbidities for 2022 and beyond
 (Healthcare Research and (AHRQ) 2025) explicitly define the use of
@@ -257,7 +257,7 @@ From Quan et al. (2005):
 > condition-by-condition basis of whether to include particular
 > variables, depending on their study objectives.
 
-PCCC does not explicitly note the if POA is required.
+PCCC does not explicitly note if POA is required.
 
 `medicalcoder` has been built to consider POA for all comorbidity
 algorithms.
@@ -272,7 +272,7 @@ Additionally, `medicalcoder` provides a `flag.method` argument for
 longitudinal data sets.
 
 **Example:** Let’s assume we have a patient record with six encounters.
-We use ICD-10 diagnostic codes C78.4 and I50.40 which maps to a cancer
+We use ICD-10 diagnostic codes C78.4 and I50.40 which map to a cancer
 and heart failure (cardiovascular disease) comorbidity respectively for
 PCCC, Charlson, and Elixhauser. For demonstration, we also flag POA with
 the second report of I50.40 intentionally marked as not present on
@@ -307,9 +307,9 @@ End users can quickly assess the lookup table for all the ICD codes
 associated with a comorbidity algorithm using the
 `get_<comorbidity>_codes` functions. Each `data.frame` has columns for
 the ICD version, diagnostic or procedure flag, the compact code, and the
-full code. A column for the condition and other method specific flags
+full code. A column for the condition and other method-specific flags
 are provided. Lastly, there are indicator columns for the variant of
-each method
+each method.
 
 ``` r
 str(get_pccc_codes())

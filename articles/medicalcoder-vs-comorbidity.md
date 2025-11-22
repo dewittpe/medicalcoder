@@ -25,7 +25,7 @@ cat(packageDescription("comorbidity")$Description)
 ##   the Charlson and Elixhauser comorbidity scores.
 ```
 
-The following table is a partical list of similarities and differences
+The following table is a partial list of similarities and differences
 between `medicalcoder` and `comorbidity`.
 
 [TABLE]
@@ -39,7 +39,7 @@ To prepare that data set for use in the
 [`comorbidity::comorbidity()`](https://ellessenne.github.io/comorbidity/reference/comorbidity.html)
 call we need to split the data in ICD-9 and ICD-10 version. Also,
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
-can handle diagnostic and procedure codes simulataneously; a nessecary
+can handle diagnostic and procedure codes simultaneously; a necessary
 feature for PCCC.
 [`comorbidity::comorbidity()`](https://ellessenne.github.io/comorbidity/reference/comorbidity.html)
 only applies comorbidity algorithms based on diagnostic codes and thus
@@ -68,9 +68,9 @@ mdcr_icd10dx <-
 
 ## Charlson Comorbidities
 
-Appling the Charlson comorbidities to the `mdcr` data set via
+Applying the Charlson comorbidities to the `mdcr` data set via
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
-is done as follows. Imporant note: the ICD codes used to assess the
+is done as follows. Important note: the ICD codes used to assess the
 Charlson comorbidities between Quan et al. (2005) and Quan et al. (2011)
 are the same. The scoring is not. To match the scoring used in
 [`comorbidity::comorbidity()`](https://ellessenne.github.io/comorbidity/reference/comorbidity.html)
@@ -352,7 +352,7 @@ pack_rows("Number of Comorbidities", start_row = 18, end_row = nrow(x))
 
 ## Elixhauser Comorbidities
 
-Appling the Elixhauser comorbidities to the `mdcr` data set via
+Applying the Elixhauser comorbidities to the `mdcr` data set via
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
 is done as follows.
 

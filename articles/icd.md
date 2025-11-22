@@ -19,7 +19,7 @@ working with International Classification of Diseases (ICD) codes.
 
 ## `get_icd_codes()`
 
-A look up table for the ICD codes have been built as internal data sets
+A lookup table for the ICD codes has been built as internal data sets
 within the `medicalcoder` package. The sources for these look up tables
 come from the Centers for Disease Control (CDC) and from the Centers for
 Medicare & Medicaid Services (CMS). The specific links to the source
@@ -61,7 +61,7 @@ The columns of this data.frame are:
 
 - `src`: a character vector denoting the source of the information.
 
-- `known_start`: The first year that the `medicalcoder` package as data
+- `known_start`: The first year that the `medicalcoder` package has data
   for this code.
 
   - For codes based on the ICD-9-CM, ICD-9-PCS, ICD-10-CM, ICD-10-PCS
@@ -153,9 +153,9 @@ ICD-10-CM Z88.7 has differences in the description over time within
 | Z88.7     | who | Personal history of allergy to serum and vaccine |       2008 |     2019 |
 
 ICD-9-CM V79.49 had the description of ‘other’ which would require
-exploration of the header codes to understand. Even when the most
-verbose description may still require consideration of the header codes
-to fullye understand.
+exploration of the header codes to understand. Even the most verbose
+description may still require consideration of the header codes to fully
+understand.
 
 | full_code | src | desc                                                     | desc_start | desc_end |
 |:----------|:----|:---------------------------------------------------------|-----------:|---------:|
@@ -203,8 +203,9 @@ The additional columns, in order of hierarchy, are:
 
 To keep the install size of `medicalcoder` under the size limits for
 CRAN, the stored data is structured in a way that several joins and
-other operations are need to have a data set that is end user friendly.
-Several data sets are generated and cached when the namespace is loaded.
+other operations are needed to have a data set that is end user
+friendly. Several data sets are generated and cached when the namespace
+is loaded.
 
 ## `lookup_icd_codes()`
 
@@ -213,7 +214,7 @@ A related function,
 allows the user to look up specific ICD codes. The return is a
 `data.frame`. The columns report the input code, if it was matched as a
 full code (with an applicable decimal point) or a compact code
-(applicable decimal point omitted) along with the ICD version ,type, and
+(applicable decimal point omitted) along with the ICD version, type, and
 when the code was assignable.
 
 ``` r
@@ -238,8 +239,8 @@ knitr::kable(lookup_icd_codes(codes), row.names = FALSE)
 | Z00        | full_code    |   10 |   1 | Z00       | Z00  | cms |        2014 |      2026 |               NA |             NA |
 | Z00        | full_code    |   10 |   1 | Z00       | Z00  | who |        2008 |      2019 |               NA |             NA |
 
-It is possible to restrict the look up to just full or compact codes.
-The default, as shown above, is to consider full and compact codes. Set
+It is possible to restrict the lookup to just full or compact codes. The
+default, as shown above, is to consider full and compact codes. Set
 `full.codes = FALSE` so only compact codes are considered.
 
 ``` r
@@ -458,7 +459,7 @@ When looking at retrospective data over several years the use of the
 
 There is also an option to considering header codes to be valid. As seen
 below, the code “516” is a header, it was never assignable in ICD-9-CM.
-By setting `headerok = TRUE` “516” will be flagged as a valid code. A
+By setting `headerok = TRUE` “516” will be flagged as a valid code. An
 ICD-10 header “A00” will be FALSE in the following checks of ICD-9
 codes.
 

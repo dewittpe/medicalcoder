@@ -300,12 +300,12 @@ column to show longitudinal diagnoses for a <code>patid</code>.</p>
 <span><span class="co">## 2   mortality -24  0      0  0  75</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="when-are-conditions-flag">When are conditions flag?<a class="anchor" aria-label="anchor" href="#when-are-conditions-flag"></a>
+<h2 id="when-are-conditions-flagged">When are conditions flagged?<a class="anchor" aria-label="anchor" href="#when-are-conditions-flagged"></a>
 </h2>
 <p>Whether or not the code is present on admission (POA) is useful when
 applying the comorbidity algorithms and considering if the patient has a
-comorbidity at time of encounter start of if the condition is a result
-of the current hospitalization.</p>
+comorbidity at the time of encounter start or if the condition is a
+result of the current hospitalization.</p>
 <p>Implementation of Elixhauser comorbidities for 2022 and beyond <span class="citation">(Healthcare Research and (AHRQ) 2025)</span> explicitly
 define the use of present on admission flags for specific conditions
 (see the <code>poa_required</code> flag reported in the data set
@@ -351,7 +351,7 @@ indicators, meanwhile, the data that we present … can help researchers
 make decisions on a condition-by-condition basis of whether to include
 particular variables, depending on their study objectives.</p>
 </blockquote>
-<p>PCCC does not explicitly note the if POA is required.</p>
+<p>PCCC does not explicitly note if POA is required.</p>
 <p><code>medicalcoder</code> has been built to consider POA for all
 comorbidity algorithms.</p>
 <p>End users can use a 0/1 indicator variable in the data set to report
@@ -363,7 +363,7 @@ column to the input data set.</p>
 <code>flag.method</code> argument for longitudinal data sets.</p>
 <p><strong>Example:</strong> Let’s assume we have a patient record with
 six encounters. We use ICD-10 diagnostic codes C78.4 and I50.40 which
-maps to a cancer and heart failure (cardiovascular disease) comorbidity
+map to a cancer and heart failure (cardiovascular disease) comorbidity
 respectively for PCCC, Charlson, and Elixhauser. For demonstration, we
 also flag POA with the second report of I50.40 intentionally marked as
 not present on admission.</p>
@@ -1296,8 +1296,8 @@ associated with a comorbidity algorithm using the
 <code>get_&lt;comorbidity&gt;_codes</code> functions. Each
 <code>data.frame</code> has columns for the ICD version, diagnostic or
 procedure flag, the compact code, and the full code. A column for the
-condition and other method specific flags are provided. Lastly, there
-are indicator columns for the variant of each method</p>
+condition and other method-specific flags are provided. Lastly, there
+are indicator columns for the variant of each method.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_pccc_codes.html">get_pccc_codes</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">## 'data.frame':    7913 obs. of  12 variables:</span></span>
