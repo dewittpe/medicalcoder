@@ -1,6 +1,8 @@
 # Changelog
 
-## medicalcoder 0.6.0.9000
+## medicalcoder 0.7.0
+
+CRAN release: 2025-11-22
 
 ### Bug Fixes
 
