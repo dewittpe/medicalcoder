@@ -584,7 +584,7 @@ comorbidities.data.frame <- function(data,
     ccc <- .charlson(id.vars = id.vars, iddf = iddf, cmrb = cmrb, primarydx.var = primarydx.var, method = method)
     if (!is.null(age.var)) {
       ages <- unique(mdcr_select(data, cols = c(id.vars, age.var)))
-      ages[["age_score"]] <- as.integer(cut(ages[[age.var]], breaks = c(-Inf, 50, 60, 70, 80, Inf), right = FALSE)) - 1L
+      ages[["age_score"]] <- as.integer(cut(ages[[age.var]], breaks = c(-Inf, 50, 60, 70, 80, Inf), right = TRUE)) - 1L
       ccc <- merge(ccc, mdcr_select(ages, cols = c(id.vars, "age_score")), all.x = TRUE, by = id.vars, sort = FALSE)
       ccc[["cci"]] <- ccc[["cci"]] + ccc[["age_score"]]
     } else {
