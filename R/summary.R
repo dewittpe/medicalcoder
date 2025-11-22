@@ -213,29 +213,18 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
   percents <- lapply(counts, function(x) 100 * x / N)
 
   rtn <-
-    cbind(
-          condition = conditions[["condition"]],
-          label = conditions[["condition_label"]],
-          data.frame(
-            dxpr_or_tech_count = as.integer(counts[["dxpr_or_tech"]]),
-            dxpr_or_tech_percent = percents[["dxpr_or_tech"]],
-            stringsAsFactors = FALSE
-          ),
-          data.frame(
-            dxpr_only_count = as.integer(counts[["dxpr_only"]]),
-            dxpr_only_percent = percents[["dxpr_only"]],
-            stringsAsFactors = FALSE
-          ),
-          data.frame(
-            tech_only_count = as.integer(counts[["tech_only"]]),
-            tech_only_percent = percents[["tech_only"]],
-            stringsAsFactors = FALSE
-          ),
-          data.frame(
-            dxpr_and_tech_count = as.integer(counts[["dxpr_and_tech"]]),
-            dxpr_and_tech_percent = percents[["dxpr_and_tech"]],
-            stringsAsFactors = FALSE
-          )
+    data.frame(
+      condition = conditions[["condition"]],
+      label = conditions[["condition_label"]],
+      dxpr_or_tech_count = as.integer(counts[["dxpr_or_tech"]]),
+      dxpr_or_tech_percent = percents[["dxpr_or_tech"]],
+      dxpr_only_count = as.integer(counts[["dxpr_only"]]),
+      dxpr_only_percent = percents[["dxpr_only"]],
+      tech_only_count = as.integer(counts[["tech_only"]]),
+      tech_only_percent = percents[["tech_only"]],
+      dxpr_and_tech_count = as.integer(counts[["dxpr_and_tech"]]),
+      dxpr_and_tech_percent = percents[["dxpr_and_tech"]],
+      stringsAsFactors = FALSE
     )
 
   rtn <-
