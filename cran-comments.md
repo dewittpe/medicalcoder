@@ -1,3 +1,24 @@
+# Version 0.7.0
+
+Bug fixes and new features.
+
+## R CMD check results
+
+0 errors | 0 warnings | 1 note
+
+* This is a new release.
+
+### plattforms:
+* local R 4.5.1
+* Github Actions:
+  * macOS R-4.5.1
+  * windows R-4.5.1
+  * ubuntu R-4.5.1
+  * ubuntu R-devel
+  * ubuntu R-4.5.1
+* rhub
+* winbuilder
+
 # Version 0.6.0
 
 ## R CMD check results
