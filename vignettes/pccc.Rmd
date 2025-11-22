@@ -536,7 +536,7 @@ merge(
 Using full codes can prevent false positives too.  Here are several different
 ways that `comorbidities()` could be called resulting in different outcomes.
 
-Note: this is a good example of how `medicalcoder` can handle full and compact
+Note: this is a good example of how medicalcoder can handle full and compact
 codes within a single record.
 
 ```{r}
@@ -654,7 +654,7 @@ comorbidities(
 ```
 
 Lastly, it should be noted that a lot of the ambiguity resulting from compact
-codes can be avoided when full codes are available.  `medicalcoder` can handle
+codes can be avoided when full codes are available.  medicalcoder can handle
 both forms. In the example below we again use the "E030" and assess it against
 all full and compact codes (default), against only full codes, and lastly
 against only compact codes.  Note in this example that we are not specifying the
@@ -698,7 +698,7 @@ ICD-9 E030 is a full code with the same compact form.
 
 # Longitudinal Conditions
 
-The `medicalcoder` package includes the example data set, `mdcr_longitudinal`,
+The medicalcoder package includes the example data set, `mdcr_longitudinal`,
 with ICD-9 and ICD-10 codes for `r length(unique(mdcr_longitudinal$patid))`
 synthetic patients with multiple encounters. Each row has a date (encounter) for
 when the ICD code was reported.
@@ -988,7 +988,7 @@ other condition is flagged.
 
 The documentation for PCCC version 2 [@feudtner2014pediatric] and version 3
 [@feinstein2024pediatric] include subconditions under each of the major
-conditions.  However, to our knowledge, no software prior to `medicalcoder`
+conditions.  However, to our knowledge, no software prior to medicalcoder
 implemented flagging for the subconditions.
 
 The subconditions for each condition are shown in the next table.

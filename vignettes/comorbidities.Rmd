@@ -33,7 +33,7 @@ packageVersion("medicalcoder")
 # Comorbidity Algorithms
 
 There are three comorbidity algorithms, each with several variants,
-implemented in the `medicalcoder` package:
+implemented in the medicalcoder package:
 
 1. Pediatric Complex Chronic Condition System (PCCC)
    a. Version 2.0 [@feudtner2014pediatric]
@@ -62,20 +62,20 @@ implemented in the `medicalcoder` package:
       iii. `elixhauser_quan2005`: [@quan2005]
 
 **IMPORTANT NOTE:** Elixhauser 1998 and AHRQ Web used diagnostic related
-group (DRG) codes as part of the methods.  The `medicalcoder`
+group (DRG) codes as part of the methods.  The medicalcoder
 package _does not_ use DRG codes.  This is consistent with the way these
 methods were implemented in @quan2005.
 
 A list of the valid methods for the package can be accessed via a non-exported
 function.  In general, the methods are listed in the form of
 `<algorithm>_<version>`.
-```{r, label = "valid-methods"}
+```{r label = "valid-methods"}
 medicalcoder:::comorbidities_methods()
 ```
 
 Vignettes for each of the major methods are available.
 
-```{r, echo = TRUE, eval = FALSE}
+```{r echo = TRUE, eval = FALSE}
 vignette(topic = "pccc",       package = "medicalcoder")
 vignette(topic = "charlson",   package = "medicalcoder")
 vignette(topic = "elixhauser", package = "medicalcoder")
@@ -97,7 +97,13 @@ stopifnot(
       "    subconditions = FALSE) ", "NULL")
 )
 ```
-```{r, label = "comorbidities-args"}
+
+Details of the function arguments call are in the manual.
+```{r label = "read-the-manual", eval = FALSE}
+help(topic = "comorbidities", package = "medicalcoder")
+```
+
+```{r label = "comorbidities-args"}
 args(comorbidities)
 ```
 
@@ -106,58 +112,34 @@ are in pairs, e.g., `dx.var` and `dx` (used for denoting if codes are
 diagnostic or procedural), or `poa.var` and `poa` (used for denoting if a codes
 are present on admission).  The `.var` version is the name of a variable within
 the `data.frame` passed into the `data` argument.  The version without `.var` is
-a default value to be applied to the entirety of `data`.
-
-Details of the function arguments call are in the manual.
-```{r, label = "read-the-manual", eval = FALSE}
-help(topic = "comorbidities", package = "medicalcoder")
-```
+a default value to be applied to the entirety of `data`. We will see some
+examples where this is useful.
 
 The `data` element is expected to be a `data.frame`, or at least something that
 inherits the `data.frame` class.  The format is expected to be a 'long' format.
 One row per code.  Two example data sets in the package show the general
 expected form of the `data`.
 
-```{r, label = "example-data"}
-str(mdcr)
-str(mdcr_longitudinal)
+```{r label = "example-data"}
+head(mdcr)
+head(mdcr_longitudinal)
 ```
-The `mdcr` data set has columns
-* `patid`: patient id
-* `icdv`: integer denoting if the ICD code is ICD-9 or ICD-10
-* `code`: character string, a compact ICD code
-* `dx`:   if 1 then the ICD is a diagnostic code (ICD-9-CM or ICD-10-CM), if 0
-  then the ICD code is a procedure code (ICD-9-PCS or ICD-10-PCS).
 
-The `mdcr_longitudinal` data set is distinct from `mdcr`.  The columns are the
-same save the `date` column to show longitudinal diagnoses for a `patid`.
-
-A simple example of flagging Elixhauser comorbidities:
 ```{r}
-ecmrb <-
-  comorbidities(
-    data = mdcr,
-    id.vars = "patid",
-    icd.codes = "code",
-    icdv.var = "icdv",
-    method = "elixhauser_ahrq_icd10",
-    poa = 1L, # consider all codes to be present on admission
-    primarydx = 0L # consider all codes to be secondary diagnoses
-  )
-summary(ecmrb)
 ```
 
-# When are conditions flagged?
+
+# When are conditions flag?
 
 Whether or not the code is present on admission (POA) is useful when applying
 the comorbidity algorithms and considering if the patient has a comorbidity at
-the time of encounter start or if the condition is a result of the current
+time of encounter start of if the condition is a result of the current
 hospitalization.
 
 Implementation of Elixhauser comorbidities for 2022 and beyond [@ahrq2025]
 explicitly define the use of present on admission flags for specific conditions
 (see the `poa_required` flag reported in the data set returned by
-`get_elixhauser_poa()`, and there are also ICD codes which are POA exempt).
+`get_elixhauser_poa()`).
 ```{r}
 str(get_elixhauser_poa())
 ```
@@ -190,20 +172,20 @@ From @quan2005:
 > researchers make decisions on a condition-by-condition basis of whether to
 > include particular variables, depending on their study objectives.
 
-PCCC does not explicitly note if POA is required.
+PCCC does not explicitly note the if POA is required.
 
-`medicalcoder` has been built to consider POA for all comorbidity algorithms.
+medicalcoder has been built to consider POA for all comorbidity algorithms.
 
 End users can use a 0/1 indicator variable in the data set to report
 which codes are POA via the function argument `poa.var`.  If all the codes are
 to be considered POA or not, the functional argument `poa` can be used to set a
 common status without adding a column to the input data set.
 
-Additionally, `medicalcoder` provides a `flag.method` argument for longitudinal
+Additionally, medicalcoder provides a `flag.method` argument for longitudinal
 data sets.
 
-**Example:** Let's assume we have a patient record with six encounters.  We use
-ICD-10 diagnostic codes C78.4 and I50.40 which map to a cancer and heart
+**Example:** Let's assume we have a patient record for six encounters.  We use
+ICD-10 diagnostic codes C78.4 and I50.40 which maps to a cancer and heart
 failure (cardiovascular disease) comorbidity respectively for PCCC, Charlson,
 and Elixhauser. For demonstration, we also flag POA with the second report of
 I50.40 intentionally marked as not present on admission.
@@ -242,9 +224,6 @@ record <-
     row.names = c(NA, -7L),
     class = "data.frame"
   )
-```
-```{r}
-record
 ```
 
 We will call `comorbidities()` for the three methods using static POA flags and
@@ -336,8 +315,8 @@ End users can quickly assess the lookup table for all the ICD codes associated
 with a comorbidity algorithm using the `get_<comorbidity>_codes` functions.
 Each `data.frame` has columns for the ICD version, diagnostic or procedure flag,
 the compact code, and the full code.  A column for the condition and other
-method-specific flags are provided.  Lastly, there are indicator columns for the
-variant of each method.
+method specific flags are provided.  Lastly, there are indicator columns for the
+variant of each method
 
 ```{r, label = "get-codes"}
 str(get_pccc_codes())
@@ -376,7 +355,7 @@ cdmf_eg <-
 cdmf_eg[, .N, keyby = .(hiv, aids)]
 ```
 
-When calling `comorbidities()` we get the expected result.
+When calling `comorbidities` we get the expected result.
 
 ```{r}
 cmdf_mdcr <-
@@ -398,4 +377,4 @@ cmdf_mdcr[, .N, keyby = .(hiv, aids)]
 
 <!-- ----------------------------------------------------------------------- -->
 <!--                              End of File                                -->
-<!-- ----------------------------------------------------------------------- -->
+<!------------------------------------------------------------------------- -->

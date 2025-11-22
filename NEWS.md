@@ -13,7 +13,7 @@
 ## New Features
 
 * `comorbidities()` will return a `tibble` with the input data is a `tbl_df`
-  (#9).  Assumming the `data.table` and/or `tibble` namespaces are available,
+  (#9).  Assuming the `data.table` and/or `tibble` namespaces are available,
   then the initial release (v0.6.0) would return a `data.table` if a
   `data.table` was passed to a `comorbidities()` due to the S3 method
   dispatches.  If a `tibble` (`tdl_df`) or a `data.frame` was passed to
@@ -26,7 +26,7 @@
   `tibble` to comorbidities when the associated namespaces are not available.
 
 * Added `elixhauser_ahrq_icd10` to use all the ICD codes ever defined from 2022
-  to 2025.  This will capture any furture years as well.
+  to 2025.  This will capture any future years as well.
 
 ## Other Changes
 

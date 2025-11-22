@@ -25,7 +25,7 @@ knitr::opts_chunk$set(collapse = TRUE, fig.align = "center")
 # Introduction
 
 The purpose of this article is to compare the API and results between
-`medicalcoder` and the R package
+medicalcoder and the R package
 [multimorbidity](https://cran.r-project.org/package=multimorbidity)
 [@r-multimorbidity].
 
@@ -38,8 +38,8 @@ packageDescription("multimorbidity")$Title
 cat(packageDescription("multimorbidity")$Description)
 ```
 
-# Prepare Data for `multimorbidity`
-The example data set `mdcr` within `medicalcoder` is in a format that is ideal
+# Prepare Data for multimorbidity
+The example data set `mdcr` within medicalcoder is in a format that is ideal
 for `medicalcoder::comorbidities()` and for the `multimorbidity::charlson()`
 call.  The only issue that needs to be addressed is that
 `multimorbidity::charlson()` is expecting to only see diagnostic codes so we

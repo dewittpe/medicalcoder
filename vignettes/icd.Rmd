@@ -15,7 +15,7 @@ vignette: >
 knitr::opts_chunk$set(collapse = TRUE, fig.align = "center")
 ```
 
-There are four functions in the `medicalcoder` package specifically for working
+There are four functions in the medicalcoder package specifically for working
 with International Classification of Diseases (ICD) codes.
 
 1. `get_icd_codes()`: returns a look up table of ICD codes as a `data.frame`.
@@ -31,10 +31,10 @@ with International Classification of Diseases (ICD) codes.
 # `get_icd_codes()`
 
 A lookup table for the ICD codes has been built as internal data sets within
-the `medicalcoder` package.  The sources for these look up tables come from the
+the medicalcoder package.  The sources for these look up tables come from the
 Centers for Disease Control (CDC) and from the Centers for Medicare & Medicaid
 Services (CMS).  The specific links to the source data sets can be found in the
-source code for the `medicalcoder` package on
+source code for the medicalcoder package on
 [GitHub](https://github.com/dewittpe/medicalcoder).
 
 End users can get a `data.frame` with
@@ -56,7 +56,7 @@ The columns of this data.frame are:
 * `full_code`: the full ICD code with the decimal point if applicable.
 * `code`: compact code, any applicable decimal point has been omitted.
 * `src`: a character vector denoting the source of the information.
-* `known_start`: The first year that the `medicalcoder` package has data for this
+* `known_start`: The first year that the medicalcoder package has data for this
   code.
   * For codes based on the ICD-9-CM, ICD-9-PCS, ICD-10-CM, ICD-10-PCS standards
     the year is the _fiscal year_ for the United States Federal Government;
@@ -69,9 +69,9 @@ The columns of this data.frame are:
     _calendar year_.
 
 * `known_end`: the last year the code was part of the standard, or that the
-  `medicalcoder` package has data for.
+  medicalcoder package has data for.
   * ICD-9 last year of active use was FY 2015.
-  * ICD-10 is active.  The current version of `medicalcoder` has details on ICD-10
+  * ICD-10 is active.  The current version of medicalcoder has details on ICD-10
     codes through FY `r max(icd_codes[["known_end"]][icd_codes[["icdv"]] == 10L])`.
 
 ```{r, label = "example-for-assignable", include = FALSE}
@@ -167,7 +167,7 @@ The additional columns, in order of hierarchy, are:
 * subsubclassification
 * extension
 
-To keep the install size of `medicalcoder` under the size
+To keep the install size of medicalcoder under the size
 limits for CRAN, the stored data is structured in a way that several joins and
 other operations are needed to have a data set that is end user friendly.
 Several data sets are generated and cached when the namespace is loaded.

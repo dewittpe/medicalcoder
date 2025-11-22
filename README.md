@@ -2,7 +2,7 @@
 
 
 
-# `medicalcoder`: An R package for working with ICD codes and Comorbidity Algorithms <img src="man/figures/hex.svg" width="200px" align="right" alt = "medicalcoder hex logo"/>
+# medicalcoder: An R package for working with ICD codes and Comorbidity Algorithms <img src="man/figures/hex.svg" width="200px" align="right" alt = "medicalcoder hex logo"/>
 
 <!-- badges: start -->
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
@@ -13,7 +13,7 @@
 [![downloads](https://cranlogs.r-pkg.org/badges/grand-total/medicalcoder)](https://www.r-pkg.org/pkg/medicalcoder)
 <!-- badges: end -->
 
-`medicalcoder` is a lightweight, base-R package for working with ICD-9 and
+medicalcoder is a lightweight, base-R package for working with ICD-9 and
 ICD-10 diagnosis and procedure codes. It provides fast, dependency-free tools to
 look up, validate, and manipulate ICD codes, while also implementing widely used
 comorbidity algorithms such as Charlson, Elixhauser, and the Pediatric Complex
@@ -27,10 +27,10 @@ The package balances performance with elegance: its internal caching, efficient
 joins, and compact data structures make it practical for large-scale health data
 analyses, while its clean design makes it easy to extend or audit. Whether you
 need to flag comorbidities, explore ICD hierarchies, or standardize clinical
-coding workflows, `medicalcoder` provides a robust, transparent foundation for
+coding workflows, medicalcoder provides a robust, transparent foundation for
 research and applied work in biomedical informatics.
 
-The primary objectives of `medicalcoder` are:
+The primary objectives of medicalcoder are:
 
 1. **Fully self-contained**
    - Minimal Dependencies
@@ -38,13 +38,13 @@ The primary objectives of `medicalcoder` are:
      - Requires R version ≥ 3.5.0 due to a [change in data
        serialization](https://cran.r-project.org/src/base/NEWS.3#:~:text=R%20has%20new,to%20version%203.5.0).
        R 3.5.0 was released in April 2018. The initial public release of
-       `medicalcoder` was in 2025.
+       medicalcoder was in 2025.
      - Several packages are listed in the *Suggests* section of the
        `DESCRIPTION` file. These are only needed for building vignettes, other
        documentation, and testing. They are not required to install the package.
 
    - No Imports
-     - `medicalcoder` does not import any non-base namespaces. This improves
+     - medicalcoder does not import any non-base namespaces. This improves
        ease of maintenance and usability.
      - Suggested packages are needed only for development work and building
        vignettes. They are not required for installation or use.
@@ -63,7 +63,7 @@ The primary objectives of `medicalcoder` are:
    - Implements three general algorithms, each with multiple variants. Details
      are provided below.
    - Supports flagging of subconditions within PCCC.
-   - Supports longitudinal flagging of comorbidities. `medicalcoder` will flag
+   - Supports longitudinal flagging of comorbidities. medicalcoder will flag
      comorbidities based on present-on-admission indicators for the
      current encounter and can look back in time for a patient to flag a
      comorbidity if reported in a prior encounter. See examples.
@@ -73,10 +73,10 @@ The primary objectives of `medicalcoder` are:
    - Ability to work with both full codes (ICD codes with decimal points) and
      compact codes (ICD codes with decimal points omitted).
 
-## Why use `medicalcoder`
+## Why use medicalcoder
 
 There are several tools for working with ICD codes and comorbidity algorithms.
-`medicalcoder` provides novel features:
+medicalcoder provides novel features:
 
 - Unified access to multiple comorbidity algorithms through a single function:
   `comorbidities()`.
@@ -180,7 +180,7 @@ head(mdcr_longitudinal)
 ### Comorbidity Algorithms
 
 There are three comorbidity methods, each with several variants, available in
-`medicalcoder`.  All of which are accessible through the `comorbidities()`
+medicalcoder.  All of which are accessible through the `comorbidities()`
 method by specifying the `method` argument.
 
 General examples and explanations for when conditions are flagged are in the
@@ -269,7 +269,7 @@ vignette(topic = "pccc", package = "medicalcoder")
 ```
 
 #### Charlson Comorbidities
-There are four variants of Charlson comorbidities implemented in `medicalcoder`
+There are four variants of Charlson comorbidities implemented in medicalcoder:
 
 * [Deyo, Cherkin, and Ciol (1992)](https://doi.org/10.1016/0895-4356(92)90133-8)
 * [Quan et al. (2005)](https://doi.org/10.1097/01.mlr.0000182534.19832.83)
@@ -336,7 +336,7 @@ cmrbs <-
     method = "elixhauser_ahrq_icd10"
   )
 ```
-The summary for the results from elixhauser_ahrq_icd10 are similar to those for
+The summary for the results from `method = elixhauser_ahrq_icd10` are similar to those for
 Charlson. A `data.frame` with the counts and percentages of distinct
 `data[id.vars]` with the noted condition, and a summary of the index scores.
 
@@ -392,18 +392,18 @@ The columns are:
     * `who`: World Health Organization.
 
 * `known_start`: The earliest (fiscal) year when source data for the code was
-  available in the source code for `medicalcoder`.  Codes from CMS are for the
+  available in the source code for medicalcoder.  Codes from CMS are for the
   United States fiscal year.  Codes from CDC and WHO are calendar year.  The
   United States fiscal year starts October 1 and concludes September 30.  For
   example, fiscal year 2013 started October 1 2012 and concluded September 30 2013.
 
-  To reemphasize that the year is for the data within `medicalcoder`.  For
+  To reemphasize that the year is for the data within medicalcoder.  For
   ICD-9-CM, the codes went into effect for fiscal year 1980.  The source code
   only has documented source files for the codes dating back to
   1997.
 
 * `known_end`: The latest (fiscal) year when the code was part of the ICD
-  system and/or known within the `medicalcoder` lookup tables.
+  system and/or known within the medicalcoder lookup tables.
 
 * Assignable codes.  Some codes are header codes, e.g., ICD-10-CM three-digit
   code Z94 is a header code because the four-digit codes Z94.0, Z94.1, Z94.2,
@@ -458,7 +458,7 @@ The major factors impacting the expected computation time for applying a
 comorbidity algorithm to a data set are:
 
 1. Data size: number of subjects/encounters.
-2. Data storage class: `medicalcoder` has been built such that no imports of
+2. Data storage class: medicalcoder has been built such that no imports of
    other namespaces is required.  That said, when a `data.table` is passed to
    `comorbidities()` and the `data.table` namespace is available, then S3
    dispatch for `merge` is used, along with some other methods, to reduce memory
@@ -466,8 +466,13 @@ comorbidity algorithm to a data set are:
 3. `flag.method`: "current" will take less time than the "cumulative" method.
 
 Details on the benchmarking method, summary graphics, and tables,  can be found
-on the `medicalcoder` GitHub
+on the medicalcoder GitHub
 [benchmarking](https://github.com/dewittpe/medicalcoder/tree/main/benchmarking)
 directory.
 
 ## Testing
+
+Along with the GitHub actions and testing on current versions of R, the
+[testing](https://github.com/dewittpe/medicalcoder/tree/main/testing)
+directory in the medicalcoder GitHub repo reports the `R CMD check` results for
+all R versions from 3.5.0 to latest.  Several with, and without Sugguests.
