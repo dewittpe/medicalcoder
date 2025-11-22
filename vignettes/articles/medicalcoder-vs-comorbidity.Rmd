@@ -14,7 +14,7 @@ vignette: >
 ```{r, label = "setup", include = FALSE}
 # IMPORTANT SYNTAX NOTE:
 # Vignettes cannot use the pipeOp `|>` so the package can depend on R >= 3.5.0
-# The _articles_ (website only) can use the pipeOp as since these are not part of the source package.
+# The _articles_ (website only) can use the pipeOp since these are not part of the source package.
 
 library(kableExtra)
 options(qwraps2_markup = "markdown")
@@ -37,7 +37,7 @@ packageDescription("comorbidity")$Title
 cat(packageDescription("comorbidity")$Description)
 ```
 
-The following table is a partical list of similarities and differences between
+The following table is a partial list of similarities and differences between
 `medicalcoder` and `comorbidity`.
 
 ```{r, echo = FALSE, results = "asis"}
@@ -57,11 +57,11 @@ PCCC version 2 [@feudtner2014pediatric]  | &#10060;      | &#9989;
 PCCC version 3 [@feinstein2024pediatric] | &#10060;      | &#9989;
 Allows for full ICD codes | &#10060; | &#9989;
 Allows for compact ICD codes | &#9989; | &#9989;
-Applys algorithms to ICD-9 and ICD-10 simulataneously | &#10060 | &#9989;
-Diagnosis and Procedure codes simulataneously | <sup>*</sup> | &#9989;
-Look up tables <sup>**</sup>              | &#9989;       | &#9989;
-Prcoedure codes                          | &#10060;      | &#9989;
-Disagnostic codes                        | &#9989;       | &#9989;
+Applies algorithms to ICD-9 and ICD-10 simultaneously | &#10060 | &#9989;
+Diagnosis and Procedure codes simultaneously | <sup>*</sup> | &#9989;
+Lookup tables <sup>**</sup>              | &#9989;       | &#9989;
+Procedure codes                          | &#10060;      | &#9989;
+Diagnostic codes                        | &#9989;       | &#9989;
 Functions for looking up/testing ICD Codes | &#10060;    | &#9989;
 ")
 
@@ -90,7 +90,7 @@ pack_rows("Comorbidity Algorithm and/or Scoring", start_row = 1, end_row = 12) |
 pack_rows("Comorbidity ICD Code Inputs", start_row = 13, end_row = 16) |>
 pack_rows("ICD Utilities", start_row = 17, end_row = nrow(x)) |>
 footnote(symbol_manual = c("*", "**"),
-  symbol = c("Procedure codes are not relevent to Charlson and Elixhauser, not
+  symbol = c("Procedure codes are not relevant to Charlson and Elixhauser, not
     needed in `comorbidity`.",
   paste(
 "<small>`comorbidity` contains look up tables for ICD-10 years 2009, 2011,
@@ -103,7 +103,7 @@ The example data set `mdcr` within `medicalcoder` is in a format that is ideal
 for `medicalcoder::comorbidities()`.  To prepare that data set for use in the
 `comorbidity::comorbidity()` call we need to split the data in ICD-9 and ICD-10
 version. Also, `medicalcoder::comorbidities()` can handle diagnostic and
-procedure codes simulataneously; a nessecary feature for PCCC.
+procedure codes simultaneously; a necessary feature for PCCC.
 `comorbidity::comorbidity()` only applies comorbidity algorithms based on
 diagnostic codes and thus does not expect to see any procedure codes.
 
@@ -128,9 +128,9 @@ mdcr_icd10dx <-
 
 # Charlson Comorbidities
 
-Appling the Charlson comorbidities to the `mdcr` data set via
+Applying the Charlson comorbidities to the `mdcr` data set via
 `medicalcoder::comorbidities()` is
-done as follows.  Imporant note: the ICD codes used to assess the Charlson
+done as follows.  Important note: the ICD codes used to assess the Charlson
 comorbidities between @quan2005 and @quan2011 are the same. The scoring is not.
 To match the scoring used in `comorbidity::comorbidity()` we need to use the
 `method = "charlson_quan2011"` in `medicalcoder::comorbidities()`.
@@ -325,7 +325,7 @@ pack_rows("Number of Comorbidities", start_row = 18, end_row = nrow(x))
 
 # Elixhauser Comorbidities
 
-Appling the Elixhauser comorbidities to the `mdcr` data set via
+Applying the Elixhauser comorbidities to the `mdcr` data set via
 `medicalcoder::comorbidities()` is done as follows.
 
 ```{r}

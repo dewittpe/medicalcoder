@@ -14,7 +14,7 @@ vignette: >
 ```{r, label = "setup", include = FALSE}
 # IMPORTANT SYNTAX NOTE:
 # Vignettes cannot use the pipeOp `|>` so the package can depend on R >= 3.5.0
-# The _articles_ (website only) can use the pipeOp as since these are not part of the source package.
+# The _articles_ (website only) can use the pipeOp since these are not part of the source package.
 
 library(kableExtra)
 options(qwraps2_markup = "markdown")
@@ -38,7 +38,7 @@ cat(packageDescription("icdcomorbid")$Description)
 ```
 
 `icdcomorbid` provides [@quan2005] Charlson and Elixhauser comorbidities.  A
-nice feature of `icdcomorbid` is the abbility to use custom mappings between
+nice feature of `icdcomorbid` is the ability to use custom mappings between
 ICD codes and comorbidities.
 
 # Prepare Data for `icdcomorbid`
@@ -47,7 +47,7 @@ for `medicalcoder::comorbidities()`.  To prepare that data set for use in the
 `icdcomorbid::icd9_to_comorbid()`  and `icd9_to_comorbid::icd10_to_comorbid()`,
 the data needs to be in a "wide" format instead of the provided long format.
 
-We start by spliting the data into ICD-9 and ICD-10 sets and add rows for any
+We start by splitting the data into ICD-9 and ICD-10 sets and add rows for any
 missing patids.
 
 ```{r}

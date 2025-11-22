@@ -376,7 +376,7 @@ saveRDS(rss_codes, "pccc_v2_r_sas_stata.rds")
 #####  # V2 documentation does not map 253.9.
 #####  #
 #####  # However, in the documentation the codes 253.[2,5,6] and then 235.9 are listed
-#####  # for metabolic which suggests that 235.9 is a typeo and should be 253.9.
+#####  # for metabolic which suggests that 235.9 is a typo and should be 253.9.
 #####  #
 #####  # Then again, 253.9 is listed in the R code for metabolic and 235.9 is not in
 #####  # the R code.  The opposite is true for SAS and Stata sources.
@@ -402,7 +402,7 @@ saveRDS(rss_codes, "pccc_v2_r_sas_stata.rds")
 #####    rss_codes[grepl("^2539", code)]
 #####  }
 #####
-#####  # For v2.1 235.9 mapping to metabolic is considered a typeo and the code is
+#####  # For v2.1 235.9 mapping to metabolic is considered a typo and the code is
 #####  # replaced by 253.9
 #####  rss_codes[code == "2359" & condition == "metabolic", code := "2539"]
 #####  eval(update_rss)
@@ -438,8 +438,8 @@ saveRDS(rss_codes, "pccc_v2_r_sas_stata.rds")
 #####
 #####  # code 9782
 #####  # This is in the stata codes for neuromusc, but not in r or sas.  978.2 is
-#####  # poisoning by cholera vaccine. It is a likely typeo in the stata code.  978 is
-#####  # not in the V2 docs and not in the V3 docs.  Further, this coded is listed as a
+#####  # poisoning by cholera vaccine. It is a likely typo in the stata code.  978 is
+#####  # not in the V2 docs and not in the V3 docs.  Further, this code is listed as a
 #####  # ICD-10-CM code which isn't possible.  Omit this code
 #####  if (interactive()) {
 #####    rss_codes[grepl("^978", code)]
@@ -450,7 +450,7 @@ saveRDS(rss_codes, "pccc_v2_r_sas_stata.rds")
 #####  # ICD-10-CM G31.8
 #####  # This is a header and is in all three languages
 #####  # The code G31.89 is explicitly in stata and SAS.
-#####  # Using partical string matching the G3189 codes will be match because of G31.8.
+#####  # Using partial string matching, the G3189 codes will match because of G31.8.
 #####  # For simplicity and reducing a small amount of computation work later, omit the
 #####  # G31.89 row.
 #####  if (interactive()) {
@@ -542,7 +542,7 @@ saveRDS(rss_codes, "pccc_v2_r_sas_stata.rds")
 #####  # ICD-10-CM D86
 #####  # mapped to hemato_immu
 #####  # D869 also mapped to hemato_immu in SAS and Stata
-#####  # This is redundant once partical string matching is implemented
+#####  # This is redundant once partial string matching is implemented
 #####  if (interactive()) {
 #####    rss_codes[grepl("^D86", code)]
 #####  }

@@ -14,7 +14,7 @@ vignette: >
 ```{r, label = "setup", include = FALSE}
 # IMPORTANT SYNTAX NOTE:
 # Vignettes cannot use the pipeOp `|>` so the package can depend on R >= 3.5.0
-# The _articles_ (website only) can use the pipeOp as since these are not part of the source package.
+# The _articles_ (website only) can use the pipeOp since these are not part of the source package.
 
 library(kableExtra)
 options(qwraps2_markup = "markdown")
@@ -103,15 +103,15 @@ difftime(toc, tic, units = "secs")
 
 ## Differences in the results
 
-We build a `data.frame` `detlas` to explore the differences in the results between
-`medicalcoder::comorbidities()` and `multimorbidity::charlson()`.  One import
+We build a `data.frame` `deltas` to explore the differences in the results between
+`medicalcoder::comorbidities()` and `multimorbidity::charlson()`.  One important
 difference is that `medicalcoder::comorbidities()` returns a `data.frame` with
 the id variable names as passed to the function whereas
 `multimorbidity::charlson()` returns a `data.frame` with the id column named id.
 
 Also, there is a difference in the storage mode for the indicator columns.
 `multimorbidity::charlson()` returns numeric columns whereas
-whereas `medicalcoder::comorbidities()` return integer columns.
+`medicalcoder::comorbidities()` return integer columns.
 
 ```{r}
 multimorbidity_charlson_results <-
