@@ -3,7 +3,7 @@
 ## Introduction
 
 The purpose of this article is to compare the API and results between
-`medicalcoder` and the R package
+medicalcoder and the R package
 [multimorbidity](https://cran.r-project.org/package=multimorbidity)
 (Bensken 2023).
 
@@ -34,9 +34,9 @@ cat(packageDescription("multimorbidity")$Description)
 ##     Martin Fortin, José Almirall, and Kathryn Nicholson (2017)<doi:10.15256/joc.2017.7.122>.
 ```
 
-## Prepare Data for `multimorbidity`
+## Prepare Data for multimorbidity
 
-The example data set `mdcr` within `medicalcoder` is in a format that is
+The example data set `mdcr` within medicalcoder is in a format that is
 ideal for
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
 and for the
@@ -86,7 +86,7 @@ medicalcoder_charlson_results <-
 toc <- Sys.time()
 
 difftime(toc, tic, units = "secs")
-## Time difference of 0.6411629 secs
+## Time difference of 0.6827662 secs
 ```
 
 Calling
@@ -106,7 +106,7 @@ multimorbidity_charlson_results <-
 toc <- Sys.time()
 
 difftime(toc, tic, units = "secs")
-## Time difference of 12.29468 secs
+## Time difference of 12.69544 secs
 ```
 
 ### Differences in the results

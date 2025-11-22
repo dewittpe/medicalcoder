@@ -3,7 +3,7 @@
 ## Introduction
 
 The purpose of this article is to compare the API and results between
-`medicalcoder` and the R package
+medicalcoder and the R package
 [comorbidity](https://cran.r-project.org/package=comorbidity) (Gasparini
 2018).
 
@@ -26,13 +26,13 @@ cat(packageDescription("comorbidity")$Description)
 ```
 
 The following table is a partial list of similarities and differences
-between `medicalcoder` and `comorbidity`.
+between medicalcoder and comorbidity.
 
 [TABLE]
 
-## Prepare Data for `comorbidity`
+## Prepare Data for comorbidity
 
-The example data set `mdcr` within `medicalcoder` is in a format that is
+The example data set `mdcr` within medicalcoder is in a format that is
 ideal for
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md).
 To prepare that data set for use in the
@@ -193,7 +193,7 @@ charlson_delta <-
   )
 ```
 
-The relevent columns:
+The relevant columns:
 
 The following data.frame reports the condition and the corresponding
 column from
@@ -282,7 +282,7 @@ for (i in seq_len(nrow(charlson_columns))) {
 ```
 
 The only columns left in the `charlson_delta` object are from
-`medicalcoder`
+medicalcoder
 
 ``` r
 str(charlson_delta)
@@ -306,9 +306,9 @@ stopifnot(
 )
 ```
 
-An addition feature the `medicalcoder` package provides that the
-`comorbidity` package does not, is a summary method for the results,
-which can be used to build nice tables via
+An addition feature the medicalcoder package provides that the
+comorbidity package does not, is a summary method for the results, which
+can be used to build nice tables via
 [kableExtra](https://CRAN.R-project.org/package=kableExtra).
 
 ``` r
@@ -467,7 +467,7 @@ elixhauser_delta <-
   )
 ```
 
-The relevent columns:
+The relevant columns:
 
 The following data.frame reports the condition and the corresponding
 column from
@@ -627,7 +627,7 @@ for (i in seq_len(nrow(elixhauser_columns))) {
 ```
 
 The remaining columns in the `elixhauser_delta` object are specific to
-`medicalcoder`, save patid.
+medicalcoder, save patid.
 
 ``` r
 str(elixhauser_delta)
@@ -644,7 +644,7 @@ str(elixhauser_delta)
 stopifnot(identical(names(elixhauser_delta), c("patid", "HTN_C", "num_cmrb", "cmrb_flag", "mortality_index", "readmission_index")))
 ```
 
-- `HTN_C`: *any* hypertension - added to simplify the cacluation of the
+- `HTN_C`: *any* hypertension - added to simplify the calculation of the
   mortality and readmission indices based on weights from AHRQ.
 
 - `num_cmrb`: Number of comorbidities flagged
@@ -654,9 +654,9 @@ stopifnot(identical(names(elixhauser_delta), c("patid", "HTN_C", "num_cmrb", "cm
 - `mortality_index` and `readmission_index`: index scores based on the
   AHRQ weights (Healthcare Cost and Utilization Project (HCUP) 2017).
 
-An addition feature of the `medicalcoder` package provides that the
-`comorbidity` package does not, is a summary method for the results,
-which can be used to build nice tables via
+An addition feature of the medicalcoder package provides that the
+comorbidity package does not, is a summary method for the results, which
+can be used to build nice tables via
 [kableExtra](https://CRAN.R-project.org/package=kableExtra).
 
 ``` r
@@ -716,15 +716,15 @@ pack_rows("Number of Comorbidities", start_row = which(x$condition == ">= 1"), e
 
 ## Benchmarking
 
-The `medicalcoder` package was built to use base R methods and has zero
+The medicalcoder package was built to use base R methods and has zero
 imports. That said, if the input data set to
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
 is a [`data.table`](https://cran.r-project.org/package=data.table) and
 the `data.table` namespace is available, the S3 methods for `data.table`
 will be used and there will be a performance improvement.
 
-`comorbidity` imports several namespaces, including `data.table`, and
-uses `data.table` for efficiency.
+comorbidity imports several namespaces, including `data.table`, and uses
+`data.table` for efficiency.
 
 In the following benchmark we will look at the time required to apply
 the Charlson comorbidity method to the `mdcr` data set via

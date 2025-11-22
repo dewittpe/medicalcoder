@@ -9,7 +9,7 @@ packageVersion("medicalcoder")
 ## Comorbidity Algorithms
 
 There are three comorbidity algorithms, each with several variants,
-implemented in the `medicalcoder` package:
+implemented in the medicalcoder package:
 
 1.  Pediatric Complex Chronic Condition System (PCCC)
     1.  Version 2.0 (Feudtner et al. 2014)
@@ -47,9 +47,9 @@ implemented in the `medicalcoder` package:
         3.  `elixhauser_quan2005`: (Quan et al. 2005)
 
 **IMPORTANT NOTE:** Elixhauser 1998 and AHRQ Web used diagnostic related
-group (DRG) codes as part of the methods. The `medicalcoder` package
-*does not* use DRG codes. This is consistent with the way these methods
-were implemented in Quan et al. (2005).
+group (DRG) codes as part of the methods. The medicalcoder package *does
+not* use DRG codes. This is consistent with the way these methods were
+implemented in Quan et al. (2005).
 
 A list of the valid methods for the package can be accessed via a
 non-exported function. In general, the methods are listed in the form of
@@ -76,7 +76,14 @@ vignette(topic = "elixhauser", package = "medicalcoder")
 ```
 
 The focus of this vignette is to highlight the general use of the
-`comorbidities` function.
+[`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+function.
+
+Details of the function arguments call are in the manual.
+
+``` r
+help(topic = "comorbidities", package = "medicalcoder")
+```
 
 ``` r
 args(comorbidities)
@@ -94,13 +101,7 @@ codes are diagnostic or procedural), or `poa.var` and `poa` (used for
 denoting if a codes are present on admission). The `.var` version is the
 name of a variable within the `data.frame` passed into the `data`
 argument. The version without `.var` is a default value to be applied to
-the entirety of `data`.
-
-Details of the function arguments call are in the manual.
-
-``` r
-help(topic = "comorbidities", package = "medicalcoder")
-```
+the entirety of `data`. We will see some examples where this is useful.
 
 The `data` element is expected to be a `data.frame`, or at least
 something that inherits the `data.frame` class. The format is expected
@@ -108,112 +109,36 @@ to be a ‘long’ format. One row per code. Two example data sets in the
 package show the general expected form of the `data`.
 
 ``` r
-str(mdcr)
-## 'data.frame':    319856 obs. of  4 variables:
-##  $ patid: int  71412 71412 71412 71412 71412 17087 64424 64424 84361 84361 ...
-##  $ icdv : int  9 9 9 9 9 10 9 9 9 9 ...
-##  $ code : chr  "99931" "75169" "99591" "V5865" ...
-##  $ dx   : int  1 1 1 1 1 1 1 0 1 1 ...
-str(mdcr_longitudinal)
-## 'data.frame':    60 obs. of  4 variables:
-##  $ patid: int  9663901 9663901 9663901 9663901 9663901 9663901 9663901 9663901 9663901 9663901 ...
-##  $ date : IDate, format: "2016-03-18" "2016-03-24" ...
-##  $ icdv : int  10 10 10 10 10 10 10 10 10 10 ...
-##  $ code : chr  "Z77.22" "IMO0002" "V87.7XXA" "J95.851" ...
-```
-
-The `mdcr` data set has columns \* `patid`: patient id \* `icdv`:
-integer denoting if the ICD code is ICD-9 or ICD-10 \* `code`: character
-string, a compact ICD code \* `dx`: if 1 then the ICD is a diagnostic
-code (ICD-9-CM or ICD-10-CM), if 0 then the ICD code is a procedure code
-(ICD-9-PCS or ICD-10-PCS).
-
-The `mdcr_longitudinal` data set is distinct from `mdcr`. The columns
-are the same save the `date` column to show longitudinal diagnoses for a
-`patid`.
-
-A simple example of flagging Elixhauser comorbidities:
-
-``` r
-ecmrb <-
-  comorbidities(
-    data = mdcr,
-    id.vars = "patid",
-    icd.codes = "code",
-    icdv.var = "icdv",
-    method = "elixhauser_ahrq_icd10",
-    poa = 1L, # consider all codes to be present on admission
-    primarydx = 0L # consider all codes to be secondary diagnoses
-  )
-summary(ecmrb)
-## $conditions
-##       condition count      percent
-## 1          AIDS     3  0.007840677
-## 2       ALCOHOL    11  0.028749151
-## 3       ANEMDEF   700  1.829491401
-## 4    AUTOIMMUNE   170  0.444305055
-## 5       BLDLOSS    33  0.086247452
-## 6   CANCER_LEUK   381  0.995766034
-## 7  CANCER_LYMPH    76  0.198630495
-## 8   CANCER_METS   213  0.556688098
-## 9  CANCER_NSITU     0  0.000000000
-## 10 CANCER_SOLID   477  1.246667712
-## 11         CBVD   117  0.305786420
-## 12         COAG   877  2.292091370
-## 13     DEMENTIA    35  0.091474570
-## 14      DEPRESS   321  0.838952485
-## 15      DIAB_CX   123  0.321467775
-## 16    DIAB_UNCX   184  0.480894883
-## 17   DRUG_ABUSE    77  0.201244054
-## 18           HF   246  0.642935550
-## 19       HTN_CX   286  0.747477915
-## 20     HTN_UNCX   395  1.032355862
-## 21    LIVER_MLD   179  0.467827087
-## 22    LIVER_SEV   159  0.415555904
-## 23 LUNG_CHRONIC  1359  3.551826878
-## 24   NEURO_MOVT   139  0.363284721
-## 25    NEURO_OTH   948  2.477654069
-## 26   NEURO_SEIZ  1490  3.894203126
-## 27        OBESE   315  0.823271131
-## 28    PARALYSIS   767  2.004599864
-## 29     PERIVASC   209  0.546233861
-## 30    PSYCHOSES    96  0.250901678
-## 31     PULMCIRC   332  0.867701636
-## 32   RENLFL_MOD   107  0.279650828
-## 33   RENLFL_SEV   247  0.645549109
-## 34 THYROID_HYPO   371  0.969630443
-## 35  THYROID_OTH    36  0.094088129
-## 36 ULCER_PEPTIC    23  0.060111860
-## 37        VALVE   572  1.494955831
-## 38     WGHTLOSS   616  1.609952433
-## 39         >= 1  7869 20.566096911
-## 40         >= 2  3186  8.326799435
-## 41         >= 3  1135  2.966389629
-## 42         >= 4   347  0.906905023
-## 43         >= 5   120  0.313627097
-## 44         >= 6    25  0.065338979
-## 45         >= 7     7  0.018294914
-## 46         >= 8     1  0.002613559
-## 
-## $index_summary
-##         index min q1 median q3 max
-## 1 readmission  -2  0      0  0  35
-## 2   mortality -24  0      0  0  75
+head(mdcr)
+##   patid icdv  code dx
+## 1 71412    9 99931  1
+## 2 71412    9 75169  1
+## 3 71412    9 99591  1
+## 4 71412    9 V5865  1
+## 5 71412    9  V427  1
+## 6 17087   10  V441  1
+head(mdcr_longitudinal)
+##     patid       date icdv     code
+## 1 9663901 2016-03-18   10   Z77.22
+## 2 9663901 2016-03-24   10  IMO0002
+## 3 9663901 2016-03-24   10 V87.7XXA
+## 4 9663901 2016-03-25   10  J95.851
+## 5 9663901 2016-03-30   10  IMO0002
+## 6 9663901 2016-03-30   10    Z93.0
 ```
 
 ## When are conditions flagged?
 
 Whether or not the code is present on admission (POA) is useful when
 applying the comorbidity algorithms and considering if the patient has a
-comorbidity at the time of encounter start or if the condition is a
+comorbidity at the start of an encounter, or if the condition is a
 result of the current hospitalization.
 
 Implementation of Elixhauser comorbidities for 2022 and beyond
 (Healthcare Research and (AHRQ) 2025) explicitly define the use of
 present on admission flags for specific conditions (see the
 `poa_required` flag reported in the data set returned by
-[`get_elixhauser_poa()`](http://www.peteredewitt.com/medicalcoder/reference/get_elixhauser_poa.md),
-and there are also ICD codes which are POA exempt).
+[`get_elixhauser_poa()`](http://www.peteredewitt.com/medicalcoder/reference/get_elixhauser_poa.md)).
 
 ``` r
 str(get_elixhauser_poa())
@@ -257,9 +182,9 @@ From Quan et al. (2005):
 > condition-by-condition basis of whether to include particular
 > variables, depending on their study objectives.
 
-PCCC does not explicitly note if POA is required.
+PCCC does not explicitly note the if POA is required.
 
-`medicalcoder` has been built to consider POA for all comorbidity
+medicalcoder has been built to consider POA for all comorbidity
 algorithms.
 
 End users can use a 0/1 indicator variable in the data set to report
@@ -268,27 +193,15 @@ codes are to be considered POA or not, the functional argument `poa` can
 be used to set a common status without adding a column to the input data
 set.
 
-Additionally, `medicalcoder` provides a `flag.method` argument for
+Additionally, medicalcoder provides a `flag.method` argument for
 longitudinal data sets.
 
-**Example:** Let’s assume we have a patient record with six encounters.
-We use ICD-10 diagnostic codes C78.4 and I50.40 which map to a cancer
+**Example:** Let’s assume we have a patient record for six encounters.
+We use ICD-10 diagnostic codes C78.4 and I50.40 which maps to a cancer
 and heart failure (cardiovascular disease) comorbidity respectively for
 PCCC, Charlson, and Elixhauser. For demonstration, we also flag POA with
 the second report of I50.40 intentionally marked as not present on
 admission.
-
-``` r
-record
-##   patid encid   code poa
-## 1     A     1   <NA>  NA
-## 2     A     2  C78.4   0
-## 3     A     3 I50.40   1
-## 4     A     4   <NA>  NA
-## 5     A     5  C78.4   1
-## 6     A     5 I50.40   0
-## 7     A     6   <NA>  NA
-```
 
 We will call
 [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
@@ -298,8 +211,8 @@ both flag methods. Results are shown in the following table.
 [TABLE]
 
 Indicators for when a comorbidity is flagged based on the algorithm,
-present on admission (poa), and flag.method. The two ICD codes,C78.4 and
-I50.40, map to cancer and cardiovascular disease respectively.
+present on admission (poa), and flag.method. The two ICD codes, C78.4
+and I50.40, map to cancer and cardiovascular disease respectively.
 
 ## Mapping ICD Codes to Comorbidities
 
@@ -307,9 +220,9 @@ End users can quickly assess the lookup table for all the ICD codes
 associated with a comorbidity algorithm using the
 `get_<comorbidity>_codes` functions. Each `data.frame` has columns for
 the ICD version, diagnostic or procedure flag, the compact code, and the
-full code. A column for the condition and other method-specific flags
+full code. A column for the condition and other method specific flags
 are provided. Lastly, there are indicator columns for the variant of
-each method.
+each method
 
 ``` r
 str(get_pccc_codes())

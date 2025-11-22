@@ -275,7 +275,7 @@ one non-technology condition is flagged.</p>
 <h3 id="icd-codes-for-pccc">ICD Codes for PCCC<a class="anchor" aria-label="anchor" href="#icd-codes-for-pccc"></a>
 </h3>
 <p>Let’s look at the codes that are in the PCCC schema. Calling
-<code>get_pccc_codes</code> returns a data.frame.</p>
+<code><a href="../reference/get_pccc_codes.html">get_pccc_codes()</a></code> returns a data.frame.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pccc_codes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_pccc_codes.html">get_pccc_codes</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">pccc_codes</span><span class="op">)</span></span>
@@ -729,7 +729,7 @@ ignored.</p>
 <div class="section level2">
 <h2 id="expected-data-structures">Expected Data Structures<a class="anchor" aria-label="anchor" href="#expected-data-structures"></a>
 </h2>
-<p>The expected input data format for <code>comorbidities</code> is a
+<p>The expected input data format for <code><a href="../reference/comorbidities.html">comorbidities()</a></code> is a
 “long” format. The only mandatory column is one column of ICD codes.
 These codes can be full codes (include the decimal point) or compact
 codes (omitting the decimal point). Additionally, column(s) for
@@ -1746,10 +1746,10 @@ specify a value for the <code>dx.var</code> argument.</p>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p>Specificity is increased by using the diagnostic/procedure flag.
 Using <code>pccc_v2.1</code> there are 278 false positive flags when the
-diagnostic/procedure flag is omitted from the <code>comorbidities</code>
-call. Using <code>pccc_v3.1</code> there are 256 false positive flags
-when the diagnostic/procedure flag is omitted from the
-<code>comorbidities</code> call.</p>
+diagnostic/procedure flag is omitted from the
+<code><a href="../reference/comorbidities.html">comorbidities()</a></code> call. Using <code>pccc_v3.1</code> there
+are 256 false positive flags when the diagnostic/procedure flag is
+omitted from the <code><a href="../reference/comorbidities.html">comorbidities()</a></code> call.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># verify that the cmrb_flag and number of conditions is the same or less after</span></span>
 <span><span class="co"># accounting for the diagnostic/procedure flag in the comorbidities call</span></span>
@@ -1838,8 +1838,8 @@ structures can lead to false positives.</p>
 <p>Using full codes can prevent false positives too. Here are several
 different ways that <code><a href="../reference/comorbidities.html">comorbidities()</a></code> could be called
 resulting in different outcomes.</p>
-<p>Note: this is a good example of how <code>medicalcoder</code> can
-handle full and compact codes within a single record.</p>
+<p>Note: this is a good example of how medicalcoder can handle full and
+compact codes within a single record.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">DF</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
@@ -1986,12 +1986,12 @@ ICD-10.</p>
 <span><span class="co">##   patid cmrb_flag</span></span>
 <span><span class="co">## 1 95471         1</span></span></code></pre></div>
 <p>Lastly, it should be noted that a lot of the ambiguity resulting from
-compact codes can be avoided when full codes are available.
-<code>medicalcoder</code> can handle both forms. In the example below we
-again use the “E030” and assess it against all full and compact codes
-(default), against only full codes, and lastly against only compact
-codes. Note in this example that we are not specifying the ICD version
-nor the diagnostic/procedure status of the code.</p>
+compact codes can be avoided when full codes are available. medicalcoder
+can handle both forms. In the example below we again use the “E030” and
+assess it against all full and compact codes (default), against only
+full codes, and lastly against only compact codes. Note in this example
+that we are not specifying the ICD version nor the diagnostic/procedure
+status of the code.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/lookup_icd_codes.html">lookup_icd_codes</a></span><span class="op">(</span><span class="st">"E030"</span><span class="op">)</span></span>
 <span><span class="co">##   input_code   match_type icdv dx full_code code src known_start known_end</span></span>
@@ -2056,7 +2056,7 @@ full code with the same compact form.</p>
 <div class="section level2">
 <h2 id="longitudinal-conditions">Longitudinal Conditions<a class="anchor" aria-label="anchor" href="#longitudinal-conditions"></a>
 </h2>
-<p>The <code>medicalcoder</code> package includes the example data set,
+<p>The medicalcoder package includes the example data set,
 <code>mdcr_longitudinal</code>, with ICD-9 and ICD-10 codes for 3
 synthetic patients with multiple encounters. Each row has a date
 (encounter) for when the ICD code was reported.</p>
@@ -2073,9 +2073,9 @@ synthetic patients with multiple encounters. Each row has a date
 <h3 id="pccc-v2">PCCC V2<a class="anchor" aria-label="anchor" href="#pccc-v2"></a>
 </h3>
 <p>Let’s look at the <code>pccc_v2.1</code> flags for each patient,
-using all the information from all the encounters. This can easily by
+using all the information from all the encounters. This can easily be
 done by specifying <code>id.vars = c("patid")</code> such that the
-<code>comorbidities</code> method considers call codes as occurring on
+<code><a href="../reference/comorbidities.html">comorbidities()</a></code> method considers all codes as occurring on
 one encounter.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">longitudinal_v2_patid</span> <span class="op">&lt;-</span></span>
@@ -5949,9 +5949,8 @@ condition is flagged.</p>
 <p>The documentation for PCCC version 2 <span class="citation">(Feudtner
 et al. 2014)</span> and version 3 <span class="citation">(Feinstein et
 al. 2024)</span> include subconditions under each of the major
-conditions. However, to our knowledge, no software prior to
-<code>medicalcoder</code> implemented flagging for the
-subconditions.</p>
+conditions. However, to our knowledge, no software prior to medicalcoder
+implemented flagging for the subconditions.</p>
 <p>The subconditions for each condition are shown in the next table.</p>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
 <table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
@@ -6592,7 +6591,7 @@ Transplantation
 </div>
 <p>To get the subconditions all you need to do is use the
 <code>subconditions = TRUE</code> argument in the
-<code>comorbidities</code> call. For this example we will apply
+<code><a href="../reference/comorbidities.html">comorbidities()</a></code> call. For this example we will apply
 <code>pccc_v3.1</code> with and without comorbidities.</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">without_subconditions</span> <span class="op">&lt;-</span></span>

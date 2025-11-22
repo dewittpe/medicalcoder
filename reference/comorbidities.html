@@ -112,9 +112,9 @@ apply to <code>data</code>.</p></dd>
 <dt id="arg-id-vars">id.vars<a class="anchor" aria-label="anchor" href="#arg-id-vars"></a></dt>
 <dd><p>Optional character vector of column names. When
 missing, the entire input <code>data</code> is treated as a single encounter from a
-single patient.  If you want to set <code>flag.method = "current"</code> then
-<code>length(id.vars) &gt;= 2</code> is expected.  The last element would be the
-encounter order (must be sortable)."</p></dd>
+single patient. If you want to set <code>flag.method = "current"</code> then
+<code>length(id.vars) &gt;= 2</code> is expected. The last element should be the
+encounter order (must be sortable).</p></dd>
 
 
 <dt id="arg-icdv-var">icdv.var<a class="anchor" aria-label="anchor" href="#arg-icdv-var"></a></dt>
@@ -146,9 +146,9 @@ warning) if <code>dx.var</code> is provided.</p></dd>
 <dd><p>Character scalar naming the column with present-on-admission
 flags: integer <code>1L</code> (present), <code>0L</code> (not present), or <code>NA</code>.
 PCCC and Charlson will only flag conditions when the code is
-present-on-admission.  Elixhauser has a mix of conditions some require
-present-on-admission others do not. <code>poa.var</code> takes precedence over <code>poa</code>
-is both are provided.</p></dd>
+present-on-admission. Elixhauser has a mix of conditions; some require
+present-on-admission while others do not. <code>poa.var</code> takes precedence over
+<code>poa</code> if both are provided.</p></dd>
 
 
 <dt id="arg-poa">poa<a class="anchor" aria-label="anchor" href="#arg-poa"></a></dt>
@@ -173,8 +173,7 @@ comorbidities and is ignored when the method is a PCCC variant.
 <dt id="arg-primarydx">primarydx<a class="anchor" aria-label="anchor" href="#arg-primarydx"></a></dt>
 <dd><p>An integer value of <code>0</code> or <code>1</code>. If <code>0</code>,
 treat all codes as non-primary diagnoses; if <code>1</code>, treat all codes as
-primary diagnoses. Ignored, with a  warning, if <code>primarydx.var</code> is
-provided.</p></dd>
+primary diagnoses. Ignored, with a warning, if <code>primarydx.var</code> is provided.</p></dd>
 
 
 <dt id="arg-flag-method">flag.method<a class="anchor" aria-label="anchor" href="#arg-flag-method"></a></dt>
@@ -204,15 +203,15 @@ subconditions (PCCC only).</p></dd>
     <p>The return object will be slightly different depending on the value of
 <code>method</code> and <code>subconditions</code>.</p><ul><li><p>When <code>subconditions = FALSE</code>, a <code>medicalcoder_comorbidities</code> object (a
 <code>data.frame</code> with attributes) is returned.  Column(s) for <code>id.vars</code>, if
-defined in the function call.  For all method there will be the following
+defined in the function call.  For all methods there will be the following
 columns:</p><ul><li><p><code>num_cmrb</code> a count of comorbidities/conditions flagged</p></li>
 <li><p><code>cmrb_flag</code> a 0/1 integer indicator for at least one
 comorbidity/condition.</p></li>
 </ul><p>Additional columns:</p><ul><li><p>PCCC methods:</p><ul><li><p>For <code>method = "pccc_v2.0"</code> and <code>method = "pccc_v2.1"</code>, there is one
 indicator column per condition.</p></li>
 <li><p>For <code>method = "pccc_v3.0"</code> and <code>method = "pccc_v3.1"</code>,
-there are four columns per condition:</p><ul><li><p><code>&lt;condition&gt;_dxpr_or_tech</code>: the condition was flag due to the
-presence of either a diagnostic or procedure code, or was flag due to
+there are four columns per condition:</p><ul><li><p><code>&lt;condition&gt;_dxpr_or_tech</code>: the condition was flagged due to the
+presence of either a diagnostic or procedure code, or was flagged due to
 the presence of a technology dependence code along with at least one
 comorbidity being flagged by a diagnostic or procedure code.</p></li>
 <li><p><code>&lt;condition&gt;_dxpr_only</code>: the condition was flagged due to the
@@ -241,19 +240,19 @@ indicators for subconditions within each condition.</p></li>
 contribute to flags. When a longitudinal method is selected (e.g.,
 <code>"cumulative"</code>), prior encounters for the same <code>id.vars</code>
 combination may contribute to condition flags. For the cumulative method to
-work the <code>id.vars</code> need to be a character vector length 2 or more.  The last
-variable listed in the id.vars will be considered the encounter id and should
-be sortable. For example, say you have data with a hospital, patient, and
-encounter id.  The <code>id.vars</code> could be one of two entries:  <code>c("hospital", "patient", "encounter")</code> or <code>c("patient", "hospital", "encounter")</code>.  In both
-cases the return with be the same as "encounter" within the hospital/patient
-id interaction is the same as "encounter" within patient/hospital
-interaction.</p>
+work, <code>id.vars</code> needs to be a character vector of length 2 or more. The last
+element is treated as the encounter identifier and must be sortable. For
+example, say you have data with a hospital, patient, and encounter id. The
+<code>id.vars</code> could be one of two entries: <code>c("hospital", "patient", "encounter")</code>
+or <code>c("patient", "hospital", "encounter")</code>. In both cases the return will be
+the same because the encounter identifier is unchanged regardless of whether
+hospital or patient is listed first.</p>
 <p>It is critically important that the <code>data[[tail(id.vars, 1)]]</code> variable can
 be sorted.  Just because your data is sorted in temporal order does not mean
 that the results will be correct if the <code>tail(id.vars, 1)</code> is not in the same
 order as the data.  For example, say you had the following:</p><table class="table table"><tr><td>patid</td><td>enc_id</td><td>date</td></tr><tr><td>P1</td><td>10823090</td><td>Aug 2023</td></tr><tr><td>P1</td><td>10725138</td><td>Jul 2025</td></tr></table><p><code>id.vars = c("patid", "enc_id")</code> will give the wrong result as enc_id
-10725138 would be sorted to come before enc_id 10823090.  <code>id.var = c("patid", "date")</code> would be sufficient input, assuming that <code>date</code> has been
-correctly stored.   Adding a column <code>enc_seq</code>, e.g.,</p><table class="table table"><tr><td>patid</td><td>enc_id</td><td>date</td><td>enc_seq</td></tr><tr><td>P1</td><td>10823090</td><td>Aug 2023</td><td>1</td></tr><tr><td>P1</td><td>10725138</td><td>Jul 2025</td><td>2</td></tr></table><p>and calling <code>comorbidities()</code> with <code>id.vars = c("patid", "enc_seq")</code> will
+10725138 would be sorted to come before enc_id 10823090.  <code>id.vars = c("patid", "date")</code> would be sufficient input, assuming that <code>date</code> has been
+correctly stored. Adding a column <code>enc_seq</code>, e.g.,</p><table class="table table"><tr><td>patid</td><td>enc_id</td><td>date</td><td>enc_seq</td></tr><tr><td>P1</td><td>10823090</td><td>Aug 2023</td><td>1</td></tr><tr><td>P1</td><td>10725138</td><td>Jul 2025</td><td>2</td></tr></table><p>and calling <code>comorbidities()</code> with <code>id.vars = c("patid", "enc_seq")</code> will
 have better performance than using the date and will clear up any possible
 issues with non-sequential encounter ids from the source data.</p>
     </div>

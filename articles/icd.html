@@ -78,13 +78,12 @@
 
     
     
-<p>There are four functions in the <code>medicalcoder</code> package
-specifically for working with International Classification of Diseases
-(ICD) codes.</p>
+<p>There are four functions in the medicalcoder package specifically for
+working with International Classification of Diseases (ICD) codes.</p>
 <ol style="list-style-type: decimal">
 <li>
-<code><a href="../reference/get_icd_codes.html">get_icd_codes()</a></code>: returns a look up table of ICD codes
-as a <code>data.frame</code>.</li>
+<code><a href="../reference/get_icd_codes.html">get_icd_codes()</a></code>: returns a lookup table of ICD codes as
+a <code>data.frame</code>.</li>
 <li>
 <code><a href="../reference/lookup_icd_codes.html">lookup_icd_codes()</a></code>: returns details on specific ICD
 codes.</li>
@@ -104,11 +103,11 @@ just format the input string appropriately.</li>
 <code>get_icd_codes()</code><a class="anchor" aria-label="anchor" href="#get_icd_codes"></a>
 </h2>
 <p>A lookup table for the ICD codes has been built as internal data sets
-within the <code>medicalcoder</code> package. The sources for these look
-up tables come from the Centers for Disease Control (CDC) and from the
-Centers for Medicare &amp; Medicaid Services (CMS). The specific links
-to the source data sets can be found in the source code for the
-<code>medicalcoder</code> package on <a href="https://github.com/dewittpe/medicalcoder" class="external-link">GitHub</a>.</p>
+within the medicalcoder package. The sources for these lookup tables
+come from the Centers for Disease Control (CDC) and from the Centers for
+Medicare &amp; Medicaid Services (CMS). The specific links to the source
+data sets can be found in the source code for the medicalcoder package
+on <a href="https://github.com/dewittpe/medicalcoder" class="external-link">GitHub</a>.</p>
 <p>End users can get a <code>data.frame</code> with ICD-9 diagnostic,
 ICD-9 procedure, ICD-10 diagnostic, and ICD-10 procedure codes.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -142,8 +141,8 @@ been omitted.</p></li>
 <li><p><code>src</code>: a character vector denoting the source of the
 information.</p></li>
 <li>
-<p><code>known_start</code>: The first year that the
-<code>medicalcoder</code> package has data for this code.</p>
+<p><code>known_start</code>: The first year that the medicalcoder
+package has data for this code.</p>
 <ul>
 <li><p>For codes based on the ICD-9-CM, ICD-9-PCS, ICD-10-CM, ICD-10-PCS
 standards the year is the <em>fiscal year</em> for the United States
@@ -156,12 +155,11 @@ year is <em>calendar year</em>.</p></li>
 </li>
 <li>
 <p><code>known_end</code>: the last year the code was part of the
-standard, or that the <code>medicalcoder</code> package has data
-for.</p>
+standard, or that the medicalcoder package has data for.</p>
 <ul>
 <li>ICD-9 last year of active use was FY 2015.</li>
-<li>ICD-10 is active. The current version of <code>medicalcoder</code>
-has details on ICD-10 codes through FY 2026.</li>
+<li>ICD-10 is active. The current version of medicalcoder has details on
+ICD-10 codes through FY 2026.</li>
 </ul>
 </li>
 <li><p><code>assignable_start</code>: The first year (fiscal or calendar
@@ -376,11 +374,11 @@ details for the codes.</p>
 <li>subsubclassification</li>
 <li>extension</li>
 </ul>
-<p>To keep the install size of <code>medicalcoder</code> under the size
-limits for CRAN, the stored data is structured in a way that several
-joins and other operations are needed to have a data set that is end
-user friendly. Several data sets are generated and cached when the
-namespace is loaded.</p>
+<p>To keep the install size of medicalcoder under the size limits for
+CRAN, the stored data is structured in a way that several joins and
+other operations are needed to have a data set that is end user
+friendly. Several data sets are generated and cached when the namespace
+is loaded.</p>
 </div>
 </div>
 <div class="section level2">

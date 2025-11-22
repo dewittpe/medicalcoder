@@ -76,7 +76,8 @@ one non-technology condition is flagged.
 ### ICD Codes for PCCC
 
 Let’s look at the codes that are in the PCCC schema. Calling
-`get_pccc_codes` returns a data.frame.
+[`get_pccc_codes()`](http://www.peteredewitt.com/medicalcoder/reference/get_pccc_codes.md)
+returns a data.frame.
 
 ``` r
 pccc_codes <- get_pccc_codes()
@@ -306,16 +307,18 @@ Filter(f = function(x) x > 0, pat2_pccc_v3.1)
 
 ## Expected Data Structures
 
-The expected input data format for `comorbidities` is a “long” format.
-The only mandatory column is one column of ICD codes. These codes can be
-full codes (include the decimal point) or compact codes (omitting the
-decimal point). Additionally, column(s) for identifying patients,
-encounters, and any other important groups are encouraged. A column to
-indicate the ICD version (9 or 10), and another column for identifying
-the code as a diagnostic or procedure code are also encouraged. The
-example `mdcr` data set has three columns, a patient id (patid), the ICD
-compact codes (code), and a column to indicate if the ICD code is a
-diagnostic or procedure code, (dx: 1 for diagnostic, 0 for procedure).
+The expected input data format for
+[`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+is a “long” format. The only mandatory column is one column of ICD
+codes. These codes can be full codes (include the decimal point) or
+compact codes (omitting the decimal point). Additionally, column(s) for
+identifying patients, encounters, and any other important groups are
+encouraged. A column to indicate the ICD version (9 or 10), and another
+column for identifying the code as a diagnostic or procedure code are
+also encouraged. The example `mdcr` data set has three columns, a
+patient id (patid), the ICD compact codes (code), and a column to
+indicate if the ICD code is a diagnostic or procedure code, (dx: 1 for
+diagnostic, 0 for procedure).
 
 The `mdcr` data is provided with columns for
 
@@ -474,9 +477,12 @@ mdcr_results_v3.1_02 <-
 
 Specificity is increased by using the diagnostic/procedure flag. Using
 `pccc_v2.1` there are 278 false positive flags when the
-diagnostic/procedure flag is omitted from the `comorbidities` call.
-Using `pccc_v3.1` there are 256 false positive flags when the
-diagnostic/procedure flag is omitted from the `comorbidities` call.
+diagnostic/procedure flag is omitted from the
+[`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+call. Using `pccc_v3.1` there are 256 false positive flags when the
+diagnostic/procedure flag is omitted from the
+[`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+call.
 
 ``` r
 # verify that the cmrb_flag and number of conditions is the same or less after
@@ -577,7 +583,7 @@ different ways that
 [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
 could be called resulting in different outcomes.
 
-Note: this is a good example of how `medicalcoder` can handle full and
+Note: this is a good example of how medicalcoder can handle full and
 compact codes within a single record.
 
 ``` r
@@ -732,12 +738,12 @@ comorbidities(
 ```
 
 Lastly, it should be noted that a lot of the ambiguity resulting from
-compact codes can be avoided when full codes are available.
-`medicalcoder` can handle both forms. In the example below we again use
-the “E030” and assess it against all full and compact codes (default),
-against only full codes, and lastly against only compact codes. Note in
-this example that we are not specifying the ICD version nor the
-diagnostic/procedure status of the code.
+compact codes can be avoided when full codes are available. medicalcoder
+can handle both forms. In the example below we again use the “E030” and
+assess it against all full and compact codes (default), against only
+full codes, and lastly against only compact codes. Note in this example
+that we are not specifying the ICD version nor the diagnostic/procedure
+status of the code.
 
 ``` r
 lookup_icd_codes("E030")
@@ -803,7 +809,7 @@ full code with the same compact form.
 
 ## Longitudinal Conditions
 
-The `medicalcoder` package includes the example data set,
+The medicalcoder package includes the example data set,
 `mdcr_longitudinal`, with ICD-9 and ICD-10 codes for 3 synthetic
 patients with multiple encounters. Each row has a date (encounter) for
 when the ICD code was reported.
@@ -822,9 +828,10 @@ head(mdcr_longitudinal)
 ### PCCC V2
 
 Let’s look at the `pccc_v2.1` flags for each patient, using all the
-information from all the encounters. This can easily by done by
-specifying `id.vars = c("patid")` such that the `comorbidities` method
-considers call codes as occurring on one encounter.
+information from all the encounters. This can easily be done by
+specifying `id.vars = c("patid")` such that the
+[`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+method considers all codes as occurring on one encounter.
 
 ``` r
 longitudinal_v2_patid <-
@@ -1088,8 +1095,8 @@ conditions are flagged if at least one other condition is flagged.
 
 The documentation for PCCC version 2 (Feudtner et al. 2014) and version
 3 (Feinstein et al. 2024) include subconditions under each of the major
-conditions. However, to our knowledge, no software prior to
-`medicalcoder` implemented flagging for the subconditions.
+conditions. However, to our knowledge, no software prior to medicalcoder
+implemented flagging for the subconditions.
 
 The subconditions for each condition are shown in the next table.
 
@@ -1179,8 +1186,10 @@ The subconditions for each condition are shown in the next table.
 | transplantation                                         | Transplantation                             |
 
 To get the subconditions all you need to do is use the
-`subconditions = TRUE` argument in the `comorbidities` call. For this
-example we will apply `pccc_v3.1` with and without comorbidities.
+`subconditions = TRUE` argument in the
+[`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+call. For this example we will apply `pccc_v3.1` with and without
+comorbidities.
 
 ``` r
 without_subconditions <-

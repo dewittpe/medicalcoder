@@ -86,7 +86,7 @@
 <h2 id="comorbidity-algorithms">Comorbidity Algorithms<a class="anchor" aria-label="anchor" href="#comorbidity-algorithms"></a>
 </h2>
 <p>There are three comorbidity algorithms, each with several variants,
-implemented in the <code>medicalcoder</code> package:</p>
+implemented in the medicalcoder package:</p>
 <ol style="list-style-type: decimal">
 <li>Pediatric Complex Chronic Condition System (PCCC)
 <ol style="list-style-type: lower-alpha">
@@ -164,8 +164,8 @@ al. 2005)</span>
 </ol>
 <p><strong>IMPORTANT NOTE:</strong> Elixhauser 1998 and AHRQ Web used
 diagnostic related group (DRG) codes as part of the methods. The
-<code>medicalcoder</code> package <em>does not</em> use DRG codes. This
-is consistent with the way these methods were implemented in <span class="citation">Quan et al. (2005)</span>.</p>
+medicalcoder package <em>does not</em> use DRG codes. This is consistent
+with the way these methods were implemented in <span class="citation">Quan et al. (2005)</span>.</p>
 <p>A list of the valid methods for the package can be accessed via a
 non-exported function. In general, the methods are listed in the form of
 <code>&lt;algorithm&gt;_&lt;version&gt;</code>.</p>
@@ -185,8 +185,11 @@ non-exported function. In general, the methods are listed in the form of
 <span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"charlson"</span>,   package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"elixhauser"</span>, package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span></span></code></pre></div>
 <p>The focus of this vignette is to highlight the general use of the
-<code>comorbidities</code> function.</p>
+<code><a href="../reference/comorbidities.html">comorbidities()</a></code> function.</p>
+<p>Details of the function arguments call are in the manual.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/help.html" class="external-link">help</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"comorbidities"</span>, package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/args.html" class="external-link">args</a></span><span class="op">(</span><span class="va">comorbidities</span><span class="op">)</span></span>
 <span><span class="co">## function (data, icd.codes, method, id.vars = NULL, icdv.var = NULL, </span></span>
 <span><span class="co">##     icdv = NULL, dx.var = NULL, dx = NULL, poa.var = NULL, poa = NULL, </span></span>
@@ -201,117 +204,43 @@ arguments are in pairs, e.g., <code>dx.var</code> and <code>dx</code>
 are present on admission). The <code>.var</code> version is the name of
 a variable within the <code>data.frame</code> passed into the
 <code>data</code> argument. The version without <code>.var</code> is a
-default value to be applied to the entirety of <code>data</code>.</p>
-<p>Details of the function arguments call are in the manual.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/help.html" class="external-link">help</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"comorbidities"</span>, package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span></span></code></pre></div>
+default value to be applied to the entirety of <code>data</code>. We
+will see some examples where this is useful.</p>
 <p>The <code>data</code> element is expected to be a
 <code>data.frame</code>, or at least something that inherits the
 <code>data.frame</code> class. The format is expected to be a ‘long’
 format. One row per code. Two example data sets in the package show the
 general expected form of the <code>data</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mdcr</span><span class="op">)</span></span>
-<span><span class="co">## 'data.frame':    319856 obs. of  4 variables:</span></span>
-<span><span class="co">##  $ patid: int  71412 71412 71412 71412 71412 17087 64424 64424 84361 84361 ...</span></span>
-<span><span class="co">##  $ icdv : int  9 9 9 9 9 10 9 9 9 9 ...</span></span>
-<span><span class="co">##  $ code : chr  "99931" "75169" "99591" "V5865" ...</span></span>
-<span><span class="co">##  $ dx   : int  1 1 1 1 1 1 1 0 1 1 ...</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mdcr_longitudinal</span><span class="op">)</span></span>
-<span><span class="co">## 'data.frame':    60 obs. of  4 variables:</span></span>
-<span><span class="co">##  $ patid: int  9663901 9663901 9663901 9663901 9663901 9663901 9663901 9663901 9663901 9663901 ...</span></span>
-<span><span class="co">##  $ date : IDate, format: "2016-03-18" "2016-03-24" ...</span></span>
-<span><span class="co">##  $ icdv : int  10 10 10 10 10 10 10 10 10 10 ...</span></span>
-<span><span class="co">##  $ code : chr  "Z77.22" "IMO0002" "V87.7XXA" "J95.851" ...</span></span></code></pre></div>
-<p>The <code>mdcr</code> data set has columns * <code>patid</code>:
-patient id * <code>icdv</code>: integer denoting if the ICD code is
-ICD-9 or ICD-10 * <code>code</code>: character string, a compact ICD
-code * <code>dx</code>: if 1 then the ICD is a diagnostic code (ICD-9-CM
-or ICD-10-CM), if 0 then the ICD code is a procedure code (ICD-9-PCS or
-ICD-10-PCS).</p>
-<p>The <code>mdcr_longitudinal</code> data set is distinct from
-<code>mdcr</code>. The columns are the same save the <code>date</code>
-column to show longitudinal diagnoses for a <code>patid</code>.</p>
-<p>A simple example of flagging Elixhauser comorbidities:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ecmrb</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">mdcr</span>,</span>
-<span>    id.vars <span class="op">=</span> <span class="st">"patid"</span>,</span>
-<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>    icdv.var <span class="op">=</span> <span class="st">"icdv"</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"elixhauser_ahrq_icd10"</span>,</span>
-<span>    poa <span class="op">=</span> <span class="fl">1L</span>, <span class="co"># consider all codes to be present on admission</span></span>
-<span>    primarydx <span class="op">=</span> <span class="fl">0L</span> <span class="co"># consider all codes to be secondary diagnoses</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ecmrb</span><span class="op">)</span></span>
-<span><span class="co">## $conditions</span></span>
-<span><span class="co">##       condition count      percent</span></span>
-<span><span class="co">## 1          AIDS     3  0.007840677</span></span>
-<span><span class="co">## 2       ALCOHOL    11  0.028749151</span></span>
-<span><span class="co">## 3       ANEMDEF   700  1.829491401</span></span>
-<span><span class="co">## 4    AUTOIMMUNE   170  0.444305055</span></span>
-<span><span class="co">## 5       BLDLOSS    33  0.086247452</span></span>
-<span><span class="co">## 6   CANCER_LEUK   381  0.995766034</span></span>
-<span><span class="co">## 7  CANCER_LYMPH    76  0.198630495</span></span>
-<span><span class="co">## 8   CANCER_METS   213  0.556688098</span></span>
-<span><span class="co">## 9  CANCER_NSITU     0  0.000000000</span></span>
-<span><span class="co">## 10 CANCER_SOLID   477  1.246667712</span></span>
-<span><span class="co">## 11         CBVD   117  0.305786420</span></span>
-<span><span class="co">## 12         COAG   877  2.292091370</span></span>
-<span><span class="co">## 13     DEMENTIA    35  0.091474570</span></span>
-<span><span class="co">## 14      DEPRESS   321  0.838952485</span></span>
-<span><span class="co">## 15      DIAB_CX   123  0.321467775</span></span>
-<span><span class="co">## 16    DIAB_UNCX   184  0.480894883</span></span>
-<span><span class="co">## 17   DRUG_ABUSE    77  0.201244054</span></span>
-<span><span class="co">## 18           HF   246  0.642935550</span></span>
-<span><span class="co">## 19       HTN_CX   286  0.747477915</span></span>
-<span><span class="co">## 20     HTN_UNCX   395  1.032355862</span></span>
-<span><span class="co">## 21    LIVER_MLD   179  0.467827087</span></span>
-<span><span class="co">## 22    LIVER_SEV   159  0.415555904</span></span>
-<span><span class="co">## 23 LUNG_CHRONIC  1359  3.551826878</span></span>
-<span><span class="co">## 24   NEURO_MOVT   139  0.363284721</span></span>
-<span><span class="co">## 25    NEURO_OTH   948  2.477654069</span></span>
-<span><span class="co">## 26   NEURO_SEIZ  1490  3.894203126</span></span>
-<span><span class="co">## 27        OBESE   315  0.823271131</span></span>
-<span><span class="co">## 28    PARALYSIS   767  2.004599864</span></span>
-<span><span class="co">## 29     PERIVASC   209  0.546233861</span></span>
-<span><span class="co">## 30    PSYCHOSES    96  0.250901678</span></span>
-<span><span class="co">## 31     PULMCIRC   332  0.867701636</span></span>
-<span><span class="co">## 32   RENLFL_MOD   107  0.279650828</span></span>
-<span><span class="co">## 33   RENLFL_SEV   247  0.645549109</span></span>
-<span><span class="co">## 34 THYROID_HYPO   371  0.969630443</span></span>
-<span><span class="co">## 35  THYROID_OTH    36  0.094088129</span></span>
-<span><span class="co">## 36 ULCER_PEPTIC    23  0.060111860</span></span>
-<span><span class="co">## 37        VALVE   572  1.494955831</span></span>
-<span><span class="co">## 38     WGHTLOSS   616  1.609952433</span></span>
-<span><span class="co">## 39         &gt;= 1  7869 20.566096911</span></span>
-<span><span class="co">## 40         &gt;= 2  3186  8.326799435</span></span>
-<span><span class="co">## 41         &gt;= 3  1135  2.966389629</span></span>
-<span><span class="co">## 42         &gt;= 4   347  0.906905023</span></span>
-<span><span class="co">## 43         &gt;= 5   120  0.313627097</span></span>
-<span><span class="co">## 44         &gt;= 6    25  0.065338979</span></span>
-<span><span class="co">## 45         &gt;= 7     7  0.018294914</span></span>
-<span><span class="co">## 46         &gt;= 8     1  0.002613559</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $index_summary</span></span>
-<span><span class="co">##         index min q1 median q3 max</span></span>
-<span><span class="co">## 1 readmission  -2  0      0  0  35</span></span>
-<span><span class="co">## 2   mortality -24  0      0  0  75</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mdcr</span><span class="op">)</span></span>
+<span><span class="co">##   patid icdv  code dx</span></span>
+<span><span class="co">## 1 71412    9 99931  1</span></span>
+<span><span class="co">## 2 71412    9 75169  1</span></span>
+<span><span class="co">## 3 71412    9 99591  1</span></span>
+<span><span class="co">## 4 71412    9 V5865  1</span></span>
+<span><span class="co">## 5 71412    9  V427  1</span></span>
+<span><span class="co">## 6 17087   10  V441  1</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mdcr_longitudinal</span><span class="op">)</span></span>
+<span><span class="co">##     patid       date icdv     code</span></span>
+<span><span class="co">## 1 9663901 2016-03-18   10   Z77.22</span></span>
+<span><span class="co">## 2 9663901 2016-03-24   10  IMO0002</span></span>
+<span><span class="co">## 3 9663901 2016-03-24   10 V87.7XXA</span></span>
+<span><span class="co">## 4 9663901 2016-03-25   10  J95.851</span></span>
+<span><span class="co">## 5 9663901 2016-03-30   10  IMO0002</span></span>
+<span><span class="co">## 6 9663901 2016-03-30   10    Z93.0</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="when-are-conditions-flagged">When are conditions flagged?<a class="anchor" aria-label="anchor" href="#when-are-conditions-flagged"></a>
 </h2>
 <p>Whether or not the code is present on admission (POA) is useful when
 applying the comorbidity algorithms and considering if the patient has a
-comorbidity at the time of encounter start or if the condition is a
+comorbidity at the start of an encounter, or if the condition is a
 result of the current hospitalization.</p>
 <p>Implementation of Elixhauser comorbidities for 2022 and beyond <span class="citation">(Healthcare Research and (AHRQ) 2025)</span> explicitly
 define the use of present on admission flags for specific conditions
 (see the <code>poa_required</code> flag reported in the data set
-returned by <code><a href="../reference/get_elixhauser_poa.html">get_elixhauser_poa()</a></code>, and there are also ICD
-codes which are POA exempt).</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+returned by <code><a href="../reference/get_elixhauser_poa.html">get_elixhauser_poa()</a></code>).</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_elixhauser_poa.html">get_elixhauser_poa</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">## 'data.frame':    49 obs. of  7 variables:</span></span>
 <span><span class="co">##  $ condition            : chr  "AIDS" "ALCOHOL" "ANEMDEF" "AUTOIMMUNE" ...</span></span>
@@ -351,40 +280,30 @@ indicators, meanwhile, the data that we present … can help researchers
 make decisions on a condition-by-condition basis of whether to include
 particular variables, depending on their study objectives.</p>
 </blockquote>
-<p>PCCC does not explicitly note if POA is required.</p>
-<p><code>medicalcoder</code> has been built to consider POA for all
-comorbidity algorithms.</p>
+<p>PCCC does not explicitly note the if POA is required.</p>
+<p>medicalcoder has been built to consider POA for all comorbidity
+algorithms.</p>
 <p>End users can use a 0/1 indicator variable in the data set to report
 which codes are POA via the function argument <code>poa.var</code>. If
 all the codes are to be considered POA or not, the functional argument
 <code>poa</code> can be used to set a common status without adding a
 column to the input data set.</p>
-<p>Additionally, <code>medicalcoder</code> provides a
-<code>flag.method</code> argument for longitudinal data sets.</p>
-<p><strong>Example:</strong> Let’s assume we have a patient record with
+<p>Additionally, medicalcoder provides a <code>flag.method</code>
+argument for longitudinal data sets.</p>
+<p><strong>Example:</strong> Let’s assume we have a patient record for
 six encounters. We use ICD-10 diagnostic codes C78.4 and I50.40 which
-map to a cancer and heart failure (cardiovascular disease) comorbidity
+maps to a cancer and heart failure (cardiovascular disease) comorbidity
 respectively for PCCC, Charlson, and Elixhauser. For demonstration, we
 also flag POA with the second report of I50.40 intentionally marked as
 not present on admission.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">record</span></span>
-<span><span class="co">##   patid encid   code poa</span></span>
-<span><span class="co">## 1     A     1   &lt;NA&gt;  NA</span></span>
-<span><span class="co">## 2     A     2  C78.4   0</span></span>
-<span><span class="co">## 3     A     3 I50.40   1</span></span>
-<span><span class="co">## 4     A     4   &lt;NA&gt;  NA</span></span>
-<span><span class="co">## 5     A     5  C78.4   1</span></span>
-<span><span class="co">## 6     A     5 I50.40   0</span></span>
-<span><span class="co">## 7     A     6   &lt;NA&gt;  NA</span></span></code></pre></div>
 <p>We will call <code><a href="../reference/comorbidities.html">comorbidities()</a></code> for the three methods using
 static POA flags and dynamic POA flags, and both flag methods. Results
 are shown in the following table.</p>
 <table style="NAborder-bottom: 0; font-size: 8px; width: auto !important; margin-left: auto; margin-right: auto;" class="table table table-striped table-bordered">
 <caption style="font-size: initial !important;">
 Indicators for when a comorbidity is flagged based on the algorithm,
-present on admission (poa), and flag.method. The two ICD codes,C78.4 and
-I50.40, map to cancer and cardiovascular disease respectively.
+present on admission (poa), and flag.method. The two ICD codes, C78.4
+and I50.40, map to cancer and cardiovascular disease respectively.
 </caption>
 <thead>
 <tr>
@@ -1296,9 +1215,9 @@ associated with a comorbidity algorithm using the
 <code>get_&lt;comorbidity&gt;_codes</code> functions. Each
 <code>data.frame</code> has columns for the ICD version, diagnostic or
 procedure flag, the compact code, and the full code. A column for the
-condition and other method-specific flags are provided. Lastly, there
-are indicator columns for the variant of each method.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+condition and other method specific flags are provided. Lastly, there
+are indicator columns for the variant of each method</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_pccc_codes.html">get_pccc_codes</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">## 'data.frame':    7913 obs. of  12 variables:</span></span>
 <span><span class="co">##  $ icdv           : int  9 9 9 9 9 9 9 9 9 9 ...</span></span>
@@ -1352,7 +1271,7 @@ following example, if only considering ICD codes which flag ‘aids’,
 there would be several thousand cases of AIDS, but only six cases of
 HIV.</p>
 <!-- NOTE: the following example is also in tests/test-charlson_cdmf2019.R -->
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cdmf_eg</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">mdcr</span>,</span>
 <span>        y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_charlson_codes.html">get_charlson_codes</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -1376,7 +1295,7 @@ HIV.</p>
 <span><span class="co">## 3:     1     1     1</span></span></code></pre></div>
 <p>When calling <code><a href="../reference/comorbidities.html">comorbidities()</a></code> we get the expected
 result.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cmdf_mdcr</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mdcr</span>,</span>
 <span>                icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
@@ -1402,7 +1321,7 @@ result.</p>
 </h2>
 <!-- ----------------------------------------------------------------------- -->
 <!--                              End of File                                -->
-<!-- ----------------------------------------------------------------------- -->
+<!------------------------------------------------------------------------- -->
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-dewitt2025pccc" class="csl-entry">
 DeWitt, Peter, James Feinstein, and Seth Russell. 2025. <em>Pccc:

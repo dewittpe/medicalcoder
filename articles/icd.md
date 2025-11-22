@@ -1,10 +1,10 @@
 # ICD Codes
 
-There are four functions in the `medicalcoder` package specifically for
+There are four functions in the medicalcoder package specifically for
 working with International Classification of Diseases (ICD) codes.
 
 1.  [`get_icd_codes()`](http://www.peteredewitt.com/medicalcoder/reference/get_icd_codes.md):
-    returns a look up table of ICD codes as a `data.frame`.
+    returns a lookup table of ICD codes as a `data.frame`.
 2.  [`lookup_icd_codes()`](http://www.peteredewitt.com/medicalcoder/reference/lookup_icd_codes.md):
     returns details on specific ICD codes.
 3.  [`is_icd()`](http://www.peteredewitt.com/medicalcoder/reference/is_icd.md):
@@ -20,10 +20,10 @@ working with International Classification of Diseases (ICD) codes.
 ## `get_icd_codes()`
 
 A lookup table for the ICD codes has been built as internal data sets
-within the `medicalcoder` package. The sources for these look up tables
+within the medicalcoder package. The sources for these lookup tables
 come from the Centers for Disease Control (CDC) and from the Centers for
 Medicare & Medicaid Services (CMS). The specific links to the source
-data sets can be found in the source code for the `medicalcoder` package
+data sets can be found in the source code for the medicalcoder package
 on [GitHub](https://github.com/dewittpe/medicalcoder).
 
 End users can get a `data.frame` with ICD-9 diagnostic, ICD-9 procedure,
@@ -61,7 +61,7 @@ The columns of this data.frame are:
 
 - `src`: a character vector denoting the source of the information.
 
-- `known_start`: The first year that the `medicalcoder` package has data
+- `known_start`: The first year that the medicalcoder package has data
   for this code.
 
   - For codes based on the ICD-9-CM, ICD-9-PCS, ICD-10-CM, ICD-10-PCS
@@ -74,11 +74,11 @@ The columns of this data.frame are:
     is *calendar year*.
 
 - `known_end`: the last year the code was part of the standard, or that
-  the `medicalcoder` package has data for.
+  the medicalcoder package has data for.
 
   - ICD-9 last year of active use was FY 2015.
-  - ICD-10 is active. The current version of `medicalcoder` has details
-    on ICD-10 codes through FY 2026.
+  - ICD-10 is active. The current version of medicalcoder has details on
+    ICD-10 codes through FY 2026.
 
 - `assignable_start`: The first year (fiscal or calendar based on src) a
   code was assignable. `NA` indicates the code was never assignable.
@@ -201,11 +201,10 @@ The additional columns, in order of hierarchy, are:
 - subsubclassification
 - extension
 
-To keep the install size of `medicalcoder` under the size limits for
-CRAN, the stored data is structured in a way that several joins and
-other operations are needed to have a data set that is end user
-friendly. Several data sets are generated and cached when the namespace
-is loaded.
+To keep the install size of medicalcoder under the size limits for CRAN,
+the stored data is structured in a way that several joins and other
+operations are needed to have a data set that is end user friendly.
+Several data sets are generated and cached when the namespace is loaded.
 
 ## `lookup_icd_codes()`
 

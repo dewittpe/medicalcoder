@@ -3,7 +3,7 @@
 ## Introduction
 
 The purpose of this article is to compare the API and results between
-`medicalcoder` and the R package
+medicalcoder and the R package
 [icdcomorbid](https://cran.r-project.org/package=icdcomorbid) (Nguyen
 and Lee 2024).
 
@@ -20,19 +20,21 @@ cat(packageDescription("icdcomorbid")$Description)
 ##     enabling the identification and analysis of various medical conditions within healthcare data.
 ```
 
-`icdcomorbid` provides (Quan et al. 2005) Charlson and Elixhauser
-comorbidities. A nice feature of `icdcomorbid` is the ability to use
+icdcomorbid provides (Quan et al. 2005) Charlson and Elixhauser
+comorbidities. A nice feature of icdcomorbid is the ability to use
 custom mappings between ICD codes and comorbidities.
 
-## Prepare Data for `icdcomorbid`
+## Prepare Data for icdcomorbid
 
-The example data set `mdcr` within `medicalcoder` is in a format that is
+The example data set `mdcr` within medicalcoder is in a format that is
 ideal for
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md).
 To prepare that data set for use in the
 [`icdcomorbid::icd9_to_comorbid()`](https://rdrr.io/pkg/icdcomorbid/man/icd9_to_comorbid.html)
-and `icd9_to_comorbid::icd10_to_comorbid()`, the data needs to be in a
-“wide” format instead of the provided long format.
+and
+[`icdcomorbid::icd10_to_comorbid()`](https://rdrr.io/pkg/icdcomorbid/man/icd10_to_comorbid.html),
+the data needs to be in a “wide” format instead of the provided long
+format.
 
 We start by splitting the data into ICD-9 and ICD-10 sets and add rows
 for any missing patids.
@@ -85,14 +87,14 @@ mdcr_icd10dx_wide <-
 
 toc <- Sys.time()
 difftime(toc, tic, units = "secs")
-## Time difference of 0.4605751 secs
+## Time difference of 0.4687047 secs
 ```
 
 ## Charlson Comorbidities
 
 A detailed comparison between
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
-and the methods in the `icdcomorbid` package will not be presented here.
+and the methods in the icdcomorbid package will not be presented here.
 Note the time required to apply the Charlson comorbidities to the `mdcr`
 data set via
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md).
@@ -115,7 +117,7 @@ medicalcoder_charlson_results <-
 toc <- Sys.time()
 
 difftime(toc, tic, units = "secs")
-## Time difference of 0.608048 secs
+## Time difference of 0.6205463 secs
 ```
 
 Compare that to the amount of time required to process just the first
@@ -136,18 +138,18 @@ icd9_to_comorbid_results <-
 toc <- Sys.time()
 
 difftime(toc, tic, units = "secs")
-## Time difference of 5.396775 secs
+## Time difference of 5.497607 secs
 ```
 
 There are 38262 patids to assess. To compare the results between
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
-and the results from the R package `icdcomorbid` would require calling
+and the results from the R package icdcomorbid would require calling
 [`icdcomorbid::icd9_to_comorbid()`](https://rdrr.io/pkg/icdcomorbid/man/icd9_to_comorbid.html),
 [`icd10_to_comorbid()`](https://rdrr.io/pkg/icdcomorbid/man/icd10_to_comorbid.html),
 aggregating the results, and scoring.
 
-Based just on the time required to compute the results, `medicalcoder`
-is superior to `icdcomorbid`.
+Based just on the time required to compute the results, medicalcoder is
+superior to icdcomorbid.
 
 ## References
 

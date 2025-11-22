@@ -57,8 +57,8 @@ comorbidities(
   Optional character vector of column names. When missing, the entire
   input `data` is treated as a single encounter from a single patient.
   If you want to set `flag.method = "current"` then
-  `length(id.vars) >= 2` is expected. The last element would be the
-  encounter order (must be sortable)."
+  `length(id.vars) >= 2` is expected. The last element should be the
+  encounter order (must be sortable).
 
 - icdv.var:
 
@@ -89,8 +89,8 @@ comorbidities(
   Character scalar naming the column with present-on-admission flags:
   integer `1L` (present), `0L` (not present), or `NA`. PCCC and Charlson
   will only flag conditions when the code is present-on-admission.
-  Elixhauser has a mix of conditions some require present-on-admission
-  others do not. `poa.var` takes precedence over `poa` is both are
+  Elixhauser has a mix of conditions; some require present-on-admission
+  while others do not. `poa.var` takes precedence over `poa` if both are
   provided.
 
 - poa:
@@ -147,7 +147,7 @@ The return object will be slightly different depending on the value of
 
 - When `subconditions = FALSE`, a `medicalcoder_comorbidities` object (a
   `data.frame` with attributes) is returned. Column(s) for `id.vars`, if
-  defined in the function call. For all method there will be the
+  defined in the function call. For all methods there will be the
   following columns:
 
   - `num_cmrb` a count of comorbidities/conditions flagged
@@ -165,11 +165,11 @@ The return object will be slightly different depending on the value of
     - For `method = "pccc_v3.0"` and `method = "pccc_v3.1"`, there are
       four columns per condition:
 
-      - `<condition>_dxpr_or_tech`: the condition was flag due to the
-        presence of either a diagnostic or procedure code, or was flag
-        due to the presence of a technology dependence code along with
-        at least one comorbidity being flagged by a diagnostic or
-        procedure code.
+      - `<condition>_dxpr_or_tech`: the condition was flagged due to the
+        presence of either a diagnostic or procedure code, or was
+        flagged due to the presence of a technology dependence code
+        along with at least one comorbidity being flagged by a
+        diagnostic or procedure code.
 
       - `<condition>_dxpr_only`: the condition was flagged due to the
         presence of a non-technology dependent diagnostic or procedure
@@ -201,15 +201,15 @@ The return object will be slightly different depending on the value of
 When `flag.method = "current"`, only codes from the index encounter
 contribute to flags. When a longitudinal method is selected (e.g.,
 `"cumulative"`), prior encounters for the same `id.vars` combination may
-contribute to condition flags. For the cumulative method to work the
-`id.vars` need to be a character vector length 2 or more. The last
-variable listed in the id.vars will be considered the encounter id and
-should be sortable. For example, say you have data with a hospital,
-patient, and encounter id. The `id.vars` could be one of two entries:
+contribute to condition flags. For the cumulative method to work,
+`id.vars` needs to be a character vector of length 2 or more. The last
+element is treated as the encounter identifier and must be sortable. For
+example, say you have data with a hospital, patient, and encounter id.
+The `id.vars` could be one of two entries:
 `c("hospital", "patient", "encounter")` or
-`c("patient", "hospital", "encounter")`. In both cases the return with
-be the same as "encounter" within the hospital/patient id interaction is
-the same as "encounter" within patient/hospital interaction.
+`c("patient", "hospital", "encounter")`. In both cases the return will
+be the same because the encounter identifier is unchanged regardless of
+whether hospital or patient is listed first.
 
 It is critically important that the `data[[tail(id.vars, 1)]]` variable
 can be sorted. Just because your data is sorted in temporal order does
@@ -225,7 +225,7 @@ following:
 
 `id.vars = c("patid", "enc_id")` will give the wrong result as enc_id
 10725138 would be sorted to come before enc_id 10823090.
-`id.var = c("patid", "date")` would be sufficient input, assuming that
+`id.vars = c("patid", "date")` would be sufficient input, assuming that
 `date` has been correctly stored. Adding a column `enc_seq`, e.g.,
 
 |       |          |          |         |

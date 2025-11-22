@@ -82,7 +82,7 @@
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>The purpose of this article is to compare the API and results between
-<code>medicalcoder</code> and the R package <a href="https://cran.r-project.org/package=comorbidity" class="external-link">comorbidity</a>
+medicalcoder and the R package <a href="https://cran.r-project.org/package=comorbidity" class="external-link">comorbidity</a>
 <span class="citation">(Gasparini 2018)</span>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.peteredewitt.com/medicalcoder/">medicalcoder</a></span><span class="op">)</span></span>
@@ -101,16 +101,16 @@
 <span><span class="co">##   &lt;doi:10.2147/CLEP.S282475&gt;), together with different weighting algorithms for both</span></span>
 <span><span class="co">##   the Charlson and Elixhauser comorbidity scores.</span></span></code></pre></div>
 <p>The following table is a partial list of similarities and differences
-between <code>medicalcoder</code> and <code>comorbidity</code>.</p>
+between medicalcoder and comorbidity.</p>
 <table class="table table table-striped" style="margin-left: auto; margin-right: auto;border-bottom: 0;">
 <thead><tr>
 <th style="text-align:left;">
 </th>
 <th style="text-align:center;">
-<code>comorbidity</code>
+comorbidity
 </th>
 <th style="text-align:center;">
-<code>medicalcoder</code>
+medicalcoder
 </th>
 </tr></thead>
 <tbody>
@@ -354,21 +354,20 @@ Functions for looking up/testing ICD Codes
 <tr>
 <td style="padding: 0; " colspan="100%">
 <sup>*</sup> Procedure codes are not relevant to Charlson and
-Elixhauser, not needed in <code>comorbidity</code>.
+Elixhauser, not needed in comorbidity.
 </td>
 </tr>
 <tr>
 <td style="padding: 0; " colspan="100%">
-<sup>**</sup><small><code>comorbidity</code> contains look up tables
-for ICD-10 years 2009, 2011, ICD-10-CM 2018, 2022, and ICD-9 for 2015.
-<code>medicalcoder</code> has a more extensive internal ICD code
-database.</small>
+<sup>**</sup><small>comorbidity contains look up tables for ICD-10
+years 2009, 2011, ICD-10-CM 2018, 2022, and ICD-9 for 2015. medicalcoder
+has a more extensive internal ICD code database.</small>
 <table class="table table table-striped" style="font-size: 8px; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="6">
 <div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
-<code>medicalcoder</code> known ICD codes
+medicalcoder known ICD codes
 </div>
 </th>
 </tr>
@@ -536,13 +535,13 @@ WHO
 </table>
 </div>
 <div class="section level2">
-<h2 id="prepare-data-for-comorbidity">Prepare Data for <code>comorbidity</code><a class="anchor" aria-label="anchor" href="#prepare-data-for-comorbidity"></a>
+<h2 id="prepare-data-for-comorbidity">Prepare Data for comorbidity<a class="anchor" aria-label="anchor" href="#prepare-data-for-comorbidity"></a>
 </h2>
-<p>The example data set <code>mdcr</code> within
-<code>medicalcoder</code> is in a format that is ideal for
-<code><a href="../reference/comorbidities.html">medicalcoder::comorbidities()</a></code>. To prepare that data set for
-use in the <code><a href="https://ellessenne.github.io/comorbidity/reference/comorbidity.html" class="external-link">comorbidity::comorbidity()</a></code> call we need to split
-the data in ICD-9 and ICD-10 version. Also,
+<p>The example data set <code>mdcr</code> within medicalcoder is in a
+format that is ideal for <code><a href="../reference/comorbidities.html">medicalcoder::comorbidities()</a></code>. To
+prepare that data set for use in the
+<code><a href="https://ellessenne.github.io/comorbidity/reference/comorbidity.html" class="external-link">comorbidity::comorbidity()</a></code> call we need to split the data
+in ICD-9 and ICD-10 version. Also,
 <code><a href="../reference/comorbidities.html">medicalcoder::comorbidities()</a></code> can handle diagnostic and
 procedure codes simultaneously; a necessary feature for PCCC.
 <code><a href="https://ellessenne.github.io/comorbidity/reference/comorbidity.html" class="external-link">comorbidity::comorbidity()</a></code> only applies comorbidity
@@ -676,7 +675,7 @@ sets together by patid.</p>
 <span>    all <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    by <span class="op">=</span> <span class="st">"patid"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p>The relevent columns:</p>
+<p>The relevant columns:</p>
 <p>The following data.frame reports the condition and the corresponding
 column from <code><a href="https://ellessenne.github.io/comorbidity/reference/comorbidity.html" class="external-link">comorbidity::comorbidity()</a></code> and from
 <code><a href="../reference/comorbidities.html">medicalcoder::comorbidities()</a></code>.</p>
@@ -757,7 +756,7 @@ columns.</p>
 <span><span class="co">## identical(charlson_delta[["score"]], charlson_delta[["cci"]])</span></span>
 <span><span class="co">## [1] TRUE</span></span></code></pre></div>
 <p>The only columns left in the <code>charlson_delta</code> object are
-from <code>medicalcoder</code></p>
+from medicalcoder</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">charlson_delta</span><span class="op">)</span></span>
 <span><span class="co">## 'data.frame':    38262 obs. of  4 variables:</span></span>
@@ -781,9 +780,9 @@ age is provided.</li>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"patid"</span>, <span class="st">"num_cmrb"</span>, <span class="st">"cmrb_flag"</span>, <span class="st">"age_score"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>An addition feature the <code>medicalcoder</code> package provides
-that the <code>comorbidity</code> package does not, is a summary method
-for the results, which can be used to build nice tables via <a href="https://CRAN.R-project.org/package=kableExtra" class="external-link">kableExtra</a>.</p>
+<p>An addition feature the medicalcoder package provides that the
+comorbidity package does not, is a summary method for the results, which
+can be used to build nice tables via <a href="https://CRAN.R-project.org/package=kableExtra" class="external-link">kableExtra</a>.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">medicalcoder_charlson_results</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"condition_description"</span>, <span class="st">"count"</span>, <span class="st">"percent"</span><span class="op">)</span><span class="op">]</span></span>
 <span></span>
@@ -1162,7 +1161,7 @@ sets together by patid.</p>
 <span>    all <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    by <span class="op">=</span> <span class="st">"patid"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p>The relevent columns:</p>
+<p>The relevant columns:</p>
 <p>The following data.frame reports the condition and the corresponding
 column from <code><a href="https://ellessenne.github.io/comorbidity/reference/comorbidity.html" class="external-link">comorbidity::comorbidity()</a></code> and from
 <code><a href="../reference/comorbidities.html">medicalcoder::comorbidities()</a></code>.</p>
@@ -1314,7 +1313,7 @@ the columns.</p>
 <span><span class="co">## identical(elixhauser_delta[["wloss"]], elixhauser_delta[["WGHTLOSS"]])</span></span>
 <span><span class="co">## [1] TRUE</span></span></code></pre></div>
 <p>The remaining columns in the <code>elixhauser_delta</code> object are
-specific to <code>medicalcoder</code>, save patid.</p>
+specific to medicalcoder, save patid.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">elixhauser_delta</span><span class="op">)</span></span>
 <span><span class="co">## 'data.frame':    38262 obs. of  6 variables:</span></span>
@@ -1328,8 +1327,8 @@ specific to <code>medicalcoder</code>, save patid.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">elixhauser_delta</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"patid"</span>, <span class="st">"HTN_C"</span>, <span class="st">"num_cmrb"</span>, <span class="st">"cmrb_flag"</span>, <span class="st">"mortality_index"</span>, <span class="st">"readmission_index"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <ul>
 <li><p><code>HTN_C</code>: <em>any</em> hypertension - added to simplify
-the cacluation of the mortality and readmission indices based on weights
-from AHRQ.</p></li>
+the calculation of the mortality and readmission indices based on
+weights from AHRQ.</p></li>
 <li><p><code>num_cmrb</code>: Number of comorbidities flagged</p></li>
 <li><p><code>cmrb_flag</code>: a 0/1 indicator for <em>any</em>
 comorbidity being flagged</p></li>
@@ -1337,9 +1336,9 @@ comorbidity being flagged</p></li>
 index scores based on the AHRQ weights <span class="citation">(Healthcare Cost and Utilization Project (HCUP)
 2017)</span>.</p></li>
 </ul>
-<p>An addition feature of the <code>medicalcoder</code> package provides
-that the <code>comorbidity</code> package does not, is a summary method
-for the results, which can be used to build nice tables via <a href="https://CRAN.R-project.org/package=kableExtra" class="external-link">kableExtra</a>.</p>
+<p>An addition feature of the medicalcoder package provides that the
+comorbidity package does not, is a summary method for the results, which
+can be used to build nice tables via <a href="https://CRAN.R-project.org/package=kableExtra" class="external-link">kableExtra</a>.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">medicalcoder_elixhauser_results</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"condition"</span>, <span class="st">"count"</span>, <span class="st">"percent"</span><span class="op">)</span><span class="op">]</span></span>
 <span></span>
@@ -1796,13 +1795,13 @@ WGHTLOSS
 <div class="section level2">
 <h2 id="benchmarking">Benchmarking<a class="anchor" aria-label="anchor" href="#benchmarking"></a>
 </h2>
-<p>The <code>medicalcoder</code> package was built to use base R methods
-and has zero imports. That said, if the input data set to
+<p>The medicalcoder package was built to use base R methods and has zero
+imports. That said, if the input data set to
 <code><a href="../reference/comorbidities.html">medicalcoder::comorbidities()</a></code> is a <a href="https://cran.r-project.org/package=data.table" class="external-link"><code>data.table</code></a>
 and the <code>data.table</code> namespace is available, the S3 methods
 for <code>data.table</code> will be used and there will be a performance
 improvement.</p>
-<p><code>comorbidity</code> imports several namespaces, including
+<p>comorbidity imports several namespaces, including
 <code>data.table</code>, and uses <code>data.table</code> for
 efficiency.</p>
 <p>In the following benchmark we will look at the time required to apply
@@ -2019,19 +2018,19 @@ medicalcoder_times_DT
 0.102
 </td>
 <td style="text-align:right;">
-0.125
+0.129
 </td>
 <td style="text-align:right;">
 0.151
 </td>
 <td style="text-align:right;">
-0.147
+0.148
 </td>
 <td style="text-align:right;">
-0.155
+0.157
 </td>
 <td style="text-align:right;">
-0.262
+0.260
 </td>
 </tr>
 <tr>
@@ -2039,22 +2038,22 @@ medicalcoder_times_DT
 medicalcoder_times
 </td>
 <td style="text-align:right;">
-0.338
+0.351
 </td>
 <td style="text-align:right;">
-0.372
+0.377
 </td>
 <td style="text-align:right;">
-0.376
+0.380
 </td>
 <td style="text-align:right;">
-0.381
+0.387
 </td>
 <td style="text-align:right;">
-0.379
+0.385
 </td>
 <td style="text-align:right;">
-0.496
+0.509
 </td>
 </tr>
 <tr>
@@ -2062,22 +2061,22 @@ medicalcoder_times
 comorbidity_times_DT
 </td>
 <td style="text-align:right;">
-1.494
+1.507
 </td>
 <td style="text-align:right;">
-1.511
+1.529
 </td>
 <td style="text-align:right;">
-1.533
+1.566
 </td>
 <td style="text-align:right;">
-1.553
+1.577
 </td>
 <td style="text-align:right;">
-1.610
+1.627
 </td>
 <td style="text-align:right;">
-1.654
+1.672
 </td>
 </tr>
 <tr>
@@ -2085,22 +2084,22 @@ comorbidity_times_DT
 comorbidity_times
 </td>
 <td style="text-align:right;">
-1.459
+1.490
 </td>
 <td style="text-align:right;">
-1.499
+1.522
 </td>
 <td style="text-align:right;">
-1.530
+1.560
 </td>
 <td style="text-align:right;">
-1.550
+1.575
 </td>
 <td style="text-align:right;">
-1.620
+1.636
 </td>
 <td style="text-align:right;">
-1.638
+1.685
 </td>
 </tr>
 </tbody>

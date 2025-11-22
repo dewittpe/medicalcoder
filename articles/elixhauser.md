@@ -8,7 +8,7 @@ packageVersion("medicalcoder")
 
 ## Introduction
 
-The `medicalcoder` package implements several variants of the Elixhauser
+The medicalcoder package implements several variants of the Elixhauser
 comorbidity algorithm.
 
 - Based on codes provided by the Agency for Healthcare Research and
@@ -26,9 +26,9 @@ comorbidity algorithm.
   - `elixhauser_quan2005`: (Quan et al. 2005)
 
 **IMPORTANT NOTE:** Elixhauser 1998 and AHRQ Web used diagnosis-related
-group (DRG) codes as part of the methods. The `medicalcoder` package
-*does not* use DRG codes. This is consistent with the way these methods
-were implemented in Quan et al. (2005).
+group (DRG) codes as part of the methods. The medicalcoder package *does
+not* use DRG codes. This is consistent with the way these methods were
+implemented in Quan et al. (2005).
 
 ## ICD Codes and Index Scores
 

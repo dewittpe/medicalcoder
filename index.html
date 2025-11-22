@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>A package for Working with ICD Codes and Comorbidity Algorithms • medicalcoder</title>
+<title>A Package for Working with ICD Codes and Comorbidity Algorithms • medicalcoder</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="A package for Working with ICD Codes and Comorbidity Algorithms">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="A Package for Working with ICD Codes and Comorbidity Algorithms">
 <meta name="description" content="Provides tools for working with medical coding schemas such as the International Classification of Diseases (ICD). Includes functions for comorbidity classification algorithms such as the Pediatric Complex Chronic Conditions (PCCC), Charlson, and Elixhauser indices.">
 <meta property="og:description" content="Provides tools for working with medical coding schemas such as the International Classification of Diseases (ICD). Includes functions for comorbidity classification algorithms such as the Pediatric Complex Chronic Conditions (PCCC), Charlson, and Elixhauser indices.">
 </head>
@@ -66,14 +66,13 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="medicalcoder-an-r-package-for-working-with-icd-codes-and-comorbidity-algorithms-">
-<code>medicalcoder</code>: An R package for working with ICD codes and Comorbidity Algorithms <img src="reference/figures/hex.svg" width="200px" align="right" alt="medicalcoder hex logo"><a class="anchor" aria-label="anchor" href="#medicalcoder-an-r-package-for-working-with-icd-codes-and-comorbidity-algorithms-"></a>
+<div class="page-header"><h1 id="medicalcoder-an-r-package-for-working-with-icd-codes-and-comorbidity-algorithms-">medicalcoder: An R package for working with ICD codes and Comorbidity Algorithms <img src="reference/figures/hex.svg" width="200px" align="right" alt="medicalcoder hex logo"><a class="anchor" aria-label="anchor" href="#medicalcoder-an-r-package-for-working-with-icd-codes-and-comorbidity-algorithms-"></a>
 </h1></div>
 <!-- badges: start -->
 
-<p><code>medicalcoder</code> is a lightweight, base-R package for working with ICD-9 and ICD-10 diagnosis and procedure codes. It provides fast, dependency-free tools to look up, validate, and manipulate ICD codes, while also implementing widely used comorbidity algorithms such as Charlson, Elixhauser, and the Pediatric Complex Chronic Conditions (PCCC). Designed for portability and reproducibility, the package avoids external dependencies—requiring only R ≥ 3.5.0—yet offers a rich set of curated ICD code libraries from the United States’ Centers for Medicare and Medicaid Services (CMS), Centers for Disease Control (CDC), and the World Health Organization (WHO).</p>
-<p>The package balances performance with elegance: its internal caching, efficient joins, and compact data structures make it practical for large-scale health data analyses, while its clean design makes it easy to extend or audit. Whether you need to flag comorbidities, explore ICD hierarchies, or standardize clinical coding workflows, <code>medicalcoder</code> provides a robust, transparent foundation for research and applied work in biomedical informatics.</p>
-<p>The primary objectives of <code>medicalcoder</code> are:</p>
+<p>medicalcoder is a lightweight, base-R package for working with ICD-9 and ICD-10 diagnosis and procedure codes. It provides fast, dependency-free tools to look up, validate, and manipulate ICD codes, while also implementing widely used comorbidity algorithms such as Charlson, Elixhauser, and the Pediatric Complex Chronic Conditions (PCCC). Designed for portability and reproducibility, the package avoids external dependencies—requiring only R ≥ 3.5.0—yet offers a rich set of curated ICD code libraries from the United States’ Centers for Medicare and Medicaid Services (CMS), Centers for Disease Control (CDC), and the World Health Organization (WHO).</p>
+<p>The package balances performance with elegance: its internal caching, efficient joins, and compact data structures make it practical for large-scale health data analyses, while its clean design makes it easy to extend or audit. Whether you need to flag comorbidities, explore ICD hierarchies, or standardize clinical coding workflows, medicalcoder provides a robust, transparent foundation for research and applied work in biomedical informatics.</p>
+<p>The primary objectives of medicalcoder are:</p>
 <ol style="list-style-type: decimal">
 <li>
 <strong>Fully self-contained</strong>
@@ -81,14 +80,13 @@
 <li>Minimal Dependencies
 <ul>
 <li>No dependencies other than base R.</li>
-<li>Requires R version ≥ 3.5.0 due to a <a href="https://cran.r-project.org/src/base/NEWS.3#:~:text=R%20has%20new,to%20version%203.5.0" class="external-link">change in data serialization</a>. R 3.5.0 was released in April 2018. The initial public release of <code>medicalcoder</code> was in 2025.</li>
+<li>Requires R version ≥ 3.5.0 due to a <a href="https://cran.r-project.org/src/base/NEWS.3#:~:text=R%20has%20new,to%20version%203.5.0" class="external-link">change in data serialization</a>. R 3.5.0 was released in April 2018. The initial public release of medicalcoder was in 2025.</li>
 <li>Several packages are listed in the <em>Suggests</em> section of the <code>DESCRIPTION</code> file. These are only needed for building vignettes, other documentation, and testing. They are not required to install the package.</li>
 </ul>
 </li>
 <li>No Imports
 <ul>
-<li>
-<code>medicalcoder</code> does not import any non-base namespaces. This improves ease of maintenance and usability.</li>
+<li>medicalcoder does not import any non-base namespaces. This improves ease of maintenance and usability.</li>
 <li>Suggested packages are needed only for development work and building vignettes. They are not required for installation or use.</li>
 <li>That said, there are non-trivial performance gains when passing a <a href="https://cran.r-project.org/package=data.table" class="external-link"><code>data.table</code></a> to the <code><a href="reference/comorbidities.html">comorbidities()</a></code> function compared to passing a base <code>data.frame</code> or a <code>tibble</code> from the tidyverse. (See <a href="https://github.com/dewittpe/medicalcoder/tree/main/benchmarking" class="external-link">benchmarking</a>).</li>
 </ul>
@@ -105,7 +103,7 @@
 <ul>
 <li>Implements three general algorithms, each with multiple variants. Details are provided below.</li>
 <li>Supports flagging of subconditions within PCCC.</li>
-<li>Supports longitudinal flagging of comorbidities. <code>medicalcoder</code> will flag comorbidities based on present-on-admission indicators for the current encounter and can look back in time for a patient to flag a comorbidity if reported in a prior encounter. See examples.</li>
+<li>Supports longitudinal flagging of comorbidities. medicalcoder will flag comorbidities based on present-on-admission indicators for the current encounter and can look back in time for a patient to flag a comorbidity if reported in a prior encounter. See examples.</li>
 </ul>
 </li>
 <li>
@@ -117,10 +115,9 @@
 </li>
 </ol>
 <div class="section level2">
-<h2 id="why-use-medicalcoder">Why use <code>medicalcoder</code>
-<a class="anchor" aria-label="anchor" href="#why-use-medicalcoder"></a>
+<h2 id="why-use-medicalcoder">Why use medicalcoder<a class="anchor" aria-label="anchor" href="#why-use-medicalcoder"></a>
 </h2>
-<p>There are several tools for working with ICD codes and comorbidity algorithms. <code>medicalcoder</code> provides novel features:</p>
+<p>There are several tools for working with ICD codes and comorbidity algorithms. medicalcoder provides novel features:</p>
 <ul>
 <li>Unified access to multiple comorbidity algorithms through a single function: <code><a href="reference/comorbidities.html">comorbidities()</a></code>.</li>
 <li>Support for both ICD-9 and ICD-10 diagnostic and procedure codes.</li>
@@ -202,7 +199,7 @@
 <div class="section level3">
 <h3 id="comorbidity-algorithms">Comorbidity Algorithms<a class="anchor" aria-label="anchor" href="#comorbidity-algorithms"></a>
 </h3>
-<p>There are three comorbidity methods, each with several variants, available in <code>medicalcoder</code>. All of which are accessible through the <code><a href="reference/comorbidities.html">comorbidities()</a></code> method by specifying the <code>method</code> argument.</p>
+<p>There are three comorbidity methods, each with several variants, available in medicalcoder. All of which are accessible through the <code><a href="reference/comorbidities.html">comorbidities()</a></code> method by specifying the <code>method</code> argument.</p>
 <p>General examples and explanations for when conditions are flagged are in the vignette</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"comorbidities"</span>, package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span></span></code></pre></div>
@@ -285,7 +282,7 @@
 <div class="section level4">
 <h4 id="charlson-comorbidities">Charlson Comorbidities<a class="anchor" aria-label="anchor" href="#charlson-comorbidities"></a>
 </h4>
-<p>There are four variants of Charlson comorbidities implemented in <code>medicalcoder</code></p>
+<p>There are four variants of Charlson comorbidities implemented in medicalcoder:</p>
 <ul>
 <li><a href="https://doi.org/10.1016/0895-4356(92)90133-8" class="external-link">Deyo, Cherkin, and Ciol (1992)</a></li>
 <li><a href="https://doi.org/10.1097/01.mlr.0000182534.19832.83" class="external-link">Quan et al. (2005)</a></li>
@@ -361,7 +358,7 @@
 <span>    primarydx <span class="op">=</span> <span class="fl">0L</span>,</span>
 <span>    method <span class="op">=</span> <span class="st">"elixhauser_ahrq_icd10"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p>The summary for the results from elixhauser_ahrq_icd10 are similar to those for Charlson. A <code>data.frame</code> with the counts and percentages of distinct <code>data[id.vars]</code> with the noted condition, and a summary of the index scores.</p>
+<p>The summary for the results from <code>method = elixhauser_ahrq_icd10</code> are similar to those for Charlson. A <code>data.frame</code> with the counts and percentages of distinct <code>data[id.vars]</code> with the noted condition, and a summary of the index scores.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cmrbs</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">s</span>, max.level <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
@@ -405,12 +402,12 @@
 </ul>
 </li>
 <li>
-<p><code>known_start</code>: The earliest (fiscal) year when source data for the code was available in the source code for <code>medicalcoder</code>. Codes from CMS are for the United States fiscal year. Codes from CDC and WHO are calendar year. The United States fiscal year starts October 1 and concludes September 30. For example, fiscal year 2013 started October 1 2012 and concluded September 30 2013.</p>
-<p>To reemphasize that the year is for the data within <code>medicalcoder</code>. For ICD-9-CM, the codes went into effect for fiscal year 1980. The source code only has documented source files for the codes dating back to</p>
+<p><code>known_start</code>: The earliest (fiscal) year when source data for the code was available in the source code for medicalcoder. Codes from CMS are for the United States fiscal year. Codes from CDC and WHO are calendar year. The United States fiscal year starts October 1 and concludes September 30. For example, fiscal year 2013 started October 1 2012 and concluded September 30 2013.</p>
+<p>To reemphasize that the year is for the data within medicalcoder. For ICD-9-CM, the codes went into effect for fiscal year 1980. The source code only has documented source files for the codes dating back to</p>
 <ol start="1997" style="list-style-type: decimal"><li>
 </li></ol>
 </li>
-<li><p><code>known_end</code>: The latest (fiscal) year when the code was part of the ICD system and/or known within the <code>medicalcoder</code> lookup tables.</p></li>
+<li><p><code>known_end</code>: The latest (fiscal) year when the code was part of the ICD system and/or known within the medicalcoder lookup tables.</p></li>
 <li>
 <p>Assignable codes. Some codes are header codes, e.g., ICD-10-CM three-digit code Z94 is a header code because the four-digit codes Z94.0, Z94.1, Z94.2, Z94.3, Z94.4, Z94.5, Z94.6, Z94.7, Z94.8, and Z94.9 exist. All but Z94.8 are assignable codes because no five-digit codes with the same initial four-digits exist. Z94.8 is a header code because the five-digit codes Z94.81, Z94.82, Z94.83, Z94.84, and Z94.89 exist.</p>
 <ul>
@@ -457,15 +454,16 @@
 <p>The major factors impacting the expected computation time for applying a comorbidity algorithm to a data set are:</p>
 <ol style="list-style-type: decimal">
 <li>Data size: number of subjects/encounters.</li>
-<li>Data storage class: <code>medicalcoder</code> has been built such that no imports of other namespaces is required. That said, when a <code>data.table</code> is passed to <code><a href="reference/comorbidities.html">comorbidities()</a></code> and the <code>data.table</code> namespace is available, then S3 dispatch for <code>merge</code> is used, along with some other methods, to reduce memory use and reduce computation time.</li>
+<li>Data storage class: medicalcoder has been built such that no imports of other namespaces is required. That said, when a <code>data.table</code> is passed to <code><a href="reference/comorbidities.html">comorbidities()</a></code> and the <code>data.table</code> namespace is available, then S3 dispatch for <code>merge</code> is used, along with some other methods, to reduce memory use and reduce computation time.</li>
 <li>
 <code>flag.method</code>: “current” will take less time than the “cumulative” method.</li>
 </ol>
-<p>Details on the benchmarking method, summary graphics, and tables, can be found on the <code>medicalcoder</code> GitHub <a href="https://github.com/dewittpe/medicalcoder/tree/main/benchmarking" class="external-link">benchmarking</a> directory.</p>
+<p>Details on the benchmarking method, summary graphics, and tables, can be found on the medicalcoder GitHub <a href="https://github.com/dewittpe/medicalcoder/tree/main/benchmarking" class="external-link">benchmarking</a> directory.</p>
 </div>
 <div class="section level2">
 <h2 id="testing">Testing<a class="anchor" aria-label="anchor" href="#testing"></a>
 </h2>
+<p>Along with the GitHub actions and testing on current versions of R, the <a href="https://github.com/dewittpe/medicalcoder/tree/main/testing" class="external-link">testing</a> directory in the medicalcoder GitHub repo reports the <code>R CMD check</code> results for all R versions from 3.5.0 to latest. Several with, and without Sugguests.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

@@ -8,7 +8,7 @@ packageVersion("medicalcoder")
 
 ## Introduction
 
-The `medicalcoder` package implements several variants of the Charlson
+The medicalcoder package implements several variants of the Charlson
 comorbidities algorithm.
 
 - `charlson_deyo1992`: Deyo’s original set of codes (Deyo, Cherkin, and
