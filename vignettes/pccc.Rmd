@@ -97,7 +97,7 @@ would only be flagged with a metabolic condition and technology dependence if at
 least one non-technology condition is flagged.
 
 ## ICD Codes for PCCC
-Let's look at the codes that are in the PCCC schema.  Calling `get_pccc_codes`
+Let's look at the codes that are in the PCCC schema.  Calling `get_pccc_codes()`
 returns a data.frame.
 ```{r, label = "get-pccc-codes"}
 pccc_codes <- get_pccc_codes()
@@ -300,7 +300,7 @@ Filter(f = function(x) x > 0, pat2_pccc_v3.1)
 
 # Expected Data Structures
 
-The expected input data format for `comorbidities` is a "long" format.  The only
+The expected input data format for `comorbidities()` is a "long" format.  The only
 mandatory column is one column of ICD codes.  These codes can be full codes
 (include the decimal point) or compact codes (omitting the decimal point).
 Additionally, column(s) for identifying patients, encounters, and any other
@@ -447,10 +447,10 @@ mdcr_results_v3.1_02 <-
 Specificity is increased by using the diagnostic/procedure flag.
 Using `pccc_v2.1` there are `r sum(mdcr_results_v2.1_02$cmrb_flag != mdcr_results_v2.1_01$cmrb_flag)`
 false positive flags when the diagnostic/procedure flag is omitted from the
-`comorbidities` call.
+`comorbidities()` call.
 Using `pccc_v3.1` there are `r sum(mdcr_results_v3.1_02$cmrb_flag != mdcr_results_v3.1_01$cmrb_flag)`
 false positive flags when the diagnostic/procedure flag is omitted from the
-`comorbidities` call.
+`comorbidities()` call.
 
 ```{r}
 # verify that the cmrb_flag and number of conditions is the same or less after
@@ -711,7 +711,7 @@ head(mdcr_longitudinal)
 
 Let's look at the `pccc_v2.1` flags for each patient, using all the information from
 all the encounters.  This can easily by done by specifying `id.vars =
-c("patid")` such that the `comorbidities` method considers call codes as
+c("patid")` such that the `comorbidities()` method considers all codes as
 occurring on one encounter.
 
 ```{r, results = 'asis'}
@@ -1014,7 +1014,7 @@ tab
 ```
 
 To get the subconditions all you need to do is use the `subconditions = TRUE`
-argument in the `comorbidities` call.  For this example we will apply
+argument in the `comorbidities()` call.  For this example we will apply
 `pccc_v3.1` with and without comorbidities.
 
 ```{r}

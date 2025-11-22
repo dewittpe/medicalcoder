@@ -44,7 +44,7 @@ ICD codes and comorbidities.
 # Prepare Data for icdcomorbid
 The example data set `mdcr` within medicalcoder is in a format that is ideal
 for `medicalcoder::comorbidities()`.  To prepare that data set for use in the
-`icdcomorbid::icd9_to_comorbid()`  and `icd9_to_comorbid::icd10_to_comorbid()`,
+`icdcomorbid::icd9_to_comorbid()`  and `icdcomorbid::icd10_to_comorbid()`,
 the data needs to be in a "wide" format instead of the provided long format.
 
 We start by splitting the data into ICD-9 and ICD-10 sets and add rows for any

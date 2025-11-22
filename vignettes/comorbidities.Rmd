@@ -82,7 +82,7 @@ vignette(topic = "elixhauser", package = "medicalcoder")
 ```
 
 The focus of this vignette is to highlight the general use of the
-`comorbidities` function.
+`comorbidities()` function.
 
 ```{r, label = 'test-that-the-args-have-not-changed', include = FALSE}
 # IF THIS FAILS YOU NEED TO MAKE SURE THE DOCUMENTATION IN THIS VIGNETTE IS
@@ -355,7 +355,7 @@ cdmf_eg <-
 cdmf_eg[, .N, keyby = .(hiv, aids)]
 ```
 
-When calling `comorbidities` we get the expected result.
+When calling `comorbidities()` we get the expected result.
 
 ```{r}
 cmdf_mdcr <-
