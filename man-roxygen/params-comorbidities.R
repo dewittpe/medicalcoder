@@ -13,9 +13,9 @@
 #'
 #' @param id.vars Optional character vector of column names. When
 #'   missing, the entire input `data` is treated as a single encounter from a
-#'   single patient.  If you want to set `flag.method = "current"` then
-#'   `length(id.vars) >= 2` is expected.  The last element would be the
-#'   encounter order (must be sortable)."
+#'   single patient. If you want to set `flag.method = "current"` then
+#'   `length(id.vars) >= 2` is expected. The last element should be the
+#'   encounter order (must be sortable).
 #'
 #' @param icdv.var Character scalar naming the column in `data` that indicates
 #'   the ICD version (9 or 10). If present it must be integer values `9` or
@@ -37,9 +37,9 @@
 #' @param poa.var Character scalar naming the column with present-on-admission
 #'   flags: integer `1L` (present), `0L` (not present), or `NA`.
 #'   PCCC and Charlson will only flag conditions when the code is
-#'   present-on-admission.  Elixhauser has a mix of conditions some require
-#'   present-on-admission others do not. `poa.var` takes precedence over `poa`
-#'   is both are provided.
+#'   present-on-admission. Elixhauser has a mix of conditions; some require
+#'   present-on-admission while others do not. `poa.var` takes precedence over
+#'   `poa` if both are provided.
 #'
 #' @param poa Integer scalar `0` or `1`. Use when all `icd.codes` share the same
 #'   present-on-admission status. Ignored with a warning if `poa` and `poa.var`
@@ -53,8 +53,7 @@
 #'
 #' @param primarydx An integer value of `0` or `1`. If `0`,
 #'   treat all codes as non-primary diagnoses; if `1`, treat all codes as
-#'   primary diagnoses. Ignored, with a  warning, if `primarydx.var` is
-#'   provided.
+#'   primary diagnoses. Ignored, with a warning, if `primarydx.var` is provided.
 #'
 #' @param age.var Character scalar naming the column in `data` that contains
 #'   patient age in years. Only applicable to Charlson comorbidities.

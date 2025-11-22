@@ -43,9 +43,9 @@ apply to \code{data}.}
 
 \item{id.vars}{Optional character vector of column names. When
 missing, the entire input \code{data} is treated as a single encounter from a
-single patient.  If you want to set \code{flag.method = "current"} then
-\code{length(id.vars) >= 2} is expected.  The last element would be the
-encounter order (must be sortable)."}
+single patient. If you want to set \code{flag.method = "current"} then
+\code{length(id.vars) >= 2} is expected. The last element should be the
+encounter order (must be sortable).}
 
 \item{icdv.var}{Character scalar naming the column in \code{data} that indicates
 the ICD version (9 or 10). If present it must be integer values \code{9} or
@@ -67,9 +67,9 @@ warning) if \code{dx.var} is provided.}
 \item{poa.var}{Character scalar naming the column with present-on-admission
 flags: integer \code{1L} (present), \code{0L} (not present), or \code{NA}.
 PCCC and Charlson will only flag conditions when the code is
-present-on-admission.  Elixhauser has a mix of conditions some require
-present-on-admission others do not. \code{poa.var} takes precedence over \code{poa}
-is both are provided.}
+present-on-admission. Elixhauser has a mix of conditions; some require
+present-on-admission while others do not. \code{poa.var} takes precedence over
+\code{poa} if both are provided.}
 
 \item{poa}{Integer scalar \code{0} or \code{1}. Use when all \code{icd.codes} share the same
 present-on-admission status. Ignored with a warning if \code{poa} and \code{poa.var}
@@ -86,8 +86,7 @@ comorbidities and is ignored when the method is a PCCC variant.
 
 \item{primarydx}{An integer value of \code{0} or \code{1}. If \code{0},
 treat all codes as non-primary diagnoses; if \code{1}, treat all codes as
-primary diagnoses. Ignored, with a  warning, if \code{primarydx.var} is
-provided.}
+primary diagnoses. Ignored, with a warning, if \code{primarydx.var} is provided.}
 
 \item{flag.method}{When \code{flag.method = 'current'} (default) only codes
 associated with the current \code{id.vars} are considered when flagging
@@ -111,7 +110,7 @@ The return object will be slightly different depending on the value of
 \itemize{
 \item When \code{subconditions = FALSE}, a \code{medicalcoder_comorbidities} object (a
 \code{data.frame} with attributes) is returned.  Column(s) for \code{id.vars}, if
-defined in the function call.  For all method there will be the following
+defined in the function call.  For all methods there will be the following
 columns:
 \itemize{
 \item \code{num_cmrb} a count of comorbidities/conditions flagged
@@ -128,8 +127,8 @@ indicator column per condition.
 \item For \code{method = "pccc_v3.0"} and \code{method = "pccc_v3.1"},
 there are four columns per condition:
 \itemize{
-\item \verb{<condition>_dxpr_or_tech}: the condition was flag due to the
-presence of either a diagnostic or procedure code, or was flag due to
+\item \verb{<condition>_dxpr_or_tech}: the condition was flagged due to the
+presence of either a diagnostic or procedure code, or was flagged due to
 the presence of a technology dependence code along with at least one
 comorbidity being flagged by a diagnostic or procedure code.
 \item \verb{<condition>_dxpr_only}: the condition was flagged due to the
@@ -163,13 +162,13 @@ When \code{flag.method = "current"}, only codes from the index encounter
 contribute to flags. When a longitudinal method is selected (e.g.,
 \code{"cumulative"}), prior encounters for the same \code{id.vars}
 combination may contribute to condition flags. For the cumulative method to
-work the \code{id.vars} need to be a character vector length 2 or more.  The last
-variable listed in the id.vars will be considered the encounter id and should
-be sortable. For example, say you have data with a hospital, patient, and
-encounter id.  The \code{id.vars} could be one of two entries:  \code{c("hospital", "patient", "encounter")} or \code{c("patient", "hospital", "encounter")}.  In both
-cases the return with be the same as "encounter" within the hospital/patient
-id interaction is the same as "encounter" within patient/hospital
-interaction.
+work, \code{id.vars} needs to be a character vector of length 2 or more. The last
+element is treated as the encounter identifier and must be sortable. For
+example, say you have data with a hospital, patient, and encounter id. The
+\code{id.vars} could be one of two entries: \code{c("hospital", "patient", "encounter")}
+or \code{c("patient", "hospital", "encounter")}. In both cases the return will be
+the same because the encounter identifier is unchanged regardless of whether
+hospital or patient is listed first.
 
 It is critically important that the \code{data[[tail(id.vars, 1)]]} variable can
 be sorted.  Just because your data is sorted in temporal order does not mean
@@ -182,8 +181,8 @@ order as the data.  For example, say you had the following:\tabular{ccc}{
 
 
 \code{id.vars = c("patid", "enc_id")} will give the wrong result as enc_id
-10725138 would be sorted to come before enc_id 10823090.  \code{id.var = c("patid", "date")} would be sufficient input, assuming that \code{date} has been
-correctly stored.   Adding a column \code{enc_seq}, e.g.,\tabular{cccc}{
+10725138 would be sorted to come before enc_id 10823090.  \code{id.vars = c("patid", "date")} would be sufficient input, assuming that \code{date} has been
+correctly stored. Adding a column \code{enc_seq}, e.g.,\tabular{cccc}{
    patid \tab enc_id \tab date \tab enc_seq \cr
    P1 \tab 10823090 \tab Aug 2023 \tab 1 \cr
    P1 \tab 10725138 \tab Jul 2025 \tab 2 \cr

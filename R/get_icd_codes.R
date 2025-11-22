@@ -1,6 +1,6 @@
 #' Get ICD Codes
 #'
-#' Retrieve a copy of the internal look up table for all known ICD codes.
+#' Retrieve a copy of the internal lookup table for all known ICD codes.
 #'
 #' @details
 #'

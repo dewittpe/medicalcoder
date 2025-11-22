@@ -11,14 +11,13 @@
 #' contribute to flags. When a longitudinal method is selected (e.g.,
 #' `"cumulative"`), prior encounters for the same `id.vars`
 #' combination may contribute to condition flags. For the cumulative method to
-#' work the `id.vars` need to be a character vector length 2 or more.  The last
-#' variable listed in the id.vars will be considered the encounter id and should
-#' be sortable. For example, say you have data with a hospital, patient, and
-#' encounter id.  The `id.vars` could be one of two entries:  `c("hospital",
-#' "patient", "encounter")` or `c("patient", "hospital", "encounter")`.  In both
-#' cases the return with be the same as "encounter" within the hospital/patient
-#' id interaction is the same as "encounter" within patient/hospital
-#' interaction.
+#' work, `id.vars` needs to be a character vector of length 2 or more. The last
+#' element is treated as the encounter identifier and must be sortable. For
+#' example, say you have data with a hospital, patient, and encounter id. The
+#' `id.vars` could be one of two entries: `c("hospital", "patient", "encounter")`
+#' or `c("patient", "hospital", "encounter")`. In both cases the return will be
+#' the same because the encounter identifier is unchanged regardless of whether
+#' hospital or patient is listed first.
 #'
 #' It is critically important that the `data[[tail(id.vars, 1)]]` variable can
 #' be sorted.  Just because your data is sorted in temporal order does not mean
@@ -31,9 +30,9 @@
 #' | P1    | 10725138 | Jul 2025 |
 #'
 #' `id.vars = c("patid", "enc_id")` will give the wrong result as enc_id
-#' 10725138 would be sorted to come before enc_id 10823090.  `id.var =
+#' 10725138 would be sorted to come before enc_id 10823090.  `id.vars =
 #' c("patid", "date")` would be sufficient input, assuming that `date` has been
-#' correctly stored.   Adding a column `enc_seq`, e.g.,
+#' correctly stored. Adding a column `enc_seq`, e.g.,
 #'
 #' | patid | enc_id   | date     | enc_seq |
 #' |:---:  |:---:     | :---:    | :---:   |
@@ -51,7 +50,7 @@
 #'
 #' * When `subconditions = FALSE`, a `medicalcoder_comorbidities` object (a
 #'   `data.frame` with attributes) is returned.  Column(s) for `id.vars`, if
-#'   defined in the function call.  For all method there will be the following
+#'   defined in the function call.  For all methods there will be the following
 #'   columns:
 #'   * `num_cmrb` a count of comorbidities/conditions flagged
 #'   * `cmrb_flag` a 0/1 integer indicator for at least one
@@ -65,8 +64,8 @@
 #'
 #'     * For `method = "pccc_v3.0"` and `method = "pccc_v3.1"`,
 #'       there are four columns per condition:
-#'       * `<condition>_dxpr_or_tech`: the condition was flag due to the
-#'         presence of either a diagnostic or procedure code, or was flag due to
+#'       * `<condition>_dxpr_or_tech`: the condition was flagged due to the
+#'         presence of either a diagnostic or procedure code, or was flagged due to
 #'         the presence of a technology dependence code along with at least one
 #'         comorbidity being flagged by a diagnostic or procedure code.
 #'       * `<condition>_dxpr_only`: the condition was flagged due to the
