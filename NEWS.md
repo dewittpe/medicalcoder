@@ -1,4 +1,4 @@
-# medicalcoder 0.6.0.9000
+# medicalcoder 0.7.0
 
 ## Bug Fixes
 * Elixhauser AHRQ 2022 - 2025
