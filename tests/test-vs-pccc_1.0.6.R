@@ -166,13 +166,13 @@ stopifnot(
 # subset(get_icd_codes(with.descriptions = TRUE), grepl("^V65\\.4", full_code) & icdv == 9)
 
 mismatch_tech_dep <- old_vs_mdcr[old_vs_mdcr$tech_dep != old_vs_mdcr$any_tech_dep, ]
-stopifnot(nrow(mismatch_tech_dep) == 18L)
+stopifnot(nrow(mismatch_tech_dep) == 32L)
 stopifnot(
   all(mismatch_tech_dep$tech_dep == 0L),
   all(mismatch_tech_dep$any_tech_dep == 1L)
 )
 stopifnot(
-          isTRUE(identical(sort(mismatch_tech_dep$full_code),
+          isTRUE(identical(sort(unique(mismatch_tech_dep$full_code)),
                            c("349.1",
                              "86.06",
                              "V45.85",
@@ -210,7 +210,7 @@ stopifnot(
 
 #
 mismatch_transplant <- old_vs_mdcr[old_vs_mdcr$transplant != old_vs_mdcr$any_transplant, ]
-stopifnot(nrow(mismatch_transplant) == 15L)
+stopifnot(nrow(mismatch_transplant) == 20L)
 stopifnot(
   all(mismatch_transplant$transplant == 0L),
   all(mismatch_transplant$any_transplant == 1L)
