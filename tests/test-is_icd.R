@@ -40,10 +40,13 @@ stopifnot(
   "failed to stop on bad icdv" = inherits(tryCatchError(is_icd(x, icdv = 8)), "error"),
   "failed to stop on bad src"  = inherits(tryCatchError(is_icd(x, src = "a")), "error"),
   "failed to stop on bad dx"   = inherits(tryCatchError(is_icd(x, dx = 2)), "error"),
+
   "warning for WHO and ICD 9"   = inherits(tryCatchWarning(is_icd(x, icdv = 9, src = "who")), "warning"),
   "all FALSE for WHO and ICD 9" = identical(suppressWarnings(is_icd(x, icdv = 9, src = "who")), y),
-  "warning for CDC and ICD 9"   = inherits(tryCatchWarning(is_icd(x, icdv = 9, src = "cdc")), "warning"),
-  "all FALSE for CDC and ICD 9" = identical(suppressWarnings(is_icd(x, icdv = 9, src = "cdc")), y),
+
+  "warning for CDC and ICD 10 pr"   = inherits(tryCatchWarning(is_icd(x, icdv = 10, src = "cdc", dx = 0)), "warning"),
+  "all FALSE for CDC and ICD 10 pr" = identical(suppressWarnings(is_icd(x, icdv = 10, src = "cdc", dx = 0)), y),
+
   "warning for WHO, ICD-10, pr" = inherits(tryCatchWarning(is_icd(x, icdv = 10, src = "who", dx = 0)), "warning"),
   "all FALSE for WHO, ICD-10, pr" = identical(suppressWarnings(is_icd(x, icdv = 10, src = "who", dx = 0)), y)
 )
