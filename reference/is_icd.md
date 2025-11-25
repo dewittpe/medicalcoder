@@ -162,29 +162,47 @@ data.frame(
 # more descriptive codes were introduced: ICD-9 diagnostic code 516.3
 lookup_icd_codes(paste0("516.3", c("", as.character(0:9))))
 #>    input_code match_type icdv dx full_code  code  src known_start known_end
-#> 1       516.3  full_code    9  1     516.3  5163  cms        1997      2015
-#> 2      516.30  full_code    9  1    516.30 51630  cms        2012      2015
-#> 3      516.31  full_code    9  1    516.31 51631  cms        2012      2015
-#> 4      516.32  full_code    9  1    516.32 51632  cms        2012      2015
-#> 5      516.33  full_code    9  1    516.33 51633  cms        2012      2015
-#> 6      516.34  full_code    9  1    516.34 51634  cms        2012      2015
-#> 7      516.35  full_code    9  1    516.35 51635  cms        2012      2015
-#> 8      516.36  full_code    9  1    516.36 51636  cms        2012      2015
-#> 9      516.37  full_code    9  1    516.37 51637  cms        2012      2015
-#> 10     516.38       <NA>   NA NA      <NA>  <NA> <NA>          NA        NA
-#> 11     516.39       <NA>   NA NA      <NA>  <NA> <NA>          NA        NA
+#> 1       516.3  full_code    9  1     516.3  5163  cdc        1997      2012
+#> 2       516.3  full_code    9  1     516.3  5163  cms        2006      2015
+#> 3      516.30  full_code    9  1    516.30 51630  cdc        2012      2012
+#> 4      516.30  full_code    9  1    516.30 51630  cms        2012      2015
+#> 5      516.31  full_code    9  1    516.31 51631  cms        2012      2015
+#> 6      516.31  full_code    9  1    516.31 51631  cdc        2012      2012
+#> 7      516.32  full_code    9  1    516.32 51632  cms        2012      2015
+#> 8      516.32  full_code    9  1    516.32 51632  cdc        2012      2012
+#> 9      516.33  full_code    9  1    516.33 51633  cdc        2012      2012
+#> 10     516.33  full_code    9  1    516.33 51633  cms        2012      2015
+#> 11     516.34  full_code    9  1    516.34 51634  cms        2012      2015
+#> 12     516.34  full_code    9  1    516.34 51634  cdc        2012      2012
+#> 13     516.35  full_code    9  1    516.35 51635  cdc        2012      2012
+#> 14     516.35  full_code    9  1    516.35 51635  cms        2012      2015
+#> 15     516.36  full_code    9  1    516.36 51636  cms        2012      2015
+#> 16     516.36  full_code    9  1    516.36 51636  cdc        2012      2012
+#> 17     516.37  full_code    9  1    516.37 51637  cdc        2012      2012
+#> 18     516.37  full_code    9  1    516.37 51637  cms        2012      2015
+#> 19     516.38       <NA>   NA NA      <NA>  <NA> <NA>          NA        NA
+#> 20     516.39       <NA>   NA NA      <NA>  <NA> <NA>          NA        NA
 #>    assignable_start assignable_end
 #> 1              1997           2011
-#> 2              2012           2015
-#> 3              2012           2015
+#> 2              2006           2011
+#> 3              2012           2012
 #> 4              2012           2015
 #> 5              2012           2015
-#> 6              2012           2015
+#> 6              2012           2012
 #> 7              2012           2015
-#> 8              2012           2015
-#> 9              2012           2015
-#> 10               NA             NA
-#> 11               NA             NA
+#> 8              2012           2012
+#> 9              2012           2012
+#> 10             2012           2015
+#> 11             2012           2015
+#> 12             2012           2012
+#> 13             2012           2012
+#> 14             2012           2015
+#> 15             2012           2015
+#> 16             2012           2012
+#> 17             2012           2012
+#> 18             2012           2015
+#> 19               NA             NA
+#> 20               NA             NA
 
 # ICD-9 code 516.3 was an assignable code through fiscal year 2011.
 is_icd("516.3")
@@ -215,31 +233,33 @@ is_icd("516.3", year = 2015, ever.assignable = TRUE)
 #   - Could be a ICD-10-CM compact code
 lookup_icd_codes("E010")
 #>   input_code   match_type icdv dx full_code code src known_start known_end
-#> 1       E010    full_code    9  1      E010 E010 cms        2010      2015
-#> 2       E010 compact_code   10  1     E01.0 E010 cms        2014      2026
-#> 3       E010 compact_code   10  1     E01.0 E010 cdc        2001      2025
-#> 4       E010 compact_code   10  1     E01.0 E010 who        2008      2019
+#> 1       E010    full_code    9  1      E010 E010 cdc        2010      2012
+#> 2       E010    full_code    9  1      E010 E010 cms        2010      2015
+#> 3       E010 compact_code   10  1     E01.0 E010 who        2008      2019
+#> 4       E010 compact_code   10  1     E01.0 E010 cms        2014      2026
+#> 5       E010 compact_code   10  1     E01.0 E010 cdc        2001      2025
 #>   assignable_start assignable_end
 #> 1               NA             NA
-#> 2             2014           2026
-#> 3             2001           2025
-#> 4             2008           2019
+#> 2               NA             NA
+#> 3             2008           2019
+#> 4             2014           2026
+#> 5             2001           2025
 subset(get_icd_codes(with.descriptions = TRUE), grepl("^E010$", code))
 #>        icdv dx full_code code src known_start known_end assignable_start
-#> 28019     9  1      E010 E010 cms        2010      2015               NA
-#> 124027   10  1     E01.0 E010 cms        2014      2026             2014
-#> 124028   10  1     E01.0 E010 who        2008      2019             2008
-#> 124029   10  1     E01.0 E010 cdc        2001      2025             2001
+#> 36603     9  1      E010 E010 cdc        2010      2012               NA
+#> 133389   10  1     E01.0 E010 cms        2014      2026             2014
+#> 133390   10  1     E01.0 E010 who        2008      2019             2008
+#> 133391   10  1     E01.0 E010 cdc        2001      2025             2001
 #>        assignable_end                                                    desc
-#> 28019              NA Activity involving other muscle strengthening exercises
-#> 124027           2026      Iodine-deficiency related diffuse (endemic) goiter
-#> 124028           2019      Iodine-deficiency-related diffuse (endemic) goitre
-#> 124029           2025      Iodine-deficiency-related diffuse (endemic) goiter
+#> 36603              NA Activity involving other muscle strengthening exercises
+#> 133389           2026      Iodine-deficiency related diffuse (endemic) goiter
+#> 133390           2019      Iodine-deficiency-related diffuse (endemic) goitre
+#> 133391           2025      Iodine-deficiency-related diffuse (endemic) goiter
 #>        desc_start desc_end
-#> 28019        2010     2015
-#> 124027       2014     2026
-#> 124028       2008     2019
-#> 124029       2001     2025
+#> 36603        2010     2012
+#> 133389       2014     2026
+#> 133390       2008     2019
+#> 133391       2001     2025
 
 is_icd("E010")
 #> [1] TRUE

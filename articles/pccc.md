@@ -535,13 +535,17 @@ subset(mdcr_results_v3.1_02, patid == "87420", select = c("cmrb_flag", "renal_dx
 
 subset(get_icd_codes(with.descriptions = TRUE), full_code %in% c("56.41", "564.1"))
 ##       icdv dx full_code code src known_start known_end assignable_start
-## 12530    9  1     564.1 5641 cms        1997      2015             1997
-## 12531    9  1     564.1 5641 cms        1997      2015             1997
-## 12532    9  0     56.41 5641 cms        1997      2015             1997
+## 17502    9  0     56.41 5641 cdc        1997      2012             1997
+## 17503    9  0     56.41 5641 cms        2006      2015             2006
+## 17504    9  1     564.1 5641 cdc        1997      2012             1997
+## 17505    9  1     564.1 5641 cms        2006      2015             2006
+## 17506    9  1     564.1 5641 cdc        1997      2012             1997
 ##       assignable_end                     desc desc_start desc_end
-## 12530           2015          Irritable colon       1997     1999
-## 12531           2015 Irritable bowel syndrome       2001     2015
-## 12532           2015     Partial ureterectomy       1997     2015
+## 17502           2012     Partial ureterectomy       1997     2012
+## 17503           2015     Partial ureterectomy       2010     2015
+## 17504           2012 Irritable bowel syndrome       2001     2012
+## 17505           2015 Irritable bowel syndrome       2010     2015
+## 17506           2012          Irritable colon       1997     1999
 ```
 
 In the above, the compact code “5641” matches procedure code 56.41 for a
@@ -748,15 +752,17 @@ status of the code.
 ``` r
 lookup_icd_codes("E030")
 ##   input_code   match_type icdv dx full_code code src known_start known_end
-## 1       E030    full_code    9  1      E030 E030 cms        2010      2015
-## 2       E030 compact_code   10  1     E03.0 E030 who        2008      2019
+## 1       E030    full_code    9  1      E030 E030 cdc        2010      2012
+## 2       E030    full_code    9  1      E030 E030 cms        2010      2015
 ## 3       E030 compact_code   10  1     E03.0 E030 cdc        2001      2025
 ## 4       E030 compact_code   10  1     E03.0 E030 cms        2014      2026
+## 5       E030 compact_code   10  1     E03.0 E030 who        2008      2019
 ##   assignable_start assignable_end
-## 1             2010           2015
-## 2             2008           2019
+## 1             2010           2012
+## 2             2010           2015
 ## 3             2001           2025
 ## 4             2014           2026
+## 5             2008           2019
 data <- data.frame(id = c("Ambiguous compact code", "Full ICD-9 code", "Full ICD-10 code"),
                    code  = c("E030", "E030", "E03.0"))
 data

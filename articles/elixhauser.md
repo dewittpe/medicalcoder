@@ -3,7 +3,7 @@
 ``` r
 library(medicalcoder)
 packageVersion("medicalcoder")
-## [1] '0.7.0'
+## [1] '0.7.0.9000'
 ```
 
 ## Introduction

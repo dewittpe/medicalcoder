@@ -29,7 +29,7 @@ year, which starts on October 1 (e.g., fiscal year 2024 runs 2023-10-01 to
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -230,29 +230,47 @@ full format based on ICD version and type (diagnostic or procedure).</p></li>
 <span class="r-in"><span><span class="co"># more descriptive codes were introduced: ICD-9 diagnostic code 516.3</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="lookup_icd_codes.html">lookup_icd_codes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"516.3"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    input_code match_type icdv dx full_code  code  src known_start known_end</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       516.3  full_code    9  1     516.3  5163  cms        1997      2015</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      516.30  full_code    9  1    516.30 51630  cms        2012      2015</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      516.31  full_code    9  1    516.31 51631  cms        2012      2015</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      516.32  full_code    9  1    516.32 51632  cms        2012      2015</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      516.33  full_code    9  1    516.33 51633  cms        2012      2015</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6      516.34  full_code    9  1    516.34 51634  cms        2012      2015</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7      516.35  full_code    9  1    516.35 51635  cms        2012      2015</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8      516.36  full_code    9  1    516.36 51636  cms        2012      2015</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9      516.37  full_code    9  1    516.37 51637  cms        2012      2015</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10     516.38       &lt;NA&gt;   NA NA      &lt;NA&gt;  &lt;NA&gt; &lt;NA&gt;          NA        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11     516.39       &lt;NA&gt;   NA NA      &lt;NA&gt;  &lt;NA&gt; &lt;NA&gt;          NA        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       516.3  full_code    9  1     516.3  5163  cdc        1997      2012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       516.3  full_code    9  1     516.3  5163  cms        2006      2015</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      516.30  full_code    9  1    516.30 51630  cdc        2012      2012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      516.30  full_code    9  1    516.30 51630  cms        2012      2015</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      516.31  full_code    9  1    516.31 51631  cms        2012      2015</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      516.31  full_code    9  1    516.31 51631  cdc        2012      2012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7      516.32  full_code    9  1    516.32 51632  cms        2012      2015</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      516.32  full_code    9  1    516.32 51632  cdc        2012      2012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9      516.33  full_code    9  1    516.33 51633  cdc        2012      2012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     516.33  full_code    9  1    516.33 51633  cms        2012      2015</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11     516.34  full_code    9  1    516.34 51634  cms        2012      2015</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12     516.34  full_code    9  1    516.34 51634  cdc        2012      2012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13     516.35  full_code    9  1    516.35 51635  cdc        2012      2012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14     516.35  full_code    9  1    516.35 51635  cms        2012      2015</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15     516.36  full_code    9  1    516.36 51636  cms        2012      2015</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16     516.36  full_code    9  1    516.36 51636  cdc        2012      2012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17     516.37  full_code    9  1    516.37 51637  cdc        2012      2012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18     516.37  full_code    9  1    516.37 51637  cms        2012      2015</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19     516.38       &lt;NA&gt;   NA NA      &lt;NA&gt;  &lt;NA&gt; &lt;NA&gt;          NA        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20     516.39       &lt;NA&gt;   NA NA      &lt;NA&gt;  &lt;NA&gt; &lt;NA&gt;          NA        NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    assignable_start assignable_end</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1              1997           2011</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2              2012           2015</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3              2012           2015</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2              2006           2011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3              2012           2012</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4              2012           2015</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5              2012           2015</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6              2012           2015</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6              2012           2012</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7              2012           2015</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8              2012           2015</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9              2012           2015</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10               NA             NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11               NA             NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8              2012           2012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9              2012           2012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10             2012           2015</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11             2012           2015</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12             2012           2012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13             2012           2012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14             2012           2015</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15             2012           2015</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16             2012           2012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17             2012           2012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18             2012           2015</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19               NA             NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20               NA             NA</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># ICD-9 code 516.3 was an assignable code through fiscal year 2011.</span></span></span>
 <span class="r-in"><span><span class="fu">is_icd</span><span class="op">(</span><span class="st">"516.3"</span><span class="op">)</span></span></span>
@@ -283,31 +301,33 @@ full format based on ICD version and type (diagnostic or procedure).</p></li>
 <span class="r-in"><span><span class="co">#   - Could be a ICD-10-CM compact code</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="lookup_icd_codes.html">lookup_icd_codes</a></span><span class="op">(</span><span class="st">"E010"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   input_code   match_type icdv dx full_code code src known_start known_end</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       E010    full_code    9  1      E010 E010 cms        2010      2015</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       E010 compact_code   10  1     E01.0 E010 cms        2014      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       E010 compact_code   10  1     E01.0 E010 cdc        2001      2025</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       E010 compact_code   10  1     E01.0 E010 who        2008      2019</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       E010    full_code    9  1      E010 E010 cdc        2010      2012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       E010    full_code    9  1      E010 E010 cms        2010      2015</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       E010 compact_code   10  1     E01.0 E010 who        2008      2019</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       E010 compact_code   10  1     E01.0 E010 cms        2014      2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       E010 compact_code   10  1     E01.0 E010 cdc        2001      2025</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   assignable_start assignable_end</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1               NA             NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2             2014           2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3             2001           2025</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4             2008           2019</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2               NA             NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3             2008           2019</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4             2014           2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5             2001           2025</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="fu"><a href="get_icd_codes.html">get_icd_codes</a></span><span class="op">(</span>with.descriptions <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^E010$"</span>, <span class="va">code</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        icdv dx full_code code src known_start known_end assignable_start</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28019     9  1      E010 E010 cms        2010      2015               NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 124027   10  1     E01.0 E010 cms        2014      2026             2014</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 124028   10  1     E01.0 E010 who        2008      2019             2008</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 124029   10  1     E01.0 E010 cdc        2001      2025             2001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36603     9  1      E010 E010 cdc        2010      2012               NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 133389   10  1     E01.0 E010 cms        2014      2026             2014</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 133390   10  1     E01.0 E010 who        2008      2019             2008</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 133391   10  1     E01.0 E010 cdc        2001      2025             2001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        assignable_end                                                    desc</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28019              NA Activity involving other muscle strengthening exercises</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 124027           2026      Iodine-deficiency related diffuse (endemic) goiter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 124028           2019      Iodine-deficiency-related diffuse (endemic) goitre</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 124029           2025      Iodine-deficiency-related diffuse (endemic) goiter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36603              NA Activity involving other muscle strengthening exercises</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 133389           2026      Iodine-deficiency related diffuse (endemic) goiter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 133390           2019      Iodine-deficiency-related diffuse (endemic) goitre</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 133391           2025      Iodine-deficiency-related diffuse (endemic) goiter</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        desc_start desc_end</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28019        2010     2015</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 124027       2014     2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 124028       2008     2019</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 124029       2001     2025</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36603        2010     2012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 133389       2014     2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 133390       2008     2019</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 133391       2001     2025</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">is_icd</span><span class="op">(</span><span class="st">"E010"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>

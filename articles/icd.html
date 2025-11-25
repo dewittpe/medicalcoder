@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -114,16 +114,16 @@ ICD-9 procedure, ICD-10 diagnostic, and ICD-10 procedure codes.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.peteredewitt.com/medicalcoder/">medicalcoder</a></span><span class="op">)</span></span>
 <span><span class="va">icd_codes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_icd_codes.html">get_icd_codes</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">icd_codes</span><span class="op">)</span></span>
-<span><span class="co">## 'data.frame':    227534 obs. of  9 variables:</span></span>
+<span><span class="co">## 'data.frame':    249736 obs. of  9 variables:</span></span>
 <span><span class="co">##  $ icdv            : int  9 9 9 9 9 9 9 9 9 9 ...</span></span>
-<span><span class="co">##  $ dx              : int  0 0 0 0 0 0 1 0 1 0 ...</span></span>
-<span><span class="co">##  $ full_code       : chr  "00" "00.0" "00.01" "00.02" ...</span></span>
-<span><span class="co">##  $ code            : chr  "00" "000" "0001" "0002" ...</span></span>
-<span><span class="co">##  $ src             : chr  "cms" "cms" "cms" "cms" ...</span></span>
-<span><span class="co">##  $ known_start     : int  2003 2003 2003 2003 2003 2003 1997 2003 1997 2003 ...</span></span>
-<span><span class="co">##  $ known_end       : int  2015 2015 2015 2015 2015 2015 2015 2015 2015 2015 ...</span></span>
-<span><span class="co">##  $ assignable_start: int  NA NA 2003 2003 2003 2003 NA NA 1997 2003 ...</span></span>
-<span><span class="co">##  $ assignable_end  : int  NA NA 2015 2015 2015 2015 NA NA 2015 2015 ...</span></span></code></pre></div>
+<span><span class="co">##  $ dx              : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ full_code       : chr  "00" "00" "00.0" "00.0" ...</span></span>
+<span><span class="co">##  $ code            : chr  "00" "00" "000" "000" ...</span></span>
+<span><span class="co">##  $ src             : chr  "cdc" "cms" "cdc" "cms" ...</span></span>
+<span><span class="co">##  $ known_start     : int  2003 2006 2003 2006 2003 2006 2003 2006 2003 2006 ...</span></span>
+<span><span class="co">##  $ known_end       : int  2012 2015 2012 2015 2012 2015 2012 2015 2012 2015 ...</span></span>
+<span><span class="co">##  $ assignable_start: int  NA NA NA NA 2003 2006 2003 2006 2003 2006 ...</span></span>
+<span><span class="co">##  $ assignable_end  : int  NA NA NA NA 2012 2015 2012 2015 2012 2015 ...</span></span></code></pre></div>
 <p>The columns of this data.frame are:</p>
 <ul>
 <li><p><code>icdv</code>: integer value 9 or 10 indicating ICD-9 or
@@ -183,19 +183,19 @@ assignable.</p></li>
 <code>with.descriptions = TRUE</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_icd_codes.html">get_icd_codes</a></span><span class="op">(</span>with.descriptions <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## 'data.frame':    241988 obs. of  12 variables:</span></span>
+<span><span class="co">## 'data.frame':    251350 obs. of  12 variables:</span></span>
 <span><span class="co">##  $ icdv            : int  9 9 9 9 9 9 9 9 9 9 ...</span></span>
-<span><span class="co">##  $ dx              : int  0 0 0 0 0 0 1 0 1 1 ...</span></span>
-<span><span class="co">##  $ full_code       : chr  "00" "00.0" "00.01" "00.02" ...</span></span>
-<span><span class="co">##  $ code            : chr  "00" "000" "0001" "0002" ...</span></span>
-<span><span class="co">##  $ src             : chr  "cms" "cms" "cms" "cms" ...</span></span>
-<span><span class="co">##  $ known_start     : int  2003 2003 2003 2003 2003 2003 1997 2003 1997 1997 ...</span></span>
-<span><span class="co">##  $ known_end       : int  2015 2015 2015 2015 2015 2015 2015 2015 2015 2015 ...</span></span>
-<span><span class="co">##  $ assignable_start: int  NA NA 2003 2003 2003 2003 NA NA 1997 1997 ...</span></span>
-<span><span class="co">##  $ assignable_end  : int  NA NA 2015 2015 2015 2015 NA NA 2015 2015 ...</span></span>
-<span><span class="co">##  $ desc            : chr  "Procedures and interventions, Not Elsewhere Classified" "Therapeutic ultrasound" "Therapeutic ultrasound of vessels of head and neck" "Therapeutic ultrasound of heart" ...</span></span>
-<span><span class="co">##  $ desc_start      : int  2003 2003 2003 2003 2003 2003 1997 2003 1997 2010 ...</span></span>
-<span><span class="co">##  $ desc_end        : int  2015 2015 2015 2015 2015 2015 2015 2015 2009 2015 ...</span></span></code></pre></div>
+<span><span class="co">##  $ dx              : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ full_code       : chr  "00" "00.0" "00.01" "00.01" ...</span></span>
+<span><span class="co">##  $ code            : chr  "00" "000" "0001" "0001" ...</span></span>
+<span><span class="co">##  $ src             : chr  "cdc" "cdc" "cdc" "cms" ...</span></span>
+<span><span class="co">##  $ known_start     : int  2003 2003 2003 2006 2003 2006 2003 2006 2003 2006 ...</span></span>
+<span><span class="co">##  $ known_end       : int  2012 2012 2012 2015 2012 2015 2012 2015 2012 2015 ...</span></span>
+<span><span class="co">##  $ assignable_start: int  NA NA 2003 2006 2003 2006 2003 2006 2003 2006 ...</span></span>
+<span><span class="co">##  $ assignable_end  : int  NA NA 2012 2015 2012 2015 2012 2015 2012 2015 ...</span></span>
+<span><span class="co">##  $ desc            : chr  "Procedures and interventions, Not Elsewhere Classified" "Therapeutic ultrasound" "Therapeutic ultrasound of vessels of head and neck" "Therapeutic ultrasound of vessels of head and neck" ...</span></span>
+<span><span class="co">##  $ desc_start      : int  2003 2003 2003 2010 2003 2010 2003 2010 2003 2010 ...</span></span>
+<span><span class="co">##  $ desc_end        : int  2012 2012 2012 2015 2012 2015 2012 2015 2012 2015 ...</span></span></code></pre></div>
 <p>The return has the additional columns:</p>
 <ul>
 <li>
@@ -237,18 +237,18 @@ below have several examples.</p>
 <tr class="odd">
 <td align="left">010.93</td>
 <td align="left">cms</td>
-<td align="left">Primary tuberculous infection, unspecified tubercle
-bacilli found (in sputum) by microscopy</td>
-<td align="right">1997</td>
-<td align="right">2009</td>
-</tr>
-<tr class="even">
-<td align="left">010.93</td>
-<td align="left">cms</td>
 <td align="left">Primary tuberculous infection, unspecified, tubercle
 bacilli found (in sputum) by microscopy</td>
 <td align="right">2010</td>
 <td align="right">2015</td>
+</tr>
+<tr class="even">
+<td align="left">010.93</td>
+<td align="left">cdc</td>
+<td align="left">Primary tuberculous infection, unspecified tubercle
+bacilli found (in sputum) by microscopy</td>
+<td align="right">1997</td>
+<td align="right">2012</td>
 </tr>
 </tbody>
 </table>
@@ -317,24 +317,24 @@ understand.</p>
 <tr class="odd">
 <td align="left">V76.49</td>
 <td align="left">cms</td>
-<td align="left">Other</td>
-<td align="right">1997</td>
-<td align="right">1999</td>
-</tr>
-<tr class="even">
-<td align="left">V76.49</td>
-<td align="left">cms</td>
-<td align="left">Other sites</td>
-<td align="right">2001</td>
-<td align="right">2009</td>
-</tr>
-<tr class="odd">
-<td align="left">V76.49</td>
-<td align="left">cms</td>
 <td align="left">Special screening for malignant neoplasms of other
 sites</td>
 <td align="right">2010</td>
 <td align="right">2015</td>
+</tr>
+<tr class="even">
+<td align="left">V76.49</td>
+<td align="left">cdc</td>
+<td align="left">Other</td>
+<td align="right">1997</td>
+<td align="right">1999</td>
+</tr>
+<tr class="odd">
+<td align="left">V76.49</td>
+<td align="left">cdc</td>
+<td align="left">Other sites</td>
+<td align="right">2001</td>
+<td align="right">2012</td>
 </tr>
 </tbody>
 </table>
@@ -347,7 +347,7 @@ argument <code>with.hierarchy</code> which will provide additional
 details for the codes.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_icd_codes.html">get_icd_codes</a></span><span class="op">(</span>with.hierarchy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## 'data.frame':    227534 obs. of  16 variables:</span></span>
+<span><span class="co">## 'data.frame':    249736 obs. of  16 variables:</span></span>
 <span><span class="co">##  $ icdv                : int  10 10 10 10 10 10 10 10 10 10 ...</span></span>
 <span><span class="co">##  $ dx                  : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span><span class="co">##  $ full_code           : chr  "001" "0016070" "0016071" "0016072" ...</span></span>
@@ -429,10 +429,36 @@ assignable.</p>
 <td align="right">0</td>
 <td align="left">00.11</td>
 <td align="left">0011</td>
+<td align="left">cdc</td>
+<td align="right">2003</td>
+<td align="right">2012</td>
+<td align="right">2003</td>
+<td align="right">2012</td>
+</tr>
+<tr class="even">
+<td align="left">0011</td>
+<td align="left">compact_code</td>
+<td align="right">9</td>
+<td align="right">1</td>
+<td align="left">001.1</td>
+<td align="left">0011</td>
+<td align="left">cdc</td>
+<td align="right">1997</td>
+<td align="right">2012</td>
+<td align="right">1997</td>
+<td align="right">2012</td>
+</tr>
+<tr class="odd">
+<td align="left">0011</td>
+<td align="left">compact_code</td>
+<td align="right">9</td>
+<td align="right">0</td>
+<td align="left">00.11</td>
+<td align="left">0011</td>
 <td align="left">cms</td>
-<td align="right">2003</td>
+<td align="right">2006</td>
 <td align="right">2015</td>
-<td align="right">2003</td>
+<td align="right">2006</td>
 <td align="right">2015</td>
 </tr>
 <tr class="even">
@@ -443,9 +469,9 @@ assignable.</p>
 <td align="left">001.1</td>
 <td align="left">0011</td>
 <td align="left">cms</td>
-<td align="right">1997</td>
+<td align="right">2006</td>
 <td align="right">2015</td>
-<td align="right">1997</td>
+<td align="right">2006</td>
 <td align="right">2015</td>
 </tr>
 <tr class="odd">
@@ -456,10 +482,62 @@ assignable.</p>
 <td align="left">732.9</td>
 <td align="left">7329</td>
 <td align="left">cms</td>
-<td align="right">1997</td>
+<td align="right">2006</td>
 <td align="right">2015</td>
-<td align="right">1997</td>
+<td align="right">2006</td>
 <td align="right">2015</td>
+</tr>
+<tr class="even">
+<td align="left">7329</td>
+<td align="left">compact_code</td>
+<td align="right">9</td>
+<td align="right">1</td>
+<td align="left">732.9</td>
+<td align="left">7329</td>
+<td align="left">cdc</td>
+<td align="right">1997</td>
+<td align="right">2012</td>
+<td align="right">1997</td>
+<td align="right">2012</td>
+</tr>
+<tr class="odd">
+<td align="left">732</td>
+<td align="left">full_code</td>
+<td align="right">9</td>
+<td align="right">1</td>
+<td align="left">732</td>
+<td align="left">732</td>
+<td align="left">cdc</td>
+<td align="right">1997</td>
+<td align="right">2012</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">732</td>
+<td align="left">full_code</td>
+<td align="right">9</td>
+<td align="right">1</td>
+<td align="left">732</td>
+<td align="left">732</td>
+<td align="left">cms</td>
+<td align="right">2006</td>
+<td align="right">2015</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">732</td>
+<td align="left">compact_code</td>
+<td align="right">9</td>
+<td align="right">0</td>
+<td align="left">73.2</td>
+<td align="left">732</td>
+<td align="left">cdc</td>
+<td align="right">1997</td>
+<td align="right">2012</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
 <tr class="even">
 <td align="left">732</td>
@@ -469,25 +547,12 @@ assignable.</p>
 <td align="left">73.2</td>
 <td align="left">732</td>
 <td align="left">cms</td>
-<td align="right">1997</td>
+<td align="right">2006</td>
 <td align="right">2015</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="left">732</td>
-<td align="left">full_code</td>
-<td align="right">9</td>
-<td align="right">1</td>
-<td align="left">732</td>
-<td align="left">732</td>
-<td align="left">cms</td>
-<td align="right">1997</td>
-<td align="right">2015</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="left">73291</td>
 <td align="left">NA</td>
 <td align="right">NA</td>
@@ -500,7 +565,7 @@ assignable.</p>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">not a code</td>
 <td align="left">NA</td>
 <td align="right">NA</td>
@@ -513,6 +578,19 @@ assignable.</p>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
+<tr class="odd">
+<td align="left">001.1</td>
+<td align="left">full_code</td>
+<td align="right">9</td>
+<td align="right">1</td>
+<td align="left">001.1</td>
+<td align="left">0011</td>
+<td align="left">cdc</td>
+<td align="right">1997</td>
+<td align="right">2012</td>
+<td align="right">1997</td>
+<td align="right">2012</td>
+</tr>
 <tr class="even">
 <td align="left">001.1</td>
 <td align="left">full_code</td>
@@ -521,9 +599,9 @@ assignable.</p>
 <td align="left">001.1</td>
 <td align="left">0011</td>
 <td align="left">cms</td>
-<td align="right">1997</td>
+<td align="right">2006</td>
 <td align="right">2015</td>
-<td align="right">1997</td>
+<td align="right">2006</td>
 <td align="right">2015</td>
 </tr>
 <tr class="odd">
@@ -546,11 +624,11 @@ assignable.</p>
 <td align="right">1</td>
 <td align="left">A92.4</td>
 <td align="left">A924</td>
-<td align="left">who</td>
-<td align="right">2008</td>
-<td align="right">2019</td>
-<td align="right">2008</td>
-<td align="right">2019</td>
+<td align="left">cdc</td>
+<td align="right">2001</td>
+<td align="right">2025</td>
+<td align="right">2001</td>
+<td align="right">2025</td>
 </tr>
 <tr class="odd">
 <td align="left">A924</td>
@@ -559,11 +637,11 @@ assignable.</p>
 <td align="right">1</td>
 <td align="left">A92.4</td>
 <td align="left">A924</td>
-<td align="left">cdc</td>
-<td align="right">2001</td>
-<td align="right">2025</td>
-<td align="right">2001</td>
-<td align="right">2025</td>
+<td align="left">who</td>
+<td align="right">2008</td>
+<td align="right">2019</td>
+<td align="right">2008</td>
+<td align="right">2019</td>
 </tr>
 <tr class="even">
 <td align="left">A924</td>
@@ -651,9 +729,9 @@ considered.</p>
 <td align="left">00.11</td>
 <td align="left">0011</td>
 <td align="left">cms</td>
-<td align="right">2003</td>
+<td align="right">2006</td>
 <td align="right">2015</td>
-<td align="right">2003</td>
+<td align="right">2006</td>
 <td align="right">2015</td>
 </tr>
 <tr class="even">
@@ -664,10 +742,36 @@ considered.</p>
 <td align="left">001.1</td>
 <td align="left">0011</td>
 <td align="left">cms</td>
-<td align="right">1997</td>
+<td align="right">2006</td>
 <td align="right">2015</td>
-<td align="right">1997</td>
+<td align="right">2006</td>
 <td align="right">2015</td>
+</tr>
+<tr class="odd">
+<td align="left">0011</td>
+<td align="left">compact_code</td>
+<td align="right">9</td>
+<td align="right">0</td>
+<td align="left">00.11</td>
+<td align="left">0011</td>
+<td align="left">cdc</td>
+<td align="right">2003</td>
+<td align="right">2012</td>
+<td align="right">2003</td>
+<td align="right">2012</td>
+</tr>
+<tr class="even">
+<td align="left">0011</td>
+<td align="left">compact_code</td>
+<td align="right">9</td>
+<td align="right">1</td>
+<td align="left">001.1</td>
+<td align="left">0011</td>
+<td align="left">cdc</td>
+<td align="right">1997</td>
+<td align="right">2012</td>
+<td align="right">1997</td>
+<td align="right">2012</td>
 </tr>
 <tr class="odd">
 <td align="left">7329</td>
@@ -677,10 +781,36 @@ considered.</p>
 <td align="left">732.9</td>
 <td align="left">7329</td>
 <td align="left">cms</td>
-<td align="right">1997</td>
+<td align="right">2006</td>
 <td align="right">2015</td>
-<td align="right">1997</td>
+<td align="right">2006</td>
 <td align="right">2015</td>
+</tr>
+<tr class="even">
+<td align="left">7329</td>
+<td align="left">compact_code</td>
+<td align="right">9</td>
+<td align="right">1</td>
+<td align="left">732.9</td>
+<td align="left">7329</td>
+<td align="left">cdc</td>
+<td align="right">1997</td>
+<td align="right">2012</td>
+<td align="right">1997</td>
+<td align="right">2012</td>
+</tr>
+<tr class="odd">
+<td align="left">732</td>
+<td align="left">compact_code</td>
+<td align="right">9</td>
+<td align="right">1</td>
+<td align="left">732</td>
+<td align="left">732</td>
+<td align="left">cdc</td>
+<td align="right">1997</td>
+<td align="right">2012</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
 <tr class="even">
 <td align="left">732</td>
@@ -690,7 +820,7 @@ considered.</p>
 <td align="left">73.2</td>
 <td align="left">732</td>
 <td align="left">cms</td>
-<td align="right">1997</td>
+<td align="right">2006</td>
 <td align="right">2015</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
@@ -699,16 +829,29 @@ considered.</p>
 <td align="left">732</td>
 <td align="left">compact_code</td>
 <td align="right">9</td>
-<td align="right">1</td>
+<td align="right">0</td>
+<td align="left">73.2</td>
 <td align="left">732</td>
-<td align="left">732</td>
-<td align="left">cms</td>
+<td align="left">cdc</td>
 <td align="right">1997</td>
-<td align="right">2015</td>
+<td align="right">2012</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
+<td align="left">732</td>
+<td align="left">compact_code</td>
+<td align="right">9</td>
+<td align="right">1</td>
+<td align="left">732</td>
+<td align="left">732</td>
+<td align="left">cms</td>
+<td align="right">2006</td>
+<td align="right">2015</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
 <td align="left">73291</td>
 <td align="left">NA</td>
 <td align="right">NA</td>
@@ -721,7 +864,7 @@ considered.</p>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">not a code</td>
 <td align="left">NA</td>
 <td align="right">NA</td>
@@ -734,7 +877,7 @@ considered.</p>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">001.1</td>
 <td align="left">NA</td>
 <td align="right">NA</td>
@@ -747,7 +890,7 @@ considered.</p>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">A9248</td>
 <td align="left">NA</td>
 <td align="right">NA</td>
@@ -760,20 +903,20 @@ considered.</p>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">A924</td>
 <td align="left">compact_code</td>
 <td align="right">10</td>
 <td align="right">1</td>
 <td align="left">A92.4</td>
 <td align="left">A924</td>
-<td align="left">cdc</td>
-<td align="right">2001</td>
-<td align="right">2025</td>
-<td align="right">2001</td>
-<td align="right">2025</td>
+<td align="left">who</td>
+<td align="right">2008</td>
+<td align="right">2019</td>
+<td align="right">2008</td>
+<td align="right">2019</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">A924</td>
 <td align="left">compact_code</td>
 <td align="right">10</td>
@@ -786,20 +929,20 @@ considered.</p>
 <td align="right">2014</td>
 <td align="right">2026</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">A924</td>
 <td align="left">compact_code</td>
 <td align="right">10</td>
 <td align="right">1</td>
 <td align="left">A92.4</td>
 <td align="left">A924</td>
-<td align="left">who</td>
-<td align="right">2008</td>
-<td align="right">2019</td>
-<td align="right">2008</td>
-<td align="right">2019</td>
+<td align="left">cdc</td>
+<td align="right">2001</td>
+<td align="right">2025</td>
+<td align="right">2001</td>
+<td align="right">2025</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Z00</td>
 <td align="left">compact_code</td>
 <td align="right">10</td>
@@ -812,7 +955,7 @@ considered.</p>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Z00</td>
 <td align="left">compact_code</td>
 <td align="right">10</td>
@@ -895,13 +1038,26 @@ codes.</p>
 <td align="right">1</td>
 <td align="left">732</td>
 <td align="left">732</td>
-<td align="left">cms</td>
+<td align="left">cdc</td>
 <td align="right">1997</td>
-<td align="right">2015</td>
+<td align="right">2012</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
+<td align="left">732</td>
+<td align="left">full_code</td>
+<td align="right">9</td>
+<td align="right">1</td>
+<td align="left">732</td>
+<td align="left">732</td>
+<td align="left">cms</td>
+<td align="right">2006</td>
+<td align="right">2015</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
 <td align="left">73291</td>
 <td align="left">NA</td>
 <td align="right">NA</td>
@@ -914,7 +1070,7 @@ codes.</p>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">not a code</td>
 <td align="left">NA</td>
 <td align="right">NA</td>
@@ -927,6 +1083,19 @@ codes.</p>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
+<tr class="odd">
+<td align="left">001.1</td>
+<td align="left">full_code</td>
+<td align="right">9</td>
+<td align="right">1</td>
+<td align="left">001.1</td>
+<td align="left">0011</td>
+<td align="left">cdc</td>
+<td align="right">1997</td>
+<td align="right">2012</td>
+<td align="right">1997</td>
+<td align="right">2012</td>
+</tr>
 <tr class="even">
 <td align="left">001.1</td>
 <td align="left">full_code</td>
@@ -935,9 +1104,9 @@ codes.</p>
 <td align="left">001.1</td>
 <td align="left">0011</td>
 <td align="left">cms</td>
-<td align="right">1997</td>
+<td align="right">2006</td>
 <td align="right">2015</td>
-<td align="right">1997</td>
+<td align="right">2006</td>
 <td align="right">2015</td>
 </tr>
 <tr class="odd">
@@ -1088,7 +1257,7 @@ ICD-9 code. It is a valid ICD-9 diagnostic code, and a valid ICD-9
 procedure code.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"7993"</span><span class="op">)</span></span>
-<span><span class="co">## Warning: Input '7993' is a: ICD 9 dx compact; ICD 9 pr compact</span></span>
+<span><span class="co">## Warning: Input '7993' is a: ICD 9 pr compact; ICD 9 dx compact</span></span>
 <span><span class="co">## [1] TRUE</span></span>
 <span><span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"7993"</span>, icdv <span class="op">=</span>  <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">## [1] TRUE</span></span>
@@ -1100,17 +1269,21 @@ procedure code.</p>
 <span><span class="co">## [1] FALSE</span></span>
 <span><span class="fu"><a href="../reference/lookup_icd_codes.html">lookup_icd_codes</a></span><span class="op">(</span><span class="st">"7993"</span><span class="op">)</span></span>
 <span><span class="co">##   input_code   match_type icdv dx full_code code src known_start known_end</span></span>
-<span><span class="co">## 1       7993 compact_code    9  1     799.3 7993 cms        1997      2015</span></span>
-<span><span class="co">## 2       7993 compact_code    9  0     79.93 7993 cms        1997      2015</span></span>
+<span><span class="co">## 1       7993 compact_code    9  1     799.3 7993 cms        2006      2015</span></span>
+<span><span class="co">## 2       7993 compact_code    9  0     79.93 7993 cdc        1997      2012</span></span>
+<span><span class="co">## 3       7993 compact_code    9  0     79.93 7993 cms        2006      2015</span></span>
+<span><span class="co">## 4       7993 compact_code    9  1     799.3 7993 cdc        1997      2012</span></span>
 <span><span class="co">##   assignable_start assignable_end</span></span>
-<span><span class="co">## 1             1997           2015</span></span>
-<span><span class="co">## 2             1997           2015</span></span></code></pre></div>
+<span><span class="co">## 1             2006           2015</span></span>
+<span><span class="co">## 2             1997           2012</span></span>
+<span><span class="co">## 3             2006           2015</span></span>
+<span><span class="co">## 4             1997           2012</span></span></code></pre></div>
 <p>A vector of possible codes:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"7993"</span>, <span class="st">"A924"</span>, <span class="st">"7993"</span>, <span class="st">"A924"</span>, <span class="st">"no"</span>, <span class="st">"A92"</span>, <span class="st">"516"</span>, <span class="st">"5163"</span>, <span class="st">"51631"</span>, <span class="st">"A00"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">## Warning: Input '7993' is a: ICD 9 dx compact; ICD 9 pr compact</span></span>
-<span><span class="co">## Warning: Input '5163' is a: ICD 9 dx compact; ICD 9 pr compact</span></span>
+<span><span class="co">## Warning: Input '7993' is a: ICD 9 pr compact; ICD 9 dx compact</span></span>
+<span><span class="co">## Warning: Input '5163' is a: ICD 9 pr compact; ICD 9 dx compact</span></span>
 <span><span class="co">##  [1]  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE  TRUE  TRUE FALSE</span></span></code></pre></div>
 <p>If you have codes with decimal points then discriminating between
 ICD-9 diagnostic and procedure codes can be done.</p>
@@ -1160,6 +1333,9 @@ assignable.</p>
 <span>    assignable_ever <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, ever.assignable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="co">## Warning: The combination of `icdv` = 9; `dx` = 1; and `src` = cms; has ICD</span></span>
+<span><span class="co">## codes with a first known_start year of 2006. The input of `year` = 1997 results</span></span>
+<span><span class="co">## in no possible positive match.</span></span>
+<span><span class="co">## Warning: The combination of `icdv` = 9; `dx` = 1; and `src` = cms; has ICD</span></span>
 <span><span class="co">## codes with a max known_end year of 2015. The input of `year` = 2016 results in</span></span>
 <span><span class="co">## no possible positive match.</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">tab</span><span class="op">)</span></span></code></pre></div>
@@ -1190,7 +1366,7 @@ assignable.</p>
 <tr class="odd">
 <td align="left">516.3</td>
 <td align="left">TRUE</td>
-<td align="left">TRUE</td>
+<td align="left">FALSE</td>
 <td align="left">TRUE</td>
 <td align="left">TRUE</td>
 <td align="left">FALSE</td>
@@ -1349,11 +1525,37 @@ assignable.</p>
 <td align="right">1</td>
 <td align="left">516.3</td>
 <td align="left">5163</td>
-<td align="left">cms</td>
+<td align="left">cdc</td>
 <td align="right">1997</td>
-<td align="right">2015</td>
+<td align="right">2012</td>
 <td align="right">1997</td>
 <td align="right">2011</td>
+</tr>
+<tr class="even">
+<td align="left">516.3</td>
+<td align="left">full_code</td>
+<td align="right">9</td>
+<td align="right">1</td>
+<td align="left">516.3</td>
+<td align="left">5163</td>
+<td align="left">cms</td>
+<td align="right">2006</td>
+<td align="right">2015</td>
+<td align="right">2006</td>
+<td align="right">2011</td>
+</tr>
+<tr class="odd">
+<td align="left">516.30</td>
+<td align="left">full_code</td>
+<td align="right">9</td>
+<td align="right">1</td>
+<td align="left">516.30</td>
+<td align="left">51630</td>
+<td align="left">cdc</td>
+<td align="right">2012</td>
+<td align="right">2012</td>
+<td align="right">2012</td>
+<td align="right">2012</td>
 </tr>
 <tr class="even">
 <td align="left">516.30</td>
@@ -1382,6 +1584,19 @@ assignable.</p>
 <td align="right">2015</td>
 </tr>
 <tr class="even">
+<td align="left">516.31</td>
+<td align="left">full_code</td>
+<td align="right">9</td>
+<td align="right">1</td>
+<td align="left">516.31</td>
+<td align="left">51631</td>
+<td align="left">cdc</td>
+<td align="right">2012</td>
+<td align="right">2012</td>
+<td align="right">2012</td>
+<td align="right">2012</td>
+</tr>
+<tr class="odd">
 <td align="left">516.32</td>
 <td align="left">full_code</td>
 <td align="right">9</td>
@@ -1394,6 +1609,19 @@ assignable.</p>
 <td align="right">2012</td>
 <td align="right">2015</td>
 </tr>
+<tr class="even">
+<td align="left">516.32</td>
+<td align="left">full_code</td>
+<td align="right">9</td>
+<td align="right">1</td>
+<td align="left">516.32</td>
+<td align="left">51632</td>
+<td align="left">cdc</td>
+<td align="right">2012</td>
+<td align="right">2012</td>
+<td align="right">2012</td>
+<td align="right">2012</td>
+</tr>
 <tr class="odd">
 <td align="left">516.33</td>
 <td align="left">full_code</td>
@@ -1401,6 +1629,32 @@ assignable.</p>
 <td align="right">1</td>
 <td align="left">516.33</td>
 <td align="left">51633</td>
+<td align="left">cdc</td>
+<td align="right">2012</td>
+<td align="right">2012</td>
+<td align="right">2012</td>
+<td align="right">2012</td>
+</tr>
+<tr class="even">
+<td align="left">516.33</td>
+<td align="left">full_code</td>
+<td align="right">9</td>
+<td align="right">1</td>
+<td align="left">516.33</td>
+<td align="left">51633</td>
+<td align="left">cms</td>
+<td align="right">2012</td>
+<td align="right">2015</td>
+<td align="right">2012</td>
+<td align="right">2015</td>
+</tr>
+<tr class="odd">
+<td align="left">516.34</td>
+<td align="left">full_code</td>
+<td align="right">9</td>
+<td align="right">1</td>
+<td align="left">516.34</td>
+<td align="left">51634</td>
 <td align="left">cms</td>
 <td align="right">2012</td>
 <td align="right">2015</td>
@@ -1414,11 +1668,11 @@ assignable.</p>
 <td align="right">1</td>
 <td align="left">516.34</td>
 <td align="left">51634</td>
-<td align="left">cms</td>
+<td align="left">cdc</td>
 <td align="right">2012</td>
-<td align="right">2015</td>
 <td align="right">2012</td>
-<td align="right">2015</td>
+<td align="right">2012</td>
+<td align="right">2012</td>
 </tr>
 <tr class="odd">
 <td align="left">516.35</td>
@@ -1427,6 +1681,32 @@ assignable.</p>
 <td align="right">1</td>
 <td align="left">516.35</td>
 <td align="left">51635</td>
+<td align="left">cdc</td>
+<td align="right">2012</td>
+<td align="right">2012</td>
+<td align="right">2012</td>
+<td align="right">2012</td>
+</tr>
+<tr class="even">
+<td align="left">516.35</td>
+<td align="left">full_code</td>
+<td align="right">9</td>
+<td align="right">1</td>
+<td align="left">516.35</td>
+<td align="left">51635</td>
+<td align="left">cms</td>
+<td align="right">2012</td>
+<td align="right">2015</td>
+<td align="right">2012</td>
+<td align="right">2015</td>
+</tr>
+<tr class="odd">
+<td align="left">516.36</td>
+<td align="left">full_code</td>
+<td align="right">9</td>
+<td align="right">1</td>
+<td align="left">516.36</td>
+<td align="left">51636</td>
 <td align="left">cms</td>
 <td align="right">2012</td>
 <td align="right">2015</td>
@@ -1440,13 +1720,26 @@ assignable.</p>
 <td align="right">1</td>
 <td align="left">516.36</td>
 <td align="left">51636</td>
-<td align="left">cms</td>
+<td align="left">cdc</td>
 <td align="right">2012</td>
-<td align="right">2015</td>
 <td align="right">2012</td>
-<td align="right">2015</td>
+<td align="right">2012</td>
+<td align="right">2012</td>
 </tr>
 <tr class="odd">
+<td align="left">516.37</td>
+<td align="left">full_code</td>
+<td align="right">9</td>
+<td align="right">1</td>
+<td align="left">516.37</td>
+<td align="left">51637</td>
+<td align="left">cdc</td>
+<td align="right">2012</td>
+<td align="right">2012</td>
+<td align="right">2012</td>
+<td align="right">2012</td>
+</tr>
+<tr class="even">
 <td align="left">516.37</td>
 <td align="left">full_code</td>
 <td align="right">9</td>
@@ -1459,7 +1752,7 @@ assignable.</p>
 <td align="right">2012</td>
 <td align="right">2015</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">516.38</td>
 <td align="left">NA</td>
 <td align="right">NA</td>
@@ -1472,7 +1765,7 @@ assignable.</p>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">516.39</td>
 <td align="left">NA</td>
 <td align="right">NA</td>
@@ -1487,13 +1780,13 @@ assignable.</p>
 </tr>
 </tbody>
 </table>
-<p>For fiscal years 1997 through 2011 the code 516.3 was assignable. In
-2012 516.3 was not assignable due to the introduction of the five digit
-codes 516.30, 516.31, 516.32, 516.33, 516.34, 516.35, 516.36, and
-516.37. Codes 526.38 and 516.39 were never in the ICD-9-CM standard.
-When looking at retrospective data over several years the use of the
-<code>ever.assignable</code> argument will simplify the testing for
-valid codes.</p>
+<p>For fiscal years 2006, 1997 through 2011, 2011 the code 516.3 was
+assignable. In 2012, 2012 516.3 was not assignable due to the
+introduction of the five digit codes 516.30, 516.31, 516.32, 516.33,
+516.34, 516.35, 516.36, and 516.37. Codes 526.38 and 516.39 were never
+in the ICD-9-CM standard. When looking at retrospective data over
+several years the use of the <code>ever.assignable</code> argument will
+simplify the testing for valid codes.</p>
 </div>
 <div class="section level4">
 <h4 id="header-codes">Header codes<a class="anchor" aria-label="anchor" href="#header-codes"></a>
@@ -1565,6 +1858,18 @@ assignable.</p>
 <span>    assignable_2005 <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, year <span class="op">=</span> <span class="fl">2005</span><span class="op">)</span>,</span>
 <span>    assignable_ever <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, ever.assignable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
+<span><span class="co">## Warning: The combination of `icdv` = 9; `dx` = 1; and `src` = cms; has ICD</span></span>
+<span><span class="co">## codes with a first known_start year of 2006. The input of `year` = 2002 results</span></span>
+<span><span class="co">## in no possible positive match.</span></span>
+<span><span class="co">## Warning: The combination of `icdv` = 9; `dx` = 1; and `src` = cms; has ICD</span></span>
+<span><span class="co">## codes with a first known_start year of 2006. The input of `year` = 2003 results</span></span>
+<span><span class="co">## in no possible positive match.</span></span>
+<span><span class="co">## Warning: The combination of `icdv` = 9; `dx` = 1; and `src` = cms; has ICD</span></span>
+<span><span class="co">## codes with a first known_start year of 2006. The input of `year` = 2004 results</span></span>
+<span><span class="co">## in no possible positive match.</span></span>
+<span><span class="co">## Warning: The combination of `icdv` = 9; `dx` = 1; and `src` = cms; has ICD</span></span>
+<span><span class="co">## codes with a first known_start year of 2006. The input of `year` = 2005 results</span></span>
+<span><span class="co">## in no possible positive match.</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">tab</span><span class="op">)</span></span></code></pre></div>
 <table style="width:100%;" class="table">
 <colgroup>
@@ -1591,63 +1896,63 @@ assignable.</p>
 <td align="left">TRUE</td>
 <td align="left">FALSE</td>
 <td align="left">FALSE</td>
-<td align="left">TRUE</td>
-<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
 <td align="left">TRUE</td>
 </tr>
 <tr class="even">
 <td align="left">719.70</td>
-<td align="left">TRUE</td>
-<td align="left">TRUE</td>
-<td align="left">TRUE</td>
 <td align="left">FALSE</td>
 <td align="left">FALSE</td>
-<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
 </tr>
 <tr class="odd">
 <td align="left">719.75</td>
-<td align="left">TRUE</td>
-<td align="left">TRUE</td>
-<td align="left">TRUE</td>
 <td align="left">FALSE</td>
 <td align="left">FALSE</td>
-<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
 </tr>
 <tr class="even">
 <td align="left">719.76</td>
-<td align="left">TRUE</td>
-<td align="left">TRUE</td>
-<td align="left">TRUE</td>
 <td align="left">FALSE</td>
 <td align="left">FALSE</td>
-<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
 </tr>
 <tr class="odd">
 <td align="left">719.77</td>
-<td align="left">TRUE</td>
-<td align="left">TRUE</td>
-<td align="left">TRUE</td>
 <td align="left">FALSE</td>
 <td align="left">FALSE</td>
-<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
 </tr>
 <tr class="even">
 <td align="left">719.78</td>
-<td align="left">TRUE</td>
-<td align="left">TRUE</td>
-<td align="left">TRUE</td>
 <td align="left">FALSE</td>
 <td align="left">FALSE</td>
-<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
 </tr>
 <tr class="odd">
 <td align="left">719.79</td>
-<td align="left">TRUE</td>
-<td align="left">TRUE</td>
-<td align="left">TRUE</td>
 <td align="left">FALSE</td>
 <td align="left">FALSE</td>
-<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
+<td align="left">FALSE</td>
 </tr>
 </tbody>
 </table>
