@@ -61,9 +61,11 @@ pccc_codes <- get_pccc_codes()
 setDT(pccc_codes)
 
 # build the mapping row-wise
-pccc_codes[,
-           map := paste0(condition, " (", paste(sort(unique(subcondition)), collapse = ", "), ")"),
-           by = .(icdv, dx, full_code, condition)]
+pccc_codes[
+  ,
+  map := paste0(condition, " (", paste(sort(unique(subcondition)), collapse = ", "), ")"),
+  by = .(icdv, dx, full_code, code, condition)
+]
 
 pccc_codes <-
   melt(
@@ -77,8 +79,11 @@ pccc_codes <-
 pccc_codes <- pccc_codes[value == 1]
 pccc_codes[, value := NULL]
 
-pccc_codes[, map := paste(sort(unique(map)), collapse = "; ")
-           , by = .(icdv, dx, full_code, method)]
+pccc_codes[
+  ,
+  map := paste(sort(unique(map)), collapse = "; "),
+  by = .(icdv, dx, full_code, code, method)
+]
 
 pccc_codes <- unique(pccc_codes)
 
