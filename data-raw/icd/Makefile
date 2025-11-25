@@ -14,7 +14,7 @@ all:
 	$(MAKE) -C icd10
 	$(MAKE) $(ICD_DATA_SETS)
 
-$(ICD_DATA_SETS) &: icd_codes.R icd9/icd9_cm_pcs.rds icd10/icd10.rds icd_chapters_subchapters.dat ../../R/icd_compact_to_full.R
+$(ICD_DATA_SETS) &: icd_codes.R icd9/icd9.rds icd10/icd10.rds icd_chapters_subchapters.dat ../../R/icd_compact_to_full.R
 	$(RSCRIPT) $<
 
 clean:

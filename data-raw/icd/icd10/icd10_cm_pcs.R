@@ -8,7 +8,7 @@
 #   cdc_icd10.rds (from cdc_icd10_cm.R)
 #   cms_icd10.rds (from cms_icd10_cm_and_pcs.R)
 #
-# output: icd10_cm_pcs.rds (data.table with code, dx, fiscal_year, cm_pcs_desc,
+# output: icd10_cm_pcs.rds (data.table with code, dx, year, cm_pcs_desc,
 #         cm_pcs_header)
 #
 # deps: data.table
@@ -35,10 +35,10 @@ cms_icd10[, dx := as.integer(dxpr == "dx")]
 
 icd10_cm_pcs <-
   merge(
-    x = cms_icd10[, .(code, dx, fiscal_year, cms_desc = desc, cms_header = header)],
-    y = cdc_icd10[, .(code, dx, fiscal_year, cdc_desc = desc, cdc_header = header)],
+    x = cms_icd10[, .(code, dx, year, cms_desc = desc, cms_header = header)],
+    y = cdc_icd10[, .(code, dx, year, cdc_desc = desc, cdc_header = header)],
     all = TRUE,
-    by = c("code", "dx", "fiscal_year")
+    by = c("code", "dx", "year")
   )
 
 # The headers come from the source files, let's rebuild
@@ -62,12 +62,12 @@ icd10_cm_pcs[nchar(code) == 7, `:=`(h6 = substr(code, 1, 6),
                                     h3 = substr(code, 1, 3))]
 
 headers <- icd10_cm_pcs[!is.na(h3) | !is.na(h4) | !is.na(h5) | !is.na(h6)]
-headers <- headers[, .(code, dx, fiscal_year, h3, h4, h5, h6)]
+headers <- headers[, .(code, dx, year, h3, h4, h5, h6)]
 
-icd10_cm_pcs[headers, cm_pcs_header := 1L, on = c("code" = "h3", "dx", "fiscal_year")]
-icd10_cm_pcs[headers, cm_pcs_header := 1L, on = c("code" = "h4", "dx", "fiscal_year")]
-icd10_cm_pcs[headers, cm_pcs_header := 1L, on = c("code" = "h5", "dx", "fiscal_year")]
-icd10_cm_pcs[headers, cm_pcs_header := 1L, on = c("code" = "h6", "dx", "fiscal_year")]
+icd10_cm_pcs[headers, cm_pcs_header := 1L, on = c("code" = "h3", "dx", "year")]
+icd10_cm_pcs[headers, cm_pcs_header := 1L, on = c("code" = "h4", "dx", "year")]
+icd10_cm_pcs[headers, cm_pcs_header := 1L, on = c("code" = "h5", "dx", "year")]
+icd10_cm_pcs[headers, cm_pcs_header := 1L, on = c("code" = "h6", "dx", "year")]
 icd10_cm_pcs[, cm_pcs_header := nafill(cm_pcs_header, type = "const", fill = 0L)]
 
 icd10_cm_pcs[, cms_header := nafill(cms_header, type = "const", fill = 0L)]

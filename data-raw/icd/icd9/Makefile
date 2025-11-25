@@ -97,7 +97,7 @@ endef
 
 .PHONY: all clean
 
-all: icd9_cm_pcs.rds
+all: icd9.rds
 
 cms.rds: cms.R $(CMS_SOURCES)
 	$(RSCRIPT) $<
@@ -105,7 +105,7 @@ cms.rds: cms.R $(CMS_SOURCES)
 cdc.rds: cdc.R $(CDC_SOURCES)
 	$(RSCRIPT) $<
 
-icd9_cm_pcs.rds: icd9_cm_pcs.R cms.rds cdc.rds
+icd9.rds: icd9.R cms.rds cdc.rds
 	$(RSCRIPT) $<
 
 cdc/dtab97.txt: $(DTAB97_SOURCES)

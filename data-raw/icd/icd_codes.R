@@ -27,15 +27,13 @@
 library(data.table)
 source("../../R/icd_compact_to_full.R")
 
-icd9 <- readRDS("./icd9/icd9_cm_pcs.rds")
+icd9 <- readRDS("./icd9/icd9.rds")
 icd10 <- readRDS("./icd10/icd10.rds")
 
 setDT(icd9)
 setDT(icd10)
 
 icd9[, icdv := 9L]
-icd9[, dx := as.integer(dxpr == "dx")]
-icd9[, dxpr := NULL]
 icd9[, full_code := icd_compact_to_full(code, icdv = icdv, dx = dx)]
 
 icd10[, icdv := 10L]
@@ -43,6 +41,7 @@ icd10[, full_code := icd_compact_to_full(code, icdv = icdv, dx = dx)]
 
 icd <- rbindlist(list(icd9, icd10), use.names = TRUE, fill = TRUE)
 
+################################################################################
 # extract just the codes as a lookup table
 icd_codes <- icd[, .(icdv, dx, full_code, code)]
 icd_codes <- unique(icd_codes)
@@ -52,40 +51,42 @@ icd_codes[, code_id := 1:.N]
 # other tables
 icd <- merge(x = icd, y = icd_codes, by = c("icdv", "dx", "full_code", "code"))
 
+################################################################################
 # Make a lookup table for the descriptions as well
 # storage size
 icd_descs <-
-  rbind(icd9[ , .(desc = cm_pcs_desc)],
-        icd10[, .(desc = cm_pcs_desc)],
-        icd10[, .(desc = who_desc)],
-        icd10[, .(desc = cdc_mortality_desc)])
+  rbind(
+    icd9[ , .(desc = cms_desc)],
+    icd9[ , .(desc = cdc_desc)],
+    icd10[, .(desc = cms_desc)],
+    icd10[, .(desc = who_desc)],
+    icd10[, .(desc = cdc_desc)]
+  )
 icd_descs <- unique(icd_descs)
 icd_descs <- icd_descs[!is.na(desc)]
 icd_descs[, desc_id := 1:.N]
 
-# Extract the CM and PCS variants
-cms <- icd[ , .(code_id, year = fcoalesce(fiscal_year, calendar_year), header = cm_pcs_header, desc = cm_pcs_desc)]
-cms <- cms[!is.na(desc)]
+################################################################################
+# Extract the CM and PCS (CMS) variants
+cms <- icd[cms == 1L, .(code_id, year, header = cms_header, desc = cms_desc)]
 cms <- cms[, .(start = min(year, na.rm = TRUE), end = max(year, na.rm = TRUE)), by = .(code_id, desc, header)]
-cms <- merge(cms, icd_descs, by = "desc")
+cms <- merge(cms, icd_descs, all.x = TRUE, by = "desc")
 cms[, desc := NULL]
 cms[, src := "cms"]
 setkey(cms, code_id, desc_id)
 
 # Extract the WHO releases
-who <- icd[ , .(code_id, year = calendar_year,   header = who_header, desc = who_desc)]
-who <- who[!is.na(desc)]
+who <- icd[who == 1L, .(code_id, year, header = who_header, desc = who_desc)]
 who <- who[, .(start = min(year), end = max(year)), by = .(code_id, desc, header)]
-who <- merge(who, icd_descs, by = "desc")
+who <- merge(who, icd_descs, all.x = TRUE, by = "desc")
 who[, desc := NULL]
 who[, src := "who"]
 setkey(who, code_id, desc_id)
 
 # Extract the CDC mortality codes
-cdc <- icd[ , .(code_id, year = calendar_year,   header = cdc_mortality_header, desc = cdc_mortality_desc)]
-cdc <- cdc[!is.na(desc)]
+cdc <- icd[cdc == 1L, .(code_id, year, header = cdc_header, desc = cdc_desc)]
 cdc <- cdc[, .(start = min(year), end = max(year)), by = .(code_id, desc, header)]
-cdc <- merge(cdc, icd_descs, by = "desc")
+cdc <- merge(cdc, icd_descs, all.x = TRUE, by = "desc")
 cdc[, desc := NULL]
 cdc[, src := "cdc"]
 setkey(cdc, code_id, desc_id)
@@ -94,12 +95,11 @@ setkey(cdc, code_id, desc_id)
 # known_start, known_end, assignable_start, assignable_end columns
 icd_srcs <- rbindlist(list(cms, who, cdc))
 
-k <- icd_srcs[,            .(known_start      = min(start), known_end      = max(end)), keyby = .(code_id, src)]
-a <- icd_srcs[header == 0, .(assignable_start = min(start), assignable_end = max(end)), keyby = .(code_id, src)]
-d <- icd_srcs[,            .(desc_start       = min(start), desc_end       = max(end)), keyby = .(code_id, desc_id, src)]
+k <- icd_srcs[,                .(known_start      = min(start), known_end      = max(end)), keyby = .(code_id, src)]
+a <- icd_srcs[header == 0,     .(assignable_start = min(start), assignable_end = max(end)), keyby = .(code_id, src)]
+d <- icd_srcs[!is.na(desc_id), .(desc_start       = min(start), desc_end       = max(end)), keyby = .(code_id, desc_id, src)]
 
 ka <- merge(x = k, y = a, all = TRUE)
-
 
 ka[, src := factor(src, levels = c("cms", "who", "cdc"))]
 d[, src := factor(src, levels = c("cms", "who", "cdc"))]
@@ -159,10 +159,6 @@ set(icd_codes, j = "chapter", value = NULL)
 
 icd_codes <- merge(icd_codes, icd_subchapters, all.x = TRUE, by = "subchapter")
 set(icd_codes, j = "subchapter", value = NULL)
-
-
-
-
 
 ################################################################################
 # Save to disk

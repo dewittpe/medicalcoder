@@ -6,10 +6,10 @@
 #          merges.
 #
 # inputs:
-#   cdc/dtab*.txt (CDC ICD-9-CM diagnosis distributions, one per fiscal year)
-#   cdc/ptab*.txt (CDC ICD-9-CM procedure distributions, one per fiscal year)
+#   cdc/dtab*.txt (CDC ICD-9-CM diagnosis distributions, one per year)
+#   cdc/ptab*.txt (CDC ICD-9-CM procedure distributions, one per year)
 #
-# output: cdc.rds (data.frame with full_code, code, desc, dxpr, fiscal_year,
+# output: cdc.rds (data.frame with full_code, code, desc, dx, year,
 #         header)
 #
 # deps: data.table, readxl, utils
@@ -27,7 +27,7 @@ library(data.table)
 ################################################################################
 # Data from the CDC
 
-# dtabXX is for fiscal year 19XX or 20XX
+# dtabXX is for year 19XX or 20XX
 dtabs <-
   list.files(path = "cdc", pattern = "dtab*", full.names = TRUE) |>
   sapply(scan,
@@ -107,7 +107,7 @@ e_codes <-
   lapply(unique) |>
   rbindlist(idcol = "file")
 
-# NOTE E849 is a valid code but the format of the input files breaks for fiscal
+# NOTE E849 is a valid code but the format of the input files breaks for
 # years 2001 - 2012.  The E894.[0-9] codes are found as expected, but the header
 # E849 needs to be added.
 
@@ -144,14 +144,14 @@ pr_codes <-
          }) |>
     lapply(unique) |>
     rbindlist(idcol = "file")
-set(pr_codes, j = "dxpr", value = "pr")
+set(pr_codes, j = "dx", value = 0L)
 
 # there are some false positive findings that need to be omitted from pr_codes
 pr_codes <- pr_codes[!(full_code == "14" & desc == "C-Urea breath test")]
 
 ################################################################################
 # build as one data set
-cdc <- rbind(cbind(rbind(numeric_codes, v_codes, e_codes), "dxpr" = "dx"), pr_codes)
+cdc <- rbind(cbind(rbind(numeric_codes, v_codes, e_codes), "dx" = 1L), pr_codes)
 
 # sanity check.  a code should not appear more than the number of input files.
 stopifnot(length(dtabs) == length(ptabs))
@@ -162,10 +162,10 @@ stopifnot(
 )
 
 ################################################################################
-# build fiscal_year
-cdc[, fiscal_year := sub("^cdc/(p|d)tab(\\d{2})\\.txt$", "\\2", file)]
-cdc[, fiscal_year := fifelse(grepl("^9", fiscal_year), paste0("19", fiscal_year), paste0("20", fiscal_year))]
-cdc[, fiscal_year := as.integer(fiscal_year)]
+# build year
+cdc[, year := sub("^cdc/(p|d)tab(\\d{2})\\.txt$", "\\2", file)]
+cdc[, year := fifelse(grepl("^9", year), paste0("19", year), paste0("20", year))]
+cdc[, year := as.integer(year)]
 cdc[, file := NULL]
 
 ################################################################################
@@ -181,12 +181,12 @@ add_rows <- function(pattern, suffixes, data) {
   #
   # return: the new rows
   data[grepl(pattern, full_code)] |>
-    split(by = c('full_code', 'fiscal_year')) |>
+    split(by = c('full_code', 'year')) |>
     lapply(function(DT, sf) {
              data.table(full_code = paste0(DT[["full_code"]], sf$suffix),
                         desc = paste(DT[["desc"]], sf$desc),
-                        dxpr = DT[["dxpr"]],
-                        fiscal_year = DT[["fiscal_year"]])
+                        dx = DT[["dx"]],
+                        year = DT[["year"]])
         }, sf = suffixes) |>
     rbindlist()
 }
@@ -261,8 +261,8 @@ cdc <-
   rbindlist(
     list(
       cdc,
-      add_rows("^20[3-8]\\.\\d$", SF[1:2], cdc[fiscal_year <  2009]),
-      add_rows("^20[3-8]\\.\\d$", SF,      cdc[fiscal_year >= 2009])
+      add_rows("^20[3-8]\\.\\d$", SF[1:2], cdc[year <  2009]),
+      add_rows("^20[3-8]\\.\\d$", SF,      cdc[year >= 2009])
     ),
     use.names = TRUE
   )
@@ -420,8 +420,8 @@ cdc <-
   rbindlist(
     list(
       cdc,
-      add_rows("^346\\.\\d$", SF[1:2], cdc[fiscal_year <  2009]),
-      add_rows("^346\\.\\d$", SF,      cdc[fiscal_year >= 2009])
+      add_rows("^346\\.\\d$", SF[1:2], cdc[year <  2009]),
+      add_rows("^346\\.\\d$", SF,      cdc[year >= 2009])
     ),
     use.names = TRUE
   )
@@ -489,8 +489,8 @@ cdc <-
 
 # 493 fifth digits 0:1
 # omit 493.8 from this as that coded, with its fifth digits, was introduced for
-# fiscal_year 2004
-# also, for fiscal_year 2001 and beyond, the fifth digit 2 was added.
+# year 2004
+# also, for year 2001 and beyond, the fifth digit 2 was added.
 SF <- fread(text ="
             suffix | desc
             0 | unspecified
@@ -500,8 +500,8 @@ cdc <-
   rbindlist(
     list(
       cdc,
-      add_rows("^493\\.[0-7,9]$", SF[0:2 + 1], cdc[fiscal_year <  2001]),
-      add_rows("^493\\.[0-7,9]$", SF,          cdc[fiscal_year >= 2001])
+      add_rows("^493\\.[0-7,9]$", SF[0:2 + 1], cdc[year <  2001]),
+      add_rows("^493\\.[0-7,9]$", SF,          cdc[year >= 2001])
     ),
     use.names = TRUE
   )
@@ -565,7 +565,7 @@ cdc <-
   rbindlist(
     list(
       cdc,
-      add_rows("^645$", SF, cdc[fiscal_year <= 1999])
+      add_rows("^645$", SF, cdc[year <= 1999])
     ),
     use.names = TRUE
   )
@@ -587,8 +587,8 @@ cdc <-
       add_rows("^64[7-8]\\.\\d$", SF, cdc),
       add_rows("^649\\.[0-4,6,9]$", SF, cdc),
       add_rows("^649\\.5$", SF[c(0,1,3)+1], cdc),
-      add_rows("^649\\.7$", SF, cdc[fiscal_year < 2009]),
-      add_rows("^649\\.7$", SF[-(c(2,4)+1)], cdc[fiscal_year >= 2009]),
+      add_rows("^649\\.7$", SF, cdc[year < 2009]),
+      add_rows("^649\\.7$", SF[-(c(2,4)+1)], cdc[year >= 2009]),
       add_rows("^649\\.8$", SF[c(1,2)+1], cdc)
     ),
     use.names = TRUE
@@ -602,7 +602,7 @@ cdc <-
     list(
       cdc,
       add_rows("^657$", SF, cdc),
-      add_rows("^670$", SF, cdc[fiscal_year < 2010]),
+      add_rows("^670$", SF, cdc[year < 2010]),
       add_rows("^672$", SF, cdc)
     ),
     use.names = TRUE
@@ -665,13 +665,13 @@ cdc <-
       add_rows("^716\\.6$", SF[c(0:8)+1], cdc),
       add_rows("^718\\.[0-1]$", SF[c(0:5,7:9)+1], cdc),
       add_rows("^718\\.[2-5,7-8]$", SF[c(0:9)+1], cdc),
-      add_rows("^718\\.6$", SF[c(0,5)+1], cdc[fiscal_year < 2012]),
-      add_rows("^718\\.6$", SF[c(5)+1], cdc[fiscal_year >= 2012]),
+      add_rows("^718\\.6$", SF[c(0,5)+1], cdc[year < 2012]),
+      add_rows("^718\\.6$", SF[c(5)+1], cdc[year >= 2012]),
       add_rows("^718\\.9$", SF[c(0:5,7:9)+1], cdc),
       add_rows("^719\\.[0-6,8-9]$", SF[c(0:9)+1], cdc),
       # it appears that the fifth digit codes for 719.7 were removed starting in
-      # fiscal year 2004
-      add_rows("^719\\.7$", SF[c(0,5:9)+1], cdc[fiscal_year < 2004]),
+      # year 2004
+      add_rows("^719\\.7$", SF[c(0,5:9)+1], cdc[year < 2004]),
       add_rows("^730\\.\\d$", SF[c(0:9)+1], cdc)
     ),
     use.names = TRUE
@@ -1075,8 +1075,8 @@ cdc <-
   rbindlist(
     list(
       cdc,
-      add_rows("^E83[0-9]$", SF[c(0:6,8:9)+1], cdc[fiscal_year <  2010]),
-      add_rows("^E83[0-9]$", SF,               cdc[fiscal_year >= 2010])
+      add_rows("^E83[0-9]$", SF[c(0:6,8:9)+1], cdc[year <  2010]),
+      add_rows("^E83[0-9]$", SF,               cdc[year >= 2010])
     ),
     use.names = TRUE
   )
@@ -1200,13 +1200,58 @@ cdc <-
 
 ################################################################################
 # test for duplicated rows
-test <- cdc[, .N, keyby = .(full_code, fiscal_year)][N > 1]
+test <- cdc[, .N, keyby = .(full_code, year)][N > 1]
 stopifnot(nrow(test) == 0L)
 
 ################################################################################
-# Save data.frames, not data.tables, to disk.
+# HEADERS
+#
+# look for headers in the dx codes.
+# 001 is a header becuase 001.0 exists
+# 001.0 is not a header becuase no code with five digits starting with 0010
+# exist, that is, 001.0 is a non-header code
+#
+# 003 is header because 0032 exists
+# 0032 is a header because 00320, 00321, ... exists
+#
+# For procedure codes:
+#   10   - header
+#   102  - header
+#   1021 - non-header
+#
+# Header status can change from year to year
+#
+# verify that the codes are the length expected
+
 cdc[, code := sub("\\.", "", full_code)]
+
+stopifnot(cdc[dx == 0L, all(nchar(code) %in% 2:4)])
+stopifnot(cdc[dx == 1L, all(nchar(code) %in% 3:5)])
+
+cdc[nchar(code) == 5L & dx == 1L, `:=`(h4 = substr(code, 1, 4), h3 = substr(code, 1, 3))]
+cdc[nchar(code) == 4L & dx == 1L, `:=`(h3 = substr(code, 1, 3))]
+
+cdc[nchar(code) == 4L & dx == 0L, `:=`(h3 = substr(code, 1, 3), h2 = substr(code, 1, 2))]
+cdc[nchar(code) == 3L & dx == 0L, `:=`(h2 = substr(code, 1, 2))]
+
+headers <- cdc[!is.na(h2) | !is.na(h3) | !is.na(h4), .(code, h2, h3, h4, dx, year)]
+headers <- unique(headers)
+
+cdc[headers, header := 1L, on = c("code" = "h2", 'dx', 'year')]
+cdc[headers, header := 1L, on = c("code" = "h3", 'dx', 'year')]
+cdc[headers, header := 1L, on = c("code" = "h4", 'dx', 'year')]
+
+cdc[, header := nafill(header, type = 'const', fill = 0L)]
+
+set(cdc, j = "h2", value = NULL)
+set(cdc, j = "h3", value = NULL)
+set(cdc, j = "h4", value = NULL)
+
+################################################################################
+# Save data.frames, not data.tables, to disk.
 cdc[, full_code := NULL]
+data.table::setnames(cdc, old = "desc", new = "cdc_desc")
+data.table::setnames(cdc, old = "header", new = "cdc_header")
 cdc <- unique(cdc)
 setDF(cdc)
 saveRDS(file = "cdc.rds", object = cdc)

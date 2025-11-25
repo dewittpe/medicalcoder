@@ -9,13 +9,12 @@
 #   who_icd10.rds
 #   icd10_cm_pcs.rds
 #
-# output: icd10.rds (data.frame with merged mortality and CM/PCS metadata)
+# output: icd10.rds (data.frame with merged cdc cms and who data)
 #
 # deps: data.table
 #
 # notes:
-#   Run after generating mortality and CM/PCS intermediates under data-
-#     raw/icd/icd10/.
+#   Run after generating CDC, WHO and CMS intermediates under data-raw/icd/icd10/
 #
 # idempotent: yes (pure joins and save)
 ################################################################################
@@ -23,30 +22,30 @@ library(data.table)
 
 cdc_allvalid <- readRDS("./cdc_allvalid.rds")
 who_icd10    <- readRDS("./who_icd10.rds")
-cm_pcs_icd10 <- readRDS("./icd10_cm_pcs.rds")
+cms_icd10 <- readRDS("./cms_icd10.rds")
 
 setDT(cdc_allvalid)
 setDT(who_icd10)
-setDT(cm_pcs_icd10)
+setDT(cms_icd10)
 
 who_icd10[, dx := 1L]
 cdc_allvalid[, dx := 1L]
 
 icd10 <-
   merge(
-    x = cdc_allvalid[, .(code, dx, calendar_year = year, cdc_mortality_desc = desc, cdc_mortality_header = header)],
-    y = who_icd10[,    .(code, dx, calendar_year,                  who_desc = desc,           who_header = header)],
+    x = cdc_allvalid[, .(cdc = 1L, code, dx, year, cdc_desc = desc, cdc_header = header)],
+    y = who_icd10[,    .(who = 1L, code, dx, year, who_desc = desc, who_header = header)],
     all = TRUE,
-    by = c("code", "dx", "calendar_year")
+    by = c("code", "dx", "year")
   )
 
 icd10 <-
   merge(
     x = icd10,
-    y = cm_pcs_icd10[, .(code, dx, fiscal_year, cm_pcs_desc, cm_pcs_header)],
+    y = cms_icd10[, .(cms = 1L, code, dx, year, cms_desc, cms_header)],
     all = TRUE,
-    by.x = c("code", "dx", "calendar_year"),
-    by.y = c("code", "dx", "fiscal_year")
+    by.x = c("code", "dx", "year"),
+    by.y = c("code", "dx", "year")
   )
 
 ################################################################################

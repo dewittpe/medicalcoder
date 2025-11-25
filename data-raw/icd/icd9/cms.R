@@ -22,7 +22,7 @@
 #     Version 23 Effective October 1, 2005
 #
 # output:  cms.rds (data.frame with columns: code (ICD-9 compact code),
-#          long_desc, short_desc, fiscal_year, dxpr
+#          long_desc, short_desc, year, dx
 #
 # deps:    data.table, readxl
 #
@@ -36,14 +36,14 @@ read_cms_zip <- function(zip_path, dx_file, pr_file, fy) {
   #' @param zip_path character string, file path to source zip file
   #' @param dx_file,pr_file character string, the name of the diagnosis file and
   #'   procedure files to read from within the zip file
-  #' @param fy: integer the fiscal year
+  #' @param fy: integer the year
   #'
   #' @return a data.table with columns (if they exist):
   #'   * code  (character) compact ICD-9 code
   #'   * long_desc (character) long description of the code
   #'   * short_desc (character) short description of the code
-  #'   * fiscal_year (integer)
-  #'   * dxpr  (character): "dx" or "pr"
+  #'   * year (integer)
+  #'   * dx (integer):  0 for procedure code, 1 for diagnosis code
 
   stopifnot(length(fy) == 1 && is.integer(fy))
   stopifnot(length(zip_path) == 1 && is.character(zip_path))
@@ -123,11 +123,11 @@ read_cms_zip <- function(zip_path, dx_file, pr_file, fy) {
   dx[, `:=`(short_desc = get(sx[1]))]
   pr[, `:=`(short_desc = get(sp[1]))]
 
-  dx[, `:=`(fiscal_year = fy, dxpr = "dx")]
-  pr[, `:=`(fiscal_year = fy, dxpr = "pr")]
+  dx[, `:=`(year = fy, dx = 1L)]
+  pr[, `:=`(year = fy, dx = 0L)]
 
   rtn <- data.table::rbindlist(list(dx = dx, pr = pr))
-  keep <- c("code", "long_desc", "short_desc", "fiscal_year", "dxpr")
+  keep <- c("code", "long_desc", "short_desc", "year", "dx")
   keep <- keep[keep %in% names(rtn)]
   rtn[, .SD, .SDcols = keep]
 }
@@ -159,12 +159,12 @@ cms <-
   )
 
 cms <- data.table::rbindlist(cms, use.names = TRUE, fill = TRUE)
-cms <- unique(cms[nzchar(code)][order(dxpr, fiscal_year, code)])
+cms <- unique(cms[nzchar(code)][order(dx, year, code)])
 
 ################################################################################
 # CMS data does not have the header codes; add them.
 cms[
-  dxpr == "dx",
+  dx == 1L,
   `:=`(
     d3 = data.table::fcase(
       grepl("^\\d", code)  & nchar(code) >= 3, substr(code, 1, 3),
@@ -183,9 +183,9 @@ cms[
   )
 ]
 
-cms[dxpr == "pr", d2 := data.table::fifelse(nchar(code) >= 2, substr(code, 1, 2), NA_character_)]
-cms[dxpr == "pr", d3 := data.table::fifelse(nchar(code) >= 3, substr(code, 1, 3), NA_character_)]
-cms[dxpr == "pr", d4 := data.table::fifelse(nchar(code) >= 4, substr(code, 1, 4), NA_character_)]
+cms[dx == 0L, d2 := data.table::fifelse(nchar(code) >= 2, substr(code, 1, 2), NA_character_)]
+cms[dx == 0L, d3 := data.table::fifelse(nchar(code) >= 3, substr(code, 1, 3), NA_character_)]
+cms[dx == 0L, d4 := data.table::fifelse(nchar(code) >= 4, substr(code, 1, 4), NA_character_)]
 
 with_headers <- list()
 
@@ -194,23 +194,30 @@ for(x in c("d2", "d3", "d4", "d5")) {
   with_headers[[x]] <-
     data.table::data.table(
       code = cms[[x]],
-      fiscal_year = cms[["fiscal_year"]],
+      year = cms[["year"]],
       short_desc = data.table::fifelse(cms[["code"]] == cms[[x]], cms[["short_desc"]], NA_character_),
       long_desc  = data.table::fifelse(cms[["code"]] == cms[[x]], cms[["long_desc"]],  NA_character_),
-      dxpr = cms[["dxpr"]]
+      dx = cms[["dx"]],
+      header = as.integer(cms[["code"]] != cms[[x]])
     )[idx]
   with_headers[[x]] <- unique(with_headers[[x]])
 }
 
 cms <- data.table::rbindlist(with_headers, use.names = TRUE, fill = TRUE)
-data.table::setorder(cms, dxpr, fiscal_year, code)
+data.table::setorder(cms, dx, year, code)
+
+# a header code introduced in 2014
+cms[code == "148" & dx == 0L, long_desc := "Operations on epiretinal visual prosthesis"]
 
 ################################################################################
 # sanity checks
 stopifnot(!anyNA(cms[["code"]]), all(nzchar(cms[["code"]])))
 
 ################################################################################
-# save
+# clean up and save
+data.table::set(cms, j = "short_desc", value = NULL)
+data.table::setnames(cms, old = "long_desc", new = "cms_desc")
+data.table::setnames(cms, old = "header", new = "cms_header")
 data.table::setDF(cms)
 saveRDS(file = "cms.rds", object = cms)
 

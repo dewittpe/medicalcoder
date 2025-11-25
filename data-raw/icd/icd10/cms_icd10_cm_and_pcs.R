@@ -8,7 +8,7 @@
 #   cms/cms_*.zip archives containing icd10cm_order_*.txt and
 #     icd10pcs_order_*.txt
 #
-# output: cms_icd10.rds (data.table with code, desc, header, dxpr, fiscal_year,
+# output: cms_icd10.rds (data.table with code, desc, header, dx, year,
 #         src)
 #
 # deps: data.table, readxl, pbapply
@@ -73,9 +73,16 @@ cms_files <- pblapply(cms_files, orderfile_to_DT, cl = 8L)
 cms_files <- rbindlist(cms_files, fill = TRUE, use.names = TRUE, idcol = "src")
 cms_files[, code := toupper(code)]
 
-cms_files[, fiscal_year := as.integer(substr(src, start = nchar(src) - 3, stop = nchar(src)))]
+cms_files[, year := as.integer(substr(src, start = nchar(src) - 3, stop = nchar(src)))]
 cms_files[, dxpr := substr(src, start = 5, stop = 6)]
 cms_files[, src := substr(src, start = 1, stop = 3)]
+cms_files[, dx := as.integer(dxpr == "dx")]
+
+data.table::setnames(
+  cms_files,
+  old = c("header", "desc"),
+  new = c("cms_header", "cms_desc")
+)
 
 ################################################################################
 setDF(cms_files)
