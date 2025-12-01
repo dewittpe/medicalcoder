@@ -5,6 +5,8 @@
 * Extend and improve the internal ICD-9 database to distinguish between CDC and
   CMS source.
 
+* Fix documentation of the `mdcr` and `mdcr_longitudinal` datasets.
+
 # medicalcoder 0.7.0
 
 ## Bug Fixes
