@@ -1,3 +1,10 @@
+# medicalcoder 0.7.0.9000
+
+## Other Changes
+
+* Extend and improve the internal ICD-9 database to distinguish between CDC and
+  CMS source.
+
 # medicalcoder 0.7.0
 
 ## Bug Fixes
