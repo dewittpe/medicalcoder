@@ -117,6 +117,23 @@ stopifnot(
   identical(getFromNamespace(x = "mdcr_select", ns = "medicalcoder")(DT), DT)
 )
 
+# check for one column
+DFD  <- getFromNamespace(x = "mdcr_select", ns = "medicalcoder")(DF,  col = c("D"))
+TBLD <- getFromNamespace(x = "mdcr_select", ns = "medicalcoder")(TBL, col = c("D"))
+DTD  <- getFromNamespace(x = "mdcr_select", ns = "medicalcoder")(DT,  col = c("D"))
+
+stopifnot(
+  identical(names(DFD),  c("D")),
+  identical(names(TBLD), c("D")),
+  identical(names(DTD),  c("D")),
+  identical(DFD[["D"]], paste("v", c(0:5, 5:8))),
+  identical(TBLD[["D"]], paste("v", c(0:5, 5:8))),
+  identical(DTD[["D"]], paste("v", c(0:5, 5:8))),
+  identical(class(DFD), class(DF)),
+  identical(class(TBLD), class(TBL)),
+  identical(class(DTD), class(DT))
+)
+
 ################################################################################
 # testing mdcr_subset
 
