@@ -117,6 +117,9 @@ mdcr_setorder <- function(x, by) {
   stopifnot(is.data.frame(x))
   if (requireNamespace("data.table", quietly = TRUE) && inherits(x, "data.table")) {
     getExportedValue(name = "setorderv", ns = "data.table")(x, by)
+  } else if (requireNamespace("dplyr", quietly = TRUE) && inherits(x, "tbl_df")) {
+    arrange <- getExportedValue(name = "arrange", ns = "dplyr")
+    x <- do.call(arrange, c(list(.data = x), lapply(by, as.name)))
   } else {
     x <- x[do.call(order, x[by]), , drop = FALSE]
   }
