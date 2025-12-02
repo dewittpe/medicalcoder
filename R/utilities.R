@@ -50,7 +50,7 @@ mdcr_select <- function(x, cols) {
   }
 
   if (requireNamespace("data.table", quietly = TRUE) && inherits(x, "data.table")) {
-    return(x[, cols, drop = FALSE, with = FALSE])
+    return(getExportedValue(name = "copy", ns = "data.table")(x[, cols, drop = FALSE, with = FALSE]))
   } else {
     return(x[, cols, drop = FALSE])
   }
