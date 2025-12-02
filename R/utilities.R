@@ -49,6 +49,14 @@ mdcr_select <- function(x, cols) {
     return(x)
   }
 
+  #  # By makeing sure that cols is a character vector the `with = FALSE` is not
+  #  # needed for data.tables which will allow for a simple call.  This is
+  #  # important because `[.data.frame` will error if `with = FALSE` is passed.
+  #  # `[.data.table` does not need `with = FALSE` if `j` is a character vector.
+  #  stopifnot(inherits(cols, "character"))
+  #  #x[, cols, drop = FALSE, with = FALSE]
+  #  x[, cols, drop = FALSE]
+
   if (requireNamespace("data.table", quietly = TRUE) && inherits(x, "data.table")) {
     return(getExportedValue(name = "copy", ns = "data.table")(x[, cols, drop = FALSE, with = FALSE]))
   } else {
