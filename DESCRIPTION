@@ -21,6 +21,7 @@ BugReports: https://github.com/dewittpe/medicalcoder/issues
 LazyData: true
 Suggests:
     data.table,
+    dplyr,
     kableExtra,
     knitr,
     R.utils,

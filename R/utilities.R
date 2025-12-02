@@ -28,6 +28,16 @@ mdcr_set <- function(x, i = NULL, j, value) {
   if (requireNamespace("data.table", quietly = TRUE) && inherits(x, "data.table")) {
     getExportedValue(name = "setDT", ns = "data.table")(x = x)
     getExportedValue(name = "set", ns = "data.table")(x = x, i = i, j = j, value = value)
+  } else if (requireNamespace("dplyr", quietly = TRUE) && inherits(x, "tbl_df")) {
+    mutate <- getExportedValue(name = "mutate", ns = "dplyr")
+    if (is.null(i)) {
+      newcol <- if (nrow(x) == 0L) value[0] else value
+    } else {
+      newcol <- x[[j]]
+      if (is.null(newcol)) newcol <- vector(mode = typeof(value), length = nrow(x))
+      newcol[i] <- value
+    }
+    x <- do.call(mutate, c(list(.data = x), stats::setNames(list(newcol), j)))
   } else {
     if (is.null(i)) {
       x[[j]] <- value
