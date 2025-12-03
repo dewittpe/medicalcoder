@@ -9,7 +9,9 @@ dataframetools <-
     "mdcr_subset",
     "mdcr_setorder",
     "mdcr_setnames",
-    "mdcr_duplicated"
+    "mdcr_duplicated",
+    "mdcr_inner_join",
+    "mdcr_left_join"
   )
 
 mdcr <- getNamespace("medicalcoder")
@@ -320,6 +322,67 @@ stopifnot(
   identical(getFromNamespace(x = "mdcr_duplicated", ns = "medicalcoder")(TBL, by = "D", fromLast = TRUE), expected),
   identical(getFromNamespace(x = "mdcr_duplicated", ns = "medicalcoder")(DT, by = "D", fromLast = TRUE), expected)
 )
+
+################################################################################
+# testing mdcr_inner_join
+#
+# without specifying the by
+t0 <- getFromNamespace(x = "mdcr_inner_join", ns = "medicalcoder")(DF, DF[2, ])
+t1 <- getFromNamespace(x = "mdcr_inner_join", ns = "medicalcoder")(DT, DT[2, ])
+t2 <- getFromNamespace(x = "mdcr_inner_join", ns = "medicalcoder")(TBL, TBL[2, ])
+
+stopifnot(
+  isTRUE( all.equal(t0, DF[2, ], check.attributes = FALSE)),
+  isTRUE( all.equal(t1, DT[2, ], check.attributes = FALSE)),
+  isTRUE( all.equal(t2, TBL[2, ], check.attributes = FALSE))
+)
+
+t3 <- getFromNamespace(x = "mdcr_inner_join", ns = "medicalcoder")(DF, DF[c(2, 5, 1), ])
+t4 <- getFromNamespace(x = "mdcr_inner_join", ns = "medicalcoder")(DT, DT[c(2, 5, 1), ])
+t5 <- getFromNamespace(x = "mdcr_inner_join", ns = "medicalcoder")(TBL, TBL[c(2, 5, 1), ])
+
+stopifnot(
+  isTRUE( all.equal( t3, DF[c(1, 2, 5), ], check.attributes = FALSE)),
+  isTRUE( all.equal( t4, DT[c(1, 2, 5), ], check.attributes = FALSE)),
+  isTRUE( all.equal( t5, TBL[c(1, 2, 5), ], check.attributes = FALSE))
+  )
+
+################################################################################
+# testing mdcr_left_join
+
+# These wrappers around merge have sort = FALSE and dplyr::left_join doesn't
+# sort the return by default.  So, build the merge, sort the result, and then
+# test for the outcome.  The first set of tests for a single
+
+t0 <- getFromNamespace(x = "mdcr_left_join", ns = "medicalcoder")(DF, DF[2, ])
+t0 <- t0[do.call(order, lapply(lapply(names(t0), as.name), get, envir = as.environment(t0))), ]
+
+t1 <- getFromNamespace(x = "mdcr_left_join", ns = "medicalcoder")(DF, DF[c(2, 5, 2), ])
+t1 <- t1[do.call(order, lapply(lapply(names(t1), as.name), get, envir = as.environment(t1))), ]
+
+t2 <- getFromNamespace(x = "mdcr_left_join", ns = "medicalcoder")(DT, DT[2, ])
+t2 <- t2[do.call(order, lapply(lapply(names(t2), as.name), get, envir = as.environment(t2))), ]
+
+t3 <- getFromNamespace(x = "mdcr_left_join", ns = "medicalcoder")(DT, DT[c(2, 5, 2), ])
+t3 <- t3[do.call(order, lapply(lapply(names(t3), as.name), get, envir = as.environment(t3))), ]
+
+t4 <- getFromNamespace(x = "mdcr_left_join", ns = "medicalcoder")(TBL, TBL[2, ])
+t4 <- t4[do.call(order, lapply(lapply(names(t4), as.name), get, envir = as.environment(t4))), ]
+
+t5 <- getFromNamespace(x = "mdcr_left_join", ns = "medicalcoder")(TBL, TBL[c(2, 5, 2), ])
+t5 <- t5[do.call(order, lapply(lapply(names(t5), as.name), get, envir = as.environment(t5))), ]
+
+# without specifying the by
+stopifnot(
+  isTRUE( all.equal( t0, DF, check.attributes = FALSE)),
+  isTRUE( all.equal( t1, DF[c(1, 2, 2, 3:nrow(DF)), ], check.attributes = FALSE)),
+  isTRUE( all.equal( t2, DT, check.attributes = FALSE)),
+  isTRUE( all.equal( t3, DT[c(1, 2, 2, 3:nrow(DF)), ], check.attributes = FALSE)),
+  isTRUE( all.equal( t4, TBL, check.attributes = FALSE)),
+  isTRUE( all.equal( t5, TBL[c(1, 2, 2, 3:nrow(DF)), ], check.attributes = FALSE))
+)
+
+
 
 
 ################################################################################

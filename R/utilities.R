@@ -180,6 +180,47 @@ mdcr_duplicated <- function(x, by = seq_along(x), ...) {
   rtn
 }
 
+#'
+#' @rdname mdcr_data_frame_tools
+#' @family data.frame tools
+#' @noRd
+#' @keywords internal
+mdcr_left_join <- function(x, y, ...) {
+  stopifnot(is.data.frame(x), is.data.frame(y))
+
+  if (requireNamespace("dplyr", quietly = TRUE) && inherits(x, "tbl_df")) {
+    lj <- getExportedValue(name = "left_join", ns = "dplyr")
+    rtn <- lj(x = x, y = y, ...)
+  } else {
+    # if x is a data.table and the data.table namespace is available then the
+    # data.table:::merge.data.table method will be called and a specific block
+    # for data.table is not needed here
+    rtn <- merge(x = x, y = y, all.x = TRUE, all.y = FALSE, sort = FALSE, ...)
+  }
+  rtn
+}
+
+#'
+#' @rdname mdcr_data_frame_tools
+#' @family data.frame tools
+#' @noRd
+#' @keywords internal
+mdcr_inner_join <- function(x, y, ...) {
+  stopifnot(is.data.frame(x), is.data.frame(y))
+
+  if (requireNamespace("dplyr", quietly = TRUE) && inherits(x, "tbl_df")) {
+    ij <- getExportedValue(name = "inner_join", ns = "dplyr")
+    rtn <- ij(x = x, y = y, ...)
+  } else {
+    # if x is a data.table and the data.table namespace is available then the
+    # data.table:::merge.data.table method will be called and a specific block
+    # for data.table is not needed here
+    rtn <- merge(x = x, y = y, all.x = FALSE, all.y = FALSE, sort = FALSE, ...)
+  }
+  rtn
+}
+
+
 
 ################################################################################
 
