@@ -385,25 +385,21 @@ comorbidities.data.frame <- function(data,
   ##############################################################################
   # inner join the data with the lookup table
   on_full <-
-    merge(
+    mdcr_inner_join(
       x = if (full.codes) {data} else {data[0, ]},
       y = lookup,
-      all = FALSE,
       by.x = by_x,
       by.y = c("full_code", by_y),
-      suffixes = c("", ".y"),
-      sort = FALSE
+      suffixes = c("", ".y")
     )
 
   on_comp <-
-    merge(
+    mdcr_inner_join(
       x = if (compact.codes) {data} else {data[0, ]},
       y = lookup,
-      all = FALSE,
       by.x = by_x,
       by.y = c("code", by_y),
-      suffixes = c("", ".y"),
-      sort = FALSE
+      suffixes = c("", ".y")
     )
 
   ##############################################################################
