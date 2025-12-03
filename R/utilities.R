@@ -137,11 +137,15 @@ mdcr_setorder <- function(x, by) {
 #' @keywords internal
 mdcr_setnames <- function(x, old, new, ...) {
   stopifnot(is.data.frame(x))
+  stopifnot(is.character(old), is.character(new))
+  stopifnot(length(old) == length(new))
   if (requireNamespace("data.table", quietly = TRUE) && inherits(x, "data.table")) {
     getExportedValue(name = "setnames", ns = "data.table")(x, old, new, ...)
+  } else if (requireNamespace("dplyr", quietly = TRUE) && inherits(x, "tbl_df")) {
+    rename <- getExportedValue(name = "rename", ns = "dplyr")
+    args <- c(list(.data = x), stats::setNames(lapply(old, as.name), new))
+    x <- do.call(rename, args)
   } else {
-    stopifnot(is.character(old), is.character(new))
-    stopifnot(length(old) == length(new))
     for (i in seq_len(length(old))) {
       names(x)[names(x) == old[i]] <- new[i]
     }
