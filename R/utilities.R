@@ -174,7 +174,7 @@ mdcr_duplicated <- function(x, by = seq_along(x), ...) {
     # optimized path instead of falling back to duplicated.data.frame.
     .datatable.aware <- TRUE
     rtn <- utils::getFromNamespace(x = 'duplicated.data.table', ns = "data.table")(x, by = by, ...)
-  } else {
+  } else {  # this is for base R data.frames and tidyverse tbl_df
     rtn <- duplicated(x[, by, drop = FALSE], ...)
   }
   rtn
