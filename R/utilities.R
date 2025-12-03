@@ -210,7 +210,24 @@ mdcr_inner_join <- function(x, y, ...) {
 
   if (requireNamespace("dplyr", quietly = TRUE) && inherits(x, "tbl_df")) {
     ij <- getExportedValue(name = "inner_join", ns = "dplyr")
-    rtn <- ij(x = x, y = y, ...)
+    dots <- list(...)
+    if (!is.null(dots$by.x) & !is.null(dots$by.y)) {
+      by <- stats::setNames(dots$by.y, dots$by.x)
+      dots$by.x <- NULL
+      dots$by.y <- NULL
+    } else if (!is.null(dots$by)) {
+      by <- dots$by
+      dots$by   <- NULL
+    } else {
+      by <- NULL
+    }
+    if (!is.null(dots$suffixes)) {
+      suffix <- dots$suffixes
+      dots$suffixes <- NULL
+    } else {
+      suffix <- c(".x", ".y")
+    }
+    rtn <- do.call(what = ij, args = c(list(x = x, y = y, by = by, suffix = suffix), dots))
   } else {
     # if x is a data.table and the data.table namespace is available then the
     # data.table:::merge.data.table method will be called and a specific block
