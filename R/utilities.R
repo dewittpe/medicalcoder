@@ -98,12 +98,21 @@ mdcr_subset <- function(x, i, cols) {
     if (missing(cols)) {
       if (requireNamespace("data.table", quietly = TRUE) && inherits(x, "data.table")) {
         return(x[rows, , drop = FALSE, with = FALSE])
+      } else if (requireNamespace("dplyr", quietly = TRUE) && inherits(x, "tbl_df")) {
+        slice <- getExportedValue(name = "slice", ns = "dplyr")
+        return(slice(x, rows))
       } else {
         return(x[rows, , drop = FALSE])
       }
     } else {
       if (requireNamespace("data.table", quietly = TRUE) && inherits(x, "data.table")) {
         return(x[rows, cols, drop = FALSE, with = FALSE])
+      } else if (requireNamespace("dplyr", quietly = TRUE) && inherits(x, "tbl_df")) {
+        slice  <- getExportedValue(name = "slice",  ns = "dplyr")
+        select <- getExportedValue(name = "select", ns = "dplyr")
+        all_of <- getExportedValue(name = "all_of", ns = "dplyr")
+        x <- slice(x, rows)
+        return(select(x, all_of(cols)))
       } else {
         cols_idx <- match(cols, names(x))
         return(x[rows, cols_idx, drop = FALSE])
