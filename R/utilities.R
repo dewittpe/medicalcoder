@@ -69,6 +69,10 @@ mdcr_select <- function(x, cols) {
 
   if (requireNamespace("data.table", quietly = TRUE) && inherits(x, "data.table")) {
     return(getExportedValue(name = "copy", ns = "data.table")(x[, cols, drop = FALSE, with = FALSE]))
+  } else if (requireNamespace("dplyr", quietly = TRUE) && inherits(x, "tbl_df")) {
+    select <- getExportedValue(name = "select", ns = "dplyr")
+    all_of <- getExportedValue(name = "all_of", ns = "dplyr")
+    return(select(x, all_of(cols)))
   } else {
     return(x[, cols, drop = FALSE])
   }
