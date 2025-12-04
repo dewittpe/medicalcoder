@@ -398,6 +398,36 @@ if (requireNamespace("tibble", quietly = TRUE)) {
 outTBL <- getFromNamespace(x = "mdcr_inner_join", ns = "medicalcoder")(r, l, by = "x1", suffixes = c(".right", ".left"))
 stopifnot(identical(outTBL, expected_tb))
 
+# test with by.x and by.y statements
+r <- data.frame(x1 = as.integer(1:10), x2 = c("A", "B", "D", "E", "F", "T", "A", "C", "9", "ten"), stringsAsFactors = FALSE)
+l <- data.frame(
+  z = as.integer(c(1, 2, 33, 44, 55, 66, 77, 8, 99, 1100)),
+  x2 = c("a", "b", "d", "e", "f", "t", "a", "c", "9", "TEN"),
+  stringsAsFactors = FALSE
+)
+outDF <- getFromNamespace(x = "mdcr_inner_join", ns = "medicalcoder")(r, l, by.x = "x1", by.y = "z", suffixes = c(".right", ".left"))
+stopifnot(identical(outDF, expected_df))
+
+if (requireNamespace("data.table", quietly = TRUE)) {
+  data.table::setDT(r)
+  data.table::setDT(l)
+  expected_dt <- data.table::copy(expected_df)
+  data.table::setDT(expected_dt)
+} else {
+  expected_dt <- expected_df
+}
+outDT <- getFromNamespace(x = "mdcr_inner_join", ns = "medicalcoder")(r, l, by.x = "x1", by.y = "z", suffixes = c(".right", ".left"))
+stopifnot(identical(outDT, expected_dt))
+
+if (requireNamespace("tibble", quietly = TRUE)) {
+  r <- tibble::as_tibble(r)
+  l <- tibble::as_tibble(l)
+  expected_tb <- tibble::as_tibble(expected_df)
+} else {
+  expected_tb <- expected_df
+}
+outTBL <- getFromNamespace(x = "mdcr_inner_join", ns = "medicalcoder")(r, l, by.x = "x1", by.y = "z", suffixes = c(".right", ".left"))
+stopifnot(identical(outTBL, expected_tb))
 
 ################################################################################
 # testing mdcr_left_join
@@ -434,8 +464,89 @@ stopifnot(
   isTRUE( all.equal( t5, TBL[c(1, 2, 2, 3:nrow(DF)), ], check.attributes = FALSE))
 )
 
+# tests with by statements and suffixes
+expected_df <-
+  data.frame(
+    x1 = as.integer(1:10),
+    x2.right = c("A", "B", "D", "E", "F", "T", "A", "C", "9", "ten"),
+    x2.left  = c("a", "b", rep(NA_character_, 5), "c", rep(NA_character_, 2))
+  )
+r <- data.frame(x1 = as.integer(1:10), x2 = c("A", "B", "D", "E", "F", "T", "A", "C", "9", "ten"), stringsAsFactors = FALSE)
+l <- data.frame(
+  x1 = as.integer(c(1, 2, 33, 44, 55, 66, 77, 8, 99, 1100)),
+  x2 = c("a", "b", "d", "e", "f", "t", "a", "c", "9", "TEN"),
+  stringsAsFactors = FALSE
+)
+outDF <- getFromNamespace(x = "mdcr_left_join", ns = "medicalcoder")(r, l, by = "x1", suffixes = c(".right", ".left"))
+outDF <- outDF[order(outDF$x1), ]
+rownames(outDF) <- NULL
+stopifnot(identical(outDF, expected_df))
+
+if (requireNamespace("data.table", quietly = TRUE)) {
+  data.table::setDT(r)
+  data.table::setDT(l)
+  expected_dt <- data.table::copy(expected_df)
+  data.table::setDT(expected_dt)
+} else {
+  expected_dt <- expected_df
+}
+outDT <- getFromNamespace(x = "mdcr_left_join", ns = "medicalcoder")(r, l, by = "x1", suffixes = c(".right", ".left"))
+outDT <- outDT[order(outDT$x1), ]
+stopifnot(identical(outDT, expected_dt))
+
+if (requireNamespace("tibble", quietly = TRUE)) {
+  r <- tibble::as_tibble(r)
+  l <- tibble::as_tibble(l)
+  expected_tb <- tibble::as_tibble(expected_df)
+} else {
+  expected_tb <- expected_df
+}
+outTBL <- getFromNamespace(x = "mdcr_left_join", ns = "medicalcoder")(r, l, by = "x1", suffixes = c(".right", ".left"))
+outTBL <- outTBL[order(outTBL$x1), ]
+stopifnot(identical(outTBL, expected_tb))
+
 ################################################################################
 # testing mdcr_full_outer_join
+# tests with by statements and suffixes
+expected_df <-
+  data.frame(
+    x1 = as.integer(c(1, 1:10, 33, 44, 55, 66, 77, 99, 1100)),
+    x2.right = c("A", "A", "B", "D", "E", "F", "T", "A", "C", "9", "ten", rep(NA_character_, 7)),
+    x2.left  = c("a", "a1", "b", rep(NA_character_, 5), "c", rep(NA_character_, 2), "d", "e", "f", "t", "a", "9", "TEN")
+  )
+r <- data.frame(x1 = as.integer(1:10), x2 = c("A", "B", "D", "E", "F", "T", "A", "C", "9", "ten"), stringsAsFactors = FALSE)
+l <- data.frame(
+  x1 = as.integer(c(1, 1, 2, 33, 44, 55, 66, 77, 8, 99, 1100)),
+  x2 = c("a", "a1", "b", "d", "e", "f", "t", "a", "c", "9", "TEN"),
+  stringsAsFactors = FALSE
+)
+outDF <- getFromNamespace(x = "mdcr_full_outer_join", ns = "medicalcoder")(r, l, by = "x1", suffixes = c(".right", ".left"))
+outDF <- outDF[order(outDF$x1), ]
+rownames(outDF) <- NULL
+stopifnot(identical(outDF, expected_df))
+
+if (requireNamespace("data.table", quietly = TRUE)) {
+  data.table::setDT(r)
+  data.table::setDT(l)
+  expected_dt <- data.table::copy(expected_df)
+  data.table::setDT(expected_dt)
+} else {
+  expected_dt <- expected_df
+}
+outDT <- getFromNamespace(x = "mdcr_full_outer_join", ns = "medicalcoder")(r, l, by = "x1", suffixes = c(".right", ".left"))
+outDT <- outDT[order(outDT$x1), ]
+stopifnot(identical(outDT, expected_dt))
+
+if (requireNamespace("tibble", quietly = TRUE)) {
+  r <- tibble::as_tibble(r)
+  l <- tibble::as_tibble(l)
+  expected_tb <- tibble::as_tibble(expected_df)
+} else {
+  expected_tb <- expected_df
+}
+outTBL <- getFromNamespace(x = "mdcr_full_outer_join", ns = "medicalcoder")(r, l, by = "x1", suffixes = c(".right", ".left"))
+outTBL <- outTBL[order(outTBL$x1), ]
+stopifnot(identical(outTBL, expected_tb))
 
 ################################################################################
 # testing mdcr_cbind

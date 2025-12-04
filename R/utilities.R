@@ -219,7 +219,7 @@ mdcr_left_join <- function(x, y, ...) {
     # if x is a data.table and the data.table namespace is available then the
     # data.table:::merge.data.table method will be called and a specific block
     # for data.table is not needed here
-    rtn <- merge(x = x, y = y, all.x = TRUE, all.y = TRUE, sort = FALSE, allow.cartesian = TRUE, ...)
+    rtn <- merge(x = x, y = y, all.x = TRUE, all.y = FALSE, sort = FALSE, allow.cartesian = TRUE, ...)
   }
   rtn
 }
