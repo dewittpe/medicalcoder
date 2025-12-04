@@ -523,12 +523,11 @@ comorbidities.data.frame <- function(data,
 
     # merge on the poa.var
     foc <-
-      merge(x = foc,
-            y = cmrb,
-            all = TRUE,
-            by.x = c(id.vars2, "first_occurrance", byconditions),
-            by.y = c(id.vars2, encid, byconditions),
-            sort = FALSE
+      mdcr_full_outer_join(
+        x = foc,
+        y = cmrb,
+        by.x = c(id.vars2, "first_occurrance", byconditions),
+        by.y = c(id.vars2, encid, byconditions)
       )
 
     if (startsWith(method, "pccc")) {
