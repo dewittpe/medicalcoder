@@ -34,7 +34,10 @@ mdcr_set <- function(x, i = NULL, j, value) {
       newcol <- if (nrow(x) == 0L) value[0] else value
     } else {
       newcol <- x[[j]]
-      if (is.null(newcol)) newcol <- vector(mode = typeof(value), length = nrow(x))
+      if (is.null(newcol)) {
+        newcol <- rep(NA, length = nrow(x))
+        storage.mode(newcol) <- typeof(value)
+      }
       newcol[i] <- value
     }
     x <- do.call(mutate, c(list(.data = x), stats::setNames(list(newcol), j)))
@@ -42,6 +45,10 @@ mdcr_set <- function(x, i = NULL, j, value) {
     if (is.null(i)) {
       x[[j]] <- value
     } else {
+      if (is.null(x[[j]])) {
+        x[[j]] <- rep(NA, nrow(x))
+        storage.mode(x[[j]]) <- typeof(value)
+      }
       x[[j]][i] <- value
     }
   }

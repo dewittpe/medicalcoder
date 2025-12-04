@@ -101,6 +101,18 @@ stopifnot(
   identical(DT[["D"]],  x)
 )
 
+# create a new column and only add a value to rows 2, 5, and 7
+x <- c(NA_character_, "first", NA_character_, NA_character_, "second", NA_character_, "third", rep(NA_character_, nrow(DF) - 7L))
+DF  <- getFromNamespace(x = "mdcr_set", ns = "medicalcoder")(DF,  i = c(2L, 5L, 7L), j = "newC", value = c("first", "second", "third"))
+TBL <- getFromNamespace(x = "mdcr_set", ns = "medicalcoder")(TBL, i = c(2L, 5L, 7L), j = "newC", value = c("first", "second", "third"))
+DT  <- getFromNamespace(x = "mdcr_set", ns = "medicalcoder")(DT,  i = c(2L, 5L, 7L), j = "newC", value = c("first", "second", "third"))
+
+stopifnot(
+  identical(DF[["newC"]],  x),
+  identical(TBL[["newC"]], x),
+  identical(DT[["newC"]],  x)
+)
+
 ################################################################################
 # testing mdcr_select
 # set colummns - change the order of the columns
