@@ -36,7 +36,7 @@
   }
 
   # build the return object
-  rtn <- cbind(iddf, as.data.frame(results$X, check.names = FALSE, stringsAsFactors = FALSE))
+  rtn <- mdcr_cbind(iddf, as.data.frame(results$X, check.names = FALSE, stringsAsFactors = FALSE))
   rtn <- mdcr_set(rtn, j = "num_cmrb", value = results$num_cmrb)
   rtn <- mdcr_set(rtn, j = "cmrb_flag", value = results$cmrb_flag)
   rtn <- mdcr_set(rtn, j = "mortality_index", value = results$mortality_index)
@@ -47,7 +47,6 @@
 }
 
 .elixhauser_post2022 <- function(ccc, id.vars, iddf, cmrb, poa.var, primarydx.var, method) {
-
   conditions <- ..mdcr_internal_elixhauser_codes..[["condition"]][which(..mdcr_internal_elixhauser_codes..[[method]] == 1L)]
   conditions <- sort(unique(conditions))
 
@@ -207,7 +206,6 @@
 }
 
 .elixhauser_pre2022 <- function(ccc, id.vars, iddf, cmrb, poa.var, primarydx.var, method) {
-
   # what are the relevent coniditions
   conditions <-
     unique(..mdcr_internal_elixhauser_codes..[["condition"]][which(..mdcr_internal_elixhauser_codes..[[method]] == 1L)])

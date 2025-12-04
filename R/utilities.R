@@ -291,6 +291,24 @@ mdcr_inner_join <- function(x, y, ...) {
   rtn
 }
 
+#'
+#' @rdname mdcr_data_frame_tools
+#' @family data.frame tools
+#' @noRd
+#' @keywords internal
+mdcr_cbind <- function(x, ...) {
+  stopifnot(is.data.frame(x))
+  if (requireNamespace("dplyr", quietly = TRUE) && inherits(x, "tbl_df")) {
+    cb <- getExportedValue(name = "bind_cols", ns = "dplyr")
+    rtn <- cb(x, ...)
+  } else {
+    # if x is a data.table and the data.table namespace is available then the
+    # data.table:::cbind.data.table method will be called and a specific block
+    # for data.table is not needed here
+    rtn <- cbind(x, ...)
+  }
+  rtn
+}
 
 
 ################################################################################

@@ -12,7 +12,8 @@ dataframetools <-
     "mdcr_duplicated",
     "mdcr_inner_join",
     "mdcr_full_outer_join",
-    "mdcr_left_join"
+    "mdcr_left_join",
+    "mdcr_cbind"
   )
 
 mdcr <- getNamespace("medicalcoder")
@@ -385,6 +386,9 @@ stopifnot(
 
 ################################################################################
 # testing mdcr_full_outer_join
+
+################################################################################
+# testing mdcr_cbind
 
 ################################################################################
 #                                 End of File                                  #
