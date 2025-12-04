@@ -1,6 +1,6 @@
 include ../Makevars
 
-.NOPARALLEL: .bench1 .bench2
+.NOPARALLEL: .bench2
 
 .PHONY: all clean
 
@@ -23,9 +23,7 @@ clean:
 	$(RM) .bench*
 	$(RM) benchmark*.svg
 	$(RM) *.pdf
-	$(RM) grid1.tsv grid2.tsv
-	$(RM) -r logs1
+	$(RM) grid2.tsv
 	$(RM) -r logs2
-	$(RM) -r bench1_results
 	$(RM) -r bench2_results
 
