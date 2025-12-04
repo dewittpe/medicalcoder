@@ -11,6 +11,7 @@ dataframetools <-
     "mdcr_setnames",
     "mdcr_duplicated",
     "mdcr_inner_join",
+    "mdcr_full_outer_join",
     "mdcr_left_join"
   )
 
@@ -382,8 +383,8 @@ stopifnot(
   isTRUE( all.equal( t5, TBL[c(1, 2, 2, 3:nrow(DF)), ], check.attributes = FALSE))
 )
 
-
-
+################################################################################
+# testing mdcr_full_outer_join
 
 ################################################################################
 #                                 End of File                                  #

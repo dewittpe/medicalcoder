@@ -190,12 +190,66 @@ mdcr_left_join <- function(x, y, ...) {
 
   if (requireNamespace("dplyr", quietly = TRUE) && inherits(x, "tbl_df")) {
     lj <- getExportedValue(name = "left_join", ns = "dplyr")
-    rtn <- lj(x = x, y = y, ...)
+    dots <- list(...)
+    if (!is.null(dots$by.x) & !is.null(dots$by.y)) {
+      by <- stats::setNames(dots$by.y, dots$by.x)
+      dots$by.x <- NULL
+      dots$by.y <- NULL
+    } else if (!is.null(dots$by)) {
+      by <- dots$by
+      dots$by   <- NULL
+    } else {
+      by <- NULL
+    }
+    if (!is.null(dots$suffixes)) {
+      suffix <- dots$suffixes
+      dots$suffixes <- NULL
+    } else {
+      suffix <- c(".x", ".y")
+    }
+    rtn <- do.call(what = lj, args = c(list(x = x, y = y, by = by, suffix = suffix), dots))
   } else {
     # if x is a data.table and the data.table namespace is available then the
     # data.table:::merge.data.table method will be called and a specific block
     # for data.table is not needed here
-    rtn <- merge(x = x, y = y, all.x = TRUE, all.y = FALSE, sort = FALSE, ...)
+    rtn <- merge(x = x, y = y, all.x = TRUE, all.y = TRUE, sort = FALSE, allow.cartesian = TRUE, ...)
+  }
+  rtn
+}
+
+#'
+#' @rdname mdcr_data_frame_tools
+#' @family data.frame tools
+#' @noRd
+#' @keywords internal
+mdcr_full_outer_join <- function(x, y, ...) {
+  stopifnot(is.data.frame(x), is.data.frame(y))
+
+  if (requireNamespace("dplyr", quietly = TRUE) && inherits(x, "tbl_df")) {
+    fj <- getExportedValue(name = "full_join", ns = "dplyr")
+    dots <- list(...)
+    if (!is.null(dots$by.x) & !is.null(dots$by.y)) {
+      by <- stats::setNames(dots$by.y, dots$by.x)
+      dots$by.x <- NULL
+      dots$by.y <- NULL
+    } else if (!is.null(dots$by)) {
+      by <- dots$by
+      dots$by   <- NULL
+    } else {
+      by <- NULL
+    }
+    if (!is.null(dots$suffixes)) {
+      suffix <- dots$suffixes
+      dots$suffixes <- NULL
+    } else {
+      suffix <- c(".x", ".y")
+    }
+    rtn <- do.call(what = fj, args = c(list(x = x, y = y, by = by, suffix = suffix), dots))
+  } else {
+    # if x is a data.table and the data.table namespace is available then the
+    # data.table:::merge.data.table method will be called and a specific block
+    # for data.table is not needed here
+    rtn <- merge(x = x, y = y, all.x = TRUE, all.y = TRUE, sort = FALSE, allow.cartesian = TRUE, ...)
   }
   rtn
 }
