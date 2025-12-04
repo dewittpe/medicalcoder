@@ -542,7 +542,7 @@ comorbidities.data.frame <- function(data,
     foc <-
       lapply(foc,
              function(y) {
-               rtn <- merge(x = iddf, y = y, all.x = TRUE, by = c(id.vars2), allow.cartesian = TRUE, sort = FALSE)
+               rtn <- mdcr_left_join(x = iddf, y = y, by = c(id.vars2))
                rtn <- mdcr_subset(rtn, i = !is.na(rtn[["condition"]]))
                i <- rtn[[encid]] >= rtn[["first_occurrance"]]
                mdcr_subset(rtn, i = i)
