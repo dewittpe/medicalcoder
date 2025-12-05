@@ -3,38 +3,38 @@ library(ggplot2)
 
 ################################################################################
 # data import
-bench2 <-
-  list.files("bench2_results", full.names = TRUE) |>
+bench <-
+  list.files("bench_results", full.names = TRUE) |>
   lapply(readRDS) |>
   lapply(setDT) |>
   rbindlist()
 
 mem <-
-  list.files("./logs2/mem", pattern = "\\.tsv$", full.names = TRUE, recursive = TRUE) |>
+  list.files("./logs/mem", pattern = "\\.tsv$", full.names = TRUE, recursive = TRUE) |>
   lapply(fread) |>
   rbindlist()
 mem[, subconditions := grepl("pccc_v3.1s", method)]
 mem[, method := sub("s$", "", method)]
 setnames(mem, "flag_method", "flag.method")
 
-bench2_summary <-
-  bench2[, .(median_time_seconds = median(time_seconds)) , by = .(data_class, subjects, encounters, seed, method, subconditions, flag.method) ]
+bench_summary <-
+  bench[, .(median_time_seconds = median(time_seconds)) , by = .(data_class, subjects, encounters, seed, method, subconditions, flag.method) ]
 mem_summary <-
   mem[,    .(median_rss_kib = median(max_rss_kib)),        by = .(data_class, subjects,             seed, method, subconditions, flag.method)]
 
-bench2_summary <-
-  merge(bench2_summary, mem_summary, all = TRUE)
+bench_summary <-
+  merge(bench_summary, mem_summary, all = TRUE)
 
-bench2_summary[!is.na(median_time_seconds) & !is.na(median_rss_kib)]
+bench_summary[!is.na(median_time_seconds) & !is.na(median_rss_kib)]
 
-bench2_summary[, data_class := fcase(data_class == "DF", "data.frame",
+bench_summary[, data_class := fcase(data_class == "DF", "data.frame",
                                      data_class == "DT", "data.table",
                                      data_class == "TBL", "tibble")]
 
 # relative time
-bench2_summary[!is.na(median_time_seconds), df_median := median_time_seconds[data_class == "data.frame"], by = .(subjects, encounters, method, subconditions, flag.method)]
-bench2_summary[, relative_time := (median_time_seconds / df_median)]
-bench2_summary[, df_median := NULL]
+bench_summary[!is.na(median_time_seconds), df_median := median_time_seconds[data_class == "data.frame"], by = .(subjects, encounters, method, subconditions, flag.method)]
+bench_summary[, relative_time := (median_time_seconds / df_median)]
+bench_summary[, df_median := NULL]
 
 ################################################################################
 # Plotting helpers
@@ -48,7 +48,7 @@ facet_spec <- . ~ fifelse(subconditions,
                           paste(method, "(with subconditions)"),
                           method) + flag.method
 g <-
-  ggplot(bench2_summary) +
+  ggplot(bench_summary) +
   theme_bw() +
   aes(x = encounters, y = median_time_seconds,
       color = data_class,
@@ -74,11 +74,11 @@ g <-
     axis.text.x = element_text(hjust = 0.75)
   )
 
-ggsave(file = "benchmark2.pdf", plot = g, width = 12, height = 7)
-ggsave(file = "benchmark2.svg", plot = g, width = 12, height = 7)
+ggsave(file = "benchmark.pdf", plot = g, width = 12, height = 7)
+ggsave(file = "benchmark.svg", plot = g, width = 12, height = 7)
 
 gr <-
-  ggplot(bench2_summary) +
+  ggplot(bench_summary) +
   theme_bw() +
   aes(x = encounters, y = relative_time, color = data_class, fill = data_class, linetype = data_class) +
   stat_smooth(method = "loess", formula = y ~ x) +
@@ -97,11 +97,11 @@ gr <-
     axis.text.x = element_text(hjust = 0.75)
   )
 
-ggsave(file = "benchmark2-relative.svg", plot = gr, width = 12, height = 7)
-ggsave(file = "benchmark2-relative.pdf", plot = gr, width = 12, height = 7)
+ggsave(file = "benchmark-relative.svg", plot = gr, width = 12, height = 7)
+ggsave(file = "benchmark-relative.pdf", plot = gr, width = 12, height = 7)
 
 g <-
-  ggplot(bench2_summary) +
+  ggplot(bench_summary) +
   theme_bw() +
   aes(x = encounters, y = median_rss_kib / (1024^2),
       color = data_class,
@@ -135,11 +135,11 @@ facet_spec <- . ~ fifelse(subconditions, paste(method, "(with subconditions)"), 
 
 outtable <- list()
 
-for (mt in unique(bench2_summary$method)) {
-  for (sc in unique(bench2_summary$subconditions)) {
-    for (dc in unique(bench2_summary$data_class)) {
-      for (fm in unique(bench2_summary$flag.method)) {
-        thisdt <- subset(bench2_summary, method == mt & subconditions == sc & data_class == dc & flag.method == fm)
+for (mt in unique(bench_summary$method)) {
+  for (sc in unique(bench_summary$subconditions)) {
+    for (dc in unique(bench_summary$data_class)) {
+      for (fm in unique(bench_summary$flag.method)) {
+        thisdt <- subset(bench_summary, method == mt & subconditions == sc & data_class == dc & flag.method == fm)
         if (nrow(thisdt)) {
           ats_loess <- loess(log10(median_time_seconds) ~ log10(encounters), data = thisdt)
           ats <- predict(ats_loess, se = TRUE)
@@ -147,14 +147,14 @@ for (mt in unique(bench2_summary$method)) {
           mem_loess <- loess(log10(median_rss_kib) ~ log10(encounters), data = thisdt)
           mem <- predict(mem_loess, se = TRUE)
 
-          bench2_summary[method == mt & subconditions == sc & data_class == dc & flag.method == fm & !is.na(median_time_seconds) & !is.na(encounters),
+          bench_summary[method == mt & subconditions == sc & data_class == dc & flag.method == fm & !is.na(median_time_seconds) & !is.na(encounters),
                          `:=`(
                               time_smoothed_y   = 10^(ats$fit),
                               time_smoothed_lwr = 10^(ats$fit - 1.96 * ats$se.fit),
                               time_smoothed_upr = 10^(ats$fit + 1.96 * ats$se.fit)
                               )]
 
-          bench2_summary[method == mt & subconditions == sc & data_class == dc & flag.method == fm & !is.na(median_rss_kib) & !is.na(encounters),
+          bench_summary[method == mt & subconditions == sc & data_class == dc & flag.method == fm & !is.na(median_rss_kib) & !is.na(encounters),
                          `:=`(
                               mem_smoothed_y   = 10^(mem$fit),
                               mem_smoothed_lwr = 10^(mem$fit - 1.96 * mem$se.fit),
@@ -163,7 +163,7 @@ for (mt in unique(bench2_summary$method)) {
           if (dc != "data.frame") {
             rts_loess <- loess(relative_time ~ log10(encounters), data = thisdt)
             rts <- predict(rts_loess, se = TRUE)
-            bench2_summary[method == mt & subconditions == sc & data_class == dc & flag.method == fm & !is.na(relative_time) & !is.na(encounters),
+            bench_summary[method == mt & subconditions == sc & data_class == dc & flag.method == fm & !is.na(relative_time) & !is.na(encounters),
                            `:=`(
                                 rel_time_smoothed_y   = rts$fit,
                                 rel_time_smoothed_lwr = rts$fit - 1.96 * rts$se.fit,
@@ -190,10 +190,8 @@ for (mt in unique(bench2_summary$method)) {
   }
 }
 
-outtable <- rbindlist(outtable)
-saveRDS(outtable, file = "outtable.rds")
 
-bench2_summary[data_class == "data.frame",
+bench_summary[data_class == "data.frame",
                `:=`(
                     rel_time_smoothed_y   = 1,
                     rel_time_smoothed_lwr = 1,
@@ -202,15 +200,15 @@ bench2_summary[data_class == "data.frame",
 
 
 # use this data set to identify the flag.method
-setkey(bench2_summary,
+setkey(bench_summary,
        method, data_class, subconditions, flag.method, subjects)
 fmpt <-
-  bench2_summary[, .(encounters = max(encounters, na.rm = TRUE)), keyby = .(method, data_class, subconditions, flag.method, subjects)]
-fmpt <- bench2_summary[fmpt, on = c(key(fmpt), "encounters")]
+  bench_summary[, .(encounters = max(encounters, na.rm = TRUE)), keyby = .(method, data_class, subconditions, flag.method, subjects)]
+fmpt <- bench_summary[fmpt, on = c(key(fmpt), "encounters")]
 fmpt <- unique(fmpt)
 
 g1 <-
-  ggplot(bench2_summary) +
+  ggplot(bench_summary) +
   theme_bw() +
   aes(x = encounters,
       y = time_smoothed_y,
@@ -223,7 +221,6 @@ g1 <-
   ) +
   geom_line() +
   geom_ribbon(alpha = 0.2, mapping = aes(color = NULL)) +
-  #geom_point(mapping = aes(y = median)) +
   geom_point(data = fmpt, mapping = aes(shape = flag.method), size = 2) +
   scale_x_log10(labels = scales::label_number(scale_cut = scales::cut_si(""))) +
   scale_y_log10(labels = scales::label_comma()) +
@@ -242,7 +239,7 @@ g1 <-
   )
 
 g2 <-
-  ggplot(bench2_summary) +
+  ggplot(bench_summary) +
   theme_bw() +
   aes(x = encounters,
       y = rel_time_smoothed_y,
@@ -256,7 +253,7 @@ g2 <-
   geom_line() +
   geom_ribbon(alpha = 0.2, mapping = aes(color = NULL)) +
   geom_point(data = fmpt[data_class != "data.frame"], mapping = aes(shape = flag.method), size = 2) +
-  scale_y_continuous(breaks = seq(0.4, 1.4, by = 0.2)) +
+  scale_y_continuous() + #breaks = seq(0.4, 1.4, by = 0.2)) +
   scale_x_log10(labels = scales::label_number(scale_cut = scales::cut_si(""))) +
   annotation_logticks(sides = "b") +
   scale_fill_manual(name = "Data Class", values = cclr) +
@@ -272,7 +269,7 @@ g2 <-
   )
 
 g3 <-
-  ggplot(bench2_summary) +
+  ggplot(bench_summary) +
   theme_bw() +
   aes(x = encounters,
       y = mem_smoothed_y / (1024^2),
@@ -302,7 +299,7 @@ g3 <-
     axis.text.x = element_text(hjust = 0.75)
   )
 
-svglite::svglite(filename = "benchmark2-composite.svg", width = 9, height = 7)
+svglite::svglite(filename = "benchmark-composite.svg", width = 9, height = 7)
 
   ggpubr::ggarrange(g1 + theme(axis.title.x = element_blank(), axis.text.x = element_blank()),
                     g2 + theme(axis.title.x = element_blank(), axis.text.x = element_blank(), strip.text = element_blank(), strip.background = element_blank()),
@@ -311,9 +308,27 @@ svglite::svglite(filename = "benchmark2-composite.svg", width = 9, height = 7)
 
 dev.off()
 
-pdf(file = "benchmark2-composite.pdf", width = 12, height = 9)
+png(filename = "benchmark-composite.png", width = 9, height = 7)
+
+  ggpubr::ggarrange(g1 + theme(axis.title.x = element_blank(), axis.text.x = element_blank()),
+                    g2 + theme(axis.title.x = element_blank(), axis.text.x = element_blank(), strip.text = element_blank(), strip.background = element_blank()),
+                    g3 + theme(strip.text = element_blank(), strip.background = element_blank()),
+                    ncol = 1, align = "v", common.legend = TRUE)
+
+dev.off()
+
+pdf(file = "benchmark-composite.pdf", width = 12, height = 9)
   ggpubr::ggarrange(g1 + theme(axis.title.x = element_blank(), axis.text.x = element_blank()),
                     g2 + theme(axis.title.x = element_blank(), axis.text.x = element_blank()),
                     g3,
                     ncol = 1, align = "v", common.legend = TRUE)
 dev.off()
+
+################################################################################
+# final step - save the outtable.rds file, this is tracked in the Makefile
+outtable <- rbindlist(outtable)
+saveRDS(outtable, file = "outtable.rds")
+
+################################################################################
+#                                 End of File                                  #
+################################################################################

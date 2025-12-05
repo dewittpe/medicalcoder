@@ -22,4 +22,4 @@ ITERS=$(seq 1 5)
       done
     done
   done
-} > grid2.tsv
+} > grid.tsv

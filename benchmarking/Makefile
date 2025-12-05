@@ -1,19 +1,19 @@
 include ../Makevars
 
-.NOPARALLEL: .bench2
+.NOPARALLEL: .bench
 
 .PHONY: all clean
 
-all: benchmark2.svg README.md
+all: README.md
 
-grid%.tsv: make_grid%.sh
+grid.tsv: make_grid.sh
 	./$<
 
-.bench%: run_parallel%.sh grid%.tsv
+.bench: run_parallel.sh grid.tsv
 	./$<
 	@touch $@
 
-benchmark%.svg: benchmark%-summary.R .bench%
+outtable.rds: benchmark-summary.R .bench
 	$(RSCRIPT) $<
 
 README.md: README.Rmd outtable.rds
@@ -21,9 +21,10 @@ README.md: README.Rmd outtable.rds
 
 clean:
 	$(RM) .bench*
-	$(RM) benchmark*.svg
+	$(RM) *.svg
 	$(RM) *.pdf
-	$(RM) grid2.tsv
-	$(RM) -r logs2
-	$(RM) -r bench2_results
+	$(RM) grid.tsv
+	$(RM) output.rds
+	$(RM) -r logs
+	$(RM) -r bench_results
 

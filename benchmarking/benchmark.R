@@ -9,7 +9,7 @@ if (interactive()) {
 args <- as.list(strsplit(outfile, split = "__")[[1]])
 
 this_data_set <-
-  build_set2(
+  build_set(
     data_class = args[[1]],
     subjects = as.integer(args[[2]]),
     seed = as.integer(args[[5]])
@@ -24,12 +24,12 @@ if (subconditions) {
 }
 
 output <-
-  benchmark2(
+  benchmark(
     data = this_data_set,
     method = method,
     subconditions = subconditions,
     flag.method = flag_method
   )
 
-saveRDS(output, file = file.path("bench2_results", outfile))
+saveRDS(output, file = file.path("bench_results", outfile))
 
