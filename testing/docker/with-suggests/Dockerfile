@@ -1,10 +1,8 @@
 ARG R_TAG=latest
-ARG SNAPSHOT=""
 FROM rocker/r-ver:${R_TAG}
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV _R_CHECK_FORCE_SUGGESTS_=false \
-    CRAN_SNAPSHOT=${SNAPSHOT:-} \
     TZ=Etc/UTC
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -19,6 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   && rm -rf /var/lib/apt/lists/*
 
 COPY docker/with-suggests/install-suggests.R /opt/install-suggests.R
-RUN R -q -e "source('/opt/install-suggests.R')"
+COPY docker/with-suggests/r_and_pkg_versions.dput /opt/r_and_pkg_versions.dput
+RUN R -q -e "r_and_pkg_versions <- dget(file = '/opt/r_and_pkg_versions.dput')" -e "source('/opt/install-suggests.R')"
 
 WORKDIR /work
