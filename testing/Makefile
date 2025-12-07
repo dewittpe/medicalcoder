@@ -16,7 +16,7 @@ V44 := 4.4.0 4.4.1 4.4.2
 V45 := 4.5.0 4.5.1 4.5.2
 LATEST := #latest
 VERSIONS := $(V35) $(V36) $(V40) $(V41) $(V42) $(V43) $(V44) $(V45) $(LATEST)
-WITHOUTSUGGESTS := #$(addsuffix -without-suggests,$(VERSIONS))
+WITHOUTSUGGESTS := $(addsuffix -without-suggests,$(VERSIONS))
 # Limit with-suggests to R versions whose base OS is still supported (roughly Debian >= bullseye/R 4.1+).
 WITHSUGGESTS := $(addsuffix -with-suggests,$(V41) $(V42) $(V43) $(V44) $(V45) $(LATEST))
 
@@ -58,12 +58,12 @@ R-%-with-suggests/$(PKG_NAME).Rcheck/00check.log: .images/R-%-with-suggests.stam
 
 .images/R-%-without-suggests.stamp: docker/without-suggests/Dockerfile $(TARBALL) | .images
 	$(DOCKER) info >/dev/null 2>&1 || { echo "$(DOCKER) is unavailable or the daemon cannot be reached"; exit 1; }
-	$(DOCKER) build --build-arg R_TAG=$* -t mdcr-$*-without-suggests -f $< .
+	$(DOCKER) build --build-arg R_TAG=$* -t mdcr-$*-without-suggests -f $< . > .images/$*-without-suggests.log 2>&1
 	@touch $@
 
 .images/R-%-with-suggests.stamp: docker/with-suggests/Dockerfile $(TARBALL) | .images
 	$(DOCKER) info >/dev/null 2>&1 || { echo "$(DOCKER) is unavailable or the daemon cannot be reached"; exit 1; }
-	$(DOCKER) build --build-arg R_TAG=$* -t mdcr-$*-with-suggests -f $< .
+	$(DOCKER) build --build-arg R_TAG=$* -t mdcr-$*-with-suggests -f $< . > .images/$*-with-suggests.log 2>&1
 	@touch $@
 
 .images:

@@ -4,8 +4,6 @@ options(
   Ncpus = max(1L, parallel::detectCores() - 1L)
 )
 
-install.packages(pkgs = c("remotes"))
-
 rver <- getRversion()
 
 if (interactive()) {
@@ -22,11 +20,17 @@ r_and_pkg_versions <-
 
 if (nrow(r_and_pkg_versions)) {
   for (i in seq_len(nrow(r_and_pkg_versions))) {
-    remotes::install_version(
-      package = r_and_pkg_versions[["pkg"]][i],
-      version = r_and_pkg_versions[["pkg_version"]][i],
-      upgrade = "never"
-    )
+    if (r_and_pkg_versions[["current_version"]][i]) {
+      install.packages(r_and_pkg_versions[["pkg"]][i])
+    }
+    url <-
+      sprintf(
+        "https://cran.r-project.org/src/contrib/Archive/%s/%s_%s.tar.gz",
+        r_and_pkg_versions[["pkg"]][i],
+        r_and_pkg_versions[["pkg"]][i],
+        r_and_pkg_versions[["pkg_version"]][i]
+      )
+    install.packages(pkgs = url, type = "source")
   }
 } else {
   install.packages(pkgs = pkgs)

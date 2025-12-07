@@ -393,6 +393,8 @@ if (requireNamespace("tibble", quietly = TRUE)) {
   l <- tibble::as_tibble(l)
   expected_tb <- tibble::as_tibble(expected_df)
 } else {
+  r <- as.data.frame(r)
+  l <- as.data.frame(l)
   expected_tb <- expected_df
 }
 outTBL <- getFromNamespace(x = "mdcr_inner_join", ns = "medicalcoder")(r, l, by = "x1", suffixes = c(".right", ".left"))
@@ -424,6 +426,8 @@ if (requireNamespace("tibble", quietly = TRUE)) {
   l <- tibble::as_tibble(l)
   expected_tb <- tibble::as_tibble(expected_df)
 } else {
+  r <- as.data.frame(r)
+  l <- as.data.frame(l)
   expected_tb <- expected_df
 }
 outTBL <- getFromNamespace(x = "mdcr_inner_join", ns = "medicalcoder")(r, l, by.x = "x1", by.y = "z", suffixes = c(".right", ".left"))
@@ -499,6 +503,8 @@ if (requireNamespace("tibble", quietly = TRUE)) {
   l <- tibble::as_tibble(l)
   expected_tb <- tibble::as_tibble(expected_df)
 } else {
+  r <- as.data.frame(r)
+  l <- as.data.frame(l)
   expected_tb <- expected_df
 }
 outTBL <- getFromNamespace(x = "mdcr_left_join", ns = "medicalcoder")(r, l, by = "x1", suffixes = c(".right", ".left"))
@@ -542,6 +548,8 @@ if (requireNamespace("tibble", quietly = TRUE)) {
   l <- tibble::as_tibble(l)
   expected_tb <- tibble::as_tibble(expected_df)
 } else {
+  r <- as.data.frame(r)
+  l <- as.data.frame(l)
   expected_tb <- expected_df
 }
 outTBL <- getFromNamespace(x = "mdcr_full_outer_join", ns = "medicalcoder")(r, l, by = "x1", suffixes = c(".right", ".left"))

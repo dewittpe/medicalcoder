@@ -29,6 +29,11 @@ To run the tests you need
 
 Just run `make` from this directory.
 
+**NOTE:** When something goes wrong and you need to dig into a specific image
+run from this directory.
+
+    docker run -v .:/work/ -it <image>
+
 # Last Testing Results
 
 ```{r}
