@@ -4,35 +4,65 @@ options(
   Ncpus = max(1L, parallel::detectCores() - 1L)
 )
 
-rver <- getRversion()
-
 if (interactive()) {
-  r_and_pkg_versions <- dget(file = "r_and_pkg_versions.dput")
-  # the else here is to source the file in the Dockerfile
-}
-
-pkgs <- unique(r_and_pkg_versions[["pkg"]])
-r_and_pkg_versions <-
-  subset(
-    x = r_and_pkg_versions,
-    subset = r_version == rver
-  )
-
-if (nrow(r_and_pkg_versions)) {
-  for (i in seq_len(nrow(r_and_pkg_versions))) {
-    if (r_and_pkg_versions[["current_version"]][i]) {
-      install.packages(r_and_pkg_versions[["pkg"]][i])
-    }
-    url <-
-      sprintf(
-        "https://cran.r-project.org/src/contrib/Archive/%s/%s_%s.tar.gz",
-        r_and_pkg_versions[["pkg"]][i],
-        r_and_pkg_versions[["pkg"]][i],
-        r_and_pkg_versions[["pkg_version"]][i]
-      )
-    install.packages(pkgs = url, type = "source")
-  }
+  to_install <- readRDS("to_install.rds")
+  deps <- readRDS("deps.rds")
+  mdcr_suggests <- readRDS("mdcr_suggests.rds")
+  rver <- "4.1.0" # for dev work
 } else {
-  install.packages(pkgs = pkgs)
+  rver <- getRversion()
 }
 
+# for a given R version
+to_install <-
+  pkg_history[pkg_date <= rvers[r_version == rver, r_eol_date]][, .SD[pkg_date == max(pkg_date)], by = .(pkg)]
+to_install <- unique(to_install, by = c("pkg", "pkg_version"))
+
+deps <-
+  split(
+    to_install,
+    f = list(to_install[["pkg"]], to_install[["pkg_version"]]),
+    sep = "___")
+
+  lapply(`[[`, "dependencies") |>
+  lapply(`[[`, 1) |>
+  data.table::rbindlist(idcol = "pkg")
+
+deps[, c("pkg", "pkg_version") := data.table::tstrsplit(pkg, "___")]
+deps <- subset(deps, package != "R")
+deps <- subset(deps, package != "R.1")
+deps <- subset(deps, !(package %in% base_pkgs))
+deps <- subset(deps, type %in% c("Depends", "Imports", "LinkingTo"))
+
+
+
+
+
+
+p <- to_install[["pkg"]][1]
+
+while(nrow(to_install) > 0L) {
+  v <- to_install[["pkg_version"]][to_install[["pkg"]] == p]
+  message(sprintf("considering %s version %s", p, v))
+  if (p %in% deps[["pkg"]]) {
+    message(sprintf("%s has missing dependencies", p))
+    p <- deps[deps[["pkg"]] == p, ][1, "package"]
+  } else {
+    if (to_install[["latest"]][to_install[["pkg"]] == p]) {
+      message(sprintf("installing %s from CRAN", p))
+      if (!interactive()) {
+        install.packages(p)
+      }
+    } else {
+      url <- sprintf("https://cran.r-project.org/src/contrib/Archive/%s/%s_%s.tar.gz", p, p, v)
+      message(sprintf("installing %s from %s", p, url))
+      if (!interactive()) {
+        install.packages(pkgs = url, type = "source", repos = NULL)
+      }
+    }
+    to_install <- subset(to_install, pkg != p)
+    deps <- subset(deps, pkg != p)
+    deps <- subset(deps, package != p)
+    p <- to_install[["pkg"]][1]
+  }
+}

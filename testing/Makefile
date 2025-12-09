@@ -54,6 +54,7 @@ R-%-with-suggests/$(PKG_NAME).Rcheck/00check.log: .images/R-%-with-suggests.stam
 	$(DOCKER) run \
 		-v "$$(PWD)":/work \
 		--rm 	mdcr-$*-with-suggests \
+		R --vanilla -e $(REPOS) -e "install.packages('data.table')" && \
 		R CMD check -o R-$*-with-suggests $(TARBALL) > R-$*-with-suggests/docker.log 2>&1
 
 .images/R-%-without-suggests.stamp: docker/without-suggests/Dockerfile $(TARBALL) | .images
