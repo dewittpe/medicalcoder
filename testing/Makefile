@@ -40,12 +40,14 @@ $(TARBALL): $(PKG_ROOT)/$(TARBALL)
 README.md: README.Rmd $(CHECKS)
 	$(R) -q -e "knitr::knit('$<', output = '$@')"
 
-R-%-without-suggests/$(PKG_NAME).Rcheck/00check.log: .images/R-%-without-suggests.stamp $(TARBALL)
+R-%-without-suggests/$(PKG_NAME).Rcheck/00check.log: $(TARBALL)
 	$(RM) -r R-$*-without-suggests
 	mkdir -p R-$*-without-suggests
 	$(DOCKER) run \
 		-v "$$(PWD)":/work \
-		--rm 	mdcr-$*-without-suggests \
+		-w /work \
+		-e _R_CHECK_FORCE_SUGGESTS_=false \
+		--rm r-base:$* \
 		R CMD check --no-build-vignettes --ignore-vignettes --no-manual -o R-$*-without-suggests $(TARBALL) > R-$*-without-suggests/docker.log 2>&1
 
 R-%-with-suggests/$(PKG_NAME).Rcheck/00check.log: .images/R-%-with-suggests.stamp $(TARBALL)
@@ -54,18 +56,10 @@ R-%-with-suggests/$(PKG_NAME).Rcheck/00check.log: .images/R-%-with-suggests.stam
 	$(DOCKER) run \
 		-v "$$(PWD)":/work \
 		--rm 	mdcr-$*-with-suggests \
-		R --vanilla -e $(REPOS) -e "install.packages('data.table')" && \
 		R CMD check -o R-$*-with-suggests $(TARBALL) > R-$*-with-suggests/docker.log 2>&1
-
-.images/R-%-without-suggests.stamp: docker/without-suggests/Dockerfile $(TARBALL) | .images
-	$(DOCKER) info >/dev/null 2>&1 || { echo "$(DOCKER) is unavailable or the daemon cannot be reached"; exit 1; }
-	#$(DOCKER) build --build-arg R_TAG=$* -t mdcr-$*-without-suggests -f $< . > .images/$*-without-suggests.log 2>&1
-	$(DOCKER) build --build-arg R_TAG=$* -t mdcr-$*-without-suggests -f $< .
-	@touch $@
 
 .images/R-%-with-suggests.stamp: docker/with-suggests/Dockerfile $(TARBALL) | .images
 	$(DOCKER) info >/dev/null 2>&1 || { echo "$(DOCKER) is unavailable or the daemon cannot be reached"; exit 1; }
-	#$(DOCKER) build --build-arg R_TAG=$* -t mdcr-$*-with-suggests -f $< . > .images/$*-with-suggests.log 2>&1
 	$(DOCKER) build --build-arg R_TAG=$* -t mdcr-$*-with-suggests -f $< .
 	@touch $@
 
