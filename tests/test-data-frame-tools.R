@@ -32,8 +32,8 @@ stopifnot(
 ################################################################################
 # Set up data for testing
 DF <- data.frame(A = 1:10, C = NA_integer_, B = LETTERS[1:10], stringsAsFactors = FALSE)
-if (requireNamespace("tibble", quietly = TRUE)) {
-  TBL <- getExportedValue(name = "as_tibble", ns = "tibble")(DF)
+if (requireNamespace("dplyr", quietly = TRUE)) {
+  TBL <- getExportedValue(name = "as_tibble", ns = "dplyr")(DF)
 } else {
   TBL <- DF
 }
@@ -203,7 +203,7 @@ if (requireNamespace("data.table", quietly = TRUE)) {
   stopifnot(inherits(DT0, "data.table"), inherits(DT1, "data.table"))
 }
 
-if (requireNamespace("tibble", quietly = TRUE)) {
+if (requireNamespace("dplyr", quietly = TRUE)) {
   stopifnot(inherits(TBL0, "tbl_df"), inherits(TBL1, "tbl_df"))
 }
 
@@ -234,7 +234,7 @@ if (requireNamespace("data.table", quietly = TRUE)) {
   stopifnot(inherits(DT0, "data.table"), inherits(DT1, "data.table"))
 }
 
-if (requireNamespace("tibble", quietly = TRUE)) {
+if (requireNamespace("dplyr", quietly = TRUE)) {
   stopifnot(inherits(TBL0, "tbl_df"), inherits(TBL1, "tbl_df"))
 }
 
@@ -265,7 +265,7 @@ if (requireNamespace("data.table", quietly = TRUE)) {
   stopifnot(inherits(DT0, "data.table"), inherits(DT1, "data.table"))
 }
 
-if (requireNamespace("tibble", quietly = TRUE)) {
+if (requireNamespace("dplyr", quietly = TRUE)) {
   stopifnot(inherits(TBL0, "tbl_df"), inherits(TBL1, "tbl_df"))
 }
 
@@ -395,10 +395,10 @@ if (requireNamespace("data.table", quietly = TRUE)) {
 outDT <- getFromNamespace(x = "mdcr_inner_join", ns = "medicalcoder")(r, l, by = "x1", suffixes = c(".right", ".left"))
 stopifnot(identical(outDT, expected_dt))
 
-if (requireNamespace("tibble", quietly = TRUE)) {
-  r <- tibble::as_tibble(r)
-  l <- tibble::as_tibble(l)
-  expected_tb <- tibble::as_tibble(expected_df)
+if (requireNamespace("dplyr", quietly = TRUE)) {
+  r <- dplyr::as_tibble(r)
+  l <- dplyr::as_tibble(l)
+  expected_tb <- dplyr::as_tibble(expected_df)
 } else {
   r <- as.data.frame(r, stringsAsFactors = FALSE)
   l <- as.data.frame(l, stringsAsFactors = FALSE)
@@ -434,10 +434,10 @@ if (requireNamespace("data.table", quietly = TRUE)) {
 outDT <- getFromNamespace(x = "mdcr_inner_join", ns = "medicalcoder")(r, l, by.x = "x1", by.y = "z", suffixes = c(".right", ".left"))
 stopifnot(identical(outDT, expected_dt))
 
-if (requireNamespace("tibble", quietly = TRUE)) {
-  r <- tibble::as_tibble(r)
-  l <- tibble::as_tibble(l)
-  expected_tb <- tibble::as_tibble(expected_df)
+if (requireNamespace("dplyr", quietly = TRUE)) {
+  r <- dplyr::as_tibble(r)
+  l <- dplyr::as_tibble(l)
+  expected_tb <- dplyr::as_tibble(expected_df)
 } else {
   r <- as.data.frame(r, stringsAsFactors = FALSE)
   l <- as.data.frame(l, stringsAsFactors = FALSE)
@@ -519,10 +519,10 @@ outDT <- outDT[order(outDT$x1), ]
 rownames(outDT) <- NULL
 stopifnot(identical(outDT, expected_dt))
 
-if (requireNamespace("tibble", quietly = TRUE)) {
-  r <- tibble::as_tibble(r)
-  l <- tibble::as_tibble(l)
-  expected_tb <- tibble::as_tibble(expected_df)
+if (requireNamespace("dplyr", quietly = TRUE)) {
+  r <- dplyr::as_tibble(r)
+  l <- dplyr::as_tibble(l)
+  expected_tb <- dplyr::as_tibble(expected_df)
 } else {
   r <- as.data.frame(r, stringsAsFactors = FALSE)
   l <- as.data.frame(l, stringsAsFactors = FALSE)
@@ -571,10 +571,10 @@ outDT <- outDT[order(outDT$x1), ]
 rownames(outDT) <- NULL
 stopifnot(identical(outDT, expected_dt))
 
-if (requireNamespace("tibble", quietly = TRUE)) {
-  r <- tibble::as_tibble(r)
-  l <- tibble::as_tibble(l)
-  expected_tb <- tibble::as_tibble(expected_df)
+if (requireNamespace("dplyr", quietly = TRUE)) {
+  r <- dplyr::as_tibble(r)
+  l <- dplyr::as_tibble(l)
+  expected_tb <- dplyr::as_tibble(expected_df)
 } else {
   r <- as.data.frame(r, stringsAsFactors = FALSE)
   l <- as.data.frame(l, stringsAsFactors = FALSE)
@@ -624,10 +624,10 @@ outDT <- outDT[order(outDT$x1), ]
 rownames(outDT) <- NULL
 stopifnot(identical(outDT, expected_dt))
 
-if (requireNamespace("tibble", quietly = TRUE)) {
-  r <- tibble::as_tibble(r)
-  l <- tibble::as_tibble(l)
-  expected_tb <- tibble::as_tibble(expected_df)
+if (requireNamespace("dplyr", quietly = TRUE)) {
+  r <- dplyr::as_tibble(r)
+  l <- dplyr::as_tibble(l)
+  expected_tb <- dplyr::as_tibble(expected_df)
 } else {
   r <- as.data.frame(r, stringsAsFactors = FALSE)
   l <- as.data.frame(l, stringsAsFactors = FALSE)
@@ -676,10 +676,10 @@ outDT <- outDT[order(outDT$x1), ]
 rownames(outDT) <- NULL
 stopifnot(identical(outDT, expected_dt))
 
-if (requireNamespace("tibble", quietly = TRUE)) {
-  r <- tibble::as_tibble(r)
-  l <- tibble::as_tibble(l)
-  expected_tb <- tibble::as_tibble(expected_df)
+if (requireNamespace("dplyr", quietly = TRUE)) {
+  r <- dplyr::as_tibble(r)
+  l <- dplyr::as_tibble(l)
+  expected_tb <- dplyr::as_tibble(expected_df)
 } else {
   r <- as.data.frame(r, stringsAsFactors = FALSE)
   l <- as.data.frame(l, stringsAsFactors = FALSE)

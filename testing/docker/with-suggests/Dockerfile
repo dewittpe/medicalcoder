@@ -57,7 +57,7 @@ RUN R -q -e " \
   cores <- parallel::detectCores(logical = FALSE); \
   cores <- if (is.na(cores) || cores < 1) 1L else cores; \
   install.packages( \
-    pkgs = c('data.table', 'dplyr','kableExtra', 'knitr', 'rmarkdown', 'R.utils', 'tibble'), \
+    pkgs = c('data.table', 'dplyr','kableExtra', 'knitr', 'rmarkdown', 'R.utils'), \
     repos = 'https://cran.rstudio.com', \
     Ncpus = cores \
   )"
