@@ -43,7 +43,7 @@ lookup_icd_codes <- function(x, regex = FALSE, full.codes = TRUE, compact.codes 
   assert_scalar_logical(compact.codes)
   stopifnot(isTRUE(full.codes | compact.codes))
 
-  ICDCODES <- get_icd_codes(with.descriptions = FALSE, with.hierarchy = FALSE)
+  ICDCODES <- get("icd_codes", envir = ..mdcr_data_env.., inherits = FALSE)
 
   if (regex) {
     if(full.codes) {

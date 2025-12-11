@@ -104,7 +104,7 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
 
   N <- nrow(object[["conditions"]])
 
-  conditions <- get_pccc_conditions()[c("condition", "condition_label")]
+  conditions <- ..mdcr_internal_pccc_conditions..[c("condition", "condition_label")]
   conditions <- unique(conditions)
   conditions <- conditions[order(conditions[["condition"]]), ]
 
@@ -159,7 +159,7 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
     warning(sprintf("Logic for pccc_summary_table has been implemented for flag.method = 'current'.  Using this function for flag.method = '%s' may not provide a meaningful summary.", attr(object, "flag.method")))
   }
 
-  conditions <- get_pccc_conditions()[c("condition", "condition_label")]
+  conditions <- ..mdcr_internal_pccc_conditions..[c("condition", "condition_label")]
   conditions <- unique(conditions)
   conditions <- conditions[order(conditions[["condition"]]), ]
 
@@ -189,7 +189,7 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
     warning(sprintf("Logic for pccc_summary_table has been implemented for flag.method = 'current'.  Using this function for flag.method = '%s' may not provide a meaningful summary.", attr(object, "flag.method")))
   }
 
-  conditions <- get_pccc_conditions()[c("condition", "condition_label")]
+  conditions <- ..mdcr_internal_pccc_conditions..[c("condition", "condition_label")]
   conditions <- unique(conditions)
   conditions <- conditions[order(conditions[["condition"]]), ]
 
@@ -254,7 +254,7 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
     warning(sprintf("Logic for charlson summary table has been implemented for flag.method = 'current'.  Using this function for flag.method = '%s' may not provide a meaningful summary.", attr(object, "flag.method")))
   }
 
-  cmrbs <- get_charlson_index_scores()[!is.na( get_charlson_index_scores()[[attr(object, "method")]]), c("condition_description", "condition")]
+  cmrbs <- ..mdcr_internal_charlson_index_scores..[!is.na( ..mdcr_internal_charlson_index_scores..[[attr(object, "method")]]), c("condition_description", "condition")]
 
   cmrbs[["count"]] <- colSums(object[cmrbs[["condition"]]])
   cmrbs[["percent"]] <- 100 * colMeans(object[cmrbs[["condition"]]])
@@ -305,7 +305,7 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
     warning(sprintf("Logic for Elixhauser summary has been implemented for flag.method = 'current'.  Using this function for flag.method = '%s' may not provide a meaningful summary.", attr(object, "flag.method")))
   }
 
-  cmrbs <- get_elixhauser_index_scores()[!is.na( get_elixhauser_index_scores()[[attr(object, "method")]]), "condition", drop = FALSE]
+  cmrbs <- ..mdcr_internal_elixhauser_index_scores..[!is.na( ..mdcr_internal_elixhauser_index_scores..[[attr(object, "method")]]), "condition", drop = FALSE]
   cmrbs <- unique(cmrbs)
 
   cmrbs[["count"]] <- colSums(object[cmrbs[["condition"]]])
