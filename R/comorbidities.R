@@ -360,13 +360,13 @@ comorbidities.data.frame <- function(data,
   # Determine the lookup table and the columns for the lookup table to keep
   lookup_to_keep <- c("condition")
   if (startsWith(method, "pccc")) {
-    lookup <- get_pccc_codes()
+    lookup <- get(x = "pccc_codes", envir = ..mdcr_data_env.., inherits = FALSE)
     lookup_to_keep <- c(lookup_to_keep, "subcondition", "transplant_flag", "tech_dep_flag")
   } else if (startsWith(method, "charlson")) {
-    lookup <- get_charlson_codes()
+    lookup <- get("charlson_codes", envir = ..mdcr_data_env.., inherits = FALSE)
     lookup_to_keep <- c(lookup_to_keep)
   } else if (startsWith(method, "elixhauser")) {
-    lookup <- get_elixhauser_codes()
+    lookup <- get("elixhauser_codes", envir = ..mdcr_data_env.., inherits = FALSE)
     lookup_to_keep <- c(lookup_to_keep, "poaexempt")
   }
 
