@@ -67,7 +67,7 @@ is_icd <- function(x, icdv = c(9L, 10L), dx = c(1L, 0L),
   }
 
   # get the known icd codes and filter to relevent codes
-  codes <- get_icd_codes(with.descriptions = FALSE, with.hierarchy = FALSE)
+  codes <- get("icd_codes", envir = ..mdcr_data_env.., inherits = FALSE)
 
   # keep based on icdv, dx, and src
   keep <- (codes[["icdv"]] %in% icdv) & (codes[["dx"]] %in% dx) & (codes[["src"]] %in% src)
