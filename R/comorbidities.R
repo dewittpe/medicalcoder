@@ -515,6 +515,7 @@ comorbidities.data.frame <- function(data,
       grps <- c(grps, "subcondition")
       byconditions <- c(byconditions, "subcondition")
     }
+    # identify first occurrence per id/condition then retain encounters on/after it
     tmp <- mdcr_select(cmrb, c(grps, encid))
     tmp <- mdcr_setorder(tmp, c(grps, encid))
     keep <- !mdcr_duplicated(tmp, by = grps)

@@ -6,6 +6,14 @@
 #' subsetting needs to be specific to data.tables. These internal (non-exported)
 #' functions provide the needed method by data.table or data.frame.
 #'
+#' `mdcr_select()` deep-copies data.table subsets (via data.table::copy()) to
+#' avoid aliasing when downstream code mutates; this intentionally trades some
+#' performance for isolation.
+#'
+#' The flags `..mdcr.datatable.aware..` and `..mdcr.dplyr.aware..` are set when
+#' the respective namespaces are available and toggle the backend-specific
+#' branches below.
+#'
 #' @param x a data.frame or data.table
 #' @param i Optional. Indicates the rows on which the values must be updated. If
 #'   not `NULL`, implies all rows.
@@ -36,9 +44,9 @@ mdcr_set <- function(x, i = NULL, j, value) {
     #   for new columns) before assigning by reference to it.
     #
     # data.tables read via readRDS()/load() or hand‑constructed can have an
-    # invalid .internal.selfref, so the first by‑reference op (set()/:=) errors.
+    # invalid .internal.selfref, so the first by‑reference op (set()/:= ) errors.
     # data.table::setDT() reinitializes the selfref so data.table::set() can work
-    # by reference.
+    # by reference. This wrapper keeps by-ref semantics consistent across backends.
 
     getExportedValue(name = "setDT", ns = "data.table")(x = x)
     getExportedValue(name = "set", ns = "data.table")(x = x, i = i, j = j, value = value)
@@ -90,12 +98,10 @@ mdcr_select <- function(x, cols) {
 
   if (..mdcr.datatable.aware.. && inherits(x, "data.table")) {
     # note: the data.table::copy() is needed here because x[, cols] returns a
-    # shallow copy of the columns.  The use of mdcr_select in the package
-    # implicitly assumes deep copies.
-    # Downstream setorder()/setnames() mutate in place, so copying here preserves the
-    # original.
-    #
-    # The deep copy is intentional to protect callers who expect an isolated subset.
+    # shallow copy of the columns. The use of mdcr_select in the package
+    # implicitly assumes deep copies. Downstream setorder()/setnames() mutate in
+    # place, so copying here preserves the original. This pays a copy cost to
+    # protect callers who expect an isolated subset.
     return(getExportedValue(name = "copy", ns = "data.table")(x[, cols, drop = FALSE, with = FALSE]))
   } else if (..mdcr.dplyr.aware.. && inherits(x, "tbl_df")) {
     select <- getExportedValue(name = "select", ns = "dplyr")
@@ -121,6 +127,7 @@ mdcr_subset <- function(x, i, cols) {
       return(mdcr_select(x, cols = cols))
     }
   } else {
+    # match base/data.table semantics: logical i is converted to positions
     rows <- if (is.logical(i)) which(i) else i
 
     if (missing(cols)) {
@@ -235,6 +242,7 @@ mdcr_left_join <- function(x, y, ...) {
     } else {
       suffix <- c(".x", ".y")
     }
+    # normalize to dplyr's by/suffix arguments to mirror base/data.table defaults
     rtn <- do.call(what = lj, args = c(list(x = x, y = y, by = by, suffix = suffix), dots))
   } else {
     # if x is a data.table and the data.table namespace is available then the
@@ -272,6 +280,7 @@ mdcr_full_outer_join <- function(x, y, ...) {
     } else {
       suffix <- c(".x", ".y")
     }
+    # normalize to dplyr's by/suffix arguments to mirror base/data.table defaults
     rtn <- do.call(what = fj, args = c(list(x = x, y = y, by = by, suffix = suffix), dots))
   } else {
     # if x is a data.table and the data.table namespace is available then the
@@ -309,6 +318,7 @@ mdcr_inner_join <- function(x, y, ...) {
     } else {
       suffix <- c(".x", ".y")
     }
+    # normalize to dplyr's by/suffix arguments to mirror base/data.table defaults
     rtn <- do.call(what = ij, args = c(list(x = x, y = y, by = by, suffix = suffix), dots))
   } else {
     # if x is a data.table and the data.table namespace is available then the
