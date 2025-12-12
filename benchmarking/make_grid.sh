@@ -7,6 +7,7 @@ FLAG_METHODS=(current cumulative)
 SEEDS=$(seq 1 10)
 ITERS=$(seq 1 5)
 
+# Benchmark job grid (per-run)
 {
   echo -e "data_class\tsubjects\tmethod\tflag_method\tseed\titer"
   for dc in "${DATA_CLASSES[@]}"; do
@@ -23,3 +24,15 @@ ITERS=$(seq 1 5)
     done
   done
 } > grid.tsv
+
+# Dataset build grid (unique datasets)
+{
+  echo -e "data_class\tsubjects\tseed"
+  for dc in "${DATA_CLASSES[@]}"; do
+    for n in "${SUBJECTS[@]}"; do
+      for s in ${SEEDS[@]}; do
+        echo -e "${dc}\t${n}\t${s}"
+      done
+    done
+  done
+} > grid_data.tsv
