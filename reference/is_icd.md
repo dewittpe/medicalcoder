@@ -57,9 +57,10 @@ is_icd(
 - year:
 
   Numeric scalar. Calendar or fiscal year to reference. Default is the
-  most current year available per source. For ICD-9, the latest year is
-  2015; ICD-10 source are updated annually. Calendar year for WHO and
-  CDC mortality. Fiscal year for CMS.
+  most current year available per source. For ICD-9, CMS data run
+  through fiscal year 2015 and CDC extracts through 2012; ICD-10 sources
+  are updated annually. Calendar year for WHO and CDC mortality. Fiscal
+  year for CMS.
 
 - headerok:
 
@@ -97,7 +98,8 @@ Similarly for ICD-9-CM: "055" is a header for measles; 055.0, 055.1,
 Code 055.7 is a header because 055.71 and 055.72 exist.
 
 Some codes change status across years. For example, ICD-9-CM 516.3 was
-assignable in fiscal years 2006–2011, then became a header in 2012–2015.
+assignable in fiscal years 1997–2011 for the CDC extracts (2006–2011 for
+CMS) and became a header in 2012–2015.
 
 ## See also
 

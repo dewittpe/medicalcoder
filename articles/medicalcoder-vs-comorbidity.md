@@ -721,7 +721,12 @@ imports. That said, if the input data set to
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
 is a [`data.table`](https://cran.r-project.org/package=data.table) and
 the `data.table` namespace is available, the S3 methods for `data.table`
-will be used and there will be a performance improvement.
+will be used and there will be a performance improvement. When given a
+[`tibble`](https://tibble.tidyverse.org/) and the
+[`dplyr`](https://dplyr.tidyverse.org/) namespace is available, the
+tibble-aware path improves on base `data.frame` performance but remains
+slower than `data.table`; see the project benchmarking results for
+details.
 
 comorbidity imports several namespaces, including `data.table`, and uses
 `data.table` for efficiency.

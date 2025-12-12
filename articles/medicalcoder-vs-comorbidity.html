@@ -1840,7 +1840,11 @@ imports. That said, if the input data set to
 <code><a href="../reference/comorbidities.html">medicalcoder::comorbidities()</a></code> is a <a href="https://cran.r-project.org/package=data.table" class="external-link"><code>data.table</code></a>
 and the <code>data.table</code> namespace is available, the S3 methods
 for <code>data.table</code> will be used and there will be a performance
-improvement.</p>
+improvement. When given a <a href="https://tibble.tidyverse.org/" class="external-link"><code>tibble</code></a> and the <a href="https://dplyr.tidyverse.org/" class="external-link"><code>dplyr</code></a> namespace is
+available, the tibble-aware path improves on base
+<code>data.frame</code> performance but remains slower than
+<code>data.table</code>; see the project benchmarking results for
+details.</p>
 <p>comorbidity imports several namespaces, including
 <code>data.table</code>, and uses <code>data.table</code> for
 efficiency.</p>
@@ -2055,22 +2059,22 @@ Max.
 medicalcoder_times_DT
 </td>
 <td style="text-align:right;">
-0.102
+0.097
 </td>
 <td style="text-align:right;">
-0.123
+0.117
 </td>
 <td style="text-align:right;">
-0.137
+0.122
+</td>
+<td style="text-align:right;">
+0.131
 </td>
 <td style="text-align:right;">
 0.149
 </td>
 <td style="text-align:right;">
-0.155
-</td>
-<td style="text-align:right;">
-0.273
+0.177
 </td>
 </tr>
 <tr>
@@ -2078,19 +2082,19 @@ medicalcoder_times_DT
 medicalcoder_times
 </td>
 <td style="text-align:right;">
-0.372
+0.368
 </td>
 <td style="text-align:right;">
-0.375
+0.374
 </td>
 <td style="text-align:right;">
-0.383
+0.376
 </td>
 <td style="text-align:right;">
 0.395
 </td>
 <td style="text-align:right;">
-0.408
+0.386
 </td>
 <td style="text-align:right;">
 0.496
@@ -2101,22 +2105,22 @@ medicalcoder_times
 comorbidity_times_DT
 </td>
 <td style="text-align:right;">
-1.535
+1.552
 </td>
 <td style="text-align:right;">
-1.572
+1.591
 </td>
 <td style="text-align:right;">
-1.584
+1.617
 </td>
 <td style="text-align:right;">
-1.600
+1.623
 </td>
 <td style="text-align:right;">
-1.629
+1.643
 </td>
 <td style="text-align:right;">
-1.691
+1.729
 </td>
 </tr>
 <tr>
@@ -2124,22 +2128,22 @@ comorbidity_times_DT
 comorbidity_times
 </td>
 <td style="text-align:right;">
-1.492
+1.522
 </td>
 <td style="text-align:right;">
-1.562
+1.561
 </td>
 <td style="text-align:right;">
-1.600
+1.572
 </td>
 <td style="text-align:right;">
-1.603
+1.605
 </td>
 <td style="text-align:right;">
 1.641
 </td>
 <td style="text-align:right;">
-1.725
+1.779
 </td>
 </tr>
 </tbody>

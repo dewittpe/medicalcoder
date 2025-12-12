@@ -1,5 +1,30 @@
 # Changelog
 
+## medicalcoder 0.7.0.9000
+
+### New Features
+
+- If a `tibble` is passed to
+  [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+  and the `dplyr` namespace is available, then `dplyr` methods will be
+  used for data manipulation. This change will generally result in less
+  computation time than base R `data.frames` (`data.tables` require even
+  less time).
+
+### Other Changes
+
+- Extend and improve the internal ICD-9 database to distinguish between
+  CDC and CMS source.
+
+- Fix documentation of the `mdcr` and `mdcr_longitudinal` datasets.
+
+- Clarified internal data.frame/data.table helpers: documented that
+  `mdcr_select()` deep-copies data.table subsets to avoid aliasing,
+  noted the selfref fix in `mdcr_set()`, and added inline guidance in
+  the longitudinal section of
+  [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+  to explain the first-occurrence logic.
+
 ## medicalcoder 0.7.0
 
 CRAN release: 2025-11-22

@@ -79,7 +79,8 @@ Similarly for ICD-9-CM: "055" is a header for measles; 055.0, 055.1,
 Code 055.7 is a header because 055.71 and 055.72 exist.
 
 Some codes change status across years. For example, ICD-9-CM 516.3 was
-assignable in fiscal years 2006–2011, then became a header in 2012–2015.
+assignable in fiscal years 1997–2011 for the CDC extracts (2006–2011 for
+CMS) and became a header in 2012–2015.
 
 ## See also
 

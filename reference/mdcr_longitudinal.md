@@ -10,9 +10,9 @@ mdcr_longitudinal
 
 ## Format
 
-`mdcr_longitudinal` is a `data.frame` with four columns. The codes are
-expected to be treated as diagnostic codes but there are a few ICD-9
-codes which could match to procedure codes as well.
+`mdcr_longitudinal` is a `data.frame` with 4 columns. The codes are
+expected to be treated as diagnostic codes. Warning: there are a few
+ICD-9 codes which could match to procedure codes.
 
 - `patid`: patient identifier, integer values
 

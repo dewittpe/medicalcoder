@@ -61,9 +61,9 @@
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p><code>mdcr_longitudinal</code> is a <code>data.frame</code> with four columns.  The codes are
-expected to be treated as diagnostic codes but there are a few ICD-9 codes
-which could match to procedure codes as well.</p><ul><li><p><code>patid</code>: patient identifier, integer values</p></li>
+    <p><code>mdcr_longitudinal</code> is a <code>data.frame</code> with 4 columns.  The codes are
+expected to be treated as diagnostic codes. Warning: there are a few ICD-9
+codes which could match to procedure codes.</p><ul><li><p><code>patid</code>: patient identifier, integer values</p></li>
 <li><p><code>date</code>: date the diagnostic code was recorded</p></li>
 <li><p><code>icdv</code>: ICD version 9 or 10, integer valued</p></li>
 <li><p><code>code</code>: ICD codes; character values</p></li>

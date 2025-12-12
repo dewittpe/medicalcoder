@@ -105,8 +105,8 @@ the entirety of `data`. We will see some examples where this is useful.
 
 The `data` element is expected to be a `data.frame`, or at least
 something that inherits the `data.frame` class. The format is expected
-to be a ‘long’ format. One row per code. Two example data sets in the
-package show the general expected form of the `data`.
+to be a ‘long’ format: one ICD code per row. Two example data sets in
+the package show the general expected form of the `data`.
 
 ``` r
 head(mdcr)

@@ -23,6 +23,7 @@ The primary objectives of medicalcoder are:
 
 1.  **Fully self-contained**
     - Minimal Dependencies
+
       - No dependencies other than base R.
       - Requires R version ≥ 3.5.0 due to a [change in data
         serialization](https://cran.r-project.org/src/base/NEWS.3#:~:text=R%20has%20new,to%20version%203.5.0).
@@ -32,20 +33,25 @@ The primary objectives of medicalcoder are:
         `DESCRIPTION` file. These are only needed for building
         vignettes, other documentation, and testing. They are not
         required to install the package.
+
     - No Imports
+
       - medicalcoder does not import any non-base namespaces. This
         improves ease of maintenance and usability.
       - Suggested packages are needed only for development work and
         building vignettes. They are not required for installation or
         use.
-      - That said, there are non-trivial performance gains when passing
-        a [`data.table`](https://cran.r-project.org/package=data.table)
-        to the
-        [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
-        function compared to passing a base `data.frame` or a `tibble`
-        from the tidyverse. (See
-        [benchmarking](https://github.com/dewittpe/medicalcoder/tree/main/benchmarking)).
+
+    - That said, there are non-trivial performance gains when passing a
+      [`data.table`](https://cran.r-project.org/package=data.table) to
+      the
+      [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+      function. Passing a `tibble` is typically faster than a base
+      `data.frame` but slower than a `data.table`. (See
+      [benchmarking](https://github.com/dewittpe/medicalcoder/tree/main/benchmarking)).
+
     - Internal lookup tables
+
       - All required data are included in the package. If you have the
         `.tar.gz` source file and R ≥ 3.5.0, that is all you need to
         install and use the package.
@@ -479,7 +485,10 @@ comorbidity algorithm to a data set are:
     [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
     and the `data.table` namespace is available, then S3 dispatch for
     `merge` is used, along with some other methods, to reduce memory use
-    and reduce computation time.
+    and reduce computation time. When a `tibble` is passed and the
+    tidyverse namespaces are available, the tibble-aware paths improve
+    performance over a base `data.frame`, but `data.table` remains
+    fastest.
 3.  `flag.method`: “current” will take less time than the “cumulative”
     method.
 

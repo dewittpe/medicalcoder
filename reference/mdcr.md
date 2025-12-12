@@ -10,9 +10,7 @@ mdcr
 
 ## Format
 
-`mdcr` is a `data.frame` with 4 columns, one for a patient id and 41 for
-diagnostic codes and 41 possible procedure codes. Each row is for one
-patient id.
+`mdcr` is a `data.frame` with 4 columns, Each row is for one ICD id.
 
 - `patid`: patient identifier, integer values
 

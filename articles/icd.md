@@ -22,9 +22,10 @@ working with International Classification of Diseases (ICD) codes.
 A lookup table for the ICD codes has been built as internal data sets
 within the medicalcoder package. The sources for these lookup tables
 come from the Centers for Disease Control (CDC) and from the Centers for
-Medicare & Medicaid Services (CMS). The specific links to the source
-data sets can be found in the source code for the medicalcoder package
-on [GitHub](https://github.com/dewittpe/medicalcoder).
+Medicare & Medicaid Services (CMS) and World Health Organization (WHO).
+The specific links to the source data sets can be found in the source
+code for the medicalcoder package on
+[GitHub](https://github.com/dewittpe/medicalcoder).
 
 End users can get a `data.frame` with ICD-9 diagnostic, ICD-9 procedure,
 ICD-10 diagnostic, and ICD-10 procedure codes.
@@ -73,10 +74,14 @@ The columns of this data.frame are:
     for Disease Control and Prevention (CDC) Mortality coding, the year
     is *calendar year*.
 
+  - For ICD-9, CDC extracts in medicalcoder span fiscal years 1997–2012
+    and CMS extracts span fiscal years 2006–2015.
+
 - `known_end`: the last year the code was part of the standard, or that
   the medicalcoder package has data for.
 
-  - ICD-9 last year of active use was FY 2015.
+  - ICD-9 CMS extracts run through FY 2015; CDC ICD-9 extracts end at FY
+    2012.
   - ICD-10 is active. The current version of medicalcoder has details on
     ICD-10 codes through FY 2026.
 
@@ -415,36 +420,30 @@ tab <-
   data.frame(
     code       = x,
     default    = is_icd(x, icdv = 9, dx = 1),
-    assignable_1997 = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 1997),
-    assignable_2010 = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 2010),
-    assignable_2011 = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 2011),
-    assignable_2012 = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 2012),
-    assignable_2013 = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 2013),
-    assignable_2016 = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 2016),
-    assignable_ever = is_icd(x, src = "cms", icdv = 9, dx = 1, ever.assignable = TRUE)
+    assignable_1997_cdc = is_icd(x, src = "cdc", icdv = 9, dx = 1, year = 1997),
+    assignable_2010_cms = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 2010),
+    assignable_2011_cms = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 2011),
+    assignable_2012_cdc = is_icd(x, src = "cdc", icdv = 9, dx = 1, year = 2012),
+    assignable_2012_cms = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 2012),
+    assignable_2015_cms = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 2015),
+    assignable_ever_cdc = is_icd(x, src = "cdc", icdv = 9, dx = 1, ever.assignable = TRUE)
   )
-## Warning: The combination of `icdv` = 9; `dx` = 1; and `src` = cms; has ICD
-## codes with a first known_start year of 2006. The input of `year` = 1997 results
-## in no possible positive match.
-## Warning: The combination of `icdv` = 9; `dx` = 1; and `src` = cms; has ICD
-## codes with a max known_end year of 2015. The input of `year` = 2016 results in
-## no possible positive match.
 knitr::kable(tab)
 ```
 
-| code   | default | assignable_1997 | assignable_2010 | assignable_2011 | assignable_2012 | assignable_2013 | assignable_2016 | assignable_ever |
-|:-------|:--------|:----------------|:----------------|:----------------|:----------------|:----------------|:----------------|:----------------|
-| 516.3  | TRUE    | FALSE           | TRUE            | TRUE            | FALSE           | FALSE           | FALSE           | TRUE            |
-| 516.30 | TRUE    | FALSE           | FALSE           | FALSE           | TRUE            | TRUE            | FALSE           | TRUE            |
-| 516.31 | TRUE    | FALSE           | FALSE           | FALSE           | TRUE            | TRUE            | FALSE           | TRUE            |
-| 516.32 | TRUE    | FALSE           | FALSE           | FALSE           | TRUE            | TRUE            | FALSE           | TRUE            |
-| 516.33 | TRUE    | FALSE           | FALSE           | FALSE           | TRUE            | TRUE            | FALSE           | TRUE            |
-| 516.34 | TRUE    | FALSE           | FALSE           | FALSE           | TRUE            | TRUE            | FALSE           | TRUE            |
-| 516.35 | TRUE    | FALSE           | FALSE           | FALSE           | TRUE            | TRUE            | FALSE           | TRUE            |
-| 516.36 | TRUE    | FALSE           | FALSE           | FALSE           | TRUE            | TRUE            | FALSE           | TRUE            |
-| 516.37 | TRUE    | FALSE           | FALSE           | FALSE           | TRUE            | TRUE            | FALSE           | TRUE            |
-| 516.38 | FALSE   | FALSE           | FALSE           | FALSE           | FALSE           | FALSE           | FALSE           | FALSE           |
-| 516.39 | FALSE   | FALSE           | FALSE           | FALSE           | FALSE           | FALSE           | FALSE           | FALSE           |
+| code   | default | assignable_1997_cdc | assignable_2010_cms | assignable_2011_cms | assignable_2012_cdc | assignable_2012_cms | assignable_2015_cms | assignable_ever_cdc |
+|:-------|:--------|:--------------------|:--------------------|:--------------------|:--------------------|:--------------------|:--------------------|:--------------------|
+| 516.3  | TRUE    | TRUE                | TRUE                | TRUE                | FALSE               | FALSE               | FALSE               | TRUE                |
+| 516.30 | TRUE    | FALSE               | FALSE               | FALSE               | TRUE                | TRUE                | TRUE                | TRUE                |
+| 516.31 | TRUE    | FALSE               | FALSE               | FALSE               | TRUE                | TRUE                | TRUE                | TRUE                |
+| 516.32 | TRUE    | FALSE               | FALSE               | FALSE               | TRUE                | TRUE                | TRUE                | TRUE                |
+| 516.33 | TRUE    | FALSE               | FALSE               | FALSE               | TRUE                | TRUE                | TRUE                | TRUE                |
+| 516.34 | TRUE    | FALSE               | FALSE               | FALSE               | TRUE                | TRUE                | TRUE                | TRUE                |
+| 516.35 | TRUE    | FALSE               | FALSE               | FALSE               | TRUE                | TRUE                | TRUE                | TRUE                |
+| 516.36 | TRUE    | FALSE               | FALSE               | FALSE               | TRUE                | TRUE                | TRUE                | TRUE                |
+| 516.37 | TRUE    | FALSE               | FALSE               | FALSE               | TRUE                | TRUE                | TRUE                | TRUE                |
+| 516.38 | FALSE   | FALSE               | FALSE               | FALSE               | FALSE               | FALSE               | FALSE               | FALSE               |
+| 516.39 | FALSE   | FALSE               | FALSE               | FALSE               | FALSE               | FALSE               | FALSE               | FALSE               |
 
 Similar information can be quickly and easily retrieved via
 [`lookup_icd_codes()`](http://www.peteredewitt.com/medicalcoder/reference/lookup_icd_codes.md).

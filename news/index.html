@@ -50,6 +50,19 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.7.0.9000" id="medicalcoder-0709000">medicalcoder 0.7.0.9000<a class="anchor" aria-label="anchor" href="#medicalcoder-0709000"></a></h2>
+<div class="section level3">
+<h3 id="new-features-0-7-0-9000">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-7-0-9000"></a></h3>
+<ul><li>If a <code>tibble</code> is passed to <code><a href="../reference/comorbidities.html">comorbidities()</a></code> and the <code>dplyr</code> namespace is available, then <code>dplyr</code> methods will be used for data manipulation. This change will generally result in less computation time than base R <code>data.frames</code> (<code>data.tables</code> require even less time).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="other-changes-0-7-0-9000">Other Changes<a class="anchor" aria-label="anchor" href="#other-changes-0-7-0-9000"></a></h3>
+<ul><li><p>Extend and improve the internal ICD-9 database to distinguish between CDC and CMS source.</p></li>
+<li><p>Fix documentation of the <code>mdcr</code> and <code>mdcr_longitudinal</code> datasets.</p></li>
+<li><p>Clarified internal data.frame/data.table helpers: documented that <code>mdcr_select()</code> deep-copies data.table subsets to avoid aliasing, noted the selfref fix in <code>mdcr_set()</code>, and added inline guidance in the longitudinal section of <code><a href="../reference/comorbidities.html">comorbidities()</a></code> to explain the first-occurrence logic.</p></li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.7.0" id="medicalcoder-070">medicalcoder 0.7.0<a class="anchor" aria-label="anchor" href="#medicalcoder-070"></a></h2><p class="text-muted">CRAN release: 2025-11-22</p>
 <div class="section level3">
 <h3 id="bug-fixes-0-7-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-7-0"></a></h3>

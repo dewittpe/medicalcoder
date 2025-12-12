@@ -105,9 +105,9 @@ just format the input string appropriately.</li>
 <p>A lookup table for the ICD codes has been built as internal data sets
 within the medicalcoder package. The sources for these lookup tables
 come from the Centers for Disease Control (CDC) and from the Centers for
-Medicare &amp; Medicaid Services (CMS). The specific links to the source
-data sets can be found in the source code for the medicalcoder package
-on <a href="https://github.com/dewittpe/medicalcoder" class="external-link">GitHub</a>.</p>
+Medicare &amp; Medicaid Services (CMS) and World Health Organization
+(WHO). The specific links to the source data sets can be found in the
+source code for the medicalcoder package on <a href="https://github.com/dewittpe/medicalcoder" class="external-link">GitHub</a>.</p>
 <p>End users can get a <code>data.frame</code> with ICD-9 diagnostic,
 ICD-9 procedure, ICD-10 diagnostic, and ICD-10 procedure codes.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -151,13 +151,16 @@ Federal Government; October 1 - September 30. For example, fiscal year
 <li><p>For codes from the World Health Organization (WHO) and the
 Centers for Disease Control and Prevention (CDC) Mortality coding, the
 year is <em>calendar year</em>.</p></li>
+<li><p>For ICD-9, CDC extracts in medicalcoder span fiscal years
+1997–2012 and CMS extracts span fiscal years 2006–2015.</p></li>
 </ul>
 </li>
 <li>
 <p><code>known_end</code>: the last year the code was part of the
 standard, or that the medicalcoder package has data for.</p>
 <ul>
-<li>ICD-9 last year of active use was FY 2015.</li>
+<li>ICD-9 CMS extracts run through FY 2015; CDC ICD-9 extracts end at FY
+2012.</li>
 <li>ICD-10 is active. The current version of medicalcoder has details on
 ICD-10 codes through FY 2026.</li>
 </ul>
@@ -1324,25 +1327,19 @@ assignable.</p>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>    code       <span class="op">=</span> <span class="va">x</span>,</span>
 <span>    default    <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
-<span>    assignable_1997 <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, year <span class="op">=</span> <span class="fl">1997</span><span class="op">)</span>,</span>
-<span>    assignable_2010 <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, year <span class="op">=</span> <span class="fl">2010</span><span class="op">)</span>,</span>
-<span>    assignable_2011 <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, year <span class="op">=</span> <span class="fl">2011</span><span class="op">)</span>,</span>
-<span>    assignable_2012 <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, year <span class="op">=</span> <span class="fl">2012</span><span class="op">)</span>,</span>
-<span>    assignable_2013 <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, year <span class="op">=</span> <span class="fl">2013</span><span class="op">)</span>,</span>
-<span>    assignable_2016 <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, year <span class="op">=</span> <span class="fl">2016</span><span class="op">)</span>,</span>
-<span>    assignable_ever <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, ever.assignable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>    assignable_1997_cdc <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cdc"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, year <span class="op">=</span> <span class="fl">1997</span><span class="op">)</span>,</span>
+<span>    assignable_2010_cms <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, year <span class="op">=</span> <span class="fl">2010</span><span class="op">)</span>,</span>
+<span>    assignable_2011_cms <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, year <span class="op">=</span> <span class="fl">2011</span><span class="op">)</span>,</span>
+<span>    assignable_2012_cdc <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cdc"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, year <span class="op">=</span> <span class="fl">2012</span><span class="op">)</span>,</span>
+<span>    assignable_2012_cms <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, year <span class="op">=</span> <span class="fl">2012</span><span class="op">)</span>,</span>
+<span>    assignable_2015_cms <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, year <span class="op">=</span> <span class="fl">2015</span><span class="op">)</span>,</span>
+<span>    assignable_ever_cdc <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cdc"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, ever.assignable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="co">## Warning: The combination of `icdv` = 9; `dx` = 1; and `src` = cms; has ICD</span></span>
-<span><span class="co">## codes with a first known_start year of 2006. The input of `year` = 1997 results</span></span>
-<span><span class="co">## in no possible positive match.</span></span>
-<span><span class="co">## Warning: The combination of `icdv` = 9; `dx` = 1; and `src` = cms; has ICD</span></span>
-<span><span class="co">## codes with a max known_end year of 2015. The input of `year` = 2016 results in</span></span>
-<span><span class="co">## no possible positive match.</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">tab</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
+<col width="4%">
 <col width="5%">
-<col width="6%">
 <col width="12%">
 <col width="12%">
 <col width="12%">
@@ -1354,19 +1351,19 @@ assignable.</p>
 <thead><tr class="header">
 <th align="left">code</th>
 <th align="left">default</th>
-<th align="left">assignable_1997</th>
-<th align="left">assignable_2010</th>
-<th align="left">assignable_2011</th>
-<th align="left">assignable_2012</th>
-<th align="left">assignable_2013</th>
-<th align="left">assignable_2016</th>
-<th align="left">assignable_ever</th>
+<th align="left">assignable_1997_cdc</th>
+<th align="left">assignable_2010_cms</th>
+<th align="left">assignable_2011_cms</th>
+<th align="left">assignable_2012_cdc</th>
+<th align="left">assignable_2012_cms</th>
+<th align="left">assignable_2015_cms</th>
+<th align="left">assignable_ever_cdc</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">516.3</td>
 <td align="left">TRUE</td>
-<td align="left">FALSE</td>
+<td align="left">TRUE</td>
 <td align="left">TRUE</td>
 <td align="left">TRUE</td>
 <td align="left">FALSE</td>
@@ -1382,7 +1379,7 @@ assignable.</p>
 <td align="left">FALSE</td>
 <td align="left">TRUE</td>
 <td align="left">TRUE</td>
-<td align="left">FALSE</td>
+<td align="left">TRUE</td>
 <td align="left">TRUE</td>
 </tr>
 <tr class="odd">
@@ -1393,7 +1390,7 @@ assignable.</p>
 <td align="left">FALSE</td>
 <td align="left">TRUE</td>
 <td align="left">TRUE</td>
-<td align="left">FALSE</td>
+<td align="left">TRUE</td>
 <td align="left">TRUE</td>
 </tr>
 <tr class="even">
@@ -1404,7 +1401,7 @@ assignable.</p>
 <td align="left">FALSE</td>
 <td align="left">TRUE</td>
 <td align="left">TRUE</td>
-<td align="left">FALSE</td>
+<td align="left">TRUE</td>
 <td align="left">TRUE</td>
 </tr>
 <tr class="odd">
@@ -1415,7 +1412,7 @@ assignable.</p>
 <td align="left">FALSE</td>
 <td align="left">TRUE</td>
 <td align="left">TRUE</td>
-<td align="left">FALSE</td>
+<td align="left">TRUE</td>
 <td align="left">TRUE</td>
 </tr>
 <tr class="even">
@@ -1426,7 +1423,7 @@ assignable.</p>
 <td align="left">FALSE</td>
 <td align="left">TRUE</td>
 <td align="left">TRUE</td>
-<td align="left">FALSE</td>
+<td align="left">TRUE</td>
 <td align="left">TRUE</td>
 </tr>
 <tr class="odd">
@@ -1437,7 +1434,7 @@ assignable.</p>
 <td align="left">FALSE</td>
 <td align="left">TRUE</td>
 <td align="left">TRUE</td>
-<td align="left">FALSE</td>
+<td align="left">TRUE</td>
 <td align="left">TRUE</td>
 </tr>
 <tr class="even">
@@ -1448,7 +1445,7 @@ assignable.</p>
 <td align="left">FALSE</td>
 <td align="left">TRUE</td>
 <td align="left">TRUE</td>
-<td align="left">FALSE</td>
+<td align="left">TRUE</td>
 <td align="left">TRUE</td>
 </tr>
 <tr class="odd">
@@ -1459,7 +1456,7 @@ assignable.</p>
 <td align="left">FALSE</td>
 <td align="left">TRUE</td>
 <td align="left">TRUE</td>
-<td align="left">FALSE</td>
+<td align="left">TRUE</td>
 <td align="left">TRUE</td>
 </tr>
 <tr class="even">

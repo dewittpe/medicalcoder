@@ -77,21 +77,24 @@
 <li>
 <strong>Fully self-contained</strong>
 <ul>
-<li>Minimal Dependencies
+<li>
+<p>Minimal Dependencies</p>
 <ul>
 <li>No dependencies other than base R.</li>
 <li>Requires R version ≥ 3.5.0 due to a <a href="https://cran.r-project.org/src/base/NEWS.3#:~:text=R%20has%20new,to%20version%203.5.0" class="external-link">change in data serialization</a>. R 3.5.0 was released in April 2018. The initial public release of medicalcoder was in 2025.</li>
 <li>Several packages are listed in the <em>Suggests</em> section of the <code>DESCRIPTION</code> file. These are only needed for building vignettes, other documentation, and testing. They are not required to install the package.</li>
 </ul>
 </li>
-<li>No Imports
+<li>
+<p>No Imports</p>
 <ul>
 <li>medicalcoder does not import any non-base namespaces. This improves ease of maintenance and usability.</li>
 <li>Suggested packages are needed only for development work and building vignettes. They are not required for installation or use.</li>
-<li>That said, there are non-trivial performance gains when passing a <a href="https://cran.r-project.org/package=data.table" class="external-link"><code>data.table</code></a> to the <code><a href="reference/comorbidities.html">comorbidities()</a></code> function compared to passing a base <code>data.frame</code> or a <code>tibble</code> from the tidyverse. (See <a href="https://github.com/dewittpe/medicalcoder/tree/main/benchmarking" class="external-link">benchmarking</a>).</li>
 </ul>
 </li>
-<li>Internal lookup tables
+<li><p>That said, there are non-trivial performance gains when passing a <a href="https://cran.r-project.org/package=data.table" class="external-link"><code>data.table</code></a> to the <code><a href="reference/comorbidities.html">comorbidities()</a></code> function. Passing a <code>tibble</code> is typically faster than a base <code>data.frame</code> but slower than a <code>data.table</code>. (See <a href="https://github.com/dewittpe/medicalcoder/tree/main/benchmarking" class="external-link">benchmarking</a>).</p></li>
+<li>
+<p>Internal lookup tables</p>
 <ul>
 <li>All required data are included in the package. If you have the <code>.tar.gz</code> source file and R ≥ 3.5.0, that is all you need to install and use the package.</li>
 </ul>
@@ -454,7 +457,7 @@
 <p>The major factors impacting the expected computation time for applying a comorbidity algorithm to a data set are:</p>
 <ol style="list-style-type: decimal">
 <li>Data size: number of subjects/encounters.</li>
-<li>Data storage class: medicalcoder has been built such that no imports of other namespaces is required. That said, when a <code>data.table</code> is passed to <code><a href="reference/comorbidities.html">comorbidities()</a></code> and the <code>data.table</code> namespace is available, then S3 dispatch for <code>merge</code> is used, along with some other methods, to reduce memory use and reduce computation time.</li>
+<li>Data storage class: medicalcoder has been built such that no imports of other namespaces is required. That said, when a <code>data.table</code> is passed to <code><a href="reference/comorbidities.html">comorbidities()</a></code> and the <code>data.table</code> namespace is available, then S3 dispatch for <code>merge</code> is used, along with some other methods, to reduce memory use and reduce computation time. When a <code>tibble</code> is passed and the tidyverse namespaces are available, the tibble-aware paths improve performance over a base <code>data.frame</code>, but <code>data.table</code> remains fastest.</li>
 <li>
 <code>flag.method</code>: “current” will take less time than the “cumulative” method.</li>
 </ol>
