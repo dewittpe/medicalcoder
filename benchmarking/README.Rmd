@@ -17,10 +17,12 @@ comorbidity algorithm to a data set are:
 
 1. Data size: number of subjects/encounters.
 2. Data storage class: `medicalcoder` has been built such that no imports of
-   other namespaces is required.  That said, when a `data.table` is passed to
+   other namespaces is required. That said, when a `data.table` is passed to
    `comorbidities()` and the `data.table` namespace is available, then S3
    dispatch for `merge` is used, along with some other methods, to reduce memory
-   use and reduce computation time.
+   use and reduce computation time. When a `tibble` is passed and tidyverse
+   namespaces are available, the tibble-aware path reduces time relative to a
+   base `data.frame`, though `data.table` remains the fastest option.
 3. flag.method: "current" will take less time than the "cumulative" method.
 
 <img src="benchmark2-composite.svg"/>
@@ -61,12 +63,11 @@ outtable[, method := fifelse(subconditions, paste(method, "(with subconditions)"
 outtable[, subconditions := NULL]
 ```
 
-In general, the expected time to apply a comorbidity method is the same between
-`data.frame`s and `tibble`s.  There is a notable decrease in time required when
-`data.table`s are passed to `comorbidities()`.  Best observed case: a
-`data.table` took
+In general, the expected time to apply a comorbidity method is lower for
+`tibble`s than for base `data.frame`s, and lower still for `data.table`s. Best
+observed case: a `data.table` took
 `r outtable_orig[data_class == "data.table", min(relative_time)]`
-the time of a `data.frame`.
+the time of a `data.frame`; `tibble`s sit between the two.
 
 ```{r show-outtable, echo = FALSE, results = "asis"}
 foo <- function(x) {
