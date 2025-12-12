@@ -26,6 +26,20 @@ NULL
 mdcr_set <- function(x, i = NULL, j, value) {
   stopifnot(is.data.frame(x))
   if (..mdcr.datatable.aware.. && inherits(x, "data.table")) {
+    # calling data.table::setDT to make sure that the object can be modified by
+    # reference. Without data.table::setDT here we see an error if the table was
+    # read from disk (e.g., readRDS()) or hand-constructed:
+    #
+    #   This data.table has either been loaded from disk (e.g. using
+    #   readRDS()/load()) or constructed manually (e.g. using structure()).
+    #   Please run setDT() or setalloccol() on it first (to pre-allocate space
+    #   for new columns) before assigning by reference to it.
+    #
+    # data.tables read via readRDS()/load() or hand‑constructed can have an
+    # invalid .internal.selfref, so the first by‑reference op (set()/:=) errors.
+    # data.table::setDT() reinitializes the selfref so data.table::set() can work
+    # by reference.
+
     getExportedValue(name = "setDT", ns = "data.table")(x = x)
     getExportedValue(name = "set", ns = "data.table")(x = x, i = i, j = j, value = value)
   } else if (..mdcr.dplyr.aware.. && inherits(x, "tbl_df")) {
@@ -75,6 +89,13 @@ mdcr_select <- function(x, cols) {
   #  x[, cols, drop = FALSE]
 
   if (..mdcr.datatable.aware.. && inherits(x, "data.table")) {
+    # note: the data.table::copy() is needed here because x[, cols] returns a
+    # shallow copy of the columns.  The use of mdcr_select in the package
+    # implicitly assumes deep copies.
+    # Downstream setorder()/setnames() mutate in place, so copying here preserves the
+    # original.
+    #
+    # The deep copy is intentional to protect callers who expect an isolated subset.
     return(getExportedValue(name = "copy", ns = "data.table")(x[, cols, drop = FALSE, with = FALSE]))
   } else if (..mdcr.dplyr.aware.. && inherits(x, "tbl_df")) {
     select <- getExportedValue(name = "select", ns = "dplyr")
