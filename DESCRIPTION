@@ -21,11 +21,11 @@ BugReports: https://github.com/dewittpe/medicalcoder/issues
 LazyData: true
 Suggests:
     data.table,
+    dplyr,
     kableExtra,
     knitr,
     R.utils,
-    rmarkdown,
-    tibble (>= 2.0.0)
+    rmarkdown
 RoxygenNote: 7.3.3
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)

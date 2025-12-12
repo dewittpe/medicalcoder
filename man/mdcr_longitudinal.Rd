@@ -5,9 +5,9 @@
 \alias{mdcr_longitudinal}
 \title{Synthetic Longitudinal Data}
 \format{
-\code{mdcr_longitudinal} is a \code{data.frame} with four columns.  The codes are
-expected to be treated as diagnostic codes but there are a few ICD-9 codes
-which could match to procedure codes as well.
+\code{mdcr_longitudinal} is a \code{data.frame} with 4 columns.  The codes are
+expected to be treated as diagnostic codes. Warning: there are a few ICD-9
+codes which could match to procedure codes.
 \itemize{
 \item \code{patid}: patient identifier, integer values
 \item \code{date}: date the diagnostic code was recorded

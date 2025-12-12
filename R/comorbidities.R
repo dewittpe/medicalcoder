@@ -360,13 +360,13 @@ comorbidities.data.frame <- function(data,
   # Determine the lookup table and the columns for the lookup table to keep
   lookup_to_keep <- c("condition")
   if (startsWith(method, "pccc")) {
-    lookup <- get_pccc_codes()
+    lookup <- get(x = "pccc_codes", envir = ..mdcr_data_env.., inherits = FALSE)
     lookup_to_keep <- c(lookup_to_keep, "subcondition", "transplant_flag", "tech_dep_flag")
   } else if (startsWith(method, "charlson")) {
-    lookup <- get_charlson_codes()
+    lookup <- get("charlson_codes", envir = ..mdcr_data_env.., inherits = FALSE)
     lookup_to_keep <- c(lookup_to_keep)
   } else if (startsWith(method, "elixhauser")) {
-    lookup <- get_elixhauser_codes()
+    lookup <- get("elixhauser_codes", envir = ..mdcr_data_env.., inherits = FALSE)
     lookup_to_keep <- c(lookup_to_keep, "poaexempt")
   }
 
@@ -385,25 +385,21 @@ comorbidities.data.frame <- function(data,
   ##############################################################################
   # inner join the data with the lookup table
   on_full <-
-    merge(
+    mdcr_inner_join(
       x = if (full.codes) {data} else {data[0, ]},
       y = lookup,
-      all = FALSE,
       by.x = by_x,
       by.y = c("full_code", by_y),
-      suffixes = c("", ".y"),
-      sort = FALSE
+      suffixes = c("", ".y")
     )
 
   on_comp <-
-    merge(
+    mdcr_inner_join(
       x = if (compact.codes) {data} else {data[0, ]},
       y = lookup,
-      all = FALSE,
       by.x = by_x,
       by.y = c("code", by_y),
-      suffixes = c("", ".y"),
-      sort = FALSE
+      suffixes = c("", ".y")
     )
 
   ##############################################################################
@@ -519,6 +515,7 @@ comorbidities.data.frame <- function(data,
       grps <- c(grps, "subcondition")
       byconditions <- c(byconditions, "subcondition")
     }
+    # identify first occurrence per id/condition then retain encounters on/after it
     tmp <- mdcr_select(cmrb, c(grps, encid))
     tmp <- mdcr_setorder(tmp, c(grps, encid))
     keep <- !mdcr_duplicated(tmp, by = grps)
@@ -527,12 +524,11 @@ comorbidities.data.frame <- function(data,
 
     # merge on the poa.var
     foc <-
-      merge(x = foc,
-            y = cmrb,
-            all = TRUE,
-            by.x = c(id.vars2, "first_occurrance", byconditions),
-            by.y = c(id.vars2, encid, byconditions),
-            sort = FALSE
+      mdcr_full_outer_join(
+        x = foc,
+        y = cmrb,
+        by.x = c(id.vars2, "first_occurrance", byconditions),
+        by.y = c(id.vars2, encid, byconditions)
       )
 
     if (startsWith(method, "pccc")) {
@@ -546,7 +542,7 @@ comorbidities.data.frame <- function(data,
     foc <-
       lapply(foc,
              function(y) {
-               rtn <- merge(x = iddf, y = y, all.x = TRUE, by = c(id.vars2), allow.cartesian = TRUE, sort = FALSE)
+               rtn <- mdcr_left_join(x = iddf, y = y, by = c(id.vars2))
                rtn <- mdcr_subset(rtn, i = !is.na(rtn[["condition"]]))
                i <- rtn[[encid]] >= rtn[["first_occurrance"]]
                mdcr_subset(rtn, i = i)
@@ -619,17 +615,6 @@ comorbidities.data.frame <- function(data,
 
   ##############################################################################
   # set attributes and return
-  if (requireNamespace("tibble", quietly = TRUE) && inherits(data, "tbl_df")) {
-    if (subconditions) {
-      ccc[["conditions"]] <- getExportedValue(name = "as_tibble", ns = "tibble")(x = ccc[["conditions"]])
-      for (i in seq_len(length(ccc[["subconditions"]]))) {
-        ccc[["subconditions"]][[i]] <- getExportedValue(name = "as_tibble", ns = "tibble")(x = ccc[["subconditions"]][[i]])
-      }
-    } else {
-      ccc <- getExportedValue(name = "as_tibble", ns = "tibble")(x = ccc)
-    }
-  }
-
   attr(ccc, "method") <- method
   attr(ccc, "id.vars") <- id.vars
   attr(ccc, "flag.method") <- flag.method

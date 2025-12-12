@@ -56,11 +56,11 @@ The primary objectives of medicalcoder are:
        ease of maintenance and usability.
      - Suggested packages are needed only for development work and building
        vignettes. They are not required for installation or use.
-     - That said, there are non-trivial performance gains when passing a
-       [`data.table`](https://cran.r-project.org/package=data.table) to the
-       `comorbidities()` function compared to passing a base `data.frame` or a
-       `tibble` from the tidyverse.
-       (See [benchmarking](https://github.com/dewittpe/medicalcoder/tree/main/benchmarking)).
+    - That said, there are non-trivial performance gains when passing a
+      [`data.table`](https://cran.r-project.org/package=data.table) to the
+      `comorbidities()` function. Passing a `tibble` is typically faster than a
+      base `data.frame` but slower than a `data.table`.
+      (See [benchmarking](https://github.com/dewittpe/medicalcoder/tree/main/benchmarking)).
 
    - Internal lookup tables
      - All required data are included in the package. If you have the `.tar.gz`
@@ -388,10 +388,12 @@ comorbidity algorithm to a data set are:
 
 1. Data size: number of subjects/encounters.
 2. Data storage class: medicalcoder has been built such that no imports of
-   other namespaces is required.  That said, when a `data.table` is passed to
+   other namespaces is required. That said, when a `data.table` is passed to
    `comorbidities()` and the `data.table` namespace is available, then S3
    dispatch for `merge` is used, along with some other methods, to reduce memory
-   use and reduce computation time.
+   use and reduce computation time. When a `tibble` is passed and the tidyverse
+   namespaces are available, the tibble-aware paths improve performance over a
+   base `data.frame`, but `data.table` remains fastest.
 3. `flag.method`: "current" will take less time than the "cumulative" method.
 
 Details on the benchmarking method, summary graphics, and tables,  can be found

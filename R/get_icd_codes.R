@@ -28,14 +28,16 @@
 #'
 #' `known_start` is the first fiscal or calendar year (depending on source) that
 #' the medicalcoder package as definitive source data for.  ICD-9-CM started in
-#' the United States in fiscal year 1980.  Source information that could be
-#' downloaded from the CDC and CMS and added to the source code for the
-#' medicalcoder package goes back to 1997.  As such 1997 is the "known start"
+#' the United States in fiscal year 1980.  The CDC extracts included in
+#' medicalcoder span fiscal years 1997--2012; the CMS ICD-9-CM/PCS extracts
+#' start in fiscal year 2006 and run through fiscal year 2015.  As such 1997 is
+#' the earliest "known start" for ICD-9 within medicalcoder.
 #'
 #' `known_end` is the last fiscal or calendar year (depending on source)
-#' for which we have definitive source data for.  For ICD-9-CM and ICD-9-PCS
-#' that is 2015.  For ICD-10-CM and ICD-10-PCS, which are active, it is just the
-#' last year of known data.  ICD-10 from the WHO ends in 2019.
+#' for which we have definitive source data for.  For ICD-9-CM and ICD-9-PCS,
+#' CMS provides data through fiscal year 2015, while the CDC extracts stop at
+#' fiscal year 2012.  For ICD-10-CM and ICD-10-PCS, which are active, it is just
+#' the last year of known data.  ICD-10 from the WHO ends in 2019.
 #'
 #' ## Header and Assignable Codes
 #'

@@ -2,10 +2,10 @@ source('utilities.R')
 library(medicalcoder)
 
 ################################################################################
-# Prep data I want to test the output with out loading or attaching the
-# data.table or the tibble namespaces.  So, the following commented out code is
+# Prep data I want to test the output without loading or attaching the
+# data.table or the dplyr namespaces.  So, the following commented out code is
 # run once, and only run when needed to update the data, so that a data.frame,
-# data.table, and tibble are all available.
+# data.table, and dplyr are all available.
 #
 # To keep the disk space use down, use only a subset of the mdcr data set
 
@@ -34,7 +34,7 @@ library(medicalcoder)
 ### x <- mdcr[mdcr$patid %in% c1[c(foo(0), foo(1), foo(2), foo(3), foo(4)), "patid"], ]
 ###
 ### saveRDS(x, file = "mdcr_subset_DF.rds", compress = "xz")
-### saveRDS(tibble::as_tibble(x), file = "mdcr_subset_TBL.rds", compress = "xz")
+### saveRDS(dplyr::as_tibble(x), file = "mdcr_subset_TBL.rds", compress = "xz")
 ### data.table::setDT(x)
 ### saveRDS(x, file = "mdcr_subset_DT.rds", compress = "xz")
 
@@ -172,20 +172,20 @@ for (obj in ls(envir = DFS, all.names = TRUE)) {
 ################################################################################
 # For tibbles
 
-if (requireNamespace("tibble", quietly = TRUE)) {
+if (requireNamespace("dplyr", quietly = TRUE)) {
   stopifnot(is.data.frame(mdcrDF))
   stopifnot(is.data.frame(mdcrTBL))
-  stopifnot(tibble::is_tibble(mdcrTBL))
+  stopifnot(inherits(mdcrTBL, "tbl_df"))
   for (obj in ls(envir = TBLS, all.names = TRUE)) {
     if (grepl("_with_subconditions", obj)) {
-      stopifnot(tibble::is_tibble(TBLS[[obj]][["conditions"]]))
+      stopifnot(inherits(TBLS[[obj]][["conditions"]], "tbl_df"))
       TBLS[[obj]][["conditions"]] <- as.data.frame(TBLS[[obj]][["conditions"]])
       for (sc in names(TBLS[[obj]][["subconditions"]])) {
-        stopifnot(tibble::is_tibble(TBLS[[obj]][["subconditions"]][[sc]]))
+        stopifnot(inherits(TBLS[[obj]][["subconditions"]][[sc]], "tbl_df"))
         TBLS[[obj]][["subconditions"]][[sc]] <- as.data.frame(TBLS[[obj]][["subconditions"]][[sc]])
       }
     } else {
-      stopifnot(tibble::is_tibble(TBLS[[obj]]))
+      stopifnot(inherits(TBLS[[obj]], "tbl_df"))
       TBLS[[obj]] <- as.data.frame(TBLS[[obj]])
       class(TBLS[[obj]]) <- c("medicalcoder_comorbidities", class(TBLS[[obj]]))
     }

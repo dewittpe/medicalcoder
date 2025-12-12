@@ -45,63 +45,7 @@ icd_codes  <- medicalcoder::get_icd_codes()[, c("icdv", "dx", "full_code")]
 icd_dx_codes <- icd_codes[icd_codes$dx == 1, ]
 icd_pr_codes <- icd_codes[icd_codes$dx == 0, ]
 
-build_set1 <- function(data_class = c("DF", "DT", "TBL") , subjects = 10 , seed = 1) {
-  subjects <- as.integer(subjects)
-  stopifnot(subjects > 0)
-  seed <- as.integer(seed)
-  set.seed(seed)
-
-  data_class <- match.arg(data_class)
-
-  dxs <- as.list(sample(dx_distribution$ncodes, size = subjects, prob = dx_distribution$d, replace = TRUE))
-  prs <- as.list(sample(pr_distribution$ncodes, size = subjects, prob = pr_distribution$d, replace = TRUE))
-
-  # How many dx and pr codes from pccc?
-  pdxs <- lapply(lapply(dxs, runif), function(x) sum(x < 0.3))
-  pprs <- lapply(lapply(prs, runif), function(x) sum(x < 0.3))
-
-  # any icd codes
-  dxs <- mapply(function(x, y) {x - y}, x = dxs, y = pdxs)
-  prs <- mapply(function(x, y) {x - y}, x = prs, y = pprs)
-
-  set <-
-    mapply(function(sid, pdx, ppr, adx, apr) {
-      x <-
-        rbind(
-          pccc_dx_codes[sample(seq_len(nrow(pccc_dx_codes)), size = pdx), ],
-          pccc_pr_codes[sample(seq_len(nrow(pccc_pr_codes)), size = ppr), ],
-          icd_dx_codes[sample(seq_len(nrow(icd_dx_codes)), size = adx), ],
-          icd_pr_codes[sample(seq_len(nrow(icd_pr_codes)), size = apr), ]
-        )
-      if (nrow(x)) {
-        x$subject_id <- sid
-      } else {
-        x <- data.frame(icdv = NA_integer_, dx = NA_integer_, full_code = NA_character_, subject_id = sid)
-      }
-      x
-    },
-    pdx = pdxs, ppr = pprs, adx = dxs, apr = prs, sid = seq_along(pdxs),
-    SIMPLIFY = FALSE
-    )
-  set <- do.call(rbind, set)
-  rownames(set) <- NULL
-
-  if (data_class == "DT") {
-    require(data.table)
-    data.table::setDT(set)
-  } else if (data_class == "TBL") {
-    require(tibble)
-    set <- as_tibble(set)
-  }
-
-  attr(set, "data_class") <- data_class
-  attr(set, "nsubjects") <- subjects
-  attr(set, "nencounters") <- subjects
-
-  set
-}
-
-build_set2 <- function(data_class = c("DF", "DT", "TBL") , subjects = 10 , seed = 1) {
+build_set <- function(data_class = c("DF", "DT", "TBL") , subjects = 10 , seed = 1) {
   subjects <- as.integer(subjects)
   stopifnot(subjects > 0)
   seed <- as.integer(seed)
@@ -164,35 +108,7 @@ build_set2 <- function(data_class = c("DF", "DT", "TBL") , subjects = 10 , seed 
   set
 }
 
-benchmark1 <- function(data, method, subconditions) {
-  tic <- Sys.time()
-  comorbidities(
-    data = data,
-    icd.codes = "full_code",
-    id.vars = "subject_id",
-    icdv.var = "icdv",
-    dx.var = "dx",
-    poa = 1,
-    primarydx = 0,
-    flag.method = "current",
-    method = method,
-    subconditions = subconditions
-  )
-  toc <- Sys.time()
-
-  data.frame(
-    data_class = attr(data, "data_class"),
-    subjects   = attr(data, "nsubjects"),
-    encounters = attr(data, "nencounters"),
-    method     = method,
-    subconditions = subconditions,
-    flag.method = "current",
-    seed = 1,
-    time_seconds = as.numeric(difftime(toc, tic, units = "secs"))
-  )
-}
-
-benchmark2 <- function(data, method, subconditions, flag.method) {
+benchmark <- function(data, method, subconditions, flag.method) {
   tic <- Sys.time()
   comorbidities(
     data = data,
