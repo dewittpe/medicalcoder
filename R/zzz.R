@@ -1,6 +1,4 @@
 ..mdcr_data_env.. <- new.env(parent = emptyenv())
-..mdcr.datatable.aware.. <- requireNamespace("data.table", quietly = TRUE)
-..mdcr.dplyr.aware.. <- requireNamespace("dplyr", quietly = TRUE)
 
 .onLoad <- function(libname, pkgname) {
   # Build icd_codes

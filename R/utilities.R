@@ -10,10 +10,6 @@
 #' avoid aliasing when downstream code mutates; this intentionally trades some
 #' performance for isolation.
 #'
-#' The flags `..mdcr.datatable.aware..` and `..mdcr.dplyr.aware..` are set when
-#' the respective namespaces are available and toggle the backend-specific
-#' branches below.
-#'
 #' @param x a data.frame or data.table
 #' @param i Optional. Indicates the rows on which the values must be updated. If
 #'   not `NULL`, implies all rows.
@@ -33,7 +29,7 @@ NULL
 #' @keywords internal
 mdcr_set <- function(x, i = NULL, j, value) {
   stopifnot(is.data.frame(x))
-  if (..mdcr.datatable.aware.. && inherits(x, "data.table")) {
+  if (requireNamespace(package = "data.table", quietly = TRUE) && inherits(x, "data.table")) {
     # calling data.table::setDT to make sure that the object can be modified by
     # reference. Without data.table::setDT here we see an error if the table was
     # read from disk (e.g., readRDS()) or hand-constructed:
@@ -50,7 +46,7 @@ mdcr_set <- function(x, i = NULL, j, value) {
 
     getExportedValue(name = "setDT", ns = "data.table")(x = x)
     getExportedValue(name = "set", ns = "data.table")(x = x, i = i, j = j, value = value)
-  } else if (..mdcr.dplyr.aware.. && inherits(x, "tbl_df")) {
+  } else if (requireNamespace(package = "dplyr", quietly = TRUE) && inherits(x, "tbl_df")) {
     mutate <- getExportedValue(name = "mutate", ns = "dplyr")
     if (is.null(i)) {
       newcol <- if (nrow(x) == 0L) value[0] else value
@@ -96,14 +92,14 @@ mdcr_select <- function(x, cols) {
   #  #x[, cols, drop = FALSE, with = FALSE]
   #  x[, cols, drop = FALSE]
 
-  if (..mdcr.datatable.aware.. && inherits(x, "data.table")) {
+  if (requireNamespace(package = "data.table", quietly = TRUE) && inherits(x, "data.table")) {
     # note: the data.table::copy() is needed here because x[, cols] returns a
     # shallow copy of the columns. The use of mdcr_select in the package
     # implicitly assumes deep copies. Downstream setorder()/setnames() mutate in
     # place, so copying here preserves the original. This pays a copy cost to
     # protect callers who expect an isolated subset.
     return(getExportedValue(name = "copy", ns = "data.table")(x[, cols, drop = FALSE, with = FALSE]))
-  } else if (..mdcr.dplyr.aware.. && inherits(x, "tbl_df")) {
+  } else if (requireNamespace(package = "dplyr", quietly = TRUE) && inherits(x, "tbl_df")) {
     select <- getExportedValue(name = "select", ns = "dplyr")
     all_of <- getExportedValue(name = "all_of", ns = "dplyr")
     return(select(x, all_of(cols)))
@@ -131,18 +127,18 @@ mdcr_subset <- function(x, i, cols) {
     rows <- if (is.logical(i)) which(i) else i
 
     if (missing(cols)) {
-      if (..mdcr.datatable.aware.. && inherits(x, "data.table")) {
+      if (requireNamespace(package = "data.table", quietly = TRUE) && inherits(x, "data.table")) {
         return(x[rows, , drop = FALSE, with = FALSE])
-      } else if (..mdcr.dplyr.aware.. && inherits(x, "tbl_df")) {
+      } else if (requireNamespace(package = "dplyr", quietly = TRUE) && inherits(x, "tbl_df")) {
         slice <- getExportedValue(name = "slice", ns = "dplyr")
         return(slice(x, rows))
       } else {
         return(x[rows, , drop = FALSE])
       }
     } else {
-      if (..mdcr.datatable.aware.. && inherits(x, "data.table")) {
+      if (requireNamespace(package = "data.table", quietly = TRUE) && inherits(x, "data.table")) {
         return(x[rows, cols, drop = FALSE, with = FALSE])
-      } else if (..mdcr.dplyr.aware.. && inherits(x, "tbl_df")) {
+      } else if (requireNamespace(package = "dplyr", quietly = TRUE) && inherits(x, "tbl_df")) {
         slice  <- getExportedValue(name = "slice",  ns = "dplyr")
         select <- getExportedValue(name = "select", ns = "dplyr")
         all_of <- getExportedValue(name = "all_of", ns = "dplyr")
@@ -163,9 +159,9 @@ mdcr_subset <- function(x, i, cols) {
 #' @keywords internal
 mdcr_setorder <- function(x, by) {
   stopifnot(is.data.frame(x))
-  if (..mdcr.datatable.aware.. && inherits(x, "data.table")) {
+  if (requireNamespace(package = "data.table", quietly = TRUE) && inherits(x, "data.table")) {
     getExportedValue(name = "setorderv", ns = "data.table")(x, by)
-  } else if (..mdcr.dplyr.aware.. && inherits(x, "tbl_df")) {
+  } else if (requireNamespace(package = "dplyr", quietly = TRUE) && inherits(x, "tbl_df")) {
     arrange <- getExportedValue(name = "arrange", ns = "dplyr")
     x <- do.call(arrange, c(list(.data = x), lapply(by, as.name)))
   } else {
@@ -183,9 +179,9 @@ mdcr_setnames <- function(x, old, new, ...) {
   stopifnot(is.data.frame(x))
   stopifnot(is.character(old), is.character(new))
   stopifnot(length(old) == length(new))
-  if (..mdcr.datatable.aware.. && inherits(x, "data.table")) {
+  if (requireNamespace(package = "data.table", quietly = TRUE) && inherits(x, "data.table")) {
     getExportedValue(name = "setnames", ns = "data.table")(x, old, new, ...)
-  } else if (..mdcr.dplyr.aware.. && inherits(x, "tbl_df")) {
+  } else if (requireNamespace(package = "dplyr", quietly = TRUE) && inherits(x, "tbl_df")) {
     rename <- getExportedValue(name = "rename", ns = "dplyr")
     args <- c(list(.data = x), stats::setNames(lapply(old, as.name), new))
     x <- do.call(rename, args)
@@ -204,10 +200,10 @@ mdcr_setnames <- function(x, old, new, ...) {
 #' @keywords internal
 mdcr_duplicated <- function(x, by = seq_along(x), ...) {
   stopifnot(is.data.frame(x))
-  if (..mdcr.datatable.aware.. && inherits(x, "data.table")) {
+  if (requireNamespace(package = "data.table", quietly = TRUE) && inherits(x, "data.table")) {
     # Flag this frame as data.table-aware so duplicated.data.table uses its
     # optimized path instead of falling back to duplicated.data.frame.
-    .datatable.aware <- ..mdcr.datatable.aware..
+    .datatable.aware <- TRUE
     rtn <- utils::getFromNamespace(x = 'duplicated.data.table', ns = "data.table")(x, by = by, ...)
   } else {  # this is for base R data.frames and tidyverse tbl_df
     rtn <- duplicated(x[, by, drop = FALSE], ...)
@@ -223,7 +219,7 @@ mdcr_duplicated <- function(x, by = seq_along(x), ...) {
 mdcr_left_join <- function(x, y, ...) {
   stopifnot(is.data.frame(x), is.data.frame(y))
 
-  if (..mdcr.dplyr.aware.. && inherits(x, "tbl_df")) {
+  if (requireNamespace(package = "dplyr", quietly = TRUE) && inherits(x, "tbl_df")) {
     lj <- getExportedValue(name = "left_join", ns = "dplyr")
     dots <- list(...)
     if (!is.null(dots$by.x) & !is.null(dots$by.y)) {
@@ -261,7 +257,7 @@ mdcr_left_join <- function(x, y, ...) {
 mdcr_full_outer_join <- function(x, y, ...) {
   stopifnot(is.data.frame(x), is.data.frame(y))
 
-  if (..mdcr.dplyr.aware.. && inherits(x, "tbl_df")) {
+  if (requireNamespace(package = "dplyr", quietly = TRUE) && inherits(x, "tbl_df")) {
     fj <- getExportedValue(name = "full_join", ns = "dplyr")
     dots <- list(...)
     if (!is.null(dots$by.x) & !is.null(dots$by.y)) {
@@ -299,7 +295,7 @@ mdcr_full_outer_join <- function(x, y, ...) {
 mdcr_inner_join <- function(x, y, ...) {
   stopifnot(is.data.frame(x), is.data.frame(y))
 
-  if (..mdcr.dplyr.aware.. && inherits(x, "tbl_df")) {
+  if (requireNamespace(package = "dplyr", quietly = TRUE) && inherits(x, "tbl_df")) {
     ij <- getExportedValue(name = "inner_join", ns = "dplyr")
     dots <- list(...)
     if (!is.null(dots$by.x) & !is.null(dots$by.y)) {
@@ -336,7 +332,7 @@ mdcr_inner_join <- function(x, y, ...) {
 #' @keywords internal
 mdcr_cbind <- function(x, ...) {
   stopifnot(is.data.frame(x))
-  if (..mdcr.dplyr.aware.. && inherits(x, "tbl_df")) {
+  if (requireNamespace(package = "dplyr", quietly = TRUE) && inherits(x, "tbl_df")) {
     cb <- getExportedValue(name = "bind_cols", ns = "dplyr")
     rtn <- cb(x, ...)
   } else {
