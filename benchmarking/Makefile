@@ -6,7 +6,7 @@ include ../Makevars
 
 all: README.md
 
-grid.tsv grid_data.tsv: make_grid.sh
+grid.tsv grid_data.tsv &: make_grid.sh
 	./$<
 
 .bench_data: run_parallel_data.sh grid_data.tsv build_data.R benchmark-utilities.R

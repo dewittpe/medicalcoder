@@ -27,10 +27,11 @@ parallel \
   --header : \
   --jobs "$JOBS" \
   --bar \
+  --shuf \
   --eta \
   --joblog logs/joblog_data.tsv \
   '
-    OUT="bench_data/{data_class}__{subjects}__{seed}.rds"
+    OUT="bench_data/{subjects}__{seed}.rds"
     test -s "$OUT" && exit 0
     Rscript build_data.R "$OUT"
   ' \

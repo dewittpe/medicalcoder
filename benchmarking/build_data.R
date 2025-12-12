@@ -1,7 +1,7 @@
 source("benchmark-utilities.R")
 
 if (interactive()) {
-  outfile <- "bench_data/DF__1e1__1.rds"
+  outfile <- "bench_data/1e1__1.rds"
 } else {
   args <- commandArgs(trailingOnly = TRUE)
   if (length(args) != 1L) stop("expected a single output path argument")
@@ -16,13 +16,12 @@ if (file.exists(outfile) && file.info(outfile)$size > 0) {
 }
 
 parts <- strsplit(basename(outfile), split = "__")[[1]]
-data_class <- parts[[1]]
-subjects   <- as.integer(parts[[2]])
-seed <- as.integer(sub("\\.rds$", "", parts[[3]]))
+subjects <- as.integer(parts[[1]])
+seed <- as.integer(sub("\\.rds$", "", parts[[2]]))
 
 dataset <-
   build_set(
-    data_class = data_class,
+    data_class = "DF",
     subjects = subjects,
     seed = seed
   )
