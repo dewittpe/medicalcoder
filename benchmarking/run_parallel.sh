@@ -11,7 +11,7 @@ else
 fi
 
 # Default concurrency: on dragontail 80% of machine cores (>=1)
-JOBS=$(( 4 * CORES / 5 ))
+JOBS=5 #$(( 1 * CORES / 5 ))
 if [ "$JOBS" -lt 1 ]; then JOBS=1; fi
 
 # Memory safeguard: require this much free RAM before starting another job
@@ -31,7 +31,6 @@ parallel \
   --header : \
   --jobs "$JOBS" \
   --memfree "$MEMFREE" \
-  --shuf \
   --bar \
   --eta \
   --joblog logs/joblog1.tsv \

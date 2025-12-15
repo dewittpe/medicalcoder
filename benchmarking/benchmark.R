@@ -16,7 +16,7 @@ if (subconditions) {
   method <- sub("s$", "", method)
 }
 
-dataset_file <- file.path("bench_data", sprintf("%s__%s.rds", subjects, seed))
+dataset_file <- file.path("bench_data", sprintf("%s__%s.rds", args[[2]], seed))
 if (!file.exists(dataset_file)) {
   stop(sprintf("Dataset %s is missing; build datasets first.", dataset_file))
 }
@@ -34,7 +34,8 @@ output <-
     data = this_data_set,
     method = method,
     subconditions = subconditions,
-    flag.method = flag_method
+    flag.method = flag_method,
+    seed = seed
   )
 
 saveRDS(output, file = file.path("bench_results", outfile))

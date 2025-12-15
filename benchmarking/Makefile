@@ -17,7 +17,7 @@ grid.tsv grid_data.tsv &: make_grid.sh
 	./$<
 	@touch $@
 
-outtable.rds: benchmark-summary.R .bench
+bench.rds relative.rds &: benchmark-summary.R .bench
 	$(RSCRIPT) $<
 
 README.md: README.Rmd outtable.rds
