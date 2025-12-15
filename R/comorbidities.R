@@ -525,31 +525,19 @@ comorbidities.data.frame <- function(data,
         by = c(id.vars2, encid, byconditions)
       )
     foc <- mdcr_setnames(foc, old = encid, new = "first_occurrance")
+    cmrb <- mdcr_left_join(cmrb, foc, by = intersect(names(cmrb), names(foc)))
 
-    if (startsWith(method, "pccc")) {
-      foc <- split(foc, f = mdcr_select(foc, c("condition", "subcondition")), drop = TRUE)
-    } else {
-      foc <- split(foc, f = mdcr_select(foc, c("condition")), drop = TRUE)
-    }
-
-    foc <- lapply(foc, unique)
-
-    foc <-
-      lapply(foc,
-             function(y) {
-               rtn <- mdcr_left_join(x = iddf, y = y, by = c(id.vars2))
-               rtn <- mdcr_subset(rtn, i = !is.na(rtn[["condition"]]))
-               i <- rtn[[encid]] >= rtn[["first_occurrance"]]
-               mdcr_subset(rtn, i = i)
-             })
-
-    cmrb <- do.call(rbind, foc)
+    # get all the iddf and conditions
+    cmrb <- mdcr_left_join(x = iddf, cmrb, by = id.vars2, suffixes = c("", ".y"))
+    cmrb <- mdcr_subset(cmrb, !is.na(cmrb[["condition"]]))
+    i <- which(cmrb[[encid]] >= cmrb[["first_occurrance"]])
+    cmrb <- mdcr_subset(cmrb, i = i)
 
     # set poa to 1 and primarydx to 0 for prior conditions
-    idx <- cmrb[[encid]] > cmrb[["first_occurrance"]]
-    cmrb[[poa.var]][idx] <- 1L
+    idx <- which(cmrb[[encid]] > cmrb[["first_occurrance"]])
+    cmrb <- mdcr_set(cmrb, i = idx, j = poa.var, value = 1L)
     if (!is.null(primarydx.var)) {
-      cmrb[[primarydx.var]][cmrb[[encid]] > cmrb[["first_occurrance"]]] <- 0L
+      cmrb <- mdcr_set(cmrb, i = idx, j = primarydx.var, value = 0L)
     }
     cmrb <- mdcr_set(cmrb, j = "first_occurrance", value =  NULL)
 
