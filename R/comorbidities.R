@@ -272,11 +272,7 @@ comorbidities.data.frame <- function(data,
     primarydx.var <- primarydx <- NULL
   }
 
-  flag.method <-
-    match.arg(
-      flag.method,
-      several.ok = FALSE
-    )
+  flag.method <- match.arg(flag.method, choices = c("current", "cumulative"), several.ok = FALSE)
 
   if (startsWith(method, "charlson") && !is.null(age.var)) {
     is_a_column(age.var, names(data))
@@ -520,16 +516,15 @@ comorbidities.data.frame <- function(data,
     tmp <- mdcr_setorder(tmp, c(grps, encid))
     keep <- !mdcr_duplicated(tmp, by = grps)
     foc <- mdcr_subset(tmp, keep)
-    foc <- mdcr_setnames(foc, old = encid, new = "first_occurrance")
 
-    # merge on the poa.var
+    # add the first occurrence on to the cmrb data.frame
     foc <-
-      mdcr_full_outer_join(
-        x = foc,
-        y = cmrb,
-        by.x = c(id.vars2, "first_occurrance", byconditions),
-        by.y = c(id.vars2, encid, byconditions)
+      mdcr_left_join(
+        x = cmrb,
+        y = foc,
+        by = c(id.vars2, encid, byconditions)
       )
+    foc <- mdcr_setnames(foc, old = encid, new = "first_occurrance")
 
     if (startsWith(method, "pccc")) {
       foc <- split(foc, f = mdcr_select(foc, c("condition", "subcondition")), drop = TRUE)
