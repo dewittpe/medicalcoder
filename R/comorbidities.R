@@ -526,18 +526,25 @@ comorbidities.data.frame <- function(data,
       )
     foc <- mdcr_setnames(foc, old = encid, new = "first_occurrance")
 
+    iddf2 <-
+      mdcr_inner_join(
+        x = unique(mdcr_select(iddf, id.vars)),
+        y = unique(mdcr_select(foc, id.vars2)),
+        by = id.vars2)
+    iddf2 <- unique(iddf2)
+
     if (startsWith(method, "pccc")) {
       foc <- split(foc, f = mdcr_select(foc, c("condition", "subcondition")), drop = TRUE)
     } else {
       foc <- split(foc, f = mdcr_select(foc, c("condition")), drop = TRUE)
     }
-
     foc <- lapply(foc, unique)
+
 
     foc <-
       lapply(foc,
              function(y) {
-               rtn <- mdcr_left_join(x = iddf, y = y, by = c(id.vars2))
+               rtn <- mdcr_left_join(x = iddf2, y = y, by = c(id.vars2))
                rtn <- mdcr_subset(rtn, i = !is.na(rtn[["condition"]]))
                i <- rtn[[encid]] >= rtn[["first_occurrance"]]
                mdcr_subset(rtn, i = i)
