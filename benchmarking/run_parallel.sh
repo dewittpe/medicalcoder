@@ -10,8 +10,8 @@ else
   CORES=$(sysctl -n hw.ncpu)
 fi
 
-# Default concurrency: on dragontail 80% of machine cores (>=1)
-JOBS=5 #$(( 1 * CORES / 5 ))
+# Default concurrency
+JOBS=$(( 2 * CORES / 5 ))
 if [ "$JOBS" -lt 1 ]; then JOBS=1; fi
 
 # Memory safeguard: require this much free RAM before starting another job
@@ -33,7 +33,7 @@ parallel \
   --memfree "$MEMFREE" \
   --bar \
   --eta \
-  --joblog logs/joblog1.tsv \
+  --joblog logs/joblog.tsv \
   --results logs/out \
   '
     OUT="bench_results/{data_class}__{subjects}__{method}__{flag_method}__{seed}__{iter}.rds"

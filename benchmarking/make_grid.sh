@@ -24,13 +24,3 @@ ITERS=$(seq 1 5)
     done
   done
 } > grid.tsv
-
-# Dataset build grid (unique datasets)
-{
-  echo -e "subjects\tseed"
-  for n in "${SUBJECTS[@]}"; do
-    for s in ${SEEDS[@]}; do
-      echo -e "${n}\t${s}"
-    done
-  done
-} > grid_data.tsv

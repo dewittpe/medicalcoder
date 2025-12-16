@@ -6,21 +6,24 @@ include ../Makevars
 
 all: README.md
 
-grid.tsv grid_data.tsv &: make_grid.sh
+grid.tsv: make_grid.sh
 	./$<
 
-.bench_data: run_parallel_data.sh grid_data.tsv build_data.R benchmark-utilities.R
-	./run_parallel_data.sh
-	@touch $@
-
-.bench: run_parallel.sh grid.tsv .bench_data
-	./$<
-	@touch $@
-
-bench.rds relative.rds &: benchmark-summary.R .bench
+mimicdata.rds: prep-mimic-data.R mimic-iv-clinical-database-demo-2.2.zip
 	$(RSCRIPT) $<
 
-README.md: README.Rmd outtable.rds
+#.bench_data: run_parallel_data.sh grid_data.tsv build_data.R benchmark-utilities.R
+#	./run_parallel_data.sh
+#	@touch $@
+
+.benchmark: run_parallel.sh grid.tsv
+	./$<
+	@touch $@
+
+bench.rds relative.rds &: benchmark-summary.R .benchmark
+	$(RSCRIPT) $<
+
+README.md: README.Rmd bench.rds
 	$(R) -e "knitr::knit('$<', output = '$@')"
 
 clean:
