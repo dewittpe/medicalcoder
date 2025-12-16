@@ -93,13 +93,7 @@ build_set <- function(data_class = c("DF", "DT", "TBL") , subjects = 10 , seed =
   set <- do.call(rbind, set)
   rownames(set) <- NULL
 
-  if (data_class == "DT") {
-    require(data.table)
-    data.table::setDT(set)
-  } else if (data_class == "TBL") {
-    require(tibble)
-    set <- as_tibble(set)
-  }
+  # Leave as data.frame here; conversion happens at benchmark time
 
   attr(set, "data_class") <- data_class
   attr(set, "nsubjects") <- subjects
@@ -108,7 +102,7 @@ build_set <- function(data_class = c("DF", "DT", "TBL") , subjects = 10 , seed =
   set
 }
 
-benchmark <- function(data, method, subconditions, flag.method) {
+benchmark <- function(data, method, subconditions, flag.method, seed) {
   tic <- Sys.time()
   comorbidities(
     data = data,
@@ -125,14 +119,12 @@ benchmark <- function(data, method, subconditions, flag.method) {
   toc <- Sys.time()
 
   data.frame(
-    data_class = attr(data, "data_class"),
     subjects   = attr(data, "nsubjects"),
     encounters = attr(data, "nencounters"),
     method     = method,
     subconditions = subconditions,
     flag.method = flag.method,
-    seed = 1,
+    seed = seed,
     time_seconds = as.numeric(difftime(toc, tic, units = "secs"))
   )
 }
-
