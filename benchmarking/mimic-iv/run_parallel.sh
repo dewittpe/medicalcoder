@@ -31,6 +31,7 @@ parallel \
   --header : \
   --jobs "$JOBS" \
   --memfree "$MEMFREE" \
+  --shuf \
   --bar \
   --eta \
   --joblog logs/joblog.tsv \

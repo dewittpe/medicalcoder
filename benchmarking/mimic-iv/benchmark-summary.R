@@ -327,8 +327,13 @@ dev.off()
 
 ################################################################################
 # final step - save the outtable.rds file, this is tracked in the Makefile
-saveRDS(bench, file = "bench.rds")
-saveRDS(relative, file = "relative.rds")
+benchmark <-
+  merge(
+    x = bench,
+    y = relative,
+    by = intersect(names(bench), names(relative))
+  )
+saveRDS(benchmark, file = "benchmark.rds")
 
 ################################################################################
 #                                 End of File                                  #

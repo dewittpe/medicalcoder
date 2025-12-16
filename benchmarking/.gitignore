@@ -1,9 +1,6 @@
+*.rds
 *.tsv
-.bench1
-.bench2
+.benchmark
 Rplots.pdf
-bench1_results/
-bench2
-bench2_results/
-logs1/
-logs2/
+bench_results/
+logs/

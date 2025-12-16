@@ -7,7 +7,7 @@ library(data.table)
 library(medicalcoder)
 
 outfile <- if (interactive()) {
-  "DT__1e3__pccc_v3.1__cumulative__1__1.rds"
+  "DT__1e3__pccc_v3.1s__cumulative__1__1.rds"
 } else {
   commandArgs(trailingOnly = TRUE)
 }
@@ -94,8 +94,14 @@ toc <- Sys.time()
 
 # sanity check
 total_encounters <- uniqueN(this_data, by = c("subject_id", "hadm_id", "dup"))
-if (nrow(x) != total_encounters) {
-  stop(sprintf("%s not created, nrow(x) != total_encounters", outfile))
+if (subconditions) {
+  if (nrow(x[["conditions"]]) != total_encounters) {
+    stop(sprintf("%s not created, nrow(x) != total_encounters", outfile))
+  }
+} else {
+  if (nrow(x) != total_encounters) {
+    stop(sprintf("%s not created, nrow(x) != total_encounters", outfile))
+  }
 }
 
 output <-
