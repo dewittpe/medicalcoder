@@ -1206,6 +1206,19 @@ I50.40 does need to be POA to count for Elixhauser.
 </tr>
 </tfoot>
 </table>
+<div class="section level4">
+<h4 id="flag-method-and-poa-defaults">Flag method and POA defaults<a class="anchor" aria-label="anchor" href="#flag-method-and-poa-defaults"></a>
+</h4>
+<p>When <code>flag.method = "cumulative"</code> and you do <em>not</em>
+supply <code>poa</code> or <code>poa.var</code>,
+<code><a href="../reference/comorbidities.html">comorbidities()</a></code> treats the first encounter where a
+condition appears as <code>poa = 0</code> and carries that condition
+forward with <code>poa = 1</code> on later encounters.</p>
+<p>When <code>flag.method = "current"</code> and you do <em>not</em>
+supply <code>poa</code> or <code>poa.var</code>,
+<code><a href="../reference/comorbidities.html">comorbidities()</a></code> treates all ICD codes as
+<code>poa = 1</code>.</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="mapping-icd-codes-to-comorbidities">Mapping ICD Codes to Comorbidities<a class="anchor" aria-label="anchor" href="#mapping-icd-codes-to-comorbidities"></a>

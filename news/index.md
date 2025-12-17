@@ -28,6 +28,11 @@
 - Improve cumulative flagging to apply first-occurrence logic more
   effecently.
 
+- Extend documentation for the expected default behavior between the
+  present-on-admission flags and `flag.method` argument in
+  [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+  (re: [\#28](https://github.com/dewittpe/medicalcoder/issues/28))
+
 ## medicalcoder 0.7.0
 
 CRAN release: 2025-11-22

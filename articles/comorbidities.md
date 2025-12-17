@@ -214,6 +214,19 @@ Indicators for when a comorbidity is flagged based on the algorithm,
 present on admission (poa), and flag.method. The two ICD codes, C78.4
 and I50.40, map to cancer and cardiovascular disease respectively.
 
+#### Flag method and POA defaults
+
+When `flag.method = "cumulative"` and you do *not* supply `poa` or
+`poa.var`,
+[`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+treats the first encounter where a condition appears as `poa = 0` and
+carries that condition forward with `poa = 1` on later encounters.
+
+When `flag.method = "current"` and you do *not* supply `poa` or
+`poa.var`,
+[`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+treates all ICD codes as `poa = 1`.
+
 ## Mapping ICD Codes to Comorbidities
 
 End users can quickly assess the lookup table for all the ICD codes

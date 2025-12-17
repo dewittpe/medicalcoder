@@ -238,6 +238,17 @@ and calling `comorbidities()` with `id.vars = c("patid", "enc_seq")`
 will have better performance than using the date and will clear up any
 possible issues with non-sequential encounter ids from the source data.
 
+**Cumulative + POA defaults:**
+
+When `flag.method = "cumulative"` and neither `poa` nor `poa.var` is
+supplied, the first encounter for a condition is treated as `poa = 0`.
+Subsequent encounters for that condition are flagged as `poa = 1`.
+
+When `flag.method = "current"` and neither `poa` nor `poa.var` is
+supplied, then all codes will be considered present-on-admission. If poa
+was assumed to be 0, then in this case the only conditions that could be
+flagged are the Elixhauser conditions which are poa-exempt.
+
 ## References
 
 - Pediatric Complex Chronic Conditions:

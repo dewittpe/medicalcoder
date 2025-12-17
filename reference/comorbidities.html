@@ -255,6 +255,15 @@ order as the data.  For example, say you had the following:</p><table class="tab
 correctly stored. Adding a column <code>enc_seq</code>, e.g.,</p><table class="table table"><tr><td>patid</td><td>enc_id</td><td>date</td><td>enc_seq</td></tr><tr><td>P1</td><td>10823090</td><td>Aug 2023</td><td>1</td></tr><tr><td>P1</td><td>10725138</td><td>Jul 2025</td><td>2</td></tr></table><p>and calling <code>comorbidities()</code> with <code>id.vars = c("patid", "enc_seq")</code> will
 have better performance than using the date and will clear up any possible
 issues with non-sequential encounter ids from the source data.</p>
+<p><strong>Cumulative + POA defaults:</strong></p>
+<p>When <code>flag.method = "cumulative"</code> and neither
+<code>poa</code> nor <code>poa.var</code> is supplied, the first encounter for a condition is
+treated as <code>poa = 0</code>. Subsequent encounters for that condition are flagged as
+<code>poa = 1</code>.</p>
+<p>When <code>flag.method = "current"</code> and neither <code>poa</code> nor <code>poa.var</code> is supplied,
+then all codes will be considered present-on-admission.  If poa was assumed
+to be 0, then in this case the only conditions that could be flagged are the
+Elixhauser conditions which are poa-exempt.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
