@@ -1,12 +1,13 @@
 #!/bin/bash
 
 DATA_CLASSES=(DF DT TBL)
-SUBJECTS=(1e1 2e1 1e2 2e2 5e2 1e3 2e3 5e3 1e4 2e4 3e4 5e4 1e5)
+SUBJECTS=(1e1 2e1 5e1 1e2 2e2 5e2 1e3 2e3 5e3 1e4 2e4 5e4 1e5 2e5 5e5 1e6)
 METHODS=(pccc_v3.1 pccc_v3.1s charlson_quan2005 elixhauser_quan2005)
 FLAG_METHODS=(current cumulative)
 SEEDS=$(seq 1 10)
 ITERS=$(seq 1 5)
 
+# Benchmark job grid (per-run)
 {
   echo -e "data_class\tsubjects\tmethod\tflag_method\tseed\titer"
   for dc in "${DATA_CLASSES[@]}"; do

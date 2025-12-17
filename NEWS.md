@@ -19,6 +19,8 @@
   `mdcr_set()`, and added inline guidance in the longitudinal section of
   `comorbidities()` to explain the first-occurrence logic.
 
+* Improve cumulative flagging to apply first-occurrence logic more effecently.
+
 # medicalcoder 0.7.0
 
 ## Bug Fixes

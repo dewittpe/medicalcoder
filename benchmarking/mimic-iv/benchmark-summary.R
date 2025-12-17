@@ -1,13 +1,17 @@
 library(data.table)
 library(ggplot2)
+library(mgcv)
 
 ################################################################################
 # data import
 bench <-
   list.files("bench_results", full.names = TRUE) |>
-  lapply(readRDS) |>
+  sapply(readRDS, simplify = FALSE) |>
   lapply(setDT) |>
-  rbindlist()
+  rbindlist(idcol = "file", use.names = TRUE, fill = TRUE)
+bench[, iter := as.integer(sub("(^.*)__(\\d+)\\.rds$", "\\2", file))]
+bench[, data_class := fcase(grepl("DT__", file), "DT", grepl("DF__", file), "DF", grepl("TBL__", file), "TBL")]
+bench[, file := NULL]
 
 mem <-
   list.files("./logs/mem", pattern = "\\.tsv$", full.names = TRUE, recursive = TRUE) |>
@@ -16,48 +20,102 @@ mem <-
 mem[, subconditions := grepl("pccc_v3.1s", method)]
 mem[, method := sub("s$", "", method)]
 setnames(mem, "flag_method", "flag.method")
+mem[, out := NULL]
 
-bench_summary <-
-  bench[, .(median_time_seconds = median(time_seconds)) , by = .(data_class, subjects, encounters, seed, method, subconditions, flag.method) ]
-mem_summary <-
-  mem[,    .(median_rss_kib = median(max_rss_kib)),        by = .(data_class, subjects,             seed, method, subconditions, flag.method)]
+bench <-
+  merge(
+    x = bench,
+    y = mem,
+    all = TRUE,
+    by = c("data_class", "subjects", "iter", "seed", "method", "subconditions", "flag.method"),
+  )
 
-bench_summary <-
-  merge(bench_summary, mem_summary, all = TRUE)
+bench[, data_class := fcase(data_class == "DF", "data.frame", data_class == "DT", "data.table", data_class == "TBL", "tibble")]
 
-bench_summary[!is.na(median_time_seconds) & !is.na(median_rss_kib)]
+bench[, log10_time_seconds := log10(time_seconds)]
+bench[, log10_encounters   := log10(encounters)]
+bench[, log10_max_rss_kib  := log10(max_rss_kib)]
 
-bench_summary[, data_class := fcase(data_class == "DF", "data.frame",
-                                     data_class == "DT", "data.table",
-                                     data_class == "TBL", "tibble")]
+################################################################################
+# use gams to smooth the data
+b <-
+  split(bench,
+    by = c("data_class", "method", "subconditions", "flag.method"),
+    sep = "__"
+  )
 
-# relative time
-bench_summary[!is.na(median_time_seconds), df_median := median_time_seconds[data_class == "data.frame"], by = .(subjects, encounters, method, subconditions, flag.method)]
-bench_summary[, relative_time := (median_time_seconds / df_median)]
-bench_summary[, df_median := NULL]
+time_gams <-
+  lapply(b,
+    function(x) {
+      m <-
+        try(
+          mgcv::gam(log10_time_seconds ~ s(log10_encounters, bs = "bs"), data = x)
+          ,
+          silent = TRUE
+        )
+      if (inherits(m, "gam")) {
+        p <- predict(m, newdata = x, se.fit = TRUE)
+        lwr <- 10**(p$fit + qnorm(0.025) * p$se.fit)
+        upr <- 10**(p$fit + qnorm(0.975) * p$se.fit)
+        p   <- 10**p$fit
+      } else {
+        p   <- NA_real_
+        lwr <- NA_real_
+        upr <- NA_real_
+      }
+      set(x, j = "time_smooth",     value = p)
+      set(x, j = "time_smooth_lwr", value = lwr)
+      set(x, j = "time_smooth_upr", value = upr)
+    })
+
+mem_gams <-
+  lapply(
+    b,
+    function(x) {
+      m <-
+        try(
+          mgcv::gam(log10_max_rss_kib ~ s(log10_encounters, bs = "bs"), data = x)
+          ,
+          silent = TRUE
+        )
+      if (inherits(m, "gam")) {
+        p <- predict(m, newdata = x, se.fit = TRUE)
+        lwr <- 10**(p$fit + qnorm(0.025) * p$se.fit)
+        upr <- 10**(p$fit + qnorm(0.975) * p$se.fit)
+        p   <- 10**p$fit
+      } else {
+        p   <- NA_real_
+        lwr <- NA_real_
+        upr <- NA_real_
+      }
+      set(x, j = "max_rss_kib_smooth",     value = p)
+      set(x, j = "max_rss_kib_smooth_lwr", value = lwr)
+      set(x, j = "max_rss_kib_smooth_upr", value = upr)
+    })
+
+bench <- rbindlist(b)
 
 ################################################################################
 # Plotting helpers
 cclr <- c("data.table" = "#8da0cb", "tibble" = "#fc8d62", "data.frame" = "#66c2a5")
-ctyp <- c("data.frame" = 2, "data.table" = 1, "tibble" = 3)
-
+ctyp <- c("data.frame" = 3, "data.table" = 1, "tibble" = 2)
 
 ################################################################################
 # plot
-facet_spec <- . ~ fifelse(subconditions,
-                          paste(method, "(with subconditions)"),
-                          method) + flag.method
-g <-
-  ggplot(bench_summary) +
+facet_spec <- . ~ fifelse(subconditions, paste(method, "(with subconditions)"), method) + flag.method
+
+g1 <-
+  ggplot(bench) +
   theme_bw() +
-  aes(x = encounters, y = median_time_seconds,
-      color = data_class,
-      fill = data_class,
-      linetype = data_class,
-      shape = data_class
-  ) +
+  aes(
+    x        = encounters,
+    y        = time_seconds,
+    color    = data_class,
+    fill     = data_class,
+    linetype = data_class,
+    shape    = data_class
+    ) +
   geom_point() +
-  geom_line() +
   scale_x_log10(labels = scales::label_comma()) +
   scale_y_log10(labels = scales::label_comma()) +
   scale_fill_manual(name = "Data Class", values = cclr) +
@@ -74,11 +132,16 @@ g <-
     axis.text.x = element_text(hjust = 0.75)
   )
 
-ggsave(file = "benchmark.pdf", plot = g, width = 12, height = 7)
-ggsave(file = "benchmark.svg", plot = g, width = 12, height = 7)
+ggsave(file = "benchmark.pdf", plot = g1, width = 12, height = 7)
+ggsave(file = "benchmark.svg", plot = g1, width = 12, height = 7)
+
+relative <-
+  bench[, unique(.SD),  .SDcols = c("data_class", "encounters", "method", "subconditions", "flag.method", "time_smooth")]
+
+relative[, relative_time := time_smooth[data_class == "data.frame"], by = .(encounters, method, subconditions, flag.method)][, relative_time := time_smooth / relative_time]
 
 gr <-
-  ggplot(bench_summary) +
+  ggplot(relative) +
   theme_bw() +
   aes(x = encounters, y = relative_time, color = data_class, fill = data_class, linetype = data_class) +
   stat_smooth(method = "loess", formula = y ~ x) +
@@ -100,14 +163,16 @@ gr <-
 ggsave(file = "benchmark-relative.svg", plot = gr, width = 12, height = 7)
 ggsave(file = "benchmark-relative.pdf", plot = gr, width = 12, height = 7)
 
-g <-
-  ggplot(bench_summary) +
+gm <-
+  ggplot(bench) +
   theme_bw() +
-  aes(x = encounters, y = median_rss_kib / (1024^2),
-      color = data_class,
-      fill = data_class,
-      linetype = data_class,
-      shape = data_class
+  aes(
+    x = encounters,
+    y = max_rss_kib / (1024^2),
+    color = data_class,
+    fill = data_class,
+    linetype = data_class,
+    shape = data_class
   ) +
   geom_point() +
   geom_line() +
@@ -119,7 +184,7 @@ g <-
   scale_shape_manual(name = "Data Class", values = ctyp) +
   annotation_logticks() +
   xlab("Encounters") +
-  ylab("median RSS (GiB)") +
+  ylab("RSS (GiB)") +
   facet_wrap(facet_spec, nrow = 2) +
   theme(
     panel.grid.minor = element_blank(),
@@ -127,93 +192,27 @@ g <-
     axis.text.x = element_text(hjust = 0.75)
   )
 
+ggsave(file = "benchmark-memory.svg", plot = gm, width = 12, height = 7)
+ggsave(file = "benchmark-memory.pdf", plot = gm, width = 12, height = 7)
+
 #
 # Combined plot
 #
 
 facet_spec <- . ~ fifelse(subconditions, paste(method, "(with subconditions)"), method)
 
-outtable <- list()
-
-for (mt in unique(bench_summary$method)) {
-  for (sc in unique(bench_summary$subconditions)) {
-    for (dc in unique(bench_summary$data_class)) {
-      for (fm in unique(bench_summary$flag.method)) {
-        thisdt <- subset(bench_summary, method == mt & subconditions == sc & data_class == dc & flag.method == fm)
-        if (nrow(thisdt)) {
-          ats_loess <- loess(log10(median_time_seconds) ~ log10(encounters), data = thisdt)
-          ats <- predict(ats_loess, se = TRUE)
-
-          mem_loess <- loess(log10(median_rss_kib) ~ log10(encounters), data = thisdt)
-          mem <- predict(mem_loess, se = TRUE)
-
-          bench_summary[method == mt & subconditions == sc & data_class == dc & flag.method == fm & !is.na(median_time_seconds) & !is.na(encounters),
-                         `:=`(
-                              time_smoothed_y   = 10^(ats$fit),
-                              time_smoothed_lwr = 10^(ats$fit - 1.96 * ats$se.fit),
-                              time_smoothed_upr = 10^(ats$fit + 1.96 * ats$se.fit)
-                              )]
-
-          bench_summary[method == mt & subconditions == sc & data_class == dc & flag.method == fm & !is.na(median_rss_kib) & !is.na(encounters),
-                         `:=`(
-                              mem_smoothed_y   = 10^(mem$fit),
-                              mem_smoothed_lwr = 10^(mem$fit - 1.96 * mem$se.fit),
-                              mem_smoothed_upr = 10^(mem$fit + 1.96 * mem$se.fit)
-                              )]
-          if (dc != "data.frame") {
-            rts_loess <- loess(relative_time ~ log10(encounters), data = thisdt)
-            rts <- predict(rts_loess, se = TRUE)
-            bench_summary[method == mt & subconditions == sc & data_class == dc & flag.method == fm & !is.na(relative_time) & !is.na(encounters),
-                           `:=`(
-                                rel_time_smoothed_y   = rts$fit,
-                                rel_time_smoothed_lwr = rts$fit - 1.96 * rts$se.fit,
-                                rel_time_smoothed_upr = rts$fit + 1.96 * rts$se.fit
-                                )]
-          }
-
-          enc <- c(1e3, 2e3, 5e3, 1e4, 2e4, 5e4, 1e5, 2e5, 5e5, 1e6)
-          outtable <-
-            c(outtable,
-              list(
-                data.table(
-                  method = mt, subconditions = sc, data_class = dc, flag.method = fm, encounters = enc,
-                  time_seconds  = 10^(predict(ats_loess, newdata = data.frame(encounters = enc))),
-                  memory        = 10^(predict(mem_loess, newdata = data.frame(encounters = enc))),
-                  relative_time = if (dc != "data.frame") {predict(rts_loess, newdata = data.frame(encounters = enc))} else {1.0}
-                )
-              )
-          )
-
-        }
-      }
-    }
-  }
-}
-
-
-bench_summary[data_class == "data.frame",
-               `:=`(
-                    rel_time_smoothed_y   = 1,
-                    rel_time_smoothed_lwr = 1,
-                    rel_time_smoothed_upr = 1
-                    )]
-
-
 # use this data set to identify the flag.method
-setkey(bench_summary,
-       method, data_class, subconditions, flag.method, subjects)
 fmpt <-
-  bench_summary[, .(encounters = max(encounters, na.rm = TRUE)), keyby = .(method, data_class, subconditions, flag.method, subjects)]
-fmpt <- bench_summary[fmpt, on = c(key(fmpt), "encounters")]
-fmpt <- unique(fmpt)
+  unique(bench, by = c("data_class", "method", "subconditions", "flag.method", "time_smooth"))
+fmpt <- fmpt[, .SD[time_smooth == max(time_smooth)], by = .(data_class, method, subconditions, flag.method)]
 
 g1 <-
-  ggplot(bench_summary) +
+  ggplot(bench) +
   theme_bw() +
   aes(x = encounters,
-      y = time_smoothed_y,
-      ymin = time_smoothed_lwr,
-      ymax = time_smoothed_upr,
+      y = time_smooth,
+      ymin = time_smooth_lwr,
+      ymax = time_smooth_upr,
       color = data_class,
       fill = data_class,
       linetype = data_class,
@@ -238,21 +237,23 @@ g1 <-
     axis.text.x = element_text(hjust = 0.75)
   )
 
+
+fmpt2 <-
+  unique(relative, by = c("data_class", "method", "subconditions", "flag.method", "time_smooth"))
+fmpt2 <- fmpt2[, .SD[time_smooth == max(time_smooth)], by = .(data_class, method, subconditions, flag.method)]
+
 g2 <-
-  ggplot(bench_summary) +
+  ggplot(relative) +
   theme_bw() +
   aes(x = encounters,
-      y = rel_time_smoothed_y,
-      ymin = rel_time_smoothed_lwr,
-      ymax = rel_time_smoothed_upr,
+      y =    relative_time,
       color = data_class,
       fill = data_class,
       linetype = data_class,
       groupby = flag.method
   ) +
   geom_line() +
-  geom_ribbon(alpha = 0.2, mapping = aes(color = NULL)) +
-  geom_point(data = fmpt[data_class != "data.frame"], mapping = aes(shape = flag.method), size = 2) +
+  geom_point(data = fmpt2[data_class != "data.frame"], mapping = aes(shape = flag.method), size = 2) +
   scale_y_continuous() + #breaks = seq(0.4, 1.4, by = 0.2)) +
   scale_x_log10(labels = scales::label_number(scale_cut = scales::cut_si(""))) +
   annotation_logticks(sides = "b") +
@@ -269,12 +270,12 @@ g2 <-
   )
 
 g3 <-
-  ggplot(bench_summary) +
+  ggplot(bench) +
   theme_bw() +
   aes(x = encounters,
-      y = mem_smoothed_y / (1024^2),
-      ymin = mem_smoothed_lwr / (1024^2),
-      ymax = mem_smoothed_upr / (1024^2),
+      y = max_rss_kib_smooth / (1024^2),
+      ymin = max_rss_kib_smooth_lwr / (1024^2),
+      ymax = max_rss_kib_smooth_lwr / (1024^2),
       color = data_class,
       fill = data_class,
       linetype = data_class,
@@ -326,8 +327,13 @@ dev.off()
 
 ################################################################################
 # final step - save the outtable.rds file, this is tracked in the Makefile
-outtable <- rbindlist(outtable)
-saveRDS(outtable, file = "outtable.rds")
+benchmark <-
+  merge(
+    x = bench,
+    y = relative,
+    by = intersect(names(bench), names(relative))
+  )
+saveRDS(benchmark, file = "benchmark.rds")
 
 ################################################################################
 #                                 End of File                                  #

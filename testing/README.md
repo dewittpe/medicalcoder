@@ -395,6 +395,6 @@ run from this directory.
 
 **Notes:**
 
-1. checking package dependencies ... NOTE Packages suggested but not available for checking:   ‘data.table’ ‘dplyr’ ‘kableExtra’ ‘knitr’ ‘R.utils’ ‘rmarkdown’   ‘tibble’
-2. checking package dependencies ... NOTE Packages suggested but not available for checking:   'data.table', 'dplyr', 'kableExtra', 'knitr', 'R.utils', 'rmarkdown',   'tibble'
+1. checking package dependencies ... NOTE Packages suggested but not available for checking:   ‘data.table’ ‘dplyr’ ‘kableExtra’ ‘knitr’ ‘R.utils’ ‘rmarkdown’
+2. checking package dependencies ... NOTE Packages suggested but not available for checking:   'data.table', 'dplyr', 'kableExtra', 'knitr', 'R.utils', 'rmarkdown'
 

@@ -10,7 +10,7 @@ else
   CORES=$(sysctl -n hw.ncpu)
 fi
 
-# Default concurrency: on dragontail 80% of machine cores (>=1)
+# Default concurrency
 JOBS=$(( 4 * CORES / 5 ))
 if [ "$JOBS" -lt 1 ]; then JOBS=1; fi
 
@@ -34,7 +34,7 @@ parallel \
   --shuf \
   --bar \
   --eta \
-  --joblog logs/joblog1.tsv \
+  --joblog logs/joblog.tsv \
   --results logs/out \
   '
     OUT="bench_results/{data_class}__{subjects}__{method}__{flag_method}__{seed}__{iter}.rds"
