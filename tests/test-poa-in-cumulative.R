@@ -1,11 +1,10 @@
 library(medicalcoder)
 
-# Verifies that cumulative flagging does not silently drop Charlson flags when
-# the caller omits an explicit poa/poa.var. With flag.method = "cumulative",
-# the default poa fallback currently sets poa = 0 and later filters to poa == 1,
-# which zeroes out all conditions. This test compares the explicit-poa path to
-# the implicit default to ensure cumulative logic retains flags without forcing
-# users to specify poa manually.
+# Verifies cumulative flagging behavior for Charlson when poa/poa.var is omitted.
+# Expected default: first encounter for a condition is NOT flagged (poa defaults
+# to 0), but the condition carries forward and is flagged on later encounters
+# (poa set to 1 after first occurrence). Explicit poa = 1 should flag all
+# encounters.
 
 df <- data.frame(
   patid = c(1L, 1L),
@@ -30,9 +29,13 @@ explicit_poa <- comorbidities(
 )
 
 stopifnot(any(explicit_poa[["cmrb_flag"]]))
+stopifnot(
+  explicit_poa$cmrb_flag[explicit_poa$enc == 1L] == 1L,
+  explicit_poa$cmrb_flag[explicit_poa$enc == 2L] == 1L
+)
 
-# Without specifying poa/poa.var, cumulative should still flag the condition.
-# If this fails, the default poa handling is discarding rows needed for Charlson.
+# Without specifying poa/poa.var, encounter 1 should remain unflagged and
+# encounter 2 should be flagged.
 default_poa <- comorbidities(
   data        = df,
   icd.codes   = "code",
@@ -44,6 +47,7 @@ default_poa <- comorbidities(
   primarydx   = 0L
 )
 
-if (!any(default_poa[["cmrb_flag"]])) {
-  stop("Cumulative + missing poa/poa.var dropped all Charlson flags; expected behavior to match explicit poa = 1.")
-}
+stopifnot(
+  default_poa$cmrb_flag[default_poa$enc == 1L] == 0L,
+  default_poa$cmrb_flag[default_poa$enc == 2L] == 1L
+)
