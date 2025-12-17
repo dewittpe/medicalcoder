@@ -149,8 +149,8 @@ stopifnot(
   is.list(summary_zero),
   identical(names(summary_zero), c("conditions", "age_summary", "index_summary")),
   all(summary_zero$conditions$count == 0L),
-  all(summary_zero$conditions$percent == 0),
   !any(is.nan(summary_zero$conditions$percent)),
+  all(is.na(summary_zero$conditions$percent)),
   all(summary_zero$index_summary == 0 | is.na(summary_zero$index_summary))
 )
 

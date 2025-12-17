@@ -142,6 +142,27 @@ stopifnot(
 )
 
 ################################################################################
+# Zero-row input should summarize without NaN/Inf (v2.1)
+
+pccc_zero <- comorbidities(
+  data        = mdcr[0, ],
+  id.vars     = "patid",
+  icd.codes   = "code",
+  poa         = 1,
+  flag.method = "current",
+  method      = "pccc_v2.1"
+)
+
+summary_zero <- summary(pccc_zero)
+
+stopifnot(
+  inherits(summary_zero, "data.frame"),
+  all(identical(summary_zero$count, c(rep(0L, 24)))),
+  !any(is.nan(summary_zero$percent)),
+  all(is.na(summary_zero$percent))
+)
+
+################################################################################
 # Zero-row input should summarize without NaN/Inf (v3.1)
 
 pccc_zero <- comorbidities(
@@ -157,10 +178,10 @@ summary_zero <- summary(pccc_zero)
 
 stopifnot(
   inherits(summary_zero, "data.frame"),
-  all(summary_zero$dxpr_or_tech_count == 0L),
-  all(summary_zero$dxpr_only_count == 0L),
-  all(summary_zero$tech_only_count == 0L),
-  all(summary_zero$dxpr_and_tech_count == 0L),
+  all(identical(summary_zero$dxpr_or_tech_count, c(rep(0L, 24)))),
+  all(identical(summary_zero$dxpr_only_count, c(rep(0L, 11), rep(NA_integer_, 13)))),
+  all(identical(summary_zero$tech_only_count, c(rep(0L, 11), rep(NA_integer_, 13)))),
+  all(identical(summary_zero$dxpr_and_tech_count, c(rep(0L, 11), rep(NA_integer_, 13)))),
   !any(is.nan(summary_zero$dxpr_or_tech_percent)),
   !any(is.nan(summary_zero$dxpr_only_percent)),
   !any(is.nan(summary_zero$tech_only_percent)),
