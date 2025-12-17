@@ -6,6 +6,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.path = "man/figures/README-"
 )
+library(knitr)
 library(kableExtra)
 suppressPackageStartupMessages(library(data.table))
 ```
@@ -15,7 +16,7 @@ suppressPackageStartupMessages(library(data.table))
 The major factors impacting the expected computation time for applying a
 comorbidity algorithm to a data set are:
 
-1. Data size: number of subjects and encounters.
+1. Data size: number of encounters.
 2. Data storage class: `medicalcoder` has been built such that no imports of
    other namespaces is required. That said, when a `data.table` is passed to
    `comorbidities()` and the `data.table` namespace is available, then S3
@@ -25,96 +26,51 @@ comorbidity algorithm to a data set are:
    base `data.frame`, though `data.table` remains the fastest option.
 3. flag.method: "current" will take less time than the "cumulative" method.
 
-<img src="benchmark2-composite.svg"/>
+The following summary is based on resampling the [MIMIC-IV Clinical Database
+Demo](https://physionet.org/content/mimic-iv-demo/2.2/) data set provided by
+PhysioNet.^1,2^ Using the MIMIC-IV Clinical Database Demo set will allow others to benchmark
+`medicalcoder` on their system with the same data as used here.
+
+[^1^] Johnson, A., Bulgarelli, L., Pollard, T., Horng, S., Celi, L. A., & Mark, R. (2023). MIMIC-IV Clinical Database Demo (version 2.2). PhysioNet. RRID:SCR_007345. https://doi.org/10.13026/dp1f-ex47
+
+[^2^] Goldberger, A., Amaral, L., Glass, L., Hausdorff, J., Ivanov, P. C., Mark, R., ... & Stanley, H. E. (2000). PhysioBank, PhysioToolkit, and PhysioNet: Components of a new research resource for complex physiologic signals. Circulation [Online]. 101 (23), pp. e215–e220. RRID:SCR_007345.
+
+```{r mimic-iv-import, include = FALSE}
+mimicivdata <- readRDS(file.path("mimic-iv", "mimicivdata.rds"))
+data.table::setDT(mimicivdata)
+```
+
+The MIMIC-IV demo data consists of
+`r data.table::uniqueN(mimicivdata, by = c("subject_id"))` subjects and a total of
+`r data.table::uniqueN(mimicivdata, by = c("subject_id", "hadm_id"))`
+encounters.  A mix of ICD-9 and ICD-10 diagnostic and procedure codes are in the
+data.  The subjects were resampled to generate data sets with upto 1,000,000
+subjects.  Each generated data set was used to benchmark by
+
+* `method`:
+    * charlson_quan2005
+    * elixhauser_quan2005
+    * pccc_v3.1 without subconditions
+    * pccc_v3.1 with subconditions
+* data class:
+    * data.frame
+    * tibble
+    * data.table
+* `flag.method`
+    * current
+    * cumulative
+
+<img src="benchmark-composite.svg"/>
 
 ```{r outtable, include = FALSE}
-bench <- readRDS("bench.rds")
-setDT(bench)
-
-relative <- readRDS("relative.rds")
-setDT(relative)
-
-bench <-
-  merge(
-    x = bench,
-    y = relative,
-    by = intersect(names(bench), names(relative))
-  )
-
-bench[, memory_gib := max_rss_kib / (1024^2)] # From KiB to GiB
-
-
-outtable <-
-  dcast(
-    data = bench,
-    data_class + subjects + method + subconditions ~ flag.method,
-    value.var = list("encounters", "time_seconds", "relative_time", "memory_gib"),
-    fun.aggregate = list(mean, mean, mean, mean)
-  )
-set(outtable, j = "encounters_mean_cumulative", value = NULL)
-setnames(outtable, old = "encounters_mean_current", new = "encounters_mean")
-outtable_orig <- data.table::copy(outtable)
-
-neworder <-
-  c("method",
-    "subconditions",
-    "subjects",
-    "encounters_mean",
-    "data_class",
-    "time_seconds_mean_current",
-    "relative_time_mean_current",
-    "memory_gib_mean_current",
-    "time_seconds_mean_cumulative",
-    "relative_time_mean_cumulative",
-    "memory_gib_mean_cumulative"
-  )
-
-setcolorder(outtable, neworder = neworder)
-
-outtable[, data_class := factor(data_class, levels = c("data.frame", "data.table", "tibble"))]
-setkey(outtable, method, subconditions, subjects, data_class)
-
-outtable[, subjects := qwraps2::frmt(as.integer(subjects))]
-
-outtable[, method := fifelse(subconditions, paste(method, "(with subconditions)"), method)]
-outtable[, subconditions := NULL]
+mimicivbenchmark <-readRDS(file.path("mimic-iv", "benchmark.rds"))
+data.table::setDT(mimicivbenchmark)
 ```
 
 In general, the expected time to apply a comorbidity method is lower for
 `tibble`s than for base `data.frame`s, and lower still for `data.table`s. Best
 observed case: a `data.table` took
-`r outtable_orig[data_class == "data.table", min(relative_time_mean_current, relative_time_mean_cumulative)]`
+`r mimicivbenchmark[data_class == "data.table", min(relative_time)]`
 the time of a `data.frame`. Best case for `tibble`s was
-`r outtable_orig[data_class == "tibble", min(relative_time_mean_current, relative_time_mean_cumulative)]`
+`r mimicivbenchmark[data_class == "tibble", min(relative_time)]`
 the time of a `data.frame`.
-
-```{r show-outtable, echo = FALSE, results = "asis"}
-foo <- function(x) {
-  kbl(
-    x = x,
-    format = "html",
-    escape = FALSE,
-    digits = 2,
-    align = "rrrrrrrrr",
-    col.names = c("Subjects", "Encounters", "Data Class", rep(c("Time (seconds)", "Relative time", "Memory (GB)"), times = 2)),
-    caption = "Expected time (seconds), relative time (with respect to data.frame), and expected memory use, by flagging method (current or cumulative), number of subjects, average number of total encounters, and input data storage format."
-  ) |>
-  collapse_rows(columns = 1, valign = "middle") |>
-  row_spec(row = c(seq(1, nrow(x), by = 6)), background = "#D9D9D9") |>
-  row_spec(row = c(seq(2, nrow(x), by = 6)), background = "#D9D9D9") |>
-  row_spec(row = c(seq(3, nrow(x), by = 6)), background = "#D9D9D9") |>
-  add_header_above(c("", "", "", "flag.method = 'current'" = 3, "flag.method = 'cumulative'" = 3))
-}
-
-cat("\n### Benchmarking Charlson (Quan 2005)\n\n")
-foo(x = outtable[method == "charlson_quan2005", -"method"])
-
-cat("\n### Benchmarking Elixhauser (Quan 2005)\n\n")
-foo(x = outtable[method == "elixhauser_quan2005", -"method"])
-
-cat("\n### Benchmarking PCCC v3.1 (without subconditions)\n\n")
-foo(x = outtable[method == "pccc_v3.1", -"method"])
-
-cat("\n### Benchmarking PCCC v3.1 (with subconditions)\n\n")
-foo(x = outtable[method == "pccc_v3.1 (with subconditions)", -"method"])
-```
