@@ -123,5 +123,38 @@ stopifnot(
 )
 
 ################################################################################
+# Zero-row input should summarize without NaN/Inf
+df0 <- data.frame(
+  patid = integer(),
+  icdv  = integer(),
+  dx    = integer(),
+  code  = character(),
+  stringsAsFactors = FALSE
+)
+
+elixhauser_zero <- comorbidities(
+  data        = df0,
+  id.vars     = "patid",
+  icdv.var    = "icdv",
+  icd.codes   = "code",
+  dx.var      = "dx",
+  method      = "elixhauser_ahrq2025",
+  flag.method = "current",
+  poa         = 1L,
+  primarydx   = 0L
+)
+
+summary_zero <- summary(elixhauser_zero)
+
+stopifnot(
+  is.list(summary_zero),
+  identical(names(summary_zero), c("conditions", "index_summary")),
+  all(summary_zero$conditions$count == 0L),
+  all(summary_zero$conditions$percent == 0),
+  !any(is.nan(summary_zero$conditions$percent)),
+  all(summary_zero$index_summary == 0 | is.na(summary_zero$index_summary))
+)
+
+################################################################################
 #                                 End of File                                  #
 ################################################################################

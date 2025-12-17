@@ -142,5 +142,31 @@ stopifnot(
 )
 
 ################################################################################
+# Zero-row input should summarize without NaN/Inf (v3.1)
+
+pccc_zero <- comorbidities(
+  data        = mdcr[0, ],
+  id.vars     = "patid",
+  icd.codes   = "code",
+  poa         = 1,
+  flag.method = "current",
+  method      = "pccc_v3.1"
+)
+
+summary_zero <- summary(pccc_zero)
+
+stopifnot(
+  inherits(summary_zero, "data.frame"),
+  all(summary_zero$dxpr_or_tech_count == 0L),
+  all(summary_zero$dxpr_only_count == 0L),
+  all(summary_zero$tech_only_count == 0L),
+  all(summary_zero$dxpr_and_tech_count == 0L),
+  !any(is.nan(summary_zero$dxpr_or_tech_percent)),
+  !any(is.nan(summary_zero$dxpr_only_percent)),
+  !any(is.nan(summary_zero$tech_only_percent)),
+  !any(is.nan(summary_zero$dxpr_and_tech_percent))
+)
+
+################################################################################
 #                                 End of File                                  #
 ################################################################################
