@@ -130,7 +130,7 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
                condition = cnd,
                subcondition = NA_character_,
                count = counts[cnd],
-               percent_of_cohort = 100 * counts[cnd] / N,
+               percent_of_cohort = if (N > 0) {100 * counts[cnd] / N} else {NA_real_},
                percent_of_those_with_condition = NA_real_,
                stringsAsFactors = FALSE
              )
@@ -138,8 +138,8 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
                condition = cnd,
                subcondition = names(scounts[[cnd]]),
                count = scounts[[cnd]],
-               percent_of_cohort = 100 * scounts[[cnd]] / N,
-               percent_of_those_with_condition = 100 * scounts[[cnd]] / counts[cnd],
+               percent_of_cohort = if (N > 0) {100 * scounts[[cnd]] / N} else {NA_real_},
+               percent_of_those_with_condition = ifelse(scounts[[cnd]] > 0, 100 * scounts[[cnd]] / counts[cnd], NA_real_),
                stringsAsFactors = FALSE
              )
              rbind(x1, x2)

@@ -38,8 +38,8 @@ stopifnot(
   all(summary_current[["percent_of_cohort"]] >= 0),
   all(summary_current[["percent_of_cohort"]] <= 100),
   all(is.na(summary_current[["percent_of_those_with_condition"]][is.na(summary_current[["subcondition"]])])),
-  all(summary_current[["percent_of_those_with_condition"]][!is.na(summary_current[["subcondition"]])] >= 0),
-  all(summary_current[["percent_of_those_with_condition"]][!is.na(summary_current[["subcondition"]])] <= 100)
+  all(summary_current[["percent_of_those_with_condition"]][!is.na(summary_current[["subcondition"]]) & summary_current[["count"]] > 0] >= 0),
+  all(summary_current[["percent_of_those_with_condition"]][!is.na(summary_current[["subcondition"]]) & summary_current[["count"]] > 0] <= 100)
 )
 
 ################################################################################
