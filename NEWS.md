@@ -21,6 +21,10 @@
 
 * Improve cumulative flagging to apply first-occurrence logic more effecently.
 
+* Extend documentation for the expected default behavior between the
+  present-on-admission flags and `flag.method` argument in `comorbidities()`
+  (re: #28)
+
 # medicalcoder 0.7.0
 
 ## Bug Fixes

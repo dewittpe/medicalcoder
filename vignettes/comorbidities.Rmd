@@ -304,6 +304,14 @@ tab <- add_header_above(tab, c(" " = 2L, c("POA = 0" = 6L, "POA = 1" = 6L, "poa.
 tab
 ```
 
+### Flag method and POA defaults
+
+When `flag.method = "cumulative"` and you do *not* supply `poa` or `poa.var`,
+`comorbidities()` treats the first encounter where a condition appears as
+`poa = 0` and carries that condition forward with `poa = 1` on later encounters.
+
+When `flag.method = "current"` and you do *not* supply `poa` or `poa.var`,
+`comorbidities()` treates all ICD codes as `poa = 1`.
 
 # Mapping ICD Codes to Comorbidities
 

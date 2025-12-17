@@ -43,6 +43,18 @@
 #' have better performance than using the date and will clear up any possible
 #' issues with non-sequential encounter ids from the source data.
 #'
+#' **Cumulative + POA defaults:**
+#'
+#' When `flag.method = "cumulative"` and neither
+#' `poa` nor `poa.var` is supplied, the first encounter for a condition is
+#' treated as `poa = 0`. Subsequent encounters for that condition are flagged as
+#' `poa = 1`.
+#'
+#' When `flag.method = "current"` and neither `poa` nor `poa.var` is supplied,
+#' then all codes will be considered present-on-admission.  If poa was assumed
+#' to be 0, then in this case the only conditions that could be flagged are the
+#' Elixhauser conditions which are poa-exempt.
+#'
 #' @return
 #'
 #' The return object will be slightly different depending on the value of
@@ -552,7 +564,10 @@ comorbidities.data.frame <- function(data,
 
     cmrb <- do.call(rbind, foc)
 
-    # set poa to 1 and primarydx to 0 for prior conditions
+    # Carry condition forward after first occurrence: set poa to 1 and
+    # primarydx to 0 on later encounters so downstream POA filtering keeps
+    # all post-first-occurrence rows and the first-occurrence row only if poa =
+    # 1 (via poa.var or poa) for the first-occurrence
     idx <- cmrb[[encid]] > cmrb[["first_occurrance"]]
     cmrb[[poa.var]][idx] <- 1L
     if (!is.null(primarydx.var)) {

@@ -192,6 +192,18 @@ correctly stored. Adding a column \code{enc_seq}, e.g.,\tabular{cccc}{
 and calling \code{comorbidities()} with \code{id.vars = c("patid", "enc_seq")} will
 have better performance than using the date and will clear up any possible
 issues with non-sequential encounter ids from the source data.
+
+\strong{Cumulative + POA defaults:}
+
+When \code{flag.method = "cumulative"} and neither
+\code{poa} nor \code{poa.var} is supplied, the first encounter for a condition is
+treated as \code{poa = 0}. Subsequent encounters for that condition are flagged as
+\code{poa = 1}.
+
+When \code{flag.method = "current"} and neither \code{poa} nor \code{poa.var} is supplied,
+then all codes will be considered present-on-admission.  If poa was assumed
+to be 0, then in this case the only conditions that could be flagged are the
+Elixhauser conditions which are poa-exempt.
 }
 \examples{
 pccc_v3.1_results <-
