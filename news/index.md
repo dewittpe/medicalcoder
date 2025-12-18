@@ -41,6 +41,12 @@
   [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
   (re: [\#28](https://github.com/dewittpe/medicalcoder/issues/28))
 
+- Add `mdcr_unique()` to the data.frame utilties. This reduced the
+  computational time required to apply
+  [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+  to `tibble`s and `data.table`s.
+  ([\#31](https://github.com/dewittpe/medicalcoder/issues/31))
+
 ## medicalcoder 0.7.0
 
 CRAN release: 2025-11-22

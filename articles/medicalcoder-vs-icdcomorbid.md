@@ -87,7 +87,7 @@ mdcr_icd10dx_wide <-
 
 toc <- Sys.time()
 difftime(toc, tic, units = "secs")
-## Time difference of 0.450994 secs
+## Time difference of 0.4722378 secs
 ```
 
 ## Charlson Comorbidities
@@ -117,7 +117,7 @@ medicalcoder_charlson_results <-
 toc <- Sys.time()
 
 difftime(toc, tic, units = "secs")
-## Time difference of 0.5664554 secs
+## Time difference of 0.5707664 secs
 ```
 
 Compare that to the amount of time required to process just the first
@@ -138,7 +138,7 @@ icd9_to_comorbid_results <-
 toc <- Sys.time()
 
 difftime(toc, tic, units = "secs")
-## Time difference of 5.758166 secs
+## Time difference of 5.896136 secs
 ```
 
 There are 38262 patids to assess. To compare the results between

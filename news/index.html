@@ -67,6 +67,7 @@
 <li><p>Clarified internal data.frame/data.table helpers: documented that <code>mdcr_select()</code> deep-copies data.table subsets to avoid aliasing, noted the selfref fix in <code>mdcr_set()</code>, and added inline guidance in the longitudinal section of <code><a href="../reference/comorbidities.html">comorbidities()</a></code> to explain the first-occurrence logic.</p></li>
 <li><p>Improve cumulative flagging to apply first-occurrence logic more effecently.</p></li>
 <li><p>Extend documentation for the expected default behavior between the present-on-admission flags and <code>flag.method</code> argument in <code><a href="../reference/comorbidities.html">comorbidities()</a></code> (re: <a href="https://github.com/dewittpe/medicalcoder/issues/28" class="external-link">#28</a>)</p></li>
+<li><p>Add <code>mdcr_unique()</code> to the data.frame utilties. This reduced the computational time required to apply <code><a href="../reference/comorbidities.html">comorbidities()</a></code> to <code>tibble</code>s and <code>data.table</code>s. (<a href="https://github.com/dewittpe/medicalcoder/issues/31" class="external-link">#31</a>)</p></li>
 </ul></div>
 </div>
     <div class="section level2">
