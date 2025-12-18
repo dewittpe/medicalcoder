@@ -130,7 +130,7 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
                condition = cnd,
                subcondition = NA_character_,
                count = counts[cnd],
-               percent_of_cohort = 100 * counts[cnd] / N,
+               percent_of_cohort = if (N > 0) {100 * counts[cnd] / N} else {NA_real_},
                percent_of_those_with_condition = NA_real_,
                stringsAsFactors = FALSE
              )
@@ -138,8 +138,8 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
                condition = cnd,
                subcondition = names(scounts[[cnd]]),
                count = scounts[[cnd]],
-               percent_of_cohort = 100 * scounts[[cnd]] / N,
-               percent_of_those_with_condition = 100 * scounts[[cnd]] / counts[cnd],
+               percent_of_cohort = if (N > 0) {100 * scounts[[cnd]] / N} else {NA_real_},
+               percent_of_those_with_condition = ifelse(scounts[[cnd]] > 0, 100 * scounts[[cnd]] / counts[cnd], NA_real_),
                stringsAsFactors = FALSE
              )
              rbind(x1, x2)
@@ -167,15 +167,19 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
 
   # Track running counts for patients meeting at least N conditions
   # so the summary can report distribution thresholds (>=2, >=3, ...).
-  tlts <- sapply(2:11, function(x) { as.integer(object[["num_cmrb"]] >= x)})
+  tlts <- lapply(2:11, function(x) { as.integer(object[["num_cmrb"]] >= x)})
+  tlts <- do.call(cbind, tlts)
   colnames(tlts) <- paste(">=", 2:11, "conditions")
+
+  p <- 100 * c(colMeans(cnds), colMeans(tlts))
+  p <- ifelse(is.nan(p), NA_real_, p)
 
   rtn <-
     data.frame(
       condition = c(names(cnds), rep("num_cmrb", ncol(tlts))),
       label     = c(conditions[["condition_label"]], "Any Technology Dependence", "Any Transplantation", "Any Condition", colnames(tlts)),
       count     = as.integer(c(colSums(cnds), colSums(tlts))),
-      percent   = 100 * c(colMeans(cnds), colMeans(tlts)),
+      percent   = p,
       stringsAsFactors = FALSE
     )
 
@@ -195,7 +199,8 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
 
   # Track running counts for patients meeting at least N conditions
   # so the summary can report distribution thresholds (>=2, >=3, ...).
-  tlts <- sapply(2:11, function(x) { as.integer(object[["num_cmrb"]] >= x)})
+  tlts <- lapply(2:11, function(x) { as.integer(object[["num_cmrb"]] >= x)})
+  tlts <- do.call(cbind, tlts)
   colnames(tlts) <- paste(">=", 2:11, "conditions")
 
   sets <-
@@ -210,7 +215,11 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
 
   counts <- lapply(sets, colSums, na.rm = TRUE)
   N <- nrow(object)
-  percents <- lapply(counts, function(x) 100 * x / N)
+  percents <- lapply(counts,
+    function(x) {
+      y <- 100 * x / N
+      ifelse(is.nan(y), NA_real_, y)
+    })
 
   rtn <-
     data.frame(
@@ -256,11 +265,11 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
 
   cmrbs <- ..mdcr_internal_charlson_index_scores..[!is.na( ..mdcr_internal_charlson_index_scores..[[attr(object, "method")]]), c("condition_description", "condition")]
 
-  cmrbs[["count"]] <- colSums(object[cmrbs[["condition"]]])
+  cmrbs[["count"]]   <- colSums(object[cmrbs[["condition"]]])
   cmrbs[["percent"]] <- 100 * colMeans(object[cmrbs[["condition"]]])
 
   num_cmrbs <-
-    lapply(seq_len(max(object[["num_cmrb"]])),
+    lapply(seq_len(max(c(1L, object[["num_cmrb"]]))),
       function(x) {
         y <- object[["num_cmrb"]] >= x
         data.frame(
@@ -275,16 +284,31 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
   cmrbs <- rbind(cmrbs, num_cmrbs)
   rownames(cmrbs) <- NULL
 
+  # set percent to NA instead of NaN
+  cmrbs[["percent"]][is.nan(cmrbs[["percent"]])] <- NA_real_
+
   index_summary <-
-    data.frame(
-      min       = min(object[["cci"]]),
-      q1        = stats::quantile(object[["cci"]], prob = 0.25),
-      median    = stats::median(object[["cci"]]),
-      q3        = stats::quantile(object[["cci"]], prob = 0.75),
-      max       = max(object[["cci"]]),
-      row.names = NULL,
-      stringsAsFactors = FALSE
-    )
+    if (length(object[["cci"]]) > 0L) {
+      data.frame(
+        min       = min(object[["cci"]]),
+        q1        = stats::quantile(object[["cci"]], prob = 0.25),
+        median    = stats::median(object[["cci"]]),
+        q3        = stats::quantile(object[["cci"]], prob = 0.75),
+        max       = max(object[["cci"]]),
+        row.names = NULL,
+        stringsAsFactors = FALSE
+      )
+    } else {
+      data.frame(
+        min       = NA_integer_,
+        q1        = NA_real_,
+        median    = NA_real_,
+        q3        = NA_real_,
+        max       = NA_integer_,
+        row.names = NULL,
+        stringsAsFactors = FALSE
+      )
+    }
 
   age_summary <-
     merge(
@@ -292,6 +316,9 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
       y = stats::setNames(as.data.frame(100 * prop.table(table(object[["age_score"]], useNA = "always")), stringsAsFactors = FALSE), c("age_score", "percent")),
       by = c("age_score")
     )
+
+  # set NA instead of NaN
+  age_summary[["percent"]][is.nan(age_summary[["percent"]])] <- NA_real_
 
   list(
     conditions = cmrbs,
@@ -308,11 +335,11 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
   cmrbs <- ..mdcr_internal_elixhauser_index_scores..[!is.na( ..mdcr_internal_elixhauser_index_scores..[[attr(object, "method")]]), "condition", drop = FALSE]
   cmrbs <- unique(cmrbs)
 
-  cmrbs[["count"]] <- colSums(object[cmrbs[["condition"]]])
+  cmrbs[["count"]]   <- colSums(object[cmrbs[["condition"]]])
   cmrbs[["percent"]] <- 100 * colMeans(object[cmrbs[["condition"]]])
 
   num_cmrbs <-
-    lapply(seq_len(max(object[["num_cmrb"]])),
+    lapply(seq_len(max(c(1L, object[["num_cmrb"]]))),
       function(x) {
         y <- object[["num_cmrb"]] >= x
         data.frame(condition = paste(">=", x), count = sum(y), percent = 100 * mean(y), stringsAsFactors = FALSE)
@@ -320,23 +347,38 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
   num_cmrbs <- do.call(rbind, num_cmrbs)
   cmrbs <- rbind(cmrbs, num_cmrbs)
   rownames(cmrbs) <- NULL
+  # set percent to NA instead of NaN
+  cmrbs[["percent"]][is.nan(cmrbs[["percent"]])] <- NA_real_
 
   index_summary <-
-    data.frame(
-      index  = c("readmission", "mortality"),
-      min    = c(min(object[["readmission_index"]]),
-                 min(object[["mortality_index"]])),
-      q1     = c(stats::quantile(object[["readmission_index"]], prob = 0.25),
-                 stats::quantile(object[["mortality_index"]], prob = 0.25)),
-      median = c(stats::median(object[["readmission_index"]]),
-                 stats::median(object[["mortality_index"]])),
-      q3     = c(stats::quantile(object[["readmission_index"]], prob = 0.75),
-                 stats::quantile(object[["mortality_index"]], prob = 0.75)),
-      max    = c(max(object[["readmission_index"]]),
-                 max(object[["mortality_index"]])),
-      row.names = NULL,
-      stringsAsFactors = FALSE
-    )
+    if (length(object[["readmission_index"]]) > 0L) {
+      data.frame(
+        index  = c("readmission", "mortality"),
+        min    = c(min(object[["readmission_index"]]),
+          min(object[["mortality_index"]])),
+        q1     = c(stats::quantile(object[["readmission_index"]], prob = 0.25),
+          stats::quantile(object[["mortality_index"]], prob = 0.25)),
+        median = c(stats::median(object[["readmission_index"]]),
+          stats::median(object[["mortality_index"]])),
+        q3     = c(stats::quantile(object[["readmission_index"]], prob = 0.75),
+          stats::quantile(object[["mortality_index"]], prob = 0.75)),
+        max    = c(max(object[["readmission_index"]]),
+          max(object[["mortality_index"]])),
+        row.names = NULL,
+        stringsAsFactors = FALSE
+      )
+    } else {
+      data.frame(
+        index  = c("readmission", "mortality"),
+        min    = c(NA_integer_, NA_integer_),
+        q1     = c(NA_real_, NA_real_),
+        median = c(NA_real_, NA_real_),
+        q3     = c(NA_real_, NA_real_),
+        max    = c(NA_integer_, NA_integer_),
+        row.names = NULL,
+        stringsAsFactors = FALSE
+      )
+    }
 
   list(
     conditions = cmrbs,

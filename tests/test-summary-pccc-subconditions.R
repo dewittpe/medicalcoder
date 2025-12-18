@@ -38,8 +38,8 @@ stopifnot(
   all(summary_current[["percent_of_cohort"]] >= 0),
   all(summary_current[["percent_of_cohort"]] <= 100),
   all(is.na(summary_current[["percent_of_those_with_condition"]][is.na(summary_current[["subcondition"]])])),
-  all(summary_current[["percent_of_those_with_condition"]][!is.na(summary_current[["subcondition"]])] >= 0),
-  all(summary_current[["percent_of_those_with_condition"]][!is.na(summary_current[["subcondition"]])] <= 100)
+  all(summary_current[["percent_of_those_with_condition"]][!is.na(summary_current[["subcondition"]]) & summary_current[["count"]] > 0] >= 0),
+  all(summary_current[["percent_of_those_with_condition"]][!is.na(summary_current[["subcondition"]]) & summary_current[["count"]] > 0] <= 100)
 )
 
 ################################################################################
@@ -124,6 +124,39 @@ stopifnot(
 summary_cumulative <- suppressWarnings(summary(pccc_sub_cumulative))
 
 stopifnot(identical(summary_cumulative, summary_current))
+
+################################################################################
+# No conditions flagged -> percentages should be 0/NA, not NaN/Inf
+df_none <- data.frame(
+  patid = 1:3,
+  icdv  = 10L,
+  dx    = 1L,
+  code  = c("XXX1", "XXX2", "XXX3"),
+  stringsAsFactors = FALSE
+)
+
+pccc_empty <- comorbidities(
+  data          = df_none,
+  id.vars       = "patid",
+  icd.codes     = "code",
+  icdv.var      = "icdv",
+  dx.var        = "dx",
+  method        = "pccc_v3.1",
+  flag.method   = "current",
+  poa           = 1,
+  subconditions = TRUE
+)
+
+summary_empty <- summary(pccc_empty)
+
+stopifnot(
+  inherits(summary_empty, "data.frame"),
+  all(summary_empty$count == 0),
+  all(summary_empty$percent_of_cohort == 0),
+  !any(is.nan(summary_empty$percent_of_cohort)),
+  all(is.na(summary_empty$percent_of_those_with_condition) | summary_empty$percent_of_those_with_condition == 0),
+  !any(is.nan(summary_empty$percent_of_those_with_condition))
+)
 
 ################################################################################
 #                                 End of File                                  #
