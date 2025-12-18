@@ -18,7 +18,7 @@
 #' @noRd
 #' @keywords internal
 .charlson <- function(id.vars, iddf, cmrb, primarydx.var, method) {
-  ccc <- unique(mdcr_select(cmrb, cols = c(id.vars, "condition", primarydx.var)))
+  ccc <- mdcr_unique(mdcr_select(cmrb, cols = c(id.vars, "condition", primarydx.var)))
 
   # omit primary dx
   idx <- which(ccc[[primarydx.var]] == 0L)

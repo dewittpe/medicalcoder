@@ -23,7 +23,7 @@
 #' @keywords internal
 .elixhauser <- function(id.vars, iddf, cmrb, poa.var, primarydx.var, method) {
   ccc <- mdcr_select(cmrb, cols = c(id.vars, "condition", "poaexempt", poa.var, primarydx.var))
-  ccc <- unique(ccc)
+  ccc <- mdcr_unique(ccc)
 
   # omit primary dx
   idx <- ccc[[primarydx.var]] == 0L
