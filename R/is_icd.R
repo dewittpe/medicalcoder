@@ -172,7 +172,7 @@ is_icd <- function(x, icdv = c(9L, 10L), dx = c(1L, 0L),
   # ambiguity check
   if (warn.ambiguous) {
 
-    DF <- unique(codes[c("full_code", "code", "icdv", "dx")])
+    DF <- mdcr_unique(codes[c("full_code", "code", "icdv", "dx")])
 
     dfcs <- DF[0, , drop = FALSE]
     dccs <- DF[0, , drop = FALSE]

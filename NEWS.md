@@ -31,6 +31,9 @@
   present-on-admission flags and `flag.method` argument in `comorbidities()`
   (re: #28)
 
+* Add `mdcr_unique()` to the data.frame utilties. This reduced the computational
+  time required to apply `comorbidities()` to `tibble`s and `data.table`s. (#31)
+
 # medicalcoder 0.7.0
 
 ## Bug Fixes

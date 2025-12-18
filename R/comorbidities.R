@@ -494,9 +494,9 @@ comorbidities.data.frame <- function(data,
   ##############################################################################
   # create a data.frame with one unique row for the id.vars
   if (!id.vars.created) {
-    iddf <- unique(mdcr_select(data, cols = id.vars))
+    iddf <- mdcr_unique(mdcr_select(data, cols = id.vars))
   } else {
-    iddf <- unique(mdcr_select(cmrb, cols = id.vars))
+    iddf <- mdcr_unique(mdcr_select(cmrb, cols = id.vars))
     if (nrow(iddf) == 0) {
       iddf <- stats::setNames(data.frame(1L, stringsAsFactors = FALSE), id.vars)
     }
@@ -540,17 +540,17 @@ comorbidities.data.frame <- function(data,
 
     iddf2 <-
       mdcr_inner_join(
-        x = unique(mdcr_select(iddf, id.vars)),
-        y = unique(mdcr_select(foc, id.vars2)),
+        x = mdcr_unique(mdcr_select(iddf, id.vars)),
+        y = mdcr_unique(mdcr_select(foc, id.vars2)),
         by = id.vars2)
-    iddf2 <- unique(iddf2)
+    iddf2 <- mdcr_unique(iddf2)
 
     if (startsWith(method, "pccc")) {
       foc <- split(foc, f = mdcr_select(foc, c("condition", "subcondition")), drop = TRUE)
     } else {
       foc <- split(foc, f = mdcr_select(foc, c("condition")), drop = TRUE)
     }
-    foc <- lapply(foc, unique)
+    foc <- lapply(foc, mdcr_unique)
 
 
     foc <-
@@ -575,7 +575,7 @@ comorbidities.data.frame <- function(data,
     }
     cmrb <- mdcr_set(cmrb, j = "first_occurrance", value =  NULL)
 
-    cmrb <- unique(cmrb)
+    cmrb <- mdcr_unique(cmrb)
   }
 
   ##############################################################################
@@ -595,7 +595,7 @@ comorbidities.data.frame <- function(data,
   } else if (startsWith(method, "charlson")) {
     ccc <- .charlson(id.vars = id.vars, iddf = iddf, cmrb = cmrb, primarydx.var = primarydx.var, method = method)
     if (!is.null(age.var)) {
-      ages <- unique(mdcr_select(data, cols = c(id.vars, age.var)))
+      ages <- mdcr_unique(mdcr_select(data, cols = c(id.vars, age.var)))
       ages[["age_score"]] <- as.integer(cut(ages[[age.var]], breaks = c(-Inf, 50, 60, 70, 80, Inf), right = TRUE)) - 1L
       ccc <- merge(ccc, mdcr_select(ages, cols = c(id.vars, "age_score")), all.x = TRUE, by = id.vars, sort = FALSE)
       ccc[["cci"]] <- ccc[["cci"]] + ccc[["age_score"]]

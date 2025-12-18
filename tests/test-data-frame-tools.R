@@ -10,6 +10,7 @@ dataframetools <-
     "mdcr_setorder",
     "mdcr_setnames",
     "mdcr_duplicated",
+    "mdcr_unique",
     "mdcr_inner_join",
     "mdcr_full_outer_join",
     "mdcr_left_join",
@@ -689,6 +690,35 @@ outTBL <- getFromNamespace(x = "mdcr_full_outer_join", ns = "medicalcoder")(r, l
 outTBL <- outTBL[order(outTBL$x1), ]
 rownames(outTBL) <- NULL
 stopifnot(identical(outTBL, expected_tb))
+
+################################################################################
+# testing mdcr_unique
+DF <- expand.grid(x1 = LETTERS, x2 = LETTERS)
+DF <- rbind(DF, DF, DF, DF, DF, DF)
+DF <- DF[sample(seq_len(nrow(DF))), ]
+rownames(DF) <- NULL
+if (requireNamespace("dplyr", quietly = TRUE)) {
+  TBL <- getExportedValue(ns = "dplyr", name = "as_tibble")(DF)
+} else {
+  TBL <- DF
+  class(TBL) <- c("tbl_df", class(TBL))
+}
+if (requireNamespace("data.table", quietly = TRUE)) {
+  DT <- getExportedValue(name = "copy", ns = "data.table")(DF)
+  getExportedValue(name = "setDT", ns = "data.table")(DT)
+} else {
+  DT <- DF
+  class(DT) <- c("data.table", class(DT))
+}
+
+uDF <- unique(DF)
+
+stopifnot(
+  all.equal(uDF, getFromNamespace(x = "mdcr_unique", ns = "medicalcoder")(DF), check.attributes = FALSE),
+  all.equal(uDF, getFromNamespace(x = "mdcr_unique", ns = "medicalcoder")(DT), check.attributes = FALSE),
+  all.equal(uDF, getFromNamespace(x = "mdcr_unique", ns = "medicalcoder")(TBL), check.attributes = FALSE)
+)
+
 
 ################################################################################
 # testing mdcr_cbind

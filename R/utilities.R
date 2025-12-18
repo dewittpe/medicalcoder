@@ -216,6 +216,26 @@ mdcr_duplicated <- function(x, by = seq_along(x), ...) {
 #' @family data.frame tools
 #' @noRd
 #' @keywords internal
+mdcr_unique <- function(x, ...) {
+  stopifnot(is.data.frame(x))
+  if (requireNamespace(package = "data.table", quietly = TRUE) && inherits(x, "data.table")) {
+    # Flag this frame as data.table-aware so unique.data.table uses its
+    # optimized path instead of falling back to unique.data.frame.
+    .datatable.aware <- TRUE
+    rtn <- utils::getFromNamespace(x = 'unique.data.table', ns = "data.table")(x, ...)
+  } else if (requireNamespace(package = "dplyr", quietly = TRUE) && inherits(x, "tbl_df")) {
+    rtn <- getExportedValue(name = "distinct", ns = "dplyr")(.data = x, ...)
+  } else {
+    rtn <- unique(x, ...)
+  }
+  rtn
+}
+
+#'
+#' @rdname mdcr_data_frame_tools
+#' @family data.frame tools
+#' @noRd
+#' @keywords internal
 mdcr_left_join <- function(x, y, ...) {
   stopifnot(is.data.frame(x), is.data.frame(y))
 
