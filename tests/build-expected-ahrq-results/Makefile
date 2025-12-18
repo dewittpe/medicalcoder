@@ -35,7 +35,7 @@ endef
 
 $(foreach y,$(YEARS),$(eval $(call build_one,$(y))))
 
-sas_testdata.csv: prepare-test-data.R
+sas_testdata.csv: prepare-testdata.R
 	$(RSCRIPT) $<
 
 2022/CMR_%_Program_v2022-1.sas: ../../data-raw/elixhauser/ahrq/CMR_v2022-1.zip
