@@ -207,6 +207,7 @@ summary(elixhauser_results)
 #> 36 ULCER_PEPTIC     0       0
 #> 37        VALVE     0       0
 #> 38     WGHTLOSS     0       0
+#> 39         >= 1     0       0
 #> 
 #> $index_summary
 #>         index min q1 median q3 max

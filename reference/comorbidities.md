@@ -550,7 +550,7 @@ summary(pccc_v3.1_subcondition_results)
 #> 54       0.339762689                       8.5751979
 #> 55       0.645549109                      16.2928760
 #> 56       2.482881188                      62.6649077
-#> 57       0.000000000                       0.0000000
+#> 57       0.000000000                              NA
 #> 58      15.231822696                              NA
 #> 59       4.618159009                      30.3191489
 #> 60       3.852386179                      25.2916953
@@ -671,6 +671,7 @@ summary(elixhauser_results)
 #> 36 ULCER_PEPTIC     0       0
 #> 37        VALVE     0       0
 #> 38     WGHTLOSS     0       0
+#> 39         >= 1     0       0
 #> 
 #> $index_summary
 #>         index min q1 median q3 max

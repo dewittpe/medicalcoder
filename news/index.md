@@ -11,6 +11,14 @@
   computation time than base R `data.frames` (`data.tables` require even
   less time).
 
+### Bug Fixes
+
+- `summary.medicalcoder_comorbidites()` no longer crashes when a zero
+  row input is passed in. Consisently return `NA` instead of `NaN` when
+  counts are zeros.
+  ([\#26](https://github.com/dewittpe/medicalcoder/issues/26),
+  [\#27](https://github.com/dewittpe/medicalcoder/issues/27))
+
 ### Other Changes
 
 - Extend and improve the internal ICD-9 database to distinguish between

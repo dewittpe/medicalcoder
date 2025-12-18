@@ -56,6 +56,11 @@
 <ul><li>If a <code>tibble</code> is passed to <code><a href="../reference/comorbidities.html">comorbidities()</a></code> and the <code>dplyr</code> namespace is available, then <code>dplyr</code> methods will be used for data manipulation. This change will generally result in less computation time than base R <code>data.frames</code> (<code>data.tables</code> require even less time).</li>
 </ul></div>
 <div class="section level3">
+<h3 id="bug-fixes-0-7-0-9000">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-7-0-9000"></a></h3>
+<ul><li>
+<code>summary.medicalcoder_comorbidites()</code> no longer crashes when a zero row input is passed in. Consisently return <code>NA</code> instead of <code>NaN</code> when counts are zeros. (<a href="https://github.com/dewittpe/medicalcoder/issues/26" class="external-link">#26</a>, <a href="https://github.com/dewittpe/medicalcoder/issues/27" class="external-link">#27</a>)</li>
+</ul></div>
+<div class="section level3">
 <h3 id="other-changes-0-7-0-9000">Other Changes<a class="anchor" aria-label="anchor" href="#other-changes-0-7-0-9000"></a></h3>
 <ul><li><p>Extend and improve the internal ICD-9 database to distinguish between CDC and CMS source.</p></li>
 <li><p>Fix documentation of the <code>mdcr</code> and <code>mdcr_longitudinal</code> datasets.</p></li>
