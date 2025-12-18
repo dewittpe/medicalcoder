@@ -11,7 +11,7 @@ else
 fi
 
 # Default concurrency
-JOBS=$(( 2 * CORES / 5 ))
+JOBS=$(( 4 * CORES / 5 ))
 if [ "$JOBS" -lt 1 ]; then JOBS=1; fi
 
 # Memory safeguard: require this much free RAM before starting another job

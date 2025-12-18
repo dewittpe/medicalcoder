@@ -35,10 +35,7 @@ g <-
   scale_y_log10() +
   facet_wrap(facet_spec, )
 
-# NOTE: as of 17 December 2025 inspection of the results show that the mimic-iv
-# data consistently took more time to process than the all-cmrb set.  This is
-# since the mimic-iv-demo data is closer to real data this should be the set
-# used to report the benchmarks.
+mimiciv <- subset(benchmarks, set == "mimiciv")
 mimiciv <- subset(benchmarks, set == "mimiciv")
 
 ################################################################################
@@ -74,8 +71,8 @@ common_layers <-
     )
   )
 
-g_expected_time <-
-  ggplot(mimiciv) +
+g_expected_time <- function(data) {
+  ggplot(data = data) +
   common_layers +
   aes(y = time_smooth, ymin = time_smooth_lwr, ymax = time_smooth_upr) +
   geom_line() +
@@ -85,20 +82,23 @@ g_expected_time <-
     breaks = c(0.1, 10, 60, 120, 300, 600),
     labels = scales::label_comma()
   )
+}
 
-g_relative_time <-
-  ggplot2::ggplot(mimiciv[data_class != "data.frame"]) +
+g_relative_time <- function(data) {
+  ggplot2::ggplot(data = data) +
   common_layers +
   ggplot2::aes(y = relative_time) +
   ggplot2::geom_line() +
   ggplot2::geom_hline(yintercept = 1, color = cclr["data.frame"], linetype = 2) +
   ggplot2::scale_y_continuous(
     name = "Relative expected run time\n(vs data.frame)",
-    transform = "log2"
+    transform = "log2",
+    breaks = 2^(seq(-3, 3, by = 1))
   )
+}
 
-g_memory <-
-  ggplot(mimiciv) +
+g_memory <- function(data) {
+  ggplot(data = data) +
   common_layers +
   aes(
     y = max_rss_kib_smooth / (1024^2),
@@ -113,26 +113,53 @@ g_memory <-
     breaks = 2^(seq(-1, 5, by = 1)),
     labels = scales::label_comma()
   )
+}
 
-composite <-
+mimiciv_composite <-
   ggpubr::ggarrange(
-    g_expected_time + theme(axis.title.x = element_blank()),
-    g_relative_time + theme(axis.title.x = element_blank()),
-    g_memory,
+    g_expected_time(benchmarks[set == "mimiciv"]) + theme(axis.title.x = element_blank()),
+    g_relative_time(benchmarks[set == "mimiciv" & data_class != "data.frame"]) + theme(axis.title.x = element_blank()),
+    g_memory(benchmarks[set == "mimiciv"]),
+    ncol = 1, align = "v", common.legend = TRUE
+  )
+mimiciv_composite <-
+  ggpubr::annotate_figure(
+    mimiciv_composite,
+    top = ggpubr::text_grob(sprintf("Benmarks for 'MIMIC-IV Demo' Data with medicalcoder version %s", packageVersion("medicalcoder")))
+  )
+
+all_cmrb_composite <-
+  ggpubr::ggarrange(
+    g_expected_time(benchmarks[set == "allcmrb"]) + theme(axis.title.x = element_blank()),
+    g_relative_time(benchmarks[set == "allcmrb" & data_class != "data.frame"]) + theme(axis.title.x = element_blank()),
+    g_memory(benchmarks[set == "allcmrb"]),
     ncol = 1, align = "v", common.legend = TRUE
   )
 
-pdf(file = "benchmark-composite.pdf", width = 12, height = 9)
-  print(composite)
-dev.off()
+all_cmrb_composite <-
+  ggpubr::annotate_figure(
+    all_cmrb_composite,
+    top = ggpubr::text_grob(sprintf("Benmarks for 'All Comorbidities' Data with medicalcoder version %s", packageVersion("medicalcoder")))
+  )
 
-png(file = "benchmark-composite.png", width = 12, height = 9)
-  print(composite)
-dev.off()
+for(x in c("mimiciv_composite", "all_cmrb_composite")) {
+  f <- sprintf("benchmark_%s_composite.pdf", x)
+  pdf(file = f, width = 12, height = 9)
+    print(get(x = x))
+  dev.off()
 
-svglite::svglite(filename = "benchmark-composite.svg", width = 12, height = 9)
-  print(composite)
-dev.off()
+  f <- sprintf("benchmark_%s_composite.png", x)
+  png(file = f, width = 12, height = 9)
+    print(get(x = x))
+  dev.off()
+
+  f <- sprintf("benchmark_%s_composite.svg", x)
+  svglite::svglite(filename = f, width = 12, height = 9)
+    print(get(x = x))
+  dev.off()
+}
+
+
 
 ################################################################################
 #                                 End of File                                  #

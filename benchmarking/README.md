@@ -17,23 +17,7 @@ comorbidity algorithm to a data set are:
    base `data.frame`, though `data.table` remains the fastest option.
 3. flag.method: "current" will take less time than the "cumulative" method.
 
-The following summary is based on resampling the [MIMIC-IV Clinical Database
-Demo](https://physionet.org/content/mimic-iv-demo/2.2/) data set provided by
-PhysioNet.^1,2^ Using the MIMIC-IV Clinical Database Demo set will allow others to benchmark
-`medicalcoder` on their system with the same data as used here.
-
-[^1^] Johnson, A., Bulgarelli, L., Pollard, T., Horng, S., Celi, L. A., & Mark, R. (2023). MIMIC-IV Clinical Database Demo (version 2.2). PhysioNet. RRID:SCR_007345. https://doi.org/10.13026/dp1f-ex47
-
-[^2^] Goldberger, A., Amaral, L., Glass, L., Hausdorff, J., Ivanov, P. C., Mark, R., ... & Stanley, H. E. (2000). PhysioBank, PhysioToolkit, and PhysioNet: Components of a new research resource for complex physiologic signals. Circulation [Online]. 101 (23), pp. e215–e220. RRID:SCR_007345.
-
-
-
-The MIMIC-IV demo data consists of
-100 subjects and a total of
-275
-encounters.  A mix of ICD-9 and ICD-10 diagnostic and procedure codes are in the
-data.  The subjects were resampled to generate data sets with upto 1,000,000
-subjects.  Each generated data set was used to benchmark by
+In the following examples, each generated data set was benchmark by
 
 * `method`:
     * charlson_quan2005
@@ -48,14 +32,57 @@ subjects.  Each generated data set was used to benchmark by
     * current
     * cumulative
 
-<img src="benchmark-composite.svg"/>
 
 
+
+
+
+
+
+
+
+## MIMIC-IV Demo Data
+
+The following summary is based on resampling the [MIMIC-IV Clinical Database
+Demo](https://physionet.org/content/mimic-iv-demo/2.2/) data set provided by
+PhysioNet.^1,2^ Using the MIMIC-IV Clinical Database Demo set will allow others to benchmark
+`medicalcoder` on their system with the same data as used here.
+
+[^1^] Johnson, A., Bulgarelli, L., Pollard, T., Horng, S., Celi, L. A., & Mark, R. (2023). MIMIC-IV Clinical Database Demo (version 2.2). PhysioNet. RRID:SCR_007345. https://doi.org/10.13026/dp1f-ex47
+
+[^2^] Goldberger, A., Amaral, L., Glass, L., Hausdorff, J., Ivanov, P. C., Mark, R., ... & Stanley, H. E. (2000). PhysioBank, PhysioToolkit, and PhysioNet: Components of a new research resource for complex physiologic signals. Circulation [Online]. 101 (23), pp. e215–e220. RRID:SCR_007345.
+
+The MIMIC-IV demo data consists of
+100 subjects and a total of
+275
+encounters.  A mix of ICD-9 and ICD-10 diagnostic and procedure codes are in the
+data.
+
+85 (85.00\%) of the subjects had at least
+one PCCC comorbidity,
+80 (80.00\%)
+of the subjects had at least one Charlson comorbidity, and
+97 (97.00\%)
+of the subjects had at least one Elixhauser comorbidity.
+
+The subjects were resampled to generate data sets with upto 1,000,000 subjects.
+
+<img src="benchmark_mimiciv_composite.svg"/>
 
 In general, the expected time to apply a comorbidity method is lower for
 `tibble`s than for base `data.frame`s, and lower still for `data.table`s. Best
 observed case: a `data.table` took
-0.3772787
+0.0743907
 the time of a `data.frame`. Best case for `tibble`s was
-0.5238209
+0.1948918
 the time of a `data.frame`.
+
+## All Comorbidities
+
+Some of the computational expense in building the indicators for the
+comorbidities is due to the number of subjects/encounters with at least one
+comorbidity. We generated data sets where all subjects on all encounters had at
+least one ICD code mapping to a comorbidity.  The benchmarking results are
+summarized in the following graphic.
+
+<img src="benchmark_all_cmrb_composite.svg"/>

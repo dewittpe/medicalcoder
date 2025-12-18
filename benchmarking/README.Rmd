@@ -26,26 +26,7 @@ comorbidity algorithm to a data set are:
    base `data.frame`, though `data.table` remains the fastest option.
 3. flag.method: "current" will take less time than the "cumulative" method.
 
-The following summary is based on resampling the [MIMIC-IV Clinical Database
-Demo](https://physionet.org/content/mimic-iv-demo/2.2/) data set provided by
-PhysioNet.^1,2^ Using the MIMIC-IV Clinical Database Demo set will allow others to benchmark
-`medicalcoder` on their system with the same data as used here.
-
-[^1^] Johnson, A., Bulgarelli, L., Pollard, T., Horng, S., Celi, L. A., & Mark, R. (2023). MIMIC-IV Clinical Database Demo (version 2.2). PhysioNet. RRID:SCR_007345. https://doi.org/10.13026/dp1f-ex47
-
-[^2^] Goldberger, A., Amaral, L., Glass, L., Hausdorff, J., Ivanov, P. C., Mark, R., ... & Stanley, H. E. (2000). PhysioBank, PhysioToolkit, and PhysioNet: Components of a new research resource for complex physiologic signals. Circulation [Online]. 101 (23), pp. e215–e220. RRID:SCR_007345.
-
-```{r mimic-iv-import, include = FALSE}
-mimicivdata <- readRDS(file.path("mimic-iv", "mimicivdata.rds"))
-data.table::setDT(mimicivdata)
-```
-
-The MIMIC-IV demo data consists of
-`r data.table::uniqueN(mimicivdata, by = c("subject_id"))` subjects and a total of
-`r data.table::uniqueN(mimicivdata, by = c("subject_id", "hadm_id"))`
-encounters.  A mix of ICD-9 and ICD-10 diagnostic and procedure codes are in the
-data.  The subjects were resampled to generate data sets with upto 1,000,000
-subjects.  Each generated data set was used to benchmark by
+In the following examples, each generated data set was benchmark by
 
 * `method`:
     * charlson_quan2005
@@ -60,12 +41,83 @@ subjects.  Each generated data set was used to benchmark by
     * current
     * cumulative
 
-<img src="benchmark-composite.svg"/>
-
-```{r outtable, include = FALSE}
-mimicivbenchmark <-readRDS(file.path("mimic-iv", "benchmark.rds"))
-data.table::setDT(mimicivbenchmark)
+```{r data-import, include = FALSE}
+mimicivdata <-
+  data.table::as.data.table(
+    readRDS(file.path("mimic-iv", "mimicivdata.rds"))
+  )
+mimicivbenchmark <-
+  data.table::as.data.table(
+    readRDS(file.path("mimic-iv", "benchmark.rds"))
+  )
 ```
+
+```{r mimic-pccc-v3.1, include = FALSE}
+mimicivpcccv3 <- medicalcoder::comorbidities(
+  data = mimicivdata,
+  id.vars = c("subject_id"),
+  icd.codes = "icd_code",
+  dx.var = "dx",
+  poa = 1,
+  flag.method = "current",
+  method = "pccc_v3.1"
+)
+```
+
+```{r mimic-charlson, include = FALSE}
+mimicivcharlson <- medicalcoder::comorbidities(
+  data = mimicivdata,
+  id.vars = c("subject_id"),
+  icd.codes = "icd_code",
+  dx.var = "dx",
+  poa = 1,
+  flag.method = "current",
+  method = "charlson_quan2005",
+  primarydx = 0
+)
+```
+
+```{r mimic-elixhauser, include = FALSE}
+mimicivelixhauser <- medicalcoder::comorbidities(
+  data = mimicivdata,
+  id.vars = c("subject_id"),
+  icd.codes = "icd_code",
+  dx.var = "dx",
+  poa = 1,
+  flag.method = "current",
+  method = "elixhauser_quan2005",
+  primarydx = 0
+)
+```
+
+
+## MIMIC-IV Demo Data
+
+The following summary is based on resampling the [MIMIC-IV Clinical Database
+Demo](https://physionet.org/content/mimic-iv-demo/2.2/) data set provided by
+PhysioNet.^1,2^ Using the MIMIC-IV Clinical Database Demo set will allow others to benchmark
+`medicalcoder` on their system with the same data as used here.
+
+[^1^] Johnson, A., Bulgarelli, L., Pollard, T., Horng, S., Celi, L. A., & Mark, R. (2023). MIMIC-IV Clinical Database Demo (version 2.2). PhysioNet. RRID:SCR_007345. https://doi.org/10.13026/dp1f-ex47
+
+[^2^] Goldberger, A., Amaral, L., Glass, L., Hausdorff, J., Ivanov, P. C., Mark, R., ... & Stanley, H. E. (2000). PhysioBank, PhysioToolkit, and PhysioNet: Components of a new research resource for complex physiologic signals. Circulation [Online]. 101 (23), pp. e215–e220. RRID:SCR_007345.
+
+The MIMIC-IV demo data consists of
+`r data.table::uniqueN(mimicivdata, by = c("subject_id"))` subjects and a total of
+`r data.table::uniqueN(mimicivdata, by = c("subject_id", "hadm_id"))`
+encounters.  A mix of ICD-9 and ICD-10 diagnostic and procedure codes are in the
+data.
+
+`r qwraps2::n_perc(mimicivpcccv3[["cmrb_flag"]])` of the subjects had at least
+one PCCC comorbidity,
+`r qwraps2::n_perc(mimicivcharlson[["cmrb_flag"]])`
+of the subjects had at least one Charlson comorbidity, and
+`r qwraps2::n_perc(mimicivelixhauser[["cmrb_flag"]])`
+of the subjects had at least one Elixhauser comorbidity.
+
+The subjects were resampled to generate data sets with upto 1,000,000 subjects.
+
+<img src="benchmark_mimiciv_composite.svg"/>
 
 In general, the expected time to apply a comorbidity method is lower for
 `tibble`s than for base `data.frame`s, and lower still for `data.table`s. Best
@@ -74,3 +126,13 @@ observed case: a `data.table` took
 the time of a `data.frame`. Best case for `tibble`s was
 `r mimicivbenchmark[data_class == "tibble", min(relative_time)]`
 the time of a `data.frame`.
+
+## All Comorbidities
+
+Some of the computational expense in building the indicators for the
+comorbidities is due to the number of subjects/encounters with at least one
+comorbidity. We generated data sets where all subjects on all encounters had at
+least one ICD code mapping to a comorbidity.  The benchmarking results are
+summarized in the following graphic.
+
+<img src="benchmark_all_cmrb_composite.svg"/>
