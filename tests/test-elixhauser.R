@@ -14,6 +14,7 @@ stopifnot(
       "elixhauser_ahrq2023",
       "elixhauser_ahrq2024",
       "elixhauser_ahrq2025",
+      "elixhauser_ahrq2026",
       "elixhauser_ahrq_icd10"
     )
   )
