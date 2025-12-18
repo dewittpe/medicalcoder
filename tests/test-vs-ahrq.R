@@ -32,8 +32,6 @@ codes <-
 codes[["primarydx"]] <- as.integer(codes[["time"]] == "1")
 codes[["poa"]] <- as.integer(codes[["poa"]] == "Y")
 
-
-
 # apply medicalcoder::comorbidities
 common_args <-
   list(
@@ -58,11 +56,11 @@ mdcr_vs_ahrq_2024 <- merge(x = mdcr_2024, y = ahrq_results, all.x = TRUE, by = c
 mdcr_vs_ahrq_2025 <- merge(x = mdcr_2025, y = ahrq_results, all.x = TRUE, by = c("CMR_VERSION", "PATID"))
 mdcr_vs_ahrq_2026 <- merge(x = mdcr_2026, y = ahrq_results, all.x = TRUE, by = c("CMR_VERSION", "PATID"))
 
-stopifnot("same number of rows" = nrow(mdcr_2022) == nrow(subset(ahrq_results, CMR_VERSION == 2022.1)) & nrow(mdcr_2022) == nrow(mdcr_vs_ahrq_2022))
-stopifnot("same number of rows" = nrow(mdcr_2023) == nrow(subset(ahrq_results, CMR_VERSION == 2022.1)) & nrow(mdcr_2023) == nrow(mdcr_vs_ahrq_2023))
-stopifnot("same number of rows" = nrow(mdcr_2024) == nrow(subset(ahrq_results, CMR_VERSION == 2022.1)) & nrow(mdcr_2024) == nrow(mdcr_vs_ahrq_2024))
-stopifnot("same number of rows" = nrow(mdcr_2025) == nrow(subset(ahrq_results, CMR_VERSION == 2022.1)) & nrow(mdcr_2025) == nrow(mdcr_vs_ahrq_2025))
-stopifnot("same number of rows" = nrow(mdcr_2026) == nrow(subset(ahrq_results, CMR_VERSION == 2022.1)) & nrow(mdcr_2026) == nrow(mdcr_vs_ahrq_2026))
+stopifnot("same number of rows (2022)" = nrow(mdcr_2022) == nrow(subset(ahrq_results, CMR_VERSION == 2022.1)) & nrow(mdcr_2022) == nrow(mdcr_vs_ahrq_2022))
+stopifnot("same number of rows (2023)" = nrow(mdcr_2023) == nrow(subset(ahrq_results, CMR_VERSION == 2023.1)) & nrow(mdcr_2023) == nrow(mdcr_vs_ahrq_2023))
+stopifnot("same number of rows (2024)" = nrow(mdcr_2024) == nrow(subset(ahrq_results, CMR_VERSION == 2024.1)) & nrow(mdcr_2024) == nrow(mdcr_vs_ahrq_2024))
+stopifnot("same number of rows (2025)" = nrow(mdcr_2025) == nrow(subset(ahrq_results, CMR_VERSION == 2025.1)) & nrow(mdcr_2025) == nrow(mdcr_vs_ahrq_2025))
+stopifnot("same number of rows (2026)" = nrow(mdcr_2026) == nrow(subset(ahrq_results, CMR_VERSION == 2026.1)) & nrow(mdcr_2026) == nrow(mdcr_vs_ahrq_2026))
 
 # check each condition - this can change year to year
 cnds_2022 <- subset(get_elixhauser_index_scores(), !is.na(elixhauser_ahrq2022), select = "condition", drop = TRUE)
