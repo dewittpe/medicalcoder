@@ -47,20 +47,28 @@ head(get_elixhauser_poa())
 #> 4  AUTOIMMUNE            0                   1                   1
 #> 5     BLDLOSS            1                   1                   1
 #> 6 CANCER_LEUK            0                   1                   1
-#>   elixhauser_ahrq2024 elixhauser_ahrq2025 elixhauser_ahrq_icd10
-#> 1                   1                   1                     1
-#> 2                   1                   1                     1
-#> 3                   1                   1                     1
-#> 4                   1                   1                     1
-#> 5                   1                   1                     1
-#> 6                   1                   1                     1
+#>   elixhauser_ahrq2024 elixhauser_ahrq2025 elixhauser_ahrq2026
+#> 1                   1                   1                   1
+#> 2                   1                   1                   1
+#> 3                   1                   1                   1
+#> 4                   1                   1                   1
+#> 5                   1                   1                   1
+#> 6                   1                   1                   1
+#>   elixhauser_ahrq_icd10
+#> 1                     1
+#> 2                     1
+#> 3                     1
+#> 4                     1
+#> 5                     1
+#> 6                     1
 str(get_elixhauser_poa())
-#> 'data.frame':    49 obs. of  7 variables:
+#> 'data.frame':    50 obs. of  8 variables:
 #>  $ condition            : chr  "AIDS" "ALCOHOL" "ANEMDEF" "AUTOIMMUNE" ...
 #>  $ poa_required         : int  0 0 1 0 1 0 0 0 0 0 ...
 #>  $ elixhauser_ahrq2022  : int  1 1 1 1 1 1 1 1 1 1 ...
 #>  $ elixhauser_ahrq2023  : int  1 1 1 1 1 1 1 1 1 1 ...
 #>  $ elixhauser_ahrq2024  : int  1 1 1 1 1 1 1 1 1 1 ...
 #>  $ elixhauser_ahrq2025  : int  1 1 1 1 1 1 1 1 1 1 ...
+#>  $ elixhauser_ahrq2026  : int  1 1 1 1 1 1 1 1 1 1 ...
 #>  $ elixhauser_ahrq_icd10: int  1 1 1 1 1 1 1 1 1 1 ...
 ```

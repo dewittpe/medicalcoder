@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -154,7 +154,7 @@ ways.</p>
 <span></span>
 <span><span class="va">toc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/difftime.html" class="external-link">difftime</a></span><span class="op">(</span><span class="va">toc</span>, <span class="va">tic</span>, units <span class="op">=</span> <span class="st">"secs"</span><span class="op">)</span></span>
-<span><span class="co">## Time difference of 0.4722378 secs</span></span></code></pre></div>
+<span><span class="co">## Time difference of 0.4552112 secs</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="charlson-comorbidities">Charlson Comorbidities<a class="anchor" aria-label="anchor" href="#charlson-comorbidities"></a>
@@ -182,7 +182,7 @@ via <code><a href="../reference/comorbidities.html">medicalcoder::comorbidities(
 <span><span class="va">toc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/difftime.html" class="external-link">difftime</a></span><span class="op">(</span><span class="va">toc</span>, <span class="va">tic</span>, units <span class="op">=</span> <span class="st">"secs"</span><span class="op">)</span></span>
-<span><span class="co">## Time difference of 0.5707664 secs</span></span></code></pre></div>
+<span><span class="co">## Time difference of 0.5671411 secs</span></span></code></pre></div>
 <p>Compare that to the amount of time required to process just the first
 1,000 patids via <code><a href="https://rdrr.io/pkg/icdcomorbid/man/icd9_to_comorbid.html" class="external-link">icdcomorbid::icd9_to_comorbid()</a></code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -199,7 +199,7 @@ via <code><a href="../reference/comorbidities.html">medicalcoder::comorbidities(
 <span><span class="va">toc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/difftime.html" class="external-link">difftime</a></span><span class="op">(</span><span class="va">toc</span>, <span class="va">tic</span>, units <span class="op">=</span> <span class="st">"secs"</span><span class="op">)</span></span>
-<span><span class="co">## Time difference of 5.896136 secs</span></span></code></pre></div>
+<span><span class="co">## Time difference of 5.8196 secs</span></span></code></pre></div>
 <p>There are 38262 patids to assess. To compare the results between
 <code><a href="../reference/comorbidities.html">medicalcoder::comorbidities()</a></code> and the results from the R
 package icdcomorbid would require calling

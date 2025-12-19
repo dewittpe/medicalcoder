@@ -3,7 +3,7 @@
 ``` r
 library(medicalcoder)
 packageVersion("medicalcoder")
-## [1] '0.7.0.9000'
+## [1] '0.7.0.9001'
 ```
 
 ## Comorbidity Algorithms
@@ -33,7 +33,7 @@ implemented in the medicalcoder package:
     3.  `charlson_cdmf2019`: (Glasheen et al. 2019)
 3.  Elixhauser
     1.  Based on codes provided by the Agency for Healthcare Research
-        and Quality (AHRQ) for fiscal years 2022 through 2025
+        and Quality (AHRQ) for fiscal years 2022 through 2026
         (Healthcare Research and (AHRQ) 2025)
         1.  `elixhauser_ahrq2022`
         2.  `elixhauser_ahrq2023`
@@ -64,7 +64,8 @@ medicalcoder:::comorbidities_methods()
 ##  [9] "elixhauser_elixhauser1988" "elixhauser_ahrq_web"      
 ## [11] "elixhauser_quan2005"       "elixhauser_ahrq2022"      
 ## [13] "elixhauser_ahrq2023"       "elixhauser_ahrq2024"      
-## [15] "elixhauser_ahrq2025"       "elixhauser_ahrq_icd10"
+## [15] "elixhauser_ahrq2025"       "elixhauser_ahrq2026"      
+## [17] "elixhauser_ahrq_icd10"
 ```
 
 Vignettes for each of the major methods are available.
@@ -142,13 +143,14 @@ present on admission flags for specific conditions (see the
 
 ``` r
 str(get_elixhauser_poa())
-## 'data.frame':    49 obs. of  7 variables:
+## 'data.frame':    50 obs. of  8 variables:
 ##  $ condition            : chr  "AIDS" "ALCOHOL" "ANEMDEF" "AUTOIMMUNE" ...
 ##  $ poa_required         : int  0 0 1 0 1 0 0 0 0 0 ...
 ##  $ elixhauser_ahrq2022  : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ elixhauser_ahrq2023  : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ elixhauser_ahrq2024  : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ elixhauser_ahrq2025  : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ elixhauser_ahrq2026  : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ elixhauser_ahrq_icd10: int  1 1 1 1 1 1 1 1 1 1 ...
 ```
 
@@ -264,7 +266,7 @@ str(get_charlson_codes())
 ##  $ charlson_quan2005: int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ charlson_quan2011: int  0 0 0 0 0 0 0 0 0 0 ...
 str(get_elixhauser_codes())
-## 'data.frame':    10428 obs. of  14 variables:
+## 'data.frame':    10451 obs. of  15 variables:
 ##  $ icdv                     : int  9 9 9 9 9 9 9 9 9 9 ...
 ##  $ dx                       : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ full_code                : chr  "042" "070.22" "070.23" "070.32" ...
@@ -278,6 +280,7 @@ str(get_elixhauser_codes())
 ##  $ elixhauser_ahrq2023      : int  NA NA NA NA NA NA NA NA NA NA ...
 ##  $ elixhauser_ahrq2024      : int  NA NA NA NA NA NA NA NA NA NA ...
 ##  $ elixhauser_ahrq2025      : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ elixhauser_ahrq2026      : int  NA NA NA NA NA NA NA NA NA NA ...
 ##  $ elixhauser_ahrq_icd10    : int  NA NA NA NA NA NA NA NA NA NA ...
 ```
 

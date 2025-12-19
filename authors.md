@@ -22,13 +22,13 @@ Source:
 [`DESCRIPTION`](https://github.com/dewittpe/medicalcoder/blob/main/DESCRIPTION)
 
 DeWitt P (2025). *medicalcoder: A Package for Working with ICD Codes and
-Comorbidity Algorithms*. R package version 0.7.0.9000,
+Comorbidity Algorithms*. R package version 0.7.0.9001,
 <http://www.peteredewitt.com/medicalcoder/>.
 
     @Manual{,
       title = {medicalcoder: A Package for Working with ICD Codes and Comorbidity Algorithms},
       author = {Peter DeWitt},
       year = {2025},
-      note = {R package version 0.7.0.9000},
+      note = {R package version 0.7.0.9001},
       url = {http://www.peteredewitt.com/medicalcoder/},
     }

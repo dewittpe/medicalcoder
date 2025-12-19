@@ -11,13 +11,22 @@
   computation time than base R `data.frames` (`data.tables` require even
   less time).
 
+- Add the `elixhauser_ahrq2026` method for
+  [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+  ([\#32](https://github.com/dewittpe/medicalcoder/issues/32))
+
 ### Bug Fixes
 
 - `summary.medicalcoder_comorbidites()` no longer crashes when a zero
-  row input is passed in. Consisently return `NA` instead of `NaN` when
+  row input is passed in. Consistently return `NA` instead of `NaN` when
   counts are zeros.
   ([\#26](https://github.com/dewittpe/medicalcoder/issues/26),
   [\#27](https://github.com/dewittpe/medicalcoder/issues/27))
+
+- Improve the conditional and multiple comorbidities mapped by a code
+  under AHRQ ICD-10 codes for fiscal years 2023 through 2026. The bug
+  was found and fixed as part of the extension
+  [\#32](https://github.com/dewittpe/medicalcoder/issues/32).
 
 ### Other Changes
 
@@ -34,14 +43,14 @@
   to explain the first-occurrence logic.
 
 - Improve cumulative flagging to apply first-occurrence logic more
-  effecently.
+  efficiently.
 
 - Extend documentation for the expected default behavior between the
   present-on-admission flags and `flag.method` argument in
   [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
   (re: [\#28](https://github.com/dewittpe/medicalcoder/issues/28))
 
-- Add `mdcr_unique()` to the data.frame utilties. This reduced the
+- Add `mdcr_unique()` to the data.frame utilities. This reduced the
   computational time required to apply
   [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
   to `tibble`s and `data.table`s.
@@ -60,7 +69,7 @@ CRAN release: 2025-11-22
   - Improved POA, NPOA, and EXEMPTPOA. This came about from
     [\#20](https://github.com/dewittpe/medicalcoder/issues/20).
 
-- Make internal data.frame tool `mdcr_duplicated` data.table aware.
+- Make internal data.frame tool `mdcr_duplicated()` data.table aware.
 
 - Elixhauser (Quan 2005) - added missing ICD-10 codes to the mappings
 

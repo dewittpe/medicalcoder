@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,7 +81,7 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.peteredewitt.com/medicalcoder/">medicalcoder</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"medicalcoder"</span><span class="op">)</span></span>
-<span><span class="co">## [1] '0.7.0.9000'</span></span></code></pre></div>
+<span><span class="co">## [1] '0.7.0.9001'</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="comorbidity-algorithms">Comorbidity Algorithms<a class="anchor" aria-label="anchor" href="#comorbidity-algorithms"></a>
 </h2>
@@ -134,7 +134,7 @@ al. 2019)</span>
 <li>Elixhauser
 <ol style="list-style-type: lower-alpha">
 <li>Based on codes provided by the Agency for Healthcare Research and
-Quality (AHRQ) for fiscal years 2022 through 2025 <span class="citation">(Healthcare Research and (AHRQ) 2025)</span>
+Quality (AHRQ) for fiscal years 2022 through 2026 <span class="citation">(Healthcare Research and (AHRQ) 2025)</span>
 <ol style="list-style-type: lower-roman">
 <li><code>elixhauser_ahrq2022</code></li>
 <li><code>elixhauser_ahrq2023</code></li>
@@ -178,7 +178,8 @@ non-exported function. In general, the methods are listed in the form of
 <span><span class="co">##  [9] "elixhauser_elixhauser1988" "elixhauser_ahrq_web"      </span></span>
 <span><span class="co">## [11] "elixhauser_quan2005"       "elixhauser_ahrq2022"      </span></span>
 <span><span class="co">## [13] "elixhauser_ahrq2023"       "elixhauser_ahrq2024"      </span></span>
-<span><span class="co">## [15] "elixhauser_ahrq2025"       "elixhauser_ahrq_icd10"</span></span></code></pre></div>
+<span><span class="co">## [15] "elixhauser_ahrq2025"       "elixhauser_ahrq2026"      </span></span>
+<span><span class="co">## [17] "elixhauser_ahrq_icd10"</span></span></code></pre></div>
 <p>Vignettes for each of the major methods are available.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"pccc"</span>,       package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span></span>
@@ -242,13 +243,14 @@ define the use of present on admission flags for specific conditions
 returned by <code><a href="../reference/get_elixhauser_poa.html">get_elixhauser_poa()</a></code>).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_elixhauser_poa.html">get_elixhauser_poa</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## 'data.frame':    49 obs. of  7 variables:</span></span>
+<span><span class="co">## 'data.frame':    50 obs. of  8 variables:</span></span>
 <span><span class="co">##  $ condition            : chr  "AIDS" "ALCOHOL" "ANEMDEF" "AUTOIMMUNE" ...</span></span>
 <span><span class="co">##  $ poa_required         : int  0 0 1 0 1 0 0 0 0 0 ...</span></span>
 <span><span class="co">##  $ elixhauser_ahrq2022  : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
 <span><span class="co">##  $ elixhauser_ahrq2023  : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
 <span><span class="co">##  $ elixhauser_ahrq2024  : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
 <span><span class="co">##  $ elixhauser_ahrq2025  : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span><span class="co">##  $ elixhauser_ahrq2026  : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
 <span><span class="co">##  $ elixhauser_ahrq_icd10: int  1 1 1 1 1 1 1 1 1 1 ...</span></span></code></pre></div>
 <p>For Charlson comorbidities, from <span class="citation">Quan et al.
 (2011)</span>:</p>
@@ -1257,7 +1259,7 @@ are indicator columns for the variant of each method</p>
 <span><span class="co">##  $ charlson_quan2005: int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span><span class="co">##  $ charlson_quan2011: int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_elixhauser_codes.html">get_elixhauser_codes</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## 'data.frame':    10428 obs. of  14 variables:</span></span>
+<span><span class="co">## 'data.frame':    10451 obs. of  15 variables:</span></span>
 <span><span class="co">##  $ icdv                     : int  9 9 9 9 9 9 9 9 9 9 ...</span></span>
 <span><span class="co">##  $ dx                       : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
 <span><span class="co">##  $ full_code                : chr  "042" "070.22" "070.23" "070.32" ...</span></span>
@@ -1271,6 +1273,7 @@ are indicator columns for the variant of each method</p>
 <span><span class="co">##  $ elixhauser_ahrq2023      : int  NA NA NA NA NA NA NA NA NA NA ...</span></span>
 <span><span class="co">##  $ elixhauser_ahrq2024      : int  NA NA NA NA NA NA NA NA NA NA ...</span></span>
 <span><span class="co">##  $ elixhauser_ahrq2025      : int  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">##  $ elixhauser_ahrq2026      : int  NA NA NA NA NA NA NA NA NA NA ...</span></span>
 <span><span class="co">##  $ elixhauser_ahrq_icd10    : int  NA NA NA NA NA NA NA NA NA NA ...</span></span></code></pre></div>
 <p>End users should be aware that just because an ICD code exists in a
 data set does not mean that the patient has the condition. For
@@ -1373,7 +1376,7 @@ Benefits</em> 12 (4): 188. <a href="https://pubmed.ncbi.nlm.nih.gov/31428236/" c
 Healthcare Cost and Utilization Project (HCUP). 2017. <span>“Elixhauser
 Comorbidity Software for ICD-9-CM.”</span> <a href="https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp" class="external-link uri">https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp</a>.
 </div>
-<div id="ref-ahrq2025" class="csl-entry">
+<div id="ref-ahrqicd10" class="csl-entry">
 Healthcare Research, Agency for, and Quality (AHRQ). 2025.
 <span>“Elixhauser Comorbidity Software Refined for ICD-10-CM Healthcare
 Cost and Utilization Project (HCUP).”</span> <a href="https://hcup-us.ahrq.gov/toolssoftware/comorbidityicd10/comorbidity_icd10.jsp" class="external-link">https://hcup-us.ahrq.gov/toolssoftware/comorbidityicd10/comorbidity_icd10.jsp</a>.

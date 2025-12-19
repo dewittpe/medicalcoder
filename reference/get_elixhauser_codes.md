@@ -78,15 +78,15 @@ head(get_elixhauser_codes())
 #> 4                  NA                  NA                  NA
 #> 5                  NA                  NA                  NA
 #> 6                  NA                  NA                  NA
-#>   elixhauser_ahrq_icd10
-#> 1                    NA
-#> 2                    NA
-#> 3                    NA
-#> 4                    NA
-#> 5                    NA
-#> 6                    NA
+#>   elixhauser_ahrq2026 elixhauser_ahrq_icd10
+#> 1                  NA                    NA
+#> 2                  NA                    NA
+#> 3                  NA                    NA
+#> 4                  NA                    NA
+#> 5                  NA                    NA
+#> 6                  NA                    NA
 str(get_elixhauser_codes())
-#> 'data.frame':    10428 obs. of  14 variables:
+#> 'data.frame':    10451 obs. of  15 variables:
 #>  $ icdv                     : int  9 9 9 9 9 9 9 9 9 9 ...
 #>  $ dx                       : int  1 1 1 1 1 1 1 1 1 1 ...
 #>  $ full_code                : chr  "042" "070.22" "070.23" "070.32" ...
@@ -100,5 +100,6 @@ str(get_elixhauser_codes())
 #>  $ elixhauser_ahrq2023      : int  NA NA NA NA NA NA NA NA NA NA ...
 #>  $ elixhauser_ahrq2024      : int  NA NA NA NA NA NA NA NA NA NA ...
 #>  $ elixhauser_ahrq2025      : int  NA NA NA NA NA NA NA NA NA NA ...
+#>  $ elixhauser_ahrq2026      : int  NA NA NA NA NA NA NA NA NA NA ...
 #>  $ elixhauser_ahrq_icd10    : int  NA NA NA NA NA NA NA NA NA NA ...
 ```

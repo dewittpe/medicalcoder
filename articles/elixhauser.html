@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,7 +81,7 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.peteredewitt.com/medicalcoder/">medicalcoder</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"medicalcoder"</span><span class="op">)</span></span>
-<span><span class="co">## [1] '0.7.0.9000'</span></span></code></pre></div>
+<span><span class="co">## [1] '0.7.0.9001'</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -89,12 +89,16 @@
 Elixhauser comorbidity algorithm.</p>
 <ul>
 <li>Based on codes provided by the Agency for Healthcare Research and
-Quality (AHRQ) for fiscal years 2022 through 2025 <span class="citation">(Healthcare Research and (AHRQ) 2025)</span>
+Quality (AHRQ) for fiscal years 2022 through 2026 <span class="citation">(Healthcare Research and (AHRQ) 2025)</span>
 <ul>
 <li><code>elixhauser_ahrq2022</code></li>
 <li><code>elixhauser_ahrq2023</code></li>
 <li><code>elixhauser_ahrq2024</code></li>
 <li><code>elixhauser_ahrq2025</code></li>
+<li><code>elixhauser_ahrq2026</code></li>
+<li>
+<code>elixhauser_ahrq_icd10</code> - All ICD-10 codes ever listed by
+AHRQ</li>
 </ul>
 </li>
 <li>Codes from Table 2 of <span class="citation">Quan et al.
@@ -127,7 +131,7 @@ with the way these methods were implemented in <span class="citation">Quan et al
 variants.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_elixhauser_codes.html">get_elixhauser_codes</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## 'data.frame':    10428 obs. of  14 variables:</span></span>
+<span><span class="co">## 'data.frame':    10451 obs. of  15 variables:</span></span>
 <span><span class="co">##  $ icdv                     : int  9 9 9 9 9 9 9 9 9 9 ...</span></span>
 <span><span class="co">##  $ dx                       : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
 <span><span class="co">##  $ full_code                : chr  "042" "070.22" "070.23" "070.32" ...</span></span>
@@ -141,9 +145,10 @@ variants.</p>
 <span><span class="co">##  $ elixhauser_ahrq2023      : int  NA NA NA NA NA NA NA NA NA NA ...</span></span>
 <span><span class="co">##  $ elixhauser_ahrq2024      : int  NA NA NA NA NA NA NA NA NA NA ...</span></span>
 <span><span class="co">##  $ elixhauser_ahrq2025      : int  NA NA NA NA NA NA NA NA NA NA ...</span></span>
+<span><span class="co">##  $ elixhauser_ahrq2026      : int  NA NA NA NA NA NA NA NA NA NA ...</span></span>
 <span><span class="co">##  $ elixhauser_ahrq_icd10    : int  NA NA NA NA NA NA NA NA NA NA ...</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_elixhauser_index_scores.html">get_elixhauser_index_scores</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## 'data.frame':    112 obs. of  10 variables:</span></span>
+<span><span class="co">## 'data.frame':    112 obs. of  11 variables:</span></span>
 <span><span class="co">##  $ condition                : chr  "AIDS" "AIDS" "ALCOHOL" "ALCOHOL" ...</span></span>
 <span><span class="co">##  $ index                    : chr  "mortality" "readmission" "mortality" "readmission" ...</span></span>
 <span><span class="co">##  $ elixhauser_ahrq_web      : int  0 19 -1 6 -2 9 0 4 NA NA ...</span></span>
@@ -153,15 +158,17 @@ variants.</p>
 <span><span class="co">##  $ elixhauser_ahrq2023      : int  -4 5 -1 3 -3 5 NA NA 0 2 ...</span></span>
 <span><span class="co">##  $ elixhauser_ahrq2024      : int  -4 5 -1 3 -3 5 NA NA 0 2 ...</span></span>
 <span><span class="co">##  $ elixhauser_ahrq2025      : int  -4 5 -1 3 -3 5 NA NA 0 2 ...</span></span>
+<span><span class="co">##  $ elixhauser_ahrq2026      : int  -4 5 -1 3 -3 5 NA NA 0 2 ...</span></span>
 <span><span class="co">##  $ elixhauser_ahrq_icd10    : int  -4 5 -1 3 -3 5 NA NA 0 2 ...</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_elixhauser_poa.html">get_elixhauser_poa</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## 'data.frame':    49 obs. of  7 variables:</span></span>
+<span><span class="co">## 'data.frame':    50 obs. of  8 variables:</span></span>
 <span><span class="co">##  $ condition            : chr  "AIDS" "ALCOHOL" "ANEMDEF" "AUTOIMMUNE" ...</span></span>
 <span><span class="co">##  $ poa_required         : int  0 0 1 0 1 0 0 0 0 0 ...</span></span>
 <span><span class="co">##  $ elixhauser_ahrq2022  : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
 <span><span class="co">##  $ elixhauser_ahrq2023  : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
 <span><span class="co">##  $ elixhauser_ahrq2024  : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
 <span><span class="co">##  $ elixhauser_ahrq2025  : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span><span class="co">##  $ elixhauser_ahrq2026  : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
 <span><span class="co">##  $ elixhauser_ahrq_icd10: int  1 1 1 1 1 1 1 1 1 1 ...</span></span></code></pre></div>
 <ul>
 <li><p><code><a href="../reference/get_elixhauser_codes.html">get_elixhauser_codes()</a></code> returns a
@@ -893,7 +900,7 @@ Data.”</span> <em>Medical Care</em> 36 (1): 8–27. <a href="https://doi.org/1
 Healthcare Cost and Utilization Project (HCUP). 2017. <span>“Elixhauser
 Comorbidity Software for ICD-9-CM.”</span> <a href="https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp" class="external-link uri">https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp</a>.
 </div>
-<div id="ref-ahrq2025" class="csl-entry">
+<div id="ref-ahrqicd10" class="csl-entry">
 Healthcare Research, Agency for, and Quality (AHRQ). 2025.
 <span>“Elixhauser Comorbidity Software Refined for ICD-10-CM Healthcare
 Cost and Utilization Project (HCUP).”</span> <a href="https://hcup-us.ahrq.gov/toolssoftware/comorbidityicd10/comorbidity_icd10.jsp" class="external-link">https://hcup-us.ahrq.gov/toolssoftware/comorbidityicd10/comorbidity_icd10.jsp</a>.

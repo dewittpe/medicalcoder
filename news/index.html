@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,21 +53,22 @@
 <h2 class="pkg-version" data-toc-text="0.7.0.9000" id="medicalcoder-0709000">medicalcoder 0.7.0.9000<a class="anchor" aria-label="anchor" href="#medicalcoder-0709000"></a></h2>
 <div class="section level3">
 <h3 id="new-features-0-7-0-9000">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-7-0-9000"></a></h3>
-<ul><li>If a <code>tibble</code> is passed to <code><a href="../reference/comorbidities.html">comorbidities()</a></code> and the <code>dplyr</code> namespace is available, then <code>dplyr</code> methods will be used for data manipulation. This change will generally result in less computation time than base R <code>data.frames</code> (<code>data.tables</code> require even less time).</li>
+<ul><li><p>If a <code>tibble</code> is passed to <code><a href="../reference/comorbidities.html">comorbidities()</a></code> and the <code>dplyr</code> namespace is available, then <code>dplyr</code> methods will be used for data manipulation. This change will generally result in less computation time than base R <code>data.frames</code> (<code>data.tables</code> require even less time).</p></li>
+<li><p>Add the <code>elixhauser_ahrq2026</code> method for <code><a href="../reference/comorbidities.html">comorbidities()</a></code> (<a href="https://github.com/dewittpe/medicalcoder/issues/32" class="external-link">#32</a>)</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-7-0-9000">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-7-0-9000"></a></h3>
-<ul><li>
-<code>summary.medicalcoder_comorbidites()</code> no longer crashes when a zero row input is passed in. Consisently return <code>NA</code> instead of <code>NaN</code> when counts are zeros. (<a href="https://github.com/dewittpe/medicalcoder/issues/26" class="external-link">#26</a>, <a href="https://github.com/dewittpe/medicalcoder/issues/27" class="external-link">#27</a>)</li>
+<ul><li><p><code>summary.medicalcoder_comorbidites()</code> no longer crashes when a zero row input is passed in. Consistently return <code>NA</code> instead of <code>NaN</code> when counts are zeros. (<a href="https://github.com/dewittpe/medicalcoder/issues/26" class="external-link">#26</a>, <a href="https://github.com/dewittpe/medicalcoder/issues/27" class="external-link">#27</a>)</p></li>
+<li><p>Improve the conditional and multiple comorbidities mapped by a code under AHRQ ICD-10 codes for fiscal years 2023 through 2026. The bug was found and fixed as part of the extension <a href="https://github.com/dewittpe/medicalcoder/issues/32" class="external-link">#32</a>.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="other-changes-0-7-0-9000">Other Changes<a class="anchor" aria-label="anchor" href="#other-changes-0-7-0-9000"></a></h3>
 <ul><li><p>Extend and improve the internal ICD-9 database to distinguish between CDC and CMS source.</p></li>
 <li><p>Fix documentation of the <code>mdcr</code> and <code>mdcr_longitudinal</code> datasets.</p></li>
 <li><p>Clarified internal data.frame/data.table helpers: documented that <code>mdcr_select()</code> deep-copies data.table subsets to avoid aliasing, noted the selfref fix in <code>mdcr_set()</code>, and added inline guidance in the longitudinal section of <code><a href="../reference/comorbidities.html">comorbidities()</a></code> to explain the first-occurrence logic.</p></li>
-<li><p>Improve cumulative flagging to apply first-occurrence logic more effecently.</p></li>
+<li><p>Improve cumulative flagging to apply first-occurrence logic more efficiently.</p></li>
 <li><p>Extend documentation for the expected default behavior between the present-on-admission flags and <code>flag.method</code> argument in <code><a href="../reference/comorbidities.html">comorbidities()</a></code> (re: <a href="https://github.com/dewittpe/medicalcoder/issues/28" class="external-link">#28</a>)</p></li>
-<li><p>Add <code>mdcr_unique()</code> to the data.frame utilties. This reduced the computational time required to apply <code><a href="../reference/comorbidities.html">comorbidities()</a></code> to <code>tibble</code>s and <code>data.table</code>s. (<a href="https://github.com/dewittpe/medicalcoder/issues/31" class="external-link">#31</a>)</p></li>
+<li><p>Add <code>mdcr_unique()</code> to the data.frame utilities. This reduced the computational time required to apply <code><a href="../reference/comorbidities.html">comorbidities()</a></code> to <code>tibble</code>s and <code>data.table</code>s. (<a href="https://github.com/dewittpe/medicalcoder/issues/31" class="external-link">#31</a>)</p></li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -79,7 +80,7 @@
 <ul><li>exclusions for less severer conditions when more severer conditions are flagged</li>
 <li>Improved POA, NPOA, and EXEMPTPOA. This came about from <a href="https://github.com/dewittpe/medicalcoder/issues/20" class="external-link">#20</a>.</li>
 </ul></li>
-<li><p>Make internal data.frame tool <code>mdcr_duplicated</code> data.table aware.</p></li>
+<li><p>Make internal data.frame tool <code>mdcr_duplicated()</code> data.table aware.</p></li>
 <li><p>Elixhauser (Quan 2005) - added missing ICD-10 codes to the mappings</p></li>
 </ul></div>
 <div class="section level3">

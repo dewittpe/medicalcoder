@@ -52,15 +52,22 @@ head(get_elixhauser_index_scores())
 #> 4                   6                   3                   3
 #> 5                  -2                  -3                  -3
 #> 6                   9                   5                   5
-#>   elixhauser_ahrq2024 elixhauser_ahrq2025 elixhauser_ahrq_icd10
-#> 1                  -4                  -4                    -4
-#> 2                   5                   5                     5
-#> 3                  -1                  -1                    -1
-#> 4                   3                   3                     3
-#> 5                  -3                  -3                    -3
-#> 6                   5                   5                     5
+#>   elixhauser_ahrq2024 elixhauser_ahrq2025 elixhauser_ahrq2026
+#> 1                  -4                  -4                  -4
+#> 2                   5                   5                   5
+#> 3                  -1                  -1                  -1
+#> 4                   3                   3                   3
+#> 5                  -3                  -3                  -3
+#> 6                   5                   5                   5
+#>   elixhauser_ahrq_icd10
+#> 1                    -4
+#> 2                     5
+#> 3                    -1
+#> 4                     3
+#> 5                    -3
+#> 6                     5
 str(get_elixhauser_index_scores())
-#> 'data.frame':    112 obs. of  10 variables:
+#> 'data.frame':    112 obs. of  11 variables:
 #>  $ condition                : chr  "AIDS" "AIDS" "ALCOHOL" "ALCOHOL" ...
 #>  $ index                    : chr  "mortality" "readmission" "mortality" "readmission" ...
 #>  $ elixhauser_ahrq_web      : int  0 19 -1 6 -2 9 0 4 NA NA ...
@@ -70,5 +77,6 @@ str(get_elixhauser_index_scores())
 #>  $ elixhauser_ahrq2023      : int  -4 5 -1 3 -3 5 NA NA 0 2 ...
 #>  $ elixhauser_ahrq2024      : int  -4 5 -1 3 -3 5 NA NA 0 2 ...
 #>  $ elixhauser_ahrq2025      : int  -4 5 -1 3 -3 5 NA NA 0 2 ...
+#>  $ elixhauser_ahrq2026      : int  -4 5 -1 3 -3 5 NA NA 0 2 ...
 #>  $ elixhauser_ahrq_icd10    : int  -4 5 -1 3 -3 5 NA NA 0 2 ...
 ```
