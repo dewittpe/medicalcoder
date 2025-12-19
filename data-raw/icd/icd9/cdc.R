@@ -1207,8 +1207,8 @@ stopifnot(nrow(test) == 0L)
 # HEADERS
 #
 # look for headers in the dx codes.
-# 001 is a header becuase 001.0 exists
-# 001.0 is not a header becuase no code with five digits starting with 0010
+# 001 is a header because 001.0 exists
+# 001.0 is not a header because no code with five digits starting with 0010
 # exist, that is, 001.0 is a non-header code
 #
 # 003 is header because 0032 exists

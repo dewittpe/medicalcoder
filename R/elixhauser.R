@@ -125,7 +125,7 @@
     }
   }
 
-  # flag if poa expempt or POA
+  # flag if POA exempt or POA
   from_to <-
     c("DRUG_ABUSEPSYCHOSES" = "PSYCHOSES",
       "HFHTN_CX" = "HF",

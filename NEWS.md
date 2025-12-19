@@ -45,7 +45,8 @@
 ## Bug Fixes
 * Elixhauser AHRQ 2022 - 2025
 
-  * exclusions for less severer conditions when more severer conditions are flagged
+  * exclusions for less severe conditions when more severe conditions are
+    flagged.
   * Improved POA, NPOA, and EXEMPTPOA.  This came about from #20.
 
 * Make internal data.frame tool `mdcr_duplicated()` data.table aware.
@@ -54,14 +55,14 @@
 
 ## New Features
 
-* `comorbidities()` will return a `tibble` with the input data is a `tbl_df`
+* `comorbidities()` will return a `tibble` when the input data is a `tbl_df`
   (#9).  Assuming the `data.table` and/or `tibble` namespaces are available,
   then the initial release (v0.6.0) would return a `data.table` if a
   `data.table` was passed to a `comorbidities()` due to the S3 method
-  dispatches.  If a `tibble` (`tdl_df`) or a `data.frame` was passed to
+  dispatches.  If a `tibble` (`tbl_df`) or a `data.frame` was passed to
   `comorbidities()` then the return would be a `data.frame`.  In this release we
   have added logic to determine if the input is a `tibble` and if the `tibble`
-  namespaces is available, then the return from `comorbidities()` will be a
+  namespace is available, then the return from `comorbidities()` will be a
   `tibble` (or list of `tibble`s when `subconditions = TRUE`).
 
   The tests were extended to consider the cases of passing in a `data.table` or

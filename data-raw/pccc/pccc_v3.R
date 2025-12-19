@@ -849,7 +849,7 @@ pccc_v3.1 <-
 # ICD-10-CM Q98.2
 # It appears that as of fiscal year 2026, Q98.2 is not in the CMS codes, but is
 # in cdc mortality and WHO data.  It is consistent with other ICD-10-CM Q98
-# codes.  Keep it in pccc_v3.1; it is in v2 becuase the header Q98 is in.
+# codes.  Keep it in pccc_v3.1; it is in v2 because the header Q98 is in.
 if (interactive()) {
   subset(medicalcoder::get_icd_codes(), grepl("^Q982", code))
   subset(medicalcoder::get_icd_codes(with.descriptions = T), grepl("^Q982", code))
@@ -862,7 +862,7 @@ pccc_v3.1 <-
         pccc_v3.1[code == "Q980"][, code := "Q982"])
 
 ################################################################################
-# Missing codes with more granulatity:
+# Missing codes with more granularity:
 #
 # Examples:
 #

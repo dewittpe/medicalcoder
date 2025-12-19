@@ -198,7 +198,7 @@ stopifnot(identical(names(OUT2), c("..medicalcoder_id..", expected_names)))
 #   icdv.var = NULL
 #   icdv = NULL
 #
-# I'd get an error becuase the "icdv" name is being used in the lookup tables and
+# I'd get an error because the "icdv" name is being used in the lookup tables and
 # gets drop in the methods and the joins in the code created a icdv.x and icdv.y
 # variable.  The code was updated so that the suffixes would be c("", ".y") to
 # fix this issue.

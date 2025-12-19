@@ -233,7 +233,7 @@ stopifnot(
 # 2015.
 #
 # t1:
-#   default call to is_icd for code 516.3 is TRUE becuase year is missing and
+#   default call to is_icd for code 516.3 is TRUE because year is missing and
 #   thus treated as most current, and ever.billable is TRUE because year was
 #   missing
 #
@@ -246,14 +246,14 @@ stopifnot(
 #
 # t4:
 #   with ever.assignable = FALSE and year = 2012 the return will be FALSE
-#   becuase 516.3 was not assignable in 2012
+#   because 516.3 was not assignable in 2012
 #
 # t5:
 #   with ever.assignable = TRUE and year = 2012 the return will be TRUE
-#   becuase 516.3 was billable prior to 2012
+#   because 516.3 was billable prior to 2012
 #
 # t6:
-#   with ever.assignable = FALSE and year = 2011 the return will be TRUE becuase
+#   with ever.assignable = FALSE and year = 2011 the return will be TRUE because
 #   516.3 was assignable in 2011
 
 stopifnot(
