@@ -54,9 +54,9 @@ expected_internal_names_and_classes <-
     "..mdcr_internal_charlson_codes.." = c(code_id = "integer", condition = "character", charlson_cdmf2019 = "integer", charlson_deyo1992 = "integer", charlson_quan2005 = "integer", charlson_quan2011 = "integer"),
     "..mdcr_internal_charlson_index_scores.." = c(condition_description = "character", condition = "character", charlson_cdmf2019 = "integer", charlson_quan2011 = "integer", charlson_quan2005 = "integer", charlson_deyo1992 = "integer"),
     "..mdcr_internal_desc_start_stop.." = c(code_id = "integer", desc_id = "integer", src = "factor", desc_start = "integer", desc_end = "integer"),
-    "..mdcr_internal_elixhauser_codes.." = c(code_id = "integer", poaexempt = "integer", condition = "character", elixhauser_ahrq_web = "integer", elixhauser_elixhauser1988 = "integer", elixhauser_quan2005 = "integer", elixhauser_ahrq2022 = "integer", elixhauser_ahrq2023 = "integer", elixhauser_ahrq2024 = "integer", elixhauser_ahrq2025 = "integer", elixhauser_ahrq_icd10 = "integer"),
-    "..mdcr_internal_elixhauser_index_scores.." = c(condition = "character", index = "character", elixhauser_ahrq_web = "integer", elixhauser_elixhauser1988 = "integer", elixhauser_quan2005 = "integer", elixhauser_ahrq2022 = "integer", elixhauser_ahrq2023 = "integer", elixhauser_ahrq2024 = "integer", elixhauser_ahrq2025 = "integer", elixhauser_ahrq_icd10 = "integer"),
-    "..mdcr_internal_elixhauser_poa.." = c(condition = "character", poa_required = "integer", elixhauser_ahrq2022 = "integer", elixhauser_ahrq2023 = "integer", elixhauser_ahrq2024 = "integer", elixhauser_ahrq2025 = "integer", elixhauser_ahrq_icd10 = "integer"),
+    "..mdcr_internal_elixhauser_codes.." = c(code_id = "integer", poaexempt = "integer", condition = "character", elixhauser_ahrq_web = "integer", elixhauser_elixhauser1988 = "integer", elixhauser_quan2005 = "integer", elixhauser_ahrq2022 = "integer", elixhauser_ahrq2023 = "integer", elixhauser_ahrq2024 = "integer", elixhauser_ahrq2025 = "integer", elixhauser_ahrq2026 = "integer", elixhauser_ahrq_icd10 = "integer"),
+    "..mdcr_internal_elixhauser_index_scores.." = c(condition = "character", index = "character", elixhauser_ahrq_web = "integer", elixhauser_elixhauser1988 = "integer", elixhauser_quan2005 = "integer", elixhauser_ahrq2022 = "integer", elixhauser_ahrq2023 = "integer", elixhauser_ahrq2024 = "integer", elixhauser_ahrq2025 = "integer", elixhauser_ahrq2026 = "integer", elixhauser_ahrq_icd10 = "integer"),
+    "..mdcr_internal_elixhauser_poa.." = c(condition = "character", poa_required = "integer", elixhauser_ahrq2022 = "integer", elixhauser_ahrq2023 = "integer", elixhauser_ahrq2024 = "integer", elixhauser_ahrq2025 = "integer", elixhauser_ahrq2026 = "integer", elixhauser_ahrq_icd10 = "integer"),
     "..mdcr_internal_icd_chapters.." = c(chapter = "character", chap_id = "integer"),
     "..mdcr_internal_icd_codes.." = c(icdv = "integer", dx = "integer", full_code = "character", code = "character", code_id = "integer", chap_id = "integer", subchap_id = "integer"),
     "..mdcr_internal_icd_descs.." = c(desc = "character", desc_id = "integer"),
@@ -76,13 +76,6 @@ for(n in names(current_names_and_classes)) {
     stop(sprintf("user visible %s does not have the expected structure", n))
   }
 }
-
-#for (n in names(current_names)) {
-#  if (!identical(names(get(n, envir = mdcr)), expected_names[[n]])) {
-#    stop(sprintf("names(%s) are not as expected", n))
-#  }
-#}
-
 
 ################################################################################
 # get the data sets via get_ methods
@@ -147,7 +140,7 @@ user_visible_expected_structures <-
   list(
     charlson_codes = c(icdv = "integer", dx = "integer", full_code = "character", code = "character", condition = "character", charlson_cdmf2019 = "integer", charlson_deyo1992 = "integer", charlson_quan2005 = "integer", charlson_quan2011 = "integer"),
     charlson_index_scores = expected_internal_names_and_classes$..mdcr_internal_charlson_index_scores..,
-    elixhauser_codes = c(icdv = "integer", dx = "integer", full_code = "character", code = "character", poaexempt = "integer", condition = "character", elixhauser_ahrq_web = "integer", elixhauser_elixhauser1988 = "integer", elixhauser_quan2005 = "integer", elixhauser_ahrq2022 = "integer", elixhauser_ahrq2023 = "integer", elixhauser_ahrq2024 = "integer", elixhauser_ahrq2025 = "integer", elixhauser_ahrq_icd10 = "integer"),
+    elixhauser_codes = c(icdv = "integer", dx = "integer", full_code = "character", code = "character", poaexempt = "integer", condition = "character", elixhauser_ahrq_web = "integer", elixhauser_elixhauser1988 = "integer", elixhauser_quan2005 = "integer", elixhauser_ahrq2022 = "integer", elixhauser_ahrq2023 = "integer", elixhauser_ahrq2024 = "integer", elixhauser_ahrq2025 = "integer", elixhauser_ahrq2026 = "integer", elixhauser_ahrq_icd10 = "integer"),
     elixhauser_index_scores = expected_internal_names_and_classes$..mdcr_internal_elixhauser_index_scores..,
     elixhauser_poa = expected_internal_names_and_classes$..mdcr_internal_elixhauser_poa..,
     icd_codes = c(icdv = "integer", dx = "integer", full_code = "character", code = "character", src = "character", known_start = "integer", known_end = "integer", assignable_start = "integer", assignable_end = "integer"),

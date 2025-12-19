@@ -7,11 +7,17 @@
   change will generally result in less computation time than base R
   `data.frames` (`data.tables` require even less time).
 
+* Add the `elixhauser_ahrq2026` method for `comorbidities()` (#32)
+
 ## Bug Fixes
 
 * `summary.medicalcoder_comorbidites()` no longer crashes when a zero row input
-  is passed in. Consisently return `NA` instead of `NaN` when counts are zeros.
+  is passed in. Consistently return `NA` instead of `NaN` when counts are zeros.
   (#26, #27)
+
+* Improve the conditional and multiple comorbidities mapped by a code under AHRQ
+  ICD-10 codes for fiscal years 2023 through 2026.  The bug was found and fixed
+  as part of the extension #32.
 
 ## Other Changes
 
@@ -25,13 +31,13 @@
   `mdcr_set()`, and added inline guidance in the longitudinal section of
   `comorbidities()` to explain the first-occurrence logic.
 
-* Improve cumulative flagging to apply first-occurrence logic more effecently.
+* Improve cumulative flagging to apply first-occurrence logic more efficiently.
 
 * Extend documentation for the expected default behavior between the
   present-on-admission flags and `flag.method` argument in `comorbidities()`
   (re: #28)
 
-* Add `mdcr_unique()` to the data.frame utilties. This reduced the computational
+* Add `mdcr_unique()` to the data.frame utilities. This reduced the computational
   time required to apply `comorbidities()` to `tibble`s and `data.table`s. (#31)
 
 # medicalcoder 0.7.0
@@ -42,7 +48,7 @@
   * exclusions for less severer conditions when more severer conditions are flagged
   * Improved POA, NPOA, and EXEMPTPOA.  This came about from #20.
 
-* Make internal data.frame tool `mdcr_duplicated` data.table aware.
+* Make internal data.frame tool `mdcr_duplicated()` data.table aware.
 
 * Elixhauser (Quan 2005) - added missing ICD-10 codes to the mappings
 

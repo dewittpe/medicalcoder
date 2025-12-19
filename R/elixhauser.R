@@ -43,7 +43,6 @@
   rtn <- mdcr_set(rtn, j = "readmission_index", value = results$readmission_index)
   rownames(rtn) <- NULL
   rtn
-
 }
 
 .elixhauser_post2022 <- function(ccc, id.vars, iddf, cmrb, poa.var, primarydx.var, method) {
@@ -93,23 +92,37 @@
     XANYPOA[cbind(ri[keep], ci[keep])] <- 1L
   }
 
-  # Assign comorbidities which are nutral to POA
+  # Assign comorbidities which are neutral to POA
   from_to <-
     c("DRUG_ABUSEPSYCHOSES" = "DRUG_ABUSE",
       "HFHTN_CX" = "HTN_CX",
       "HTN_CXRENLFL_SEV"= "HTN_CX",
       "HFHTN_CXRENLFL_SEV"= "HTN_CX",
       "ALCOHOLLIVER_MLD" = "ALCOHOL",
-      "VALVE_AUTOIMMUNE" = "AUTOIMMUNE"
+      "VALVE_AUTOIMMUNE" = "AUTOIMMUNE",
+      "LIVER_MLD_NEURO" = "LIVER_MLD",
+      "LIVER_MLD_NEURO" = "NEURO_OTH",
+      "NEURO_OTH_SEIZ" = "NEURO_OTH",
+      "NEURO_OTH_SEIZ" = "NEURO_SEIZ",
+      "LIVER_MLD_PULMCIRC" = "LIVER_MLD",
+      "LIVER_MLD_PULMCIRC" = "PULMCIRC"
     )
 
   for (i in seq_len(length(from_to))) {
     f <- names(from_to)[i]
     t <- unname(from_to[i])
-          XPOA[      XPOA[, f] == 1L, t] <- 1L
-    XPOAEXEMPT[XPOAEXEMPT[, f] == 1L, t] <- 1L
-       XANYPOA[   XANYPOA[, f] == 1L, t] <- 1L
-         XNPOA[     XNPOA[, f] == 1L, t] <- 1L
+    if (f %in% colnames(XPOA)) {
+      XPOA[XPOA[, f] == 1L, t] <- 1L
+    }
+    if (f %in% colnames(XPOAEXEMPT)) {
+      XPOAEXEMPT[XPOAEXEMPT[, f] == 1L, t] <- 1L
+    }
+    if (f %in% colnames(XANYPOA)) {
+      XANYPOA[XANYPOA[, f] == 1L, t] <- 1L
+    }
+    if (f %in% colnames(XNPOA)) {
+      XNPOA[XNPOA[, f] == 1L, t] <- 1L
+    }
   }
 
   # flag if poa expempt or POA
@@ -128,8 +141,12 @@
   for (i in seq_len(length(from_to))) {
     f <- names(from_to)[i]
     t <- unname(from_to[i])
-          XPOA[      XPOA[, f] == 1L, t] <- 1L
-    XPOAEXEMPT[XPOAEXEMPT[, f] == 1L, t] <- 1L
+    if (f %in% colnames(XPOA)) {
+      XPOA[XPOA[, f] == 1L, t] <- 1L
+    }
+    if (f %in% colnames(XPOAEXEMPT)) {
+      XPOAEXEMPT[XPOAEXEMPT[, f] == 1L, t] <- 1L
+    }
   }
 
   # CBVD_NPOA is unique in that it requires that the condition is not POA

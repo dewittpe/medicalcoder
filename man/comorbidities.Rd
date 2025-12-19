@@ -288,8 +288,8 @@ PMC6684052.
 \item Elixhauser Comorbidities:
 \itemize{
 \item Agency for Healthcare Research and Quality (AHRQ). Elixhauser
-Comorbidity Software Refined for ICD-10-CM Diagnoses, v2025.1 [Internet].
-2025. Available from:
+Comorbidity Software Refined for ICD-10-CM Diagnoses, v2026.1 [Internet].
+2026. Available from:
 https://www.hcup-us.ahrq.gov/toolssoftware/comorbidityicd10/comorbidity_icd10.jsp
 }
 }

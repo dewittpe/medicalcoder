@@ -41,10 +41,7 @@ codes <- codes[,
   "ahrq_web",
   "elixhauser1988",
   "quan2005",
-  "ahrq2022",
-  "ahrq2023",
-  "ahrq2024",
-  "ahrq2025",
+  sort(grep("ahrq\\d{4}", names(codes), value = TRUE)),
   "ahrq_icd10")]
 
 # Which conditions require a POA required flag?

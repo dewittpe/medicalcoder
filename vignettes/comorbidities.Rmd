@@ -50,7 +50,7 @@ implemented in the medicalcoder package:
    c. `charlson_cdmf2019`: [@glasheen2019]
 
 3. Elixhauser
-   a. Based on codes provided by the Agency for Healthcare Research and Quality (AHRQ) for fiscal years 2022 through 2025 [@ahrq2025]
+   a. Based on codes provided by the Agency for Healthcare Research and Quality (AHRQ) for fiscal years 2022 through 2026 [@ahrqicd10]
       i. `elixhauser_ahrq2022`
       ii. `elixhauser_ahrq2023`
       iii. `elixhauser_ahrq2024`
@@ -132,7 +132,7 @@ the comorbidity algorithms and considering if the patient has a comorbidity at
 the start of an encounter, or if the condition is a result of the current
 hospitalization.
 
-Implementation of Elixhauser comorbidities for 2022 and beyond [@ahrq2025]
+Implementation of Elixhauser comorbidities for 2022 and beyond [@ahrqicd10]
 explicitly define the use of present on admission flags for specific conditions
 (see the `poa_required` flag reported in the data set returned by
 `get_elixhauser_poa()`).

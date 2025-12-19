@@ -3,10 +3,11 @@ library(data.table)
 # ahrq results
 ahrq_results <-
   list(
-    "2022/mdcr_sas_result_index_2022.csv.gz",
-    "2023/mdcr_sas_result_index_2023.csv.gz",
-    "2024/mdcr_sas_result_index_2024.csv.gz",
-    "2025/mdcr_sas_result_index_2025.csv.gz"
+    "2022/sas_result_index_2022.csv.gz",
+    "2023/sas_result_index_2023.csv.gz",
+    "2024/sas_result_index_2024.csv.gz",
+    "2025/sas_result_index_2025.csv.gz",
+    "2026/sas_result_index_2026.csv.gz"
   )
 ahrq_results <- lapply(ahrq_results, data.table::fread)
 ahrq_results <- rbindlist(ahrq_results)

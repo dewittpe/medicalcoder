@@ -9,6 +9,7 @@
 #   ahrq/CMR_v2023-1.zip
 #   ahrq/CMR_v2024-1.zip
 #   ahrq/CMR_v2025.1.zip
+#   ahrq/CMR-v2026-1.zip
 #   ../icd/icd_codes.rds
 #
 # output:
@@ -47,38 +48,43 @@ if (interactive()) {
   unzip("ahrq/CMR_v2023-1.zip", list = TRUE)  # AHRQ based on ICD-10
   unzip("ahrq/CMR_v2024-1.zip", list = TRUE)  # AHRQ based on ICD-10
   unzip("ahrq/CMR_v2025.1.zip", list = TRUE)  # AHRQ based on ICD-10
+  unzip("ahrq/CMR-v2026-1.zip", list = TRUE)  # AHRQ based on ICD-10
 }
 
 unzip("ahrq/CMR_v2022-1.zip", exdir = tmpdir)
 unzip("ahrq/CMR_v2023-1.zip", exdir = tmpdir)
 unzip("ahrq/CMR_v2024-1.zip", exdir = tmpdir)
 unzip("ahrq/CMR_v2025.1.zip", exdir = tmpdir, junkpaths = TRUE)
+unzip("ahrq/CMR-v2026-1.zip", exdir = tmpdir)
 
 ################################################################################
 # import all the SAS Programs for the ICD-10 version of Elixhauser
 
 format_programs <-
   list(
-    "ahrq2022" = scan(file = paste0(tmpdir, "/CMR_Format_Program_v2022-1.sas"), what = character(), sep = "\n", quiet = !interactive()),
-    "ahrq2023" = scan(file = paste0(tmpdir, "/CMR_Format_Program_v2023-1.sas"), what = character(), sep = "\n", quiet = !interactive()),
-    "ahrq2024" = scan(file = paste0(tmpdir, "/CMR_Format_Program_v2024-1.sas"), what = character(), sep = "\n", quiet = !interactive()),
-    "ahrq2025" = scan(file = paste0(tmpdir, "/CMR_Format_Program_v2025-1.sas"), what = character(), sep = "\n", quiet = !interactive())
+    "ahrq2022" = scan(file = file.path(tmpdir, "CMR_Format_Program_v2022-1.sas"), what = character(), sep = "\n", quiet = !interactive()),
+    "ahrq2023" = scan(file = file.path(tmpdir, "CMR_Format_Program_v2023-1.sas"), what = character(), sep = "\n", quiet = !interactive()),
+    "ahrq2024" = scan(file = file.path(tmpdir, "CMR_Format_Program_v2024-1.sas"), what = character(), sep = "\n", quiet = !interactive()),
+    "ahrq2025" = scan(file = file.path(tmpdir, "CMR_Format_Program_v2025-1.sas"), what = character(), sep = "\n", quiet = !interactive()),
+    "ahrq2026" = scan(file = file.path(tmpdir, "CMR_Format_Program_v2026-1.sas"), what = character(), sep = "\n", quiet = !interactive())
   )
 
 mapping_programs <-
   list(
-    "ahrq2022" = scan(file = paste0(tmpdir, "/CMR_Mapping_Program_v2022-1.sas"), what = character(), sep = "\n", quiet = !interactive()),
-    "ahrq2023" = scan(file = paste0(tmpdir, "/CMR_Mapping_Program_v2023-1.sas"), what = character(), sep = "\n", quiet = !interactive()),
-    "ahrq2024" = scan(file = paste0(tmpdir, "/CMR_Mapping_Program_v2024-1.sas"), what = character(), sep = "\n", quiet = !interactive()),
-    "ahrq2025" = scan(file = paste0(tmpdir, "/CMR_Mapping_Program_v2025-1.sas"), what = character(), sep = "\n", quiet = !interactive())
+    "ahrq2022" = scan(file = file.path(tmpdir, "CMR_Mapping_Program_v2022-1.sas"), what = character(), sep = "\n", quiet = !interactive()),
+    "ahrq2023" = scan(file = file.path(tmpdir, "CMR_Mapping_Program_v2023-1.sas"), what = character(), sep = "\n", quiet = !interactive()),
+    "ahrq2024" = scan(file = file.path(tmpdir, "CMR_Mapping_Program_v2024-1.sas"), what = character(), sep = "\n", quiet = !interactive()),
+    "ahrq2025" = scan(file = file.path(tmpdir, "CMR_Mapping_Program_v2025-1.sas"), what = character(), sep = "\n", quiet = !interactive()),
+    "ahrq2026" = scan(file = file.path(tmpdir, "CMR_Mapping_Program_v2026-1.sas"), what = character(), sep = "\n", quiet = !interactive())
   )
 
 index_programs <-
   list(
-    "ahrq2022" = scan(file = paste0(tmpdir, "/CMR_Index_Program_v2022-1.sas"), what = character(), sep = "\n", quiet = !interactive()),
-    "ahrq2023" = scan(file = paste0(tmpdir, "/CMR_Index_Program_v2023-1.sas"), what = character(), sep = "\n", quiet = !interactive()),
-    "ahrq2024" = scan(file = paste0(tmpdir, "/CMR_Index_Program_v2024-1.sas"), what = character(), sep = "\n", quiet = !interactive()),
-    "ahrq2025" = scan(file = paste0(tmpdir, "/CMR_Index_Program_v2025-1.sas"), what = character(), sep = "\n", quiet = !interactive())
+    "ahrq2022" = scan(file = file.path(tmpdir, "CMR_Index_Program_v2022-1.sas"), what = character(), sep = "\n", quiet = !interactive()),
+    "ahrq2023" = scan(file = file.path(tmpdir, "CMR_Index_Program_v2023-1.sas"), what = character(), sep = "\n", quiet = !interactive()),
+    "ahrq2024" = scan(file = file.path(tmpdir, "CMR_Index_Program_v2024-1.sas"), what = character(), sep = "\n", quiet = !interactive()),
+    "ahrq2025" = scan(file = file.path(tmpdir, "CMR_Index_Program_v2025-1.sas"), what = character(), sep = "\n", quiet = !interactive()),
+    "ahrq2026" = scan(file = file.path(tmpdir, "CMR_Index_Program_v2026-1.sas"), what = character(), sep = "\n", quiet = !interactive())
   )
 
 ################################################################################
@@ -100,29 +106,31 @@ values <-
   lapply(format_programs, get_value_start_stop) |>
   rbindlist(idcol = "version")
 
-build_comfmt <-
-  function(x) {
-    x <- sub(pattern = '=', replacement = "->", x)
-    x <- sub(pattern = '-> \\"(.+)\\"', replacement = ") -> \\1;", x = x)
-    strt <- grep("->", x) + 1
-    x[1] <- paste("c(", x[1])
-    x[strt] <- paste("c(", x[strt])
-    other_idx <- grep("other", x)
-    x <- x[-seq(other_idx, length(x))]
-    tmpfile <- tempfile()
-    cat(x, file = tmpfile)
-    e <- new.env()
-    source(tmpfile, local = e)
-    as.list(e)
-  }
+build_comfmt <- function(x) {
+  x <- sub(pattern = '=', replacement = "->", x)
+  x <- sub(pattern = '-> \\"(.+)\\"', replacement = ") -> \\1;", x = x)
+  strt <- grep("->", x) + 1
+  x[1] <- paste("c(", x[1])
+  x[strt] <- paste("c(", x[strt])
+  other_idx <- grep("other", x)
+  x <- x[-seq(other_idx, length(x))]
+  tmpfile <- tempfile()
+  cat(x, file = tmpfile)
+  e <- new.env()
+  source(tmpfile, local = e)
+  as.list(e)
+}
 
 build_poaexmpt <- function(x) {
   other_idx <- grep("other", x)
   x <- x[-seq(other_idx, length(x))]
+  # for 2022 - 2025 the last element ended with "1"
+  # for 2026 the last element ended with '1'
+  # Change from double quotes to single quotes.
   x <- sub('= \\"1\\"', ')', x)
+  x <- sub("= '1'", ')', x)
   x <- trimws(x)
   x[1] <- paste("poaexmpt <- c(", x[1])
-  x
   tmpfile <- tempfile()
   cat(x, file = tmpfile)
   e <- new.env()
@@ -253,7 +261,9 @@ elixhauser_poa <-
   list("ahrq2022" = readxl::read_xlsx(paste0(tmpdir, "/CMR-Reference-File-v2022-1.xlsx"), sheet = 2, skip = 1),
        "ahrq2023" = readxl::read_xlsx(paste0(tmpdir, "/CMR-Reference-File-v2023-1.xlsx"), sheet = 2, skip = 1),
        "ahrq2024" = readxl::read_xlsx(paste0(tmpdir, "/CMR-Reference-File-v2024-1.xlsx"), sheet = 2, skip = 1),
-       "ahrq2025" = readxl::read_xlsx(paste0(tmpdir, "/CMR-Reference-File-v2025-1.xlsx"), sheet = 2, skip = 1))
+       "ahrq2025" = readxl::read_xlsx(paste0(tmpdir, "/CMR-Reference-File-v2025-1.xlsx"), sheet = 2, skip = 1),
+       "ahrq2026" = readxl::read_xlsx(paste0(tmpdir, "/CMR-Reference-File-v2026-1.xlsx"), sheet = 2, skip = 1)
+  )
 
 elixhauser_poa <- lapply(elixhauser_poa, setDT)
 
@@ -279,15 +289,26 @@ elixhauser_poa[, condition := sub("CMR_", "", condition)]
 
 # Extend conditions -- several of the conditions in the elixhauser_poa set are
 # catch alls and more granular conditions are in the codes.  Extend the
-# elixhauser_poa set to include th more granular conditions
+# elixhauser_poa set to include the more granular conditions
 #
-#> qwraps2::set_diff(elixhauser_poa$condition, elixhauser_codes$condition)
+# 2026 added a new condition, LIVER_MLD_PULMCIRC
+#> qwraps2::set_diff(
+#>   elixhauser_codes[ahrq2025 == 1, condition],
+#>   elixhauser_codes[ahrq2026 == 1, condition]
+#> )
 #+ Total number of unique values: 49
+#+ Number of elements in both elixhauser_codes[ahrq2025 == 1, condition] and elixhauser_codes[ahrq2026 == 1, condition]: 48
+#+ Number of elements only in elixhauser_codes[ahrq2025 == 1, condition]: 0
+#+ Number of elements only in elixhauser_codes[ahrq2026 == 1, condition]: 1
+#+   unique elements: LIVER_MLD_PULMCIRC
+
+#> qwraps2::set_diff(elixhauser_poa$condition, elixhauser_codes$condition)
+#+ Total number of unique values: 50
 #+ Number of elements in both elixhauser_poa$condition and elixhauser_codes$condition: 37
 #+ Number of elements only in elixhauser_poa$condition: 1
 #+   unique elements: CBVD
-#+ Number of elements only in elixhauser_codes$condition: 11
-#+   unique elements: DRUG_ABUSEPSYCHOSES, CBVD_POA, NEURO_OTH_SEIZ, HFHTN_CX, HTN_CXRENLFL_SEV, HFHTN_CXRENLFL_SEV, CBVD_SQLA, CBVD_SQLAPARALYSIS, ALCOHOLLIVER_MLD, LIVER_MLD_NEURO, VALVE_AUTOIMMUNE
+#+ Number of elements only in elixhauser_codes$condition: 12
+#+   unique elements: DRUG_ABUSEPSYCHOSES, CBVD_POA, NEURO_OTH_SEIZ, HFHTN_CX, HTN_CXRENLFL_SEV, HFHTN_CXRENLFL_SEV, LIVER_MLD_PULMCIRC, CBVD_SQLA, CBVD_SQLAPARALYSIS, ALCOHOLLIVER_MLD, LIVER_MLD_NEURO, VALVE_AUTOIMMUNE
 
 elixhauser_poa <-
   rbind(
@@ -302,9 +323,16 @@ elixhauser_poa <-
     elixhauser_poa[condition == "HF"][, condition := "HFHTN_CXRENLFL_SEV"],
     elixhauser_poa[condition == "NEURO_OTH"][, condition := "NEURO_OTH_SEIZ"],
     elixhauser_poa[condition == "AUTOIMMUNE"][, condition := "VALVE_AUTOIMMUNE"],
-    elixhauser_poa[condition == "LIVER_MLD"][, condition := "LIVER_MLD_NEURO"]
+    elixhauser_poa[condition == "LIVER_MLD"][, condition := "LIVER_MLD_NEURO"],
+    elixhauser_poa[condition == "LIVER_MLD"][, condition := "LIVER_MLD_PULMCIRC"]
   )
 
+#> qwraps2::set_diff(elixhauser_poa$condition, elixhauser_codes$condition)
+#+ Total number of unique values: 50
+#+ Number of elements in both elixhauser_poa$condition and elixhauser_codes$condition: 49
+#+ Number of elements only in elixhauser_poa$condition: 1
+#+   unique elements: CBVD
+#+ Number of elements only in elixhauser_codes$condition: 0
 
 # Under the assumption that the POA required flag is static over the years, then
 # the this data structure is not needed and a POA required flag cold just be
