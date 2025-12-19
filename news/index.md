@@ -64,8 +64,8 @@ CRAN release: 2025-11-22
 
 - Elixhauser AHRQ 2022 - 2025
 
-  - exclusions for less severer conditions when more severer conditions
-    are flagged
+  - exclusions for less severe conditions when more severe conditions
+    are flagged.
   - Improved POA, NPOA, and EXEMPTPOA. This came about from
     [\#20](https://github.com/dewittpe/medicalcoder/issues/20).
 
@@ -76,18 +76,18 @@ CRAN release: 2025-11-22
 ### New Features
 
 - [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
-  will return a `tibble` with the input data is a `tbl_df`
+  will return a `tibble` when the input data is a `tbl_df`
   ([\#9](https://github.com/dewittpe/medicalcoder/issues/9)). Assuming
   the `data.table` and/or `tibble` namespaces are available, then the
   initial release (v0.6.0) would return a `data.table` if a `data.table`
   was passed to a
   [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
-  due to the S3 method dispatches. If a `tibble` (`tdl_df`) or a
+  due to the S3 method dispatches. If a `tibble` (`tbl_df`) or a
   `data.frame` was passed to
   [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
   then the return would be a `data.frame`. In this release we have added
   logic to determine if the input is a `tibble` and if the `tibble`
-  namespaces is available, then the return from
+  namespace is available, then the return from
   [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
   will be a `tibble` (or list of `tibble`s when `subconditions = TRUE`).
 

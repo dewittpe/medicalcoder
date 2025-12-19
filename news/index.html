@@ -77,7 +77,7 @@
 <h3 id="bug-fixes-0-7-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-7-0"></a></h3>
 <ul><li>
 <p>Elixhauser AHRQ 2022 - 2025</p>
-<ul><li>exclusions for less severer conditions when more severer conditions are flagged</li>
+<ul><li>exclusions for less severe conditions when more severe conditions are flagged.</li>
 <li>Improved POA, NPOA, and EXEMPTPOA. This came about from <a href="https://github.com/dewittpe/medicalcoder/issues/20" class="external-link">#20</a>.</li>
 </ul></li>
 <li><p>Make internal data.frame tool <code>mdcr_duplicated()</code> data.table aware.</p></li>
@@ -86,7 +86,7 @@
 <div class="section level3">
 <h3 id="new-features-0-7-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-7-0"></a></h3>
 <ul><li>
-<p><code><a href="../reference/comorbidities.html">comorbidities()</a></code> will return a <code>tibble</code> with the input data is a <code>tbl_df</code> (<a href="https://github.com/dewittpe/medicalcoder/issues/9" class="external-link">#9</a>). Assuming the <code>data.table</code> and/or <code>tibble</code> namespaces are available, then the initial release (v0.6.0) would return a <code>data.table</code> if a <code>data.table</code> was passed to a <code><a href="../reference/comorbidities.html">comorbidities()</a></code> due to the S3 method dispatches. If a <code>tibble</code> (<code>tdl_df</code>) or a <code>data.frame</code> was passed to <code><a href="../reference/comorbidities.html">comorbidities()</a></code> then the return would be a <code>data.frame</code>. In this release we have added logic to determine if the input is a <code>tibble</code> and if the <code>tibble</code> namespaces is available, then the return from <code><a href="../reference/comorbidities.html">comorbidities()</a></code> will be a <code>tibble</code> (or list of <code>tibble</code>s when <code>subconditions = TRUE</code>).</p>
+<p><code><a href="../reference/comorbidities.html">comorbidities()</a></code> will return a <code>tibble</code> when the input data is a <code>tbl_df</code> (<a href="https://github.com/dewittpe/medicalcoder/issues/9" class="external-link">#9</a>). Assuming the <code>data.table</code> and/or <code>tibble</code> namespaces are available, then the initial release (v0.6.0) would return a <code>data.table</code> if a <code>data.table</code> was passed to a <code><a href="../reference/comorbidities.html">comorbidities()</a></code> due to the S3 method dispatches. If a <code>tibble</code> (<code>tbl_df</code>) or a <code>data.frame</code> was passed to <code><a href="../reference/comorbidities.html">comorbidities()</a></code> then the return would be a <code>data.frame</code>. In this release we have added logic to determine if the input is a <code>tibble</code> and if the <code>tibble</code> namespace is available, then the return from <code><a href="../reference/comorbidities.html">comorbidities()</a></code> will be a <code>tibble</code> (or list of <code>tibble</code>s when <code>subconditions = TRUE</code>).</p>
 <p>The tests were extended to consider the cases of passing in a <code>data.table</code> or <code>tibble</code> to comorbidities when the associated namespaces are not available.</p>
 </li>
 <li><p>Added <code>elixhauser_ahrq_icd10</code> to use all the ICD codes ever defined from 2022 to 2025. This will capture any future years as well.</p></li>
