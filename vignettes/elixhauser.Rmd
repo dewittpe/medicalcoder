@@ -36,11 +36,13 @@ packageVersion("medicalcoder")
 The medicalcoder package implements several variants of the Elixhauser
 comorbidity algorithm.
 
-* Based on codes provided by the Agency for Healthcare Research and Quality (AHRQ) for fiscal years 2022 through 2025 [@ahrq2025]
+* Based on codes provided by the Agency for Healthcare Research and Quality (AHRQ) for fiscal years 2022 through 2026 [@ahrqicd10]
   *  `elixhauser_ahrq2022`
   *  `elixhauser_ahrq2023`
   *  `elixhauser_ahrq2024`
   *  `elixhauser_ahrq2025`
+  *  `elixhauser_ahrq2026`
+  *  `elixhauser_ahrq_icd10` - All ICD-10 codes ever listed by AHRQ
 
 * Codes from Table 2 of @quan2005
   * `elixhauser_elixhauser1988`: [@elixhauser1998;@quan2005]

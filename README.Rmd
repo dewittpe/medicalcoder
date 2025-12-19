@@ -274,7 +274,7 @@ vignette(topic = "charlson", package = "medicalcoder")
   * `method = elixhauser_elixhauser1988`
 * [Quan et al. (2005)](https://doi.org/10.1097/01.mlr.0000182534.19832.83)
   * `method = elixhauser_quan2005`
-* AHRQ (2017, 2022, 2023, 2024, 2025, ICD10)
+* AHRQ (2017, 2022, 2023, 2024, 2025, 2026, ICD10)
   * [For ICD-9 codes](https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp)
     * `method = elixhauser_ahrq_web`
   * [For ICD-10 codes](https://hcup-us.ahrq.gov/toolssoftware/comorbidityicd10/comorbidity_icd10.jsp)
@@ -282,6 +282,7 @@ vignette(topic = "charlson", package = "medicalcoder")
     * `method = elixhauser_ahrq2023`
     * `method = elixhauser_ahrq2024`
     * `method = elixhauser_ahrq2025`
+    * `method = elixhauser_ahrq2026`
     * `method = elixhauser_ahrq_icd10`
 
 ```{r}
