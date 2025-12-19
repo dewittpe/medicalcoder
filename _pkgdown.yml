@@ -16,6 +16,8 @@ navbar:
           href: articles/elixhauser.html
         - text: Pediatric Complex Chronic Conditions
           href: articles/pccc.html
+        - text: Simularities and Differences
+          href: articles/condition-similarities.html
         - text: -------
         - text: ICD Codes
         - text: ICD Utilities
