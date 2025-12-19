@@ -11,7 +11,7 @@ elixhauser <- comorbidities(
   icdv.var    = "icdv",
   icd.codes   = "code",
   dx.var      = "dx",
-  method      = "elixhauser_ahrq2025",
+  method      = "elixhauser_ahrq_icd10",
   flag.method = "current",
   poa         = 1,
   primarydx   = 0
@@ -138,7 +138,7 @@ elixhauser_zero <- comorbidities(
   icdv.var    = "icdv",
   icd.codes   = "code",
   dx.var      = "dx",
-  method      = "elixhauser_ahrq2025",
+  method      = "elixhauser_ahrq_icd10",
   flag.method = "current",
   poa         = 1L,
   primarydx   = 0L
