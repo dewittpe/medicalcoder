@@ -1,0 +1,121 @@
+---
+title: "medicalcoder"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{medicalcoder}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(medicalcoder)
+```
+
+## Quick start
+
+The essentials for first-time users:
+
+* Input must be **long**: one ICD code per row.
+* Required columns for `comorbidities()`:
+  - `id.vars`: one or more IDs (e.g., `patid`, `encounter`).
+  - `icd.codes`: column with the ICD code (full or compact).
+  - `icdv`: 9/10 for ICD-9/10.
+  - `dx`: 1 = diagnosis, 0 = procedure.
+* Present-on-admission (POA): either a single value (`poa = 0/1`) or a column (`poa.var`).
+* Primary diagnosis: excluded by default (`primarydx = 0`); include via `primarydx = 1` or `primarydx.var`.
+
+### Minimal Elixhauser (AHRQ 2026, ICD-10)
+
+Use the bundled `mdcr` data in long format.
+
+```{r elixhauser}
+data(mdcr, package = "medicalcoder")
+
+elix_sample <-
+  comorbidities(
+    data      = mdcr,
+    id.vars   = "patid",
+    icd.codes = "code",
+    icdv.var  = "icdv",
+    dx.var    = "dx",
+    poa       = 1,             # treat all codes as present on admission
+    primarydx = 0,             # exclude primary diagnosis codes
+    method    = "elixhauser_ahrq2026"
+  )
+
+head(elix_sample[, c("patid", "cmrb_flag", "mortality_index", "readmission_index")])
+```
+
+### Charlson (Quan 2005)
+
+```{r charlson}
+charlson_sample <-
+  comorbidities(
+    data      = mdcr,
+    id.vars   = "patid",
+    icd.codes = "code",
+    icdv.var  = "icdv",
+    dx.var    = "dx",
+    poa       = 0,             # POA not required for Charlson
+    primarydx = 0,
+    method    = "charlson_quan2005"
+  )
+
+head(charlson_sample[, c("patid", "cmrb_flag", "cci")])
+```
+
+### Pediatric Complex Chronic Conditions (PCCC v3.1)
+
+Flag PCCC conditions and subconditions.
+
+```{r pccc}
+pccc_sample <-
+  comorbidities(
+    data          = mdcr,
+    id.vars       = "patid",
+    icd.codes     = "code",
+    dx.var        = "dx",
+    icdv.var      = "icdv",
+    poa           = 1,
+    method        = "pccc_v3.1",
+    subconditions = TRUE
+  )
+
+names(pccc_sample)[1:10]
+```
+
+## Longitudinal flagging
+
+Use `flag.method = "cumulative"` with at least two `id.vars` (e.g., patient + encounter). The first occurrence of a condition is carried forward to later encounters.
+
+```{r cumulative}
+data(mdcr_longitudinal, package = "medicalcoder")
+
+cum_args <- list(
+  data        = mdcr_longitudinal,
+  id.vars     = c("patid", "enc"),
+  icd.codes   = "code",
+  icdv.var    = "icdv",
+  dx.var      = "dx",
+  primarydx   = 0,
+  method      = "charlson_quan2011",
+  flag.method = "cumulative"
+)
+
+charlson_cum <- do.call(comorbidities, c(cum_args, list(poa = 1)))
+
+charlson_cum[charlson_cum$patid == charlson_cum$patid[1], c("patid", "enc", "cmrb_flag")]
+```
+
+## What next?
+
+* For method-specific details, see the vignettes: `charlson`, `elixhauser`, `pccc`, and `comorbidities`.
+* For ICD utilities, see the `icd` vignette.
+* For performance tips, see the benchmarking directory in the repo.

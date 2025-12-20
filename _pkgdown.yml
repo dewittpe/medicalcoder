@@ -7,6 +7,9 @@ navbar:
     articles:
       text: Articles
       menu:
+        - text: Get Started
+          href: articles/medicalcoder.html
+        - text: -------
         - text: Comorbidities
         - text: Overview
           href: articles/comorbidities.html
