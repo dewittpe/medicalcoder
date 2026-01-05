@@ -125,7 +125,7 @@ mimiciv_composite <-
 mimiciv_composite <-
   ggpubr::annotate_figure(
     mimiciv_composite,
-    top = ggpubr::text_grob(sprintf("Benmarks for 'MIMIC-IV Demo' Data with medicalcoder version %s", packageVersion("medicalcoder")))
+    top = ggpubr::text_grob(sprintf("Benchmarks for 'MIMIC-IV Demo' Data with medicalcoder version %s", packageVersion("medicalcoder")))
   )
 
 all_cmrb_composite <-
@@ -139,21 +139,21 @@ all_cmrb_composite <-
 all_cmrb_composite <-
   ggpubr::annotate_figure(
     all_cmrb_composite,
-    top = ggpubr::text_grob(sprintf("Benmarks for 'All Comorbidities' Data with medicalcoder version %s", packageVersion("medicalcoder")))
+    top = ggpubr::text_grob(sprintf("Benchmarks for 'All Comorbidities' Data with medicalcoder version %s", packageVersion("medicalcoder")))
   )
 
 for(x in c("mimiciv_composite", "all_cmrb_composite")) {
-  f <- sprintf("benchmark_%s_composite.pdf", x)
+  f <- sprintf("benchmark_%s.pdf", x)
   pdf(file = f, width = 12, height = 9)
     print(get(x = x))
   dev.off()
 
-  f <- sprintf("benchmark_%s_composite.png", x)
+  f <- sprintf("benchmark_%s.png", x)
   png(file = f, width = 12, height = 9)
     print(get(x = x))
   dev.off()
 
-  f <- sprintf("benchmark_%s_composite.svg", x)
+  f <- sprintf("benchmark_%s.svg", x)
   svglite::svglite(filename = f, width = 12, height = 9)
     print(get(x = x))
   dev.off()
