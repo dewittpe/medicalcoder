@@ -16,6 +16,8 @@ navbar:
           href: articles/elixhauser.html
         - text: Pediatric Complex Chronic Conditions
           href: articles/pccc.html
+        - text: Transition From The pccc Package to The medicalcoder Package
+          href: articles/transition-pccc-to-medicalcoder.html
         - text: -------
         - text: ICD Codes
         - text: ICD Utilities
