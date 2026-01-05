@@ -45,12 +45,12 @@ In the following examples, each generated data set was benchmark by
 
 The following summary is based on resampling the [MIMIC-IV Clinical Database
 Demo](https://physionet.org/content/mimic-iv-demo/2.2/) data set provided by
-PhysioNet.^1,2^ Using the MIMIC-IV Clinical Database Demo set will allow others to benchmark
+PhysioNet.[^1][^2] Using the MIMIC-IV Clinical Database Demo set will allow others to benchmark
 `medicalcoder` on their system with the same data as used here.
 
-[^1^] Johnson, A., Bulgarelli, L., Pollard, T., Horng, S., Celi, L. A., & Mark, R. (2023). MIMIC-IV Clinical Database Demo (version 2.2). PhysioNet. RRID:SCR_007345. https://doi.org/10.13026/dp1f-ex47
+[^1]: Johnson, A., Bulgarelli, L., Pollard, T., Horng, S., Celi, L. A., & Mark, R. (2023). MIMIC-IV Clinical Database Demo (version 2.2). PhysioNet. RRID:SCR_007345. https://doi.org/10.13026/dp1f-ex47
 
-[^2^] Goldberger, A., Amaral, L., Glass, L., Hausdorff, J., Ivanov, P. C., Mark, R., ... & Stanley, H. E. (2000). PhysioBank, PhysioToolkit, and PhysioNet: Components of a new research resource for complex physiologic signals. Circulation [Online]. 101 (23), pp. e215–e220. RRID:SCR_007345.
+[^2]: Goldberger, A., Amaral, L., Glass, L., Hausdorff, J., Ivanov, P. C., Mark, R., ... & Stanley, H. E. (2000). PhysioBank, PhysioToolkit, and PhysioNet: Components of a new research resource for complex physiologic signals. Circulation [Online]. 101 (23), pp. e215–e220. RRID:SCR_007345.
 
 The MIMIC-IV demo data consists of
 100 subjects and a total of
