@@ -29,4 +29,4 @@ Suggests:
 RoxygenNote: 7.3.3
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
-Config/Needs/website: pkgdown, comorbidity, icdcomorbid, multimorbidity, dplyr, odbc, DBI, RSQLite
+Config/Needs/website: pkgdown, comorbidity, icdcomorbid, multimorbidity, dplyr, odbc, DBI, RSQLite, pccc
