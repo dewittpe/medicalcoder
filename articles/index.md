@@ -18,3 +18,5 @@
   multimorbidity](http://www.peteredewitt.com/medicalcoder/articles/medicalcoder-vs-multimorbidity.md):
 - [Pediatric Complex Chronic
   Conditions](http://www.peteredewitt.com/medicalcoder/articles/pccc.md):
+- [Transition From The pccc Package to the medicalcoder
+  Package](http://www.peteredewitt.com/medicalcoder/articles/transition-pccc-to-medicalcoder.md):
