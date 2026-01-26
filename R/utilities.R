@@ -84,7 +84,7 @@ mdcr_select <- function(x, cols) {
     return(x)
   }
 
-  #  # By makeing sure that cols is a character vector the `with = FALSE` is not
+  #  # By making sure that cols is a character vector the `with = FALSE` is not
   #  # needed for data.tables which will allow for a simple call.  This is
   #  # important because `[.data.frame` will error if `with = FALSE` is passed.
   #  # `[.data.table` does not need `with = FALSE` if `j` is a character vector.
