@@ -3978,7 +3978,7 @@ encounters 2, 4, and 6.</p>
 <p>The constructed data and permutations are:</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">permutations</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span></span>
+<span>  <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/data.table.html" class="external-link">data.table</a></span><span class="op">(</span></span>
 <span>    permutation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, each <span class="op">=</span> <span class="fl">7</span><span class="op">)</span>,</span>
 <span>    encounter_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">7</span>, times <span class="op">=</span> <span class="fl">6</span><span class="op">)</span>,</span>
 <span>    code <span class="op">=</span></span>
@@ -10958,7 +10958,7 @@ device and technology use, and 2) other metabolic disorders.</p>
 <span></span>
 <span><span class="co"># which encounters flag for the subconditions?</span></span>
 <span><span class="va">scnd</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/melt.data.table.html" class="external-link">melt</a></span><span class="op">(</span></span>
+<span>  <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/melt.data.table.html" class="external-link">melt</a></span><span class="op">(</span></span>
 <span>    <span class="va">rslts</span><span class="op">$</span><span class="va">subconditions</span><span class="op">$</span><span class="va">metabolic</span>,</span>
 <span>    id.vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plabel"</span>, <span class="st">"encounter_id"</span><span class="op">)</span>,</span>
 <span>    measure.vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"device_and_technology_use"</span>, <span class="st">"other_metabolic_disorders"</span><span class="op">)</span>,</span>
@@ -10974,7 +10974,7 @@ device and technology use, and 2) other metabolic disorders.</p>
 <span>  <span class="op">]</span></span>
 <span></span>
 <span><span class="va">scnd</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/dcast.data.table.html" class="external-link">dcast</a></span><span class="op">(</span></span>
+<span>  <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/dcast.data.table.html" class="external-link">dcast</a></span><span class="op">(</span></span>
 <span>    <span class="va">scnd</span>,</span>
 <span>    <span class="va">plabel</span> <span class="op">~</span> <span class="va">subcondition</span>,</span>
 <span>    value.var <span class="op">=</span> <span class="st">"sencid"</span></span>

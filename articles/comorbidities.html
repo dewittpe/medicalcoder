@@ -95,19 +95,20 @@ implemented in the medicalcoder package:</p>
 <ol style="list-style-type: lower-roman">
 <li>
 <code>pccc_v2.0</code> is consistent with the older R package pccc
-(v1.0.6) <span class="citation">(DeWitt, Feinstein, and Russell
-2025)</span>.</li>
+(v1.0.7) <span class="citation">(James A. Feinstein et al. 2018; DeWitt,
+Feinstein, and Russell 2026)</span>.</li>
 <li>
 <code>pccc_v2.1</code> modifies the set of ICD codes to be more
 consistent with documentation and other implementations of v2.0.</li>
 </ol>
 </li>
-<li>Version 3.0 <span class="citation">(Feinstein et al. 2024)</span>
+<li>Version 3.0 <span class="citation">(James A. Feinstein et al.
+2024)</span>
 <ol style="list-style-type: lower-roman">
 <li>
 <code>pccc_v3.0</code> is consistent with the SAS software published
 on the <a href="https://www.childrenshospitals.org/content/analytics/toolkit/complex-chronic-conditions" class="external-link">Children’s
-Hospital Association</a> website in conjunction with <span class="citation">Feinstein et al. (2024)</span>.</li>
+Hospital Association</a> website in conjunction with <span class="citation">James A. Feinstein et al. (2024)</span>.</li>
 <li>
 <code>pccc_v3.1</code> modifies the set of ICD codes to be more
 consistent with documentation.</li>
@@ -1295,10 +1296,10 @@ HIV.</p>
 <span>                   <span class="va">condition</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"aids"</span>, <span class="st">"hiv"</span><span class="op">)</span> <span class="op">&amp;</span></span>
 <span>                   <span class="va">charlson_cdmf2019</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span>,</span>
 <span>        by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"icdv"</span>, <span class="st">"dx"</span>, <span class="st">"code"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/setDT.html" class="external-link">setDT</a></span><span class="op">(</span><span class="va">cdmf_eg</span><span class="op">)</span></span>
+<span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/setDT.html" class="external-link">setDT</a></span><span class="op">(</span><span class="va">cdmf_eg</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">cdmf_eg</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/dcast.data.table.html" class="external-link">dcast</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">cdmf_eg</span>,</span>
+<span>  <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/dcast.data.table.html" class="external-link">dcast</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">cdmf_eg</span>,</span>
 <span>                    <span class="va">patid</span> <span class="op">~</span> <span class="va">condition</span>,</span>
 <span>                    value.var <span class="op">=</span> <span class="st">"charlson_cdmf2019"</span>,</span>
 <span>                    fun.aggregate <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span><span class="op">}</span><span class="op">)</span></span>
@@ -1323,7 +1324,7 @@ result.</p>
 <span>                flag.method <span class="op">=</span> <span class="st">"current"</span>,</span>
 <span>                primarydx <span class="op">=</span> <span class="fl">0L</span>,</span>
 <span>                poa <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></span>
-<span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/setDT.html" class="external-link">setDT</a></span><span class="op">(</span><span class="va">cmdf_mdcr</span><span class="op">)</span></span>
+<span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/setDT.html" class="external-link">setDT</a></span><span class="op">(</span><span class="va">cmdf_mdcr</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">cmdf_mdcr</span><span class="op">[</span>, <span class="va">.N</span>, keyby <span class="op">=</span> <span class="fu">.</span><span class="op">(</span><span class="va">hiv</span>, <span class="va">aids</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">## Key: &lt;hiv, aids&gt;</span></span>
@@ -1340,8 +1341,8 @@ result.</p>
 <!--                              End of File                                -->
 <!------------------------------------------------------------------------- -->
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
-<div id="ref-dewitt2025pccc" class="csl-entry">
-DeWitt, Peter, James Feinstein, and Seth Russell. 2025. <em>Pccc:
+<div id="ref-dewitt2026pccc" class="csl-entry">
+DeWitt, Peter, James Feinstein, and Seth Russell. 2026. <em>Pccc:
 Pediatric Complex Chronic Conditions</em>. <a href="https://github.com/CUD2V/pccc" class="external-link">https://github.com/CUD2V/pccc</a>.
 </div>
 <div id="ref-deyo1992adapting" class="csl-entry">
@@ -1359,6 +1360,12 @@ Data.”</span> <em>Medical Care</em> 36 (1): 8–27. <a href="https://doi.org/1
 Feinstein, James A, Matt Hall, Amber Davidson, and Chris Feudtner. 2024.
 <span>“Pediatric Complex Chronic Condition System Version 3.”</span>
 <em>JAMA Network Open</em> 7 (7): e2420579–79. <a href="https://doi.org/10.1001/jamanetworkopen.2024.20579" class="external-link">https://doi.org/10.1001/jamanetworkopen.2024.20579</a>.
+</div>
+<div id="ref-feinstein2018pccc" class="csl-entry">
+Feinstein, James A., Seth Russell, Peter E. DeWitt, Chris Feudtner,
+Dingwei Dai, and Tellen D. Bennett. 2018. <span>“R Package for Pediatric
+Complex Chronic Condition Classification.”</span> <em>JAMA
+Pediatrics</em> 172 (6): 596–98. <a href="https://doi.org/10.1001/jamapediatrics.2018.0256" class="external-link">https://doi.org/10.1001/jamapediatrics.2018.0256</a>.
 </div>
 <div id="ref-feudtner2014pediatric" class="csl-entry">
 Feudtner, Chris, James A Feinstein, Wenjun Zhong, Matt Hall, and Dingwei

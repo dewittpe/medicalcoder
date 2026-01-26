@@ -2,11 +2,11 @@
 
 ## Introduction
 
-The R package [pccc](https://cran.r-project.org/package=pccc) (Feinstein
-et al. 2024; DeWitt, Feinstein, and Russell 2025) was published to
-support version 2 of the Pediatric Complex Chronic Conditions (PCCC)
-(Feudtner et al. 2014). This document is provided to help users of pccc
-to transition to medicalcoder.
+The R package [pccc](https://cran.r-project.org/package=pccc) (James A.
+Feinstein et al. 2018; DeWitt, Feinstein, and Russell 2026) was
+published to support version 2 of the Pediatric Complex Chronic
+Conditions (PCCC) (Feudtner et al. 2014). This document is provided to
+help users of pccc to transition to medicalcoder.
 
 Major differences between
 [`pccc::ccc()`](https://rdrr.io/pkg/pccc/man/ccc.html) and
@@ -71,13 +71,13 @@ Major differences between
 
   - `pccc_v2.0`: consistent results with
     [`pccc::ccc()`](https://rdrr.io/pkg/pccc/man/ccc.html) for pccc
-    version 1.0.6.
+    version 1.0.7.
 
   - `pccc_v2.1`: improved mappings of ICD codes to PCCC using the PCCC
     v2 scoring algorithm.
 
   - `pccc_v3.0`: consistent with SAS code published with PCCC version 3
-    (Feinstein et al. 2024).
+    (James A. Feinstein et al. 2024).
 
   - `pccc_v3.1`: extended set of ICD code to condition mappings.
 
@@ -108,7 +108,7 @@ Major differences between
 ``` r
 library(pccc)
 packageVersion("pccc")
-## [1] '1.0.6'
+## [1] '1.0.7'
 library(medicalcoder)
 ```
 
@@ -364,7 +364,7 @@ The `misc` column is the “miscellaneous” category reported by
 and is not reported by
 [`pccc::ccc()`](https://rdrr.io/pkg/pccc/man/ccc.html). The existence of
 the `misc` column and some differences in the returned results between
-[`pccc::ccc()`](https://rdrr.io/pkg/pccc/man/ccc.html) version 1.0.6,
+[`pccc::ccc()`](https://rdrr.io/pkg/pccc/man/ccc.html) version 1.0.7,
 and
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
 is due to how medicalcoder is implemented.
@@ -449,15 +449,15 @@ medicalcoder_dt_time <- difftime(toc, tic, units = "secs")
 
 ``` r
 pccc_ccc_tbl_time
-## Time difference of 8.832043 secs
+## Time difference of 9.878002 secs
 pccc_ccc_dt_time
-## Time difference of 7.528091 secs
+## Time difference of 7.44308 secs
 medicalcoder_df_time
-## Time difference of 0.865835 secs
+## Time difference of 0.6046948 secs
 medicalcoder_tbl_time
-## Time difference of 0.3059685 secs
+## Time difference of 0.3259645 secs
 medicalcoder_dt_time
-## Time difference of 0.3336756 secs
+## Time difference of 0.5021324 secs
 ```
 
 ### Summary of results
@@ -612,13 +612,18 @@ article](https://www.peteredewitt.com/medicalcoder/articles/pccc.html#pccc-versi
 
 ## References
 
-DeWitt, Peter, James Feinstein, and Seth Russell. 2025. *Pccc: Pediatric
+DeWitt, Peter, James Feinstein, and Seth Russell. 2026. *Pccc: Pediatric
 Complex Chronic Conditions*. <https://github.com/CUD2V/pccc>.
 
 Feinstein, James A, Matt Hall, Amber Davidson, and Chris Feudtner. 2024.
 “Pediatric Complex Chronic Condition System Version 3.” *JAMA Network
 Open* 7 (7): e2420579–79.
 <https://doi.org/10.1001/jamanetworkopen.2024.20579>.
+
+Feinstein, James A., Seth Russell, Peter E. DeWitt, Chris Feudtner,
+Dingwei Dai, and Tellen D. Bennett. 2018. “R Package for Pediatric
+Complex Chronic Condition Classification.” *JAMA Pediatrics* 172 (6):
+596–98. <https://doi.org/10.1001/jamapediatrics.2018.0256>.
 
 Feudtner, Chris, James A Feinstein, Wenjun Zhong, Matt Hall, and Dingwei
 Dai. 2014. “Pediatric Complex Chronic Conditions Classification System

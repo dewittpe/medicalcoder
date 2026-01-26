@@ -14,15 +14,17 @@ implemented in the medicalcoder package:
 1.  Pediatric Complex Chronic Condition System (PCCC)
     1.  Version 2.0 (Feudtner et al. 2014)
         1.  `pccc_v2.0` is consistent with the older R package pccc
-            (v1.0.6) (DeWitt, Feinstein, and Russell 2025).
+            (v1.0.7) (James A. Feinstein et al. 2018; DeWitt, Feinstein,
+            and Russell 2026).
         2.  `pccc_v2.1` modifies the set of ICD codes to be more
             consistent with documentation and other implementations of
             v2.0.
-    2.  Version 3.0 (Feinstein et al. 2024)
+    2.  Version 3.0 (James A. Feinstein et al. 2024)
         1.  `pccc_v3.0` is consistent with the SAS software published on
             the [Children’s Hospital
             Association](https://www.childrenshospitals.org/content/analytics/toolkit/complex-chronic-conditions)
-            website in conjunction with Feinstein et al. (2024).
+            website in conjunction with James A. Feinstein et al.
+            (2024).
         2.  `pccc_v3.1` modifies the set of ICD codes to be more
             consistent with documentation.
 2.  Charlson
@@ -349,7 +351,7 @@ cmdf_mdcr[, .N, keyby = .(hiv, aids)]
 
 ## References
 
-DeWitt, Peter, James Feinstein, and Seth Russell. 2025. *Pccc: Pediatric
+DeWitt, Peter, James Feinstein, and Seth Russell. 2026. *Pccc: Pediatric
 Complex Chronic Conditions*. <https://github.com/CUD2V/pccc>.
 
 Deyo, Richard A, Daniel C Cherkin, and Marcia A Ciol. 1992. “Adapting a
@@ -366,6 +368,11 @@ Feinstein, James A, Matt Hall, Amber Davidson, and Chris Feudtner. 2024.
 “Pediatric Complex Chronic Condition System Version 3.” *JAMA Network
 Open* 7 (7): e2420579–79.
 <https://doi.org/10.1001/jamanetworkopen.2024.20579>.
+
+Feinstein, James A., Seth Russell, Peter E. DeWitt, Chris Feudtner,
+Dingwei Dai, and Tellen D. Bennett. 2018. “R Package for Pediatric
+Complex Chronic Condition Classification.” *JAMA Pediatrics* 172 (6):
+596–98. <https://doi.org/10.1001/jamapediatrics.2018.0256>.
 
 Feudtner, Chris, James A Feinstein, Wenjun Zhong, Matt Hall, and Dingwei
 Dai. 2014. “Pediatric Complex Chronic Conditions Classification System

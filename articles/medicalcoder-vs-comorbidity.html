@@ -1859,12 +1859,12 @@ work we make some copies of the input data and set the copies to be
 <details><summary>
 Code (click to toggle view/fold)
 </summary><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mdcrDT</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">mdcr</span><span class="op">)</span></span>
-<span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/setDT.html" class="external-link">setDT</a></span><span class="op">(</span><span class="va">mdcrDT</span><span class="op">)</span></span>
-<span><span class="va">mdcr_icd9dxDT</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">mdcr_icd9dx</span><span class="op">)</span></span>
-<span><span class="va">mdcr_icd10dxDT</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">mdcr_icd10dx</span><span class="op">)</span></span>
-<span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/setDT.html" class="external-link">setDT</a></span><span class="op">(</span><span class="va">mdcr_icd9dxDT</span><span class="op">)</span></span>
-<span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/setDT.html" class="external-link">setDT</a></span><span class="op">(</span><span class="va">mdcr_icd10dxDT</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mdcrDT</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">mdcr</span><span class="op">)</span></span>
+<span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/setDT.html" class="external-link">setDT</a></span><span class="op">(</span><span class="va">mdcrDT</span><span class="op">)</span></span>
+<span><span class="va">mdcr_icd9dxDT</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">mdcr_icd9dx</span><span class="op">)</span></span>
+<span><span class="va">mdcr_icd10dxDT</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">mdcr_icd10dx</span><span class="op">)</span></span>
+<span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/setDT.html" class="external-link">setDT</a></span><span class="op">(</span><span class="va">mdcr_icd9dxDT</span><span class="op">)</span></span>
+<span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/setDT.html" class="external-link">setDT</a></span><span class="op">(</span><span class="va">mdcr_icd10dxDT</span><span class="op">)</span></span></code></pre></div>
 </details><p>Next we define four functions to simplify calling the code multiple
 times.</p>
 <details><summary>
@@ -2060,22 +2060,22 @@ Max.
 medicalcoder_times_DT
 </td>
 <td style="text-align:right;">
-0.077
+0.098
 </td>
 <td style="text-align:right;">
-0.122
+0.123
 </td>
 <td style="text-align:right;">
-0.124
+0.127
 </td>
 <td style="text-align:right;">
-0.133
+0.143
 </td>
 <td style="text-align:right;">
-0.133
+0.153
 </td>
 <td style="text-align:right;">
-0.280
+0.315
 </td>
 </tr>
 <tr>
@@ -2083,22 +2083,22 @@ medicalcoder_times_DT
 medicalcoder_times
 </td>
 <td style="text-align:right;">
-0.373
+0.343
 </td>
 <td style="text-align:right;">
-0.383
+0.379
+</td>
+<td style="text-align:right;">
+0.381
+</td>
+<td style="text-align:right;">
+0.394
 </td>
 <td style="text-align:right;">
 0.386
 </td>
 <td style="text-align:right;">
-0.411
-</td>
-<td style="text-align:right;">
-0.401
-</td>
-<td style="text-align:right;">
-0.556
+0.517
 </td>
 </tr>
 <tr>
@@ -2106,22 +2106,22 @@ medicalcoder_times
 comorbidity_times_DT
 </td>
 <td style="text-align:right;">
-1.555
+1.575
 </td>
 <td style="text-align:right;">
-1.596
+1.599
 </td>
 <td style="text-align:right;">
-1.628
+1.635
 </td>
 <td style="text-align:right;">
-1.641
+1.647
 </td>
 <td style="text-align:right;">
-1.674
+1.685
 </td>
 <td style="text-align:right;">
-1.765
+1.792
 </td>
 </tr>
 <tr>
@@ -2129,22 +2129,22 @@ comorbidity_times_DT
 comorbidity_times
 </td>
 <td style="text-align:right;">
-1.535
+1.504
 </td>
 <td style="text-align:right;">
-1.589
+1.596
 </td>
 <td style="text-align:right;">
-1.623
+1.631
 </td>
 <td style="text-align:right;">
-1.627
+1.634
 </td>
 <td style="text-align:right;">
-1.652
+1.658
 </td>
 <td style="text-align:right;">
-1.736
+1.785
 </td>
 </tr>
 </tbody>
