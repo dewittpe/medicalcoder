@@ -1,20 +1,20 @@
 ################################################################################
 # file: pccc/pccc_v2.0.R
 #
-# purpose: Recreate the pccc 1.0.6 classification outputs using database joins
+# purpose: Recreate the pccc 1.0.7 classification outputs using database joins
 #          for reproducibility.
 #
 # inputs:
 #   ../icd/icd_codes.rds
 #   ./pccc_v2_subconditions.rds
-#   pccc package version 1.0.6 installed
+#   pccc package version 1.0.7 installed
 #
 # output: pccc_v2.0.rds
 #
 # deps: data.table, pccc
 #
 # notes:
-#   Validates reproduction of the original pccc 1.0.6 behaviour before applying
+#   Validates reproduction of the original pccc 1.0.7 behaviour before applying
 #     v2.1 enhancements.
 #
 # idempotent: yes (deterministic given fixed package version)
@@ -23,11 +23,11 @@
 ################################################################################
 # file: pccc_v2.0.R
 #
-# Generate a code set that will perfectly reproduce the results from pccc_1.0.6
+# Generate a code set that will perfectly reproduce the results from pccc_1.0.7
 #
 library(data.table)
 library(pccc)
-stopifnot(packageVersion("pccc") == "1.0.6")
+stopifnot(packageVersion("pccc") == "1.0.7")
 
 icd_codes <- readRDS("../icd/icd_codes.rds")
 setDT(icd_codes)
@@ -37,7 +37,7 @@ set(icd_codes, j = "subchap_id", value = NULL)
 subconditions <- readRDS("pccc_v2_subconditions.rds")
 setDT(subconditions)
 
-# pccc_1.0.6 requires the input to be in a wide format and can only apply logic
+# pccc_1.0.7 requires the input to be in a wide format and can only apply logic
 # for ICD-9 or ICD-10 in one call.  Split the codes into the four sets ICD-9-CM,
 # ICD-9-PCS, ICD-10-CM, and ICD-10-PCS.  Apply pccc::ccc to each and bind the
 # results so we know when ICD codes map to which conditions.
@@ -135,7 +135,7 @@ pccc_v2.0 <-
 # implanted in R as metabolic (transplant).  One major issue with this error is
 # that there are no codes for metabolic (transplant). It doesn't make sense to
 # retain this error so, method=pccc_v2.0 will differ from the R package
-# pccc_1.0.6 for this code.
+# pccc_1.0.7 for this code.
 
 # ICD-9-CM 253.9
 #
@@ -159,7 +159,7 @@ pccc_v2.0 <-
 # 3:     9     1     253.9   2539 cm_pcs             1997           2015                                                                Unspecified       1997     2009
 # 4:     9     1     253.9   2539 cm_pcs             1997           2015   Unspecified disorder of the pituitary gland and its hypothalamic control       2010     2015
 #
-# For the objective of having pccc_v2.0 reproducing pccc_1.0.6 then keep what
+# For the objective of having pccc_v2.0 reproducing pccc_1.0.7 then keep what
 # appears to be an error, 2539 mapping to metabolic.  For pccc_v2.1 map the
 # 235.9 and 253.9 as will be done in V3.
 pccc_v2.0[full_code == "253.9", subcondition := "endocrine disorders"]
@@ -224,9 +224,9 @@ pccc_v2.0[full_code == "416.0", subcondition := "chronic respiratory diseases"]
 # along with 56.71 and 56.79.  The docx lists 56.72, 56.73, 56.74, 56.75 under
 # renal (device).  56.7[1-5,9] is the complete set of codes.  listing of 56.7
 # for renal (other) appears to be too much.  It is also inconsistent with v3
-# docs and the implimentation of pccc_1.0.6.  Omit this header code from v2.1
+# docs and the implimentation of pccc_1.0.7.  Omit this header code from v2.1
 #
-# from pccc_1.0.6 src/pccc.cpp:
+# from pccc_1.0.7 src/pccc.cpp:
 #   renal: "5671","5672","5673","5674","5675","5679"  >>>> Set to renal (other)
 #    tech:  5672","5673","5674","5675"                >>>> Set to renal (device and technology use)
 #

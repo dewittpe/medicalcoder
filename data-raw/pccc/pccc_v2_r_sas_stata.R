@@ -5,7 +5,7 @@
 #          implementations for comparison.
 #
 # inputs:
-#   ./pccc_v2/pccc_1.0.6.tar.gz (source package archive)
+#   ./pccc_v2/pccc_1.0.7.tar.gz (source package archive)
 #
 # output: pccc_v2_r_sas_stata.rds
 #
@@ -36,8 +36,8 @@ library(pbapply)
 # Extract the codes from the latest version of the pccc package before starting
 # a massive redesign for version 3 of pccc.
 # R codes in 1.0.4 and 1.0.5 are the same
-# R codes in 1.0.6 have been extended.
-untar(tarfile = "./pccc_v2/pccc_1.0.6.tar.gz", exdir = tempdir())
+# R codes in 1.0.7 have been extended.
+untar(tarfile = "./pccc_v2/pccc_1.0.7.tar.gz", exdir = tempdir())
 
 sas_codes <- scan(file = paste0(tempdir(), "/pccc/inst/pccc_references/ccc_version2_sas.sas"),
                   what = "character",
@@ -336,7 +336,7 @@ saveRDS(rss_codes, "pccc_v2_r_sas_stata.rds")
 #####  ## Typeos to fix
 #####  #
 #####  # ICD-10 dx code M4330 is not a valid code, M433 is a valid code.  This was
-#####  # fixed in the old R package between v1.0.5 and v1.0.6.  It needs to be fixed in
+#####  # fixed in the old R package between v1.0.5 and v1.0.7.  It needs to be fixed in
 #####  # the sas and stata code
 #####  if (interactive()) {
 #####    rss_codes[grepl("^M433", code)]

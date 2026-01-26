@@ -37,7 +37,7 @@ implemented in the medicalcoder package:
 
 1. Pediatric Complex Chronic Condition System (PCCC)
    a. Version 2.0 [@feudtner2014pediatric]
-       i. `pccc_v2.0` is consistent with the older R package pccc (v1.0.6) [@dewitt2025pccc].
+       i. `pccc_v2.0` is consistent with the older R package pccc (v1.0.7) [@feinstein2018pccc;@dewitt2026pccc].
        ii. `pccc_v2.1` modifies the set of ICD codes to be more consistent with documentation and other implementations of v2.0.
 
    b. Version 3.0 [@feinstein2024pediatric]

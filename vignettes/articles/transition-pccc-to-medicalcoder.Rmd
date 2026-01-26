@@ -25,7 +25,7 @@ knitr::opts_chunk$set(collapse = TRUE, fig.align = "center")
 # Introduction
 
 The R package [pccc](https://cran.r-project.org/package=pccc)
-[@feinstein2024pediatric;@dewitt2025pccc] was published to support version 2 of
+[@feinstein2018pccc;@dewitt2026pccc] was published to support version 2 of
 the Pediatric Complex Chronic Conditions (PCCC) [@feudtner2014pediatric].  This
 document is provided to help users of pccc to transition to medicalcoder.
 
@@ -83,7 +83,7 @@ Major differences between `pccc::ccc()` and `medicalcoder::comorbidities()`:
 
   * `medicalcoder::comorbidities()` impliments:
 
-    * `pccc_v2.0`: consistent results with `pccc::ccc()` for pccc version 1.0.6.
+    * `pccc_v2.0`: consistent results with `pccc::ccc()` for pccc version 1.0.7.
     * `pccc_v2.1`: improved mappings of ICD codes to PCCC using the PCCC v2
       scoring algorithm.
     * `pccc_v3.0`: consistent with SAS code published with PCCC version 3
@@ -341,7 +341,7 @@ old_vs_new[, num_cmrb := NULL]
 The `misc` column is the "miscellaneous" category reported by
 `medicalcoder::comorbidities()` and is not reported by `pccc::ccc()`.  The
 existence of the `misc` column and some differences in the returned results
-between `pccc::ccc()` version 1.0.6, and `medicalcoder::comorbidities()` is due
+between `pccc::ccc()` version 1.0.7, and `medicalcoder::comorbidities()` is due
 to how medicalcoder is implemented.
 
 ```{r}
