@@ -25,7 +25,7 @@
 # file: pccc_v2.1.R
 #
 # Import the code ranges, conditions, and subconditions for pccc v2.  The source
-# file was the result of a copy and paste from Word to Excel to tab delim file.
+# file was the result of a copy and paste from Word to Excel to a tab-delimited file.
 #
 # Also import codes from other sources and build a dataset pccc_v2.1
 library(data.table)
@@ -170,7 +170,7 @@ if (interactive()) {
 # #  1867    9  0     02.42 0242 cm_pcs        1997      2015             1997           2015                       Replacement of ventricular shunt       1997     2015
 # #  1868    9  0     02.43 0243 cm_pcs        1997      2015             1997           2015                           Removal of ventricular shunt       1997     2015
 #
-# With 02.43 being the _removal_ of the shunt, it seems to me that the kid had,
+# With 02.43 being the _removal_ of the shunt, it seems to me that the patient had,
 # but no longer has, the neuromusc condition and tech_dep.
 #
 # Remove the header code since not all subcodes are in.
@@ -227,7 +227,7 @@ if (interactive()) {
   v2ref[grepl("^358", code) & icdv == 9 & dx == 0]
   known_icd_codes[grepl("^358", code) & icdv == 9 & dx == 0]
 }
-# header with all asssignable
+# header with all assignable
 v2ref[code == "358" & icdv == 9 & dx == 0,
       `:=`(r = 0, sas = 0, stata = 0)]
 
@@ -342,7 +342,7 @@ v2ref <- v2ref[!(grepl("^528", code) & icdv == 9 & dx == 0 & r == -1 & sas == -1
 # along with 56.71 and 56.79.  The docx lists 56.72, 56.73, 56.74, 56.75 under
 # renal (device).  56.7[1-5,9] is the complete set of codes.  listing of 56.7
 # for renal (other) appears to be too much.  It is also inconsistent with v3
-# docs and the implimentation of pccc_1.0.7.  Omit this header code from v2.1
+# docs and the implementation of pccc_1.0.7.  Omit this header code from v2.1
 #
 # from pccc_1.0.7 src/pccc.cpp:
 #   renal: "5671","5672","5673","5674","5675","5679"  >>>> Set to renal (other)
@@ -363,7 +363,7 @@ v2ref <- v2ref[!(grepl("^567[2345]", code) & icdv == 9 & dx == 0 & grepl("other"
 
 # ICD-9-PCS 89.45
 # Not listed in the documentation, it is listed in the procedure codes for cvd
-# in the software and ad device
+# in the software and as device
 # Codes 89.4[6-9] are all CVD device and technology use
 # v2ref[grepl("^8945", code) & icdv == 9 & dx == 0]
 v2ref[grepl("^8945", code) & icdv == 9 & dx == 0,
@@ -383,7 +383,7 @@ v2ref <- v2ref[!(code %in% c("3592", "35924") & icdv == 9 & dx == 1)]
 # This code only appears in the documentation for v2.  It is not in any of the
 # software, and it is not in the documentation for v3.
 # 757.39 is for Other specified anomalies of skin, unlikely to be a correct
-# code.  It is worth notting that this is the only 757 code in v2
+# code.  It is worth noting that this is the only 757 code in v2
 # Omit it.
 if (interactive()) {
   known_icd_codes[grepl("^75739", code) & icdv == 9 & dx == 1]
@@ -448,7 +448,7 @@ v2ref[, tech_dep_flag := max(tech_dep_flag), by = .(icdv, dx, code)]
 v2ref[, transplant_flag := max(transplant_flag), by = .(icdv, dx, code)]
 
 # Codes which are device and tech in misc should only be retained if not in
-# another conidtion.  same for transplant.
+# another condition. Same for transplant.
 non_misc_tech <- v2ref[condition != "misc" & subcondition == "device and technology use"]
 non_misc_tran <- v2ref[condition != "misc" & subcondition == "transplantation"]
 
@@ -473,7 +473,7 @@ v2ref <-
 v2ref[code == "2359" & condition == "metabolic", `:=`(code = "2539", full_code = "253.9")]
 
 # ICD-9-CM 331 is a header code that can/should be part of this set.  Also,
-# 331.0 was missing from the docs, but the 331 in the souce code for the
+# 331.0 was missing from the docs, but the 331 in the source code for the
 # software flagged it.  331.1 also needs to be here as it was assignable and
 # then became a header.
 #
@@ -523,12 +523,12 @@ v2ref <- v2ref[!(code %in% c("V4585", "V5391") & condition == "misc")]
 v2ref[code %in% c("V4585", "V5391"), transplant_flag := 0L]
 
 # ICD-9-CM 277 is a header listed in the documentation for respiratory
-# (cystic_fibrosis).  However, that is not how it is implimented.  Some of 277
+# (cystic_fibrosis).  However, that is not how it is implemented.  Some of 277
 # maps to respiratory, some maps to metabolic.  Also, in the
 # documentation for v3 none of the 277 codes are duplicated.
-# FIX: drop 277 form v2ref
+# FIX: drop 277 from v2ref
 #
-# This issue, also requries 2771, 2773, 2777, and 2778 to be removed
+# This issue also requires 2771, 2773, 2777, and 2778 to be removed
 v2ref <- v2ref[!(code == "277" & dx == 1 & icdv == 9)]
 v2ref <- v2ref[!(code == "2771" & dx == 1 & icdv == 9)]
 v2ref <- v2ref[!(code == "2773" & dx == 1 & icdv == 9)]

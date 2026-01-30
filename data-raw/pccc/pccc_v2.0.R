@@ -224,7 +224,7 @@ pccc_v2.0[full_code == "416.0", subcondition := "chronic respiratory diseases"]
 # along with 56.71 and 56.79.  The docx lists 56.72, 56.73, 56.74, 56.75 under
 # renal (device).  56.7[1-5,9] is the complete set of codes.  listing of 56.7
 # for renal (other) appears to be too much.  It is also inconsistent with v3
-# docs and the implimentation of pccc_1.0.7.  Omit this header code from v2.1
+# docs and the implementation of pccc_1.0.7.  Omit this header code from v2.1
 #
 # from pccc_1.0.7 src/pccc.cpp:
 #   renal: "5671","5672","5673","5674","5675","5679"  >>>> Set to renal (other)

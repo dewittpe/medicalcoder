@@ -752,7 +752,7 @@ saveRDS(rss_codes, "pccc_v2_r_sas_stata.rds")
 #####
 #####  # ICD-10-CM T82.121A
 #####  # In R and SAS, missing in Stata
-#####  # In V2 docx for cvd adn tech_dep
+#####  # In V2 docx for cvd and tech_dep
 #####  # update stata flag
 #####  if (interactive()) {
 #####    rss_codes[grepl("^T8212", code)]

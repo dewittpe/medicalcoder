@@ -164,11 +164,11 @@ subconditions[orig_code == "Z93.1-Z93.4",     pattern := "^Z93[1-4]"]
 subconditions[orig_code == "Z93.50-Z93.52",   pattern := "^Z935[0-2]"]
 subconditions[orig_code == "Z95.810-Z95.812", pattern := "^Z9581[0-2]"]
 
-# There are typeos to fix.
+# There are typos to fix.
 #
-# ICD-9 code '6.88' is a miscellanceous; transplantation code.  This is not a
-# valid ICD code.  However, it appears that it is a typeo.  It is listed in the
-# set: "996.80, 6.88, 996.89."  That strongly suggests that the 6.88 is a typeo and
+# ICD-9 code '6.88' is a miscellaneous transplantation code.  This is not a
+# valid ICD code.  However, it appears that it is a typo.  It is listed in the
+# set: "996.80, 6.88, 996.89."  That strongly suggests that the 6.88 is a typo and
 # should be 996.88. Fix this by fixing the pattern to match codes on.
 if (interactive()) {
   subconditions[orig_code == "6.88"]
@@ -183,7 +183,7 @@ subconditions[orig_code == "P25.22", pattern := "^P252"]
 # M43.30 is not a valid ICD-10-CM code, M43.3 is.
 subconditions[orig_code == "M43.30", pattern := "^M433"]
 
-# ICD 277.4 was listed in the ICD-10 column but this is a ICD-9 code
+# ICD 277.4 was listed in the ICD-10 column but this is an ICD-9 code
 subconditions[orig_code == "277.4", `:=`(icdv = 9L, dx = 1L)]
 
 # ICD-10-CM G82.90
@@ -198,8 +198,8 @@ subconditions <- subconditions[orig_code != "428.83"]
 
 # ICD-9 "33.4" is listed as neuromuscular movement disease.
 # In the docx the code "33.4" is listed in the
-# set: "... 333.0, 333.2, 33.4, 333.5, ..." which suggests this could be a typeo
-# In the V3 documentation it is noted that this is a typeo
+# set: "... 333.0, 333.2, 33.4, 333.5, ..." which suggests this could be a typo
+# In the V3 documentation it is noted that this is a typo
 subconditions[orig_code == "33.4", `:=`(icdv = 9, dx = 1, pattern = "^3334")]
 
 # Find all the codes that match the patterns

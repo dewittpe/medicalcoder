@@ -148,7 +148,7 @@ charlson_index_scores <-
 ################################################################################
 # some sanity checks
 #
-# all the conditions in the codes are in the index scores and visa versa
+# all the conditions in the codes are in the index scores and vice versa
 stopifnot(all(charlson_index_scores$condition %in% charlson_codes$condition))
 stopifnot(all(charlson_codes$condition %in% charlson_index_scores$condition))
 

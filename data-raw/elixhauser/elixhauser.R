@@ -35,7 +35,7 @@ codes <-
   Reduce(function(x, y) { merge(x, y, all = TRUE, by = c("code_id", "condition")) },
          x = _)
 
-# setcolumn order
+# set column order
 codes <- codes[,
   c("code_id", "poaexempt", "condition",
   "ahrq_web",
@@ -44,8 +44,8 @@ codes <- codes[,
   sort(grep("ahrq\\d{4}", names(codes), value = TRUE)),
   "ahrq_icd10")]
 
-# Which conditions require a POA required flag?
-# isn't needed for the codes defined in Quan (2005).
+# Which conditions require a POA-required flag?
+# This isn't needed for the codes defined in Quan (2005).
 poa <- readRDS("./elixhauser_poa_ahrq_icd10.rds")
 
 ################################################################################

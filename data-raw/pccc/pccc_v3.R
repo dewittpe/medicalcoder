@@ -345,7 +345,7 @@ pccc_v3.1 <- unique(pccc_v3.1)
 
 # remove the non-misc
 # Codes which are device and tech in misc should only be retained if not in
-# another conidtion.  same for transplant.
+# another condition. Same for transplant.
 non_misc_tech <- pccc_v3.1[condition != "misc" & subcondition == "device and technology use"]
 non_misc_tran <- pccc_v3.1[condition != "misc" & subcondition == "transplantation"]
 
