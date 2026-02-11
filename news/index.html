@@ -61,6 +61,7 @@
 <h3 id="bug-fixes-0-7-0-9000">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-7-0-9000"></a></h3>
 <ul><li><p><code>summary.medicalcoder_comorbidites()</code> no longer crashes when a zero row input is passed in. Consistently return <code>NA</code> instead of <code>NaN</code> when counts are zeros. (<a href="https://github.com/dewittpe/medicalcoder/issues/26" class="external-link">#26</a>, <a href="https://github.com/dewittpe/medicalcoder/issues/27" class="external-link">#27</a>)</p></li>
 <li><p>Improve the conditional and multiple comorbidities mapped by a code under AHRQ ICD-10 codes for fiscal years 2023 through 2026. The bug was found and fixed as part of the extension <a href="https://github.com/dewittpe/medicalcoder/issues/32" class="external-link">#32</a>.</p></li>
+<li><p>Fix Elixhauser (Quan 2005) ICD-10 codes for depression by omitting F42.2</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="other-changes-0-7-0-9000">Other Changes<a class="anchor" aria-label="anchor" href="#other-changes-0-7-0-9000"></a></h3>

@@ -28,6 +28,9 @@
   was found and fixed as part of the extension
   [\#32](https://github.com/dewittpe/medicalcoder/issues/32).
 
+- Fix Elixhauser (Quan 2005) ICD-10 codes for depression by omitting
+  F42.2
+
 ### Other Changes
 
 - Extend and improve the internal ICD-9 database to distinguish between
