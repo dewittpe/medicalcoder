@@ -61,7 +61,13 @@
 <h3 id="bug-fixes-0-7-0-9000">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-7-0-9000"></a></h3>
 <ul><li><p><code>summary.medicalcoder_comorbidites()</code> no longer crashes when a zero row input is passed in. Consistently return <code>NA</code> instead of <code>NaN</code> when counts are zeros. (<a href="https://github.com/dewittpe/medicalcoder/issues/26" class="external-link">#26</a>, <a href="https://github.com/dewittpe/medicalcoder/issues/27" class="external-link">#27</a>)</p></li>
 <li><p>Improve the conditional and multiple comorbidities mapped by a code under AHRQ ICD-10 codes for fiscal years 2023 through 2026. The bug was found and fixed as part of the extension <a href="https://github.com/dewittpe/medicalcoder/issues/32" class="external-link">#32</a>.</p></li>
-<li><p>Fix Elixhauser (Quan 2005) ICD-10 codes for depression by omitting F42.2</p></li>
+<li><p>Add ICD-9-PCS 35.7 to the PCCC codes. (<a href="https://github.com/dewittpe/medicalcoder/issues/38" class="external-link">#38</a>) The v2 docs have 37.52, 37.53, 37.54, 37.55 as cvd (device) and 37.5, 37.51 as cvd (transplant). v3 docs have 3751 as cdv (transplant), all other four digit codes under 37.5 as cdv (device). One issue here is that 37.5 was an assignable code from CDC through 2003 and then was a header with the same four digit codes as CMS through 2012. CMS continued to use the four digit codes through 2015.</p></li>
+<li>
+<p>Improve Elixhauser (Quan 2005) ICD-10 codes</p>
+<ul><li>omitting F42.2 for depression</li>
+<li>adding G36.x for neuro</li>
+<li>adding 333.4 for neuro</li>
+</ul></li>
 </ul></div>
 <div class="section level3">
 <h3 id="other-changes-0-7-0-9000">Other Changes<a class="anchor" aria-label="anchor" href="#other-changes-0-7-0-9000"></a></h3>

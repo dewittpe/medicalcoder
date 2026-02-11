@@ -96,7 +96,7 @@ mdcrDT_icd10dx_wide <-
 toc <- Sys.time()
 
 difftime(toc, tic, units = "secs")
-## Time difference of 0.4081736 secs
+## Time difference of 0.4397171 secs
 ```
 
 ## Charlson Comorbidities
@@ -192,7 +192,7 @@ the packages.
 
 ``` r
 attr(medicalcoder_charlson_results, "tictoc") # seconds
-## [1] 0.2889578
+## [1] 0.3101807
 attr(icdcomorbid_charlson_results,  "tictoc") # seconds
 ## [1] 608.8486
 ```

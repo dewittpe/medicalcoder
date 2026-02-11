@@ -82,7 +82,7 @@ returns a data.frame.
 ``` r
 pccc_codes <- get_pccc_codes()
 str(pccc_codes)
-## 'data.frame':    7913 obs. of  12 variables:
+## 'data.frame':    7906 obs. of  12 variables:
 ##  $ icdv           : int  9 9 9 9 9 9 9 9 9 9 ...
 ##  $ dx             : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ full_code      : chr  "00.10" "00.50" "00.51" "00.53" ...
@@ -438,10 +438,10 @@ diagnostic and procedure.
 pccc_codes[pccc_codes$code == "3321", ]
 ##      icdv dx full_code code   condition              subcondition
 ## 59      9  0     33.21 3321 respiratory device_and_technology_use
-## 1460    9  1     332.1 3321   neuromusc         movement_diseases
+## 1453    9  1     332.1 3321   neuromusc         movement_diseases
 ##      transplant_flag tech_dep_flag pccc_v3.1 pccc_v3.0 pccc_v2.1 pccc_v2.0
 ## 59                 0             1         1         1         1         1
-## 1460               0             0         1         1         1         1
+## 1453               0             0         1         1         1         1
 table(mdcr[mdcr$code == "3321", "dx"])
 ## 
 ##  0  1 
@@ -513,9 +513,9 @@ subset(mdcr, patid == "87420")
 ## 4074 87420    9  5641  1
 subset(get_pccc_codes(), code %in% c("78321", "5641"))
 ##     icdv dx full_code code condition subcondition transplant_flag tech_dep_flag
-## 192    9  0     56.41 5641     renal        other               0             0
+## 185    9  0     56.41 5641     renal        other               0             0
 ##     pccc_v3.1 pccc_v3.0 pccc_v2.1 pccc_v2.0
-## 192         1         1         1         1
+## 185         1         1         1         1
 ```
 
 ``` r
@@ -969,13 +969,13 @@ The codes we’ll use are:
 codes <- c("H49.811", "J84.111", "Z96.41")
 subset(get_pccc_codes(), full_code %in% codes)
 ##      icdv dx full_code   code   condition                 subcondition
-## 6445   10  1   H49.811 H49811   metabolic    other_metabolic_disorders
-## 6712   10  1   J84.111 J84111 respiratory chronic_respiratory_diseases
-## 7905   10  1    Z96.41  Z9641   metabolic    device_and_technology_use
+## 6438   10  1   H49.811 H49811   metabolic    other_metabolic_disorders
+## 6705   10  1   J84.111 J84111 respiratory chronic_respiratory_diseases
+## 7898   10  1    Z96.41  Z9641   metabolic    device_and_technology_use
 ##      transplant_flag tech_dep_flag pccc_v3.1 pccc_v3.0 pccc_v2.1 pccc_v2.0
-## 6445               0             0         1         1         1         1
-## 6712               0             0         1         1         0         0
-## 7905               0             1         1         1         1         1
+## 6438               0             0         1         1         1         1
+## 6705               0             0         1         1         0         0
+## 7898               0             1         1         1         1         1
 ```
 
 The constructed data and permutations are:

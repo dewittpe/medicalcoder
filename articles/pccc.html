@@ -280,7 +280,7 @@ one non-technology condition is flagged.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pccc_codes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_pccc_codes.html">get_pccc_codes</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">pccc_codes</span><span class="op">)</span></span>
-<span><span class="co">## 'data.frame':    7913 obs. of  12 variables:</span></span>
+<span><span class="co">## 'data.frame':    7906 obs. of  12 variables:</span></span>
 <span><span class="co">##  $ icdv           : int  9 9 9 9 9 9 9 9 9 9 ...</span></span>
 <span><span class="co">##  $ dx             : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span><span class="co">##  $ full_code      : chr  "00.10" "00.50" "00.51" "00.53" ...</span></span>
@@ -1713,10 +1713,10 @@ both diagnostic and procedure.</p>
 <code class="sourceCode R"><span><span class="va">pccc_codes</span><span class="op">[</span><span class="va">pccc_codes</span><span class="op">$</span><span class="va">code</span> <span class="op">==</span> <span class="st">"3321"</span>, <span class="op">]</span></span>
 <span><span class="co">##      icdv dx full_code code   condition              subcondition</span></span>
 <span><span class="co">## 59      9  0     33.21 3321 respiratory device_and_technology_use</span></span>
-<span><span class="co">## 1460    9  1     332.1 3321   neuromusc         movement_diseases</span></span>
+<span><span class="co">## 1453    9  1     332.1 3321   neuromusc         movement_diseases</span></span>
 <span><span class="co">##      transplant_flag tech_dep_flag pccc_v3.1 pccc_v3.0 pccc_v2.1 pccc_v2.0</span></span>
 <span><span class="co">## 59                 0             1         1         1         1         1</span></span>
-<span><span class="co">## 1460               0             0         1         1         1         1</span></span>
+<span><span class="co">## 1453               0             0         1         1         1         1</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">mdcr</span><span class="op">[</span><span class="va">mdcr</span><span class="op">$</span><span class="va">code</span> <span class="op">==</span> <span class="st">"3321"</span>, <span class="st">"dx"</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">##  0  1 </span></span>
@@ -1777,9 +1777,9 @@ omitted from the <code><a href="../reference/comorbidities.html">comorbidities()
 <span><span class="co">## 4074 87420    9  5641  1</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_pccc_codes.html">get_pccc_codes</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">code</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"78321"</span>, <span class="st">"5641"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">##     icdv dx full_code code condition subcondition transplant_flag tech_dep_flag</span></span>
-<span><span class="co">## 192    9  0     56.41 5641     renal        other               0             0</span></span>
+<span><span class="co">## 185    9  0     56.41 5641     renal        other               0             0</span></span>
 <span><span class="co">##     pccc_v3.1 pccc_v3.0 pccc_v2.1 pccc_v2.0</span></span>
-<span><span class="co">## 192         1         1         1         1</span></span></code></pre></div>
+<span><span class="co">## 185         1         1         1         1</span></span></code></pre></div>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">mdcr_results_v2.1_01</span>, <span class="va">patid</span> <span class="op">==</span> <span class="st">"87420"</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cmrb_flag"</span>, <span class="st">"renal"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">##       cmrb_flag renal</span></span>
@@ -3968,13 +3968,13 @@ encounters 2, 4, and 6.</p>
 <code class="sourceCode R"><span><span class="va">codes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"H49.811"</span>, <span class="st">"J84.111"</span>, <span class="st">"Z96.41"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_pccc_codes.html">get_pccc_codes</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">full_code</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">codes</span><span class="op">)</span></span>
 <span><span class="co">##      icdv dx full_code   code   condition                 subcondition</span></span>
-<span><span class="co">## 6445   10  1   H49.811 H49811   metabolic    other_metabolic_disorders</span></span>
-<span><span class="co">## 6712   10  1   J84.111 J84111 respiratory chronic_respiratory_diseases</span></span>
-<span><span class="co">## 7905   10  1    Z96.41  Z9641   metabolic    device_and_technology_use</span></span>
+<span><span class="co">## 6438   10  1   H49.811 H49811   metabolic    other_metabolic_disorders</span></span>
+<span><span class="co">## 6705   10  1   J84.111 J84111 respiratory chronic_respiratory_diseases</span></span>
+<span><span class="co">## 7898   10  1    Z96.41  Z9641   metabolic    device_and_technology_use</span></span>
 <span><span class="co">##      transplant_flag tech_dep_flag pccc_v3.1 pccc_v3.0 pccc_v2.1 pccc_v2.0</span></span>
-<span><span class="co">## 6445               0             0         1         1         1         1</span></span>
-<span><span class="co">## 6712               0             0         1         1         0         0</span></span>
-<span><span class="co">## 7905               0             1         1         1         1         1</span></span></code></pre></div>
+<span><span class="co">## 6438               0             0         1         1         1         1</span></span>
+<span><span class="co">## 6705               0             0         1         1         0         0</span></span>
+<span><span class="co">## 7898               0             1         1         1         1         1</span></span></code></pre></div>
 <p>The constructed data and permutations are:</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">permutations</span> <span class="op">&lt;-</span></span>
