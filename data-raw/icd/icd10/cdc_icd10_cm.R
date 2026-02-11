@@ -28,7 +28,7 @@ source("utilities.R")
 ################################################################################
 # Yearly data from CDC
 cdc_icd10cm_dir <- "ftp.cdc.gov/pub/Health_Statistics/NCHS/Publications/ICD10CM"
-cdc_tempdir <- paste0(tempdir(), "/cdc")
+cdc_tempdir <- file.path(tempdir(), "cdc")
 dir.create(cdc_tempdir, showWarnings = FALSE)
 
 if (interactive()) {
