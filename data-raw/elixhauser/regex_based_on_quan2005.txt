@@ -265,7 +265,7 @@ NEURO               | 10   | 1  | quan2005       | ^G1[0-3]
 NEURO               | 10   | 1  | quan2005       | ^G25\.[4,5]
 NEURO               | 10   | 1  | quan2005       | ^G2[0-2]
 NEURO               | 10   | 1  | quan2005       | ^G31\.[2,8,9]
-NEURO               | 10   | 1  | quan2005       | ^G3[2,5,7]
+NEURO               | 10   | 1  | quan2005       | ^G3[2,5-7]
 NEURO               | 10   | 1  | quan2005       | ^G4[0,1]
 NEURO               | 10   | 1  | quan2005       | ^G93\.[1,4]
 NEURO               | 10   | 1  | quan2005       | ^R47\.0
@@ -289,7 +289,7 @@ NEURO               | 9    | 1  | elixhauser1988 | ^348\.[1,3]
 NEURO               | 9    | 1  | elixhauser1988 | ^78[0,4]\.3
 NEURO               | 9    | 1  | quan2005       | ^331\.9
 NEURO               | 9    | 1  | quan2005       | ^332\.[0,1,4]
-NEURO               | 9    | 1  | quan2005       | ^333\.5
+NEURO               | 9    | 1  | quan2005       | ^333\.[4,5]
 NEURO               | 9    | 1  | quan2005       | ^333\.92
 NEURO               | 9    | 1  | quan2005       | ^336\.2
 NEURO               | 9    | 1  | quan2005       | ^33[4,5]

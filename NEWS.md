@@ -19,7 +19,10 @@
   ICD-10 codes for fiscal years 2023 through 2026.  The bug was found and fixed
   as part of the extension #32.
 
-* Fix Elixhauser (Quan 2005) ICD-10 codes for depression by omitting F42.2
+* Improve Elixhauser (Quan 2005) ICD-10 codes
+  * omitting F42.2 for depression
+  * adding G36.x for neuro
+  * adding 333.4 for neuro
 
 ## Other Changes
 
