@@ -941,6 +941,22 @@ pccc_v3.1 <- pccc_v3.1[!(code %in% c("51632", "51633", "51634", "51635", "51636"
 stopifnot("G25.3 is not in pccc_v3.1" = pccc_v3.1[grepl("^G253", code), .N == 0])
 
 ################################################################################
+# ICD-9-PCS 37.5
+# This was a billable code and became a header over time.  add to v3.1.
+# pccc_v3.1[startsWith(code, "375")]
+pccc_v3.1 <-
+  rbind(
+    pccc_v3.1,
+    pccc_v3.1[full_code == "37.51"][,
+      `:=`(
+        full_code = "37.5",
+        code = "375",
+        code_id = known_icd_codes[full_code == "37.5", code_id]
+      )
+    ])
+# pccc_v3.1[startsWith(code, "375")]
+
+################################################################################
 # save to disk
 pccc_v3.0 <- unique(pccc_v3.0)
 pccc_v3.1 <- unique(pccc_v3.1)

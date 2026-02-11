@@ -237,26 +237,23 @@ if (interactive()) {
   known_icd_codes[grepl("^375", code) & icdv == 9 & dx == 0]
 }
 #
-# This is interesting.  From the docx file:
-# 37.52, 37.53, 37.54, 37.55 - cvd; device
-# 37.5, 37.51 - cvd; transplant
 #
-# Looks right.  set the r, sas, stata indicators to 0
+# The v2 docs have
+#   37.52, 37.53, 37.54, 37.55 as cvd (device)
+#   37.5, 37.51 as cvd (transplant)
 #
-# subset(get_icd_codes(with.description = T), grepl("^375", code) & icdv == 9 & dx == 0)
-# #        icdv dx full_code code    src known_start known_end assignable_start assignable_end                                                                                     desc
-# #  12438    9  0      37.5  375 cm_pcs        1997      2015             1997           2003                                                                    Heart transplantation
-# #  12439    9  0     37.51 3751 cm_pcs        2004      2015             2004           2015                                                                    Heart transplantation
-# #  12440    9  0      37.5  375 cm_pcs        1997      2015             1997           2003                                                             Heart replacement procedures
-# #  12467    9  0     37.52 3752 cm_pcs        2004      2015             2004           2015                                           Implantation of total replacement heart system
-# #  12468    9  0     37.52 3752 cm_pcs        2004      2015             2004           2015                    Implantation of total internal biventricular heart replacement system
-# #  12478    9  0     37.53 3753 cm_pcs        2004      2015             2004           2015                 Replacement or repair of thoracic unit of total replacement heart system
-# #  12479    9  0     37.53 3753 cm_pcs        2004      2015             2004           2015               Replacement or repair of thoracic unit of (total) replacement heart system
-# #  12490    9  0     37.54 3754 cm_pcs        2004      2015             2004           2015   Replacement or repair of other implantable component of total replacement heart system
-# #  12491    9  0     37.54 3754 cm_pcs        2004      2015             2004           2015 Replacement or repair of other implantable component of (total) replacement heart system
-# #  12500    9  0     37.55 3755 cm_pcs        2009      2015             2009           2015                               Removal of internal biventricular heart replacement system
+# v3 docs have 3751 as cdv (transplant),
+# all other four digit codes under 37.5 as cdv (device).
+#
+# One issue here is that 37.5 was an assignable code from CDC through 2003 and
+# then was a header with the same four digit codes as CMS through 2012. CMS
+# continued to use the four digit codes through 2015.
+#
+# When building medicalcoder and considering the implication of the historic
+# 37.5 code as "Heart transplant"
+#
 v2ref[code == "375" & icdv == 9 & dx == 0,
-      `:=`(r = 0, sas = 0, stata = 0)]
+      `:=`(r = 1, sas = 1, stata = 1)]
 
 # ICD-9-PCS 37.6
 if (interactive()) {
@@ -547,10 +544,6 @@ v2ref <- v2ref[!(grepl("^2779", code) & dx == 1 & icdv == 9 & condition == "resp
 v2ref <- v2ref[!(code == "376" & dx == 0 & icdv == 9)]
 v2ref <- v2ref[!(code == "3762" & dx == 0 & icdv == 9)]
 v2ref <- v2ref[!(code == "3764" & dx == 0 & icdv == 9)]
-
-# ICD-9-PCS 37.5 is a header code that shouldn't be in the set.  37.5x maps cvd,
-# but to different subconditions
-v2ref <- v2ref[!(code == "375" & dx == 0 & icdv == 9)]
 
 # ICD-9-CM 277.3 and 277.8 are both headers that can/should be part of v2.1 and
 # v3.1

@@ -24,7 +24,7 @@ stopifnot("pccc_pers" %in% ls())
 
 # Expected counts in pccc_pers
 stopifnot(
-  pccc_pers[per ==  1, N == 198439],
+  pccc_pers[per ==  1, N == 198438],
   pccc_pers[per ==  2, N ==      3],
   pccc_pers[per ==  3, N ==      0],
   pccc_pers[per ==  4, N ==      0],
@@ -32,7 +32,7 @@ stopifnot(
   pccc_pers[per ==  6, N ==     37],
   pccc_pers[per ==  7, N ==    962],
   pccc_pers[per ==  8, N ==      0],
-  pccc_pers[per ==  9, N ==     47],
+  pccc_pers[per ==  9, N ==     48],
   pccc_pers[per == 10, N ==      0],
   pccc_pers[per == 11, N ==      0],
   pccc_pers[per == 12, N ==      0],
@@ -81,7 +81,7 @@ stopifnot(
 # Expected counts in pccc_deltas, this should be the same as pccc_pers, but you
 # need to count the rows.
 stopifnot(
-  pccc_deltas[per ==  1, .N == 198439],
+  pccc_deltas[per ==  1, .N == 198438],
   pccc_deltas[per ==  2, .N ==      3],
   pccc_deltas[per ==  3, .N ==      0],
   pccc_deltas[per ==  4, .N ==      0],
@@ -89,7 +89,7 @@ stopifnot(
   pccc_deltas[per ==  6, .N ==     37],
   pccc_deltas[per ==  7, .N ==    962],
   pccc_deltas[per ==  8, .N ==      0],
-  pccc_deltas[per ==  9, .N ==     47],
+  pccc_deltas[per ==  9, .N ==     48],
   pccc_deltas[per == 10, .N ==      0],
   pccc_deltas[per == 11, .N ==      0],
   pccc_deltas[per == 12, .N ==      0],

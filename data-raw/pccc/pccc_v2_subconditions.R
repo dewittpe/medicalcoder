@@ -245,6 +245,30 @@ subconditions[subcondition == "bone and join anomalies",
               subcondition := "bone and joint anomalies"]
 
 ################################################################################
+# ICD-9-PCS 37.5 and 37.52
+#
+# The v2 docs have
+#   37.52, 37.53, 37.54, 37.55 as cvd (device)
+#   37.5, 37.51 as cvd (transplant)
+#
+# v3 docs have 3751 as cdv (transplant),
+# all other four digit codes under 37.5 as cdv (device).
+#
+# One issue here is that 37.5 was an assignable code from CDC through 2003 and
+# then was a header with the same four digit codes as CMS through 2012. CMS
+# continued to use the four digit codes through 2015.
+#
+# When building medicalcoder and considering the implication of the historic
+# 37.5 code as "Heart transplant"
+#
+# subconditions[startsWith(code, "375")] |> print(nrow = Inf)
+
+subconditions <-
+  subconditions[
+    !(subcondition == "transplantation" & orig_code == "37.5" & nchar(code) == 4)
+  ]
+
+################################################################################
 # look for anything that didn't map to a known icd code
 
 if (interactive()) {

@@ -99,8 +99,8 @@ stopifnot(!any(is.na(old_vs_mdcr)))
 stopifnot(nrow(old_vs_mdcr) == nrow(icd_codes))
 
 # expect no difference in the following conditions:
-#   neuromusc
 #   cvd
+#   neuromusc
 #   respiratory
 #   renal
 #   gi
@@ -110,8 +110,8 @@ stopifnot(nrow(old_vs_mdcr) == nrow(icd_codes))
 #   malignancy
 #   neonatal
 stopifnot(
-  with(old_vs_mdcr, all(neuromusc_old == neuromusc_mdcr)),
   with(old_vs_mdcr, all(cvd_old == cvd_mdcr)),
+  with(old_vs_mdcr, all(neuromusc_old == neuromusc_mdcr)),
   with(old_vs_mdcr, all(respiratory_old == respiratory_mdcr)),
   with(old_vs_mdcr, all(renal_old == renal_mdcr)),
   with(old_vs_mdcr, all(gi_old == gi_mdcr)),
@@ -166,23 +166,28 @@ stopifnot(
 # subset(get_icd_codes(with.descriptions = TRUE), grepl("^V65\\.4", full_code) & icdv == 9)
 
 mismatch_tech_dep <- old_vs_mdcr[old_vs_mdcr$tech_dep != old_vs_mdcr$any_tech_dep, ]
+
 stopifnot(nrow(mismatch_tech_dep) == 32L)
+
 stopifnot(
   all(mismatch_tech_dep$tech_dep == 0L),
   all(mismatch_tech_dep$any_tech_dep == 1L)
 )
+
 stopifnot(
-          isTRUE(identical(sort(unique(mismatch_tech_dep$full_code)),
-                           c("349.1",
-                             "86.06",
-                             "V45.85",
-                             "V53.3",
-                             "V53.91",
-                             "V56", "V56.0", "V56.1", "V56.2", "V56.3", "V56.31", "V56.32", "V56.8",
-                             "V65.46",
-                             "Z49.01", "Z49.02", "Z49.31", "Z49.32")
-             )
-          )
+  isTRUE(
+    identical(
+      sort(unique(mismatch_tech_dep$full_code)),
+      c("349.1",
+        "86.06",
+        "V45.85",
+        "V53.3",
+        "V53.91",
+        "V56", "V56.0", "V56.1", "V56.2", "V56.3", "V56.31", "V56.32", "V56.8",
+        "V65.46",
+        "Z49.01", "Z49.02", "Z49.31", "Z49.32")
+    )
+  )
 )
 
 # we expect there are some differences in the transplant flag
@@ -210,28 +215,19 @@ stopifnot(
 
 #
 mismatch_transplant <- old_vs_mdcr[old_vs_mdcr$transplant != old_vs_mdcr$any_transplant, ]
-stopifnot(nrow(mismatch_transplant) == 20L)
+stopifnot(nrow(mismatch_transplant) == 12L)
 stopifnot(
   all(mismatch_transplant$transplant == 0L),
   all(mismatch_transplant$any_transplant == 1L)
 )
 
 stopifnot(
-          isTRUE(identical(sort(unique(mismatch_transplant$full_code)),
-                           c("37.52",
-                             "37.53",
-                             "37.54",
-                             "37.55",
-                             "V42.0",
-                             "Z94.1",
-                             "Z94.2",
-                             "Z94.4",
-                             "Z94.81",
-                             "Z94.82",
-                             "Z94.83",
-                             "Z94.84")
-                          )
-          )
+  isTRUE(
+    identical(
+      sort(unique(mismatch_transplant$full_code)),
+      c("V42.0", "Z94.1", "Z94.2", "Z94.4", "Z94.81", "Z94.82", "Z94.83", "Z94.84")
+    )
+  )
 )
 
 

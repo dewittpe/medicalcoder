@@ -422,6 +422,7 @@ pccc_v2.0[subcondition == "diaphragm and abdominal wall", subcondition := "diaph
 pccc_v2.0[grepl("trans", subcondition) & transplant_flag == 0L, transplant_flag := 1L]
 pccc_v2.0[grepl("tech", subcondition) & tech_dep_flag == 0L, tech_dep_flag := 1L]
 
+# Need to add ICD-9-PCS 37.5 to the set in v2.1
 
 ################################################################################
 setDF(pccc_v2.0)
