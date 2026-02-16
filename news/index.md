@@ -2,6 +2,13 @@
 
 ## medicalcoder 0.7.0.9000
 
+### License Change
+
+medicalcoder \<= 0.7.0 was under GPL-2 for no other reason that that was
+the default in the template DESCRIPTION file. With this release we have
+transitioned from GPL-2 to BSD-3-Clause to reduce almost all barriers to
+use of the package in other environments.
+
 ### New Features
 
 - If a `tibble` is passed to

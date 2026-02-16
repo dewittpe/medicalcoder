@@ -164,7 +164,7 @@ ways.</p>
 <span><span class="va">toc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/difftime.html" class="external-link">difftime</a></span><span class="op">(</span><span class="va">toc</span>, <span class="va">tic</span>, units <span class="op">=</span> <span class="st">"secs"</span><span class="op">)</span></span>
-<span><span class="co">## Time difference of 0.4397171 secs</span></span></code></pre></div>
+<span><span class="co">## Time difference of 0.4296284 secs</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="charlson-comorbidities">Charlson Comorbidities<a class="anchor" aria-label="anchor" href="#charlson-comorbidities"></a>
@@ -252,7 +252,7 @@ scoring.</p>
 between the packages.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">medicalcoder_charlson_results</span>, <span class="st">"tictoc"</span><span class="op">)</span> <span class="co"># seconds</span></span>
-<span><span class="co">## [1] 0.3101807</span></span>
+<span><span class="co">## [1] 0.2939472</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">icdcomorbid_charlson_results</span>,  <span class="st">"tictoc"</span><span class="op">)</span> <span class="co"># seconds</span></span>
 <span><span class="co">## [1] 608.8486</span></span></code></pre></div>
 <p>The return from icdcomorbid are booleans. We will coerce to integers

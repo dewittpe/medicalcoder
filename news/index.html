@@ -53,6 +53,10 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.7.0.9000" id="medicalcoder-0709000">medicalcoder 0.7.0.9000<a class="anchor" aria-label="anchor" href="#medicalcoder-0709000"></a></h2>
 <div class="section level3">
+<h3 id="license-change-0-7-0-9000">License Change<a class="anchor" aria-label="anchor" href="#license-change-0-7-0-9000"></a></h3>
+<p>medicalcoder &lt;= 0.7.0 was under GPL-2 for no other reason that that was the default in the template DESCRIPTION file. With this release we have transitioned from GPL-2 to BSD-3-Clause to reduce almost all barriers to use of the package in other environments.</p>
+</div>
+<div class="section level3">
 <h3 id="new-features-0-7-0-9000">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-7-0-9000"></a></h3>
 <ul><li><p>If a <code>tibble</code> is passed to <code><a href="../reference/comorbidities.html">comorbidities()</a></code> and the <code>dplyr</code> namespace is available, then <code>dplyr</code> methods will be used for data manipulation. This change will generally result in less computation time than base R <code>data.frames</code> (<code>data.tables</code> require even less time).</p></li>
 <li><p>Add the <code>elixhauser_ahrq2026</code> method for <code><a href="../reference/comorbidities.html">comorbidities()</a></code> (<a href="https://github.com/dewittpe/medicalcoder/issues/32" class="external-link">#32</a>)</p></li>
