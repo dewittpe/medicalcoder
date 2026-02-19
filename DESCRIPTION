@@ -13,7 +13,7 @@ Description: Provides tools for working with medical coding schemas such as the
   comorbidity classification algorithms such as the Pediatric Complex Chronic
   Conditions (PCCC), Charlson, and Elixhauser indices.
 Depends: R (>= 3.5.0)
-License: GPL-2
+License: BSD_3_clause + file LICENSE
 Language: en-US
 Encoding: UTF-8
 URL: http://www.peteredewitt.com/medicalcoder/, https://github.com/dewittpe/medicalcoder/
