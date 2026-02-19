@@ -714,6 +714,312 @@ pack_rows("Number of Comorbidities", start_row = which(x$condition == ">= 1"), e
 | \>= 8                       | 4     | 0.01       |
 | \>= 9                       | 2     | 0.01       |
 
+## All ICD Codes
+
+Here we check for consistency in the mappings between *medicalcoder* and
+*comorbidity* using all known ICD codes within *medicalcoder*.
+
+``` r
+all_dx_codes <-
+  subset(
+    x      = medicalcoder::get_icd_codes(),
+    subset = dx == 1 & !is.na(assignable_start),
+    select = c("icdv", "full_code", "code")
+    ) |>
+  data.table::as.data.table() |>
+  unique()
+all_dx_codes[, code_id := paste0("ICD-", icdv, " ", full_code)]
+```
+
+### Charlson
+
+``` r
+mdcr_results <-
+  medicalcoder::comorbidities(
+    data = all_dx_codes,
+    icd.codes = "code",
+    id.vars = "code_id",
+    icdv.var = "icdv",
+    method = "charlson_quan2005",
+    poa = 1,
+    primarydx = 0L)
+
+cmrb_results <-
+  rbind(
+    comorbidity::comorbidity(
+      x = subset(all_dx_codes, icdv == 9),
+      id = "code_id",
+      code = "code",
+      map = "charlson_icd9_quan",
+      assign0 = TRUE
+    ),
+    comorbidity::comorbidity(
+      x = subset(all_dx_codes, icdv == 10),
+      id = "code_id",
+      code = "code",
+      map = "charlson_icd10_quan",
+      assign0 = TRUE
+    )
+  )
+
+charlson_delta <-
+  merge(mdcr_results, cmrb_results, all = TRUE, by = "code_id")
+
+for (i in seq_len(nrow(charlson_columns))) {
+  x <- charlson_columns[["comorbidity"]][i]
+  y <- charlson_columns[["medicalcoder"]][i]
+  if (x == y) {
+    x <- paste0(x, ".x")
+    y <- paste0(y, ".y")
+  }
+  e <- base::substitute(identical(charlson_delta[[X]], charlson_delta[[Y]]), list(X = x, Y = y))
+  print(e)
+  r <- eval(e)
+  print(r)
+  if (r) {
+    charlson_delta[[x]] <- NULL
+    charlson_delta[[y]] <- NULL
+  }
+}
+## identical(charlson_delta[["aids"]], charlson_delta[["aidshiv"]])
+## [1] TRUE
+## identical(charlson_delta[["canc"]], charlson_delta[["mal"]])
+## [1] FALSE
+## identical(charlson_delta[["metacanc"]], charlson_delta[["mst"]])
+## [1] TRUE
+## identical(charlson_delta[["cevd"]], charlson_delta[["cebvd"]])
+## [1] TRUE
+## identical(charlson_delta[["cpd"]], charlson_delta[["copd"]])
+## [1] TRUE
+## identical(charlson_delta[["chf.x"]], charlson_delta[["chf.y"]])
+## [1] TRUE
+## identical(charlson_delta[["dementia"]], charlson_delta[["dem"]])
+## [1] TRUE
+## identical(charlson_delta[["hp.x"]], charlson_delta[["hp.y"]])
+## [1] TRUE
+## identical(charlson_delta[["mi.x"]], charlson_delta[["mi.y"]])
+## [1] TRUE
+## identical(charlson_delta[["pvd.x"]], charlson_delta[["pvd.y"]])
+## [1] TRUE
+## identical(charlson_delta[["pud.x"]], charlson_delta[["pud.y"]])
+## [1] TRUE
+## identical(charlson_delta[["rheumd"]], charlson_delta[["rhd"]])
+## [1] TRUE
+## identical(charlson_delta[["diab"]], charlson_delta[["dm"]])
+## [1] TRUE
+## identical(charlson_delta[["diabwc"]], charlson_delta[["dmc"]])
+## [1] TRUE
+## identical(charlson_delta[["rend"]], charlson_delta[["rnd"]])
+## [1] TRUE
+## identical(charlson_delta[["mld.x"]], charlson_delta[["mld.y"]])
+## [1] TRUE
+## identical(charlson_delta[["msld.x"]], charlson_delta[["msld.y"]])
+## [1] TRUE
+## identical(charlson_delta[["score"]], charlson_delta[["cci"]])
+## [1] FALSE
+
+print(charlson_delta[mal != canc, .(code_id, mal, canc)], nrow = Inf)
+## Key: <code_id>
+##            code_id   mal  canc
+##             <char> <int> <int>
+##  1:   ICD-10 C4A.0     1     0
+##  2:  ICD-10 C4A.10     1     0
+##  3:  ICD-10 C4A.11     1     0
+##  4: ICD-10 C4A.111     1     0
+##  5: ICD-10 C4A.112     1     0
+##  6:  ICD-10 C4A.12     1     0
+##  7: ICD-10 C4A.121     1     0
+##  8: ICD-10 C4A.122     1     0
+##  9:  ICD-10 C4A.20     1     0
+## 10:  ICD-10 C4A.21     1     0
+## 11:  ICD-10 C4A.22     1     0
+## 12:  ICD-10 C4A.30     1     0
+## 13:  ICD-10 C4A.31     1     0
+## 14:  ICD-10 C4A.39     1     0
+## 15:   ICD-10 C4A.4     1     0
+## 16:  ICD-10 C4A.51     1     0
+## 17:  ICD-10 C4A.52     1     0
+## 18:  ICD-10 C4A.59     1     0
+## 19:  ICD-10 C4A.60     1     0
+## 20:  ICD-10 C4A.61     1     0
+## 21:  ICD-10 C4A.62     1     0
+## 22:  ICD-10 C4A.70     1     0
+## 23:  ICD-10 C4A.71     1     0
+## 24:  ICD-10 C4A.72     1     0
+## 25:   ICD-10 C4A.8     1     0
+## 26:   ICD-10 C4A.9     1     0
+##            code_id   mal  canc
+##             <char> <int> <int>
+```
+
+The ICD-10 codes C4A.x are not flagged as malignancies via
+[`comorbidity::comorbidity()`](https://ellessenne.github.io/comorbidity/reference/comorbidity.html).
+This is likely due to the mapping missing. Here we can see the mappings
+used between the two utilities. The implementation used by
+[`comorbidity::comorbidity()`](https://ellessenne.github.io/comorbidity/reference/comorbidity.html)
+relies on regular expressions applied to the data and the omitted C4A is
+why the code is not flagged.
+[`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+builds a table with valid ICD codes to join against and has the C4A.x
+codes
+
+``` r
+# comorbidity:::.maps$charlson_icd10_quan$canc
+grep("^C4", comorbidity:::.maps$charlson_icd10_quan$canc, value = TRUE)
+## [1] "C40" "C41" "C43" "C45" "C46" "C47" "C48" "C49"
+grep("^C4A", medicalcoder::get_charlson_codes()$code, value = TRUE)
+##  [1] "C4A"    "C4A0"   "C4A1"   "C4A10"  "C4A11"  "C4A111" "C4A112" "C4A12" 
+##  [9] "C4A121" "C4A122" "C4A2"   "C4A20"  "C4A21"  "C4A22"  "C4A3"   "C4A30" 
+## [17] "C4A31"  "C4A39"  "C4A4"   "C4A5"   "C4A51"  "C4A52"  "C4A59"  "C4A6"  
+## [25] "C4A60"  "C4A61"  "C4A62"  "C4A7"   "C4A70"  "C4A71"  "C4A72"  "C4A8"  
+## [33] "C4A9"
+grep("^C4A", medicalcoder::get_charlson_codes()$full_code, value = TRUE)
+##  [1] "C4A"     "C4A.0"   "C4A.1"   "C4A.10"  "C4A.11"  "C4A.111" "C4A.112"
+##  [8] "C4A.12"  "C4A.121" "C4A.122" "C4A.2"   "C4A.20"  "C4A.21"  "C4A.22" 
+## [15] "C4A.3"   "C4A.30"  "C4A.31"  "C4A.39"  "C4A.4"   "C4A.5"   "C4A.51" 
+## [22] "C4A.52"  "C4A.59"  "C4A.6"   "C4A.60"  "C4A.61"  "C4A.62"  "C4A.7"  
+## [29] "C4A.70"  "C4A.71"  "C4A.72"  "C4A.8"   "C4A.9"
+```
+
+The implementation of
+[`comorbidity::comorbidity()`](https://ellessenne.github.io/comorbidity/reference/comorbidity.html)
+can result in false positives when invalid codes are submitted.
+
+``` r
+df <- data.frame(id = "pat1", code = "C40-NOT-AN-ICD-CODE")
+comorbidity::comorbidity(x = df, id = "id", code = "code", assign0 = TRUE, map = "charlson_icd10_quan")
+##     id mi chf pvd cevd dementia cpd rheumd pud mld diab diabwc hp rend canc
+## 1 pat1  0   0   0    0        0   0      0   0   0    0      0  0    0    1
+##   msld metacanc aids
+## 1    0        0    0
+medicalcoder::comorbidities(data = df, id.var = "id", icd.codes = "code", method = "charlson_quan2005", poa = 1, primarydx = 0)
+## 
+## Comorbidities via charlson_quan2005
+## 
+##     id aidshiv mal cebvd copd chf dem dmc dm hp mld msld mst mi pud pvd rnd rhd
+## 1 pat1       0   0     0    0   0   0   0  0  0   0    0   0  0   0   0   0   0
+##   num_cmrb cmrb_flag cci age_score
+## 1        0         0   0        NA
+```
+
+### Elixhauser
+
+``` r
+mdcr_results <-
+  medicalcoder::comorbidities(
+    data = all_dx_codes,
+    icd.codes = "code",
+    id.vars = "code_id",
+    icdv.var = "icdv",
+    method = "elixhauser_quan2005",
+    poa = 1,
+    primarydx = 0L)
+
+cmrb_results <-
+  rbind(
+    comorbidity::comorbidity(
+      x = subset(all_dx_codes, icdv == 9),
+      id = "code_id",
+      code = "code",
+      map = "elixhauser_icd9_quan",
+      assign0 = TRUE
+    ),
+    comorbidity::comorbidity(
+      x = subset(all_dx_codes, icdv == 10),
+      id = "code_id",
+      code = "code",
+      map = "elixhauser_icd10_quan",
+      assign0 = TRUE
+    )
+  )
+
+elixhauser_delta <-
+  merge(
+    x = comorbidity_elixhauser_results,
+    y = medicalcoder_elixhauser_results,
+    all = TRUE,
+    by = "patid"
+  )
+
+for (i in seq_len(nrow(elixhauser_columns))) {
+  x <- elixhauser_columns[["comorbidity"]][i]
+  y <- elixhauser_columns[["medicalcoder"]][i]
+  if (x == y) {
+    x <- paste0(x, ".x")
+    y <- paste0(y, ".y")
+  }
+  e <- base::substitute(identical(elixhauser_delta[[X]], elixhauser_delta[[Y]]), list(X = x, Y = y))
+  print(e)
+  r <- eval(e)
+  print(r)
+  stopifnot(r)
+  elixhauser_delta[[x]] <- NULL
+  elixhauser_delta[[y]] <- NULL
+}
+## identical(elixhauser_delta[["aids"]], elixhauser_delta[["AIDS"]])
+## [1] TRUE
+## identical(elixhauser_delta[["alcohol"]], elixhauser_delta[["ALCOHOL"]])
+## [1] TRUE
+## identical(elixhauser_delta[["blane"]], elixhauser_delta[["BLDLOSS"]])
+## [1] TRUE
+## identical(elixhauser_delta[["dane"]], elixhauser_delta[["ANEMDEF"]])
+## [1] TRUE
+## identical(elixhauser_delta[["carit"]], elixhauser_delta[["CARDIAC_ARRHYTHMIAS"]])
+## [1] TRUE
+## identical(elixhauser_delta[["solidtum"]], elixhauser_delta[["TUMOR"]])
+## [1] TRUE
+## identical(elixhauser_delta[["metacanc"]], elixhauser_delta[["METS"]])
+## [1] TRUE
+## identical(elixhauser_delta[["cpd"]], elixhauser_delta[["CHRNLUNG"]])
+## [1] TRUE
+## identical(elixhauser_delta[["coag"]], elixhauser_delta[["COAG"]])
+## [1] TRUE
+## identical(elixhauser_delta[["chf"]], elixhauser_delta[["CHF"]])
+## [1] TRUE
+## identical(elixhauser_delta[["depre"]], elixhauser_delta[["DEPRESS"]])
+## [1] TRUE
+## identical(elixhauser_delta[["diabc"]], elixhauser_delta[["DMCX"]])
+## [1] TRUE
+## identical(elixhauser_delta[["diabunc"]], elixhauser_delta[["DM"]])
+## [1] TRUE
+## identical(elixhauser_delta[["drug"]], elixhauser_delta[["DRUG"]])
+## [1] TRUE
+## identical(elixhauser_delta[["fed"]], elixhauser_delta[["LYTES"]])
+## [1] TRUE
+## identical(elixhauser_delta[["hypc"]], elixhauser_delta[["HTN_CX"]])
+## [1] TRUE
+## identical(elixhauser_delta[["hypunc"]], elixhauser_delta[["HTN_UNCX"]])
+## [1] TRUE
+## identical(elixhauser_delta[["hypothy"]], elixhauser_delta[["HYPOTHY"]])
+## [1] TRUE
+## identical(elixhauser_delta[["ld"]], elixhauser_delta[["LIVER"]])
+## [1] TRUE
+## identical(elixhauser_delta[["lymph"]], elixhauser_delta[["LYMPH"]])
+## [1] TRUE
+## identical(elixhauser_delta[["obes"]], elixhauser_delta[["OBESE"]])
+## [1] TRUE
+## identical(elixhauser_delta[["ond"]], elixhauser_delta[["NEURO"]])
+## [1] TRUE
+## identical(elixhauser_delta[["para"]], elixhauser_delta[["PARA"]])
+## [1] TRUE
+## identical(elixhauser_delta[["pud"]], elixhauser_delta[["ULCER"]])
+## [1] TRUE
+## identical(elixhauser_delta[["pvd"]], elixhauser_delta[["PERIVASC"]])
+## [1] TRUE
+## identical(elixhauser_delta[["psycho"]], elixhauser_delta[["PSYCH"]])
+## [1] TRUE
+## identical(elixhauser_delta[["pcd"]], elixhauser_delta[["PULMCIRC"]])
+## [1] TRUE
+## identical(elixhauser_delta[["rf"]], elixhauser_delta[["RENLFAIL"]])
+## [1] TRUE
+## identical(elixhauser_delta[["rheumd"]], elixhauser_delta[["ARTH"]])
+## [1] TRUE
+## identical(elixhauser_delta[["valv"]], elixhauser_delta[["VALVE"]])
+## [1] TRUE
+## identical(elixhauser_delta[["wloss"]], elixhauser_delta[["WGHTLOSS"]])
+## [1] TRUE
+```
+
 ## Benchmarking
 
 The medicalcoder package was built to use base R methods and has zero

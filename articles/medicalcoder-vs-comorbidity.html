@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -1834,6 +1834,303 @@ WGHTLOSS
 </table>
 </div>
 <div class="section level2">
+<h2 id="all-icd-codes">All ICD Codes<a class="anchor" aria-label="anchor" href="#all-icd-codes"></a>
+</h2>
+<p>Here we check for consistency in the mappings between
+<em>medicalcoder</em> and <em>comorbidity</em> using all known ICD codes
+within <em>medicalcoder</em>.</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">all_dx_codes</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span></span>
+<span>    x      <span class="op">=</span> <span class="fu">medicalcoder</span><span class="fu">::</span><span class="fu"><a href="../reference/get_icd_codes.html">get_icd_codes</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    subset <span class="op">=</span> <span class="va">dx</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">assignable_start</span><span class="op">)</span>,</span>
+<span>    select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"icdv"</span>, <span class="st">"full_code"</span>, <span class="st">"code"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">all_dx_codes</span><span class="op">[</span>, <span class="va">code_id</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"ICD-"</span>, <span class="va">icdv</span>, <span class="st">" "</span>, <span class="va">full_code</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="charlson">Charlson<a class="anchor" aria-label="anchor" href="#charlson"></a>
+</h3>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mdcr_results</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">medicalcoder</span><span class="fu">::</span><span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">all_dx_codes</span>,</span>
+<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    id.vars <span class="op">=</span> <span class="st">"code_id"</span>,</span>
+<span>    icdv.var <span class="op">=</span> <span class="st">"icdv"</span>,</span>
+<span>    method <span class="op">=</span> <span class="st">"charlson_quan2005"</span>,</span>
+<span>    poa <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    primarydx <span class="op">=</span> <span class="fl">0L</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cmrb_results</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span></span>
+<span>    <span class="fu">comorbidity</span><span class="fu">::</span><span class="fu"><a href="https://ellessenne.github.io/comorbidity/reference/comorbidity.html" class="external-link">comorbidity</a></span><span class="op">(</span></span>
+<span>      x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">all_dx_codes</span>, <span class="va">icdv</span> <span class="op">==</span> <span class="fl">9</span><span class="op">)</span>,</span>
+<span>      id <span class="op">=</span> <span class="st">"code_id"</span>,</span>
+<span>      code <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>      map <span class="op">=</span> <span class="st">"charlson_icd9_quan"</span>,</span>
+<span>      assign0 <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    <span class="fu">comorbidity</span><span class="fu">::</span><span class="fu"><a href="https://ellessenne.github.io/comorbidity/reference/comorbidity.html" class="external-link">comorbidity</a></span><span class="op">(</span></span>
+<span>      x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">all_dx_codes</span>, <span class="va">icdv</span> <span class="op">==</span> <span class="fl">10</span><span class="op">)</span>,</span>
+<span>      id <span class="op">=</span> <span class="st">"code_id"</span>,</span>
+<span>      code <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>      map <span class="op">=</span> <span class="st">"charlson_icd10_quan"</span>,</span>
+<span>      assign0 <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">charlson_delta</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge</a></span><span class="op">(</span><span class="va">mdcr_results</span>, <span class="va">cmrb_results</span>, all <span class="op">=</span> <span class="cn">TRUE</span>, by <span class="op">=</span> <span class="st">"code_id"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">charlson_columns</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">charlson_columns</span><span class="op">[[</span><span class="st">"comorbidity"</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="va">i</span><span class="op">]</span></span>
+<span>  <span class="va">y</span> <span class="op">&lt;-</span> <span class="va">charlson_columns</span><span class="op">[[</span><span class="st">"medicalcoder"</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="va">i</span><span class="op">]</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="va">y</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">".x"</span><span class="op">)</span></span>
+<span>    <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">y</span>, <span class="st">".y"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html" class="external-link">substitute</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">charlson_delta</span><span class="op">[[</span><span class="va">X</span><span class="op">]</span><span class="op">]</span>, <span class="va">charlson_delta</span><span class="op">[[</span><span class="va">Y</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">x</span>, Y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
+<span>  <span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/eval.html" class="external-link">eval</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">r</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">charlson_delta</span><span class="op">[[</span><span class="va">x</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span>    <span class="va">charlson_delta</span><span class="op">[[</span><span class="va">y</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span><span class="co">## identical(charlson_delta[["aids"]], charlson_delta[["aidshiv"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(charlson_delta[["canc"]], charlson_delta[["mal"]])</span></span>
+<span><span class="co">## [1] FALSE</span></span>
+<span><span class="co">## identical(charlson_delta[["metacanc"]], charlson_delta[["mst"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(charlson_delta[["cevd"]], charlson_delta[["cebvd"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(charlson_delta[["cpd"]], charlson_delta[["copd"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(charlson_delta[["chf.x"]], charlson_delta[["chf.y"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(charlson_delta[["dementia"]], charlson_delta[["dem"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(charlson_delta[["hp.x"]], charlson_delta[["hp.y"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(charlson_delta[["mi.x"]], charlson_delta[["mi.y"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(charlson_delta[["pvd.x"]], charlson_delta[["pvd.y"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(charlson_delta[["pud.x"]], charlson_delta[["pud.y"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(charlson_delta[["rheumd"]], charlson_delta[["rhd"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(charlson_delta[["diab"]], charlson_delta[["dm"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(charlson_delta[["diabwc"]], charlson_delta[["dmc"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(charlson_delta[["rend"]], charlson_delta[["rnd"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(charlson_delta[["mld.x"]], charlson_delta[["mld.y"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(charlson_delta[["msld.x"]], charlson_delta[["msld.y"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(charlson_delta[["score"]], charlson_delta[["cci"]])</span></span>
+<span><span class="co">## [1] FALSE</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">charlson_delta</span><span class="op">[</span><span class="va">mal</span> <span class="op">!=</span> <span class="va">canc</span>, <span class="fu">.</span><span class="op">(</span><span class="va">code_id</span>, <span class="va">mal</span>, <span class="va">canc</span><span class="op">)</span><span class="op">]</span>, nrow <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span></span>
+<span><span class="co">## Key: &lt;code_id&gt;</span></span>
+<span><span class="co">##            code_id   mal  canc</span></span>
+<span><span class="co">##             &lt;char&gt; &lt;int&gt; &lt;int&gt;</span></span>
+<span><span class="co">##  1:   ICD-10 C4A.0     1     0</span></span>
+<span><span class="co">##  2:  ICD-10 C4A.10     1     0</span></span>
+<span><span class="co">##  3:  ICD-10 C4A.11     1     0</span></span>
+<span><span class="co">##  4: ICD-10 C4A.111     1     0</span></span>
+<span><span class="co">##  5: ICD-10 C4A.112     1     0</span></span>
+<span><span class="co">##  6:  ICD-10 C4A.12     1     0</span></span>
+<span><span class="co">##  7: ICD-10 C4A.121     1     0</span></span>
+<span><span class="co">##  8: ICD-10 C4A.122     1     0</span></span>
+<span><span class="co">##  9:  ICD-10 C4A.20     1     0</span></span>
+<span><span class="co">## 10:  ICD-10 C4A.21     1     0</span></span>
+<span><span class="co">## 11:  ICD-10 C4A.22     1     0</span></span>
+<span><span class="co">## 12:  ICD-10 C4A.30     1     0</span></span>
+<span><span class="co">## 13:  ICD-10 C4A.31     1     0</span></span>
+<span><span class="co">## 14:  ICD-10 C4A.39     1     0</span></span>
+<span><span class="co">## 15:   ICD-10 C4A.4     1     0</span></span>
+<span><span class="co">## 16:  ICD-10 C4A.51     1     0</span></span>
+<span><span class="co">## 17:  ICD-10 C4A.52     1     0</span></span>
+<span><span class="co">## 18:  ICD-10 C4A.59     1     0</span></span>
+<span><span class="co">## 19:  ICD-10 C4A.60     1     0</span></span>
+<span><span class="co">## 20:  ICD-10 C4A.61     1     0</span></span>
+<span><span class="co">## 21:  ICD-10 C4A.62     1     0</span></span>
+<span><span class="co">## 22:  ICD-10 C4A.70     1     0</span></span>
+<span><span class="co">## 23:  ICD-10 C4A.71     1     0</span></span>
+<span><span class="co">## 24:  ICD-10 C4A.72     1     0</span></span>
+<span><span class="co">## 25:   ICD-10 C4A.8     1     0</span></span>
+<span><span class="co">## 26:   ICD-10 C4A.9     1     0</span></span>
+<span><span class="co">##            code_id   mal  canc</span></span>
+<span><span class="co">##             &lt;char&gt; &lt;int&gt; &lt;int&gt;</span></span></code></pre></div>
+<p>The ICD-10 codes C4A.x are not flagged as malignancies via
+<code><a href="https://ellessenne.github.io/comorbidity/reference/comorbidity.html" class="external-link">comorbidity::comorbidity()</a></code>. This is likely due to the
+mapping missing. Here we can see the mappings used between the two
+utilities. The implementation used by
+<code><a href="https://ellessenne.github.io/comorbidity/reference/comorbidity.html" class="external-link">comorbidity::comorbidity()</a></code> relies on regular expressions
+applied to the data and the omitted C4A is why the code is not flagged.
+<code><a href="../reference/comorbidities.html">medicalcoder::comorbidities()</a></code> builds a table with valid ICD
+codes to join against and has the C4A.x codes</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># comorbidity:::.maps$charlson_icd10_quan$canc</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"^C4"</span>, <span class="fu">comorbidity</span><span class="fu">:::</span><span class="va">.maps</span><span class="op">$</span><span class="va">charlson_icd10_quan</span><span class="op">$</span><span class="va">canc</span>, value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">## [1] "C40" "C41" "C43" "C45" "C46" "C47" "C48" "C49"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"^C4A"</span>, <span class="fu">medicalcoder</span><span class="fu">::</span><span class="fu"><a href="../reference/get_charlson_codes.html">get_charlson_codes</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">code</span>, value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">##  [1] "C4A"    "C4A0"   "C4A1"   "C4A10"  "C4A11"  "C4A111" "C4A112" "C4A12" </span></span>
+<span><span class="co">##  [9] "C4A121" "C4A122" "C4A2"   "C4A20"  "C4A21"  "C4A22"  "C4A3"   "C4A30" </span></span>
+<span><span class="co">## [17] "C4A31"  "C4A39"  "C4A4"   "C4A5"   "C4A51"  "C4A52"  "C4A59"  "C4A6"  </span></span>
+<span><span class="co">## [25] "C4A60"  "C4A61"  "C4A62"  "C4A7"   "C4A70"  "C4A71"  "C4A72"  "C4A8"  </span></span>
+<span><span class="co">## [33] "C4A9"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"^C4A"</span>, <span class="fu">medicalcoder</span><span class="fu">::</span><span class="fu"><a href="../reference/get_charlson_codes.html">get_charlson_codes</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">full_code</span>, value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">##  [1] "C4A"     "C4A.0"   "C4A.1"   "C4A.10"  "C4A.11"  "C4A.111" "C4A.112"</span></span>
+<span><span class="co">##  [8] "C4A.12"  "C4A.121" "C4A.122" "C4A.2"   "C4A.20"  "C4A.21"  "C4A.22" </span></span>
+<span><span class="co">## [15] "C4A.3"   "C4A.30"  "C4A.31"  "C4A.39"  "C4A.4"   "C4A.5"   "C4A.51" </span></span>
+<span><span class="co">## [22] "C4A.52"  "C4A.59"  "C4A.6"   "C4A.60"  "C4A.61"  "C4A.62"  "C4A.7"  </span></span>
+<span><span class="co">## [29] "C4A.70"  "C4A.71"  "C4A.72"  "C4A.8"   "C4A.9"</span></span></code></pre></div>
+<p>The implementation of <code><a href="https://ellessenne.github.io/comorbidity/reference/comorbidity.html" class="external-link">comorbidity::comorbidity()</a></code> can
+result in false positives when invalid codes are submitted.</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"pat1"</span>, code <span class="op">=</span> <span class="st">"C40-NOT-AN-ICD-CODE"</span><span class="op">)</span></span>
+<span><span class="fu">comorbidity</span><span class="fu">::</span><span class="fu"><a href="https://ellessenne.github.io/comorbidity/reference/comorbidity.html" class="external-link">comorbidity</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">df</span>, id <span class="op">=</span> <span class="st">"id"</span>, code <span class="op">=</span> <span class="st">"code"</span>, assign0 <span class="op">=</span> <span class="cn">TRUE</span>, map <span class="op">=</span> <span class="st">"charlson_icd10_quan"</span><span class="op">)</span></span>
+<span><span class="co">##     id mi chf pvd cevd dementia cpd rheumd pud mld diab diabwc hp rend canc</span></span>
+<span><span class="co">## 1 pat1  0   0   0    0        0   0      0   0   0    0      0  0    0    1</span></span>
+<span><span class="co">##   msld metacanc aids</span></span>
+<span><span class="co">## 1    0        0    0</span></span>
+<span><span class="fu">medicalcoder</span><span class="fu">::</span><span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">df</span>, id.var <span class="op">=</span> <span class="st">"id"</span>, icd.codes <span class="op">=</span> <span class="st">"code"</span>, method <span class="op">=</span> <span class="st">"charlson_quan2005"</span>, poa <span class="op">=</span> <span class="fl">1</span>, primarydx <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Comorbidities via charlson_quan2005</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##     id aidshiv mal cebvd copd chf dem dmc dm hp mld msld mst mi pud pvd rnd rhd</span></span>
+<span><span class="co">## 1 pat1       0   0     0    0   0   0   0  0  0   0    0   0  0   0   0   0   0</span></span>
+<span><span class="co">##   num_cmrb cmrb_flag cci age_score</span></span>
+<span><span class="co">## 1        0         0   0        NA</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="elixhauser">Elixhauser<a class="anchor" aria-label="anchor" href="#elixhauser"></a>
+</h3>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mdcr_results</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">medicalcoder</span><span class="fu">::</span><span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">all_dx_codes</span>,</span>
+<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    id.vars <span class="op">=</span> <span class="st">"code_id"</span>,</span>
+<span>    icdv.var <span class="op">=</span> <span class="st">"icdv"</span>,</span>
+<span>    method <span class="op">=</span> <span class="st">"elixhauser_quan2005"</span>,</span>
+<span>    poa <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    primarydx <span class="op">=</span> <span class="fl">0L</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cmrb_results</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span></span>
+<span>    <span class="fu">comorbidity</span><span class="fu">::</span><span class="fu"><a href="https://ellessenne.github.io/comorbidity/reference/comorbidity.html" class="external-link">comorbidity</a></span><span class="op">(</span></span>
+<span>      x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">all_dx_codes</span>, <span class="va">icdv</span> <span class="op">==</span> <span class="fl">9</span><span class="op">)</span>,</span>
+<span>      id <span class="op">=</span> <span class="st">"code_id"</span>,</span>
+<span>      code <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>      map <span class="op">=</span> <span class="st">"elixhauser_icd9_quan"</span>,</span>
+<span>      assign0 <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    <span class="fu">comorbidity</span><span class="fu">::</span><span class="fu"><a href="https://ellessenne.github.io/comorbidity/reference/comorbidity.html" class="external-link">comorbidity</a></span><span class="op">(</span></span>
+<span>      x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">all_dx_codes</span>, <span class="va">icdv</span> <span class="op">==</span> <span class="fl">10</span><span class="op">)</span>,</span>
+<span>      id <span class="op">=</span> <span class="st">"code_id"</span>,</span>
+<span>      code <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>      map <span class="op">=</span> <span class="st">"elixhauser_icd10_quan"</span>,</span>
+<span>      assign0 <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">elixhauser_delta</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="va">comorbidity_elixhauser_results</span>,</span>
+<span>    y <span class="op">=</span> <span class="va">medicalcoder_elixhauser_results</span>,</span>
+<span>    all <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    by <span class="op">=</span> <span class="st">"patid"</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">elixhauser_columns</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">elixhauser_columns</span><span class="op">[[</span><span class="st">"comorbidity"</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="va">i</span><span class="op">]</span></span>
+<span>  <span class="va">y</span> <span class="op">&lt;-</span> <span class="va">elixhauser_columns</span><span class="op">[[</span><span class="st">"medicalcoder"</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="va">i</span><span class="op">]</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="va">y</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">".x"</span><span class="op">)</span></span>
+<span>    <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">y</span>, <span class="st">".y"</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html" class="external-link">substitute</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">elixhauser_delta</span><span class="op">[[</span><span class="va">X</span><span class="op">]</span><span class="op">]</span>, <span class="va">elixhauser_delta</span><span class="op">[[</span><span class="va">Y</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">x</span>, Y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
+<span>  <span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/eval.html" class="external-link">eval</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
+<span>  <span class="va">elixhauser_delta</span><span class="op">[[</span><span class="va">x</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span>  <span class="va">elixhauser_delta</span><span class="op">[[</span><span class="va">y</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span><span class="op">}</span></span>
+<span><span class="co">## identical(elixhauser_delta[["aids"]], elixhauser_delta[["AIDS"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["alcohol"]], elixhauser_delta[["ALCOHOL"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["blane"]], elixhauser_delta[["BLDLOSS"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["dane"]], elixhauser_delta[["ANEMDEF"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["carit"]], elixhauser_delta[["CARDIAC_ARRHYTHMIAS"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["solidtum"]], elixhauser_delta[["TUMOR"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["metacanc"]], elixhauser_delta[["METS"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["cpd"]], elixhauser_delta[["CHRNLUNG"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["coag"]], elixhauser_delta[["COAG"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["chf"]], elixhauser_delta[["CHF"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["depre"]], elixhauser_delta[["DEPRESS"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["diabc"]], elixhauser_delta[["DMCX"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["diabunc"]], elixhauser_delta[["DM"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["drug"]], elixhauser_delta[["DRUG"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["fed"]], elixhauser_delta[["LYTES"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["hypc"]], elixhauser_delta[["HTN_CX"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["hypunc"]], elixhauser_delta[["HTN_UNCX"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["hypothy"]], elixhauser_delta[["HYPOTHY"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["ld"]], elixhauser_delta[["LIVER"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["lymph"]], elixhauser_delta[["LYMPH"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["obes"]], elixhauser_delta[["OBESE"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["ond"]], elixhauser_delta[["NEURO"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["para"]], elixhauser_delta[["PARA"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["pud"]], elixhauser_delta[["ULCER"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["pvd"]], elixhauser_delta[["PERIVASC"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["psycho"]], elixhauser_delta[["PSYCH"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["pcd"]], elixhauser_delta[["PULMCIRC"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["rf"]], elixhauser_delta[["RENLFAIL"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["rheumd"]], elixhauser_delta[["ARTH"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["valv"]], elixhauser_delta[["VALVE"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="co">## identical(elixhauser_delta[["wloss"]], elixhauser_delta[["WGHTLOSS"]])</span></span>
+<span><span class="co">## [1] TRUE</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
 <h2 id="benchmarking">Benchmarking<a class="anchor" aria-label="anchor" href="#benchmarking"></a>
 </h2>
 <p>The medicalcoder package was built to use base R methods and has zero
@@ -1858,7 +2155,7 @@ work we make some copies of the input data and set the copies to be
 <code>data.tables</code>.</p>
 <details><summary>
 Code (click to toggle view/fold)
-</summary><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mdcrDT</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">mdcr</span><span class="op">)</span></span>
 <span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/setDT.html" class="external-link">setDT</a></span><span class="op">(</span><span class="va">mdcrDT</span><span class="op">)</span></span>
 <span><span class="va">mdcr_icd9dxDT</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">mdcr_icd9dx</span><span class="op">)</span></span>
@@ -1869,7 +2166,7 @@ Code (click to toggle view/fold)
 times.</p>
 <details><summary>
 Code (click to toggle view/fold)
-</summary><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">medicalcoder_charlson_results</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">medicalcoder</span><span class="fu">::</span><span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
 <span>    data <span class="op">=</span> <span class="va">mdcr</span>,</span>
@@ -1985,7 +2282,7 @@ Code (click to toggle view/fold)
 execution time, in seconds, for each evaluation.</p>
 <details><summary>
 Code (click to toggle view/fold)
-</summary><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">medicalcoder_times</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span>
 <span><span class="va">medicalcoder_times_DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span>
 <span><span class="va">comorbidity_times</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span>
@@ -2060,22 +2357,22 @@ Max.
 medicalcoder_times_DT
 </td>
 <td style="text-align:right;">
-0.089
-</td>
-<td style="text-align:right;">
-0.113
+0.119
 </td>
 <td style="text-align:right;">
 0.120
 </td>
 <td style="text-align:right;">
-0.128
+0.126
 </td>
 <td style="text-align:right;">
-0.138
+0.139
 </td>
 <td style="text-align:right;">
-0.192
+0.145
+</td>
+<td style="text-align:right;">
+0.268
 </td>
 </tr>
 <tr>
@@ -2083,22 +2380,22 @@ medicalcoder_times_DT
 medicalcoder_times
 </td>
 <td style="text-align:right;">
-0.340
+0.325
+</td>
+<td style="text-align:right;">
+0.346
 </td>
 <td style="text-align:right;">
 0.368
 </td>
 <td style="text-align:right;">
-0.371
+0.362
 </td>
 <td style="text-align:right;">
-0.379
+0.372
 </td>
 <td style="text-align:right;">
-0.377
-</td>
-<td style="text-align:right;">
-0.491
+0.391
 </td>
 </tr>
 <tr>
@@ -2106,22 +2403,22 @@ medicalcoder_times
 comorbidity_times_DT
 </td>
 <td style="text-align:right;">
-1.493
+1.461
 </td>
 <td style="text-align:right;">
-1.526
+1.507
 </td>
 <td style="text-align:right;">
-1.561
+1.539
 </td>
 <td style="text-align:right;">
-1.568
+1.556
 </td>
 <td style="text-align:right;">
-1.597
+1.603
 </td>
 <td style="text-align:right;">
-1.661
+1.705
 </td>
 </tr>
 <tr>
@@ -2129,22 +2426,22 @@ comorbidity_times_DT
 comorbidity_times
 </td>
 <td style="text-align:right;">
-1.458
+1.453
 </td>
 <td style="text-align:right;">
-1.525
+1.501
 </td>
 <td style="text-align:right;">
-1.551
+1.526
 </td>
 <td style="text-align:right;">
-1.560
+1.526
+</td>
+<td style="text-align:right;">
+1.540
 </td>
 <td style="text-align:right;">
 1.607
-</td>
-<td style="text-align:right;">
-1.639
 </td>
 </tr>
 </tbody>

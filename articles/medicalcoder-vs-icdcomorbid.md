@@ -96,7 +96,7 @@ mdcrDT_icd10dx_wide <-
 toc <- Sys.time()
 
 difftime(toc, tic, units = "secs")
-## Time difference of 0.4296284 secs
+## Time difference of 0.4106195 secs
 ```
 
 ## Charlson Comorbidities
@@ -192,7 +192,7 @@ the packages.
 
 ``` r
 attr(medicalcoder_charlson_results, "tictoc") # seconds
-## [1] 0.2939472
+## [1] 0.3003922
 attr(icdcomorbid_charlson_results,  "tictoc") # seconds
 ## [1] 608.8486
 ```
@@ -261,7 +261,7 @@ There are differences in the flags for AIDS/HIV, all false-negatives
 from icdcomorbid. The issue, as shown below, is that ICD-9-CM code 042
 is not flagged as AIDS/HIV by icdcomorbid. This appears to be due to the
 string “042.x” using within the json files within icdcomorbid for
-mapping codes to comorbidities. Table 1 witin Quan (2005) (Quan et al.
+mapping codes to comorbidities. Table 1 within Quan (2005) (Quan et al.
 2005) reports “042.x-044.x” which should match any ICD-9 code under the
 three digit code 042, 043, or 044. (Note: 043 and 044 were removed from
 the ICD-9-CM standard starting October 1, 1994 (fiscal year 1995) which

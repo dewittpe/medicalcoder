@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,8 +96,8 @@ transition to medicalcoder.</p>
 <li>
 <code><a href="https://rdrr.io/pkg/pccc/man/ccc.html" class="external-link">pccc::ccc()</a></code> expects a data.frame with each row
 representing one patient and/or encounter. There is a column for each
-diagnosic and procedure code. For example, a data set were the max
-number of diagnosic codes is six and the max number of procedure codes
+diagnostic and procedure code. For example, a data set were the max
+number of diagnostic codes is six and the max number of procedure codes
 is five, an entry for patient XX could look like the following:</li>
 </ul>
 </li>
@@ -110,7 +110,7 @@ is five, an entry for patient XX could look like the following:</li>
 be in a data.frame where each row is single ICD code. For example, the
 same record for patient XX above would be three columns below, one row
 for each code, one column to identify the patient/encounter, and a
-column to denote if the code is a diagnosic (dx = 1) or procedure (dx =
+column to denote if the code is a diagnostic (dx = 1) or procedure (dx =
 0).</li>
 </ul>
 <pre><code>  patid    code  dx
@@ -142,9 +142,9 @@ specify the ICD version via the arguments <code>icdv</code> and
 <li>PCCC Versions</li>
 </ol>
 <ul>
-<li><p><code><a href="https://rdrr.io/pkg/pccc/man/ccc.html" class="external-link">pccc::ccc()</a></code> only impliments PCCC version 2 <span class="citation">(Feudtner et al. 2014)</span></p></li>
+<li><p><code><a href="https://rdrr.io/pkg/pccc/man/ccc.html" class="external-link">pccc::ccc()</a></code> only implements PCCC version 2 <span class="citation">(Feudtner et al. 2014)</span></p></li>
 <li>
-<p><code><a href="../reference/comorbidities.html">medicalcoder::comorbidities()</a></code> impliments:</p>
+<p><code><a href="../reference/comorbidities.html">medicalcoder::comorbidities()</a></code> implements:</p>
 <ul>
 <li><p><code>pccc_v2.0</code>: consistent results with
 <code><a href="https://rdrr.io/pkg/pccc/man/ccc.html" class="external-link">pccc::ccc()</a></code> for pccc version 1.0.7.</p></li>
@@ -167,7 +167,7 @@ and Elixhauser comorbidities.</p></li>
 <li><p><code><a href="https://rdrr.io/pkg/pccc/man/ccc.html" class="external-link">pccc::ccc()</a></code> only returns flags for primary
 conditions</p></li>
 <li><p><code><a href="../reference/comorbidities.html">medicalcoder::comorbidities()</a></code>: when the argument
-<code>subconditons = TRUE</code> is passed in, for PCCC the primary
+<code>subconditions = TRUE</code> is passed in, for PCCC the primary
 conditions and subconditions are flagged. Examples to follow.</p></li>
 </ul>
 <ol start="5" style="list-style-type: decimal">
@@ -460,7 +460,7 @@ Z94</a></li>
 </div>
 </div>
 <div class="section level2">
-<h2 id="additional-benfits-of-medicalcoder">Additional Benfits of medicalcoder<a class="anchor" aria-label="anchor" href="#additional-benfits-of-medicalcoder"></a>
+<h2 id="additional-benefits-of-medicalcoder">Additional Benefits of medicalcoder<a class="anchor" aria-label="anchor" href="#additional-benefits-of-medicalcoder"></a>
 </h2>
 <div class="section level3">
 <h3 id="computation-performance">Computation Performance<a class="anchor" aria-label="anchor" href="#computation-performance"></a>
@@ -503,15 +503,15 @@ for more details.</p>
 <span><span class="va">medicalcoder_dt_time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/difftime.html" class="external-link">difftime</a></span><span class="op">(</span><span class="va">toc</span>, <span class="va">tic</span>, units <span class="op">=</span> <span class="st">"secs"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pccc_ccc_tbl_time</span></span>
-<span><span class="co">## Time difference of 7.243505 secs</span></span>
+<span><span class="co">## Time difference of 9.504813 secs</span></span>
 <span><span class="va">pccc_ccc_dt_time</span></span>
-<span><span class="co">## Time difference of 4.980737 secs</span></span>
+<span><span class="co">## Time difference of 7.538025 secs</span></span>
 <span><span class="va">medicalcoder_df_time</span></span>
-<span><span class="co">## Time difference of 0.6092265 secs</span></span>
+<span><span class="co">## Time difference of 0.5839362 secs</span></span>
 <span><span class="va">medicalcoder_tbl_time</span></span>
-<span><span class="co">## Time difference of 0.3139157 secs</span></span>
+<span><span class="co">## Time difference of 0.3014781 secs</span></span>
 <span><span class="va">medicalcoder_dt_time</span></span>
-<span><span class="co">## Time difference of 0.4852829 secs</span></span></code></pre></div>
+<span><span class="co">## Time difference of 0.4532356 secs</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="summary-of-results">Summary of results<a class="anchor" aria-label="anchor" href="#summary-of-results"></a>

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,21 +51,21 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.7.0.9000" id="medicalcoder-0709000">medicalcoder 0.7.0.9000<a class="anchor" aria-label="anchor" href="#medicalcoder-0709000"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.8.0" id="medicalcoder-080">medicalcoder 0.8.0<a class="anchor" aria-label="anchor" href="#medicalcoder-080"></a></h2>
 <div class="section level3">
-<h3 id="license-change-0-7-0-9000">License Change<a class="anchor" aria-label="anchor" href="#license-change-0-7-0-9000"></a></h3>
+<h3 id="license-change-0-8-0">License Change<a class="anchor" aria-label="anchor" href="#license-change-0-8-0"></a></h3>
 <p>medicalcoder &lt;= 0.7.0 was under GPL-2 for no other reason that that was the default in the template DESCRIPTION file. With this release we have transitioned from GPL-2 to BSD-3-Clause to reduce almost all barriers to use of the package in other environments.</p>
 </div>
 <div class="section level3">
-<h3 id="new-features-0-7-0-9000">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-7-0-9000"></a></h3>
+<h3 id="new-features-0-8-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-8-0"></a></h3>
 <ul><li><p>If a <code>tibble</code> is passed to <code><a href="../reference/comorbidities.html">comorbidities()</a></code> and the <code>dplyr</code> namespace is available, then <code>dplyr</code> methods will be used for data manipulation. This change will generally result in less computation time than base R <code>data.frames</code> (<code>data.tables</code> require even less time).</p></li>
 <li><p>Add the <code>elixhauser_ahrq2026</code> method for <code><a href="../reference/comorbidities.html">comorbidities()</a></code> (<a href="https://github.com/dewittpe/medicalcoder/issues/32" class="external-link">#32</a>)</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-0-7-0-9000">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-7-0-9000"></a></h3>
+<h3 id="bug-fixes-0-8-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-8-0"></a></h3>
 <ul><li><p><code>summary.medicalcoder_comorbidites()</code> no longer crashes when a zero row input is passed in. Consistently return <code>NA</code> instead of <code>NaN</code> when counts are zeros. (<a href="https://github.com/dewittpe/medicalcoder/issues/26" class="external-link">#26</a>, <a href="https://github.com/dewittpe/medicalcoder/issues/27" class="external-link">#27</a>)</p></li>
 <li><p>Improve the conditional and multiple comorbidities mapped by a code under AHRQ ICD-10 codes for fiscal years 2023 through 2026. The bug was found and fixed as part of the extension <a href="https://github.com/dewittpe/medicalcoder/issues/32" class="external-link">#32</a>.</p></li>
-<li><p>Add ICD-9-PCS 35.7 to the PCCC codes. (<a href="https://github.com/dewittpe/medicalcoder/issues/38" class="external-link">#38</a>) The v2 docs have 37.52, 37.53, 37.54, 37.55 as cvd (device) and 37.5, 37.51 as cvd (transplant). v3 docs have 3751 as cdv (transplant), all other four digit codes under 37.5 as cdv (device). One issue here is that 37.5 was an assignable code from CDC through 2003 and then was a header with the same four digit codes as CMS through 2012. CMS continued to use the four digit codes through 2015.</p></li>
+<li><p>Add ICD-9-PCS 35.7 to the PCCC codes. (<a href="https://github.com/dewittpe/medicalcoder/issues/38" class="external-link">#38</a>) The v2 docs have 37.52, 37.53, 37.54, 37.55 as cvd (device) and 37.5, 37.51 as cvd (transplant). v3 docs have 3751 as cvd (transplant), all other four digit codes under 37.5 as cvd (device). One issue here is that 37.5 was an assignable code from CDC through 2003 and then was a header with the same four digit codes as CMS through 2012. CMS continued to use the four digit codes through 2015.</p></li>
 <li>
 <p>Improve Elixhauser (Quan 2005) ICD-10 codes</p>
 <ul><li>omitting F42.2 for depression</li>
@@ -74,7 +74,7 @@
 </ul></li>
 </ul></div>
 <div class="section level3">
-<h3 id="other-changes-0-7-0-9000">Other Changes<a class="anchor" aria-label="anchor" href="#other-changes-0-7-0-9000"></a></h3>
+<h3 id="other-changes-0-8-0">Other Changes<a class="anchor" aria-label="anchor" href="#other-changes-0-8-0"></a></h3>
 <ul><li><p>Extend and improve the internal ICD-9 database to distinguish between CDC and CMS source.</p></li>
 <li><p>Fix documentation of the <code>mdcr</code> and <code>mdcr_longitudinal</code> datasets.</p></li>
 <li><p>Clarified internal data.frame/data.table helpers: documented that <code>mdcr_select()</code> deep-copies data.table subsets to avoid aliasing, noted the selfref fix in <code>mdcr_set()</code>, and added inline guidance in the longitudinal section of <code><a href="../reference/comorbidities.html">comorbidities()</a></code> to explain the first-occurrence logic.</p></li>

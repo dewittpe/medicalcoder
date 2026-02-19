@@ -16,8 +16,8 @@ Major differences between
 
     - [`pccc::ccc()`](https://rdrr.io/pkg/pccc/man/ccc.html) expects a
       data.frame with each row representing one patient and/or
-      encounter. There is a column for each diagnosic and procedure
-      code. For example, a data set were the max number of diagnosic
+      encounter. There is a column for each diagnostic and procedure
+      code. For example, a data set were the max number of diagnostic
       codes is six and the max number of procedure codes is five, an
       entry for patient XX could look like the following:
 
@@ -30,7 +30,7 @@ Major differences between
   expects the input data to be in a data.frame where each row is single
   ICD code. For example, the same record for patient XX above would be
   three columns below, one row for each code, one column to identify the
-  patient/encounter, and a column to denote if the code is a diagnosic
+  patient/encounter, and a column to denote if the code is a diagnostic
   (dx = 1) or procedure (dx = 0).
 
 &nbsp;
@@ -63,11 +63,11 @@ Major differences between
 
 3.  PCCC Versions
 
-- [`pccc::ccc()`](https://rdrr.io/pkg/pccc/man/ccc.html) only impliments
+- [`pccc::ccc()`](https://rdrr.io/pkg/pccc/man/ccc.html) only implements
   PCCC version 2 (Feudtner et al. 2014)
 
 - [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
-  impliments:
+  implements:
 
   - `pccc_v2.0`: consistent results with
     [`pccc::ccc()`](https://rdrr.io/pkg/pccc/man/ccc.html) for pccc
@@ -90,7 +90,7 @@ Major differences between
   flags for primary conditions
 
 - [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md):
-  when the argument `subconditons = TRUE` is passed in, for PCCC the
+  when the argument `subconditions = TRUE` is passed in, for PCCC the
   primary conditions and subconditions are flagged. Examples to follow.
 
 5.  Present-on-Admission and Longitudinal data
@@ -403,7 +403,7 @@ GitHub links:
 - [ICD-9 V42.0](https://github.com/CUD2V/pccc/issues/54)
 - [ICD-10 Z94](https://github.com/CUD2V/pccc/issues/55)
 
-## Additional Benfits of medicalcoder
+## Additional Benefits of medicalcoder
 
 ### Computation Performance
 
@@ -449,15 +449,15 @@ medicalcoder_dt_time <- difftime(toc, tic, units = "secs")
 
 ``` r
 pccc_ccc_tbl_time
-## Time difference of 7.243505 secs
+## Time difference of 9.504813 secs
 pccc_ccc_dt_time
-## Time difference of 4.980737 secs
+## Time difference of 7.538025 secs
 medicalcoder_df_time
-## Time difference of 0.6092265 secs
+## Time difference of 0.5839362 secs
 medicalcoder_tbl_time
-## Time difference of 0.3139157 secs
+## Time difference of 0.3014781 secs
 medicalcoder_dt_time
-## Time difference of 0.4852829 secs
+## Time difference of 0.4532356 secs
 ```
 
 ### Summary of results

@@ -3,7 +3,7 @@
 ``` r
 library(medicalcoder)
 packageVersion("medicalcoder")
-## [1] '0.7.0.9001'
+## [1] '0.8.0'
 ```
 
 ## Comorbidity Algorithms
@@ -229,7 +229,7 @@ carries that condition forward with `poa = 1` on later encounters.
 When `flag.method = "current"` and you do *not* supply `poa` or
 `poa.var`,
 [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
-treates all ICD codes as `poa = 1`.
+treats all ICD codes as `poa = 1`.
 
 ## Mapping ICD Codes to Comorbidities
 
