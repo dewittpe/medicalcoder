@@ -582,7 +582,7 @@ comorbidities.data.frame <- function(data,
   # retain only the row for present on admission for pccc and charlson.
   # elixhauser conditions may or may not need poa, so do not subset in that
   # case.
-  if (!startsWith(method, "elixhauser")) {
+  if (startsWith(method, "charlson") | startsWith(method, "pccc")) {
     cmrb <- mdcr_subset(cmrb, i = cmrb[[poa.var]] == 1L)
   }
 
@@ -598,7 +598,8 @@ comorbidities.data.frame <- function(data,
       ages <- mdcr_unique(mdcr_select(data, cols = c(id.vars, age.var)))
       ages[["age_score"]] <- as.integer(cut(ages[[age.var]], breaks = c(-Inf, 50, 60, 70, 80, Inf), right = TRUE)) - 1L
       ccc <- merge(ccc, mdcr_select(ages, cols = c(id.vars, "age_score")), all.x = TRUE, by = id.vars, sort = FALSE)
-      ccc[["cci"]] <- ccc[["cci"]] + ccc[["age_score"]]
+      nonmissing <- which(!is.na(ccc[["age_score"]]))
+      ccc[["cci"]][nonmissing] <- ccc[["cci"]][nonmissing] + ccc[["age_score"]][nonmissing]
     } else {
       ccc[["age_score"]] <- rep(NA_integer_, nrow(ccc))
     }
