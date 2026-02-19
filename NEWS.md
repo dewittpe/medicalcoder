@@ -28,8 +28,8 @@ the package in other environments.
 
 * Add ICD-9-PCS 35.7 to the PCCC codes. (#38)
   The v2 docs have 37.52, 37.53, 37.54, 37.55 as cvd (device) and 37.5, 37.51 as
-  cvd (transplant). v3 docs have 3751 as cdv (transplant), all other four digit
-  codes under 37.5 as cdv (device). One issue here is that 37.5 was an
+  cvd (transplant). v3 docs have 3751 as cvd (transplant), all other four digit
+  codes under 37.5 as cvd (device). One issue here is that 37.5 was an
   assignable code from CDC through 2003 and then was a header with the same four
   digit codes as CMS through 2012. CMS continued to use the four digit codes
   through 2015.

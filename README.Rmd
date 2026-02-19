@@ -407,4 +407,4 @@ directory.
 Along with the GitHub actions and testing on current versions of R, the
 [testing](https://github.com/dewittpe/medicalcoder/tree/main/testing)
 directory in the medicalcoder GitHub repo reports the `R CMD check` results for
-all R versions from 3.5.0 to latest.  Several with, and without Sugguests.
+all R versions from 3.5.0 to latest.  Several with, and without Suggests.

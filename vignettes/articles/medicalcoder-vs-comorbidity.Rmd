@@ -610,7 +610,7 @@ stopifnot(charlson_delta[mal != canc, .N == 26L])
 The ICD-10 codes C4A.x are not flagged as malignancies via
 `comorbidity::comorbidity()`.  This is likely due to the mapping missing.  Here
 we can see the mappings used between the two utilities.  The implementation used
-by `comorbidity::comorbidity()` relies on regular expressions applyed to the
+by `comorbidity::comorbidity()` relies on regular expressions applied to the
 data and the omitted C4A is why the code is not flagged.
 `medicalcoder::comorbidities()` builds a table with valid ICD codes to join
 against and has the C4A.x codes
@@ -622,7 +622,7 @@ grep("^C4A", medicalcoder::get_charlson_codes()$code, value = TRUE)
 grep("^C4A", medicalcoder::get_charlson_codes()$full_code, value = TRUE)
 ```
 
-The implimentation of `comorbidity::comorbidity()` can result in false positives
+The implementation of `comorbidity::comorbidity()` can result in false positives
 when invalid codes are submitted.
 
 ```{r}

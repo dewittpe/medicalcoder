@@ -311,7 +311,7 @@ When `flag.method = "cumulative"` and you do *not* supply `poa` or `poa.var`,
 `poa = 0` and carries that condition forward with `poa = 1` on later encounters.
 
 When `flag.method = "current"` and you do *not* supply `poa` or `poa.var`,
-`comorbidities()` treates all ICD codes as `poa = 1`.
+`comorbidities()` treats all ICD codes as `poa = 1`.
 
 # Mapping ICD Codes to Comorbidities
 

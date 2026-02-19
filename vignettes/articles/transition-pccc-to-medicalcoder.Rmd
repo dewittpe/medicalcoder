@@ -34,8 +34,8 @@ Major differences between `pccc::ccc()` and `medicalcoder::comorbidities()`:
 1. Input data format
 
    * `pccc::ccc()` expects a data.frame with each row representing one patient
-     and/or encounter.  There is a column for each diagnosic and procedure code.
-     For example, a data set were the max number of diagnosic codes is six and
+     and/or encounter.  There is a column for each diagnostic and procedure code.
+     For example, a data set were the max number of diagnostic codes is six and
      the max number of procedure codes is five, an entry for patient XX could
      look like the following:
 
@@ -49,7 +49,7 @@ Major differences between `pccc::ccc()` and `medicalcoder::comorbidities()`:
     where each row is single ICD code.  For example, the same record for patient
     XX above would be three columns below, one row for each code, one column to
     identify the patient/encounter, and a column to denote if the code is a
-    diagnosic (dx = 1) or procedure (dx = 0).
+    diagnostic (dx = 1) or procedure (dx = 0).
 
 ```
   patid    code  dx
@@ -79,9 +79,9 @@ Major differences between `pccc::ccc()` and `medicalcoder::comorbidities()`:
 
 3. PCCC Versions
 
-  * `pccc::ccc()` only impliments PCCC version 2 [@feudtner2014pediatric]
+  * `pccc::ccc()` only implements PCCC version 2 [@feudtner2014pediatric]
 
-  * `medicalcoder::comorbidities()` impliments:
+  * `medicalcoder::comorbidities()` implements:
 
     * `pccc_v2.0`: consistent results with `pccc::ccc()` for pccc version 1.0.7.
     * `pccc_v2.1`: improved mappings of ICD codes to PCCC using the PCCC v2
@@ -97,7 +97,7 @@ Major differences between `pccc::ccc()` and `medicalcoder::comorbidities()`:
 
   * `pccc::ccc()` only returns flags for primary conditions
 
-  * `medicalcoder::comorbidities()`: when the argument `subconditons = TRUE` is
+  * `medicalcoder::comorbidities()`: when the argument `subconditions = TRUE` is
     passed in, for PCCC the primary conditions and subconditions are flagged.
     Examples to follow.
 
@@ -365,7 +365,7 @@ GitHub links:
 * [ICD-10 Z94](https://github.com/CUD2V/pccc/issues/55)
 
 
-# Additional Benfits of medicalcoder
+# Additional Benefits of medicalcoder
 
 ## Computation Performance
 
