@@ -39,6 +39,10 @@ the package in other environments.
   * adding G36.x for neuro
   * adding 333.4 for neuro
 
+* Add checks for data structures (#41)
+
+* Handle zero length patterns in regex (#42)
+
 ## Other Changes
 
 * Extend and improve the internal ICD-9 database to distinguish between CDC and
