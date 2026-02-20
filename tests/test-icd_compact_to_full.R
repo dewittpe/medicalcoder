@@ -19,6 +19,14 @@ stopifnot(identical(
   c("03.09","17.12")
 ))
 
+# verify the converstion of a couple specific ICD-10-CM codes
+stopifnot(
+  identical(
+    icd_compact_to_full(c("C4A11", "Z3A29"), icdv = 10, dx = 1),
+    c("C4A.11", "Z3A.29")
+  )
+)
+
 ################################################################################
 #                                 End of File                                  #
 ################################################################################
