@@ -2,7 +2,7 @@
 
 
 
-# medicalcoder: An R package for working with ICD codes and Comorbidity Algorithms <img src="man/figures/hex.svg" width="200px" align="right" alt = "medicalcoder hex logo"/>
+# medicalcoder: A Unified and Longitudinally Aware Framework for ICD-Based Comorbidity Assessment <img src="man/figures/hex.svg" width="200px" align="right" alt = "medicalcoder hex logo"/>
 
 <!-- badges: start -->
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
@@ -14,14 +14,15 @@
 <!-- badges: end -->
 
 medicalcoder is a lightweight, base-R package for working with ICD-9 and
-ICD-10 diagnosis and procedure codes. It provides fast, dependency-free tools to
-look up, validate, and manipulate ICD codes, while also implementing widely used
-comorbidity algorithms such as Charlson, Elixhauser, and the Pediatric Complex
-Chronic Conditions (PCCC). Designed for portability and reproducibility, the
-package avoids external dependencies—requiring only R ≥ 3.5.0—yet offers a rich
-set of curated ICD code libraries from the United States' Centers for Medicare
-and Medicaid Services (CMS), Centers for Disease Control (CDC), and the World
-Health Organization (WHO).
+ICD-10 diagnosis and procedure codes. It implements widely used comorbidity
+algorithms such as Charlson, Elixhauser, and the Pediatric Complex Chronic
+Conditions (PCCC), supports longitudinal comorbidity flagging across encounters,
+and provides fast, dependency-free utilities to look up, validate, and
+manipulate ICD codes. Designed for portability and reproducibility, the package
+avoids external dependencies—requiring only R ≥ 3.5.0—yet offers a rich set of
+curated ICD code libraries from the United States' Centers for Medicare and
+Medicaid Services (CMS), Centers for Disease Control (CDC), and the World Health
+Organization (WHO).
 
 The package balances performance with elegance: its internal caching, efficient
 joins, and compact data structures make it practical for large-scale health data
@@ -86,7 +87,7 @@ medicalcoder provides novel features:
 
 ## Install
 
-### CRAN
+### From CRAN
 
 ``` r
 install.packages("medicalcoder")
@@ -106,11 +107,7 @@ you can install from within R via:
 
 
 ``` r
-install.packages(
-  pkgs = "medicalcoder_X.Y.Z.tar.gz", # replace file name with the file you have
-  repos = NULL,
-  type = "source"
-)
+install.packages(pkgs = "medicalcoder_X.Y.Z.tar.gz", repos = NULL, type = "source")
 ```
 
 From the command line:
