@@ -1,15 +1,16 @@
-# medicalcoder: An R package for working with ICD codes and Comorbidity Algorithms ![medicalcoder hex logo](reference/figures/hex.svg)
+# medicalcoder: A Unified and Longitudinally Aware Framework for ICD-Based Comorbidity Assessment ![medicalcoder hex logo](reference/figures/hex.svg)
 
 medicalcoder is a lightweight, base-R package for working with ICD-9 and
-ICD-10 diagnosis and procedure codes. It provides fast, dependency-free
-tools to look up, validate, and manipulate ICD codes, while also
-implementing widely used comorbidity algorithms such as Charlson,
-Elixhauser, and the Pediatric Complex Chronic Conditions (PCCC).
-Designed for portability and reproducibility, the package avoids
-external dependencies—requiring only R ≥ 3.5.0—yet offers a rich set of
-curated ICD code libraries from the United States’ Centers for Medicare
-and Medicaid Services (CMS), Centers for Disease Control (CDC), and the
-World Health Organization (WHO).
+ICD-10 diagnosis and procedure codes. It implements widely used
+comorbidity algorithms such as Charlson, Elixhauser, and the Pediatric
+Complex Chronic Conditions (PCCC), supports longitudinal comorbidity
+flagging across encounters, and provides fast, dependency-free utilities
+to look up, validate, and manipulate ICD codes. Designed for portability
+and reproducibility, the package avoids external dependencies—requiring
+only R ≥ 3.5.0—yet offers a rich set of curated ICD code libraries from
+the United States’ Centers for Medicare and Medicaid Services (CMS),
+Centers for Disease Control (CDC), and the World Health Organization
+(WHO).
 
 The package balances performance with elegance: its internal caching,
 efficient joins, and compact data structures make it practical for
@@ -83,7 +84,7 @@ algorithms. medicalcoder provides novel features:
 
 ## Install
 
-### CRAN
+### From CRAN
 
 ``` r
 install.packages("medicalcoder")
@@ -101,11 +102,7 @@ If you have the .tar.gz file for version X.Y.Z, e.g.,
 `medicalcoder_X.Y.Z.tar.gz` you can install from within R via:
 
 ``` r
-install.packages(
-  pkgs = "medicalcoder_X.Y.Z.tar.gz", # replace file name with the file you have
-  repos = NULL,
-  type = "source"
-)
+install.packages(pkgs = "medicalcoder_X.Y.Z.tar.gz", repos = NULL, type = "source")
 ```
 
 From the command line:
@@ -204,7 +201,7 @@ vignette(topic = "comorbidities", package = "medicalcoder")
 - All variants can flag conditions and subconditions.
 
 ``` r
-# PCCC v3.1 example
+# PCCC v2.1 and v3.1 example
 library(medicalcoder)
 cmrbs2 <-
   comorbidities(

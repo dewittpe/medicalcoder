@@ -5,14 +5,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>A Package for Working with ICD Codes and Comorbidity Algorithms • medicalcoder</title>
+<title>A Unified and Longitudinally Aware Framework for ICD-Based Comorbidity Assessment • medicalcoder</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="A Package for Working with ICD Codes and Comorbidity Algorithms">
-<meta name="description" content="Provides tools for working with medical coding schemas such as the International Classification of Diseases (ICD). Includes functions for comorbidity classification algorithms such as the Pediatric Complex Chronic Conditions (PCCC), Charlson, and Elixhauser indices.">
-<meta property="og:description" content="Provides tools for working with medical coding schemas such as the International Classification of Diseases (ICD). Includes functions for comorbidity classification algorithms such as the Pediatric Complex Chronic Conditions (PCCC), Charlson, and Elixhauser indices.">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="A Unified and Longitudinally Aware Framework for ICD-Based Comorbidity Assessment">
+<meta name="description" content="Provides comorbidity classification algorithms such as the Pediatric Complex Chronic Conditions (PCCC), Charlson, and Elixhauser indices, supports longitudinal comorbidity flagging across encounters, and includes utilities for working with medical coding schemas such as the International Classification of Diseases (ICD).">
+<meta property="og:description" content="Provides comorbidity classification algorithms such as the Pediatric Complex Chronic Conditions (PCCC), Charlson, and Elixhauser indices, supports longitudinal comorbidity flagging across encounters, and includes utilities for working with medical coding schemas such as the International Classification of Diseases (ICD).">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -67,11 +67,11 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="medicalcoder-an-r-package-for-working-with-icd-codes-and-comorbidity-algorithms-">medicalcoder: An R package for working with ICD codes and Comorbidity Algorithms <img src="reference/figures/hex.svg" width="200px" align="right" alt="medicalcoder hex logo"><a class="anchor" aria-label="anchor" href="#medicalcoder-an-r-package-for-working-with-icd-codes-and-comorbidity-algorithms-"></a>
+<div class="page-header"><h1 id="medicalcoder-a-unified-and-longitudinally-aware-framework-for-icd-based-comorbidity-assessment-">medicalcoder: A Unified and Longitudinally Aware Framework for ICD-Based Comorbidity Assessment <img src="reference/figures/hex.svg" width="200px" align="right" alt="medicalcoder hex logo"><a class="anchor" aria-label="anchor" href="#medicalcoder-a-unified-and-longitudinally-aware-framework-for-icd-based-comorbidity-assessment-"></a>
 </h1></div>
 <!-- badges: start -->
 
-<p>medicalcoder is a lightweight, base-R package for working with ICD-9 and ICD-10 diagnosis and procedure codes. It provides fast, dependency-free tools to look up, validate, and manipulate ICD codes, while also implementing widely used comorbidity algorithms such as Charlson, Elixhauser, and the Pediatric Complex Chronic Conditions (PCCC). Designed for portability and reproducibility, the package avoids external dependencies—requiring only R ≥ 3.5.0—yet offers a rich set of curated ICD code libraries from the United States’ Centers for Medicare and Medicaid Services (CMS), Centers for Disease Control (CDC), and the World Health Organization (WHO).</p>
+<p>medicalcoder is a lightweight, base-R package for working with ICD-9 and ICD-10 diagnosis and procedure codes. It implements widely used comorbidity algorithms such as Charlson, Elixhauser, and the Pediatric Complex Chronic Conditions (PCCC), supports longitudinal comorbidity flagging across encounters, and provides fast, dependency-free utilities to look up, validate, and manipulate ICD codes. Designed for portability and reproducibility, the package avoids external dependencies—requiring only R ≥ 3.5.0—yet offers a rich set of curated ICD code libraries from the United States’ Centers for Medicare and Medicaid Services (CMS), Centers for Disease Control (CDC), and the World Health Organization (WHO).</p>
 <p>The package balances performance with elegance: its internal caching, efficient joins, and compact data structures make it practical for large-scale health data analyses, while its clean design makes it easy to extend or audit. Whether you need to flag comorbidities, explore ICD hierarchies, or standardize clinical coding workflows, medicalcoder provides a robust, transparent foundation for research and applied work in biomedical informatics.</p>
 <p>The primary objectives of medicalcoder are:</p>
 <ol style="list-style-type: decimal">
@@ -133,7 +133,7 @@
 <h2 id="install">Install<a class="anchor" aria-label="anchor" href="#install"></a>
 </h2>
 <div class="section level3">
-<h3 id="cran">CRAN<a class="anchor" aria-label="anchor" href="#cran"></a>
+<h3 id="from-cran">From CRAN<a class="anchor" aria-label="anchor" href="#from-cran"></a>
 </h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"medicalcoder"</span><span class="op">)</span></span></code></pre></div>
@@ -149,11 +149,7 @@
 </h3>
 <p>If you have the .tar.gz file for version X.Y.Z, e.g., <code>medicalcoder_X.Y.Z.tar.gz</code> you can install from within R via:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span></span>
-<span>  pkgs <span class="op">=</span> <span class="st">"medicalcoder_X.Y.Z.tar.gz"</span>, <span class="co"># replace file name with the file you have</span></span>
-<span>  repos <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  type <span class="op">=</span> <span class="st">"source"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span>pkgs <span class="op">=</span> <span class="st">"medicalcoder_X.Y.Z.tar.gz"</span>, repos <span class="op">=</span> <span class="cn">NULL</span>, type <span class="op">=</span> <span class="st">"source"</span><span class="op">)</span></span></code></pre></div>
 <p>From the command line:</p>
 <pre><code>R CMD INSTALL medicalcoder_X.Y.Z.tar.gz</code></pre>
 </div>
@@ -240,7 +236,7 @@
 <li>All variants can flag conditions and subconditions.</li>
 </ul>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># PCCC v3.1 example</span></span>
+<code class="sourceCode R"><span><span class="co"># PCCC v2.1 and v3.1 example</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.peteredewitt.com/medicalcoder/">medicalcoder</a></span><span class="op">)</span></span>
 <span><span class="va">cmrbs2</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>

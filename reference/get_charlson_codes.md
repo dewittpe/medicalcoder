@@ -26,7 +26,7 @@ A `data.frame` with the following columns:
 
 - `condition`: Character vector of the conditions
 
-- `charson_\<variant\>`: Integer vector indicating if the code is part
+- `charlson_\<variant\>`: Integer vector indicating if the code is part
   of the \\variant\\ of the Charlson comorbidities.
 
 ## See also
