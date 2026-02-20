@@ -11,11 +11,18 @@ stopifnot(
   all(lr$full_code %in% lx$full_code)
 )
 
-# the following gives an error:
-#   Error in merge.data.frame(x = input, y = matches, all.x = TRUE, by = c(ifelse(regex,  :
-#     negative length vectors are not allowed
-m <- tryCatchError(lookup_icd_codes(x = "", regex = TRUE))
-stopifnot(inherits(m, "error"))
+# verify that a zero length regex will throw an error
+m0 <- tryCatchError(lookup_icd_codes(x = "", regex = TRUE))
+stopifnot(
+  inherits(m0, "error"),
+  m0[["message"]] == "When regex = TRUE, `x` must be non-empty strings."
+)
+
+m00 <- tryCatchError(lookup_icd_codes(x = c("^C4A", ""), regex = TRUE))
+stopifnot(
+  inherits(m00, "error"),
+  m00[["message"]] == "When regex = TRUE, `x` must be non-empty strings."
+)
 
 # out of the data.frame should be the same columns with or without matches
 m1 <- lookup_icd_codes(x = "", regex = FALSE)

@@ -42,6 +42,9 @@ lookup_icd_codes <- function(x, regex = FALSE, full.codes = TRUE, compact.codes 
   assert_scalar_logical(full.codes)
   assert_scalar_logical(compact.codes)
   stopifnot(isTRUE(full.codes | compact.codes))
+  if (isTRUE(regex) && any(is.na(x) | nchar(x) == 0L)) {
+    stop("When regex = TRUE, `x` must be non-empty strings.")
+  }
 
   ICDCODES <- get("icd_codes", envir = ..mdcr_data_env.., inherits = FALSE)
 
