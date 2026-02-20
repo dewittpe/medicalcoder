@@ -11,7 +11,7 @@ a \code{data.frame} with the following columns
 \itemize{
 \item \code{condition}: (character) syntax valid name for the condition
 \item \code{subcondition}: (character) syntax valid name for the subcondition
-\item \code{condition_label.}: (character) human readable label for the condition
+\item \code{condition_label}: (character) human readable label for the condition
 \item \code{subcondition_label}: (character) human readable label for the
 subcondition
 }
