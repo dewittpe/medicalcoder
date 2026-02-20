@@ -340,7 +340,7 @@ cmrbs <-
   )
 ```
 
-The summary for the results from `method = elixhauser_ahrq_icd10` are
+The summary for the results from `method = elixhauser_ahrq_icd10` is
 similar to those for Charlson. A `data.frame` with the counts and
 percentages of distinct `data[id.vars]` with the noted condition, and a
 summary of the index scores.

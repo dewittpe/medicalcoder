@@ -18,7 +18,7 @@ a `data.frame` with the following columns
 
 - `subcondition`: (character) syntax valid name for the subcondition
 
-- `condition_label.`: (character) human readable label for the condition
+- `condition_label`: (character) human readable label for the condition
 
 - `subcondition_label`: (character) human readable label for the
   subcondition
