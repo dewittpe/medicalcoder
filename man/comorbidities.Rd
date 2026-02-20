@@ -43,7 +43,7 @@ apply to \code{data}.}
 
 \item{id.vars}{Optional character vector of column names. When
 missing, the entire input \code{data} is treated as a single encounter from a
-single patient. If you want to set \code{flag.method = "current"} then
+single patient. If you want to set \code{flag.method = "cumulative"} then
 \code{length(id.vars) >= 2} is expected. The last element should be the
 encounter order (must be sortable).}
 

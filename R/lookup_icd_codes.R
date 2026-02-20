@@ -9,7 +9,9 @@
 #' @template details-header-and-assignable-codes
 #' @template details-fiscal-and-calendar-years
 #'
-#' @param x Character vector of ICD codes (full or compact form).
+#' @param x Character vector of ICD codes (full or compact form). When
+#'   `regex = TRUE`, `x` must contain at least one non-empty, non-missing
+#'   string.
 #' @param regex Logical scalar. If `TRUE`, treat `x` as regular
 #'   expressions; if `FALSE`, use exact matching.
 #' @template params-icd-form

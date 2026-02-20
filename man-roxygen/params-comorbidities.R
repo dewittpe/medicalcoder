@@ -13,7 +13,7 @@
 #'
 #' @param id.vars Optional character vector of column names. When
 #'   missing, the entire input `data` is treated as a single encounter from a
-#'   single patient. If you want to set `flag.method = "current"` then
+#'   single patient. If you want to set `flag.method = "cumulative"` then
 #'   `length(id.vars) >= 2` is expected. The last element should be the
 #'   encounter order (must be sortable).
 #'

@@ -13,7 +13,9 @@ lookup_icd_codes(
 )
 }
 \arguments{
-\item{x}{Character vector of ICD codes (full or compact form).}
+\item{x}{Character vector of ICD codes (full or compact form). When
+\code{regex = TRUE}, \code{x} must contain at least one non-empty, non-missing
+string.}
 
 \item{regex}{Logical scalar. If \code{TRUE}, treat \code{x} as regular
 expressions; if \code{FALSE}, use exact matching.}
