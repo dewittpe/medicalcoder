@@ -55,13 +55,15 @@ implemented in the medicalcoder package:
       ii. `elixhauser_ahrq2023`
       iii. `elixhauser_ahrq2024`
       iv. `elixhauser_ahrq2025`
+      v. `elixhauser_ahrq2026`
+      vi. `elixhauser_ahrq_icd10`: uses all codes from all the specific years
 
    b. Codes from Table 2 of @quan2005
       i. `elixhauser_elixhauser1988`: [@elixhauser1998;@quan2005]
       ii. `elixhauser_ahrq_web`: [@quan2005;@ahrq2017]
       iii. `elixhauser_quan2005`: [@quan2005]
 
-**IMPORTANT NOTE:** Elixhauser 1998 and AHRQ Web used diagnostic related
+**IMPORTANT NOTE:** Elixhauser 1998 and AHRQ Web used diagnosis-related
 group (DRG) codes as part of the methods.  The medicalcoder
 package _does not_ use DRG codes.  This is consistent with the way these
 methods were implemented in @quan2005.

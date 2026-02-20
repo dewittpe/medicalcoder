@@ -10,9 +10,9 @@
 #'
 #' @return a `data.frame` with the following columns
 #' * `condition`: (character) syntax valid name for the condition
-#' * `subconditions`: (character) syntax valid name for the subcondition
-#' * `conditions_label.`: (character) human readable label for the condition
-#' * `subconditions_label`: (character) human readable label for the
+#' * `subcondition`: (character) syntax valid name for the subcondition
+#' * `condition_label`: (character) human readable label for the condition
+#' * `subcondition_label`: (character) human readable label for the
 #'   subcondition
 #'
 #' @examples

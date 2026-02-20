@@ -14,7 +14,7 @@ A \code{data.frame} with the following columns:
 \item \code{full_code}: Character vector with the ICD code and any relevant decimal point
 \item \code{code}: Character vector with the compact ICD code
 \item \code{condition}: Character vector of the conditions
-\item \verb{charson_\\<variant\\>}: Integer vector indicating if the code is part of the \<variant\> of the Charlson comorbidities.
+\item \verb{charlson_\\<variant\\>}: Integer vector indicating if the code is part of the \<variant\> of the Charlson comorbidities.
 }
 }
 \description{

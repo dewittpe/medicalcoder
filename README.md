@@ -207,7 +207,7 @@ vignette(topic = "comorbidities", package = "medicalcoder")
 
 
 ``` r
-# PCCC v3.1 example
+# PCCC v2.1 and v3.1 example
 library(medicalcoder)
 cmrbs2 <-
   comorbidities(

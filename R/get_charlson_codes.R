@@ -19,7 +19,7 @@
 #' * `full_code`: Character vector with the ICD code and any relevant decimal point
 #' * `code`: Character vector with the compact ICD code
 #' * `condition`: Character vector of the conditions
-#' * `charson_\<variant\>`: Integer vector indicating if the code is part of the \<variant\> of the Charlson comorbidities.
+#' * `charlson_\<variant\>`: Integer vector indicating if the code is part of the \<variant\> of the Charlson comorbidities.
 #'
 #' @examples
 #' head(get_charlson_codes())
