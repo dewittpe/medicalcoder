@@ -17,3 +17,6 @@
 ^pkgdown$
 ^tests/build-expected-ahrq-results/*
 ^logo/*
+^.*\\.tar\\.gz$
+^.*\\.Rcheck/*
+^vignettes/articles/*
