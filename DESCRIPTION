@@ -1,5 +1,5 @@
 Package: medicalcoder
-Title: A Package for Working with ICD Codes and Comorbidity Algorithms
+Title: A Unified and Longitudinally Aware Framework for ICD-Based Comorbidity Assessment
 Version: 0.8.0
 Authors@R: c(
     person(given = "Peter",   family = "DeWitt",    email = "peter.dewitt@cuanschutz.edu",      role = c("aut", "cre", "cov"), comment = c(ORCID = "0000-0002-6391-0795")),
@@ -8,10 +8,11 @@ Authors@R: c(
     person(given = "Meg",     family = "Rebull",    email = "meg.rebull@cuanschutz.edu",        role = c("ctb"),               comment = c(ORCID = "0000-0003-0334-4223")),
     person(given = "Vincent", family = "Rubinetti", email = "vincent.rubinetti@cuanschutz.edu", role = c("cov"),               comment = c(ORCID = "0000-0002-4655-3773"))
     )
-Description: Provides tools for working with medical coding schemas such as the
-  International Classification of Diseases (ICD). Includes functions for
-  comorbidity classification algorithms such as the Pediatric Complex Chronic
-  Conditions (PCCC), Charlson, and Elixhauser indices.
+Description: Provides comorbidity classification algorithms such as the
+  Pediatric Complex Chronic Conditions (PCCC), Charlson, and Elixhauser indices,
+  supports longitudinal comorbidity flagging across encounters, and includes
+  utilities for working with medical coding schemas such as the International
+  Classification of Diseases (ICD).
 Depends: R (>= 3.5.0)
 License: BSD_3_clause + file LICENSE
 Language: en-US
