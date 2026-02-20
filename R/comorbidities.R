@@ -221,6 +221,9 @@ comorbidities.data.frame <- function(data,
 
   if (!is.null(poa.var)) {
     is_a_column(poa.var, names(data))
+    if (!is.numeric(data[[poa.var]])) {
+      stop(sprintf("Column '%s' must be numeric (0/1/NA) when supplied as poa.var.", poa.var), call. = FALSE)
+    }
     pn <- poa.var %in% ..protected_names..
     if (pn) {
       stop(
@@ -234,6 +237,9 @@ comorbidities.data.frame <- function(data,
 
   if ((startsWith(method, "elixhauser") | startsWith(method, "charlson")) & !is.null(primarydx.var)) {
     is_a_column(primarydx.var, names(data))
+    if (!is.numeric(data[[primarydx.var]])) {
+      stop(sprintf("Column '%s' must be numeric (0/1/NA) when supplied as primarydx.var.", primarydx.var), call. = FALSE)
+    }
     pn <- primarydx.var %in% ..protected_names..
     if (pn) {
       stop(
@@ -278,6 +284,9 @@ comorbidities.data.frame <- function(data,
       icdv <- NULL
     } else {
       is_a_column(icdv.var, names(data))
+      if (!is.numeric(data[[icdv.var]])) {
+        stop(sprintf("Column '%s' must be numeric (9/10/NA) when supplied as icdv.var.", icdv.var), call. = FALSE)
+      }
     }
   } else {
     if (!is.null(icdv)) {
@@ -300,6 +309,9 @@ comorbidities.data.frame <- function(data,
       dx <- NULL
     } else{
       is_a_column(dx.var, names(data))
+      if (!is.numeric(data[[dx.var]])) {
+        stop(sprintf("Column '%s' must be numeric (0/1/NA) when supplied as dx.var.", dx.var), call. = FALSE)
+      }
     }
   } else {
     if (!is.null(dx)) {

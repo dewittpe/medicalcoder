@@ -83,6 +83,96 @@ x <-
   )
 stopifnot(inherits(x, "error"))
 
+################################################################################
+# verify errors are thrown when icdv.var, dx.var, poa.var, or primarydx.var are
+# non-numeric
+mdcr3 <- mdcr
+mdcr3[["icdv_chr"]] <- as.character(mdcr3[["icdv"]])
+mdcr3[["dx_chr"]] <- as.character(mdcr3[["dx"]])
+mdcr3[["poa_chr"]] <- as.character(rep(1L, nrow(mdcr3)))
+mdcr3[["primarydx_chr"]] <- as.character(rep(0L, nrow(mdcr3)))
+
+x <-
+  tryCatchError(
+    comorbidities(
+      data = mdcr3,
+      id.vars = "patid",
+      icd.codes = "code",
+      icdv.var = "icdv_chr",
+      dx.var = "dx",
+      poa = 1L,
+      method = "pccc_v3.1"
+    )
+  )
+stopifnot(
+  inherits(x, "error"),
+  grepl(
+    "Column .*icdv_chr.* must be numeric \\(9/10/NA\\) when supplied as icdv\\.var\\.",
+    gsub("['\"`\\p{Pi}\\p{Pf}]", "", x[["message"]], perl = TRUE)
+  )
+)
+
+x <-
+  tryCatchError(
+    comorbidities(
+      data = mdcr3,
+      id.vars = "patid",
+      icd.codes = "code",
+      icdv.var = "icdv",
+      dx.var = "dx_chr",
+      poa = 1L,
+      method = "pccc_v3.1"
+    )
+  )
+stopifnot(
+  inherits(x, "error"),
+  grepl(
+    "Column .*dx_chr.* must be numeric \\(0/1/NA\\) when supplied as dx\\.var\\.",
+    gsub("['\"`\\p{Pi}\\p{Pf}]", "", x[["message"]], perl = TRUE)
+  )
+)
+
+x <-
+  tryCatchError(
+    comorbidities(
+      data = mdcr3,
+      id.vars = "patid",
+      icd.codes = "code",
+      icdv.var = "icdv",
+      dx.var = "dx",
+      poa.var = "poa_chr",
+      method = "pccc_v3.1"
+    )
+  )
+stopifnot(
+  inherits(x, "error"),
+  grepl(
+    "Column .*poa_chr.* must be numeric \\(0/1/NA\\) when supplied as poa\\.var\\.",
+    gsub("['\"`\\p{Pi}\\p{Pf}]", "", x[["message"]], perl = TRUE)
+  )
+)
+
+x <-
+  tryCatchError(
+    comorbidities(
+      data = mdcr3,
+      id.vars = "patid",
+      icd.codes = "code",
+      icdv.var = "icdv",
+      dx.var = "dx",
+      poa = 1L,
+      primarydx.var = "primarydx_chr",
+      method = "elixhauser_ahrq2025"
+    )
+  )
+stopifnot(
+  inherits(x, "error"),
+  grepl(
+    "Column .*primarydx_chr.* must be numeric \\(0/1/NA\\) when supplied as primarydx\\.var\\.",
+    gsub("['\"`\\p{Pi}\\p{Pf}]", "", x[["message"]], perl = TRUE)
+  )
+)
+
 
 ################################################################################
 # Test: check_and_set_*
