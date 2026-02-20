@@ -1,40 +1,22 @@
-# Version 0.7.0
+# Version 0.8.0
 
 Bug fixes and new features.
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+Status: OK
 
-* This is a new release.
+### platforms:
+* local macOS
+  - All R versions 3.5.0 through 4.5.2 without suggests
+  - All R versions 4.4.0 through 4.5.2 with suggests
 
-### plattforms:
-* local R 4.5.1
 * Github Actions:
-  * macOS R-4.5.1
-  * windows R-4.5.1
-  * ubuntu R-4.5.1
+  * macOS R-4.5.2
+  * windows R-4.5.2
+  * ubuntu R-4.5.2
   * ubuntu R-devel
-  * ubuntu R-4.5.1
-* rhub
-* winbuilder
-
-# Version 0.6.0
-
-## R CMD check results
-
-0 errors | 0 warnings | 1 note
-
-* This is a new release.
-
-### plattforms:
-* local R 4.5.1
-* Github Actions:
-  * macOS R-4.5.1
-  * windows R-4.5.1
-  * ubuntu R-4.5.1
-  * ubuntu R-devel
-  * ubuntu R-4.5.1
+  * ubuntu R-4.5.2
 * rhub
 * winbuilder
 
@@ -58,4 +40,4 @@ DESCRIPTION file:
 * "ICD" is the common abbreviation for the International Classification of Diseases.
 * "PCCC" is a defined abbreviation for the Pediatric Complex Complex Conditions
   and is commonly used in literature.
-* ""schemas is a common pural for schema, preferable to the more formal schemata.
+* "schemas" is a common plural for schema, preferable to the more formal schemata.
