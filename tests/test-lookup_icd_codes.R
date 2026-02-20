@@ -15,13 +15,19 @@ stopifnot(
 m0 <- tryCatchError(lookup_icd_codes(x = "", regex = TRUE))
 stopifnot(
   inherits(m0, "error"),
-  m0[["message"]] == "When regex = TRUE, `x` must be non-empty strings."
+  m0[["message"]] == "When regex = TRUE, x must be non-empty strings."
 )
 
 m00 <- tryCatchError(lookup_icd_codes(x = c("^C4A", ""), regex = TRUE))
 stopifnot(
   inherits(m00, "error"),
-  m00[["message"]] == "When regex = TRUE, `x` must be non-empty strings."
+  m00[["message"]] == "When regex = TRUE, x must be non-empty strings."
+)
+
+m000 <- tryCatchError(lookup_icd_codes(x = character(0), regex = TRUE))
+stopifnot(
+  inherits(m000, "error"),
+  m000[["message"]] == "When regex = TRUE, x must be non-empty strings."
 )
 
 # out of the data.frame should be the same columns with or without matches
