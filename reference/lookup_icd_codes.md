@@ -28,7 +28,9 @@ lookup_icd_codes(
 
 - x:
 
-  Character vector of ICD codes (full or compact form).
+  Character vector of ICD codes (full or compact form). When
+  `regex = TRUE`, `x` must contain at least one non-empty, non-missing
+  string.
 
 - regex:
 

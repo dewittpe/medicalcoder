@@ -2,6 +2,8 @@
 
 ## medicalcoder 0.8.0
 
+CRAN release: 2026-02-22
+
 ### License Change
 
 medicalcoder \<= 0.7.0 was under GPL-2 for no other reason that that was
