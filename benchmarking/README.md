@@ -72,9 +72,9 @@ The subjects were resampled to generate data sets with upto 1,000,000 subjects.
 In general, the expected time to apply a comorbidity method is lower for
 `tibble`s than for base `data.frame`s, and lower still for `data.table`s. Best
 observed case: a `data.table` took
-0.0743907
+0.0729237
 the time of a `data.frame`. Best case for `tibble`s was
-0.1948918
+0.2046715
 the time of a `data.frame`.
 
 ## All Comorbidities

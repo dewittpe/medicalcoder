@@ -149,9 +149,12 @@ for(x in c("mimiciv_composite", "all_cmrb_composite")) {
   dev.off()
 
   f <- sprintf("benchmark_%s.png", x)
-  png(file = f, width = 12, height = 9)
-    print(get(x = x))
-  dev.off()
+  ggplot2::ggsave(
+    plot = get(x = x),
+    filename = f,
+    width = 12,
+    height = 9
+  )
 
   f <- sprintf("benchmark_%s.svg", x)
   svglite::svglite(filename = f, width = 12, height = 9)
