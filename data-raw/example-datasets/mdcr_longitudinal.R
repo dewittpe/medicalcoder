@@ -24,12 +24,7 @@ setnames(mdcr_longitudinal,
          old = c("icd_type", "icd_code"),
          new = c("icdv", "code"))
 setDF(mdcr_longitudinal)
-save(mdcr_longitudinal, file = "../../data/mdcr_longitudinal.rda")
-tools::resaveRdaFiles(
-  "../../data/mdcr_longitudinal.rda",
-  compress = "xz",
-  compression_level = 9
-)
+save(mdcr_longitudinal, file = "../../data/mdcr_longitudinal.rda", ascii = FALSE, version = 3, compress = "xz", compression_level = 9)
 
 ################################################################################
 #                                 End of File                                  #

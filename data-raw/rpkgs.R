@@ -6,7 +6,6 @@
 #
 # inputs:
 #   CRAN packages: Rcpp, data.table, tidyverse, pbapply, readxl, zoo, qwraps2,
-#     usethis
 #   pccc/pccc_v2/pccc_1.0.7.tar.gz (local tarball install)
 #
 # output: Installs/updates packages in the active library (no files written).
@@ -25,7 +24,7 @@
 
 options(repos=c(CRAN='https://cran.rstudio.com'))
 
-pkgs <- c("Rcpp", "data.table", "tidyverse", "pbapply", "readxl", "zoo", "qwraps2", "usethis")
+pkgs <- c("Rcpp", "data.table", "tidyverse", "pbapply", "readxl", "zoo", "qwraps2")
 
 to_install <- setdiff(pkgs, rownames(installed.packages()))
 

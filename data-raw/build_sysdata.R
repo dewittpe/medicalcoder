@@ -20,9 +20,9 @@
 #   ./elixhauser/elixhauser_poa.rds
 #   ./elixhauser/elixhauser_codes.rds
 #
-# output:  R/sysdata.rda (internal package data created via usethis::use_data)
+# output:  R/sysdata.rda
 #
-# deps:    base (readRDS), usethis (use_data)
+# deps:    base (readRDS)
 #
 # notes:   Must be run with working directory set to data-raw/ so relative paths
 #          resolve. Overwrites existing R/sysdata.rda.
@@ -55,7 +55,7 @@
 
 # All internal data sets need to have the ..mdcr_internal_ prefix and .. suffix.
 # This is expected in tests and in use within the package.
-usethis::use_data(
+save(
     ..mdcr_internal_pccc_codes..
   , ..mdcr_internal_pccc_conditions..
 
@@ -73,11 +73,13 @@ usethis::use_data(
   , ..mdcr_internal_elixhauser_poa..
   , ..mdcr_internal_elixhauser_codes..
 
-  , internal  = TRUE
-  , overwrite = TRUE
-)
+  , file = "../R/sysdata.rda"
 
-tools::resaveRdaFiles("../R/sysdata.rda", compress = "xz", compression_level = 9)
+  , compress = "xz"
+  , compression_level = 9
+  , ascii = FALSE
+  , version = 3
+)
 
 ################################################################################
 #                                 End of File                                  #

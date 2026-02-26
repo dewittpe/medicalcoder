@@ -40,12 +40,7 @@ mdcr[, patid := patid2]
 mdcr[, patid2 := NULL]
 
 setDF(mdcr)
-save(mdcr, file = "../../data/mdcr.rda")
-tools::resaveRdaFiles(
-  "../../data/mdcr.rda",
-  compress = "xz",
-  compression_level = 9
-)
+save(mdcr, file = "../../data/mdcr.rda", ascii = FALSE, version = 3, compress = "xz", compression_level = 9)
 
 ################################################################################
 #                                 End of File                                  #
