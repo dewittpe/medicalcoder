@@ -3,7 +3,7 @@
 ``` r
 library(medicalcoder)
 packageVersion("medicalcoder")
-## [1] '0.8.0'
+## [1] '0.8.0.9000'
 ```
 
 ## Comorbidity Algorithms

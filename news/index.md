@@ -1,5 +1,13 @@
 # Changelog
 
+## medicalcoder 0.8.0.9000
+
+### Bug Fixes
+
+- Fix Charlson `age.var` handling when `id.vars` is missing or has
+  multiple ages per ID.
+  ([\#43](https://github.com/dewittpe/medicalcoder/issues/43))
+
 ## medicalcoder 0.8.0
 
 CRAN release: 2026-02-22
