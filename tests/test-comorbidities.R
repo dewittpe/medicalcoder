@@ -363,5 +363,66 @@ for (m in ms) {
 }
 
 ################################################################################
+# age.var handling for charlson with missing/ambiguous id.vars
+#
+# RE: https://github.com/dewittpe/medicalcoder/issues/43
+DF <-
+  data.frame(
+    pid = c(1, 1, 2),
+    enc_id = c(1, 2, 1),
+    icd_code = c("", "", ""),
+    age = c(54, 55, 54),
+    stringsAsFactors = FALSE
+  )
+
+common_args <-
+  list(
+    data      = DF,
+    icd.codes = "icd_code",
+    poa       = 1L,
+    primarydx = 0L,
+    method    = "charlson_quan2005"
+  )
+
+# id.vars = NULL should not error when age.var is supplied
+# for v0.8.0 this would error.
+out_no_error <-
+  tryCatchError(
+    suppressWarnings(
+      do.call(comorbidities, c(common_args, list(id.vars = NULL, age.var = "age")))
+    )
+  )
+stopifnot(inherits(out_no_error, "medicalcoder_comorbidities"), nrow(out_no_error) == 2L)
+
+# if id.vars = NULL, or id.vars = "ptid", for the example, data, the return will
+# have three rows becuase the ages are distinct.  This should give a warning
+out0_warning <-
+  tryCatchWarning(
+    do.call(comorbidities, c(common_args, list(id.vars = NULL, age.var = "age")))
+  )
+out1_warning <-
+  tryCatchWarning(
+    do.call(comorbidities, c(common_args, list(id.vars = "pid", age.var = "age")))
+  )
+stopifnot(inherits(out0_warning, "warning"), inherits(out1_warning, "warning"))
+stopifnot(
+  out0_warning$message == "There is more than one unique value for age.  Since `id.vars = NULL` the expectation is there would be one unique age value.  The return will have more than one row, one for each unique age.",
+  out1_warning$message == "There is at least one set of id.vars with more than one age value.  The expectation is that there is only one age value for each unique set of id.vars.  The return will have more than one row for each unique set of id.vars."
+)
+
+out0 <-
+  suppressWarnings(
+    do.call(comorbidities, c(common_args, list(id.vars = NULL, age.var = "age")))
+  )
+out1 <-
+  suppressWarnings(
+    do.call(comorbidities, c(common_args, list(id.vars = "pid", age.var = "age")))
+  )
+stopifnot(
+  inherits(out0, "medicalcoder_comorbidities"), nrow(out0) == 2L,
+  inherits(out1, "medicalcoder_comorbidities"), nrow(out1) == 3L
+)
+
+################################################################################
 #                                 End of File                                  #
 ################################################################################
