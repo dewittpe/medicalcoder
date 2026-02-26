@@ -571,11 +571,29 @@ comorbidities.data.frame <- function(data,
   } else if (startsWith(method, "charlson")) {
     ccc <- .charlson(id.vars = id.vars, iddf = iddf, cmrb = cmrb, primarydx.var = primarydx.var, method = method)
     if (!is.null(age.var)) {
-      ages <- mdcr_unique(mdcr_select(data, cols = c(id.vars, age.var)))
+      if (id.vars.created) {
+        ages <- mdcr_unique(mdcr_select(data, cols = c(age.var)))
+        ages <- mdcr_set(ages, j = id.vars, value = rep(1L, nrow(ages)))
+        warn_about_age <- nrow(ages) > 1
+      } else {
+        ages <- mdcr_unique(mdcr_select(data, cols = c(id.vars, age.var)))
+        warn_about_age <- any(mdcr_duplicated(ages, by = id.vars))
+      }
+
+      if (warn_about_age) {
+        if (id.vars.created) {
+          msg <- "There is more than one unique value for age.  Since `id.vars = NULL` the expectation is there would be one unique age value.  The return will have more than one row, one for each unique age."
+        } else {
+          msg <- "There is at least one set of id.vars with more than one age value.  The expectation is that there is only one age value for each unique set of id.vars.  The return will have more than one row for each unique set of id.vars."
+        }
+        warning(msg, call. = FALSE)
+      }
+
       ages[["age_score"]] <- as.integer(cut(ages[[age.var]], breaks = c(-Inf, 50, 60, 70, 80, Inf), right = TRUE)) - 1L
       ccc <- merge(ccc, mdcr_select(ages, cols = c(id.vars, "age_score")), all.x = TRUE, by = id.vars, sort = FALSE)
       nonmissing <- which(!is.na(ccc[["age_score"]]))
       ccc[["cci"]][nonmissing] <- ccc[["cci"]][nonmissing] + ccc[["age_score"]][nonmissing]
+
     } else {
       ccc[["age_score"]] <- rep(NA_integer_, nrow(ccc))
     }
