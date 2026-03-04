@@ -86,7 +86,7 @@ medicalcoder_charlson_results <-
 toc <- Sys.time()
 
 difftime(toc, tic, units = "secs")
-## Time difference of 0.6468945 secs
+## Time difference of 0.6687598 secs
 ```
 
 Calling
@@ -106,7 +106,7 @@ multimorbidity_charlson_results <-
 toc <- Sys.time()
 
 difftime(toc, tic, units = "secs")
-## Time difference of 13.15024 secs
+## Time difference of 13.47547 secs
 ```
 
 ### Differences in the results
