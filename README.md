@@ -11,6 +11,7 @@
 [![CRAN status](https://www.r-pkg.org/badges/version-last-release/medicalcoder)](https://CRAN.R-project.org/package=medicalcoder)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/medicalcoder)](https://www.r-pkg.org/pkg/medicalcoder)
 [![downloads](https://cranlogs.r-pkg.org/badges/grand-total/medicalcoder)](https://www.r-pkg.org/pkg/medicalcoder)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/dewittpe/medicalcoder)
 <!-- badges: end -->
 
 medicalcoder is a lightweight, base-R package for working with ICD-9 and
