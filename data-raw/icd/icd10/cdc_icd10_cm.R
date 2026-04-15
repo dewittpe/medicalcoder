@@ -221,38 +221,85 @@ unzip(file.path(cdc_icd10cm_dir, "/2025/ICD10-CM Code Descriptions 2025.zip"),
 ######
 # 2026
 if (interactive()) {
-  dir(file.path(cdc_icd10cm_dir, "/2026"))
-  unzip(file.path(cdc_icd10cm_dir, "/2026/icd10cm-Code Descriptions-2026.zip"), list = TRUE)
+  dir(file.path(cdc_icd10cm_dir, "2026"))
+  unzip(file.path(cdc_icd10cm_dir, "2026", "icd10cm-Code Descriptions-2026.zip"), list = TRUE)
 }
 
-unzip(file.path(cdc_icd10cm_dir, "/2026/icd10cm-Code Descriptions-2026.zip"),
-      exdir = file.path(cdc_tempdir, "/2026"),
+unzip(file.path(cdc_icd10cm_dir, "2026/icd10cm-Code Descriptions-2026.zip"),
+      exdir = file.path(cdc_tempdir, "2026"),
       overwrite = TRUE)
+
+######
+# 2026 - update
+#
+# NOTE: 15 April 2026
+# there are "update" files which correspond to how to code, but there are no
+# changes to the codes themselves.
+if (interactive()) {
+  dir(file.path(cdc_icd10cm_dir, "2026-update"))
+  unzip(file.path(cdc_icd10cm_dir, "2026-update", "icd10cm-Code Descriptions-April-1-2026.zip"), list = TRUE)
+  unzip(file.path(cdc_icd10cm_dir, "2026-update", "icd10cm-addenda-April-1-2026.zip"), list = TRUE)
+  unzip(file.path(cdc_icd10cm_dir, "2026-update", "icd10cm-April-1-2026-XML.zip"), list = TRUE)
+  unzip(file.path(cdc_icd10cm_dir, "2026-update", "icd10cm-table-and-index-April-1-2026.zip"), list = TRUE)
+}
+
+# unzip(file.path(cdc_icd10cm_dir, "2026-update", "icd10cm-table-and-index-April-1-2026.zip"),
+#       exdir = file.path(cdc_tempdir, "2026-update"),
+#       overwrite = TRUE)
+#
+# update2026 <-
+#   scan(
+#     file = file.path(cdc_tempdir, "2026-update", "icd10cm-order-addenda-April-1-2026.txt"),
+#     what = character(),
+#     sep = "\n"
+#   )
+# cat(update2026, sep = '\n')
+#
+### Headers
+###   23467 headers in icd10cm_order_2026.txt
+###   23467 headers in icd10cm_order_2026.txt
+###       0 additions
+###       0 deletions
+###       0 revisions
+### of which
+###       0 revisions to both long and short titles
+###       0 revisions to long title only
+###       0 revisions to short title only
+### Codes
+###   74719 codes in icd10cm_order_2026.txt
+###   74719 codes in icd10cm_order_2026.txt
+###       0 additions
+###       0 deletions
+###       0 revisions
+### of which
+###       0 revisions to both long and short titles
+###       0 revisions to long title only
+###       0 revisions to short title only
 
 ################################################################################
 # scan all the files - Just for 2014 and beyond, the same as for CMS
 cdc_files <-
   list(
-       #cdc_dx_2007 = file.path(cdc_tempdir, "/2007/2007_I10desc.txt"),
+       #cdc_dx_2007 = file.path(cdc_tempdir, "2007", "2007_I10desc.txt"),
        # no 2008 data
-       #cdc_dx_2009 = file.path(cdc_tempdir, "/2009/I10cm_desc.txt"),
-       #cdc_dx_2010 = file.path(cdc_tempdir, "/2010/I10cm_desc2010.txt"),
-       #cdc_dx_2011 = file.path(cdc_tempdir, "/2011/icd10cm_desc_2011.txt"),
-       #cdc_dx_2012 = file.path(cdc_tempdir, "/2012/icd10cm_order_2012.txt"),
-       #cdc_dx_2013 = file.path(cdc_tempdir, "/2013/icd10cm_order_2013.txt"),
-       cdc_dx_2014 = file.path(cdc_tempdir, "/2014/icd10cm_order_2014.txt"),
-       cdc_dx_2015 = file.path(cdc_tempdir, "/2015/icd10cm_order_2015.txt"),
-       cdc_dx_2016 = file.path(cdc_tempdir, "/2016/icd10cm_order_2016.txt"),
-       cdc_dx_2017 = file.path(cdc_icd10cm_dir, "/2017/icd10cm_order_2017.txt"),
-       cdc_dx_2018 = file.path(cdc_tempdir, "/2018/icd10cm_order_2018.txt"),
-       cdc_dx_2019 = file.path(cdc_icd10cm_dir, "/2019/icd10cm_order_2019.txt"),
-       cdc_dx_2020 = file.path(cdc_icd10cm_dir, "/2020/icd10cm_order_2020.txt"),
-       cdc_dx_2021 = file.path(cdc_icd10cm_dir, "/2021/icd10cm_order_2021.txt"),
-       cdc_dx_2022 = file.path(cdc_icd10cm_dir, "/2022/icd10cm_order_2022.txt"),
-       cdc_dx_2023 = file.path(cdc_tempdir, "/2023/icd10cm-order-2023.txt"),
-       cdc_dx_2024 = file.path(cdc_tempdir, "/2024/icd10cm-order-2024.txt"),
-       cdc_dx_2025 = file.path(cdc_tempdir, "/2025/icd10cm-order-2025.txt"),
-       cdc_dx_2026 = file.path(cdc_tempdir, "/2026/icd10cm-order-2026.txt")
+       #cdc_dx_2009 = file.path(cdc_tempdir, "2009", "I10cm_desc.txt"),
+       #cdc_dx_2010 = file.path(cdc_tempdir, "2010", "I10cm_desc2010.txt"),
+       #cdc_dx_2011 = file.path(cdc_tempdir, "2011", "icd10cm_desc_2011.txt"),
+       #cdc_dx_2012 = file.path(cdc_tempdir, "2012", "icd10cm_order_2012.txt"),
+       #cdc_dx_2013 = file.path(cdc_tempdir, "2013", "icd10cm_order_2013.txt"),
+       cdc_dx_2014 = file.path(cdc_tempdir, "2014", "icd10cm_order_2014.txt"),
+       cdc_dx_2015 = file.path(cdc_tempdir, "2015", "icd10cm_order_2015.txt"),
+       cdc_dx_2016 = file.path(cdc_tempdir, "2016", "icd10cm_order_2016.txt"),
+       cdc_dx_2017 = file.path(cdc_icd10cm_dir, "2017", "icd10cm_order_2017.txt"),
+       cdc_dx_2018 = file.path(cdc_tempdir, "2018", "icd10cm_order_2018.txt"),
+       cdc_dx_2019 = file.path(cdc_icd10cm_dir, "2019", "icd10cm_order_2019.txt"),
+       cdc_dx_2020 = file.path(cdc_icd10cm_dir, "2020", "icd10cm_order_2020.txt"),
+       cdc_dx_2021 = file.path(cdc_icd10cm_dir, "2021", "icd10cm_order_2021.txt"),
+       cdc_dx_2022 = file.path(cdc_icd10cm_dir, "2022", "icd10cm_order_2022.txt"),
+       cdc_dx_2023 = file.path(cdc_tempdir, "2023", "icd10cm-order-2023.txt"),
+       cdc_dx_2024 = file.path(cdc_tempdir, "2024", "icd10cm-order-2024.txt"),
+       cdc_dx_2025 = file.path(cdc_tempdir, "2025", "icd10cm-order-2025.txt"),
+       cdc_dx_2026 = file.path(cdc_tempdir, "2026", "icd10cm-order-2026.txt")
       ) |>
   lapply(scan, what = "character", sep = "\n", quiet = !interactive())
 
@@ -265,7 +312,8 @@ cdc_files[, dxpr := substr(src, start = 5, stop = 6)]
 cdc_files[, src := substr(src, start = 1, stop = 3)]
 
 ################################################################################
-setDF(cdc_files)
+# save to disk
+data.table::setDF(cdc_files)
 saveRDS(cdc_files, file = "cdc_icd10.rds")
 
 ################################################################################
