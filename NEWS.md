@@ -5,6 +5,8 @@
 * Fix Charlson `age.var` handling when `id.vars` is missing or has multiple ages
   per ID. (#43)
 
+* Account for possible zero nrow sets in `mdcr_set()`
+
 # medicalcoder 0.8.0
 
 ## License Change

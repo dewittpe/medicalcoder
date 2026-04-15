@@ -45,7 +45,7 @@ mdcr_set <- function(x, i = NULL, j, value) {
     # by reference. This wrapper keeps by-ref semantics consistent across backends.
 
     getExportedValue(name = "setDT", ns = "data.table")(x = x)
-    getExportedValue(name = "set", ns = "data.table")(x = x, i = i, j = j, value = value)
+    getExportedValue(name = "set", ns = "data.table")(x = x, i = i, j = j, value = if (nrow(x) == 0L) value[0] else value)
   } else if (requireNamespace(package = "dplyr", quietly = TRUE) && inherits(x, "tbl_df")) {
     mutate <- getExportedValue(name = "mutate", ns = "dplyr")
     if (is.null(i)) {
