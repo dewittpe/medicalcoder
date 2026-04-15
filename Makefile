@@ -49,10 +49,10 @@ data-raw:
 # Install dev dependencies once; store console output in the stamp
 .install_dev_deps.Rout: $(PKG_ROOT)/DESCRIPTION
 	$(RSCRIPT) --quiet -e $(REPOS) \
-	  -e "if (!requireNamespace('devtools', quietly=TRUE)) \
-	       install.packages('devtools', repos='$(CRAN)')" \
+	  -e "if (!requireNamespace('pak', quietly=TRUE)) \
+	       install.packages('pak', repos='$(CRAN)')" \
 	  -e "options(warn=2)" \
-	  -e "devtools::install_dev_deps(pkg='$(PKG_ROOT)')" \
+	  -e "pak::local_install_dev_deps(root = '$(PKG_ROOT)')" \
 	  > $@ 2>&1
 
 .document.Rout: $(RFILES) $(MANROXYGEN) $(EXAMPLES) $(PKG_ROOT)/DESCRIPTION README.md .install_dev_deps.Rout
