@@ -7,6 +7,8 @@
 
 * Account for possible zero nrow sets in `mdcr_set()`
 
+* Harden sort order for the results from `lookup_icd_codes()`
+
 # medicalcoder 0.8.0
 
 ## License Change

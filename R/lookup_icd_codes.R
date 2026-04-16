@@ -49,6 +49,7 @@ lookup_icd_codes <- function(x, regex = FALSE, full.codes = TRUE, compact.codes 
   }
 
   ICDCODES <- get("icd_codes", envir = ..mdcr_data_env.., inherits = FALSE)
+  lookup_order <- seq_len(nrow(ICDCODES))
 
   if (regex) {
     if(full.codes) {
@@ -88,9 +89,14 @@ lookup_icd_codes <- function(x, regex = FALSE, full.codes = TRUE, compact.codes 
     on_full_code <-
       merge(
         x = input,
-        y = data.frame(ICDCODES, matched_full_code = ICDCODES[["full_code"]], zzz = 1L, stringsAsFactors = FALSE),
+        y = data.frame(ICDCODES,
+                       matched_full_code = ICDCODES[["full_code"]],
+                       lookup_order = lookup_order,
+                       zzz = 1L,
+                       stringsAsFactors = FALSE),
         by.x = "input_code",
-        by.y = "full_code"
+        by.y = "full_code",
+        sort = FALSE
       )
   }
 
@@ -98,9 +104,14 @@ lookup_icd_codes <- function(x, regex = FALSE, full.codes = TRUE, compact.codes 
     on_compact_code <-
       merge(
         x = input,
-        y = data.frame(ICDCODES, matched_code = ICDCODES[["code"]], zzz = 1L, stringsAsFactors = FALSE),
+        y = data.frame(ICDCODES,
+                       matched_code = ICDCODES[["code"]],
+                       lookup_order = lookup_order,
+                       zzz = 1L,
+                       stringsAsFactors = FALSE),
         by.x = "input_code",
-        by.y = "code"
+        by.y = "code",
+        sort = FALSE
       )
   }
 
@@ -121,20 +132,23 @@ lookup_icd_codes <- function(x, regex = FALSE, full.codes = TRUE, compact.codes 
     col_order <- c("input_code")
   }
   col_order <- c(col_order, "input_seq", "match_type", "icdv", "dx", "full_code", "code", "src", "known_start", "known_end", "assignable_start", "assignable_end")
+  sort_order <- c(col_order[1:2], "match_rank", "lookup_order")
 
   ofc <- exists("on_full_code") && nrow(on_full_code)
   occ <- exists("on_compact_code") && nrow(on_compact_code)
 
   if (ofc) {
     on_full_code[["match_type"]] <- "full_code"
+    on_full_code[["match_rank"]] <- 1L
     names(on_full_code) <- sub("matched_", "", names(on_full_code))
-    on_full_code <- mdcr_select(on_full_code, cols = col_order)
+    on_full_code <- mdcr_select(on_full_code, cols = c(col_order, "match_rank", "lookup_order"))
   }
 
   if (occ) {
     on_compact_code[["match_type"]] <- "compact_code"
+    on_compact_code[["match_rank"]] <- 2L
     names(on_compact_code) <- sub("matched_", "", names(on_compact_code))
-    on_compact_code <- mdcr_select(on_compact_code, cols = col_order)
+    on_compact_code <- mdcr_select(on_compact_code, cols = c(col_order, "match_rank", "lookup_order"))
   }
 
   if (ofc & occ) {
@@ -150,13 +164,15 @@ lookup_icd_codes <- function(x, regex = FALSE, full.codes = TRUE, compact.codes 
     )
   }
 
-  rtn <- merge(x = input, y = matches, all.x = TRUE, by = col_order[1:2])
+  rtn <- merge(x = input, y = matches, all.x = TRUE, by = col_order[1:2], sort = FALSE)
 
   if (regex) {
     rtn[["input_code"]] <- NULL
   }
 
-  rtn <- rtn[order(rtn[["input_seq"]]), , drop = FALSE]
+  rtn <- mdcr_setorder(rtn, by = sort_order[sort_order %in% names(rtn)])
+  rtn[["match_rank"]] <- NULL
+  rtn[["lookup_order"]] <- NULL
   rtn[["input_seq"]] <- NULL
 
   mdcr_unique(rtn)
