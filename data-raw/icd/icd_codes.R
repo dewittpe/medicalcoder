@@ -45,7 +45,8 @@ icd <- rbindlist(list(icd9, icd10), use.names = TRUE, fill = TRUE)
 # extract just the codes as a lookup table
 icd_codes <- icd[, .(icdv, dx, full_code, code)]
 icd_codes <- unique(icd_codes)
-icd_codes[, code_id := 1:.N]
+setorder(icd_codes, icdv, dx, code, full_code)
+icd_codes[, code_id := seq_len(.N)]
 
 # put the code_id back onto the icd data.frame so it can be used when building
 # other tables
@@ -64,7 +65,8 @@ icd_descs <-
   )
 icd_descs <- unique(icd_descs)
 icd_descs <- icd_descs[!is.na(desc)]
-icd_descs[, desc_id := 1:.N]
+setorder(icd_descs, desc)
+icd_descs[, desc_id := seq_len(.N)]
 
 ################################################################################
 # Extract the CM and PCS (CMS) variants
@@ -73,6 +75,7 @@ cms <- cms[, .(start = min(year, na.rm = TRUE), end = max(year, na.rm = TRUE)), 
 cms <- merge(cms, icd_descs, all.x = TRUE, by = "desc")
 cms[, desc := NULL]
 cms[, src := "cms"]
+setorder(cms, code_id, header, start, end, desc_id)
 setkey(cms, code_id, desc_id)
 
 # Extract the WHO releases
@@ -81,6 +84,7 @@ who <- who[, .(start = min(year), end = max(year)), by = .(code_id, desc, header
 who <- merge(who, icd_descs, all.x = TRUE, by = "desc")
 who[, desc := NULL]
 who[, src := "who"]
+setorder(who, code_id, header, start, end, desc_id)
 setkey(who, code_id, desc_id)
 
 # Extract the CDC mortality codes
@@ -89,6 +93,7 @@ cdc <- cdc[, .(start = min(year), end = max(year)), by = .(code_id, desc, header
 cdc <- merge(cdc, icd_descs, all.x = TRUE, by = "desc")
 cdc[, desc := NULL]
 cdc[, src := "cdc"]
+setorder(cdc, code_id, header, start, end, desc_id)
 setkey(cdc, code_id, desc_id)
 
 # stack up the ICD sources and build the
@@ -103,6 +108,8 @@ ka <- merge(x = k, y = a, all = TRUE)
 
 ka[, src := factor(src, levels = c("cms", "who", "cdc"))]
 d[, src := factor(src, levels = c("cms", "who", "cdc"))]
+setorder(ka, code_id, src)
+setorder(d, code_id, desc_id, src)
 
 ################################################################################
 # chapters and subchapters
@@ -140,11 +147,13 @@ for (icdv in c(9L, 10L)) {
 
 icd_chapters <- icd_codes[, unique(.SD), .SDcols = "chapter"]
 stopifnot(!any(is.na(icd_chapters[["chapter"]])))
-icd_chapters[, chap_id := 1:.N]
+setorder(icd_chapters, chapter)
+icd_chapters[, chap_id := seq_len(.N)]
 
 icd_subchapters <- icd_codes[!is.na(subchapter), unique(.SD), .SDcols = "subchapter"]
 stopifnot(!any(is.na(icd_subchapters[["subchapter"]])))
-icd_subchapters[, subchap_id := 1:.N]
+setorder(icd_subchapters, subchapter)
+icd_subchapters[, subchap_id := seq_len(.N)]
 
 stopifnot(icd_codes[icdv ==  9L & dx == 1L & is.na(subchapter)][, .N == 0L])
 stopifnot(icd_codes[icdv ==  9L & dx == 0L & !is.na(subchapter)][, .N == 0L])
@@ -159,6 +168,7 @@ set(icd_codes, j = "chapter", value = NULL)
 
 icd_codes <- merge(icd_codes, icd_subchapters, all.x = TRUE, by = "subchapter")
 set(icd_codes, j = "subchapter", value = NULL)
+setorder(icd_codes, code_id)
 
 ################################################################################
 # Save to disk
