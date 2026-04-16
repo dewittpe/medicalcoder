@@ -8,6 +8,11 @@
   multiple ages per ID.
   ([\#43](https://github.com/dewittpe/medicalcoder/issues/43))
 
+- Account for possible zero nrow sets in `mdcr_set()`
+
+- Harden sort order for the results from
+  [`lookup_icd_codes()`](http://www.peteredewitt.com/medicalcoder/reference/lookup_icd_codes.md)
+
 ## medicalcoder 0.8.0
 
 CRAN release: 2026-02-22

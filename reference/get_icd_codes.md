@@ -145,68 +145,68 @@ C86.00 and C86.01 assignable codes.
 ``` r
 icd_codes <- get_icd_codes()
 str(icd_codes)
-#> 'data.frame':    249736 obs. of  9 variables:
+#> 'data.frame':    249819 obs. of  9 variables:
 #>  $ icdv            : int  9 9 9 9 9 9 9 9 9 9 ...
 #>  $ dx              : int  0 0 0 0 0 0 0 0 0 0 ...
 #>  $ full_code       : chr  "00" "00" "00.0" "00.0" ...
 #>  $ code            : chr  "00" "00" "000" "000" ...
-#>  $ src             : chr  "cdc" "cms" "cdc" "cms" ...
-#>  $ known_start     : int  2003 2006 2003 2006 2003 2006 2003 2006 2003 2006 ...
-#>  $ known_end       : int  2012 2015 2012 2015 2012 2015 2012 2015 2012 2015 ...
-#>  $ assignable_start: int  NA NA NA NA 2003 2006 2003 2006 2003 2006 ...
-#>  $ assignable_end  : int  NA NA NA NA 2012 2015 2012 2015 2012 2015 ...
+#>  $ src             : chr  "cms" "cdc" "cms" "cdc" ...
+#>  $ known_start     : int  2006 2003 2006 2003 2006 2003 2006 2003 2006 2003 ...
+#>  $ known_end       : int  2015 2012 2015 2012 2015 2012 2015 2012 2015 2012 ...
+#>  $ assignable_start: int  NA NA NA NA 2006 2003 2006 2003 2006 2003 ...
+#>  $ assignable_end  : int  NA NA NA NA 2015 2012 2015 2012 2015 2012 ...
 
 # Explore the change in the assignable year for C86 code between CMS and
 # WHO
 subset(get_icd_codes(), grepl("^C86$", full_code))
 #>        icdv dx full_code code src known_start known_end assignable_start
-#> 128357   10  1       C86  C86 cms        2014      2026               NA
-#> 128358   10  1       C86  C86 who        2010      2019               NA
+#> 133130   10  1       C86  C86 cms        2014      2026               NA
+#> 133131   10  1       C86  C86 who        2010      2019               NA
 #>        assignable_end
-#> 128357             NA
-#> 128358             NA
+#> 133130             NA
+#> 133131             NA
 subset(get_icd_codes(), grepl("^C86\\.\\d$", full_code))
 #>        icdv dx full_code code src known_start known_end assignable_start
-#> 128359   10  1     C86.0 C860 cms        2014      2026             2014
-#> 128360   10  1     C86.0 C860 who        2010      2019             2010
-#> 128363   10  1     C86.1 C861 cms        2014      2026             2014
-#> 128364   10  1     C86.1 C861 who        2010      2019             2010
-#> 128367   10  1     C86.2 C862 cms        2014      2026             2014
-#> 128368   10  1     C86.2 C862 who        2010      2019             2010
-#> 128371   10  1     C86.3 C863 cms        2014      2026             2014
-#> 128372   10  1     C86.3 C863 who        2010      2019             2010
-#> 128375   10  1     C86.4 C864 cms        2014      2026             2014
-#> 128376   10  1     C86.4 C864 who        2010      2019             2010
-#> 128379   10  1     C86.5 C865 cms        2014      2026             2014
-#> 128380   10  1     C86.5 C865 who        2010      2019             2010
-#> 128383   10  1     C86.6 C866 cms        2014      2026             2014
-#> 128384   10  1     C86.6 C866 who        2010      2019             2010
+#> 133132   10  1     C86.0 C860 cms        2014      2026             2014
+#> 133133   10  1     C86.0 C860 who        2010      2019             2010
+#> 133136   10  1     C86.1 C861 cms        2014      2026             2014
+#> 133137   10  1     C86.1 C861 who        2010      2019             2010
+#> 133140   10  1     C86.2 C862 cms        2014      2026             2014
+#> 133141   10  1     C86.2 C862 who        2010      2019             2010
+#> 133144   10  1     C86.3 C863 cms        2014      2026             2014
+#> 133145   10  1     C86.3 C863 who        2010      2019             2010
+#> 133148   10  1     C86.4 C864 cms        2014      2026             2014
+#> 133149   10  1     C86.4 C864 who        2010      2019             2010
+#> 133152   10  1     C86.5 C865 cms        2014      2026             2014
+#> 133153   10  1     C86.5 C865 who        2010      2019             2010
+#> 133156   10  1     C86.6 C866 cms        2014      2026             2014
+#> 133157   10  1     C86.6 C866 who        2010      2019             2010
 #>        assignable_end
-#> 128359           2024
-#> 128360           2019
-#> 128363           2024
-#> 128364           2019
-#> 128367           2024
-#> 128368           2019
-#> 128371           2024
-#> 128372           2019
-#> 128375           2024
-#> 128376           2019
-#> 128379           2024
-#> 128380           2019
-#> 128383           2024
-#> 128384           2019
+#> 133132           2024
+#> 133133           2019
+#> 133136           2024
+#> 133137           2019
+#> 133140           2024
+#> 133141           2019
+#> 133144           2024
+#> 133145           2019
+#> 133148           2024
+#> 133149           2019
+#> 133152           2024
+#> 133153           2019
+#> 133156           2024
+#> 133157           2019
 subset(get_icd_codes(), grepl("^C86\\.0(\\d|$)", full_code))
 #>        icdv dx full_code  code src known_start known_end assignable_start
-#> 128359   10  1     C86.0  C860 cms        2014      2026             2014
-#> 128360   10  1     C86.0  C860 who        2010      2019             2010
-#> 128361   10  1    C86.00 C8600 cms        2025      2026             2025
-#> 128362   10  1    C86.01 C8601 cms        2025      2026             2025
+#> 133132   10  1     C86.0  C860 cms        2014      2026             2014
+#> 133133   10  1     C86.0  C860 who        2010      2019             2010
+#> 133134   10  1    C86.00 C8600 cms        2025      2026             2025
+#> 133135   10  1    C86.01 C8601 cms        2025      2026             2025
 #>        assignable_end
-#> 128359           2024
-#> 128360           2019
-#> 128361           2026
-#> 128362           2026
+#> 133132           2024
+#> 133133           2019
+#> 133134           2026
+#> 133135           2026
 
 is_icd("C86", headerok = FALSE) # FALSE
 #> [1] FALSE
@@ -217,13 +217,13 @@ is_icd("C86", headerok = TRUE, src = "cdc") # Not a CDC mortality code
 
 lookup_icd_codes("^C86\\.0\\d*", regex = TRUE)
 #>    input_regex match_type icdv dx full_code  code src known_start known_end
-#> 1 ^C86\\.0\\d*  full_code   10  1     C86.0  C860 cms        2014      2026
-#> 2 ^C86\\.0\\d*  full_code   10  1     C86.0  C860 who        2010      2019
+#> 2 ^C86\\.0\\d*  full_code   10  1     C86.0  C860 cms        2014      2026
+#> 1 ^C86\\.0\\d*  full_code   10  1     C86.0  C860 who        2010      2019
 #> 5 ^C86\\.0\\d*  full_code   10  1    C86.00 C8600 cms        2025      2026
 #> 6 ^C86\\.0\\d*  full_code   10  1    C86.01 C8601 cms        2025      2026
 #>   assignable_start assignable_end
-#> 1             2014           2024
-#> 2             2010           2019
+#> 2             2014           2024
+#> 1             2010           2019
 #> 5             2025           2026
 #> 6             2025           2026
 ```

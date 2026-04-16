@@ -86,13 +86,13 @@ used in assessing Charlson comorbidities.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">get_charlson_codes</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   icdv dx full_code  code condition charlson_cdmf2019 charlson_deyo1992</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    9  1     003.1  0031      aids                 1                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    9  1     007.2  0072      aids                 1                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    9  1     007.4  0074      aids                 1                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    9  1       010   010      aids                 1                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    9  1     010.0  0100      aids                 1                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    9  1    010.00 01000      aids                 1                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   icdv dx full_code code condition charlson_cdmf2019 charlson_deyo1992</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    9  0     38.48 3848       pvd                 0                 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    9  1     003.1 0031      aids                 1                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    9  1     007.2 0072      aids                 1                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    9  1     007.4 0074      aids                 1                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    9  1       010  010      aids                 1                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    9  1     010.0 0100      aids                 1                 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   charlson_quan2005 charlson_quan2011</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1                 0                 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2                 0                 0</span>
@@ -103,12 +103,12 @@ used in assessing Charlson comorbidities.</p>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">get_charlson_codes</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	7410 obs. of  9 variables:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ icdv             : int  9 9 9 9 9 9 9 9 9 9 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ dx               : int  1 1 1 1 1 1 1 1 1 1 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ full_code        : chr  "003.1" "007.2" "007.4" "010" ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ code             : chr  "0031" "0072" "0074" "010" ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ condition        : chr  "aids" "aids" "aids" "aids" ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ charlson_cdmf2019: int  1 1 1 1 1 1 1 1 1 1 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ charlson_deyo1992: int  0 0 0 0 0 0 0 0 0 0 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ dx               : int  0 1 1 1 1 1 1 1 1 1 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ full_code        : chr  "38.48" "003.1" "007.2" "007.4" ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ code             : chr  "3848" "0031" "0072" "0074" ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ condition        : chr  "pvd" "aids" "aids" "aids" ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ charlson_cdmf2019: int  0 1 1 1 1 1 1 1 1 1 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ charlson_deyo1992: int  1 0 0 0 0 0 0 0 0 0 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ charlson_quan2005: int  0 0 0 0 0 0 0 0 0 0 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ charlson_quan2011: int  0 0 0 0 0 0 0 0 0 0 ...</span>
 <span class="r-in"><span></span></span>

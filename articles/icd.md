@@ -34,16 +34,16 @@ ICD-10 diagnostic, and ICD-10 procedure codes.
 library(medicalcoder)
 icd_codes <- get_icd_codes()
 str(icd_codes)
-## 'data.frame':    249736 obs. of  9 variables:
+## 'data.frame':    249819 obs. of  9 variables:
 ##  $ icdv            : int  9 9 9 9 9 9 9 9 9 9 ...
 ##  $ dx              : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ full_code       : chr  "00" "00" "00.0" "00.0" ...
 ##  $ code            : chr  "00" "00" "000" "000" ...
-##  $ src             : chr  "cdc" "cms" "cdc" "cms" ...
-##  $ known_start     : int  2003 2006 2003 2006 2003 2006 2003 2006 2003 2006 ...
-##  $ known_end       : int  2012 2015 2012 2015 2012 2015 2012 2015 2012 2015 ...
-##  $ assignable_start: int  NA NA NA NA 2003 2006 2003 2006 2003 2006 ...
-##  $ assignable_end  : int  NA NA NA NA 2012 2015 2012 2015 2012 2015 ...
+##  $ src             : chr  "cms" "cdc" "cms" "cdc" ...
+##  $ known_start     : int  2006 2003 2006 2003 2006 2003 2006 2003 2006 2003 ...
+##  $ known_end       : int  2015 2012 2015 2012 2015 2012 2015 2012 2015 2012 ...
+##  $ assignable_start: int  NA NA NA NA 2006 2003 2006 2003 2006 2003 ...
+##  $ assignable_end  : int  NA NA NA NA 2015 2012 2015 2012 2015 2012 ...
 ```
 
 The columns of this data.frame are:
@@ -106,19 +106,19 @@ with `with.descriptions = TRUE`.
 
 ``` r
 str(get_icd_codes(with.descriptions = TRUE))
-## 'data.frame':    251350 obs. of  12 variables:
+## 'data.frame':    251433 obs. of  12 variables:
 ##  $ icdv            : int  9 9 9 9 9 9 9 9 9 9 ...
 ##  $ dx              : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ full_code       : chr  "00" "00.0" "00.01" "00.01" ...
 ##  $ code            : chr  "00" "000" "0001" "0001" ...
-##  $ src             : chr  "cdc" "cdc" "cdc" "cms" ...
-##  $ known_start     : int  2003 2003 2003 2006 2003 2006 2003 2006 2003 2006 ...
-##  $ known_end       : int  2012 2012 2012 2015 2012 2015 2012 2015 2012 2015 ...
-##  $ assignable_start: int  NA NA 2003 2006 2003 2006 2003 2006 2003 2006 ...
-##  $ assignable_end  : int  NA NA 2012 2015 2012 2015 2012 2015 2012 2015 ...
+##  $ src             : chr  "cdc" "cdc" "cms" "cdc" ...
+##  $ known_start     : int  2003 2003 2006 2003 2006 2003 2006 2003 2006 2003 ...
+##  $ known_end       : int  2012 2012 2015 2012 2015 2012 2015 2012 2015 2012 ...
+##  $ assignable_start: int  NA NA 2006 2003 2006 2003 2006 2003 2006 2003 ...
+##  $ assignable_end  : int  NA NA 2015 2012 2015 2012 2015 2012 2015 2012 ...
 ##  $ desc            : chr  "Procedures and interventions, Not Elsewhere Classified" "Therapeutic ultrasound" "Therapeutic ultrasound of vessels of head and neck" "Therapeutic ultrasound of vessels of head and neck" ...
-##  $ desc_start      : int  2003 2003 2003 2010 2003 2010 2003 2010 2003 2010 ...
-##  $ desc_end        : int  2012 2012 2012 2015 2012 2015 2012 2015 2012 2015 ...
+##  $ desc_start      : int  2003 2003 2010 2003 2010 2003 2010 2003 2010 2003 ...
+##  $ desc_end        : int  2012 2012 2015 2012 2015 2012 2015 2012 2015 2012 ...
 ```
 
 The return has the additional columns:
@@ -145,16 +145,16 @@ The only difference in the description for 010.93 is a comma.
 
 | full_code | src | desc                                                                                         | desc_start | desc_end |
 |:----------|:----|:---------------------------------------------------------------------------------------------|-----------:|---------:|
-| 010.93    | cms | Primary tuberculous infection, unspecified, tubercle bacilli found (in sputum) by microscopy |       2010 |     2015 |
 | 010.93    | cdc | Primary tuberculous infection, unspecified tubercle bacilli found (in sputum) by microscopy  |       1997 |     2012 |
+| 010.93    | cms | Primary tuberculous infection, unspecified, tubercle bacilli found (in sputum) by microscopy |       2010 |     2015 |
 
 ICD-10-CM Z88.7 has differences in the description over time within
 `cms` source and between `cms` and `who`.
 
 | full_code | src | desc                                             | desc_start | desc_end |
 |:----------|:----|:-------------------------------------------------|-----------:|---------:|
-| Z88.7     | cms | Allergy status to serum and vaccine status       |       2014 |     2020 |
 | Z88.7     | cms | Allergy status to serum and vaccine              |       2021 |     2026 |
+| Z88.7     | cms | Allergy status to serum and vaccine status       |       2014 |     2020 |
 | Z88.7     | who | Personal history of allergy to serum and vaccine |       2008 |     2019 |
 
 ICD-9-CM V79.49 had the description of ‘other’ which would require
@@ -164,9 +164,9 @@ understand.
 
 | full_code | src | desc                                                     | desc_start | desc_end |
 |:----------|:----|:---------------------------------------------------------|-----------:|---------:|
-| V76.49    | cms | Special screening for malignant neoplasms of other sites |       2010 |     2015 |
 | V76.49    | cdc | Other                                                    |       1997 |     1999 |
 | V76.49    | cdc | Other sites                                              |       2001 |     2012 |
+| V76.49    | cms | Special screening for malignant neoplasms of other sites |       2010 |     2015 |
 
 ### with.hierarchy
 
@@ -177,7 +177,7 @@ additional details for the codes.
 
 ``` r
 str(get_icd_codes(with.hierarchy = TRUE))
-## 'data.frame':    249736 obs. of  16 variables:
+## 'data.frame':    249819 obs. of  16 variables:
 ##  $ icdv                : int  10 10 10 10 10 10 10 10 10 10 ...
 ##  $ dx                  : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ full_code           : chr  "001" "0016070" "0016071" "0016072" ...
@@ -228,24 +228,24 @@ knitr::kable(lookup_icd_codes(codes), row.names = FALSE)
 
 | input_code | match_type   | icdv |  dx | full_code | code | src | known_start | known_end | assignable_start | assignable_end |
 |:-----------|:-------------|-----:|----:|:----------|:-----|:----|------------:|----------:|-----------------:|---------------:|
-| 0011       | compact_code |    9 |   0 | 00.11     | 0011 | cdc |        2003 |      2012 |             2003 |           2012 |
-| 0011       | compact_code |    9 |   1 | 001.1     | 0011 | cdc |        1997 |      2012 |             1997 |           2012 |
+| 001.1      | full_code    |    9 |   1 | 001.1     | 0011 | cms |        2006 |      2015 |             2006 |           2015 |
+| 001.1      | full_code    |    9 |   1 | 001.1     | 0011 | cdc |        1997 |      2012 |             1997 |           2012 |
 | 0011       | compact_code |    9 |   0 | 00.11     | 0011 | cms |        2006 |      2015 |             2006 |           2015 |
+| 0011       | compact_code |    9 |   0 | 00.11     | 0011 | cdc |        2003 |      2012 |             2003 |           2012 |
 | 0011       | compact_code |    9 |   1 | 001.1     | 0011 | cms |        2006 |      2015 |             2006 |           2015 |
+| 0011       | compact_code |    9 |   1 | 001.1     | 0011 | cdc |        1997 |      2012 |             1997 |           2012 |
+| 732        | full_code    |    9 |   1 | 732       | 732  | cms |        2006 |      2015 |               NA |             NA |
+| 732        | full_code    |    9 |   1 | 732       | 732  | cdc |        1997 |      2012 |               NA |             NA |
+| 732        | compact_code |    9 |   0 | 73.2      | 732  | cms |        2006 |      2015 |               NA |             NA |
+| 732        | compact_code |    9 |   0 | 73.2      | 732  | cdc |        1997 |      2012 |               NA |             NA |
 | 7329       | compact_code |    9 |   1 | 732.9     | 7329 | cms |        2006 |      2015 |             2006 |           2015 |
 | 7329       | compact_code |    9 |   1 | 732.9     | 7329 | cdc |        1997 |      2012 |             1997 |           2012 |
-| 732        | full_code    |    9 |   1 | 732       | 732  | cdc |        1997 |      2012 |               NA |             NA |
-| 732        | full_code    |    9 |   1 | 732       | 732  | cms |        2006 |      2015 |               NA |             NA |
-| 732        | compact_code |    9 |   0 | 73.2      | 732  | cdc |        1997 |      2012 |               NA |             NA |
-| 732        | compact_code |    9 |   0 | 73.2      | 732  | cms |        2006 |      2015 |               NA |             NA |
 | 73291      | NA           |   NA |  NA | NA        | NA   | NA  |          NA |        NA |               NA |             NA |
-| not a code | NA           |   NA |  NA | NA        | NA   | NA  |          NA |        NA |               NA |             NA |
-| 001.1      | full_code    |    9 |   1 | 001.1     | 0011 | cdc |        1997 |      2012 |             1997 |           2012 |
-| 001.1      | full_code    |    9 |   1 | 001.1     | 0011 | cms |        2006 |      2015 |             2006 |           2015 |
-| A9248      | NA           |   NA |  NA | NA        | NA   | NA  |          NA |        NA |               NA |             NA |
-| A924       | compact_code |   10 |   1 | A92.4     | A924 | cdc |        2001 |      2025 |             2001 |           2025 |
-| A924       | compact_code |   10 |   1 | A92.4     | A924 | who |        2008 |      2019 |             2008 |           2019 |
 | A924       | compact_code |   10 |   1 | A92.4     | A924 | cms |        2014 |      2026 |             2014 |           2026 |
+| A924       | compact_code |   10 |   1 | A92.4     | A924 | who |        2008 |      2019 |             2008 |           2019 |
+| A924       | compact_code |   10 |   1 | A92.4     | A924 | cdc |        2001 |      2025 |             2001 |           2025 |
+| A9248      | NA           |   NA |  NA | NA        | NA   | NA  |          NA |        NA |               NA |             NA |
+| not a code | NA           |   NA |  NA | NA        | NA   | NA  |          NA |        NA |               NA |             NA |
 | Z00        | full_code    |   10 |   1 | Z00       | Z00  | cms |        2014 |      2026 |               NA |             NA |
 | Z00        | full_code    |   10 |   1 | Z00       | Z00  | who |        2008 |      2019 |               NA |             NA |
 
@@ -262,25 +262,25 @@ knitr::kable(
 
 | input_code | match_type   | icdv |  dx | full_code | code | src | known_start | known_end | assignable_start | assignable_end |
 |:-----------|:-------------|-----:|----:|:----------|:-----|:----|------------:|----------:|-----------------:|---------------:|
+| 001.1      | NA           |   NA |  NA | NA        | NA   | NA  |          NA |        NA |               NA |             NA |
 | 0011       | compact_code |    9 |   0 | 00.11     | 0011 | cms |        2006 |      2015 |             2006 |           2015 |
-| 0011       | compact_code |    9 |   1 | 001.1     | 0011 | cms |        2006 |      2015 |             2006 |           2015 |
 | 0011       | compact_code |    9 |   0 | 00.11     | 0011 | cdc |        2003 |      2012 |             2003 |           2012 |
+| 0011       | compact_code |    9 |   1 | 001.1     | 0011 | cms |        2006 |      2015 |             2006 |           2015 |
 | 0011       | compact_code |    9 |   1 | 001.1     | 0011 | cdc |        1997 |      2012 |             1997 |           2012 |
-| 7329       | compact_code |    9 |   1 | 732.9     | 7329 | cms |        2006 |      2015 |             2006 |           2015 |
-| 7329       | compact_code |    9 |   1 | 732.9     | 7329 | cdc |        1997 |      2012 |             1997 |           2012 |
-| 732        | compact_code |    9 |   1 | 732       | 732  | cdc |        1997 |      2012 |               NA |             NA |
 | 732        | compact_code |    9 |   0 | 73.2      | 732  | cms |        2006 |      2015 |               NA |             NA |
 | 732        | compact_code |    9 |   0 | 73.2      | 732  | cdc |        1997 |      2012 |               NA |             NA |
 | 732        | compact_code |    9 |   1 | 732       | 732  | cms |        2006 |      2015 |               NA |             NA |
+| 732        | compact_code |    9 |   1 | 732       | 732  | cdc |        1997 |      2012 |               NA |             NA |
+| 7329       | compact_code |    9 |   1 | 732.9     | 7329 | cms |        2006 |      2015 |             2006 |           2015 |
+| 7329       | compact_code |    9 |   1 | 732.9     | 7329 | cdc |        1997 |      2012 |             1997 |           2012 |
 | 73291      | NA           |   NA |  NA | NA        | NA   | NA  |          NA |        NA |               NA |             NA |
-| not a code | NA           |   NA |  NA | NA        | NA   | NA  |          NA |        NA |               NA |             NA |
-| 001.1      | NA           |   NA |  NA | NA        | NA   | NA  |          NA |        NA |               NA |             NA |
-| A9248      | NA           |   NA |  NA | NA        | NA   | NA  |          NA |        NA |               NA |             NA |
-| A924       | compact_code |   10 |   1 | A92.4     | A924 | who |        2008 |      2019 |             2008 |           2019 |
 | A924       | compact_code |   10 |   1 | A92.4     | A924 | cms |        2014 |      2026 |             2014 |           2026 |
+| A924       | compact_code |   10 |   1 | A92.4     | A924 | who |        2008 |      2019 |             2008 |           2019 |
 | A924       | compact_code |   10 |   1 | A92.4     | A924 | cdc |        2001 |      2025 |             2001 |           2025 |
-| Z00        | compact_code |   10 |   1 | Z00       | Z00  | who |        2008 |      2019 |               NA |             NA |
+| A9248      | NA           |   NA |  NA | NA        | NA   | NA  |          NA |        NA |               NA |             NA |
+| not a code | NA           |   NA |  NA | NA        | NA   | NA  |          NA |        NA |               NA |             NA |
 | Z00        | compact_code |   10 |   1 | Z00       | Z00  | cms |        2014 |      2026 |               NA |             NA |
+| Z00        | compact_code |   10 |   1 | Z00       | Z00  | who |        2008 |      2019 |               NA |             NA |
 
 And set `compact.codes = FALSE` to only consider full codes.
 
@@ -293,18 +293,18 @@ knitr::kable(
 
 | input_code | match_type | icdv |  dx | full_code | code | src | known_start | known_end | assignable_start | assignable_end |
 |:-----------|:-----------|-----:|----:|:----------|:-----|:----|------------:|----------:|-----------------:|---------------:|
-| 0011       | NA         |   NA |  NA | NA        | NA   | NA  |          NA |        NA |               NA |             NA |
-| 7329       | NA         |   NA |  NA | NA        | NA   | NA  |          NA |        NA |               NA |             NA |
-| 732        | full_code  |    9 |   1 | 732       | 732  | cdc |        1997 |      2012 |               NA |             NA |
-| 732        | full_code  |    9 |   1 | 732       | 732  | cms |        2006 |      2015 |               NA |             NA |
-| 73291      | NA         |   NA |  NA | NA        | NA   | NA  |          NA |        NA |               NA |             NA |
-| not a code | NA         |   NA |  NA | NA        | NA   | NA  |          NA |        NA |               NA |             NA |
-| 001.1      | full_code  |    9 |   1 | 001.1     | 0011 | cdc |        1997 |      2012 |             1997 |           2012 |
 | 001.1      | full_code  |    9 |   1 | 001.1     | 0011 | cms |        2006 |      2015 |             2006 |           2015 |
-| A9248      | NA         |   NA |  NA | NA        | NA   | NA  |          NA |        NA |               NA |             NA |
+| 001.1      | full_code  |    9 |   1 | 001.1     | 0011 | cdc |        1997 |      2012 |             1997 |           2012 |
+| 0011       | NA         |   NA |  NA | NA        | NA   | NA  |          NA |        NA |               NA |             NA |
+| 732        | full_code  |    9 |   1 | 732       | 732  | cms |        2006 |      2015 |               NA |             NA |
+| 732        | full_code  |    9 |   1 | 732       | 732  | cdc |        1997 |      2012 |               NA |             NA |
+| 7329       | NA         |   NA |  NA | NA        | NA   | NA  |          NA |        NA |               NA |             NA |
+| 73291      | NA         |   NA |  NA | NA        | NA   | NA  |          NA |        NA |               NA |             NA |
 | A924       | NA         |   NA |  NA | NA        | NA   | NA  |          NA |        NA |               NA |             NA |
-| Z00        | full_code  |   10 |   1 | Z00       | Z00  | who |        2008 |      2019 |               NA |             NA |
+| A9248      | NA         |   NA |  NA | NA        | NA   | NA  |          NA |        NA |               NA |             NA |
+| not a code | NA         |   NA |  NA | NA        | NA   | NA  |          NA |        NA |               NA |             NA |
 | Z00        | full_code  |   10 |   1 | Z00       | Z00  | cms |        2014 |      2026 |               NA |             NA |
+| Z00        | full_code  |   10 |   1 | Z00       | Z00  | who |        2008 |      2019 |               NA |             NA |
 
 By default,
 [`lookup_icd_codes()`](http://www.peteredewitt.com/medicalcoder/reference/lookup_icd_codes.md)
@@ -355,15 +355,15 @@ is_icd(x = "7993", icdv = 10, dx = 0)
 ## [1] FALSE
 lookup_icd_codes("7993")
 ##   input_code   match_type icdv dx full_code code src known_start known_end
-## 1       7993 compact_code    9  1     799.3 7993 cms        2006      2015
+## 4       7993 compact_code    9  0     79.93 7993 cms        2006      2015
 ## 2       7993 compact_code    9  0     79.93 7993 cdc        1997      2012
-## 3       7993 compact_code    9  0     79.93 7993 cms        2006      2015
-## 4       7993 compact_code    9  1     799.3 7993 cdc        1997      2012
+## 1       7993 compact_code    9  1     799.3 7993 cms        2006      2015
+## 3       7993 compact_code    9  1     799.3 7993 cdc        1997      2012
 ##   assignable_start assignable_end
-## 1             2006           2015
+## 4             2006           2015
 ## 2             1997           2012
-## 3             2006           2015
-## 4             1997           2012
+## 1             2006           2015
+## 3             1997           2012
 ```
 
 A vector of possible codes:
@@ -452,28 +452,28 @@ Similar information can be quickly and easily retrieved via
 knitr::kable(lookup_icd_codes(x))
 ```
 
-| input_code | match_type | icdv |  dx | full_code | code  | src | known_start | known_end | assignable_start | assignable_end |
-|:-----------|:-----------|-----:|----:|:----------|:------|:----|------------:|----------:|-----------------:|---------------:|
-| 516.3      | full_code  |    9 |   1 | 516.3     | 5163  | cdc |        1997 |      2012 |             1997 |           2011 |
-| 516.3      | full_code  |    9 |   1 | 516.3     | 5163  | cms |        2006 |      2015 |             2006 |           2011 |
-| 516.30     | full_code  |    9 |   1 | 516.30    | 51630 | cdc |        2012 |      2012 |             2012 |           2012 |
-| 516.30     | full_code  |    9 |   1 | 516.30    | 51630 | cms |        2012 |      2015 |             2012 |           2015 |
-| 516.31     | full_code  |    9 |   1 | 516.31    | 51631 | cms |        2012 |      2015 |             2012 |           2015 |
-| 516.31     | full_code  |    9 |   1 | 516.31    | 51631 | cdc |        2012 |      2012 |             2012 |           2012 |
-| 516.32     | full_code  |    9 |   1 | 516.32    | 51632 | cms |        2012 |      2015 |             2012 |           2015 |
-| 516.32     | full_code  |    9 |   1 | 516.32    | 51632 | cdc |        2012 |      2012 |             2012 |           2012 |
-| 516.33     | full_code  |    9 |   1 | 516.33    | 51633 | cdc |        2012 |      2012 |             2012 |           2012 |
-| 516.33     | full_code  |    9 |   1 | 516.33    | 51633 | cms |        2012 |      2015 |             2012 |           2015 |
-| 516.34     | full_code  |    9 |   1 | 516.34    | 51634 | cms |        2012 |      2015 |             2012 |           2015 |
-| 516.34     | full_code  |    9 |   1 | 516.34    | 51634 | cdc |        2012 |      2012 |             2012 |           2012 |
-| 516.35     | full_code  |    9 |   1 | 516.35    | 51635 | cdc |        2012 |      2012 |             2012 |           2012 |
-| 516.35     | full_code  |    9 |   1 | 516.35    | 51635 | cms |        2012 |      2015 |             2012 |           2015 |
-| 516.36     | full_code  |    9 |   1 | 516.36    | 51636 | cms |        2012 |      2015 |             2012 |           2015 |
-| 516.36     | full_code  |    9 |   1 | 516.36    | 51636 | cdc |        2012 |      2012 |             2012 |           2012 |
-| 516.37     | full_code  |    9 |   1 | 516.37    | 51637 | cdc |        2012 |      2012 |             2012 |           2012 |
-| 516.37     | full_code  |    9 |   1 | 516.37    | 51637 | cms |        2012 |      2015 |             2012 |           2015 |
-| 516.38     | NA         |   NA |  NA | NA        | NA    | NA  |          NA |        NA |               NA |             NA |
-| 516.39     | NA         |   NA |  NA | NA        | NA    | NA  |          NA |        NA |               NA |             NA |
+|     | input_code | match_type | icdv |  dx | full_code | code  | src | known_start | known_end | assignable_start | assignable_end |
+|:----|:-----------|:-----------|-----:|----:|:----------|:------|:----|------------:|----------:|-----------------:|---------------:|
+| 1   | 516.3      | full_code  |    9 |   1 | 516.3     | 5163  | cms |        2006 |      2015 |             2006 |           2011 |
+| 2   | 516.3      | full_code  |    9 |   1 | 516.3     | 5163  | cdc |        1997 |      2012 |             1997 |           2011 |
+| 4   | 516.30     | full_code  |    9 |   1 | 516.30    | 51630 | cms |        2012 |      2015 |             2012 |           2015 |
+| 3   | 516.30     | full_code  |    9 |   1 | 516.30    | 51630 | cdc |        2012 |      2012 |             2012 |           2012 |
+| 5   | 516.31     | full_code  |    9 |   1 | 516.31    | 51631 | cms |        2012 |      2015 |             2012 |           2015 |
+| 6   | 516.31     | full_code  |    9 |   1 | 516.31    | 51631 | cdc |        2012 |      2012 |             2012 |           2012 |
+| 8   | 516.32     | full_code  |    9 |   1 | 516.32    | 51632 | cms |        2012 |      2015 |             2012 |           2015 |
+| 7   | 516.32     | full_code  |    9 |   1 | 516.32    | 51632 | cdc |        2012 |      2012 |             2012 |           2012 |
+| 9   | 516.33     | full_code  |    9 |   1 | 516.33    | 51633 | cms |        2012 |      2015 |             2012 |           2015 |
+| 10  | 516.33     | full_code  |    9 |   1 | 516.33    | 51633 | cdc |        2012 |      2012 |             2012 |           2012 |
+| 12  | 516.34     | full_code  |    9 |   1 | 516.34    | 51634 | cms |        2012 |      2015 |             2012 |           2015 |
+| 11  | 516.34     | full_code  |    9 |   1 | 516.34    | 51634 | cdc |        2012 |      2012 |             2012 |           2012 |
+| 13  | 516.35     | full_code  |    9 |   1 | 516.35    | 51635 | cms |        2012 |      2015 |             2012 |           2015 |
+| 14  | 516.35     | full_code  |    9 |   1 | 516.35    | 51635 | cdc |        2012 |      2012 |             2012 |           2012 |
+| 16  | 516.36     | full_code  |    9 |   1 | 516.36    | 51636 | cms |        2012 |      2015 |             2012 |           2015 |
+| 15  | 516.36     | full_code  |    9 |   1 | 516.36    | 51636 | cdc |        2012 |      2012 |             2012 |           2012 |
+| 18  | 516.37     | full_code  |    9 |   1 | 516.37    | 51637 | cms |        2012 |      2015 |             2012 |           2015 |
+| 17  | 516.37     | full_code  |    9 |   1 | 516.37    | 51637 | cdc |        2012 |      2012 |             2012 |           2012 |
+| 19  | 516.38     | NA         |   NA |  NA | NA        | NA    | NA  |          NA |        NA |               NA |             NA |
+| 20  | 516.39     | NA         |   NA |  NA | NA        | NA    | NA  |          NA |        NA |               NA |             NA |
 
 For fiscal years 2006, 1997 through 2011, 2011 the code 516.3 was
 assignable. In 2012, 2012 516.3 was not assignable due to the
@@ -579,9 +579,9 @@ icd_compact_to_full("E1234", icdv = 10, dx = 1)
 
 lookup_icd_codes(c("E1234", "E123.4", "E12.34"))[, c("input_code", "match_type")]
 ##   input_code match_type
-## 3      E1234       <NA>
+## 3     E12.34       <NA>
 ## 2     E123.4       <NA>
-## 1     E12.34       <NA>
+## 1      E1234       <NA>
 ```
 
 Notice that no change to the string is made when trying to convert to a
