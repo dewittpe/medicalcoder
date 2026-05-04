@@ -311,11 +311,18 @@ summary.medicalcoder_comorbidities_with_subconditions <- function(object, ...) {
     }
 
   age_summary <-
-    merge(
-      x = stats::setNames(as.data.frame(table(object[["age_score"]], useNA = "always"), stringsAsFactors = FALSE), c("age_score", "count")),
-      y = stats::setNames(as.data.frame(100 * prop.table(table(object[["age_score"]], useNA = "always")), stringsAsFactors = FALSE), c("age_score", "percent")),
-      by = c("age_score")
-    )
+    {
+      age_count <- table(object[["age_score"]], useNA = "always")
+      age_percent <- 100 * prop.table(age_count)
+      data.frame(
+        age_score = unname(names(age_count)),
+        count = unname(as.integer(age_count)),
+        percent = unname(as.numeric(age_percent)),
+        stringsAsFactors = FALSE
+      )
+    }
+
+  rownames(age_summary) <- NULL
 
   # set NA instead of NaN
   age_summary[["percent"]][is.nan(age_summary[["percent"]])] <- NA_real_

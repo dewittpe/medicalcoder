@@ -5,6 +5,9 @@
 * Fix Charlson `age.var` handling when `id.vars` is missing or has multiple ages
   per ID. (#43)
 
+* Fix `summary()` for Charlson results when `age.var` is omitted and
+  `age_score` is all missing.
+
 * Account for possible zero nrow sets in `mdcr_set()`
 
 * Harden sort order for the results from `lookup_icd_codes()`

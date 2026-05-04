@@ -97,6 +97,29 @@ expected_index_summary <-
 stopifnot(identical(summary_current$index_summary, expected_index_summary))
 
 ################################################################################
+# Missing age.var creates an all-NA age_score and should still summarize cleanly
+charlson_no_age <- comorbidities(
+  data        = mdcr,
+  id.vars     = "patid",
+  icdv.var    = "icdv",
+  icd.codes   = "code",
+  dx.var      = "dx",
+  method      = "charlson_quan2011",
+  flag.method = "current",
+  poa         = 1L,
+  primarydx   = 0L
+)
+
+summary_no_age <- summary(charlson_no_age)
+
+stopifnot(
+  identical(summary_no_age$age_summary$age_score, NA_character_),
+  identical(summary_no_age$age_summary$count, nrow(charlson_no_age)),
+  identical(summary_no_age$age_summary$percent, 100),
+  !anyNA(row.names(summary_no_age$age_summary))
+)
+
+################################################################################
 # A non-current flag.method generates a warning but still returns the summary
 charlson_cumulative <- charlson
 attr(charlson_cumulative, "flag.method") <- "cumulative"
