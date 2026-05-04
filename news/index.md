@@ -1,6 +1,6 @@
 # Changelog
 
-## medicalcoder 0.8.0.9000
+## medicalcoder 0.8.1
 
 ### Bug Fixes
 
