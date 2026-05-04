@@ -20,7 +20,7 @@ mdcr
 Synthetic Data
 }
 \seealso{
-Other datasets: 
+Other datasets:
 \code{\link{mdcr_longitudinal}}
 }
 \concept{datasets}

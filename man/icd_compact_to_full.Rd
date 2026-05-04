@@ -32,8 +32,8 @@ codes.
 \item \code{\link[=is_icd]{is_icd()}} to test if a string is a known ICD code.
 }
 
-Other ICD tools: 
-\code{\link{is_icd}()},
-\code{\link{lookup_icd_codes}()}
+Other ICD tools:
+\code{\link[=is_icd]{is_icd()}},
+\code{\link[=lookup_icd_codes]{lookup_icd_codes()}}
 }
 \concept{ICD tools}

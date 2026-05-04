@@ -82,6 +82,11 @@ loaded, the needed internal lookup tables are generated and cached.
 \author{
 \strong{Maintainer}: Peter DeWitt \email{peter.dewitt@cuanschutz.edu} (\href{https://orcid.org/0000-0002-6391-0795}{ORCID}) [cover designer]
 
+Authors:
+\itemize{
+  \item Peter DeWitt \email{peter.dewitt@cuanschutz.edu} (\href{https://orcid.org/0000-0002-6391-0795}{ORCID}) [cover designer]
+}
+
 Other contributors:
 \itemize{
   \item Tell Bennett \email{tell.bennett@cuanschutz.edu} (\href{https://orcid.org/0000-0003-1483-4236}{ORCID}) [contributor]

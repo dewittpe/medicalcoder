@@ -22,7 +22,7 @@ mdcr_longitudinal
 Synthetic Longitudinal Data
 }
 \seealso{
-Other datasets: 
+Other datasets:
 \code{\link{mdcr}}
 }
 \concept{datasets}

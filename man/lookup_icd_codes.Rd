@@ -74,8 +74,8 @@ and became a header in 2012–2015.
 full format based on ICD version and type (diagnostic or procedure).
 }
 
-Other ICD tools: 
-\code{\link{icd_compact_to_full}()},
-\code{\link{is_icd}()}
+Other ICD tools:
+\code{\link[=icd_compact_to_full]{icd_compact_to_full()}},
+\code{\link[=is_icd]{is_icd()}}
 }
 \concept{ICD tools}

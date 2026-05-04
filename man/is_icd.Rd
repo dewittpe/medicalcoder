@@ -150,8 +150,8 @@ codes.
 full format based on ICD version and type (diagnostic or procedure).
 }
 
-Other ICD tools: 
-\code{\link{icd_compact_to_full}()},
-\code{\link{lookup_icd_codes}()}
+Other ICD tools:
+\code{\link[=icd_compact_to_full]{icd_compact_to_full()}},
+\code{\link[=lookup_icd_codes]{lookup_icd_codes()}}
 }
 \concept{ICD tools}
