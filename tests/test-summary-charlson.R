@@ -76,11 +76,16 @@ stopifnot(
 ################################################################################
 # Age and index summaries align with expected calculations
 expected_age_summary <-
-  merge(
-    x = stats::setNames(as.data.frame(table(charlson$age_score, useNA = "always"), stringsAsFactors = FALSE), c("age_score", "count")),
-    y = stats::setNames(as.data.frame(100 * prop.table(table(charlson$age_score, useNA = "always")), stringsAsFactors = FALSE), c("age_score", "percent")),
-    by = "age_score"
-  )
+  {
+    age_count <- table(charlson$age_score, useNA = "always")
+    age_percent <- 100 * prop.table(age_count)
+    data.frame(
+      age_score = unname(names(age_count)),
+      count = unname(as.integer(age_count)),
+      percent = unname(as.numeric(age_percent)),
+      stringsAsFactors = FALSE
+    )
+  }
 
 stopifnot(identical(summary_current$age_summary, expected_age_summary))
 
