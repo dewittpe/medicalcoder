@@ -100,7 +100,7 @@ mdcrDT_icd10dx_wide <-
 toc <- Sys.time()
 
 difftime(toc, tic, units = "secs")
-## Time difference of 0.4220622 secs
+## Time difference of 0.4165452 secs
 ```
 
 ## Charlson Comorbidities
@@ -199,7 +199,7 @@ the packages.
 ``` r
 
 attr(medicalcoder_charlson_results, "tictoc") # seconds
-## [1] 0.4406343
+## [1] 0.443228
 attr(icdcomorbid_charlson_results,  "tictoc") # seconds
 ## [1] 608.8486
 ```
@@ -441,7 +441,7 @@ str(icdcomorbid_false_negatives)
 ##  $ patid            : int  19368 40729 86363 79065 80692 60642 61627 89753 66356 71033 ...
 ##  $ condition        : chr  "chf" "chf" "chf" "chf" ...
 ##  $ charlson_quan2005: int  1 1 1 1 1 1 1 1 1 1 ...
-##  - attr(*, ".internal.selfref")=<pointer: 0x56259bcb4ef0> 
+##  - attr(*, ".internal.selfref")=<pointer: 0x55f8ca2bfef0> 
 ##  - attr(*, "sorted")= chr [1:3] "code" "icdv" "dx"
 
 unique(icdcomorbid_false_negatives[icdv == 9 & dx == 1, .(code)][["code"]])
