@@ -1,6 +1,7 @@
 # Pediatric Complex Chronic Conditions
 
 ``` r
+
 library(medicalcoder)
 ```
 
@@ -25,7 +26,9 @@ with multiple subconditions.
 | 10  | renal           | Renal Urologic                          |
 | 11  | respiratory     | Respiratory                             |
 
-Syntactically valid names for complex chronic conditions
+Syntactically valid names for complex chronic conditions {.table .table
+.table-striped
+style="font-size: 10px; width: auto !important; margin-left: auto; margin-right: auto;"}
 
 The PCCC system provides a standardized approach to identifying children
 with complex chronic conditions using administrative data. This has
@@ -80,6 +83,7 @@ Let’s look at the codes that are in the PCCC schema. Calling
 returns a data.frame.
 
 ``` r
+
 pccc_codes <- get_pccc_codes()
 str(pccc_codes)
 ## 'data.frame':    7906 obs. of  12 variables:
@@ -125,6 +129,7 @@ Example: Consider a patient with the following four diagnostic and two
 procedure ICD-9 codes:
 
 ``` r
+
 pat1 <-
   data.frame(
     dx = c(1, 1, 1, 1, 0, 0),
@@ -137,6 +142,7 @@ An inner join between the `pccc_codes` and `pat1` will yield the
 conditions this patient has.
 
 ``` r
+
 merge(x = pccc_codes, y = pat1, all = FALSE, by = c("icdv", "dx", "code"))
 ##   icdv dx code full_code condition              subcondition transplant_flag
 ## 1    9  0 8606     86.06 metabolic device_and_technology_use               0
@@ -155,6 +161,7 @@ patient has two conditions: neuromuscular and metabolic. This patient
 also has a flag for device and technology use.
 
 ``` r
+
 pat1_pccc_v2.0 <-
   comorbidities(
     data = pat1,
@@ -194,6 +201,7 @@ neuromuscular and metabolic. The technology dependence flags are also 1
 for this patient, but are not counted in the total number of conditions.
 
 ``` r
+
 pat1_pccc_v3.0 <-
   comorbidities(
     data = pat1,
@@ -263,6 +271,7 @@ Now, consider another patient, pat2, with the same codes as pat1 except
 for 3432, the code mapping to a neuromuscular condition.
 
 ``` r
+
 pat2 <- subset(pat1, code != "3432")
 ```
 
@@ -271,6 +280,7 @@ technology dependence conditions because of the code 86.06 is in the
 record, but will not have the neuromuscular condition.
 
 ``` r
+
 pat2_pccc_v2.1 <-
   comorbidities(
     data = pat2,
@@ -291,6 +301,7 @@ is because no condition was identified based on non-technology dependent
 codes and thus the one technology dependent code is ignored.
 
 ``` r
+
 pat2_pccc_v3.1 <-
   comorbidities(
     data = pat2,
@@ -328,6 +339,7 @@ The `mdcr` data is provided with columns for
 - diagnostic/procedure indicator.
 
 ``` r
+
 head(mdcr)
 ##   patid icdv  code dx
 ## 1 71412    9 99931  1
@@ -353,6 +365,7 @@ accounting for ICD version or the diagnostic/procedure status of the
 code can be done as follows:
 
 ``` r
+
 mdcr_results_v2.1_01 <-
   comorbidities(
     data = mdcr,
@@ -384,6 +397,7 @@ are extended to provide the counts and percentages for `_dxpr_or_tech`,
 `_dxpr_only`, `_tech_only`, and `_dxpr_and_tech`.
 
 ``` r
+
 str(summary(mdcr_results_v2.1_01))
 ## 'data.frame':    24 obs. of  4 variables:
 ##  $ condition: chr  "congeni_genetic" "cvd" "gi" "hemato_immu" ...
@@ -408,6 +422,7 @@ Since the summary tables are `data.frame`s the end user may manipulate
 the results for reporting as they want, see the following table.
 
 ``` r
+
 x <-
   merge(
     summary(mdcr_results_v2.1_01),
@@ -422,6 +437,8 @@ x[["condition"]] <- NULL
 [TABLE]
 
 Summary Table for `mdcr_results_v2.1_01` and `mdcr_results_v3.1_01`.
+{.table .table .table-striped
+style="font-size: 10px; margin-left: auto; margin-right: auto;"}
 
 ### Accounting for Diagnostic/Procedure
 
@@ -435,6 +452,7 @@ important. In the `mdcr` data the code 3321 does appear as both
 diagnostic and procedure.
 
 ``` r
+
 pccc_codes[pccc_codes$code == "3321", ]
 ##      icdv dx full_code code   condition              subcondition
 ## 59      9  0     33.21 3321 respiratory device_and_technology_use
@@ -452,6 +470,7 @@ To account for the diagnostic or procedure status of the codes specify a
 value for the `dx.var` argument.
 
 ``` r
+
 mdcr_results_v2.1_02 <-
   comorbidities(
     data = mdcr,
@@ -485,6 +504,7 @@ diagnostic/procedure flag is omitted from the
 call.
 
 ``` r
+
 # verify that the cmrb_flag and number of conditions is the same or less after
 # accounting for the diagnostic/procedure flag in the comorbidities call
 stopifnot(all(mdcr_results_v2.1_02$cmrb_flag <= mdcr_results_v2.1_01$cmrb_flag))
@@ -507,6 +527,7 @@ sum(mdcr_results_v3.1_02$num_cmrb  != mdcr_results_v3.1_01$num_cmrb)
 Let’s explore the record for patient 87420.
 
 ``` r
+
 subset(mdcr, patid == "87420")
 ##      patid icdv  code dx
 ## 4073 87420    9 78321  1
@@ -519,6 +540,7 @@ subset(get_pccc_codes(), code %in% c("78321", "5641"))
 ```
 
 ``` r
+
 subset(mdcr_results_v2.1_01, patid == "87420", select = c("cmrb_flag", "renal"))
 ##       cmrb_flag renal
 ## 32849         1     1
@@ -565,6 +587,7 @@ procedure codes, the overlaps between the two coding structures can lead
 to false positives.
 
 ``` r
+
 merge(
   x = subset(mdcr, patid == "87420"),
   y = pccc_codes,
@@ -591,6 +614,7 @@ Note: this is a good example of how medicalcoder can handle full and
 compact codes within a single record.
 
 ``` r
+
 DF <-
   data.frame(
     id = c("full dx", "full pr", "compact dx", "compact pr"),
@@ -698,6 +722,7 @@ values then using the `icdv` argument can simplify the call and in this
 case, no condition for ICD-9 and a condition is flagged for ICD-10.
 
 ``` r
+
 subset(mdcr, patid == "95471")
 ##        patid icdv code dx
 ## 125330 95471   10 E030  1
@@ -750,6 +775,7 @@ that we are not specifying the ICD version nor the diagnostic/procedure
 status of the code.
 
 ``` r
+
 lookup_icd_codes("E030")
 ##   input_code   match_type icdv dx full_code code src known_start known_end
 ## 1       E030    full_code    9  1      E030 E030 cms        2010      2015
@@ -821,6 +847,7 @@ patients with multiple encounters. Each row has a date (encounter) for
 when the ICD code was reported.
 
 ``` r
+
 head(mdcr_longitudinal)
 ##     patid       date icdv     code
 ## 1 9663901 2016-03-18   10   Z77.22
@@ -840,6 +867,7 @@ specifying `id.vars = c("patid")` such that the
 method considers all codes as occurring on one encounter.
 
 ``` r
+
 longitudinal_v2_patid <-
   comorbidities(
     data = mdcr_longitudinal,
@@ -855,16 +883,17 @@ tab <- kableExtra::kable_styling(tab, bootstrap_options = c("striped"), font_siz
 tab
 ```
 
-|   patid | congeni_genetic | cvd |  gi | hemato_immu | malignancy | metabolic | misc | neonatal | neuromusc | renal | respiratory | any_tech_dep | any_transplant | num_cmrb | cmrb_flag |
-|--------:|----------------:|----:|----:|------------:|-----------:|----------:|-----:|---------:|----------:|------:|------------:|-------------:|---------------:|---------:|----------:|
-|  231597 |               0 |   0 |   0 |           0 |          0 |         1 |    0 |        0 |         1 |     1 |           1 |            1 |              1 |        4 |         1 |
-|  650838 |               1 |   0 |   1 |           0 |          0 |         0 |    0 |        1 |         1 |     1 |           0 |            1 |              0 |        5 |         1 |
-| 9663901 |               0 |   0 |   1 |           0 |          0 |         0 |    0 |        0 |         1 |     0 |           1 |            1 |              0 |        3 |         1 |
+| patid | congeni_genetic | cvd | gi | hemato_immu | malignancy | metabolic | misc | neonatal | neuromusc | renal | respiratory | any_tech_dep | any_transplant | num_cmrb | cmrb_flag |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 231597 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 1 | 1 | 1 | 1 | 1 | 4 | 1 |
+| 650838 | 1 | 0 | 1 | 0 | 0 | 0 | 0 | 1 | 1 | 1 | 0 | 1 | 0 | 5 | 1 |
+| 9663901 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 1 | 1 | 0 | 3 | 1 |
 
 We can look at the conditions flagged at each encounter by specifying
 the `id.vars = c("patid", "date")`.
 
 ``` r
+
 longitudinal_v2_patid_date <-
   comorbidities(data = mdcr_longitudinal,
     icd.codes = "code",
@@ -876,17 +905,17 @@ longitudinal_v2_patid_date <-
   )
 ```
 
-|   patid | date       | congeni_genetic | cvd |  gi | hemato_immu | malignancy | metabolic | misc | neonatal | neuromusc | renal | respiratory | any_tech_dep | any_transplant | num_cmrb | cmrb_flag |
-|--------:|:-----------|----------------:|----:|----:|------------:|-----------:|----------:|-----:|---------:|----------:|------:|------------:|-------------:|---------------:|---------:|----------:|
-| 9663901 | 2016-03-18 |               0 |   0 |   0 |           0 |          0 |         0 |    0 |        0 |         0 |     0 |           0 |            0 |              0 |        0 |         0 |
-| 9663901 | 2016-03-24 |               0 |   0 |   0 |           0 |          0 |         0 |    0 |        0 |         0 |     0 |           0 |            0 |              0 |        0 |         0 |
-| 9663901 | 2016-03-25 |               0 |   0 |   0 |           0 |          0 |         0 |    0 |        0 |         0 |     0 |           0 |            0 |              0 |        0 |         0 |
-| 9663901 | 2016-03-30 |               0 |   0 |   1 |           0 |          0 |         0 |    0 |        0 |         0 |     0 |           1 |            1 |              0 |        2 |         1 |
-| 9663901 | 2016-05-19 |               0 |   0 |   0 |           0 |          0 |         0 |    0 |        0 |         0 |     0 |           0 |            0 |              0 |        0 |         0 |
-| 9663901 | 2016-07-09 |               0 |   0 |   0 |           0 |          0 |         0 |    0 |        0 |         1 |     0 |           1 |            1 |              0 |        2 |         1 |
-| 9663901 | 2017-01-31 |               0 |   0 |   0 |           0 |          0 |         0 |    0 |        0 |         0 |     0 |           0 |            0 |              0 |        0 |         0 |
-| 9663901 | 2017-02-16 |               0 |   0 |   0 |           0 |          0 |         0 |    0 |        0 |         0 |     0 |           0 |            0 |              0 |        0 |         0 |
-| 9663901 | 2018-03-29 |               0 |   0 |   0 |           0 |          0 |         0 |    0 |        0 |         0 |     0 |           1 |            1 |              0 |        1 |         1 |
+| patid | date | congeni_genetic | cvd | gi | hemato_immu | malignancy | metabolic | misc | neonatal | neuromusc | renal | respiratory | any_tech_dep | any_transplant | num_cmrb | cmrb_flag |
+|---:|:---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 9663901 | 2016-03-18 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 9663901 | 2016-03-24 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 9663901 | 2016-03-25 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 9663901 | 2016-03-30 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 | 2 | 1 |
+| 9663901 | 2016-05-19 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 9663901 | 2016-07-09 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 1 | 1 | 0 | 2 | 1 |
+| 9663901 | 2017-01-31 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 9663901 | 2017-02-16 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 9663901 | 2018-03-29 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 | 1 | 1 |
 
 Looking at patid 9663901 at an encounter level we see that the
 conditions occur at different moments in time and the condition the
@@ -899,6 +928,7 @@ set to mark the presence of a condition at the time of reporting and
 thereafter.
 
 ``` r
+
 longitudinal_v2_patid_date_cumulative_poa0 <-
   comorbidities(
     data = mdcr_longitudinal,
@@ -911,19 +941,20 @@ longitudinal_v2_patid_date_cumulative_poa0 <-
   )
 ```
 
-|   patid | date       | congeni_genetic | cvd |  gi | hemato_immu | malignancy | metabolic | misc | neonatal | neuromusc | renal | respiratory | any_tech_dep | any_transplant | num_cmrb | cmrb_flag |
-|--------:|:-----------|----------------:|----:|----:|------------:|-----------:|----------:|-----:|---------:|----------:|------:|------------:|-------------:|---------------:|---------:|----------:|
-| 9663901 | 2016-03-18 |               0 |   0 |   0 |           0 |          0 |         0 |    0 |        0 |         0 |     0 |           0 |            0 |              0 |        0 |         0 |
-| 9663901 | 2016-03-24 |               0 |   0 |   0 |           0 |          0 |         0 |    0 |        0 |         0 |     0 |           0 |            0 |              0 |        0 |         0 |
-| 9663901 | 2016-03-25 |               0 |   0 |   0 |           0 |          0 |         0 |    0 |        0 |         0 |     0 |           0 |            0 |              0 |        0 |         0 |
-| 9663901 | 2016-03-30 |               0 |   0 |   0 |           0 |          0 |         0 |    0 |        0 |         0 |     0 |           0 |            0 |              0 |        0 |         0 |
-| 9663901 | 2016-05-19 |               0 |   0 |   1 |           0 |          0 |         0 |    0 |        0 |         0 |     0 |           1 |            1 |              0 |        2 |         1 |
-| 9663901 | 2016-07-09 |               0 |   0 |   1 |           0 |          0 |         0 |    0 |        0 |         0 |     0 |           1 |            1 |              0 |        2 |         1 |
-| 9663901 | 2017-01-31 |               0 |   0 |   1 |           0 |          0 |         0 |    0 |        0 |         1 |     0 |           1 |            1 |              0 |        3 |         1 |
-| 9663901 | 2017-02-16 |               0 |   0 |   1 |           0 |          0 |         0 |    0 |        0 |         1 |     0 |           1 |            1 |              0 |        3 |         1 |
-| 9663901 | 2018-03-29 |               0 |   0 |   1 |           0 |          0 |         0 |    0 |        0 |         1 |     0 |           1 |            1 |              0 |        3 |         1 |
+| patid | date | congeni_genetic | cvd | gi | hemato_immu | malignancy | metabolic | misc | neonatal | neuromusc | renal | respiratory | any_tech_dep | any_transplant | num_cmrb | cmrb_flag |
+|---:|:---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 9663901 | 2016-03-18 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 9663901 | 2016-03-24 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 9663901 | 2016-03-25 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 9663901 | 2016-03-30 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 9663901 | 2016-05-19 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 | 2 | 1 |
+| 9663901 | 2016-07-09 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 | 2 | 1 |
+| 9663901 | 2017-01-31 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 1 | 1 | 0 | 3 | 1 |
+| 9663901 | 2017-02-16 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 1 | 1 | 0 | 3 | 1 |
+| 9663901 | 2018-03-29 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 1 | 1 | 0 | 3 | 1 |
 
 ``` r
+
 longitudinal_v2_patid_date_cumulative_poa1 <-
   comorbidities(
     data = mdcr_longitudinal,
@@ -936,17 +967,17 @@ longitudinal_v2_patid_date_cumulative_poa1 <-
   )
 ```
 
-|   patid | date       | congeni_genetic | cvd |  gi | hemato_immu | malignancy | metabolic | misc | neonatal | neuromusc | renal | respiratory | any_tech_dep | any_transplant | num_cmrb | cmrb_flag |
-|--------:|:-----------|----------------:|----:|----:|------------:|-----------:|----------:|-----:|---------:|----------:|------:|------------:|-------------:|---------------:|---------:|----------:|
-| 9663901 | 2016-03-18 |               0 |   0 |   0 |           0 |          0 |         0 |    0 |        0 |         0 |     0 |           0 |            0 |              0 |        0 |         0 |
-| 9663901 | 2016-03-24 |               0 |   0 |   0 |           0 |          0 |         0 |    0 |        0 |         0 |     0 |           0 |            0 |              0 |        0 |         0 |
-| 9663901 | 2016-03-25 |               0 |   0 |   0 |           0 |          0 |         0 |    0 |        0 |         0 |     0 |           0 |            0 |              0 |        0 |         0 |
-| 9663901 | 2016-03-30 |               0 |   0 |   1 |           0 |          0 |         0 |    0 |        0 |         0 |     0 |           1 |            1 |              0 |        2 |         1 |
-| 9663901 | 2016-05-19 |               0 |   0 |   1 |           0 |          0 |         0 |    0 |        0 |         0 |     0 |           1 |            1 |              0 |        2 |         1 |
-| 9663901 | 2016-07-09 |               0 |   0 |   1 |           0 |          0 |         0 |    0 |        0 |         1 |     0 |           1 |            1 |              0 |        3 |         1 |
-| 9663901 | 2017-01-31 |               0 |   0 |   1 |           0 |          0 |         0 |    0 |        0 |         1 |     0 |           1 |            1 |              0 |        3 |         1 |
-| 9663901 | 2017-02-16 |               0 |   0 |   1 |           0 |          0 |         0 |    0 |        0 |         1 |     0 |           1 |            1 |              0 |        3 |         1 |
-| 9663901 | 2018-03-29 |               0 |   0 |   1 |           0 |          0 |         0 |    0 |        0 |         1 |     0 |           1 |            1 |              0 |        3 |         1 |
+| patid | date | congeni_genetic | cvd | gi | hemato_immu | malignancy | metabolic | misc | neonatal | neuromusc | renal | respiratory | any_tech_dep | any_transplant | num_cmrb | cmrb_flag |
+|---:|:---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 9663901 | 2016-03-18 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 9663901 | 2016-03-24 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 9663901 | 2016-03-25 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 9663901 | 2016-03-30 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 | 2 | 1 |
+| 9663901 | 2016-05-19 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 | 2 | 1 |
+| 9663901 | 2016-07-09 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 1 | 1 | 0 | 3 | 1 |
+| 9663901 | 2017-01-31 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 1 | 1 | 0 | 3 | 1 |
+| 9663901 | 2017-02-16 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 1 | 1 | 0 | 3 | 1 |
+| 9663901 | 2018-03-29 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 1 | 1 | 0 | 3 | 1 |
 
 ### PCCC V3
 
@@ -966,6 +997,7 @@ The codes we’ll use are:
 - Z96.41: metabolic (device and technology use).
 
 ``` r
+
 codes <- c("H49.811", "J84.111", "Z96.41")
 subset(get_pccc_codes(), full_code %in% codes)
 ##      icdv dx full_code   code   condition                 subcondition
@@ -981,6 +1013,7 @@ subset(get_pccc_codes(), full_code %in% codes)
 The constructed data and permutations are:
 
 ``` r
+
 permutations <-
   data.table::data.table(
     permutation = rep(1:6, each = 7),
@@ -1002,7 +1035,7 @@ str(permutations, vec.len = 1)
 ##  $ encounter_id: int  1 2 ...
 ##  $ code        : chr  NA ...
 ##  $ plabel      : chr  "Permutation 1: H49.811, J84.111, Z96.41" ...
-##  - attr(*, ".internal.selfref")=<externalptr>
+##  - attr(*, ".internal.selfref")=<pointer: 0x55def8515ef0>
 ```
 
 - Permutation 1: H49.811, J84.111, Z96.41
@@ -1017,6 +1050,7 @@ We’ll apply the `pccc_v3.1` to this code set with
 present-on-admission.
 
 ``` r
+
 rtn <-
   comorbidities(
     data = permutations,
@@ -1106,90 +1140,90 @@ implemented flagging for the subconditions.
 
 The subconditions for each condition are shown in the next table.
 
-| subcondition                                            | subcondition_label                          |
-|---------------------------------------------------------|---------------------------------------------|
-| **congeni_genetic: Other Congenital or Genetic Defect** |                                             |
-| bone_and_joint_anomalies                                | Bone And Joint Anomalies                    |
-| chromosomal_anomalies                                   | Chromosomal Anomalies                       |
-| diaphragm_and_abdominal_wall_anomalies                  | Diaphragm And Abdominal Wall Anomalies      |
-| other_congenital_anomalies                              | Other Congenital Anomalies                  |
-| **cvd: Cardiovascular**                                 |                                             |
-| cardiomyopathies                                        | Cardiomyopathies                            |
-| conduction_disorder                                     | Conduction Disorder                         |
-| device_and_technology_use                               | Device And Technology Use                   |
-| dysrhythmias                                            | Dysrhythmias                                |
-| endocardium_diseases                                    | Endocardium Diseases                        |
-| heart_and_great_vessel_malformations                    | Heart And Great Vessel Malformations        |
-| other                                                   | Other                                       |
-| transplantation                                         | Transplantation                             |
-| **gi: Gastrointestinal**                                |                                             |
-| chronic_liver_disease_and_cirrhosis                     | Chronic Liver Disease And Cirrhosis         |
-| congenital_anomalies                                    | Congenital Anomalies                        |
-| device_and_technology_use                               | Device And Technology Use                   |
-| inflammatory_bowel_disease                              | Inflammatory Bowel Disease                  |
-| other                                                   | Other                                       |
-| transplantation                                         | Transplantation                             |
-| **hemato_immu: Hematologic or Immunologic**             |                                             |
-| acquired_immunodeficiency                               | Acquired Immunodeficiency                   |
-| aplastic_anemias                                        | Aplastic Anemias                            |
-| coagulation_hemorrhagic                                 | Coagulation Hemorrhagic                     |
-| diffuse_diseases_of_connective_tissue                   | Diffuse Diseases Of Connective Tissue       |
-| hemophagocytic_syndromes                                | Hemophagocytic Syndromes                    |
-| hereditary_anemias                                      | Hereditary Anemias                          |
-| hereditary_immunodeficiency                             | Hereditary Immunodeficiency                 |
-| leukopenia                                              | Leukopenia                                  |
-| other                                                   | Other                                       |
-| polyarteritis_nodosa_and_related_conditions             | Polyarteritis Nodosa And Related Conditions |
-| sarcoidosis                                             | Sarcoidosis                                 |
-| transplantation                                         | Transplantation                             |
-| **malignancy: Malignancy**                              |                                             |
-| neoplasms                                               | Neoplasms                                   |
-| transplantation                                         | Transplantation                             |
-| **metabolic: Metabolic**                                |                                             |
-| amino_acid_metabolism                                   | Amino Acid Metabolism                       |
-| carbohydrate_metabolism                                 | Carbohydrate Metabolism                     |
-| device_and_technology_use                               | Device And Technology Use                   |
-| endocrine_disorders                                     | Endocrine Disorders                         |
-| lipid_metabolism                                        | Lipid Metabolism                            |
-| other_metabolic_disorders                               | Other Metabolic Disorders                   |
-| storage_disorders                                       | Storage Disorders                           |
-| **misc: Miscellaneous, Not Elsewhere Classified**       |                                             |
-| device_and_technology_use                               | Device And Technology Use                   |
-| transplantation                                         | Transplantation                             |
-| **neonatal: Premature & Neonatal**                      |                                             |
-| birth_asphyxia                                          | Birth Asphyxia                              |
-| cerebral_hemorrhage_at_birth                            | Cerebral Hemorrhage At Birth                |
-| extreme_immaturity                                      | Extreme Immaturity                          |
-| fetal_malnutrition                                      | Fetal Malnutrition                          |
-| hypoxic_ischemic_encephalopathy                         | Hypoxic Ischemic Encephalopathy             |
-| other                                                   | Other                                       |
-| respiratory_diseases                                    | Respiratory Diseases                        |
-| spinal_cord_injury_at_birth                             | Spinal Cord Injury At Birth                 |
-| **neuromusc: Neurologic or Neuromuscular**              |                                             |
-| brain_and_spinal_cord_malformations                     | Brain And Spinal Cord Malformations         |
-| cns_degeneration_and_diseases                           | Cns Degeneration And Diseases               |
-| device_and_technology_use                               | Device And Technology Use                   |
-| epilepsy                                                | Epilepsy                                    |
-| infantile_cerebral_palsy                                | Infantile Cerebral Palsy                    |
-| intellectual_disabilities                               | Intellectual Disabilities                   |
-| movement_diseases                                       | Movement Diseases                           |
-| muscular_dystrophies_and_myopathies                     | Muscular Dystrophies And Myopathies         |
-| occlusion_of_cerebral_arteries                          | Occlusion Of Cerebral Arteries              |
-| other_neurologic_disorders                              | Other Neurologic Disorders                  |
-| **renal: Renal Urologic**                               |                                             |
-| chronic_bladder_diseases                                | Chronic Bladder Diseases                    |
-| chronic_renal_failure                                   | Chronic Renal Failure                       |
-| congenital_anomalies                                    | Congenital Anomalies                        |
-| device_and_technology_use                               | Device And Technology Use                   |
-| other                                                   | Other                                       |
-| transplantation                                         | Transplantation                             |
-| **respiratory: Respiratory**                            |                                             |
-| chronic_respiratory_diseases                            | Chronic Respiratory Diseases                |
-| cystic_fibrosis                                         | Cystic Fibrosis                             |
-| device_and_technology_use                               | Device And Technology Use                   |
-| other                                                   | Other                                       |
-| respiratory_malformations                               | Respiratory Malformations                   |
-| transplantation                                         | Transplantation                             |
+| subcondition | subcondition_label |
+|----|----|
+| **congeni_genetic: Other Congenital or Genetic Defect** |  |
+| bone_and_joint_anomalies | Bone And Joint Anomalies |
+| chromosomal_anomalies | Chromosomal Anomalies |
+| diaphragm_and_abdominal_wall_anomalies | Diaphragm And Abdominal Wall Anomalies |
+| other_congenital_anomalies | Other Congenital Anomalies |
+| **cvd: Cardiovascular** |  |
+| cardiomyopathies | Cardiomyopathies |
+| conduction_disorder | Conduction Disorder |
+| device_and_technology_use | Device And Technology Use |
+| dysrhythmias | Dysrhythmias |
+| endocardium_diseases | Endocardium Diseases |
+| heart_and_great_vessel_malformations | Heart And Great Vessel Malformations |
+| other | Other |
+| transplantation | Transplantation |
+| **gi: Gastrointestinal** |  |
+| chronic_liver_disease_and_cirrhosis | Chronic Liver Disease And Cirrhosis |
+| congenital_anomalies | Congenital Anomalies |
+| device_and_technology_use | Device And Technology Use |
+| inflammatory_bowel_disease | Inflammatory Bowel Disease |
+| other | Other |
+| transplantation | Transplantation |
+| **hemato_immu: Hematologic or Immunologic** |  |
+| acquired_immunodeficiency | Acquired Immunodeficiency |
+| aplastic_anemias | Aplastic Anemias |
+| coagulation_hemorrhagic | Coagulation Hemorrhagic |
+| diffuse_diseases_of_connective_tissue | Diffuse Diseases Of Connective Tissue |
+| hemophagocytic_syndromes | Hemophagocytic Syndromes |
+| hereditary_anemias | Hereditary Anemias |
+| hereditary_immunodeficiency | Hereditary Immunodeficiency |
+| leukopenia | Leukopenia |
+| other | Other |
+| polyarteritis_nodosa_and_related_conditions | Polyarteritis Nodosa And Related Conditions |
+| sarcoidosis | Sarcoidosis |
+| transplantation | Transplantation |
+| **malignancy: Malignancy** |  |
+| neoplasms | Neoplasms |
+| transplantation | Transplantation |
+| **metabolic: Metabolic** |  |
+| amino_acid_metabolism | Amino Acid Metabolism |
+| carbohydrate_metabolism | Carbohydrate Metabolism |
+| device_and_technology_use | Device And Technology Use |
+| endocrine_disorders | Endocrine Disorders |
+| lipid_metabolism | Lipid Metabolism |
+| other_metabolic_disorders | Other Metabolic Disorders |
+| storage_disorders | Storage Disorders |
+| **misc: Miscellaneous, Not Elsewhere Classified** |  |
+| device_and_technology_use | Device And Technology Use |
+| transplantation | Transplantation |
+| **neonatal: Premature & Neonatal** |  |
+| birth_asphyxia | Birth Asphyxia |
+| cerebral_hemorrhage_at_birth | Cerebral Hemorrhage At Birth |
+| extreme_immaturity | Extreme Immaturity |
+| fetal_malnutrition | Fetal Malnutrition |
+| hypoxic_ischemic_encephalopathy | Hypoxic Ischemic Encephalopathy |
+| other | Other |
+| respiratory_diseases | Respiratory Diseases |
+| spinal_cord_injury_at_birth | Spinal Cord Injury At Birth |
+| **neuromusc: Neurologic or Neuromuscular** |  |
+| brain_and_spinal_cord_malformations | Brain And Spinal Cord Malformations |
+| cns_degeneration_and_diseases | Cns Degeneration And Diseases |
+| device_and_technology_use | Device And Technology Use |
+| epilepsy | Epilepsy |
+| infantile_cerebral_palsy | Infantile Cerebral Palsy |
+| intellectual_disabilities | Intellectual Disabilities |
+| movement_diseases | Movement Diseases |
+| muscular_dystrophies_and_myopathies | Muscular Dystrophies And Myopathies |
+| occlusion_of_cerebral_arteries | Occlusion Of Cerebral Arteries |
+| other_neurologic_disorders | Other Neurologic Disorders |
+| **renal: Renal Urologic** |  |
+| chronic_bladder_diseases | Chronic Bladder Diseases |
+| chronic_renal_failure | Chronic Renal Failure |
+| congenital_anomalies | Congenital Anomalies |
+| device_and_technology_use | Device And Technology Use |
+| other | Other |
+| transplantation | Transplantation |
+| **respiratory: Respiratory** |  |
+| chronic_respiratory_diseases | Chronic Respiratory Diseases |
+| cystic_fibrosis | Cystic Fibrosis |
+| device_and_technology_use | Device And Technology Use |
+| other | Other |
+| respiratory_malformations | Respiratory Malformations |
+| transplantation | Transplantation |
 
 To get the subconditions all you need to do is use the
 `subconditions = TRUE` argument in the
@@ -1198,6 +1232,7 @@ call. For this example we will apply `pccc_v3.1` with and without
 comorbidities.
 
 ``` r
+
 without_subconditions <-
   comorbidities(
     data = mdcr,
@@ -1230,6 +1265,7 @@ results of calling
 with `subconditions = FALSE`.
 
 ``` r
+
 with_subconditions
 ## 
 ## Comorbidities and Subconditions via pccc_v3.1
@@ -1264,6 +1300,7 @@ A quick and easy way to get a summary of the subconditions is to call
 [`summary()`](https://rdrr.io/r/base/summary.html).
 
 ``` r
+
 str(summary(with_subconditions))
 ## 'data.frame':    82 obs. of  5 variables:
 ##  $ condition                      : chr  "congeni_genetic" "congeni_genetic" "congeni_genetic" "congeni_genetic" ...
@@ -1327,6 +1364,7 @@ same `permutations` data set from above we will look at the metabolic
 and respiratory conditions and subconditions.
 
 ``` r
+
 rslts <-
   comorbidities(
     data = permutations,
@@ -1349,6 +1387,7 @@ where the chronic respiratory disease is flagged is consistent with when
 the primary respiratory condition is flagged.
 
 ``` r
+
 all(rslts$subconditions$respiratory$chronic_respiratory_diseases == 1)
 ## [1] TRUE
 sapply(rslts$subconditions$respiratory[, -(1:3)], max)
@@ -1380,12 +1419,14 @@ scnd <-
 [TABLE]
 
 Encounters flagging for respiratory condition and the chronic
-respiratory disease subcondition.
+respiratory disease subcondition. {.table .table .table-striped
+style="font-size: 10px; margin-left: auto; margin-right: auto;"}
 
 For the metabolic condition we have two subconditions to look at, 1)
 device and technology use, and 2) other metabolic disorders.
 
 ``` r
+
 # which encounters flag for primary condition metabolic?
 cnd <-
   rslts$conditions[
@@ -1423,7 +1464,8 @@ scnd <-
 
 Encounters flagging for a metabolic condition and the encounters
 flagging for subconidtions device and technology use and/or other
-metabolic disorders.
+metabolic disorders. {.table .table .table-striped
+style="font-size: 10px; margin-left: auto; margin-right: auto;"}
 
 ## References
 

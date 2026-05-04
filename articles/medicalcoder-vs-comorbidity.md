@@ -8,6 +8,7 @@ medicalcoder and the R package
 2018).
 
 ``` r
+
 library(medicalcoder)
 library(comorbidity)
 packageVersion("comorbidity")
@@ -46,6 +47,7 @@ only applies comorbidity algorithms based on diagnostic codes and thus
 does not expect to see any procedure codes.
 
 ``` r
+
 mdcr_icd9dx  <- subset(mdcr, icdv ==  9L & dx == 1L)
 mdcr_icd10dx <- subset(mdcr, icdv == 10L & dx == 1L)
 ```
@@ -54,6 +56,7 @@ To make sure we have a fair comparison, we will add rows without a code
 for each patid not in the subsets.
 
 ``` r
+
 mdcr_icd9dx <-
   rbind(
     mdcr_icd9dx,
@@ -78,6 +81,7 @@ we need to use the `method = "charlson_quan2011"` in
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md).
 
 ``` r
+
 medicalcoder_charlson_results <-
   medicalcoder::comorbidities(
     data = mdcr,
@@ -98,6 +102,7 @@ ICD-10 codes. We will then need to combine the results and then apply a
 scoring function.
 
 ``` r
+
 comorbidity_charlson_icd9_results <-
   comorbidity::comorbidity(
     x = mdcr_icd9dx,
@@ -145,6 +150,7 @@ we check that we have the same number of rows and all the patid are
 accounted for.
 
 ``` r
+
 nrow(medicalcoder_charlson_results) == nrow(comorbidity_charlson_results)
 ## [1] TRUE
 
@@ -163,6 +169,7 @@ There are differences in the results in terms of the names and numbers
 of columns returned.
 
 ``` r
+
 dim(medicalcoder_charlson_results)
 ## [1] 38262    22
 names(medicalcoder_charlson_results)
@@ -184,6 +191,7 @@ We will compare results column by column. First, we merge the data sets
 together by patid.
 
 ``` r
+
 charlson_delta <-
   merge(
     x = comorbidity_charlson_results,
@@ -202,6 +210,7 @@ and from
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md).
 
 ``` r
+
 charlson_columns
 ##                             Condition comorbidity medicalcoder
 ## 1                                AIDS        aids      aidshiv
@@ -228,6 +237,7 @@ For each row in `charlson_columns` we will verify that the results are
 identical in `charlson_delta` and remove the columns.
 
 ``` r
+
 for (i in seq_len(nrow(charlson_columns))) {
   x <- charlson_columns[["comorbidity"]][i]
   y <- charlson_columns[["medicalcoder"]][i]
@@ -285,6 +295,7 @@ The only columns left in the `charlson_delta` object are from
 medicalcoder
 
 ``` r
+
 str(charlson_delta)
 ## 'data.frame':    38262 obs. of  4 variables:
 ##  $ patid    : int  10000 10002 10005 10006 10008 10010 10014 10015 10017 10018 ...
@@ -298,6 +309,7 @@ str(charlson_delta)
 - `age_score`: a score adjustment based on age *if* age is provided.
 
 ``` r
+
 stopifnot(
   identical(
     names(charlson_delta),
@@ -312,6 +324,7 @@ can be used to build nice tables via
 [kableExtra](https://CRAN.R-project.org/package=kableExtra).
 
 ``` r
+
 x <- summary(medicalcoder_charlson_results)[[1]][, c("condition_description", "count", "percent")]
 
 kbl(
@@ -357,6 +370,7 @@ Applying the Elixhauser comorbidities to the `mdcr` data set via
 is done as follows.
 
 ``` r
+
 medicalcoder_elixhauser_results <-
   medicalcoder::comorbidities(
     data = mdcr,
@@ -377,6 +391,7 @@ ICD-10 codes. We will then need to combine the results and then apply a
 scoring function.
 
 ``` r
+
 comorbidity_elixhauser_icd9_results <-
   comorbidity::comorbidity(
     x = mdcr_icd9dx,
@@ -408,6 +423,7 @@ we check that we have the same number of rows and all the patid are
 accounted for.
 
 ``` r
+
 nrow(medicalcoder_elixhauser_results) == nrow(comorbidity_elixhauser_results)
 ## [1] TRUE
 
@@ -426,6 +442,7 @@ There are differences in the results in terms of the names and numbers
 of columns returned.
 
 ``` r
+
 dim(medicalcoder_elixhauser_results)
 ## [1] 38262    37
 names(medicalcoder_elixhauser_results)
@@ -458,6 +475,7 @@ We will compare results column by column. First, we merge the data sets
 together by patid.
 
 ``` r
+
 elixhauser_delta <-
   merge(
     x = comorbidity_elixhauser_results,
@@ -476,6 +494,7 @@ and from
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md).
 
 ``` r
+
 elixhauser_columns
 ##                                        Condition comorbidity
 ## 1                                       AIDS/HIV        aids
@@ -547,6 +566,7 @@ For each row in `elixhauser_columns` we will verify that the results are
 identical in `elixhauser_delta` and remove the columns.
 
 ``` r
+
 for (i in seq_len(nrow(elixhauser_columns))) {
   x <- elixhauser_columns[["comorbidity"]][i]
   y <- elixhauser_columns[["medicalcoder"]][i]
@@ -630,6 +650,7 @@ The remaining columns in the `elixhauser_delta` object are specific to
 medicalcoder, save patid.
 
 ``` r
+
 str(elixhauser_delta)
 ## 'data.frame':    38262 obs. of  6 variables:
 ##  $ patid            : int  10000 10002 10005 10006 10008 10010 10014 10015 10017 10018 ...
@@ -641,6 +662,7 @@ str(elixhauser_delta)
 ```
 
 ``` r
+
 stopifnot(identical(names(elixhauser_delta), c("patid", "HTN_C", "num_cmrb", "cmrb_flag", "mortality_index", "readmission_index")))
 ```
 
@@ -660,6 +682,7 @@ can be used to build nice tables via
 [kableExtra](https://CRAN.R-project.org/package=kableExtra).
 
 ``` r
+
 x <- summary(medicalcoder_elixhauser_results)[[1]][, c("condition", "count", "percent")]
 
 kbl(
@@ -720,6 +743,7 @@ Here we check for consistency in the mappings between *medicalcoder* and
 *comorbidity* using all known ICD codes within *medicalcoder*.
 
 ``` r
+
 all_dx_codes <-
   subset(
     x      = medicalcoder::get_icd_codes(),
@@ -734,6 +758,7 @@ all_dx_codes[, code_id := paste0("ICD-", icdv, " ", full_code)]
 ### Charlson
 
 ``` r
+
 mdcr_results <-
   medicalcoder::comorbidities(
     data = all_dx_codes,
@@ -864,6 +889,7 @@ builds a table with valid ICD codes to join against and has the C4A.x
 codes
 
 ``` r
+
 # comorbidity:::.maps$charlson_icd10_quan$canc
 grep("^C4", comorbidity:::.maps$charlson_icd10_quan$canc, value = TRUE)
 ## [1] "C40" "C41" "C43" "C45" "C46" "C47" "C48" "C49"
@@ -886,6 +912,7 @@ The implementation of
 can result in false positives when invalid codes are submitted.
 
 ``` r
+
 df <- data.frame(id = "pat1", code = "C40-NOT-AN-ICD-CODE")
 comorbidity::comorbidity(x = df, id = "id", code = "code", assign0 = TRUE, map = "charlson_icd10_quan")
 ##     id mi chf pvd cevd dementia cpd rheumd pud mld diab diabwc hp rend canc
@@ -905,6 +932,7 @@ medicalcoder::comorbidities(data = df, id.var = "id", icd.codes = "code", method
 ### Elixhauser
 
 ``` r
+
 mdcr_results <-
   medicalcoder::comorbidities(
     data = all_dx_codes,
@@ -1049,6 +1077,7 @@ input data and set the copies to be `data.tables`.
 Code (click to toggle view/fold)
 
 ``` r
+
 mdcrDT <- data.table::copy(mdcr)
 data.table::setDT(mdcrDT)
 mdcr_icd9dxDT <- data.table::copy(mdcr_icd9dx)
@@ -1063,6 +1092,7 @@ times.
 Code (click to toggle view/fold)
 
 ``` r
+
 medicalcoder_charlson_results <- function() {
   medicalcoder::comorbidities(
     data = mdcr,
@@ -1182,6 +1212,7 @@ time, in seconds, for each evaluation.
 Code (click to toggle view/fold)
 
 ``` r
+
 medicalcoder_times <- numeric(0)
 medicalcoder_times_DT <- numeric(0)
 comorbidity_times <- numeric(0)
@@ -1255,20 +1286,17 @@ Davis, and Andrew Renda. 2019. “Charlson Comorbidity Index: ICD-9 Update
 and ICD-10 Translation.” *American Health & Drug Benefits* 12 (4): 188.
 <https://pubmed.ncbi.nlm.nih.gov/31428236/>.
 
-Healthcare Cost and Utilization Project (HCUP). 2017. “Elixhauser
-Comorbidity Software for ICD-9-CM.”
-<https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp>.
+Healthcare Cost and Utilization Project (HCUP). 2017. *Elixhauser
+Comorbidity Software for ICD-9-CM*.
+[Https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp](https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp).
 
-Quan, Hude, Bo Li, Colette M. Couris, Kiyohide Fushimi, Peter Graham,
-Philip Hider, Jean-Michel Januel, and Vijaya Sundararajan. 2011.
-“Updating and Validating the Charlson Comorbidity Index and Score for
-Risk Adjustment in Hospital Discharge Abstracts Using Data from 6
-Countries.” *American Journal of Epidemiology* 173 (6): 676–82.
+Quan, Hude, Bo Li, Colette M. Couris, et al. 2011. “Updating and
+Validating the Charlson Comorbidity Index and Score for Risk Adjustment
+in Hospital Discharge Abstracts Using Data from 6 Countries.” *American
+Journal of Epidemiology* 173 (6): 676–82.
 <https://doi.org/10.1093/aje/kwq433>.
 
-Quan, Hude, Vijaya Sundararajan, Patricia Halfon, Andrew Fong, Bernard
-Burnand, Jean-Christophe Luthi, L Duncan Saunders, Catherine A. Beck,
-Thomas E. Feasby, and William A. Ghali. 2005. “Coding Algorithms for
-Defining Comorbidities in ICD-9-CM and ICD-10 Administrative Data.”
-*Medical Care* 43 (11): 1130–39.
+Quan, Hude, Vijaya Sundararajan, Patricia Halfon, et al. 2005. “Coding
+Algorithms for Defining Comorbidities in ICD-9-CM and ICD-10
+Administrative Data.” *Medical Care* 43 (11): 1130–39.
 <https://doi.org/10.1097/01.mlr.0000182534.19832.83>.

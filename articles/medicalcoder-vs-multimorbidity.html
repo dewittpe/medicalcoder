@@ -87,6 +87,11 @@ medicalcoder and the R package <a href="https://cran.r-project.org/package=multi
 <span class="citation">(Bensken 2023)</span>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Attaching package: 'data.table'</span></span>
+<span><span class="co">## The following object is masked from 'package:base':</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##     %notin%</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.peteredewitt.com/medicalcoder/">medicalcoder</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/WYATTBENSKEN/multimorbidity" class="external-link">multimorbidity</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"multimorbidity"</span><span class="op">)</span></span>
@@ -158,7 +163,7 @@ diagnostic codes so we will omit the procedure codes from
 <span><span class="va">toc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/difftime.html" class="external-link">difftime</a></span><span class="op">(</span><span class="va">toc</span>, <span class="va">tic</span>, units <span class="op">=</span> <span class="st">"secs"</span><span class="op">)</span></span>
-<span><span class="co">## Time difference of 0.6528969 secs</span></span></code></pre></div>
+<span><span class="co">## Time difference of 0.6925991 secs</span></span></code></pre></div>
 <p>Calling <code><a href="https://rdrr.io/pkg/multimorbidity/man/charlson.html" class="external-link">multimorbidity::charlson()</a></code></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tic</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -174,7 +179,7 @@ diagnostic codes so we will omit the procedure codes from
 <span><span class="va">toc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/difftime.html" class="external-link">difftime</a></span><span class="op">(</span><span class="va">toc</span>, <span class="va">tic</span>, units <span class="op">=</span> <span class="st">"secs"</span><span class="op">)</span></span>
-<span><span class="co">## Time difference of 13.58718 secs</span></span></code></pre></div>
+<span><span class="co">## Time difference of 13.06116 secs</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="differences-in-the-results">Differences in the results<a class="anchor" aria-label="anchor" href="#differences-in-the-results"></a>
 </h3>
@@ -353,17 +358,16 @@ utility.</p>
 <!-- ----------------------------------------------------------------------- -->
 <!--                              End of File                                -->
 <!-- ----------------------------------------------------------------------- -->
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-r-multimorbidity" class="csl-entry">
 Bensken, Wyatt. 2023. <em>Multimorbidity: Harmonizing Various
 Comorbidity, Multimorbidity, and Frailty Measures</em>. <a href="https://doi.org/10.32614/CRAN.package.multimorbidity" class="external-link">https://doi.org/10.32614/CRAN.package.multimorbidity</a>.
 </div>
 <div id="ref-quan2005" class="csl-entry">
-Quan, Hude, Vijaya Sundararajan, Patricia Halfon, Andrew Fong, Bernard
-Burnand, Jean-Christophe Luthi, L Duncan Saunders, Catherine A. Beck,
-Thomas E. Feasby, and William A. Ghali. 2005. <span>“Coding Algorithms
-for Defining Comorbidities in ICD-9-CM and ICD-10 Administrative
-Data.”</span> <em>Medical Care</em> 43 (11): 1130–39. <a href="https://doi.org/10.1097/01.mlr.0000182534.19832.83" class="external-link">https://doi.org/10.1097/01.mlr.0000182534.19832.83</a>.
+Quan, Hude, Vijaya Sundararajan, Patricia Halfon, et al. 2005.
+<span>“Coding Algorithms for Defining Comorbidities in ICD-9-CM and
+ICD-10 Administrative Data.”</span> <em>Medical Care</em> 43 (11):
+1130–39. <a href="https://doi.org/10.1097/01.mlr.0000182534.19832.83" class="external-link">https://doi.org/10.1097/01.mlr.0000182534.19832.83</a>.
 </div>
 </div>
 </div>

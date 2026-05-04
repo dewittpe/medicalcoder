@@ -87,12 +87,14 @@ algorithms. medicalcoder provides novel features:
 ### From CRAN
 
 ``` r
+
 install.packages("medicalcoder")
 ```
 
 ### From GitHub
 
 ``` r
+
 remotes::install_github("dewittpe/medicalcoder")
 ```
 
@@ -102,6 +104,7 @@ If you have the .tar.gz file for version X.Y.Z, e.g.,
 `medicalcoder_X.Y.Z.tar.gz` you can install from within R via:
 
 ``` r
+
 install.packages(pkgs = "medicalcoder_X.Y.Z.tar.gz", repos = NULL, type = "source")
 ```
 
@@ -120,6 +123,7 @@ additional columns for patient and/or encounter id. There are two
 example data sets in the package: `mdcr` and `mdcr_longitudinal`.
 
 ``` r
+
 data(mdcr, mdcr_longitudinal, package = "medicalcoder")
 ```
 
@@ -129,6 +133,7 @@ and the `dx` column denotes diagnostic (1) or procedure (0) code. This
 data set contains diagnostic and procedure codes for 38 262 patients.
 
 ``` r
+
 str(mdcr)
 #> 'data.frame':    319856 obs. of  4 variables:
 #>  $ patid: int  71412 71412 71412 71412 71412 17087 64424 64424 84361 84361 ...
@@ -152,6 +157,7 @@ of the diagnosis and allows us to look at changes in comorbidities over
 time.
 
 ``` r
+
 str(mdcr_longitudinal)
 #> 'data.frame':    60 obs. of  4 variables:
 #>  $ patid: int  9663901 9663901 9663901 9663901 9663901 9663901 9663901 9663901 9663901 9663901 ...
@@ -179,6 +185,7 @@ General examples and explanations for when conditions are flagged are in
 the vignette
 
 ``` r
+
 vignette(topic = "comorbidities", package = "medicalcoder")
 ```
 
@@ -201,6 +208,7 @@ vignette(topic = "comorbidities", package = "medicalcoder")
 - All variants can flag conditions and subconditions.
 
 ``` r
+
 # PCCC v2.1 and v3.1 example
 library(medicalcoder)
 cmrbs2 <-
@@ -237,6 +245,7 @@ A summary of the flagged conditions is generated with a call to
 [`summary()`](https://rdrr.io/r/base/summary.html).
 
 ``` r
+
 s2 <- summary(cmrbs2)
 str(s2)
 ```
@@ -246,6 +255,7 @@ For `pccc_v2.0` and `pccc_v2.1` the `data.frame` returned by
 (unique `id.vars` with the condition) and percentage.
 
 ``` r
+
 s3 <- summary(cmrbs3)
 str(s3)
 ```
@@ -259,6 +269,7 @@ have the condition”.
 Further detail, examples, and explanations are in the vignette.
 
 ``` r
+
 vignette(topic = "pccc", package = "medicalcoder")
 ```
 
@@ -275,6 +286,7 @@ medicalcoder:
 - [Glasheen (2019)](https://pubmed.ncbi.nlm.nih.gov/31428236/)
 
 ``` r
+
 # Charlson example
 cmrbs <-
   comorbidities(
@@ -295,6 +307,7 @@ comorbidities is a list of data frames summarizing the conditions, age
 category, and the index score.
 
 ``` r
+
 s <- summary(cmrbs)
 str(s, max.level = 1)
 ```
@@ -302,6 +315,7 @@ str(s, max.level = 1)
 More details and examples are provided in the vignette:
 
 ``` r
+
 vignette(topic = "charlson", package = "medicalcoder")
 ```
 
@@ -327,6 +341,7 @@ vignette(topic = "charlson", package = "medicalcoder")
     - `method = elixhauser_ahrq_icd10`
 
 ``` r
+
 # Elixhauser example
 cmrbs <-
   comorbidities(
@@ -346,6 +361,7 @@ percentages of distinct `data[id.vars]` with the noted condition, and a
 summary of the index scores.
 
 ``` r
+
 s <- summary(cmrbs)
 str(s, max.level = 1)
 ```
@@ -353,6 +369,7 @@ str(s, max.level = 1)
 More details and examples are provided in the vignette:
 
 ``` r
+
 vignette(topic = "elixhauser", package = "medicalcoder")
 ```
 
@@ -366,6 +383,7 @@ You can get a table of ICD codes via
 [`get_icd_codes()`](http://www.peteredewitt.com/medicalcoder/reference/get_icd_codes.md).
 
 ``` r
+
 str(medicalcoder::get_icd_codes())
 #> 'data.frame':    249819 obs. of  9 variables:
 #>  $ icdv            : int  9 9 9 9 9 9 9 9 9 9 ...
@@ -429,6 +447,7 @@ The columns are:
   - `assignable_end`: Latest (fiscal) year when the code was assignable.
 
 ``` r
+
 subset(
   x = lookup_icd_codes("^Z94", regex = TRUE, full.codes = TRUE, compact.codes = FALSE),
   subset = src == "cms",
@@ -468,6 +487,7 @@ are also provided for working with ICD codes.
 More details and examples are in the vignette:
 
 ``` r
+
 vignette(topic = "icd", package = "medicalcoder")
 ```
 

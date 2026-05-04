@@ -8,7 +8,13 @@ medicalcoder and the R package
 (Bensken 2023).
 
 ``` r
+
 library(data.table)
+## 
+## Attaching package: 'data.table'
+## The following object is masked from 'package:base':
+## 
+##     %notin%
 library(medicalcoder)
 library(multimorbidity)
 packageVersion("multimorbidity")
@@ -47,6 +53,7 @@ is expecting to only see diagnostic codes so we will omit the procedure
 codes from `mdcr`.
 
 ``` r
+
 mdcr_dx <- subset(mdcr, dx == 1)
 
 # add any patid omit
@@ -69,6 +76,7 @@ and the methods in the
 call is presented here.
 
 ``` r
+
 tic <- Sys.time()
 
 medicalcoder_charlson_results <-
@@ -86,13 +94,14 @@ medicalcoder_charlson_results <-
 toc <- Sys.time()
 
 difftime(toc, tic, units = "secs")
-## Time difference of 0.6528969 secs
+## Time difference of 0.6925991 secs
 ```
 
 Calling
 [`multimorbidity::charlson()`](https://rdrr.io/pkg/multimorbidity/man/charlson.html)
 
 ``` r
+
 tic <- Sys.time()
 
 multimorbidity_charlson_results <-
@@ -106,7 +115,7 @@ multimorbidity_charlson_results <-
 toc <- Sys.time()
 
 difftime(toc, tic, units = "secs")
-## Time difference of 13.58718 secs
+## Time difference of 13.06116 secs
 ```
 
 ### Differences in the results
@@ -131,6 +140,7 @@ returns numeric columns whereas
 return integer columns.
 
 ``` r
+
 multimorbidity_charlson_results <-
   multimorbidity_charlson_results |>
   dplyr::mutate_if(is.numeric, as.integer)
@@ -150,6 +160,7 @@ We will compare the columns between the two methods. None of the results
 are the same.
 
 ``` r
+
 dcolumns <- data.table::fread(text = "
 medicalcoder | multimorbidity
 aidshiv | charlson_hiv
@@ -191,6 +202,7 @@ Let’s dig into one of the conditions: Rheumatic disease (“rhd” in
 [`multimorbidity::charlson()`](https://rdrr.io/pkg/multimorbidity/man/charlson.html)).
 
 ``` r
+
 deltas[rhd != charlson_rheum, .(patid, rhd, charlson_rheum)]
 ##      patid   rhd charlson_rheum
 ##      <int> <int>          <int>
@@ -221,6 +233,7 @@ not flagging the condition. Let’s look at the ICD codes
 flagged in the records
 
 ``` r
+
 missingcodes <-
   merge(
     x = subset(mdcr, patid %in% deltas[rhd != charlson_rheum, patid]),
@@ -262,6 +275,7 @@ and not flagged by
 [`multimorbidity::charlson()`](https://rdrr.io/pkg/multimorbidity/man/charlson.html).
 
 ``` r
+
 medicalcoder::comorbidities(
   data = missingcodes,
   id.vars = "codeid",
@@ -310,9 +324,7 @@ Bensken, Wyatt. 2023. *Multimorbidity: Harmonizing Various Comorbidity,
 Multimorbidity, and Frailty Measures*.
 <https://doi.org/10.32614/CRAN.package.multimorbidity>.
 
-Quan, Hude, Vijaya Sundararajan, Patricia Halfon, Andrew Fong, Bernard
-Burnand, Jean-Christophe Luthi, L Duncan Saunders, Catherine A. Beck,
-Thomas E. Feasby, and William A. Ghali. 2005. “Coding Algorithms for
-Defining Comorbidities in ICD-9-CM and ICD-10 Administrative Data.”
-*Medical Care* 43 (11): 1130–39.
+Quan, Hude, Vijaya Sundararajan, Patricia Halfon, et al. 2005. “Coding
+Algorithms for Defining Comorbidities in ICD-9-CM and ICD-10
+Administrative Data.” *Medical Care* 43 (11): 1130–39.
 <https://doi.org/10.1097/01.mlr.0000182534.19832.83>.

@@ -8,6 +8,7 @@ comorbidity flags returned by
 vs the SQL code provided by Johnson et al. (2018).
 
 ``` r
+
 library(medicalcoder)
 ```
 
@@ -20,6 +21,7 @@ the MIMIC-IV data. We make a few small modifications to the code so we
 can evaluate the SQL locally via RSQLite and on a local data set.
 
 ``` r
+
 mimic_charson_query <-
   scan(
     file = "https://raw.githubusercontent.com/MIT-LCP/mimic-code/278df75ec30991ff3a6f5ceb6d2221635a085e9f/mimic-iv/concepts/comorbidity/charlson.sql",
@@ -53,8 +55,14 @@ mimic_charson_query <- paste(mimic_charson_query, collapse = "\n")
 ```
 
 ``` r
+
 library(medicalcoder)
 library(data.table)
+## 
+## Attaching package: 'data.table'
+## The following object is masked from 'package:base':
+## 
+##     %notin%
 mdcr_for_mimic <- data.table::copy(mdcr)
 setDT(mdcr_for_mimic)
 
@@ -71,6 +79,7 @@ mdcr_for_mimic[, age := as.integer(substr(as.character(subject_id), 1L, 2L))]
 ```
 
 ``` r
+
 library(odbc)
 library(DBI)
 library(RSQLite)
@@ -92,6 +101,7 @@ setDT(mimic_charlson_results)
 ```
 
 ``` r
+
 medicalcoder_charlson_results <-
   comorbidities(
     data = mdcr_for_mimic,
@@ -109,6 +119,7 @@ medicalcoder_charlson_results <-
 ```
 
 ``` r
+
 delta <-
   merge(
     x = medicalcoder_charlson_results,
@@ -119,6 +130,7 @@ delta <-
 ```
 
 ``` r
+
 uniqueN(mdcr_for_mimic$hadm_id)
 ## [1] 38262
 nrow(mimic_charlson_results)
@@ -131,6 +143,7 @@ Conditions without multiple severity levels are the same between the two
 methods.
 
 ``` r
+
 dcolumns <- fread(text = "
 medicalcoder | mimic
 aidshiv      | aids
@@ -150,6 +163,7 @@ cci          | charlson_comorbidity_index
 ```
 
 ``` r
+
 for (i in seq_len(nrow(dcolumns))) {
   x <- dcolumns[["medicalcoder"]][i]
   y <- dcolumns[["mimic"]][i]
@@ -202,6 +216,7 @@ sets the flag for diabetes without complication to 0 when diabetes with
 complication is present. MIMIC code retains the non-complex case.
 
 ``` r
+
 delta[dm == 1L & dmc == 1L, .N == 0L] # medicalcoder
 ## [1] TRUE
 delta[diabetes_without_cc == 0L & diabetes_with_cc == 0L, .N > 0L] # MIMIC
@@ -237,6 +252,7 @@ sets malignant cancer (mal) to 0 when metastatic solid tumor (mst) is
 present. MIMIC retains both flags.
 
 ``` r
+
 delta[mal == 1L & mst == 1L, .N == 0L] # medicalcoder
 ## [1] TRUE
 delta[malignant_cancer == 1L & metastatic_solid_tumor == 1L, .N > 0L] # MIMIC
@@ -272,6 +288,7 @@ sets the flag for mild liver disease (mld) to 0 when moderate/severe
 liver disease (msld) is flagged. MIMIC retains both flags.
 
 ``` r
+
 delta[mld == 1L & msld == 1L, .N == 0L] # medicalcoder
 ## [1] TRUE
 delta[mild_liver_disease == 1L & severe_liver_disease == 1L, .N > 0L] # MIMIC
@@ -308,13 +325,14 @@ and report the number of comorbidities flagged and indicator for any
 comorbidity.
 
 ``` r
+
 str(delta)
 ## Classes 'medicalcoder_comorbidities', 'data.table' and 'data.frame': 38262 obs. of  4 variables:
 ##  $ subject_id: int  10000 10002 10005 10006 10008 10010 10014 10015 10017 10018 ...
 ##  $ hadm_id   : chr  "10000e1" "10002e1" "10005e1" "10006e1" ...
 ##  $ num_cmrb  : int  1 0 1 0 0 0 0 1 0 0 ...
 ##  $ cmrb_flag : int  1 0 1 0 0 0 0 1 0 0 ...
-##  - attr(*, ".internal.selfref")=<externalptr> 
+##  - attr(*, ".internal.selfref")=<pointer: 0x559a4e38eef0> 
 ##  - attr(*, "sorted")= chr [1:2] "subject_id" "hadm_id"
 ##  - attr(*, "index")= int(0)
 ```

@@ -132,6 +132,11 @@ set.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.peteredewitt.com/medicalcoder/">medicalcoder</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Attaching package: 'data.table'</span></span>
+<span><span class="co">## The following object is masked from 'package:base':</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##     %notin%</span></span>
 <span><span class="va">mdcr_for_mimic</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">mdcr</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/setDT.html" class="external-link">setDT</a></span><span class="op">(</span><span class="va">mdcr_for_mimic</span><span class="op">)</span></span>
 <span></span>
@@ -361,7 +366,7 @@ comorbidities flagged and indicator for any comorbidity.</p>
 <span><span class="co">##  $ hadm_id   : chr  "10000e1" "10002e1" "10005e1" "10006e1" ...</span></span>
 <span><span class="co">##  $ num_cmrb  : int  1 0 1 0 0 0 0 1 0 0 ...</span></span>
 <span><span class="co">##  $ cmrb_flag : int  1 0 1 0 0 0 0 1 0 0 ...</span></span>
-<span><span class="co">##  - attr(*, ".internal.selfref")=&lt;externalptr&gt; </span></span>
+<span><span class="co">##  - attr(*, ".internal.selfref")=&lt;pointer: 0x559a4e38eef0&gt; </span></span>
 <span><span class="co">##  - attr(*, "sorted")= chr [1:2] "subject_id" "hadm_id"</span></span>
 <span><span class="co">##  - attr(*, "index")= int(0)</span></span></code></pre></div>
 </div>
@@ -371,7 +376,7 @@ comorbidities flagged and indicator for any comorbidity.</p>
 <!-- ----------------------------------------------------------------------- -->
 <!--                              End of File                                -->
 <!-- ----------------------------------------------------------------------- -->
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-johnson2018mimic" class="csl-entry">
 Johnson, Alistair E W, David J Stone, Leo A Celi, and Tom J Pollard.
 2018. <span>“The MIMIC Code Repository: Enabling Reproducibility in

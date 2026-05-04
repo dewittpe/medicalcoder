@@ -2,11 +2,11 @@
 
 ## Introduction
 
-The R package [pccc](https://cran.r-project.org/package=pccc) (James A.
-Feinstein et al. 2018; DeWitt, Feinstein, and Russell 2026) was
-published to support version 2 of the Pediatric Complex Chronic
-Conditions (PCCC) (Feudtner et al. 2014). This document is provided to
-help users of pccc to transition to medicalcoder.
+The R package [pccc](https://cran.r-project.org/package=pccc) (Feinstein
+et al. 2018; DeWitt et al. 2026) was published to support version 2 of
+the Pediatric Complex Chronic Conditions (PCCC) (Feudtner et al. 2014).
+This document is provided to help users of pccc to transition to
+medicalcoder.
 
 Major differences between
 [`pccc::ccc()`](https://rdrr.io/pkg/pccc/man/ccc.html) and
@@ -77,7 +77,7 @@ Major differences between
     v2 scoring algorithm.
 
   - `pccc_v3.0`: consistent with SAS code published with PCCC version 3
-    (James A. Feinstein et al. 2024).
+    (Feinstein et al. 2024).
 
   - `pccc_v3.1`: extended set of ICD code to condition mappings.
 
@@ -106,6 +106,7 @@ Major differences between
 ## `pccc::ccc()` vs `medicalcoder::comorbidities()`
 
 ``` r
+
 library(pccc)
 packageVersion("pccc")
 ## [1] '1.0.7'
@@ -117,6 +118,7 @@ library(medicalcoder)
 We’ll use the `mdcr` data set from the medicalcoder package.
 
 ``` r
+
 head(mdcr)
 ##   patid icdv  code dx
 ## 1 71412    9 99931  1
@@ -133,6 +135,7 @@ ICD-10.
 Using the tidyverse we can build the needed input data sets
 
 ``` r
+
 mdcr_tbls <-
   mdcr |>
   dplyr::group_by(patid, icdv, dx) |>
@@ -154,6 +157,7 @@ mdcr_tbls <-
 A data.table approach:
 
 ``` r
+
 mdcr_DTs <- data.table::as.data.table(data.table::copy(mdcr))
 mdcr_DTs[
   ,
@@ -178,6 +182,7 @@ we need to call [`pccc::ccc()`](https://rdrr.io/pkg/pccc/man/ccc.html)
 twice and to then aggregate the results.
 
 ``` r
+
 tic <- Sys.time()
 
 pccc_9_results_tbl <-
@@ -211,6 +216,7 @@ pccc_ccc_tbl_time <- difftime(toc, tic, units = "secs")
 ```
 
 ``` r
+
 tic <- Sys.time()
 
 pccc_9_results_DT <-
@@ -246,6 +252,7 @@ A quick sanity check that we have the same results for both the
 tidyverse and data.table input data sets.
 
 ``` r
+
 stopifnot(
   isTRUE(
     all.equal(pccc_results_DT, pccc_results_tbl, check.attributes = FALSE)
@@ -256,6 +263,7 @@ stopifnot(
 ### Calling `medicalcoder::comorbidities()`
 
 ``` r
+
 tic <- Sys.time()
 
 medicalcoder_results <-
@@ -276,6 +284,7 @@ medicalcoder_df_time <- difftime(toc, tic)
 ### Differences in results?
 
 ``` r
+
 old_vs_new <-
   merge(
     x = pccc_results_DT,
@@ -293,6 +302,7 @@ from
 are identical.
 
 ``` r
+
 stopifnot(
   isTRUE(
     with(old_vs_new, identical(ccc_flag, cmrb_flag))
@@ -304,6 +314,7 @@ Second, the flags for all but the technology dependence and transplant
 flags are identical.
 
 ``` r
+
 stopifnot(
   with(old_vs_new, identical(neuromusc_old,       neuromusc_new)),
   with(old_vs_new, identical(cvd_old,             cvd_new)),
@@ -322,6 +333,7 @@ Omitting the columns which are as expected from the `old_vs_new`
 data.table we can focus in on the differences in the results.
 
 ``` r
+
 good <- c("neuromusc", "cvd", "respiratory", "renal", "gi", "hemato_immu",
   "metabolic", "congeni_genetic", "malignancy", "neonatal", "ccc_flag",
   "cmrb_flag")
@@ -356,6 +368,7 @@ There is not similar flag from
 [`pccc::ccc()`](https://rdrr.io/pkg/pccc/man/ccc.html).
 
 ``` r
+
 old_vs_new[, num_cmrb := NULL]
 ```
 
@@ -370,6 +383,7 @@ and
 is due to how medicalcoder is implemented.
 
 ``` r
+
 old_vs_new
 ## Key: <patid>
 ##        patid tech_dep transplant  misc any_tech_dep any_transplant
@@ -416,6 +430,7 @@ time to compute. The differences here are small. See
 for more details.
 
 ``` r
+
 mdcr_tbl <- tibble::as_tibble(mdcr)
 tic <- Sys.time()
 medicalcoder_results <-
@@ -448,16 +463,17 @@ medicalcoder_dt_time <- difftime(toc, tic, units = "secs")
 ```
 
 ``` r
+
 pccc_ccc_tbl_time
-## Time difference of 9.682338 secs
+## Time difference of 7.321753 secs
 pccc_ccc_dt_time
-## Time difference of 7.641659 secs
+## Time difference of 5.043009 secs
 medicalcoder_df_time
-## Time difference of 0.7373645 secs
+## Time difference of 0.8093832 secs
 medicalcoder_tbl_time
-## Time difference of 0.3731561 secs
+## Time difference of 0.4076018 secs
 medicalcoder_dt_time
-## Time difference of 0.5050013 secs
+## Time difference of 0.3578799 secs
 ```
 
 ### Summary of results
@@ -466,6 +482,7 @@ A simple call to [`summary()`](https://rdrr.io/r/base/summary.html) will
 return a data.frame with counts and percentages for the
 
 ``` r
+
 summary(medicalcoder_results)
 ##          condition                                   label count      percent
 ## 1  congeni_genetic      Other Congenital or Genetic Defect  3399  8.883487533
@@ -514,6 +531,7 @@ with `subconditions = TRUE` when working with PCCC will flag these
 conditions as well as the primary conditions.
 
 ``` r
+
 with_subconditions <-
   medicalcoder::comorbidities(
     data = mdcr,
@@ -551,6 +569,7 @@ a subconditon, the percentage is reported as percent of the cohort and
 as the percent of those with the primary condition.
 
 ``` r
+
 str(summary(with_subconditions))
 ## 'data.frame':    82 obs. of  5 variables:
 ##  $ condition                      : chr  "congeni_genetic" "congeni_genetic" "congeni_genetic" "congeni_genetic" ...
@@ -565,6 +584,7 @@ publication ready tables. For example, say we want to report on the
 cardiovascular and metabolic conditions and subconditions.
 
 ``` r
+
 cvd_and_metabolic <- subset(summary(with_subconditions), condition %in% c("cvd", "metabolic"))
 cvd_and_metabolic$subcondition[is.na(cvd_and_metabolic$subcondition)] <- "Any subcondition"
 
@@ -579,30 +599,31 @@ kableExtra::kable_styling(bootstrap_options = "striped") |>
 kableExtra::pack_rows(index = table(cvd_and_metabolic$condition))
 ```
 
-| Subcondition                         | Patients | % of chort | % of those with the primary condition |
-|--------------------------------------|----------|------------|---------------------------------------|
-| **cvd**                              |          |            |                                       |
-| Any subcondition                     | 4952     | 12.94      |                                       |
-| cardiomyopathies                     | 240      | 0.63       | 4.85                                  |
-| conduction_disorder                  | 653      | 1.71       | 13.19                                 |
-| device_and_technology_use            | 438      | 1.14       | 8.84                                  |
-| dysrhythmias                         | 1130     | 2.95       | 22.82                                 |
-| endocardium_diseases                 | 247      | 0.65       | 4.99                                  |
-| heart_and_great_vessel_malformations | 2298     | 6.01       | 46.41                                 |
-| other                                | 1071     | 2.80       | 21.63                                 |
-| transplantation                      | 237      | 0.62       | 4.79                                  |
-| **metabolic**                        |          |            |                                       |
-| Any subcondition                     | 2983     | 7.80       |                                       |
-| amino_acid_metabolism                | 187      | 0.49       | 6.27                                  |
-| carbohydrate_metabolism              | 130      | 0.34       | 4.36                                  |
-| device_and_technology_use            | 71       | 0.19       | 2.38                                  |
-| endocrine_disorders                  | 748      | 1.95       | 25.08                                 |
-| lipid_metabolism                     | 294      | 0.77       | 9.86                                  |
-| other_metabolic_disorders            | 1736     | 4.54       | 58.20                                 |
-| storage_disorders                    | 69       | 0.18       | 2.31                                  |
+| Subcondition | Patients | % of chort | % of those with the primary condition |
+|----|----|----|----|
+| **cvd** |  |  |  |
+| Any subcondition | 4952 | 12.94 |  |
+| cardiomyopathies | 240 | 0.63 | 4.85 |
+| conduction_disorder | 653 | 1.71 | 13.19 |
+| device_and_technology_use | 438 | 1.14 | 8.84 |
+| dysrhythmias | 1130 | 2.95 | 22.82 |
+| endocardium_diseases | 247 | 0.65 | 4.99 |
+| heart_and_great_vessel_malformations | 2298 | 6.01 | 46.41 |
+| other | 1071 | 2.80 | 21.63 |
+| transplantation | 237 | 0.62 | 4.79 |
+| **metabolic** |  |  |  |
+| Any subcondition | 2983 | 7.80 |  |
+| amino_acid_metabolism | 187 | 0.49 | 6.27 |
+| carbohydrate_metabolism | 130 | 0.34 | 4.36 |
+| device_and_technology_use | 71 | 0.19 | 2.38 |
+| endocrine_disorders | 748 | 1.95 | 25.08 |
+| lipid_metabolism | 294 | 0.77 | 9.86 |
+| other_metabolic_disorders | 1736 | 4.54 | 58.20 |
+| storage_disorders | 69 | 0.18 | 2.31 |
 
 Patients with cardiovascular and/or metabolic conditions and the
-associated with_subconditions.
+associated with_subconditions. {.table .table .table-striped
+style="margin-left: auto; margin-right: auto;"}
 
 ## PCCC version 3
 

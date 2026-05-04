@@ -8,6 +8,7 @@ medicalcoder and the R package
 and Lee 2024).
 
 ``` r
+
 library(medicalcoder)
 library(icdcomorbid)
 packageVersion("icdcomorbid")
@@ -40,6 +41,7 @@ We start by splitting the data into ICD-9 and ICD-10 sets and add rows
 for any missing patids.
 
 ``` r
+
 mdcrDT <- data.table::as.data.table(medicalcoder::mdcr)
 mdcrDT_icd9dx  <- subset(mdcrDT, icdv ==  9L & dx == 1L)
 mdcrDT_icd10dx <- subset(mdcrDT, icdv == 10L & dx == 1L)
@@ -71,6 +73,7 @@ fifteen seconds for the following and then stopped the process because
 there are more efficient ways.
 
 ``` r
+
 #  mdcrDT_icd9dx_wide <-
 #    icdcomorbid::long_to_wide(
 #      df = mdcrDT_icd9dx,
@@ -82,6 +85,7 @@ there are more efficient ways.
 ```
 
 ``` r
+
 tic <- Sys.time()
 
 mdcrDT_icd9dx[, DX := paste0("DX", seq_along(code)), by = .(patid)]
@@ -96,7 +100,7 @@ mdcrDT_icd10dx_wide <-
 toc <- Sys.time()
 
 difftime(toc, tic, units = "secs")
-## Time difference of 0.4092503 secs
+## Time difference of 0.4220622 secs
 ```
 
 ## Charlson Comorbidities
@@ -109,6 +113,7 @@ data set via
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md).
 
 ``` r
+
 tic <- Sys.time()
 
 medicalcoder_charlson_results <-
@@ -137,6 +142,7 @@ and the results from the R package icdcomorbid would require calling
 aggregating the results, and scoring.
 
 ``` r
+
 tic <- Sys.time()
 
 icdcomorbid_charlson_icd9_results <-
@@ -191,8 +197,9 @@ The amount of time required to process the data differs greatly between
 the packages.
 
 ``` r
+
 attr(medicalcoder_charlson_results, "tictoc") # seconds
-## [1] 0.4164126
+## [1] 0.4406343
 attr(icdcomorbid_charlson_results,  "tictoc") # seconds
 ## [1] 608.8486
 ```
@@ -201,6 +208,7 @@ The return from icdcomorbid are booleans. We will coerce to integers
 before comparing to medicalcoder.
 
 ``` r
+
 data.table::setDT(icdcomorbid_charlson_results)
 for (j in setdiff(names(icdcomorbid_charlson_results), "patid")) {
   data.table::set(
@@ -221,6 +229,7 @@ mdcr_v_icdcomorbid <-
 Let’s compare the results starting the AIDS/HIV.
 
 ``` r
+
 identical(
   mdcr_v_icdcomorbid[["aidshiv"]],  # medicalcoder::comorbidities()
   mdcr_v_icdcomorbid[["aids_hiv"]]  # icdcomorbid
@@ -273,6 +282,7 @@ appears to have 042.x. The false-negative suggests an issue with the way
 comorbidities are flagged.
 
 ``` r
+
 scan(
   file = system.file(package = "icdcomorbid", "comorbidity_mappings", "charlson9.json"),
   what = "character",
@@ -286,6 +296,7 @@ grep("aids_hiv", x = _, value = TRUE)
 Next, congestive heart failure.
 
 ``` r
+
 identical(
   mdcr_v_icdcomorbid[["chf"]],  # medicalcoder::comorbidities()
   mdcr_v_icdcomorbid[["congestive_heart_failure"]]  # icdcomorbid
@@ -323,6 +334,7 @@ mdcr_v_icdcomorbid[, .N, keyby = .(chf, congestive_heart_failure)]
 Focusing on the differences:
 
 ``` r
+
 mdcr_v_icdcomorbid[
   !Vectorize(identical)(chf, congestive_heart_failure),
   .N,
@@ -341,6 +353,7 @@ no comorbidities flagged. It should be noted that not all cases of
 `num_cmrb == 0` have missing values for `congestive_heart_failure`.
 
 ``` r
+
 mdcr_v_icdcomorbid[num_cmrb == 0, .N]
 ## [1] 28473
 mdcr_v_icdcomorbid[is.na(congestive_heart_failure), all(num_cmrb == 0)]
@@ -351,6 +364,7 @@ What about the cases where icdcomorbid flagged congestive_heart_failure
 and medicalcoder did not
 
 ``` r
+
 # where does icdcomorbid flag that medicalcoder does not?
 DT <-
   mdcrDT[patid %in% mdcr_v_icdcomorbid[congestive_heart_failure > chf, patid]]
@@ -394,6 +408,7 @@ DT[
   icdcomorbid JSON files.
 
 ``` r
+
 scan(
   file = system.file(package = "icdcomorbid", "comorbidity_mappings", "charlson10.json"),
   what = "character",
@@ -407,6 +422,7 @@ And what about the cases where medicalcoder flags and icdcomorbid does
 not?
 
 ``` r
+
 icdcomorbid_false_negatives <-
   merge(
     x = mdcrDT[patid %in% mdcr_v_icdcomorbid[congestive_heart_failure < chf, patid]],
@@ -425,7 +441,7 @@ str(icdcomorbid_false_negatives)
 ##  $ patid            : int  19368 40729 86363 79065 80692 60642 61627 89753 66356 71033 ...
 ##  $ condition        : chr  "chf" "chf" "chf" "chf" ...
 ##  $ charlson_quan2005: int  1 1 1 1 1 1 1 1 1 1 ...
-##  - attr(*, ".internal.selfref")=<externalptr> 
+##  - attr(*, ".internal.selfref")=<pointer: 0x56259bcb4ef0> 
 ##  - attr(*, "sorted")= chr [1:3] "code" "icdv" "dx"
 
 unique(icdcomorbid_false_negatives[icdv == 9 & dx == 1, .(code)][["code"]])
@@ -450,9 +466,7 @@ sufficient to support using medicalcoder over icdcomorbid.
 Nguyen, April, and Seungwon Lee. 2024. *Icdcomorbid: Mapping ICD Codes
 to Comorbidity*. <https://doi.org/10.32614/CRAN.package.icdcomorbid>.
 
-Quan, Hude, Vijaya Sundararajan, Patricia Halfon, Andrew Fong, Bernard
-Burnand, Jean-Christophe Luthi, L Duncan Saunders, Catherine A. Beck,
-Thomas E. Feasby, and William A. Ghali. 2005. “Coding Algorithms for
-Defining Comorbidities in ICD-9-CM and ICD-10 Administrative Data.”
-*Medical Care* 43 (11): 1130–39.
+Quan, Hude, Vijaya Sundararajan, Patricia Halfon, et al. 2005. “Coding
+Algorithms for Defining Comorbidities in ICD-9-CM and ICD-10
+Administrative Data.” *Medical Care* 43 (11): 1130–39.
 <https://doi.org/10.1097/01.mlr.0000182534.19832.83>.

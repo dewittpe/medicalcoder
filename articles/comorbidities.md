@@ -1,6 +1,7 @@
 # Comorbidities
 
 ``` r
+
 library(medicalcoder)
 packageVersion("medicalcoder")
 ## [1] '0.8.0.9000'
@@ -14,22 +15,20 @@ implemented in the medicalcoder package:
 1.  Pediatric Complex Chronic Condition System (PCCC)
     1.  Version 2.0 (Feudtner et al. 2014)
         1.  `pccc_v2.0` is consistent with the older R package pccc
-            (v1.0.7) (James A. Feinstein et al. 2018; DeWitt, Feinstein,
-            and Russell 2026).
+            (v1.0.7) (Feinstein et al. 2018; DeWitt et al. 2026).
         2.  `pccc_v2.1` modifies the set of ICD codes to be more
             consistent with documentation and other implementations of
             v2.0.
-    2.  Version 3.0 (James A. Feinstein et al. 2024)
+    2.  Version 3.0 (Feinstein et al. 2024)
         1.  `pccc_v3.0` is consistent with the SAS software published on
             the [Children’s Hospital
             Association](https://www.childrenshospitals.org/content/analytics/toolkit/complex-chronic-conditions)
-            website in conjunction with James A. Feinstein et al.
-            (2024).
+            website in conjunction with Feinstein et al. (2024).
         2.  `pccc_v3.1` modifies the set of ICD codes to be more
             consistent with documentation.
 2.  Charlson
-    1.  `charlson_deyo1992`: Deyo’s original set of codes (Deyo,
-        Cherkin, and Ciol 1992; Quan et al. 2005)
+    1.  `charlson_deyo1992`: Deyo’s original set of codes (Deyo et al.
+        1992; Quan et al. 2005)
     2.  `charlson_quan2005` and `charlson_quan2011`: Codes and index
         scoring (Quan et al. 2005, 2011)
     3.  `charlson_cdmf2019`: (Glasheen et al. 2019)
@@ -61,6 +60,7 @@ non-exported function. In general, the methods are listed in the form of
 `<algorithm>_<version>`.
 
 ``` r
+
 medicalcoder:::comorbidities_methods()
 ##  [1] "pccc_v2.0"                 "pccc_v2.1"                
 ##  [3] "pccc_v3.0"                 "pccc_v3.1"                
@@ -76,6 +76,7 @@ medicalcoder:::comorbidities_methods()
 Vignettes for each of the major methods are available.
 
 ``` r
+
 vignette(topic = "pccc",       package = "medicalcoder")
 vignette(topic = "charlson",   package = "medicalcoder")
 vignette(topic = "elixhauser", package = "medicalcoder")
@@ -88,10 +89,12 @@ function.
 Details of the function arguments call are in the manual.
 
 ``` r
+
 help(topic = "comorbidities", package = "medicalcoder")
 ```
 
 ``` r
+
 args(comorbidities)
 ## function (data, icd.codes, method, id.vars = NULL, icdv.var = NULL, 
 ##     icdv = NULL, dx.var = NULL, dx = NULL, poa.var = NULL, poa = NULL, 
@@ -115,6 +118,7 @@ to be a ‘long’ format: one ICD code per row. Two example data sets in
 the package show the general expected form of the `data`.
 
 ``` r
+
 head(mdcr)
 ##   patid icdv  code dx
 ## 1 71412    9 99931  1
@@ -147,6 +151,7 @@ present on admission flags for specific conditions (see the
 [`get_elixhauser_poa()`](http://www.peteredewitt.com/medicalcoder/reference/get_elixhauser_poa.md)).
 
 ``` r
+
 str(get_elixhauser_poa())
 ## 'data.frame':    50 obs. of  8 variables:
 ##  $ condition            : chr  "AIDS" "ALCOHOL" "ANEMDEF" "AUTOIMMUNE" ...
@@ -220,6 +225,8 @@ both flag methods. Results are shown in the following table.
 Indicators for when a comorbidity is flagged based on the algorithm,
 present on admission (poa), and flag.method. The two ICD codes, C78.4
 and I50.40, map to cancer and cardiovascular disease respectively.
+{.table .table .table-striped .table-bordered
+style="NAborder-bottom: 0; font-size: 8px; width: auto !important; margin-left: auto; margin-right: auto;"}
 
 #### Flag method and POA defaults
 
@@ -245,6 +252,7 @@ are provided. Lastly, there are indicator columns for the variant of
 each method
 
 ``` r
+
 str(get_pccc_codes())
 ## 'data.frame':    7906 obs. of  12 variables:
 ##  $ icdv           : int  9 9 9 9 9 9 9 9 9 9 ...
@@ -303,6 +311,7 @@ flag ‘aids’, there would be several thousand cases of AIDS, but only six
 cases of HIV.
 
 ``` r
+
 cdmf_eg <-
   merge(x = mdcr,
         y = subset(get_charlson_codes(),
@@ -331,6 +340,7 @@ When calling
 we get the expected result.
 
 ``` r
+
 cmdf_mdcr <-
   comorbidities(data = mdcr,
                 icd.codes = "code",
@@ -388,25 +398,22 @@ Davis, and Andrew Renda. 2019. “Charlson Comorbidity Index: ICD-9 Update
 and ICD-10 Translation.” *American Health & Drug Benefits* 12 (4): 188.
 <https://pubmed.ncbi.nlm.nih.gov/31428236/>.
 
-Healthcare Cost and Utilization Project (HCUP). 2017. “Elixhauser
-Comorbidity Software for ICD-9-CM.”
-<https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp>.
+Healthcare Cost and Utilization Project (HCUP). 2017. *Elixhauser
+Comorbidity Software for ICD-9-CM*.
+[Https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp](https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp).
 
-Healthcare Research, Agency for, and Quality (AHRQ). 2025. “Elixhauser
+Healthcare Research, Agency for, and Quality (AHRQ). 2025. *Elixhauser
 Comorbidity Software Refined for ICD-10-CM Healthcare Cost and
-Utilization Project (HCUP).”
+Utilization Project (HCUP)*.
 <https://hcup-us.ahrq.gov/toolssoftware/comorbidityicd10/comorbidity_icd10.jsp>.
 
-Quan, Hude, Bo Li, Colette M. Couris, Kiyohide Fushimi, Peter Graham,
-Philip Hider, Jean-Michel Januel, and Vijaya Sundararajan. 2011.
-“Updating and Validating the Charlson Comorbidity Index and Score for
-Risk Adjustment in Hospital Discharge Abstracts Using Data from 6
-Countries.” *American Journal of Epidemiology* 173 (6): 676–82.
+Quan, Hude, Bo Li, Colette M. Couris, et al. 2011. “Updating and
+Validating the Charlson Comorbidity Index and Score for Risk Adjustment
+in Hospital Discharge Abstracts Using Data from 6 Countries.” *American
+Journal of Epidemiology* 173 (6): 676–82.
 <https://doi.org/10.1093/aje/kwq433>.
 
-Quan, Hude, Vijaya Sundararajan, Patricia Halfon, Andrew Fong, Bernard
-Burnand, Jean-Christophe Luthi, L Duncan Saunders, Catherine A. Beck,
-Thomas E. Feasby, and William A. Ghali. 2005. “Coding Algorithms for
-Defining Comorbidities in ICD-9-CM and ICD-10 Administrative Data.”
-*Medical Care* 43 (11): 1130–39.
+Quan, Hude, Vijaya Sundararajan, Patricia Halfon, et al. 2005. “Coding
+Algorithms for Defining Comorbidities in ICD-9-CM and ICD-10
+Administrative Data.” *Medical Care* 43 (11): 1130–39.
 <https://doi.org/10.1097/01.mlr.0000182534.19832.83>.

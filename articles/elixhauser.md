@@ -1,6 +1,7 @@
 # Elixhauser Comorbidities
 
 ``` r
+
 library(medicalcoder)
 packageVersion("medicalcoder")
 ## [1] '0.8.0.9000'
@@ -38,6 +39,7 @@ End users may access three lookup tables relevant to Elixhauser
 variants.
 
 ``` r
+
 str(get_elixhauser_codes())
 ## 'data.frame':    10455 obs. of  15 variables:
 ##  $ icdv                     : int  9 9 9 9 9 9 9 9 9 9 ...
@@ -104,6 +106,7 @@ all conditions will be assumed to be secondary. To suppress this warning
 pass an appropriate value for either argument.
 
 ``` r
+
 # will warn because primarydx and primarydx.var are both NULL
 mdcr_results0 <-
   comorbidities(
@@ -144,6 +147,7 @@ of at least one comorbidity, and the mortality and readmission index
 scores.
 
 ``` r
+
 str(mdcr_results)
 ## Classes 'medicalcoder_comorbidities' and 'data.frame':   38262 obs. of  54 variables:
 ##  $ patid              : int  10000 10002 10005 10006 10008 10010 10014 10015 10017 10018 ...
@@ -209,6 +213,7 @@ Call [`summary()`](https://rdrr.io/r/base/summary.html) to get a list of
 summaries which can be used to generate summary tables.
 
 ``` r
+
 summary(mdcr_results)
 ## $conditions
 ##       condition count      percent
@@ -317,7 +322,9 @@ summary(mdcr_results)
 | \>= 8                   | 1     | 0.003      |
 
 Counts and percentages of patients in the mdcr example data sets with
-the Elixhauser Quan et al. (2005) comorbidities.
+the Elixhauser Quan et al. (2005) comorbidities. {.table .table
+.table-striped
+style="font-size: 10px; margin-left: auto; margin-right: auto;"}
 
 ## References
 
@@ -326,18 +333,16 @@ Coffey. 1998. “Comorbidity Measures for Use with Administrative Data.”
 *Medical Care* 36 (1): 8–27.
 <https://doi.org/10.1097/00005650-199801000-00004>.
 
-Healthcare Cost and Utilization Project (HCUP). 2017. “Elixhauser
-Comorbidity Software for ICD-9-CM.”
-<https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp>.
+Healthcare Cost and Utilization Project (HCUP). 2017. *Elixhauser
+Comorbidity Software for ICD-9-CM*.
+[Https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp](https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp).
 
-Healthcare Research, Agency for, and Quality (AHRQ). 2025. “Elixhauser
+Healthcare Research, Agency for, and Quality (AHRQ). 2025. *Elixhauser
 Comorbidity Software Refined for ICD-10-CM Healthcare Cost and
-Utilization Project (HCUP).”
+Utilization Project (HCUP)*.
 <https://hcup-us.ahrq.gov/toolssoftware/comorbidityicd10/comorbidity_icd10.jsp>.
 
-Quan, Hude, Vijaya Sundararajan, Patricia Halfon, Andrew Fong, Bernard
-Burnand, Jean-Christophe Luthi, L Duncan Saunders, Catherine A. Beck,
-Thomas E. Feasby, and William A. Ghali. 2005. “Coding Algorithms for
-Defining Comorbidities in ICD-9-CM and ICD-10 Administrative Data.”
-*Medical Care* 43 (11): 1130–39.
+Quan, Hude, Vijaya Sundararajan, Patricia Halfon, et al. 2005. “Coding
+Algorithms for Defining Comorbidities in ICD-9-CM and ICD-10
+Administrative Data.” *Medical Care* 43 (11): 1130–39.
 <https://doi.org/10.1097/01.mlr.0000182534.19832.83>.

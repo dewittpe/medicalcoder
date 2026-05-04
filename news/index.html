@@ -55,6 +55,7 @@
 <div class="section level3">
 <h3 id="bug-fixes-0-8-0-9000">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-8-0-9000"></a></h3>
 <ul><li><p>Fix Charlson <code>age.var</code> handling when <code>id.vars</code> is missing or has multiple ages per ID. (<a href="https://github.com/dewittpe/medicalcoder/issues/43" class="external-link">#43</a>)</p></li>
+<li><p>Fix <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> for Charlson results when <code>age.var</code> is omitted and <code>age_score</code> is all missing.</p></li>
 <li><p>Account for possible zero nrow sets in <code>mdcr_set()</code></p></li>
 <li><p>Harden sort order for the results from <code><a href="../reference/lookup_icd_codes.html">lookup_icd_codes()</a></code></p></li>
 </ul></div>

@@ -1,6 +1,7 @@
 # Charlson Comorbidities
 
 ``` r
+
 library(medicalcoder)
 packageVersion("medicalcoder")
 ## [1] '0.8.0.9000'
@@ -11,8 +12,8 @@ packageVersion("medicalcoder")
 The medicalcoder package implements several variants of the Charlson
 comorbidities algorithm.
 
-- `charlson_deyo1992`: Deyo’s original set of codes (Deyo, Cherkin, and
-  Ciol 1992; Quan et al. 2005)
+- `charlson_deyo1992`: Deyo’s original set of codes (Deyo et al. 1992;
+  Quan et al. 2005)
 - `charlson_quan2005` and `charlson_quan2011`: Codes and index scoring
   (Quan et al. 2005, 2011)
 - `charlson_cdmf2019`: (Glasheen et al. 2019)
@@ -28,6 +29,7 @@ and
 calls respectively.
 
 ``` r
+
 str(get_charlson_codes())
 ## 'data.frame':    7410 obs. of  9 variables:
 ##  $ icdv             : int  9 9 9 9 9 9 9 9 9 9 ...
@@ -55,6 +57,7 @@ Example: applying the Quan et al. (2005) variant of the Charlson
 comorbidities to the `mdcr` data can be done as follows.
 
 ``` r
+
 mdcr_results <-
   comorbidities(
     data = mdcr,
@@ -76,6 +79,7 @@ for the relevant conditions, the id.vars (if applicable), `age_score`
 and `cci` the Charlson Comorbidity Index.
 
 ``` r
+
 str(mdcr_results)
 ## Classes 'medicalcoder_comorbidities' and 'data.frame':   38262 obs. of  22 variables:
 ##  $ patid    : int  10000 10002 10005 10006 10008 10010 10014 10015 10017 10018 ...
@@ -110,6 +114,7 @@ object for a list of summary objects. These can be used to generate
 output tables to the end user’s liking.
 
 ``` r
+
 str(summary(mdcr_results))
 ## List of 3
 ##  $ conditions   :'data.frame':   22 obs. of  4 variables:
@@ -157,7 +162,8 @@ str(summary(mdcr_results))
 | \>= 5                                  | 1     | 0.003      |
 
 Counts and percentages of patients in the mdcr example data sets with
-the Quan et al. (2005) comorbidities.
+the Quan et al. (2005) comorbidities. {.table .table .table-striped
+style="font-size: 10px; margin-left: auto; margin-right: auto;"}
 
 ## References
 
@@ -171,16 +177,13 @@ Davis, and Andrew Renda. 2019. “Charlson Comorbidity Index: ICD-9 Update
 and ICD-10 Translation.” *American Health & Drug Benefits* 12 (4): 188.
 <https://pubmed.ncbi.nlm.nih.gov/31428236/>.
 
-Quan, Hude, Bo Li, Colette M. Couris, Kiyohide Fushimi, Peter Graham,
-Philip Hider, Jean-Michel Januel, and Vijaya Sundararajan. 2011.
-“Updating and Validating the Charlson Comorbidity Index and Score for
-Risk Adjustment in Hospital Discharge Abstracts Using Data from 6
-Countries.” *American Journal of Epidemiology* 173 (6): 676–82.
+Quan, Hude, Bo Li, Colette M. Couris, et al. 2011. “Updating and
+Validating the Charlson Comorbidity Index and Score for Risk Adjustment
+in Hospital Discharge Abstracts Using Data from 6 Countries.” *American
+Journal of Epidemiology* 173 (6): 676–82.
 <https://doi.org/10.1093/aje/kwq433>.
 
-Quan, Hude, Vijaya Sundararajan, Patricia Halfon, Andrew Fong, Bernard
-Burnand, Jean-Christophe Luthi, L Duncan Saunders, Catherine A. Beck,
-Thomas E. Feasby, and William A. Ghali. 2005. “Coding Algorithms for
-Defining Comorbidities in ICD-9-CM and ICD-10 Administrative Data.”
-*Medical Care* 43 (11): 1130–39.
+Quan, Hude, Vijaya Sundararajan, Patricia Halfon, et al. 2005. “Coding
+Algorithms for Defining Comorbidities in ICD-9-CM and ICD-10
+Administrative Data.” *Medical Care* 43 (11): 1130–39.
 <https://doi.org/10.1097/01.mlr.0000182534.19832.83>.
