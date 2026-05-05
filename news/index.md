@@ -2,6 +2,8 @@
 
 ## medicalcoder 0.8.1
 
+CRAN release: 2026-05-05
+
 ### Bug Fixes
 
 - Fix Charlson `age.var` handling when `id.vars` is missing or has
