@@ -90,7 +90,7 @@ setkey(DT, suggests, rversion)
 
 The green tiles indicate no notes, no warning, no error.
 
-```{r testing-matrix, echo = FALSE, fig.width=10, fig.height=4}
+```{r testing-matrix, echo = FALSE, fig.width=10, fig.height=5}
 data.table::melt(
   data = DT,
   id.vars = c("rversion", "version", "suggests", "status")
