@@ -78,43 +78,48 @@ DT[, suggests := fifelse(grepl("R-.+without-suggests.+$", DT$checkdir), "Without
 DT[, checkdir := NULL]
 DT <- unique(DT)
 
+DT[, errors := data.table::fifelse(is.na(errors), "None", errors)]
+DT[, warnings := data.table::fifelse(is.na(warnings), "None", warnings)]
+DT[, notes := data.table::fifelse(is.na(notes), "None", notes)]
+
 DT[, errors   := factor(errors)]
 DT[, warnings := factor(warnings)]
 DT[, notes    := factor(notes)]
 setkey(DT, suggests, rversion)
 ```
 
-```{r results = "asis"}
-kableExtra::kbl(
-  x = DT[, .(
-    "R Version" = rversion,
-    #"Suggested Packages" = suggests,
-    "Status" = status,
-    "Error"  = fifelse(errors == "", "", paste("Error", as.numeric(errors))),
-    "Warning"  = fifelse(warnings == "", "", paste("Warning", as.numeric(warnings))),
-    "Note"  = fifelse(notes == "", "", paste("Note", as.numeric(notes)))
-    )],
-  align = "cccccc",
-  format = "markdown"
-  ) |>
-kableExtra::pack_rows(index = table(DT$suggests))
-
-cat(
-  "\n**Errors:**\n",
-  if (nlevels(DT$errors)) { paste0(seq_len(nlevels(DT$errors)), ". ", levels(DT$errors)) },
-  sep = "\n"
-)
-
-cat(
-  "\n**Warnings:**\n",
-  if (nlevels(DT$warnings)) { paste0(seq_len(nlevels(DT$warnings)), ". ", levels(DT$warnings)) },
-  sep = "\n"
-)
-
-cat(
-  "\n**Notes:**\n",
-  if (nlevels(DT$notes)) { paste0(seq_len(nlevels(DT$notes)), ". ", levels(DT$notes)) },
-  sep = "\n"
-)
+```{r, echo = FALSE, fig.width=16, fig.height=9}
+data.table::melt(
+  data = DT,
+  id.vars = c("rversion", "version", "suggests", "status")
+  )[,
+    fill := data.table::fcase(
+      value == "None", "darkgreen",
+      variable == "errors", "darkred",
+      variable == "warnings", "red",
+      variable == "notes", "yellow"
+      )][,
+    rv := paste("R version:", sub("\\d$", "x", rversion))
+    ][
+    , variable := factor(variable, levels = rev(levels(variable)))
+    ]|>
+ggplot2::ggplot(data = _) +
+  ggplot2::theme_bw() +
+  ggplot2::aes(
+    x = rversion,
+    y = variable,
+    fill = fill,
+  ) +
+  ggplot2::geom_tile(color = "white") +
+  ggplot2::geom_point(data = function(x) subset(x, value != "None"), mapping = ggplot2::aes(shape = factor(value))) +
+  ggplot2::scale_fill_identity() +
+  ggplot2::facet_grid(suggests ~ rv, scales = "free_x") +
+  ggplot2::guides(shape = ggplot2::guide_legend(ncol = 1)) +
+  ggplot2::theme(
+    axis.title = ggplot2::element_blank(),
+    axis.text.x = ggplot2::element_text(angle = 30, vjust = 1, hjust = 1),
+    legend.title = ggplot2::element_blank(),
+    legend.position = "bottom"
+  )
 ```
 
