@@ -5,6 +5,8 @@ SHELL := $(if $(USER_SHELL),$(USER_SHELL),/bin/bash)
 .SHELLFLAGS := -lc
 
 DOCKER ?= docker
+DOCKER_PLATFORM ?= linux/amd64
+DOCKER_PLATFORM_FLAG := $(if $(DOCKER_PLATFORM),--platform $(DOCKER_PLATFORM),)
 
 V35 := 3.5.0 3.5.1 3.5.2 3.5.3
 V36 := 3.6.0 3.6.1 3.6.2 3.6.3
@@ -12,13 +14,14 @@ V40 := 4.0.0 4.0.1 4.0.2 4.0.3 4.0.4 4.0.5
 V41 := 4.1.0 4.1.1 4.1.2 4.1.3
 V42 := 4.2.0 4.2.1 4.2.2 4.2.3
 V43 := 4.3.0 4.3.1 4.3.2 4.3.3
-V44 := 4.4.0 4.4.1 4.4.2
-V45 := 4.5.0 4.5.1 4.5.2
+V44 := 4.4.0 4.4.1 4.4.2 4.4.3
+V45 := 4.5.0 4.5.1 4.5.2 4.5.3
+V46 := 4.6.0
 LATEST := #latest
-VERSIONS := $(V35) $(V36) $(V40) $(V41) $(V42) $(V43) $(V44) $(V45) $(LATEST)
+VERSIONS := $(V35) $(V36) $(V40) $(V41) $(V42) $(V43) $(V44) $(V45) $(V46) $(LATEST)
 WITHOUTSUGGESTS := $(addsuffix -without-suggests,$(VERSIONS))
 # Limit with-suggests to R versions whose base OS is still supported (roughly Debian >= bullseye/R 4.1+).
-WITHSUGGESTS := $(addsuffix -with-suggests,$(V41) $(V42) $(V43) $(V44) $(V45) $(LATEST))
+WITHSUGGESTS := $(addsuffix -with-suggests,$(V41) $(V42) $(V43) $(V44) $(V45) $(V46) $(LATEST))
 
 PKG_ROOT    := ..
 PKG_VERSION := $(shell awk '/^Version:/{print $$2}' $(PKG_ROOT)/DESCRIPTION)
@@ -44,6 +47,7 @@ R-%-without-suggests/$(PKG_NAME).Rcheck/00check.log: $(TARBALL)
 	$(RM) -r R-$*-without-suggests
 	mkdir -p R-$*-without-suggests
 	$(DOCKER) run \
+		$(DOCKER_PLATFORM_FLAG) \
 		-v "$$(PWD)":/work \
 		-w /work \
 		-e _R_CHECK_FORCE_SUGGESTS_=false \
@@ -54,13 +58,14 @@ R-%-with-suggests/$(PKG_NAME).Rcheck/00check.log: .images/R-%-with-suggests.stam
 	$(RM) -r R-$*-with-suggests
 	mkdir -p R-$*-with-suggests
 	$(DOCKER) run \
+		$(DOCKER_PLATFORM_FLAG) \
 		-v "$$(PWD)":/work \
 		--rm 	mdcr-$*-with-suggests \
 		R CMD check -o R-$*-with-suggests $(TARBALL) > R-$*-with-suggests/docker.log 2>&1
 
 .images/R-%-with-suggests.stamp: docker/with-suggests/Dockerfile $(TARBALL) | .images
 	$(DOCKER) info >/dev/null 2>&1 || { echo "$(DOCKER) is unavailable or the daemon cannot be reached"; exit 1; }
-	$(DOCKER) build --build-arg R_TAG=$* -t mdcr-$*-with-suggests -f $< .
+	$(DOCKER) build $(DOCKER_PLATFORM_FLAG) --build-arg R_TAG=$* -t mdcr-$*-with-suggests -f $< .
 	@touch $@
 
 .images:
