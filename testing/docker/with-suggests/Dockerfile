@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libcurl4-openssl-dev \
     libssl-dev \
     libgit2-dev \
+    libuv1-dev \
     libfontconfig1-dev \
     libharfbuzz-dev \
     libfribidi-dev \

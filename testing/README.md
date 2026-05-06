@@ -43,113 +43,113 @@ run from this directory.
    <td style="text-align:center;padding-left: 2em;" indentlevel="1"> 4.1.0 </td>
    <td style="text-align:center;"> 0 </td>
    <td style="text-align:center;">  </td>
-   <td style="text-align:center;"> Warning 2 </td>
-   <td style="text-align:center;"> Note 3 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
   </tr>
   <tr>
    <td style="text-align:center;padding-left: 2em;" indentlevel="1"> 4.1.1 </td>
    <td style="text-align:center;"> 0 </td>
    <td style="text-align:center;">  </td>
-   <td style="text-align:center;"> Warning 2 </td>
-   <td style="text-align:center;"> Note 3 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
   </tr>
   <tr>
    <td style="text-align:center;padding-left: 2em;" indentlevel="1"> 4.1.2 </td>
    <td style="text-align:center;"> 0 </td>
    <td style="text-align:center;">  </td>
-   <td style="text-align:center;"> Warning 2 </td>
-   <td style="text-align:center;"> Note 3 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
   </tr>
   <tr>
    <td style="text-align:center;padding-left: 2em;" indentlevel="1"> 4.1.3 </td>
    <td style="text-align:center;"> 0 </td>
    <td style="text-align:center;">  </td>
-   <td style="text-align:center;"> Warning 2 </td>
-   <td style="text-align:center;"> Note 3 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
   </tr>
   <tr>
    <td style="text-align:center;padding-left: 2em;" indentlevel="1"> 4.2.0 </td>
    <td style="text-align:center;"> 0 </td>
    <td style="text-align:center;">  </td>
-   <td style="text-align:center;"> Warning 2 </td>
-   <td style="text-align:center;"> Note 3 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
   </tr>
   <tr>
    <td style="text-align:center;padding-left: 2em;" indentlevel="1"> 4.2.1 </td>
    <td style="text-align:center;"> 0 </td>
    <td style="text-align:center;">  </td>
-   <td style="text-align:center;"> Warning 2 </td>
-   <td style="text-align:center;"> Note 3 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
   </tr>
   <tr>
    <td style="text-align:center;padding-left: 2em;" indentlevel="1"> 4.2.2 </td>
    <td style="text-align:center;"> 0 </td>
    <td style="text-align:center;">  </td>
-   <td style="text-align:center;"> Warning 2 </td>
-   <td style="text-align:center;"> Note 3 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
   </tr>
   <tr>
    <td style="text-align:center;padding-left: 2em;" indentlevel="1"> 4.2.3 </td>
    <td style="text-align:center;"> 0 </td>
    <td style="text-align:center;">  </td>
-   <td style="text-align:center;"> Warning 1 </td>
-   <td style="text-align:center;"> Note 3 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
   </tr>
   <tr>
    <td style="text-align:center;padding-left: 2em;" indentlevel="1"> 4.3.0 </td>
    <td style="text-align:center;"> 0 </td>
    <td style="text-align:center;">  </td>
-   <td style="text-align:center;"> Warning 2 </td>
-   <td style="text-align:center;"> Note 3 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
   </tr>
   <tr>
    <td style="text-align:center;padding-left: 2em;" indentlevel="1"> 4.3.1 </td>
    <td style="text-align:center;"> 0 </td>
    <td style="text-align:center;">  </td>
-   <td style="text-align:center;"> Warning 2 </td>
-   <td style="text-align:center;"> Note 3 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
   </tr>
   <tr>
    <td style="text-align:center;padding-left: 2em;" indentlevel="1"> 4.3.2 </td>
    <td style="text-align:center;"> 0 </td>
    <td style="text-align:center;">  </td>
-   <td style="text-align:center;"> Warning 2 </td>
-   <td style="text-align:center;"> Note 3 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
   </tr>
   <tr>
    <td style="text-align:center;padding-left: 2em;" indentlevel="1"> 4.3.3 </td>
    <td style="text-align:center;"> 0 </td>
    <td style="text-align:center;">  </td>
-   <td style="text-align:center;"> Warning 2 </td>
-   <td style="text-align:center;"> Note 3 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
   </tr>
   <tr>
    <td style="text-align:center;padding-left: 2em;" indentlevel="1"> 4.4.0 </td>
    <td style="text-align:center;"> 0 </td>
    <td style="text-align:center;">  </td>
    <td style="text-align:center;">  </td>
-   <td style="text-align:center;"> Note 3 </td>
+   <td style="text-align:center;">  </td>
   </tr>
   <tr>
    <td style="text-align:center;padding-left: 2em;" indentlevel="1"> 4.4.1 </td>
    <td style="text-align:center;"> 0 </td>
    <td style="text-align:center;">  </td>
    <td style="text-align:center;">  </td>
-   <td style="text-align:center;"> Note 3 </td>
+   <td style="text-align:center;">  </td>
   </tr>
   <tr>
    <td style="text-align:center;padding-left: 2em;" indentlevel="1"> 4.4.2 </td>
    <td style="text-align:center;"> 0 </td>
    <td style="text-align:center;">  </td>
    <td style="text-align:center;">  </td>
-   <td style="text-align:center;"> Note 3 </td>
+   <td style="text-align:center;">  </td>
   </tr>
   <tr>
    <td style="text-align:center;padding-left: 2em;" indentlevel="1"> 4.4.3 </td>
    <td style="text-align:center;"> 0 </td>
    <td style="text-align:center;">  </td>
    <td style="text-align:center;">  </td>
-   <td style="text-align:center;"> Note 3 </td>
+   <td style="text-align:center;">  </td>
   </tr>
   <tr>
    <td style="text-align:center;padding-left: 2em;" indentlevel="1"> 4.5.0 </td>
@@ -434,12 +434,9 @@ run from this directory.
 
 **Warnings:**
 
-1. checking running R code from vignettes ... WARNING Errors in running code in vignettes: when running code in 'charlson.Rmd'   ...  > library(kableExtra)    When sourcing 'charlson.R': Error: there is no package called 'kableExtra' Execution halted when running code in 'comorbidities.Rmd'   ...  > library(kableExtra)    When sourcing 'comorbidities.R': Error: there is no package called 'kableExtra' Execution halted when running code in 'elixhauser.Rmd'   ...  > library(kableExtra)    When sourcing 'elixhauser.R': Error: there is no package called 'kableExtra' Execution halted when running code in 'pccc.Rmd'   ...  > library(kableExtra)    When sourcing 'pccc.R': Error: there is no package called 'kableExtra' Execution halted    'charlson.Rmd' using 'UTF-8'... failed   'comorbidities.Rmd' using 'UTF-8'... failed   'elixhauser.Rmd' using 'UTF-8'... failed   'icd.Rmd' using 'UTF-8'... OK   'pccc.Rmd' using 'UTF-8'... failed
-2. checking running R code from vignettes ... WARNING Errors in running code in vignettes: when running code in ‘charlson.Rmd’   ...  > library(kableExtra)    When sourcing ‘charlson.R’: Error: there is no package called ‘kableExtra’ Execution halted when running code in ‘comorbidities.Rmd’   ...  > library(kableExtra)    When sourcing ‘comorbidities.R’: Error: there is no package called ‘kableExtra’ Execution halted when running code in ‘elixhauser.Rmd’   ...  > library(kableExtra)    When sourcing ‘elixhauser.R’: Error: there is no package called ‘kableExtra’ Execution halted when running code in ‘pccc.Rmd’   ...  > library(kableExtra)    When sourcing ‘pccc.R’: Error: there is no package called ‘kableExtra’ Execution halted    ‘charlson.Rmd’ using ‘UTF-8’... failed   ‘comorbidities.Rmd’ using ‘UTF-8’... failed   ‘elixhauser.Rmd’ using ‘UTF-8’... failed   ‘icd.Rmd’ using ‘UTF-8’... OK   ‘pccc.Rmd’ using ‘UTF-8’... failed
 
 **Notes:**
 
 1. checking package dependencies ... NOTE Packages suggested but not available for checking:   ‘data.table’ ‘dplyr’ ‘kableExtra’ ‘knitr’ ‘R.utils’ ‘rmarkdown’
 2. checking package dependencies ... NOTE Packages suggested but not available for checking:   'data.table', 'dplyr', 'kableExtra', 'knitr', 'R.utils', 'rmarkdown'
-3. checking package dependencies ... NOTE Packages suggested but not available for checking:   'kableExtra', 'rmarkdown'
 
