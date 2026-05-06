@@ -27,5 +27,7 @@ run from this directory.
 
 
 
+The green tiles indicate no notes, no warning, no error.
+
 ![plot of chunk testing-matrix](figure/testing-matrix-1.png)
 
