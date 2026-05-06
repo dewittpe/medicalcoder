@@ -27,5 +27,5 @@ run from this directory.
 
 
 
-![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png)
+![plot of chunk testing-matrix](figure/testing-matrix-1.png)
 

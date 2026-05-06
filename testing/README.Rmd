@@ -88,7 +88,7 @@ DT[, notes    := factor(notes)]
 setkey(DT, suggests, rversion)
 ```
 
-```{r, echo = FALSE, fig.width=16, fig.height=9}
+```{r testing-matrix, echo = FALSE, fig.width=16, fig.height=9}
 data.table::melt(
   data = DT,
   id.vars = c("rversion", "version", "suggests", "status")
