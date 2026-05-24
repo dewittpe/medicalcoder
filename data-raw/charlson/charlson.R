@@ -19,11 +19,8 @@
 #
 # idempotent: yes (deterministic transformations)
 ################################################################################
-
-library(pbapply)
-library(data.table)
 icd_codes <- readRDS("../icd/icd_codes.rds")
-setDT(icd_codes)
+data.table::setDT(icd_codes)
 
 ################################################################################
 # Import the regex patterns for finding all relevant codes
@@ -33,8 +30,8 @@ regex_patterns <-
     "./cdmf2019.txt",
     "./quan2005.txt"
   ) |>
-  lapply(fread, header = TRUE) |>
-  rbindlist()
+  lapply(data.table::fread, header = TRUE) |>
+  data.table::rbindlist()
 regex_patterns <- split(regex_patterns, f = 1:nrow(regex_patterns))
 
 ################################################################################
@@ -53,10 +50,10 @@ get_codes <- function(pattern, dx, icdv) {
 
 # get the set of ever billable codes that match the regex
 codes <-
-  pblapply(
+  pbapply::pblapply(
     regex_patterns,
     function(x) {
-      data.table(x,
+      data.table::data.table(x,
         full_code = get_codes(pattern = x[["pattern"]], dx = x[["dx"]], icdv = x[["icdv"]])
       )
     },
@@ -70,7 +67,7 @@ if (any(sapply(codes, nrow) == 0)) {
   # F05.1 and I98.2 are in the WHO standard and not in the ICD-10-CM standard.
 }
 
-codes <- rbindlist(codes)
+codes <- data.table::rbindlist(codes)
 codes[, pattern := NULL]
 codes <- unique(codes)
 
@@ -118,7 +115,7 @@ charlson_codes[, code := NULL]
 
 charlson_codes[, dummy := 1L]
 charlson_codes <-
-  dcast(charlson_codes,
+  data.table::dcast(charlson_codes,
         code_id + condition ~ method,
         value.var = "dummy",
         fill = 0L)
@@ -132,7 +129,7 @@ charlson_codes[, quan2011 := quan2005]
 ################################################################################
 # import scores and prep to match codes
 charlson_index_scores <-
-  fread(file = "./charlson.txt", header = TRUE)
+  data.table::fread(file = "./charlson.txt", header = TRUE)
 
 # Note about the size of this object
 #
@@ -189,20 +186,20 @@ stopifnot(
 # and Elixhauser sets
 for (j in names(charlson_codes)) {
   if (!(j %in% c("code_id", "icdv", "dx", "full_code", "code", "condition"))) {
-    setnames(charlson_codes, old = j, new = paste0("charlson_", j))
+    data.table::setnames(charlson_codes, old = j, new = paste0("charlson_", j))
   }
 }
 for (j in names(charlson_index_scores)) {
   if (!(j %in% c("condition", "condition_description"))) {
-    setnames(charlson_index_scores, old = j, new = paste0("charlson_", j))
+    data.table::setnames(charlson_index_scores, old = j, new = paste0("charlson_", j))
   }
 }
 
 ################################################################################
 # save to disk
-setDF(charlson_codes)
+data.table::setDF(charlson_codes)
 saveRDS(charlson_codes, "./charlson_codes.rds")
-setDF(charlson_index_scores)
+data.table::setDF(charlson_index_scores)
 saveRDS(charlson_index_scores, "./charlson_index_scores.rds")
 
 ################################################################################
