@@ -13,6 +13,7 @@ internal_data_sets <-
   c(
     "..mdcr_internal_charlson_codes..",
     "..mdcr_internal_charlson_index_scores..",
+    "..mdcr_internal_charlson_regex..",
     "..mdcr_internal_desc_start_stop..",
     "..mdcr_internal_elixhauser_codes..",
     "..mdcr_internal_elixhauser_index_scores..",
@@ -53,6 +54,7 @@ expected_internal_names_and_classes <-
   list(
     "..mdcr_internal_charlson_codes.." = c(code_id = "integer", condition = "character", charlson_cdmf2019 = "integer", charlson_deyo1992 = "integer", charlson_quan2005 = "integer", charlson_quan2011 = "integer"),
     "..mdcr_internal_charlson_index_scores.." = c(condition_description = "character", condition = "character", charlson_cdmf2019 = "integer", charlson_quan2011 = "integer", charlson_quan2005 = "integer", charlson_deyo1992 = "integer"),
+    "..mdcr_internal_charlson_regex.." = c(condition = "character", icdv = "integer", dx = "integer", pattern = "character", cdmf2019 = "integer", deyo1992 = "integer", quan2005 = "integer"),
     "..mdcr_internal_desc_start_stop.." = c(code_id = "integer", desc_id = "integer", src = "factor", desc_start = "integer", desc_end = "integer"),
     "..mdcr_internal_elixhauser_codes.." = c(code_id = "integer", poaexempt = "integer", condition = "character", elixhauser_ahrq_web = "integer", elixhauser_elixhauser1988 = "integer", elixhauser_quan2005 = "integer", elixhauser_ahrq2022 = "integer", elixhauser_ahrq2023 = "integer", elixhauser_ahrq2024 = "integer", elixhauser_ahrq2025 = "integer", elixhauser_ahrq2026 = "integer", elixhauser_ahrq_icd10 = "integer"),
     "..mdcr_internal_elixhauser_index_scores.." = c(condition = "character", index = "character", elixhauser_ahrq_web = "integer", elixhauser_elixhauser1988 = "integer", elixhauser_quan2005 = "integer", elixhauser_ahrq2022 = "integer", elixhauser_ahrq2023 = "integer", elixhauser_ahrq2024 = "integer", elixhauser_ahrq2025 = "integer", elixhauser_ahrq2026 = "integer", elixhauser_ahrq_icd10 = "integer"),

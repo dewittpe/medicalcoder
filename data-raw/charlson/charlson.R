@@ -32,6 +32,18 @@ regex_patterns <-
   ) |>
   lapply(data.table::fread, header = TRUE) |>
   data.table::rbindlist()
+
+# save these for use in the package
+regex_patterns[, dummy := 1L]
+regex_wide <-
+  data.table::dcast(
+    data = regex_patterns,
+    formula = condition + icdv + dx + pattern ~ method,
+    value.var = "dummy",
+    fill = 0L
+  )
+
+# split for mapping known ICD codes to the conditions
 regex_patterns <- split(regex_patterns, f = 1:nrow(regex_patterns))
 
 ################################################################################
@@ -197,6 +209,8 @@ for (j in names(charlson_index_scores)) {
 
 ################################################################################
 # save to disk
+data.table::setDF(regex_wide)
+saveRDS(regex_wide, "./charlson_regex.rds")
 data.table::setDF(charlson_codes)
 saveRDS(charlson_codes, "./charlson_codes.rds")
 data.table::setDF(charlson_index_scores)

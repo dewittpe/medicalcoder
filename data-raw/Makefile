@@ -1,6 +1,7 @@
 include ../Makevars
 
-DATASETS := ./charlson/charlson_codes.rds\
+DATASETS := ./charlson/charlson_regex.rds\
+						./charlson/charlson_codes.rds\
 						./charlson/charlson_index_scores.rds\
 						./elixhauser/elixhauser_codes.rds\
 						./elixhauser/elixhauser_index_scores.rds\

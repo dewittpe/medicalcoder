@@ -44,6 +44,7 @@
 ..mdcr_internal_pccc_conditions.. <- readRDS("./pccc/pccc_conditions.rds")
 
 # Charlson Data sets
+..mdcr_internal_charlson_regex..        <- readRDS("./charlson/charlson_regex.rds")
 ..mdcr_internal_charlson_codes..        <- readRDS("./charlson/charlson_codes.rds")
 ..mdcr_internal_charlson_index_scores.. <- readRDS("./charlson/charlson_index_scores.rds")
 
@@ -66,6 +67,7 @@ save(
   , ..mdcr_internal_known_and_assignable_start_stop..
   , ..mdcr_internal_desc_start_stop..
 
+  , ..mdcr_internal_charlson_regex..
   , ..mdcr_internal_charlson_codes..
   , ..mdcr_internal_charlson_index_scores..
 
