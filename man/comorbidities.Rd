@@ -21,7 +21,8 @@ comorbidities(
   flag.method = c("current", "cumulative"),
   full.codes = TRUE,
   compact.codes = TRUE,
-  subconditions = FALSE
+  subconditions = FALSE,
+  mapping = c("precomputed", "regex")
 )
 }
 \arguments{

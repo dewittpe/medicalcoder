@@ -196,6 +196,12 @@ stopifnot(
 ################################################################################
 # add the "charlson_" prefix to the method names for consistency across the PCCC
 # and Elixhauser sets
+regex_wide[, quan2011 := quan2005]
+for (j in names(regex_wide)) {
+  if (!(j %in% c("icdv", "dx", "condition", "pattern"))) {
+    data.table::setnames(regex_wide, old = j, new = paste0("charlson_", j))
+  }
+}
 for (j in names(charlson_codes)) {
   if (!(j %in% c("code_id", "icdv", "dx", "full_code", "code", "condition"))) {
     data.table::setnames(charlson_codes, old = j, new = paste0("charlson_", j))

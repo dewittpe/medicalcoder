@@ -166,7 +166,8 @@ comorbidities <- function(data,
                           flag.method = c("current", "cumulative"),
                           full.codes = TRUE,
                           compact.codes = TRUE,
-                          subconditions = FALSE
+                          subconditions = FALSE,
+                          mapping = c("precomputed", "regex")
                           ) {
   UseMethod("comorbidities")
 }
@@ -184,7 +185,9 @@ comorbidities.data.frame <- function(data,
                                      flag.method = c("current", "cumulative"),
                                      full.codes = TRUE,
                                      compact.codes = TRUE,
-                                     subconditions = FALSE) {
+                                     subconditions = FALSE,
+                                     mapping = c("precomputed", "regex")
+                                     ) {
 
   ##############################################################################
   # verify input arguments
@@ -198,6 +201,8 @@ comorbidities.data.frame <- function(data,
       choices = comorbidities_methods(),
       several.ok = FALSE
     )
+
+  mapping <- match.arg(arg = mapping, choices = c("precomputed", "regex"), several.ok = FALSE)
 
   is_a_column <- function(x, cols) {
     stopifnot(is.character(x) && length(x) == 1L && x %in% cols)
@@ -344,13 +349,25 @@ comorbidities.data.frame <- function(data,
   # Determine the lookup table and the columns for the lookup table to keep
   lookup_to_keep <- c("condition")
   if (startsWith(method, "pccc")) {
-    lookup <- get(x = "pccc_codes", envir = ..mdcr_data_env.., inherits = FALSE)
+    if (mapping == "precomputed") {
+      lookup <- get(x = "pccc_codes", envir = ..mdcr_data_env.., inherits = FALSE)
+    } else {
+      lookup <- ..mdcr_internal_pccc_regex..
+    }
     lookup_to_keep <- c(lookup_to_keep, "subcondition", "transplant_flag", "tech_dep_flag")
   } else if (startsWith(method, "charlson")) {
-    lookup <- get("charlson_codes", envir = ..mdcr_data_env.., inherits = FALSE)
+    if (mapping == "precomputed") {
+      lookup <- get("charlson_codes", envir = ..mdcr_data_env.., inherits = FALSE)
+    } else {
+      lookup <- ..mdcr_internal_charlson_regex..
+    }
     lookup_to_keep <- c(lookup_to_keep)
   } else if (startsWith(method, "elixhauser")) {
-    lookup <- get("elixhauser_codes", envir = ..mdcr_data_env.., inherits = FALSE)
+    if (mapping == "precomputed") {
+      lookup <- get("elixhauser_codes", envir = ..mdcr_data_env.., inherits = FALSE)
+    } else {
+      lookup <- ..mdcr_internal_elixhauser_regex..
+    }
     lookup_to_keep <- c(lookup_to_keep, "poaexempt")
   }
 
@@ -368,23 +385,137 @@ comorbidities.data.frame <- function(data,
 
   ##############################################################################
   # inner join the data with the lookup table
-  on_full <-
-    mdcr_inner_join(
-      x = if (full.codes) {data} else {data[0, ]},
-      y = lookup,
-      by.x = by_x,
-      by.y = c("full_code", by_y),
-      suffixes = c("", ".y")
-    )
+  if (mapping == "precomputed") {
+    on_full <-
+      mdcr_inner_join(
+        x = if (full.codes) {data} else {data[0, ]},
+        y = lookup,
+        by.x = by_x,
+        by.y = c("full_code", by_y),
+        suffixes = c("", ".y")
+      )
 
-  on_comp <-
-    mdcr_inner_join(
-      x = if (compact.codes) {data} else {data[0, ]},
-      y = lookup,
-      by.x = by_x,
-      by.y = c("code", by_y),
-      suffixes = c("", ".y")
-    )
+    on_comp <-
+      mdcr_inner_join(
+        x = if (compact.codes) {data} else {data[0, ]},
+        y = lookup,
+        by.x = by_x,
+        by.y = c("code", by_y),
+        suffixes = c("", ".y")
+      )
+  } else {
+    # use the names on_comp and on_full
+    # As of v0.8.1, the only mapping between icd codes and conditions was done
+    # by precomputed link tables of ICD codes and conditions.
+    # An extension to use regex is begin built, and at least for the intial,
+    # "get it done" reuse these names here.  Let on_comp be empty and on_full be
+    # based on the regex matching.
+    on_comp <-
+      mdcr_inner_join(
+        x = data[0, ],
+        y = lookup,
+        by.x = by_x[-1],
+        by.y = by_y,
+        suffixes = c("", ".y")
+      )
+
+    map_by_regex <- function(uc, ptrns) {
+      if (is.null(uc) || nrow(uc) == 0L || is.null(ptrns) || nrow(ptrns) == 0L) {
+        return(NULL)
+      }
+      mapped <- lapply(uc[[icd.codes]], function(x) {
+        y <- sapply(ptrns[["pattern"]], grepl, x)
+        if (length(y) > 0L) {
+          which(y)
+        } else {
+          integer(0)
+        }
+      })
+      mapped <- stats::setNames(mapped, uc[[icd.codes]])
+      mapped <- Filter(length, mapped)
+      mapped <-
+        Map(
+          f = function(nm, i) { 
+            rtn <- mdcr_subset(ptrns, i = i)
+            rtn <- mdcr_set(rtn, j = "code", value = nm)
+            rtn
+          },
+          nm = names(mapped),
+          i = mapped
+        )
+      mapped <- do.call(rbind, mapped)
+      if (length(mapped) > 0L) {
+        mdcr_inner_join(
+          x = uc,
+          y = mapped,
+          by.x = by_x,
+          by.y = c("code", by_y)
+        )
+      }
+    }
+
+    if (is.null(dx.var) & is.null(icdv.var)) {
+      unique_codes <- mdcr_unique(data, by = icd.codes)
+      on_full <- map_by_regex(unique_codes, lookup)
+    } else if (!is.null(dx.var) & is.null(icdv.var)) {
+      unique_codes <- mdcr_unique(data, by = c(icd.codes, dx.var))
+      unique_codes <- split(x = unique_codes, f = unique_codes[[dx.var]])
+      m0 <- map_by_regex(
+        unique_codes[["0"]],
+        mdcr_subset(lookup, lookup[["dx"]] == 0L)
+      )
+      m1 <- map_by_regex(
+        unique_codes[["1"]],
+        mdcr_subset(lookup, lookup[["dx"]] == 1L)
+      )
+      on_full <- rbind(m0, m1)
+    } else if (is.null(dx.var) & !is.null(icdv.var)) {
+      unique_codes <- mdcr_unique(data, by = c(icd.codes, icdv.var))
+      unique_codes <- split(x = unique_codes, f = unique_codes[[icdv.var]])
+      m9 <- map_by_regex(
+        unique_codes[["9"]],
+        mdcr_subset(lookup, lookup[["icdv"]] == 9L)
+      )
+      m10 <- map_by_regex(
+        unique_codes[["10"]],
+        mdcr_subset(lookup, lookup[["icdv"]] == 10L)
+      )
+      on_full <- rbind(m9, m10)
+    } else if (!is.null(dx.var) & !is.null(icdv.var)) {
+      unique_codes <- mdcr_unique(data, by = c(icd.codes, icdv.var, dx.var))
+      unique_codes <- split(x = unique_codes, f = unique_codes[c(icdv.var, dx.var)])
+      m9.0 <- map_by_regex(
+        uc = unique_codes[["9.0"]],
+        ptrns = mdcr_subset(lookup, lookup[["icdv"]] == 9L & lookup[["dx"]] == 0L)
+      )
+      m9.1 <- map_by_regex(
+        uc = unique_codes[["9.1"]]
+        ,
+        ptrns = mdcr_subset(lookup, lookup[["icdv"]] == 9L & lookup[["dx"]] == 1L)
+      )
+      m10.0 <- map_by_regex(
+        unique_codes[["10.0"]],
+        mdcr_subset(lookup, lookup[["icdv"]] == 10L & lookup[["dx"]] == 0L)
+      )
+      m10.1 <- map_by_regex(
+        unique_codes[["10.1"]],
+        mdcr_subset(lookup, lookup[["icdv"]] == 10L & lookup[["dx"]] == 1L)
+      )
+      on_full <- rbind(m9.0, m9.1, m10.0, m10.1)
+    } else {
+      # you should never get here
+    }
+    if (is.null(on_full)) {
+      on_full <- on_comp[0, , drop = FALSE]
+    }
+    #on_full <-
+    #  mdcr_inner_join(
+    #    x = data,
+    #    y = on_full,
+    #    by.x = by_x,
+    #    by.y = c("code", by_y)
+    #  )
+  }
 
   ##############################################################################
   # Now determine if the id.vars, poa.var, and primarydx.var need to be

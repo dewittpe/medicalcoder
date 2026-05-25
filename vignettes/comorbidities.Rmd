@@ -96,7 +96,7 @@ stopifnot(
       "    icdv = NULL, dx.var = NULL, dx = NULL, poa.var = NULL, poa = NULL, ",
       "    age.var = NULL, primarydx.var = NULL, primarydx = NULL, flag.method = c(\"current\", ",
       "        \"cumulative\"), full.codes = TRUE, compact.codes = TRUE, ",
-      "    subconditions = FALSE) ", "NULL")
+      "    subconditions = FALSE, mapping = c(\"precomputed\", \"regex\")) ", "NULL")
 )
 ```
 
