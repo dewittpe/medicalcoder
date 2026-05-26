@@ -55,6 +55,19 @@
 #' to be 0, then in this case the only conditions that could be flagged are the
 #' Elixhauser conditions which are poa-exempt.
 #'
+#' The `mapping` option controls how ICD codes are mapped to conidtions.  The
+#' default `precomputed` uses a set of valid ICD codes from 
+#' The United States Centers for Disease Control and Prevention (CDC) (ICD-9 and
+#' ICD-10); the Centers for Medicare and Medicaid Services (CMS) (ICD-9 and
+#' ICD-10); and from the World Health Organization (WHO) (ICD-10 only).
+#' If you know your input data is consistent with the WHO ICD-10, or the U.S.
+#' ICD-9-CM, ICD-9-PCS, ICD-10-CM, or ICD-10-PCS then the `precomputed` will be
+#' the fastest to compute.  If your input data from from another ICD standard,
+#' for example ICD-10-AM from Austrilia, and/or you use a method developed on a
+#' different standard, e.g., `charlson_sundararajan2004`, then setting `mapping
+#' = 'regex'` might be preferable until a complete set of the relevent ICD code
+#' standard can be used to precompute the mappings.
+#'
 #' @return
 #'
 #' The return object will be slightly different depending on the value of
@@ -419,54 +432,25 @@ comorbidities.data.frame <- function(data,
         suffixes = c("", ".y")
       )
 
-    map_by_regex <- function(uc, ptrns) {
-      if (is.null(uc) || nrow(uc) == 0L || is.null(ptrns) || nrow(ptrns) == 0L) {
-        return(NULL)
-      }
-      mapped <- lapply(uc[[icd.codes]], function(x) {
-        y <- sapply(ptrns[["pattern"]], grepl, x)
-        if (length(y) > 0L) {
-          which(y)
-        } else {
-          integer(0)
-        }
-      })
-      mapped <- stats::setNames(mapped, uc[[icd.codes]])
-      mapped <- Filter(length, mapped)
-      mapped <-
-        Map(
-          f = function(nm, i) { 
-            rtn <- mdcr_subset(ptrns, i = i)
-            rtn <- mdcr_set(rtn, j = "code", value = nm)
-            rtn
-          },
-          nm = names(mapped),
-          i = mapped
-        )
-      mapped <- do.call(rbind, mapped)
-      if (length(mapped) > 0L) {
-        mdcr_inner_join(
-          x = uc,
-          y = mapped,
-          by.x = by_x,
-          by.y = c("code", by_y)
-        )
-      }
-    }
-
     if (is.null(dx.var) & is.null(icdv.var)) {
       unique_codes <- mdcr_unique(data, by = icd.codes)
-      on_full <- map_by_regex(unique_codes, lookup)
+      on_full <- map_by_regex(unique_codes, lookup, icd.codes, by_x, by_y)
     } else if (!is.null(dx.var) & is.null(icdv.var)) {
       unique_codes <- mdcr_unique(data, by = c(icd.codes, dx.var))
       unique_codes <- split(x = unique_codes, f = unique_codes[[dx.var]])
       m0 <- map_by_regex(
         unique_codes[["0"]],
-        mdcr_subset(lookup, lookup[["dx"]] == 0L)
+        mdcr_subset(lookup, lookup[["dx"]] == 0L),
+        icd.codes,
+        by_x,
+        by_y
       )
       m1 <- map_by_regex(
         unique_codes[["1"]],
-        mdcr_subset(lookup, lookup[["dx"]] == 1L)
+        mdcr_subset(lookup, lookup[["dx"]] == 1L),
+        icd.codes,
+        by_x,
+        by_y
       )
       on_full <- rbind(m0, m1)
     } else if (is.null(dx.var) & !is.null(icdv.var)) {
@@ -474,11 +458,17 @@ comorbidities.data.frame <- function(data,
       unique_codes <- split(x = unique_codes, f = unique_codes[[icdv.var]])
       m9 <- map_by_regex(
         unique_codes[["9"]],
-        mdcr_subset(lookup, lookup[["icdv"]] == 9L)
+        mdcr_subset(lookup, lookup[["icdv"]] == 9L),
+        icd.codes,
+        by_x,
+        by_y
       )
       m10 <- map_by_regex(
         unique_codes[["10"]],
-        mdcr_subset(lookup, lookup[["icdv"]] == 10L)
+        mdcr_subset(lookup, lookup[["icdv"]] == 10L),
+        icd.codes,
+        by_x,
+        by_y
       )
       on_full <- rbind(m9, m10)
     } else if (!is.null(dx.var) & !is.null(icdv.var)) {
@@ -486,20 +476,32 @@ comorbidities.data.frame <- function(data,
       unique_codes <- split(x = unique_codes, f = unique_codes[c(icdv.var, dx.var)])
       m9.0 <- map_by_regex(
         uc = unique_codes[["9.0"]],
-        ptrns = mdcr_subset(lookup, lookup[["icdv"]] == 9L & lookup[["dx"]] == 0L)
+        ptrns = mdcr_subset(lookup, lookup[["icdv"]] == 9L & lookup[["dx"]] == 0L),
+        icd.codes,
+        by_x,
+        by_y
       )
       m9.1 <- map_by_regex(
         uc = unique_codes[["9.1"]]
         ,
-        ptrns = mdcr_subset(lookup, lookup[["icdv"]] == 9L & lookup[["dx"]] == 1L)
+        ptrns = mdcr_subset(lookup, lookup[["icdv"]] == 9L & lookup[["dx"]] == 1L),
+        icd.codes,
+        by_x,
+        by_y
       )
       m10.0 <- map_by_regex(
         unique_codes[["10.0"]],
-        mdcr_subset(lookup, lookup[["icdv"]] == 10L & lookup[["dx"]] == 0L)
+        mdcr_subset(lookup, lookup[["icdv"]] == 10L & lookup[["dx"]] == 0L),
+        icd.codes,
+        by_x,
+        by_y
       )
       m10.1 <- map_by_regex(
-        unique_codes[["10.1"]],
-        mdcr_subset(lookup, lookup[["icdv"]] == 10L & lookup[["dx"]] == 1L)
+        uc = unique_codes[["10.1"]],
+        ptrns = mdcr_subset(lookup, lookup[["icdv"]] == 10L & lookup[["dx"]] == 1L),
+        icd.codes = icd.codes,
+        by_x = by_x,
+        by_y = by_y
       )
       on_full <- rbind(m9.0, m9.1, m10.0, m10.1)
     } else {
@@ -805,6 +807,45 @@ comorbidities_methods <- function() {
       "elixhauser_ahrq2025", "elixhauser_ahrq2026", "elixhauser_ahrq_icd10")
 }
 
+# map_by_regex is used to...
+# @param uc a data.frame with unique codes
+# @param ptrns a data.frame with regex ptrns mapping to conditions
+# @param icd.codes name of the column in uc with the ICD codes
+# @param by_x,by_y the columns to join the uc and found conditions by
+map_by_regex <- function(uc, ptrns, icd.codes, by_x, by_y) {
+  if (is.null(uc) || nrow(uc) == 0L || is.null(ptrns) || nrow(ptrns) == 0L) {
+    return(NULL)
+  }
+  mapped <- lapply(uc[[icd.codes]], function(x) {
+    y <- sapply(ptrns[["pattern"]], grepl, x)
+    if (length(y) > 0L) {
+      which(y)
+    } else {
+      integer(0)
+    }
+  })
+  mapped <- stats::setNames(mapped, uc[[icd.codes]])
+  mapped <- Filter(length, mapped)
+  mapped <-
+    Map(
+      f = function(nm, i) { 
+        rtn <- mdcr_subset(ptrns, i = i)
+        rtn <- mdcr_set(rtn, j = "code_via_regex", value = nm)
+        rtn
+      },
+      nm = names(mapped),
+      i = mapped
+    )
+  mapped <- do.call(rbind, mapped)
+  if (length(mapped) > 0L) {
+    mdcr_inner_join(
+      x = uc,
+      y = mapped,
+      by.x = by_x,
+      by.y = c("code_via_regex", by_y)
+    )
+  }
+}
 
 # protected names... throw and error and tell end users that it is ill-advised
 # to use these names for id.vars, poa.var, primarydx.var

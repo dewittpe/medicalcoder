@@ -104,6 +104,10 @@ is the associated compact code.}
 
 \item{subconditions}{Logical scalar; when \code{TRUE}, report both conditions and
 subconditions (PCCC only).}
+
+\item{mapping}{Character string specifying if the mapping between
+\code{data[[icd.codes]]} should be done via a precomputed set of valid codes or
+regular expression.  See Details.}
 }
 \value{
 The return object will be slightly different depending on the value of
@@ -205,6 +209,18 @@ When \code{flag.method = "current"} and neither \code{poa} nor \code{poa.var} is
 then all codes will be considered present-on-admission.  If poa was assumed
 to be 0, then in this case the only conditions that could be flagged are the
 Elixhauser conditions which are poa-exempt.
+
+The \code{mapping} option controls how ICD codes are mapped to conidtions.  The
+default \code{precomputed} uses a set of valid ICD codes from
+The United States Centers for Disease Control and Prevention (CDC) (ICD-9 and
+ICD-10); the Centers for Medicare and Medicaid Services (CMS) (ICD-9 and
+ICD-10); and from the World Health Organization (WHO) (ICD-10 only).
+If you know your input data is consistent with the WHO ICD-10, or the U.S.
+ICD-9-CM, ICD-9-PCS, ICD-10-CM, or ICD-10-PCS then the \code{precomputed} will be
+the fastest to compute.  If your input data from from another ICD standard,
+for example ICD-10-AM from Austrilia, and/or you use a method developed on a
+different standard, e.g., \code{charlson_sundararajan2004}, then setting \code{mapping = 'regex'} might be preferable until a complete set of the relevent ICD code
+standard can be used to precompute the mappings.
 }
 \examples{
 pccc_v3.1_results <-

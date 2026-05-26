@@ -77,3 +77,7 @@
 #' @param subconditions Logical scalar; when `TRUE`, report both conditions and
 #'   subconditions (PCCC only).
 #'
+#' @param mapping Character string specifying if the mapping between
+#' `data[[icd.codes]]` should be done via a precomputed set of valid codes or
+#' regular expression.  See Details.
+#'
