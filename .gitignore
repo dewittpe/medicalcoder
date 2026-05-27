@@ -4,6 +4,7 @@
 .DS_Store
 data-raw/charlson/charlson_codes.rds
 data-raw/charlson/charlson_index_scores.rds
+data-raw/charlson/charlson_regex.rds
 data-raw/elixhauser/elixhauser_codes.rds
 data-raw/elixhauser/elixhauser_index_scores.rds
 data-raw/elixhauser/elixhauser_poa.rds

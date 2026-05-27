@@ -14,7 +14,9 @@ p <- new.env()
 rf <- new.env()
 rc <- new.env()
 
-for (m in names(charlson_codes)[which(!(names(charlson_codes) %in% jsc))]) {
+tic <- Sys.time()
+#for (m in names(charlson_codes)[which(!(names(charlson_codes) %in% jsc))]) {
+for (m in "charlson_cdmf2019") {
   if (interactive()) message(m)
 
   v <- medicalcoder:::mdcr_subset(charlson_codes, charlson_codes[[m]] == 1L, c(jsc, m))
@@ -102,9 +104,21 @@ for (m in names(charlson_codes)[which(!(names(charlson_codes) %in% jsc))]) {
 
   assign(x = m, value = by_regex, envir = rc)
 }
+difftime(Sys.time(), tic)
+
+z <-
+  merge(
+    x = cbind(p$charlson_cdmf2019, p = 1),
+    y = cbind(rf$charlson_cdmf2019, r = 1),
+    all = TRUE
+  )
+subset(z, is.na(p) | is.na(r))
 
 stopifnot(isTRUE(all.equal(p, rf)))
 stopifnot(isTRUE(all.equal(p, rc)))
+
+
+stop()
 
 ################################################################################
 # test that you get the same results when icdv and dx are specified.  There

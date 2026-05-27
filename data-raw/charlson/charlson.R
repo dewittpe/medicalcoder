@@ -33,16 +33,6 @@ regex_patterns <-
   lapply(data.table::fread, header = TRUE) |>
   data.table::rbindlist()
 
-# save these for use in the package
-regex_patterns[, dummy := 1L]
-regex_wide <-
-  data.table::dcast(
-    data = regex_patterns,
-    formula = condition + icdv + dx + pattern ~ method,
-    value.var = "dummy",
-    fill = 0L
-  )
-
 # split for mapping known ICD codes to the conditions
 regex_patterns <- split(regex_patterns, f = 1:nrow(regex_patterns))
 
@@ -196,12 +186,6 @@ stopifnot(
 ################################################################################
 # add the "charlson_" prefix to the method names for consistency across the PCCC
 # and Elixhauser sets
-regex_wide[, quan2011 := quan2005]
-for (j in names(regex_wide)) {
-  if (!(j %in% c("icdv", "dx", "condition", "pattern"))) {
-    data.table::setnames(regex_wide, old = j, new = paste0("charlson_", j))
-  }
-}
 for (j in names(charlson_codes)) {
   if (!(j %in% c("code_id", "icdv", "dx", "full_code", "code", "condition"))) {
     data.table::setnames(charlson_codes, old = j, new = paste0("charlson_", j))
@@ -215,8 +199,6 @@ for (j in names(charlson_index_scores)) {
 
 ################################################################################
 # save to disk
-data.table::setDF(regex_wide)
-saveRDS(regex_wide, "./charlson_regex.rds")
 data.table::setDF(charlson_codes)
 saveRDS(charlson_codes, "./charlson_codes.rds")
 data.table::setDF(charlson_index_scores)
