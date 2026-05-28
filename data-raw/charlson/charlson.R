@@ -66,8 +66,9 @@ codes <-
 if (any(sapply(codes, nrow) == 0)) {
   print(regex_patterns[which(sapply(codes, nrow) == 0L)])
   warning("regex with no matches")
-  #grep("^I982", who_dx$code, value = TRUE)
   # F05.1 and I98.2 are in the WHO standard and not in the ICD-10-CM standard.
+  # But that shouldn't matter, F05.1 is in Table 1 of the Quan et al. (2005) for
+  # Dementia.
 }
 
 codes <- data.table::rbindlist(codes)

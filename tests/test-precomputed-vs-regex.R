@@ -131,15 +131,19 @@ m <- sort(m)
 stopifnot(
   identical(
     m,
-    c("charlson_cdmf2019", "charlson_deyo1992", "charlson_quan2005", "charlson_quan2011")
+    c("charlson_cdmf2019", "charlson_deyo1992", "charlson_quan2005", "charlson_quan2011", "charlson_sundararajan2004")
   )
 )
 
 # add an age variable
 mdcr$age <- as.integer(substr(as.character(mdcr$patid), 1, 2))
 
+#mdcr[["rowid"]] <- 1:nrow(mdcr)
+
 commonargs <-
   list(
+    #data = subset(mdcr, patid == "11460"),
+    #id.vars = "rowid",
     data = mdcr,
     id.vars = "patid",
     icdv.var = "icdv",
@@ -173,6 +177,14 @@ eval(e)
 DFclock <- Map(difftime, time1 = tocs, time2 = tics)
 stopifnot(all.equal(p, r))
 
+#d <-
+#  merge(
+#    cbind(p$charlson_sundararajan2004, p = 1),
+#    cbind(r$charlson_sundararajan2004, r = 1),
+#    all = TRUE
+#  )
+#subset(d, is.na(p)  | is.na(r)) |> head()
+
 if (requireNamespace("dplyr", quietly = TRUE)) {
   mdcr <- getExportedValue(name = "as_tibble", ns = "dplyr")(mdcr)
   eval(e)
@@ -180,12 +192,18 @@ if (requireNamespace("dplyr", quietly = TRUE)) {
   stopifnot(all.equal(p, r))
 }
 
+
+
+
+
 if (requireNamespace("data.table", quietly = TRUE)) {
   mdcr <- getExportedValue(name = "as.data.table", ns = "data.table")(mdcr)
   eval(e)
   DTclock <- Map(difftime, time1 = tocs, time2 = tics)
   stopifnot(all.equal(p, r))
 }
+
+
 
 
 ################################################################################

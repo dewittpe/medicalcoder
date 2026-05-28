@@ -42,27 +42,27 @@ medicalcoder and comorbidity.
 
 ```{r, echo = FALSE, results = "asis"}
 x <- data.table::fread(text ="
-feature | comorbidity | medicalcoder
-Charlson [@quan2005]                     | &#9989;       | &#9989;
-Charlson [@quan2011]                     | &#10060;      | &#9989;
-Charlson [@deyo1992adapting]             | &#10060;      | &#9989;
-Charlson [@glasheen2019]                 | &#10060;      | &#9989;
-Charlson (Ludvigsson et al., 2021)       | &#9989;       | &#10060;
-Charlson (Sundararajan et al., 2004)     | &#9989;       | &#10060;
-Elixhauser [@quan2005]                   | &#9989;       | &#9989;
-Elixhauser [@elixhauser1998]             | &#10060;      | &#9989;
-Elixhauser (ICD-9-CM AHRQ)               | &#10060;      | &#9989;
-Elixhauser (ICD-10-CM AHRQ)              | &#10060;      | &#9989;
-PCCC version 2 [@feudtner2014pediatric]  | &#10060;      | &#9989;
-PCCC version 3 [@feinstein2024pediatric] | &#10060;      | &#9989;
-Allows for full ICD codes | &#10060; | &#9989;
-Allows for compact ICD codes | &#9989; | &#9989;
-Applies algorithms to ICD-9 and ICD-10 simultaneously | &#10060 | &#9989;
-Diagnosis and Procedure codes simultaneously | <sup>*</sup> | &#9989;
-Lookup tables <sup>**</sup>              | &#9989;       | &#9989;
-Procedure codes                          | &#10060;      | &#9989;
-Diagnostic codes                        | &#9989;       | &#9989;
-Functions for looking up/testing ICD Codes | &#10060;    | &#9989;
+feature                                               | comorbidity  | medicalcoder
+Charlson [@quan2005]                                  | &#9989;      | &#9989;
+Charlson [@quan2011]                                  | &#10060;     | &#9989;
+Charlson [@deyo1992adapting]                          | &#10060;     | &#9989;
+Charlson [@glasheen2019]                              | &#10060;     | &#9989;
+Charlson (Ludvigsson et al., 2021)                    | &#9989;      | &#10060;
+Charlson (Sundararajan et al., 2004)                  | &#9989;      | &9989;
+Elixhauser [@quan2005]                                | &#9989;      | &#9989;
+Elixhauser [@elixhauser1998]                          | &#10060;     | &#9989;
+Elixhauser (ICD-9-CM AHRQ)                            | &#10060;     | &#9989;
+Elixhauser (ICD-10-CM AHRQ)                           | &#10060;     | &#9989;
+PCCC version 2 [@feudtner2014pediatric]               | &#10060;     | &#9989;
+PCCC version 3 [@feinstein2024pediatric]              | &#10060;     | &#9989;
+Allows for full ICD codes                             | &#10060;     | &#9989;
+Allows for compact ICD codes                          | &#9989;      | &#9989;
+Applies algorithms to ICD-9 and ICD-10 simultaneously | &#10060      | &#9989;
+Diagnosis and Procedure codes simultaneously          | <sup>*</sup> | &#9989;
+Lookup tables <sup>**</sup>                           | &#9989;      | &#9989;
+Procedure codes                                       | &#10060;     | &#9989;
+Diagnostic codes                                      | &#9989;      | &#9989;
+Functions for looking up/testing ICD Codes            | &#10060;     | &#9989;
 ")
 
 y <- data.table::as.data.table(get_icd_codes())[
@@ -323,6 +323,74 @@ kbl(
 pack_rows("Comorbidity", start_row = 1, end_row = 17) |>
 pack_rows("Number of Comorbidities", start_row = 18, end_row = nrow(x))
 ```
+
+## Sundararajan (2004)
+
+The method by @sundararajan2004 is applicable to ICD-10-AM, the Austrialian
+based ICD-10 codes. This provides an interesting use case for the medicalcoder
+package.  The internal database of ICD codes within medicalcoder are from the
+World Health Organization (WHO) and the United States of America based Centers
+for Disease Control (CDC) and Centers for Medicare and Medicaid Services (CMS).
+As such, the precompiled codes for mapping to comorbidities for this method are
+may omit some valid ICD-10-AM codes since that code standard is not currently in
+the medicalcoder internal data.  As such, the medicalcoder (version > 0.8.1)
+provides the ability to apply the mapping using either precompiled codes or regular
+expressions.
+
+```{r}
+# use precompiled codes
+tic <- Sys.time()
+sundararajan2004_example_precompiled <-
+  medicalcoder::comorbidities(
+    data = mdcr,
+    id.vars = "patid",
+    icd.codes = "code",
+    dx.var = "dx",
+    icdv.var = "icdv",
+    poa = 1L, # assume all codes are present on admission
+    primarydx = 0L, # assume all codes are secondary diagnoses
+    method = "charlson_sundararajan2004",
+    mapping = "precomputed" # default
+  )
+difftime(Sys.time(), tic)
+
+# use regex
+tic <- Sys.time()
+sundararajan2004_example_regex <-
+  medicalcoder::comorbidities(
+    data = mdcr,
+    id.vars = "patid",
+    icd.codes = "code",
+    dx.var = "dx",
+    icdv.var = "icdv",
+    poa = 1L, # assume all codes are present on admission
+    primarydx = 0L, # assume all codes are secondary diagnoses
+    method = "charlson_sundararajan2004",
+    mapping = "regex"
+  )
+difftime(Sys.time(), tic)
+```
+The two calls yield the same result.
+```{r}
+stopifnot(
+  isTRUE(
+    all.equal(
+      sundararajan2004_example_precompiled,
+      sundararajan2004_example_regex
+    )
+  )
+)
+```
+This is expected for two reasons:
+
+1. The `mdcr` dataset contains ICD-9-CM and ICD-10-CM (United States ICD
+   diagnostic) codes
+2. The precompiled codes are built against the intenal ICD database within
+   medicalcoder built on WHO, CDC, and CMS codes.
+
+That does not mean that the precompiled codes will work if you are working with
+a different ICD system.  Since @sundararajan2004 defined the mapping for
+ICD-10-AM we should consider possible issues.
 
 # Elixhauser Comorbidities
 

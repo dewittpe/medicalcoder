@@ -10,7 +10,7 @@ m <- sort(m)
 stopifnot(
   identical(
     m,
-    c("charlson_cdmf2019", "charlson_deyo1992", "charlson_quan2005", "charlson_quan2011")
+    c("charlson_cdmf2019", "charlson_deyo1992", "charlson_quan2005", "charlson_quan2011", "charlson_sundararajan2004")
   )
 )
 
