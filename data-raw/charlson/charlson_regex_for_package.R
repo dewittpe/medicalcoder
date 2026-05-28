@@ -1,7 +1,7 @@
 ################################################################################
 # file: charlson_regex_for_package.R
 #
-# objective: 
+# objective:
 #
 #   define regular expressions for mapping between ICD and Charlson
 #   Comorbidities.
@@ -16,11 +16,11 @@
 # requirements:
 #
 # inputs:
-#    ./deyo1992.txt
-#    ./cdmf2019.txt
-#    ./quan2005.txt
+#    ./regex_for_package.txt
 #
 # outpus:
+#
+#   ./charlson_regex.rds
 #
 ################################################################################
 regex_patterns <- data.table::fread("regex_for_package.txt", header=TRUE)

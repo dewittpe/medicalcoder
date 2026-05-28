@@ -28,7 +28,8 @@ regex_patterns <-
   list(
     "./deyo1992.txt",
     "./cdmf2019.txt",
-    "./quan2005.txt"
+    "./quan2005.txt",
+    "./sundararajan2004.txt"
   ) |>
   lapply(data.table::fread, header = TRUE) |>
   data.table::rbindlist()
