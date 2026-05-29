@@ -1,3 +1,19 @@
+# medicalcoder 0.8.1.9000
+
+## New Features
+* `comorbidities()` gains a new argument to allow end users to specify the
+  mapping between ICD codes and the conditions to be done via precomputed link
+  tables or via regex (part of #45)
+
+* Add `charlson_sundararajan_2004`
+
+* Add ICD-10-AM (Australian Modification) to the ICD database
+
+## Improvements
+
+* WHO ICD-10 codes extend 2019 to 2020 and 2021 and the WHO last published in
+  2019 and then transiitoned to ICD-11 January 1 2022.
+
 # medicalcoder 0.8.1
 
 ## Bug Fixes

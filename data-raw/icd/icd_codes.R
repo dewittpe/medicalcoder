@@ -60,7 +60,8 @@ icd_descs <-
     icd9[ , .(desc = cdc_desc)],
     icd10[, .(desc = cms_desc)],
     icd10[, .(desc = who_desc)],
-    icd10[, .(desc = cdc_desc)]
+    icd10[, .(desc = cdc_desc)],
+    icd10[, .(desc = ihacpa_desc)]
   )
 icd_descs <- unique(icd_descs)
 icd_descs <- icd_descs[!is.na(desc)]
@@ -95,9 +96,18 @@ cdc[, src := "cdc"]
 data.table::setorder(cdc, code_id, header, start, end, desc_id)
 data.table::setkey(cdc, code_id, desc_id)
 
+# Extract the ICD-10-AM codes from IHACPA
+ihacpa <- icd[ihacpa == 1L, .(code_id, year, header = ihacpa_header, desc = ihacpa_desc)]
+ihacpa <- ihacpa[, .(start = min(year), end = max(year)), by = .(code_id, desc, header)]
+ihacpa <- merge(ihacpa, icd_descs, all.x = TRUE, by = "desc")
+ihacpa[, desc := NULL]
+ihacpa[, src := "ihacpa"]
+data.table::setorder(ihacpa, code_id, header, start, end, desc_id)
+data.table::setkey(ihacpa, code_id, desc_id)
+
 # stack up the ICD sources and build the
 # known_start, known_end, assignable_start, assignable_end columns
-icd_srcs <- data.table::rbindlist(list(cms, who, cdc))
+icd_srcs <- data.table::rbindlist(list(cms, who, cdc, ihacpa))
 
 k <- icd_srcs[,                .(known_start      = min(start), known_end      = max(end)), keyby = .(code_id, src)]
 a <- icd_srcs[header == 0,     .(assignable_start = min(start), assignable_end = max(end)), keyby = .(code_id, src)]
@@ -105,8 +115,8 @@ d <- icd_srcs[!is.na(desc_id), .(desc_start       = min(start), desc_end       =
 
 ka <- merge(x = k, y = a, all = TRUE)
 
-ka[, src := factor(src, levels = c("cms", "who", "cdc"))]
-d[, src := factor(src, levels = c("cms", "who", "cdc"))]
+ka[, src := factor(src, levels = c("cms", "cdc", "ihacpa", "who"))]
+d[, src := factor(src, levels = c("cms", "cdc", "ihacpa", "who"))]
 data.table::setorder(ka, code_id, src)
 data.table::setorder(d, code_id, desc_id, src)
 
