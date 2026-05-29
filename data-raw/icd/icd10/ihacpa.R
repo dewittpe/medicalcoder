@@ -34,12 +34,49 @@ codes <-
 # Found an error in the codes, X27.1 Contact with a platypus should by X27.0
 codes[full_code == "X27.1" & description == "Contact with platypus", full_code := "X27.0"]
 
+codes[full_code == "G82.50", .N == 0]
+codes[full_code == "G82.51" & description == "Tetraplegia, unspecified", full_code := "G82.50"]
+
+codes[full_code == "S34.70", .N == 0]
+codes[full_code == "S34.71" & description == "Functional spinal cord injury, lumbar level unspecified", full_code := "S34.70"]
+
+codes[full_code == "U55.20", .N == 0]
+codes[full_code == "U55.21" & description == "Skiing, alpine and downhill", full_code := "U55.20"]
+
+# There codes W02.7, W02.8, and W02.9 were delted in the fifth edition
+#   W02.7 Fall involving baby carriage
+#   W02.8 Fall involving baby walker
+#   W02.9 Fall involving other and unspecified pedestrian conveyance
+#
+# Keep the other stem for now
+codes <-
+  codes[!(
+            full_code %in% c("W02.7", "W02.8", "W02.9") &
+            description %in% c(
+              "Fall involving baby carriage",
+              "Fall involving baby walker",
+              "Fall involving other and unspecified pedestrian conveyance"
+            )
+        )]
+
+# build the compact codes
 codes[, code := sub("\\.", "", full_code)]
 
-# The Tenth edition was valid from 1 July 2017 through 30 June 2019   (https://www.ihacpa.gov.au/resources/icd-10-amachiacs-tenth-edition)
-# The Elevnth edition was valid from 1 July 2019 through 30 June 2022 (https://www.ihacpa.gov.au/resources/icd-10-amachiacs-eleventh-edition)
-# The Twelfth edition was valid from 1 July 2022 through 30 June 2025 (https://www.ihacpa.gov.au/resources/icd-10-amachiacs-twelfth-edition)
-# The Thirteenth edition is valid since 1 July 2025....               (https://www.ihacpa.gov.au/resources/icd-10-amachiacs-thirteenth-edition)
+# | Edition    | Start                 | End                    | url                                                                     |
+# | :-------   | :-------------------- | :--------------------- | :------------------------------------------------------------------     |
+# | First      | 1 July 1998 (FY 1999) | 30 June 2000 (FY 2000) | https://www.ihacpa.gov.au/resources/icd-10-ammbs-eacs-first-edition     |
+# | Second     | 1 July 2000 (FY 2001) | 30 June 2002 (FY 2002) | https://www.ihacpa.gov.au/resources/icd-10-ammbs-eacs-second-edition    |
+# | Third      | 1 July 2002 (FY 2003) | 30 June 2004 (FY 2004) | https://www.ihacpa.gov.au/resources/icd-10-amachiacs-third-edition      |
+# | Fourth     | 1 July 2004 (FY 2005) | 30 June 2006 (FY 2006) | https://www.ihacpa.gov.au/resources/icd-10-amachiacs-fourth-edition     |
+# | Fifth      | 1 July 2006 (FY 2007) | 30 June 2008 (FY 2008) | https://www.ihacpa.gov.au/resources/icd-10-amachiacs-fifth-edition      |
+# | Sixth      | 1 July 2008 (FY 2009) | 30 June 2010 (FY 2010) | https://www.ihacpa.gov.au/resources/icd-10-amachiacs-sixth-edition      |
+# | Seventh    | 1 July 2010 (FY 2011) | 30 June 2013 (FY 2013) | https://www.ihacpa.gov.au/resources/icd-10-amachiacs-seventh-edition    |
+# | Eighth     | 1 July 2013 (FY 2014) | 30 June 2015 (FY 2015) | https://www.ihacpa.gov.au/resources/icd-10-amachiacs-eighth-edition     |
+# | Ninth      | 1 July 2015 (FY 2015) | 30 June 2017 (FY 2017) | https://www.ihacpa.gov.au/resources/icd-10-amachiacs-ninth-edition      |
+# | Tenth      | 1 July 2017 (FY 2018) | 30 June 2019 (FY 2019) | https://www.ihacpa.gov.au/resources/icd-10-amachiacs-tenth-edition      |
+# | Eleventh   | 1 July 2019 (FY 2020) | 30 June 2022 (FY 2022) | https://www.ihacpa.gov.au/resources/icd-10-amachiacs-eleventh-edition   |
+# | Twelfth    | 1 July 2022 (FY 2023) | 30 June 2025 (FY 2025) | https://www.ihacpa.gov.au/resources/icd-10-amachiacs-twelfth-edition    |
+# | Thirteenth | 1 July 2025 (FY 2026) |                        | https://www.ihacpa.gov.au/resources/icd-10-amachiacs-thirteenth-edition |
 
 # set financial year (calendary year the financial year ends)
 codes[, year := data.table::fcase(
@@ -47,6 +84,16 @@ codes[, year := data.table::fcase(
   startsWith(file, "twelfth"), 2023L,
   startsWith(file, "thirteent"), 2026L)
 ]
+
+# are there any duplicated codes within a year? -- Yes!
+#
+# It appears that old descriptions of codes persist in the table and there are
+# notes in the pdf for changes.
+#
+if (interactive()) {
+  codes[, .N, keyby = .(full_code, year)][N > 1]
+}
+stopifnot(codes[, .N, keyby = .(full_code, year)][, all(N == 1L)])
 
 # copy data for years in between as was done with WHO and to match yearly
 # versions of US codes.
@@ -60,6 +107,9 @@ a26 <- codes[year == 2026L]
 
 codes <- data.table::rbindlist(list(a20, a21, a22, a23, a24, a25, a26))
 
+codes[startsWith(full_code, "A02")]
+
+################################################################################
 # Find headers
 stopifnot(codes[, all(nchar(code) %in% 3:5)])
 
