@@ -67,6 +67,9 @@ who[, file := NULL]
 # the 2016 release. Copy the 2016 list and adjust the year for 2017 and 2018 for
 # easier merges with CDC and CMS CM/PCS data. Do the same for 2008–2009 and
 # 2010–2013.
+#
+# 2019 was the last year the WHO published ICD-10 codes.  The who transitioned
+# to ICD-11 January 1 2022, so copy the 2019 codes to 2020 and 2021
 stopifnot(sort(unique(who$year)) == c(2008L, 2010L, 2014L, 2015L, 2016L, 2019L))
 a09 <- who[year == 2008L]
 a11 <- who[year == 2010L]
@@ -74,6 +77,8 @@ a12 <- data.table::copy(a11)
 a13 <- data.table::copy(a11)
 a17 <- who[year == 2016L]
 a18 <- data.table::copy(a17)
+a20 <- who[year == 2019L]
+a21 <- data.table::copy(a20)
 
 a09[, year := 2009L]
 a11[, year := 2011L]
@@ -81,8 +86,10 @@ a12[, year := 2012L]
 a13[, year := 2013L]
 a17[, year := 2017L]
 a18[, year := 2018L]
+a20[, year := 2020L]
+a21[, year := 2021L]
 
-who <- data.table::rbindlist(list(who, a09, a11, a12, a13, a17, a18))
+who <- data.table::rbindlist(list(who, a09, a11, a12, a13, a17, a18, a20, a21))
 
 ################################################################################
 # Find headers
