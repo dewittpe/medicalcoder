@@ -10,7 +10,8 @@ DATASETS := ./charlson/charlson_regex.rds\
 						./icd/icd_codes.rds\
 						./icd/icd_descs.rds\
 						./icd/icd_subchapters.rds\
-						./pccc/pccc_codes.rds
+						./pccc/pccc_codes.rds\
+						./pccc/pccc_conditions.rds
 
 .PHONY: all clean
 
