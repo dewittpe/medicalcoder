@@ -21,7 +21,7 @@ codes <-
   )
 codes <- stats::setNames(codes, basename(codes))
 
-codes <- 
+codes <-
   lapply(codes, scan, what = character(), sep = "\n", quiet = !interactive()) |>
   lapply(function(x) {
     data.table::data.table(
@@ -32,13 +32,33 @@ codes <-
   data.table::rbindlist(idcol = "file")
 
 
+codes[, code := sub("\\.", "", full_code)]
+
+# The Tenth edition was valid from 1 July 2017 through 30 June 2019   (https://www.ihacpa.gov.au/resources/icd-10-amachiacs-tenth-edition)
+# The Elevnth edition was valid from 1 July 2019 through 30 June 2022 (https://www.ihacpa.gov.au/resources/icd-10-amachiacs-eleventh-edition)
+# The Twelfth edition was valid from 1 July 2022 through 30 June 2025 (https://www.ihacpa.gov.au/resources/icd-10-amachiacs-twelfth-edition)
+# The Thirteenth edition is valid since 1 July 2025....               (https://www.ihacpa.gov.au/resources/icd-10-amachiacs-thirteenth-edition)
+
+# set financial year (calendary year the financial year ends)
 codes[, year := data.table::fcase(
-  startsWith(file, "eleven"), 2019L,
-  startsWith(file, "twelfth"), 2022L,
-  startsWith(file, "thirteent"), 2025L)
+  startsWith(file, "eleven"), 2020L,
+  startsWith(file, "twelfth"), 2023L,
+  startsWith(file, "thirteent"), 2026L)
 ]
 
-codes[, code := sub("\\.", "", full_code)]
+
+
+# copy data for years in between as was done with WHO and to match yearly
+# versions of US codes.
+a20 <- codes[year == 2020L]
+a21 <- data.table::copy(a20); a21[, year := 2021L]
+a22 <- data.table::copy(a20); a22[, year := 2022L]
+a23 <- codes[year == 2023L]
+a24 <- data.table::copy(a23); a24[, year := 2024L]
+a25 <- data.table::copy(a23); a25[, year := 2025L]
+a26 <- codes[year == 2026L]
+
+codes <- data.table::rbindlist(list(a20, a21, a22, a23, a24, a25, a26))
 
 # Find headers
 stopifnot(codes[, all(nchar(code) %in% 3:5)])
