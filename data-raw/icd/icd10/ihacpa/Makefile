@@ -17,6 +17,7 @@ eleven.txt: edition11.pdf
 	sed -E $(SED_INPLACE) 's/\*//g' $@.temp
 	sed -E $(SED_INPLACE) '/^$$/d' $@.temp
 	sed -E $(SED_INPLACE) -e ':a' -e 'N' -e '$$!ba' -e 's/\n {6,}/ /g' $@.temp
+	sed -E $(SED_INPLACE) 's/^173.01/I73.01/g' $@.temp
 	$(RM) $@.temp.bak
 	@mv $@.temp $@
 	$(RM) $@.temp
@@ -35,6 +36,7 @@ twelfth01.txt: edition12part1.pdf
 	sed -E $(SED_INPLACE) 's/\xE2\x80\xA0//g' $@.temp
 	sed -E $(SED_INPLACE) 's/\*//g' $@.temp
 	sed -E $(SED_INPLACE) '/^[[:alnum:]][0-9][0-9](-|\xE2\x80\x93)[[:alnum:]]/d' $@.temp
+	sed -E $(SED_INPLACE) 's/^173.01/I73.01/g' $@.temp
 	$(RM) $@.temp.bak
 	@mv $@.temp $@
 	$(RM) $@.temp
@@ -71,6 +73,7 @@ thirteenth01.txt: edition13part1.pdf
 	sed -E $(SED_INPLACE) 's/\*//g' $@.temp
 	sed -E $(SED_INPLACE) '/^[[:blank:]]*OFFICIAL/d' $@.temp
 	sed -E $(SED_INPLACE) -e ':a' -e 'N' -e '$$!ba' -e 's/\n {6,}/ /g' $@.temp
+	sed -E $(SED_INPLACE) 's/^173.01/I73.01/g' $@.temp
 	$(RM) $@.temp.bak
 	@mv $@.temp $@
 	$(RM) $@.temp

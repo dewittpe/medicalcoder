@@ -4848,7 +4848,7 @@ I72.9      Aneurysm and dissection of unspecified site
 I73        Other peripheral vascular diseases
 I73.0      Raynaud's syndrome
 I73.00     Raynaud’s syndrome without gangrene
-173.01     Raynaud’s syndrome with gangrene
+I73.01     Raynaud’s syndrome with gangrene
 I73.1      Thromboangiitis obliterans [Buerger]
 I73.8      Other specified peripheral vascular diseases
 I73.9      Peripheral vascular disease, unspecified
