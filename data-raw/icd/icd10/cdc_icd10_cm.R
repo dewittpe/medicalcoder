@@ -20,9 +20,6 @@
 #
 # idempotent: yes (recreates the same table given the same source zips)
 ################################################################################
-
-library(data.table)
-library(pbapply)
 source("utilities.R")
 
 ################################################################################
@@ -303,8 +300,8 @@ cdc_files <-
       ) |>
   lapply(scan, what = "character", sep = "\n", quiet = !interactive())
 
-cdc_files <- pblapply(cdc_files, orderfile_to_DT, cl = 8L)
-cdc_files <- rbindlist(cdc_files, fill = TRUE, use.names = TRUE, idcol = "src")
+cdc_files <- pbapply::pblapply(cdc_files, orderfile_to_DT, cl = 8L)
+cdc_files <- data.table::rbindlist(cdc_files, fill = TRUE, use.names = TRUE, idcol = "src")
 cdc_files[, code := toupper(code)]
 
 cdc_files[, fiscal_year := as.integer(substr(src, start = nchar(src) - 3, stop = nchar(src)))]
