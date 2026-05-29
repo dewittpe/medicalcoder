@@ -31,6 +31,8 @@ codes <-
   }) |>
   data.table::rbindlist(idcol = "file")
 
+# Found an error in the codes, X27.1 Contact with a platypus should by X27.0
+codes[full_code == "X27.1" & description == "Contact with platypus", full_code := "X27.0"]
 
 codes[, code := sub("\\.", "", full_code)]
 
@@ -45,8 +47,6 @@ codes[, year := data.table::fcase(
   startsWith(file, "twelfth"), 2023L,
   startsWith(file, "thirteent"), 2026L)
 ]
-
-
 
 # copy data for years in between as was done with WHO and to match yearly
 # versions of US codes.
@@ -83,6 +83,7 @@ codes[, file := NULL]
 ################################################################################
 data.table::setDF(codes)
 saveRDS(codes, file = "ihacpa_icd10.rds")
+
 
 ################################################################################
 #                                 End of File                                  #
