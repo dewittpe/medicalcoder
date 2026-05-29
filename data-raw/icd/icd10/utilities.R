@@ -21,7 +21,7 @@
 # Build a data.table from the order files
 orderfile_to_DT <- function(x) {
   stopifnot(inherits(x, "character"))
-  data.table(
+  data.table::data.table(
     code  = trimws(substr(x, start = 7, stop = 13))
     #, order = trimws(substr(x, start = 1, stop = 5))
     , header = 1L - as.integer(trimws(substr(x, start = 15, stop = 15)))
@@ -32,7 +32,7 @@ orderfile_to_DT <- function(x) {
 
 desc_to_DT <- function(x) {
   stopifnot(inherits(x, "character"))
-  data.table(
+  data.table::data.table(
     code  = trimws(substr(x, start = 1, stop = 8))
     , desc  = trimws(substr(x, start = 9, stop = 10000L))
     )
