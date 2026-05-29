@@ -20,9 +20,6 @@
 #
 # idempotent: yes (read/transform/write without side effects)
 ################################################################################
-library(data.table)
-
-################################################################################
 # WHO Codes
 who <-
   sapply(list.files(path = "who", pattern = "icd10_who_\\d{4}\\.txt$", full.names = TRUE),
@@ -45,11 +42,13 @@ lapply(who, substr, start = 8, stop = 8) |>
 who <-
   lapply(who,
          function(x) {
-           data.table(full_code = trimws(substr(x, start = 1, stop = 7)),
-                      desc      = trimws(substr(x, start = 9, stop = 10000L)))
+           data.table::data.table(
+             full_code = trimws(substr(x, start = 1, stop = 7)),
+             desc      = trimws(substr(x, start = 9, stop = 10000L))
+           )
          }) |>
-  rbindlist(idcol = "file")
-setkey(who, full_code)
+  data.table::rbindlist(idcol = "file")
+data.table::setkey(who, full_code)
 
 # extract the chapters and code ranges
 who_chapters <- who[grepl("^\\D(\\D|$)", full_code)]
@@ -71,10 +70,10 @@ who[, file := NULL]
 stopifnot(sort(unique(who$year)) == c(2008L, 2010L, 2014L, 2015L, 2016L, 2019L))
 a09 <- who[year == 2008L]
 a11 <- who[year == 2010L]
-a12 <- copy(a11)
-a13 <- copy(a11)
+a12 <- data.table::copy(a11)
+a13 <- data.table::copy(a11)
 a17 <- who[year == 2016L]
-a18 <- copy(a17)
+a18 <- data.table::copy(a17)
 
 a09[, year := 2009L]
 a11[, year := 2011L]
@@ -83,7 +82,7 @@ a13[, year := 2013L]
 a17[, year := 2017L]
 a18[, year := 2018L]
 
-who <- rbindlist(list(who, a09, a11, a12, a13, a17, a18))
+who <- data.table::rbindlist(list(who, a09, a11, a12, a13, a17, a18))
 
 ################################################################################
 # Find headers
@@ -99,9 +98,9 @@ who[headers, header := 1L, on = c("code" = "h3", 'year')]
 who[headers, header := 1L, on = c("code" = "h4", 'year')]
 
 # all the codes that have not yet been matched are not-headers
-who[, header := nafill(header, type = 'const', fill = 0L)]
-set(who, j = "h3", value = NULL)
-set(who, j = "h4", value = NULL)
+who[, header := data.table::nafill(header, type = 'const', fill = 0L)]
+data.table::set(who, j = "h3", value = NULL)
+data.table::set(who, j = "h4", value = NULL)
 
 if (interactive()) {
   who[nchar(code) == 5]
@@ -116,7 +115,7 @@ stopifnot(
   )
 
 ################################################################################
-setDF(who)
+data.table::setDF(who)
 saveRDS(who, file = "who_icd10.rds")
 
 ################################################################################
