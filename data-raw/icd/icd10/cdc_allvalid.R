@@ -12,7 +12,7 @@
 #
 # output: cdc_allvalid.rds (data.table with full_code, code, desc, year, header)
 #
-# deps: data.table, pbapply, readxl
+# deps: data.table
 #
 # notes:
 #   Source files are expected to be downloaded under data-
@@ -21,11 +21,6 @@
 #     in missing header codes.
 #
 # idempotent: yes (deterministic transformations of static CDC inputs)
-################################################################################
-
-library(data.table)
-library(pbapply)
-
 ################################################################################
 if (interactive()) {
   dir("ftp.cdc.gov/pub/Health_Statistics/NCHS/Publications/ICD10/")
@@ -66,10 +61,10 @@ cdc_allvalid_2020 <- data.table::fread("ftp.cdc.gov/pub/Health_Statistics/NCHS/P
 cdc_allvalid_2011 <- readxl::read_xls("ftp.cdc.gov/pub/Health_Statistics/NCHS/Publications/ICD10/allvalid2011 (detailed titles headings).xls", skip = 6)
 cdc_allvalid_2009 <- readxl::read_xls("ftp.cdc.gov/pub/Health_Statistics/NCHS/Publications/ICD10/allvalid2009(detailed titles headings).xls", skip = 6)
 
-setDT(cdc_allvalid_2023)
-setDT(cdc_allvalid_2020)
-setDT(cdc_allvalid_2011)
-setDT(cdc_allvalid_2009)
+data.table::setDT(cdc_allvalid_2023)
+data.table::setDT(cdc_allvalid_2020)
+data.table::setDT(cdc_allvalid_2011)
+data.table::setDT(cdc_allvalid_2009)
 
 cdc_allvalid_2023 <- unique(cdc_allvalid_2023)
 cdc_allvalid_2020 <- unique(cdc_allvalid_2020)
@@ -109,15 +104,15 @@ cdc_allvalid_2009 <- cdc_allvalid_2009[!(Code == "N99" & `ICD Title` == "Other d
 cdc_allvalid_2011 <- cdc_allvalid_2011[!(Code == "T79" & `ICD Title` == "Certain early complications of trauma")]
 cdc_allvalid_2009 <- cdc_allvalid_2009[!(Code == "T79" & `ICD Title` == "Certain early complications of trauma")]
 
-setnames(cdc_allvalid_2023, old = c("ICD Title", "Code"), new = c("desc", "full_code"))
-setnames(cdc_allvalid_2020, old = c("ICD Title", "Code"), new = c("desc", "full_code"))
-setnames(cdc_allvalid_2011, old = c("ICD Title", "Code"), new = c("desc", "full_code"))
-setnames(cdc_allvalid_2009, old = c("ICD Title", "Code"), new = c("desc", "full_code"))
+data.table::setnames(cdc_allvalid_2023, old = c("ICD Title", "Code"), new = c("desc", "full_code"))
+data.table::setnames(cdc_allvalid_2020, old = c("ICD Title", "Code"), new = c("desc", "full_code"))
+data.table::setnames(cdc_allvalid_2011, old = c("ICD Title", "Code"), new = c("desc", "full_code"))
+data.table::setnames(cdc_allvalid_2009, old = c("ICD Title", "Code"), new = c("desc", "full_code"))
 
-setkey(cdc_allvalid_2023, full_code)
-setkey(cdc_allvalid_2020, full_code)
-setkey(cdc_allvalid_2011, full_code)
-setkey(cdc_allvalid_2009, full_code)
+data.table::setkey(cdc_allvalid_2023, full_code)
+data.table::setkey(cdc_allvalid_2020, full_code)
+data.table::setkey(cdc_allvalid_2011, full_code)
+data.table::setkey(cdc_allvalid_2009, full_code)
 
 cdc_allvalid_2023[is.na(Status), Status := ""]
 cdc_allvalid_2020[is.na(Status), Status := ""]
@@ -148,32 +143,32 @@ cdc_allvalid_2023_sets <- cdc_allvalid_2023[grepl("-", full_code)]
 cdc_allvalid_2023      <- cdc_allvalid_2023[!cdc_allvalid_2023_sets]
 
 # Copy the data so there is a version for each calendar year
-cdc_allvalid_2001 <- copy(cdc_allvalid_2009)
-cdc_allvalid_2002 <- copy(cdc_allvalid_2009)
-cdc_allvalid_2003 <- copy(cdc_allvalid_2009)
-cdc_allvalid_2004 <- copy(cdc_allvalid_2009)
-cdc_allvalid_2005 <- copy(cdc_allvalid_2009)
-cdc_allvalid_2006 <- copy(cdc_allvalid_2009)
-cdc_allvalid_2007 <- copy(cdc_allvalid_2009)
-cdc_allvalid_2008 <- copy(cdc_allvalid_2009)
-cdc_allvalid_2009 <- copy(cdc_allvalid_2009)
+cdc_allvalid_2001 <- data.table::copy(cdc_allvalid_2009)
+cdc_allvalid_2002 <- data.table::copy(cdc_allvalid_2009)
+cdc_allvalid_2003 <- data.table::copy(cdc_allvalid_2009)
+cdc_allvalid_2004 <- data.table::copy(cdc_allvalid_2009)
+cdc_allvalid_2005 <- data.table::copy(cdc_allvalid_2009)
+cdc_allvalid_2006 <- data.table::copy(cdc_allvalid_2009)
+cdc_allvalid_2007 <- data.table::copy(cdc_allvalid_2009)
+cdc_allvalid_2008 <- data.table::copy(cdc_allvalid_2009)
+cdc_allvalid_2009 <- data.table::copy(cdc_allvalid_2009)
 #cdc_allvalid_2009
-cdc_allvalid_2010 <- copy(cdc_allvalid_2009)
+cdc_allvalid_2010 <- data.table::copy(cdc_allvalid_2009)
 #cdc_allvalid_2011
-cdc_allvalid_2012 <- copy(cdc_allvalid_2011)
-cdc_allvalid_2013 <- copy(cdc_allvalid_2011)
-cdc_allvalid_2014 <- copy(cdc_allvalid_2011)
-cdc_allvalid_2015 <- copy(cdc_allvalid_2011)
-cdc_allvalid_2016 <- copy(cdc_allvalid_2011)
-cdc_allvalid_2017 <- copy(cdc_allvalid_2011)
-cdc_allvalid_2018 <- copy(cdc_allvalid_2011)
-cdc_allvalid_2019 <- copy(cdc_allvalid_2011)
+cdc_allvalid_2012 <- data.table::copy(cdc_allvalid_2011)
+cdc_allvalid_2013 <- data.table::copy(cdc_allvalid_2011)
+cdc_allvalid_2014 <- data.table::copy(cdc_allvalid_2011)
+cdc_allvalid_2015 <- data.table::copy(cdc_allvalid_2011)
+cdc_allvalid_2016 <- data.table::copy(cdc_allvalid_2011)
+cdc_allvalid_2017 <- data.table::copy(cdc_allvalid_2011)
+cdc_allvalid_2018 <- data.table::copy(cdc_allvalid_2011)
+cdc_allvalid_2019 <- data.table::copy(cdc_allvalid_2011)
 #cdc_allvalid_2020
-cdc_allvalid_2021 <- copy(cdc_allvalid_2020)
-cdc_allvalid_2022 <- copy(cdc_allvalid_2020)
+cdc_allvalid_2021 <- data.table::copy(cdc_allvalid_2020)
+cdc_allvalid_2022 <- data.table::copy(cdc_allvalid_2020)
 #cdc_allvalid_2023
-cdc_allvalid_2024 <- copy(cdc_allvalid_2023)
-cdc_allvalid_2025 <- copy(cdc_allvalid_2023)
+cdc_allvalid_2024 <- data.table::copy(cdc_allvalid_2023)
+cdc_allvalid_2025 <- data.table::copy(cdc_allvalid_2023)
 
 cdc_allvalid_2001[, year := 2001L]
 cdc_allvalid_2002[, year := 2002L]
@@ -427,9 +422,9 @@ headers <-
   headers |>
   split(by = "h3") |>
   lapply(function(x) {
-    data.table(code = x$h3, full_code = x$h3, year = seq(x$V1, x$V2))
+    data.table::data.table(code = x$h3, full_code = x$h3, year = seq(x$V1, x$V2))
     }) |>
-  rbindlist()
+  data.table::rbindlist()
 
 headers <-
   merge(
@@ -439,7 +434,7 @@ headers <-
     by = c("code", "year")
   )
 
-setkey(headers, code, year)
+data.table::setkey(headers, code, year)
 headers[, desc := zoo::na.locf(desc), by = .(code)]
 
 cdc_allvalid <- rbind(headers, cdc_allvalid, use.names = TRUE, fill = TRUE)
@@ -463,7 +458,7 @@ stopifnot(
 
 
 ################################################################################
-setDF(cdc_allvalid)
+data.table::setDF(cdc_allvalid)
 saveRDS(cdc_allvalid, file = "cdc_allvalid.rds")
 
 ################################################################################
