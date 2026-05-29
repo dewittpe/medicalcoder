@@ -42,7 +42,7 @@ twelfth01.txt: edition12part1.pdf
 	$(RM) $@.temp
 
 twelfth02.txt: edition12part2.pdf
-	pdftotext -f 4 -l 366 -layout $< $@.temp
+	pdftotext -f 4 -l 838 -layout $< $@.temp
 	sed -E $(SED_INPLACE) '/^IHACPA ICD-10-AM/d' $@.temp
 	sed -E $(SED_INPLACE) '/^Back to top/d' $@.temp
 	sed -E $(SED_INPLACE) '/^$$/d' $@.temp
