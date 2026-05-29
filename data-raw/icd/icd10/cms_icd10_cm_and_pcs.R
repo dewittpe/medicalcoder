@@ -19,10 +19,6 @@
 #
 # idempotent: yes (deterministic unzip/read/merge)
 ################################################################################
-
-library(data.table)
-library(readxl)
-library(pbapply)
 source("utilities.R")
 
 ################################################################################
@@ -79,8 +75,8 @@ cms_files <-
     quiet = !interactive()
   )
 
-cms_files <- pblapply(cms_files, orderfile_to_DT, cl = 8L)
-cms_files <- rbindlist(cms_files, fill = TRUE, use.names = TRUE, idcol = "src")
+cms_files <- pbapply::pblapply(cms_files, orderfile_to_DT, cl = 8L)
+cms_files <- data.table::rbindlist(cms_files, fill = TRUE, use.names = TRUE, idcol = "src")
 cms_files[, code := toupper(code)]
 
 cms_files[, year := as.integer(substr(src, start = nchar(src) - 3, stop = nchar(src)))]
@@ -95,7 +91,7 @@ data.table::setnames(
 )
 
 ################################################################################
-setDF(cms_files)
+data.table::setDF(cms_files)
 saveRDS(cms_files, file = "cms_icd10.rds")
 
 ################################################################################
