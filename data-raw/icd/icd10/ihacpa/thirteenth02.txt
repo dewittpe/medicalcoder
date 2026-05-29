@@ -15209,8 +15209,7 @@ X19.74      Contact with other and unspecified heat and hot substances, farm, wh
 X19.78      Contact with other and unspecified heat and hot substances, farm, while engaged in other specified activities
 X19.79      Contact with other and unspecified heat and hot substances, farm, during unspecified activity
 X19.8       Contact with other and unspecified heat and hot substances, other specified places
-X19.80      Contact with other and unspecified heat and hot substances, other specified places, while
-engaged in sports activity
+X19.80      Contact with other and unspecified heat and hot substances, other specified places, while engaged in sports activity
 X19.81      Contact with other and unspecified heat and hot substances, other specified places, while engaged in leisure activity
 X19.82      Contact with other and unspecified heat and hot substances, other specified places, while working for income
 X19.83      Contact with other and unspecified heat and hot substances, other specified places, while engaged in other types of work
@@ -16534,8 +16533,7 @@ X36.09       Victim of avalanche, landslide and other earth movements, home, dur
 X36.1         Victim of avalanche, landslide and other earth movements, residential institution
 X36.10        Victim of avalanche, landslide and other earth movements, residential institution, while engaged in sports activity
 X36.11        Victim of avalanche, landslide and other earth movements, residential institution, while engaged in leisure activity
-X36.12        Victim of avalanche, landslide and other earth movements, residential institution, while
-working for income
+X36.12        Victim of avalanche, landslide and other earth movements, residential institution, while working for income
 X36.13        Victim of avalanche, landslide and other earth movements, residential institution, while engaged in other types of work
 X36.14        Victim of avalanche, landslide and other earth movements, residential institution, while resting, sleeping, eating or engaging in other vital activities
 X36.18        Victim of avalanche, landslide and other earth movements, residential institution, while engaged in other specified activities
@@ -17035,8 +17033,7 @@ X42.24      Accidental poisoning by and exposure to narcotics and psychodyslepti
 X42.28      Accidental poisoning by and exposure to narcotics and psychodysleptics [hallucinogens], not elsewhere classified, school, other institution and public administrative area, while engaged in other specified activities
 X42.29      Accidental poisoning by and exposure to narcotics and psychodysleptics [hallucinogens], not elsewhere classified, school, other institution and public administrative area, during unspecified activity
 X42.3       Accidental poisoning by and exposure to narcotics and psychodysleptics [hallucinogens], not elsewhere classified, sports and athletics area
-X42.30      Accidental poisoning by and exposure to narcotics and psychodysleptics [hallucinogens],
-not elsewhere classified, sports and athletics area, while engaged in sports activity
+X42.30      Accidental poisoning by and exposure to narcotics and psychodysleptics [hallucinogens], not elsewhere classified, sports and athletics area, while engaged in sports activity
 X42.31      Accidental poisoning by and exposure to narcotics and psychodysleptics [hallucinogens], not elsewhere classified, sports and athletics area, while engaged in leisure activity
 X42.32      Accidental poisoning by and exposure to narcotics and psychodysleptics [hallucinogens], not elsewhere classified, sports and athletics area, while working for income
 X42.33      Accidental poisoning by and exposure to narcotics and psychodysleptics [hallucinogens], not elsewhere classified, sports and athletics area, while engaged in other types of work
@@ -18085,8 +18082,7 @@ X57.20      Unspecified privation, school, other institution and public administ
 X57.21      Unspecified privation, school, other institution and public administrative area, while engaged in leisure activity
 X57.22      Unspecified privation, school, other institution and public administrative area, while working for income
 X57.23       Unspecified privation, school, other institution and public administrative area, while engaged in other types of work
-X57.24       Unspecified privation, school, other institution and public administrative area, while resting,
-sleeping, eating or engaging in other vital activities
+X57.24       Unspecified privation, school, other institution and public administrative area, while resting, sleeping, eating or engaging in other vital activities
 X57.28       Unspecified privation, school, other institution and public administrative area, while engaged in other specified activities
 X57.29       Unspecified privation, school, other institution and public administrative area, during unspecified activity
 X57.3        Unspecified privation, sports and athletics area
@@ -18320,8 +18316,7 @@ X60.1       Intentional self-poisoning by and exposure to nonopioid analgesics, 
 X60.10      Intentional self-poisoning by and exposure to nonopioid analgesics, antipyretics and antirheumatics, residential institution, while engaged in sports activity
 X60.11      Intentional self-poisoning by and exposure to nonopioid analgesics, antipyretics and antirheumatics, residential institution, while engaged in leisure activity
 X60.12      Intentional self-poisoning by and exposure to nonopioid analgesics, antipyretics and antirheumatics, residential institution, while working for income
-X60.13      Intentional self-poisoning by and exposure to nonopioid analgesics, antipyretics and
-antirheumatics, residential institution, while engaged in other types of work
+X60.13      Intentional self-poisoning by and exposure to nonopioid analgesics, antipyretics and antirheumatics, residential institution, while engaged in other types of work
 X60.14      Intentional self-poisoning by and exposure to nonopioid analgesics, antipyretics and antirheumatics, residential institution, while resting, sleeping, eating or engaging in other vital activities
 X60.18      Intentional self-poisoning by and exposure to nonopioid analgesics, antipyretics and antirheumatics, residential institution, while engaged in other specified activities
 X60.19      Intentional self-poisoning by and exposure to nonopioid analgesics, antipyretics and antirheumatics, residential institution, during unspecified activity
@@ -18586,8 +18581,7 @@ X63.38      Intentional self-poisoning by and exposure to other drugs acting on 
 X63.39      Intentional self-poisoning by and exposure to other drugs acting on the autonomic nervous system, sports and athletics area, during unspecified activity
 X63.4        Intentional self-poisoning by and exposure to other drugs acting on the autonomic nervous system, street and highway
 X63.40       Intentional self-poisoning by and exposure to other drugs acting on the autonomic nervous system, street and highway, while engaged in sports activity
-X63.41       Intentional self-poisoning by and exposure to other drugs acting on the autonomic nervous
-system, street and highway, while engaged in leisure activity
+X63.41       Intentional self-poisoning by and exposure to other drugs acting on the autonomic nervous system, street and highway, while engaged in leisure activity
 X63.42       Intentional self-poisoning by and exposure to other drugs acting on the autonomic nervous system, street and highway, while working for income
 X63.43       Intentional self-poisoning by and exposure to other drugs acting on the autonomic nervous system, street and highway, while engaged in other types of work
 X63.44       Intentional self-poisoning by and exposure to other drugs acting on the autonomic nervous system, street and highway, while resting, sleeping, eating or engaging in other vital activities
@@ -18911,8 +18905,7 @@ X67.38      Intentional self-poisoning by and exposure to other gases and vapour
 X67.39      Intentional self-poisoning by and exposure to other gases and vapours, sports and athletics area, during unspecified activity
 X67.4       Intentional self-poisoning by carbon monoxide from unspecified sources
 X67.40      Intentional self-poisoning by and exposure to other gases and vapours, street and highway, while engaged in sports activity
-X67.41      Intentional self-poisoning by and exposure to other gases and vapours, street and highway,
-while engaged in leisure activity
+X67.41      Intentional self-poisoning by and exposure to other gases and vapours, street and highway, while engaged in leisure activity
 X67.42      Intentional self-poisoning by and exposure to other gases and vapours, street and highway, while working for income
 X67.43      Intentional self-poisoning by and exposure to other gases and vapours, street and highway, while engaged in other types of work
 X67.44      Intentional self-poisoning by and exposure to other gases and vapours, street and highway, while resting, sleeping, eating or engaging in other vital activities
@@ -19132,8 +19125,7 @@ X70.09        Intentional self-harm by hanging, strangulation and suffocation, h
 X70.1         Intentional self-harm by strangulation
 X70.10        Intentional self-harm by hanging, strangulation and suffocation, residential institution, while engaged in sports activity
 X70.11        Intentional self-harm by hanging, strangulation and suffocation, residential institution, while engaged in leisure activity
-X70.12        Intentional self-harm by hanging, strangulation and suffocation, residential institution, while
-working for income
+X70.12        Intentional self-harm by hanging, strangulation and suffocation, residential institution, while working for income
 X70.13        Intentional self-harm by hanging, strangulation and suffocation, residential institution, while engaged in other types of work
 X70.14        Intentional self-harm by hanging, strangulation and suffocation, residential institution, while resting, sleeping, eating or engaging in other vital activities
 X70.18        Intentional self-harm by hanging, strangulation and suffocation, residential institution, while engaged in other specified activities
@@ -19412,8 +19404,7 @@ X73.52      Intentional self-harm by rifle, shotgun and larger firearm discharge
 X73.53      Intentional self-harm by rifle, shotgun and larger firearm discharge, trade and service area, while engaged in other types of work
 X73.54      Intentional self-harm by rifle, shotgun and larger firearm discharge, trade and service area, while resting, sleeping, eating or engaging in other vital activities
 X73.58      Intentional self-harm by rifle, shotgun and larger firearm discharge, trade and service area, while engaged in other specified activities
-X73.59      Intentional self-harm by rifle, shotgun and larger firearm discharge, trade and service area,
-during unspecified activity
+X73.59      Intentional self-harm by rifle, shotgun and larger firearm discharge, trade and service area, during unspecified activity
 X73.6       Intentional self-harm by rifle, shotgun and larger firearm discharge, industrial and construction area
 X73.60      Intentional self-harm by rifle, shotgun and larger firearm discharge, industrial and construction area, while engaged in sports activity
 X73.61      Intentional self-harm by rifle, shotgun and larger firearm discharge, industrial and construction area, while engaged in leisure activity
@@ -25104,7 +25095,6 @@ Y95           Nosocomial condition
 Y96           Work-related condition
 Y97           Environmental-pollution-related condition
 Y98           Lifestyle-related condition
-Back to top
 U04         Severe acute respiratory syndrome [SARS]
 U04.9       Severe acute respiratory syndrome [SARS]
 U06         Emergency use of U06

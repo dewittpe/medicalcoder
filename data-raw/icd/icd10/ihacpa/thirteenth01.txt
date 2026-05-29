@@ -16852,7 +16852,3 @@ Z99.3        Dependence on wheelchair
 Z99.4        Dependence on artificial heart
 Z99.8        Dependence on other enabling machines and devices
 Z99.9        Dependence on unspecified enabling machine and device
-Appendix A: Morphology of neoplasms
-Appendix B: Special tabulation lists for mortality and morbidity
-Appendix C: Unacceptable Principal Diagnosis Codes
-Appendix D: Classification of Hospital Acquired Diagnoses (CHADx)

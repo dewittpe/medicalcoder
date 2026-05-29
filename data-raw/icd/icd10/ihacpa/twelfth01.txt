@@ -15877,7 +15877,6 @@ T98.0         Sequelae of effects of foreign body entering through natural orifi
 T98.1         Sequelae of other and unspecified effects of external causes
 T98.2         Sequelae of certain early complications of trauma
 T98.3         Sequelae of complications of surgical and medical care, not elsewhere classified
-Back to top
 Z00           General examination and investigation of persons without complaint or reported diagnosis
 Z00.0         General medical examination
 Z00.1         Routine child health examination
