@@ -35,7 +35,7 @@
 #' @family ICD tools
 #' @export
 is_icd <- function(x, icdv = c(9L, 10L), dx = c(1L, 0L),
-                   src = c("cms", "who", "cdc"),
+                   src = c("cdc", "cms", "ihacpa", "who"),
                    year, headerok = FALSE,
                    ever.assignable = missing(year),
                    warn.ambiguous = TRUE,
