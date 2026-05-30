@@ -175,7 +175,9 @@ lookup_icd_codes <- function(x, regex = FALSE, full.codes = TRUE, compact.codes 
   rtn[["lookup_order"]] <- NULL
   rtn[["input_seq"]] <- NULL
 
-  mdcr_unique(rtn)
+  rtn <- mdcr_unique(rtn)
+  rownames(rtn) <- NULL
+  rtn
 }
 
 ################################################################################
