@@ -23,25 +23,37 @@ icd_codes <- get_icd_codes(with.descriptions = TRUE)
 setDT(icd_codes)
 
 # retain the most recent description
-icd_codes[, max_desc_end := max(desc_end), by = .(icdv, dx, full_code, code)]
+icd_codes[, max_desc_end := max(desc_end), by = .(icdv, dx, full_code, code, src)]
 icd_codes <- icd_codes[max_desc_end == desc_end]
 icd_codes[, max_desc_end := NULL]
 
 # retain cms if that is available along with another coding system
 icd_codes[, srcs := length(unique(src)), by = .(icdv, dx, full_code, code)]
 icd_codes[, cms := as.integer(any(src == "cms")), by = .(icdv, dx, full_code, code)]
+icd_codes[, cdc := as.integer(any(src == "cdc")), by = .(icdv, dx, full_code, code)]
+icd_codes[, ihacpa := as.integer(any(src == "ihacpa")), by = .(icdv, dx, full_code, code)]
+icd_codes[, who := as.integer(any(src == "who")), by = .(icdv, dx, full_code, code)]
+
+icd_codes[, .N, keyby = .(srcs, cms, cdc)]
 
 icd_codes <-
   icd_codes[
-    srcs == 1 |                              # just one source
-    (srcs == 2 & cms == 1 & src == "cms") |  # more than one source - take CMS
-    (srcs > 1 & cms == 0 & src == "cdc")     # more than one source, CMS not available, take CDC
+    srcs == 1 |                                     
+    (srcs > 1 & cms == 1 & src == "cms") |         
+    (srcs > 1 & cms == 0 & cdc == 1 & src == "cdc") |
+    (srcs > 1 & cms == 0 & cdc == 0 & ihacpa == 1 & src == "ihacpa") |
+    (srcs > 1 & cms == 0 & cdc == 0 & ihacpa == 0 & who == 1 & src == "who") 
   ]
 icd_codes[, srcs := NULL]
 icd_codes[, cms := NULL]
 
 stopifnot(icd_codes[, .N, by = .(icdv, dx, full_code, code)][, all(N == 1)])
 #icd_codes[, .N, by = .(icdv, dx, full_code, code)][N > 1]
+icd_codes[code == "S3471"]
+icd_codes[code == "U5521"]
+icd_codes[code == "W027"]
+icd_codes[code == "W028"]
+icd_codes[code == "W029"]
 
 icd_codes[, icdsystem := fcase(icdv ==  9 & dx == 0, "ICD-9-PCS",
                                icdv ==  9 & dx == 1, "ICD-9-CM",

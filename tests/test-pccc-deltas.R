@@ -24,15 +24,15 @@ stopifnot("pccc_pers" %in% ls())
 
 # Expected counts in pccc_pers
 stopifnot(
-  pccc_pers[per ==  1, N == 198521],
-  pccc_pers[per ==  2, N ==      3],
+  pccc_pers[per ==  1, N == 223687],
+  pccc_pers[per ==  2, N ==     20],
   pccc_pers[per ==  3, N ==      0],
   pccc_pers[per ==  4, N ==      0],
   pccc_pers[per ==  5, N ==      7],
   pccc_pers[per ==  6, N ==     37],
   pccc_pers[per ==  7, N ==    962],
   pccc_pers[per ==  8, N ==      0],
-  pccc_pers[per ==  9, N ==     48],
+  pccc_pers[per ==  9, N ==     68],
   pccc_pers[per == 10, N ==      0],
   pccc_pers[per == 11, N ==      0],
   pccc_pers[per == 12, N ==      0],
@@ -41,7 +41,7 @@ stopifnot(
   pccc_pers[per == 15, N ==      0],
   pccc_pers[per == 16, N ==     49],
   pccc_pers[per == 17, N ==      0],
-  pccc_pers[per == 18, N ==      0],
+  pccc_pers[per == 18, N ==      2],
   pccc_pers[per == 19, N ==      0],
   pccc_pers[per == 20, N ==      0],
   pccc_pers[per == 21, N ==      0],
@@ -66,9 +66,9 @@ stopifnot(
   pccc_pers[per == 40, N ==      0],
   pccc_pers[per == 41, N ==      1],
   pccc_pers[per == 42, N ==      0],
-  pccc_pers[per == 43, N ==     64],
+  pccc_pers[per == 43, N ==     81],
   pccc_pers[per == 44, N ==      0],
-  pccc_pers[per == 45, N ==   1032],
+  pccc_pers[per == 45, N ==   1394],
   pccc_pers[per == 46, N ==      0],
   pccc_pers[per == 47, N ==      3],
   pccc_pers[per == 48, N ==     25],
@@ -81,15 +81,15 @@ stopifnot(
 # Expected counts in pccc_deltas, this should be the same as pccc_pers, but you
 # need to count the rows.
 stopifnot(
-  pccc_deltas[per ==  1, .N == 198521],
-  pccc_deltas[per ==  2, .N ==      3],
+  pccc_deltas[per ==  1, .N == 223687],
+  pccc_deltas[per ==  2, .N ==     20],
   pccc_deltas[per ==  3, .N ==      0],
   pccc_deltas[per ==  4, .N ==      0],
   pccc_deltas[per ==  5, .N ==      7],
   pccc_deltas[per ==  6, .N ==     37],
   pccc_deltas[per ==  7, .N ==    962],
   pccc_deltas[per ==  8, .N ==      0],
-  pccc_deltas[per ==  9, .N ==     48],
+  pccc_deltas[per ==  9, .N ==     68],
   pccc_deltas[per == 10, .N ==      0],
   pccc_deltas[per == 11, .N ==      0],
   pccc_deltas[per == 12, .N ==      0],
@@ -98,7 +98,7 @@ stopifnot(
   pccc_deltas[per == 15, .N ==      0],
   pccc_deltas[per == 16, .N ==     49],
   pccc_deltas[per == 17, .N ==      0],
-  pccc_deltas[per == 18, .N ==      0],
+  pccc_deltas[per == 18, .N ==      2],
   pccc_deltas[per == 19, .N ==      0],
   pccc_deltas[per == 20, .N ==      0],
   pccc_deltas[per == 21, .N ==      0],
@@ -123,9 +123,9 @@ stopifnot(
   pccc_deltas[per == 40, .N ==      0],
   pccc_deltas[per == 41, .N ==      1],
   pccc_deltas[per == 42, .N ==      0],
-  pccc_deltas[per == 43, .N ==     64],
+  pccc_deltas[per == 43, .N ==     81],
   pccc_deltas[per == 44, .N ==      0],
-  pccc_deltas[per == 45, .N ==   1032],
+  pccc_deltas[per == 45, .N ==   1394],
   pccc_deltas[per == 46, .N ==      0],
   pccc_deltas[per == 47, .N ==      3],
   pccc_deltas[per == 48, .N ==     25],
@@ -201,9 +201,37 @@ stopifnot(
 
 # Tests related to PER 2
 # for per 2 verify that the codes are as expected
-stopifnot(pccc_deltas[per == 2, full_code == c("E72.530", "E72.538", "E72.539")])
+#
+# E72.530, E72.538, and E72.539 where identified a long time ago, but I don't
+# recall why.
+#
+# Q75.31 and Q75.39 are in ICD-10-AM, not in ICD-10-CM nor ICD-10 (WHO).  These
+# codes are in v3.1 as stems from the Q75.3 which is in ICD-10-CM.
+#
+# Similar for Q75.81 and Q75.89
+#
+# Q87.0 is the assignable code for ICD-10-CM, there are fifth digits for
+# ICD-10-AM
+#
+# Q92.7 is assignable in ICD-10-CM, ICD-10-AM have fifth digits
+per2codes <-
+  c(
+    "E72.530", "E72.538", "E72.539",
+    "Q75.31", "Q75.39",
+    "Q75.81", "Q75.89",
+    paste0("Q87.0", 0:9),
+    paste0("Q92.7", 1:3)
+  )
+stopifnot(pccc_deltas[per == 2, full_code %in% per2codes])
+
+if (interactive()) {
+  pccc_deltas[per == 2 & full_code %notin% per2codes]
+  subset(get_icd_codes(), startsWith(full_code, "Q92.7"))
+  subset(get_pccc_codes(), startsWith(full_code, "Q92.7"))
+}
 
 # Tests related to PER 3
+stopifnot(pccc_deltas[per == 3, .N == 0L])
 
 # Tests related to PER 4
 # for per 4 verify that the codes are as expected
@@ -303,9 +331,26 @@ not_documented_in_eTable3_per43 <-
     "G31.80",
     "G31.86",
     "G31.87",
+    "G31.88",  # ICD-10-AM only (src == "ihacpa")
     "G80",
     "M41.2",  # omit this header - all other codes removed from v3
+    "M41.21", # ICD-10-AM only (src == "ihacpa")
+    "M41.28", # ICD-10-AM only (src == "ihacpa")
+    "M41.29", # ICD-10-AM only (src == "ihacpa")
     "M41.8",  # omit this header - all other codes removed from v3
+    "M41.81", # ICD-10-AM only (src == "ihacpa")
+    "M41.88", # ICD-10-AM only (src == "ihacpa")
+    "M41.89", # ICD-10-AM only (src == "ihacpa")
+    "M41.90", # ICD-10-AM only (src == "ihacpa")
+    "M41.91", # ICD-10-AM only (src == "ihacpa")
+    "M41.92", # ICD-10-AM only (src == "ihacpa")
+    "M41.93", # ICD-10-AM only (src == "ihacpa")
+    "M41.94", # ICD-10-AM only (src == "ihacpa")
+    "M41.95", # ICD-10-AM only (src == "ihacpa")
+    "M41.96", # ICD-10-AM only (src == "ihacpa")
+    "M41.97", # ICD-10-AM only (src == "ihacpa")
+    "M41.98", # ICD-10-AM only (src == "ihacpa")
+    "M41.99", # ICD-10-AM only (src == "ihacpa")
     "P21.0",  # not a cms code - is in cdc mortality and who
     "P21.9",  # not a cms code - is in cdc mortality and who
     "P84",

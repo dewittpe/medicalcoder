@@ -174,7 +174,8 @@ for (n in names(user_visible)) {
 ################################################################################
 # verify *_codes are all valid codes
 for (n in grep("_codes$", names(user_visible), value = TRUE)) {
-  z <- is_icd(x = user_visible[[n]][["code"]],
+  z <- is_icd(
+    x    = user_visible[[n]][["code"]],
     icdv = user_visible[[n]][["icdv"]],
     dx   = user_visible[[n]][["dx"]],
     headerok = TRUE,
@@ -195,6 +196,7 @@ for (n in grep("_codes$", names(user_visible), value = TRUE)) {
     stop(sprintf("not all user_visible[['%s']][['full_code']] are valid ever.assignable ICD codes", n))
   }
 }
+
 ################################################################################
 # PCCC specific checks
 #
@@ -234,7 +236,7 @@ for (n in grep("^icd_", names(user_visible), value = TRUE)) {
 # Verify that the src column is as expected
 for (n in grep("^icd_", names(user_visible), value = TRUE)) {
   stopifnot(
-    identical(c("cdc", "cms", "who"), sort(unique(user_visible[[n]][["src"]])))
+    identical(c("cdc", "cms", "ihacpa", "who"), sort(unique(user_visible[[n]][["src"]])))
   )
 }
 
