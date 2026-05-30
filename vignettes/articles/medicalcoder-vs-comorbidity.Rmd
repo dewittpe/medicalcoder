@@ -48,7 +48,7 @@ Charlson [@quan2011]                                  | &#10060;     | &#9989;
 Charlson [@deyo1992adapting]                          | &#10060;     | &#9989;
 Charlson [@glasheen2019]                              | &#10060;     | &#9989;
 Charlson (Ludvigsson et al., 2021)                    | &#9989;      | &#10060;
-Charlson (Sundararajan et al., 2004)                  | &#9989;      | &9989;
+Charlson (Sundararajan et al., 2004)                  | &#9989;      | &#9989;
 Elixhauser [@quan2005]                                | &#9989;      | &#9989;
 Elixhauser [@elixhauser1998]                          | &#10060;     | &#9989;
 Elixhauser (ICD-9-CM AHRQ)                            | &#10060;     | &#9989;
@@ -386,11 +386,10 @@ This is expected for two reasons:
 1. The `mdcr` dataset contains ICD-9-CM and ICD-10-CM (United States ICD
    diagnostic) codes
 2. The precompiled codes are built against the intenal ICD database within
-   medicalcoder built on WHO, CDC, and CMS codes.
-
-That does not mean that the precompiled codes will work if you are working with
-a different ICD system.  Since @sundararajan2004 defined the mapping for
-ICD-10-AM we should consider possible issues.
+   medicalcoder built on ICD-10 codes from the WHO, ICD-9/10-CM from the United
+   States Centers for Medicare and Medicaid Services (CMS), and ICD-10-AM
+   (Austrialian Modification) from the Independent Health and Aged Care Pricing
+   Authority (IHACPA).
 
 # Elixhauser Comorbidities
 
