@@ -1253,7 +1253,9 @@ respiratory disease is flagged is consistent with when the primary respiratory
 condition is flagged.
 
 ```{r}
-all(rslts$subconditions$respiratory$chronic_respiratory_diseases == 1)
+stopifnot(
+  all(rslts$subconditions$respiratory$chronic_respiratory_diseases == 1)
+)
 sapply(rslts$subconditions$respiratory[, -(1:3)], max)
 
 # which encounters flag for primary condition respiratory?
