@@ -957,6 +957,38 @@ pccc_v3.1 <-
 # pccc_v3.1[startsWith(code, "375")]
 
 ################################################################################
+# Edits after adding ICD-10-AM (Australian Modification) from IHACPA
+#
+# Q75.3 have fifth digit extentions in ICD-10-AM not in the WHO or U.S. sets
+if (interactive()) {
+  known_icd_codes[startsWith(code, "Q753")]
+
+  pccc_v3.0[code == "Q753"]
+  pccc_v3.1[code == "Q753"]
+
+  gicdc <- get_icd_codes()
+  subset(gicdc, startsWith(full_code, "Q75.3"))
+
+  x <-
+    pbapply::pblapply(unique(pccc_v3.1[["full_code"]]),
+      function(x) { subset(gicdc, icdv == 10 & dx == 1 & startsWith(full_code, x)) }
+    )
+  x <- data.table::rbindlist(x)
+  x <- unique(x)
+
+  subset(x, startsWith(full_code, "Q75.3"))
+  subset(pccc_v3.1, startsWith(full_code, "Q75.3"))
+
+  merge(
+    x = x[!pccc_v3.1, on = .NATURAL],
+    y = get_icd_codes(),
+    all.x = TRUE,
+    all.y = FALSE
+  ) |> print(nrow = Inf)
+}
+
+
+################################################################################
 # save to disk
 pccc_v3.0 <- unique(pccc_v3.0)
 pccc_v3.1 <- unique(pccc_v3.1)
