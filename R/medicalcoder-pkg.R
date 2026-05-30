@@ -8,10 +8,11 @@
 #' widely used comorbidity algorithms such as Charlson, Elixhauser, and the
 #' Pediatric Complex Chronic Conditions (PCCC).
 #' Designed for portability and reproducibility, the package avoids external
-#' dependencies—requiring only R >= 3.5.0—yet offers a rich set of curated ICD
+#' dependencies, requiring only R >= 3.5.0, yet offers a rich set of curated ICD
 #' code libraries from the United States' Centers for Medicare and Medicaid
-#' Services (CMS), Centers for Disease Control (CDC), and the World Health
-#' Organization (WHO).
+#' Services (CMS), Centers for Disease Control (CDC), the World Health
+#' Organization (WHO), and ICD-10 Australian Modification (ICD-10-AM) codes
+#' from the Independent Health and Aged Care Pricing Authority (IHACPA).
 #'
 #' The package balances performance with elegance: its internal caching,
 #' efficient joins, and compact data structures make it practical for

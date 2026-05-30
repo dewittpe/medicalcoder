@@ -19,7 +19,7 @@ a \code{data.frame}
 The default return has the following columns:
 \itemize{
 \item \code{icdv}: Integer vector indicating if the code is from ICD-9 or ICD-10
-\item \code{dx}: Integer vector.  1 if the code is a diagnostic, (ICD-9-CM, ICD-10-CM, WHO, CDC Mortality), or 0 if the code is procedural (ICD-9-PCS, ICD-10-PCS)
+\item \code{dx}: Integer vector.  1 if the code is a diagnostic, (ICD-9-CM, ICD-10-CM, ICD-10-AM, WHO, CDC Mortality), or 0 if the code is procedural (ICD-9-PCS, ICD-10-PCS)
 \item \code{full_code}: Character vector with the ICD code and any relevant decimal point
 \item \code{code}: Character vector with the compact ICD code omitting any relevant decimal point
 \item \code{src}: Character vector reporting the source of the information.  See Details.
@@ -53,11 +53,13 @@ Retrieve a copy of the internal lookup table for all known ICD codes.
 \details{
 \subsection{Sources}{
 
-There are three sources of ICD codes.
+There are four sources of ICD codes.
 \itemize{
 \item \code{cms}: Codes from the ICD-9-CM, ICD-9-PCS, ICD-10-CM, and ICD-10-PCS standards.
 \item \code{who}: Codes from World Health Organization.
 \item \code{cdc}: Codes from CDC Mortality coding standard.
+\item \code{ihacpa}: ICD-10-AM codes from the Independent Health and Aged Care
+Pricing Authority.
 }
 }
 
@@ -73,12 +75,12 @@ Calendar years run January 1 to December 31.
 
 Within the ICD data there are columns
 \code{known_start}, \code{known_end}, \code{assignable_start}, \code{assignable_end},
-\code{desc_start} and \code{desc_end}.  For ICD codes with \code{src == "cms"}, these are
-fiscal years.  For codes with \code{src == "cdc"} or \code{src == "who"} these are
-calendar years.
+\code{desc_start} and \code{desc_end}. For ICD codes with \code{src == "cms"}, these are
+fiscal years. For codes with \code{src == "cdc"}, \code{src == "ihacpa"}, or
+\code{src == "who"} these are calendar years.
 
 \code{known_start} is the first fiscal or calendar year (depending on source) that
-the medicalcoder package as definitive source data for.  ICD-9-CM started in
+the medicalcoder package has definitive source data for.  ICD-9-CM started in
 the United States in fiscal year 1980.  The CDC extracts included in
 medicalcoder span fiscal years 1997--2012; the CMS ICD-9-CM/PCS extracts
 start in fiscal year 2006 and run through fiscal year 2015.  As such 1997 is

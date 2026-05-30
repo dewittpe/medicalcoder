@@ -28,9 +28,9 @@ diagnostic (ICD-9-CM, ICD-10-CM, CDC mortality, WHO), \code{0L} for procedural
 (ICD-9-PCS, ICD-10-PCS). Defaults to both.}
 
 \item{src}{Character vector of code sources. One or more of \code{"cdc"}, \code{"cms"},
-\code{"ihacpa"}, and \code{"who"}. Defaults to all.  CDC and CMS are from the United
-States (ICD-9/10-CM and ICD-9/10-PCS), IHACPA from Austrila (ICD-10-AM), and
-the World Health Organization (ICD-10).}
+\code{"ihacpa"}, and \code{"who"}. Defaults to all. CDC and CMS are from the United
+States (ICD-9/10-CM and ICD-9/10-PCS), IHACPA from Australia (ICD-10-AM),
+and the World Health Organization (ICD-10).}
 
 \item{year}{Numeric scalar. Calendar or fiscal year to reference. Default
 is the most current year available per source. For ICD-9, CMS data run

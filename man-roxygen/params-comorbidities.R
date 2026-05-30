@@ -77,7 +77,9 @@
 #' @param subconditions Logical scalar; when `TRUE`, report both conditions and
 #'   subconditions (PCCC only).
 #'
-#' @param mapping Character string specifying if the mapping between
-#' `data[[icd.codes]]` should be done via a precomputed set of valid codes or
-#' regular expression.  See Details.
+#' @param mapping Character string specifying how `data[[icd.codes]]` should be
+#' mapped to comorbidity conditions. `mapping = "precomputed"` uses the
+#' precomputed ICD code-condition links included with medicalcoder and is the
+#' default. `mapping = "regex"` applies the method's regular expressions
+#' directly to the input ICD codes. See Details.
 #'

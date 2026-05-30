@@ -55,18 +55,21 @@
 #' to be 0, then in this case the only conditions that could be flagged are the
 #' Elixhauser conditions which are poa-exempt.
 #'
-#' The `mapping` option controls how ICD codes are mapped to conidtions.  The
-#' default `precomputed` uses a set of valid ICD codes from 
-#' The United States Centers for Disease Control and Prevention (CDC) (ICD-9 and
-#' ICD-10); the Centers for Medicare and Medicaid Services (CMS) (ICD-9 and
-#' ICD-10); and from the World Health Organization (WHO) (ICD-10 only).
-#' If you know your input data is consistent with the WHO ICD-10, or the U.S.
-#' ICD-9-CM, ICD-9-PCS, ICD-10-CM, or ICD-10-PCS then the `precomputed` will be
-#' the fastest to compute.  If your input data from from another ICD standard,
-#' for example ICD-10-AM from Austrilia, and/or you use a method developed on a
-#' different standard, e.g., `charlson_sundararajan2004`, then setting `mapping
-#' = 'regex'` might be preferable until a complete set of the relevent ICD code
-#' standard can be used to precompute the mappings.
+#' The `mapping` option controls how ICD codes are mapped to conditions. The
+#' default, `mapping = "precomputed"`, uses a precomputed table that links
+#' valid ICD codes to comorbidity conditions. Those links are built from the ICD
+#' code sources included with medicalcoder: the United States Centers for
+#' Disease Control and Prevention (CDC), the Centers for Medicare and Medicaid
+#' Services (CMS), the World Health Organization (WHO), and the Independent
+#' Health and Aged Care Pricing Authority (IHACPA) ICD-10 Australian
+#' Modification (ICD-10-AM) data.
+#'
+#' `mapping = "precomputed"` is generally fastest and is the behavior used by
+#' medicalcoder before the `mapping` argument was added. `mapping = "regex"`
+#' applies the method's regular expressions directly to the input ICD codes.
+#' Regex mapping is currently implemented for Charlson methods and is useful
+#' when codes come from an ICD modification that may not be completely covered
+#' by the precomputed code-condition links, or when auditing a method.
 #'
 #' @return
 #'
@@ -136,6 +139,10 @@
 #'   * Deyo RA, Cherkin DC, Ciol MA. Adapting a clinical comorbidity index
 #'       for use with ICD-9-CM administrative databases. J Clin Epidemiol. 1992
 #'       Jun;45(6):613-9. https://doi.org/10.1016/0895-4356(92)90133-8. PMID: 1607900.
+#'   * Sundararajan V, Henderson T, Perry C, Muggivan A, Quan H, Ghali WA.
+#'       New ICD-10 version of the Charlson comorbidity index predicted
+#'       in-hospital mortality. J Clin Epidemiol. 2004 Dec;57(12):1288-94.
+#'       https://doi.org/10.1016/j.jclinepi.2004.03.012. PMID: 15617955.
 #'   * Quan H, Sundararajan V, Halfon P, Fong A, Burnand B, Luthi JC,
 #'       Saunders LD, Beck CA, Feasby TE, Ghali WA. Coding algorithms for defining
 #'       comorbidities in ICD-9-CM and ICD-10 administrative data. Med Care. 2005
@@ -365,7 +372,8 @@ comorbidities.data.frame <- function(data,
     if (mapping == "precomputed") {
       lookup <- get(x = "pccc_codes", envir = ..mdcr_data_env.., inherits = FALSE)
     } else {
-      lookup <- ..mdcr_internal_pccc_regex..
+      stop('mapping = "regex" for PCCC methods has not yet been implimented')
+      #lookup <- ..mdcr_internal_pccc_regex..
     }
     lookup_to_keep <- c(lookup_to_keep, "subcondition", "transplant_flag", "tech_dep_flag")
   } else if (startsWith(method, "charlson")) {
@@ -379,7 +387,8 @@ comorbidities.data.frame <- function(data,
     if (mapping == "precomputed") {
       lookup <- get("elixhauser_codes", envir = ..mdcr_data_env.., inherits = FALSE)
     } else {
-      lookup <- ..mdcr_internal_elixhauser_regex..
+      stop('mapping = "regex" for Elixhauser methods has not yet been implimented')
+      # lookup <- ..mdcr_internal_elixhauser_regex..
     }
     lookup_to_keep <- c(lookup_to_keep, "poaexempt")
   }

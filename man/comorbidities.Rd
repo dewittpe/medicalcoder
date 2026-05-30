@@ -105,9 +105,11 @@ is the associated compact code.}
 \item{subconditions}{Logical scalar; when \code{TRUE}, report both conditions and
 subconditions (PCCC only).}
 
-\item{mapping}{Character string specifying if the mapping between
-\code{data[[icd.codes]]} should be done via a precomputed set of valid codes or
-regular expression.  See Details.}
+\item{mapping}{Character string specifying how \code{data[[icd.codes]]} should be
+mapped to comorbidity conditions. \code{mapping = "precomputed"} uses the
+precomputed ICD code-condition links included with medicalcoder and is the
+default. \code{mapping = "regex"} applies the method's regular expressions
+directly to the input ICD codes. See Details.}
 }
 \value{
 The return object will be slightly different depending on the value of
@@ -210,17 +212,21 @@ then all codes will be considered present-on-admission.  If poa was assumed
 to be 0, then in this case the only conditions that could be flagged are the
 Elixhauser conditions which are poa-exempt.
 
-The \code{mapping} option controls how ICD codes are mapped to conidtions.  The
-default \code{precomputed} uses a set of valid ICD codes from
-The United States Centers for Disease Control and Prevention (CDC) (ICD-9 and
-ICD-10); the Centers for Medicare and Medicaid Services (CMS) (ICD-9 and
-ICD-10); and from the World Health Organization (WHO) (ICD-10 only).
-If you know your input data is consistent with the WHO ICD-10, or the U.S.
-ICD-9-CM, ICD-9-PCS, ICD-10-CM, or ICD-10-PCS then the \code{precomputed} will be
-the fastest to compute.  If your input data from from another ICD standard,
-for example ICD-10-AM from Austrilia, and/or you use a method developed on a
-different standard, e.g., \code{charlson_sundararajan2004}, then setting \code{mapping = 'regex'} might be preferable until a complete set of the relevent ICD code
-standard can be used to precompute the mappings.
+The \code{mapping} option controls how ICD codes are mapped to conditions. The
+default, \code{mapping = "precomputed"}, uses a precomputed table that links
+valid ICD codes to comorbidity conditions. Those links are built from the ICD
+code sources included with medicalcoder: the United States Centers for
+Disease Control and Prevention (CDC), the Centers for Medicare and Medicaid
+Services (CMS), the World Health Organization (WHO), and the Independent
+Health and Aged Care Pricing Authority (IHACPA) ICD-10 Australian
+Modification (ICD-10-AM) data.
+
+\code{mapping = "precomputed"} is generally fastest and is the behavior used by
+medicalcoder before the \code{mapping} argument was added. \code{mapping = "regex"}
+applies the method's regular expressions directly to the input ICD codes.
+Regex mapping is currently implemented for Charlson methods and is useful
+when codes come from an ICD modification that may not be completely covered
+by the precomputed code-condition links, or when auditing a method.
 }
 \examples{
 pccc_v3.1_results <-
@@ -287,6 +293,10 @@ https://doi.org/10.1016/0021-9681(87)90171-8.
 \item Deyo RA, Cherkin DC, Ciol MA. Adapting a clinical comorbidity index
 for use with ICD-9-CM administrative databases. J Clin Epidemiol. 1992
 Jun;45(6):613-9. https://doi.org/10.1016/0895-4356(92)90133-8. PMID: 1607900.
+\item Sundararajan V, Henderson T, Perry C, Muggivan A, Quan H, Ghali WA.
+New ICD-10 version of the Charlson comorbidity index predicted
+in-hospital mortality. J Clin Epidemiol. 2004 Dec;57(12):1288-94.
+https://doi.org/10.1016/j.jclinepi.2004.03.012. PMID: 15617955.
 \item Quan H, Sundararajan V, Halfon P, Fong A, Burnand B, Luthi JC,
 Saunders LD, Beck CA, Feasby TE, Ghali WA. Coding algorithms for defining
 comorbidities in ICD-9-CM and ICD-10 administrative data. Med Care. 2005

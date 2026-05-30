@@ -5,10 +5,12 @@
 #' @details
 #'
 #' ## Sources
-#' There are three sources of ICD codes.
+#' There are four sources of ICD codes.
 #' * `cms`: Codes from the ICD-9-CM, ICD-9-PCS, ICD-10-CM, and ICD-10-PCS standards.
 #' * `who`: Codes from World Health Organization.
 #' * `cdc`: Codes from CDC Mortality coding standard.
+#' * `ihacpa`: ICD-10-AM codes from the Independent Health and Aged Care
+#'   Pricing Authority.
 #'
 #' ## Fiscal and Calendar Years
 #'
@@ -22,12 +24,12 @@
 #'
 #' Within the ICD data there are columns
 #' `known_start`, `known_end`, `assignable_start`, `assignable_end`,
-#' `desc_start` and `desc_end`.  For ICD codes with `src == "cms"`, these are
-#' fiscal years.  For codes with `src == "cdc"` or `src == "who"` these are
-#' calendar years.
+#' `desc_start` and `desc_end`. For ICD codes with `src == "cms"`, these are
+#' fiscal years. For codes with `src == "cdc"`, `src == "ihacpa"`, or
+#' `src == "who"` these are calendar years.
 #'
 #' `known_start` is the first fiscal or calendar year (depending on source) that
-#' the medicalcoder package as definitive source data for.  ICD-9-CM started in
+#' the medicalcoder package has definitive source data for.  ICD-9-CM started in
 #' the United States in fiscal year 1980.  The CDC extracts included in
 #' medicalcoder span fiscal years 1997--2012; the CMS ICD-9-CM/PCS extracts
 #' start in fiscal year 2006 and run through fiscal year 2015.  As such 1997 is
@@ -68,7 +70,7 @@
 #' The default return has the following columns:
 #'
 #' * `icdv`: Integer vector indicating if the code is from ICD-9 or ICD-10
-#' * `dx`: Integer vector.  1 if the code is a diagnostic, (ICD-9-CM, ICD-10-CM, WHO, CDC Mortality), or 0 if the code is procedural (ICD-9-PCS, ICD-10-PCS)
+#' * `dx`: Integer vector.  1 if the code is a diagnostic, (ICD-9-CM, ICD-10-CM, ICD-10-AM, WHO, CDC Mortality), or 0 if the code is procedural (ICD-9-PCS, ICD-10-PCS)
 #' * `full_code`: Character vector with the ICD code and any relevant decimal point
 #' * `code`: Character vector with the compact ICD code omitting any relevant decimal point
 #' * `src`: Character vector reporting the source of the information.  See Details.
