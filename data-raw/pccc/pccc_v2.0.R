@@ -25,17 +25,15 @@
 #
 # Generate a code set that will perfectly reproduce the results from pccc_1.0.7
 #
-library(data.table)
-library(pccc)
 stopifnot(packageVersion("pccc") == "1.0.7")
 
 icd_codes <- readRDS("../icd/icd_codes.rds")
-setDT(icd_codes)
-set(icd_codes, j = "chap_id", value = NULL)
-set(icd_codes, j = "subchap_id", value = NULL)
+data.table::setDT(icd_codes)
+data.table::set(icd_codes, j = "chap_id", value = NULL)
+data.table::set(icd_codes, j = "subchap_id", value = NULL)
 
 subconditions <- readRDS("pccc_v2_subconditions.rds")
-setDT(subconditions)
+data.table::setDT(subconditions)
 
 # pccc_1.0.7 requires the input to be in a wide format and can only apply logic
 # for ICD-9 or ICD-10 in one call.  Split the codes into the four sets ICD-9-CM,
@@ -56,17 +54,18 @@ pccc_v2.0 <- rbind(
 )
 
 pccc_v2.0 <-
-  melt(pccc_v2.0,
-       id.vars = "code_id",
-       measure.vars = c("neuromusc", "cvd", "respiratory", "renal",
-                        "gi", "hemato_immu", "metabolic", "congeni_genetic",
-                        "malignancy", "neonatal", "tech_dep", "transplant"),
-       variable.name = "condition",
-       variable.factor = FALSE
+  data.table::melt(
+    data = pccc_v2.0,
+    id.vars = "code_id",
+    measure.vars = c("neuromusc", "cvd", "respiratory", "renal",
+      "gi", "hemato_immu", "metabolic", "congeni_genetic",
+      "malignancy", "neonatal", "tech_dep", "transplant"),
+    variable.name = "condition",
+    variable.factor = FALSE
   )
 
 pccc_v2.0 <- pccc_v2.0[value == 1]
-set(pccc_v2.0, j = "value", value = NULL)
+data.table::set(pccc_v2.0, j = "value", value = NULL)
 
 # Add on the subconditions
 pccc_v2.0 <-
@@ -77,8 +76,8 @@ pccc_v2.0 <-
         by = c("code_id", "condition"))
 
 # build tech dep and transplant flags
-set(pccc_v2.0, j = "tech_dep_flag", value = 0L)
-set(pccc_v2.0, j = "transplant_flag", value = 0L)
+data.table::set(pccc_v2.0, j = "tech_dep_flag", value = 0L)
+data.table::set(pccc_v2.0, j = "transplant_flag", value = 0L)
 pccc_v2.0[condition == "transplant", `:=`(condition = "misc", subcondition = "transplantation", transplant_flag = 1L, tech_dep_flag = 0L)]
 pccc_v2.0[condition == "tech_dep",   `:=`(condition = "misc", subcondition = "device & technology use", transplant_flag = 0L, tech_dep_flag = 1L)]
 pccc_v2.0[subcondition == "transplantation", transplant_flag := 1L]
@@ -118,17 +117,19 @@ pccc_v2.0 <-
 pccc_v2.0[, allmisc := all(condition == "misc"), by = .(code_id)]
 pccc_v2.0[, N := .N, by = .(code_id)]
 
-set(pccc_v2.0, j = "N", value = NULL)
-set(pccc_v2.0, j = "allmisc", value = NULL)
+data.table::set(pccc_v2.0, j = "N", value = NULL)
+data.table::set(pccc_v2.0, j = "allmisc", value = NULL)
 
 # merge on the icd codes and find the subcondition for anything that isn't
 # already figured out or document the problem.
 pccc_v2.0 <-
-  merge(x = pccc_v2.0,
-        y = icd_codes,
-        all.x = TRUE,
-        all.y = FALSE,
-        by = "code_id")
+  merge(
+    x = pccc_v2.0,
+    y = icd_codes,
+    all.x = TRUE,
+    all.y = FALSE,
+    by = "code_id"
+  )
 
 # ICD-9-CM V53.91 "Fitting and adjustment of insulin pump"
 # This is listed in the documentation as metabolic (devices) but has been
@@ -391,7 +392,10 @@ pccc_v2.0[grepl("^Q89\\.8", full_code), subcondition := unique(na.omit(subcondit
 #
 # Not in the docs,
 # desc: Asymptomatic human immunodeficiency virus [HIV] infection status
-pccc_v2.0[full_code == "Z21", subcondition := "acquired immunodeficiency"]
+#
+# Note: ICD-10-SE has the four digit code Z21.9
+pccc_v2.0[full_code == "Z21",   subcondition := "acquired immunodeficiency"]
+pccc_v2.0[full_code == "Z21.9", subcondition := "acquired immunodeficiency"]
 
 # ICD-10-CM Z79.4
 #
@@ -399,11 +403,6 @@ pccc_v2.0[full_code == "Z21", subcondition := "acquired immunodeficiency"]
 pccc_v2.0[full_code == "Z79.4", subcondition := "endocrine disorders"]
 
 if (interactive()) {
-  #pccc_v2.0[is.na(subcondition)]
-  #subconditions[orig_code == "Q21.2-Q24"]
-  #pccc_v2.0[, unique(subcondition)]
-  #lookup_icd_codes("^V08", regex = T)
-  #subset(get_icd_codes(with.description = T), code == "Z794")
   pccc_v2.0[is.na(subcondition)]
 }
 stopifnot(isTRUE(!any(is.na(pccc_v2.0$subcondition))))
@@ -425,7 +424,7 @@ pccc_v2.0[grepl("tech", subcondition) & tech_dep_flag == 0L, tech_dep_flag := 1L
 # Need to add ICD-9-PCS 37.5 to the set in v2.1
 
 ################################################################################
-setDF(pccc_v2.0)
+data.table::setDF(pccc_v2.0)
 saveRDS(pccc_v2.0, file = "pccc_v2.0.rds")
 
 ################################################################################
