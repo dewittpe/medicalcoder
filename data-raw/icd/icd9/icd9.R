@@ -19,11 +19,10 @@
 #
 # idempotent: yes (deterministic merge and transformations)
 ################################################################################
-library(data.table)
 cdc <- readRDS(file = "cdc.rds")
 cms <- readRDS(file = "cms.rds")
-setDT(cdc)
-setDT(cms)
+data.table::setDT(cdc)
+data.table::setDT(cms)
 
 ################################################################################
 # Look for differences between codes from CDC and CMS by year
@@ -37,9 +36,11 @@ cms_codes <- cms[, .(code, dx, year, src = "cms", dummy = 1L)]
 old_warn <- options()$warn
 options(warn = 2)
 allcodes <-
-  dcast(rbindlist(list(cdc_codes, cms_codes), use.name = TRUE),
-        code + dx ~ paste(src, year, sep = "_"),
-        value.var = "dummy")
+  data.table::dcast(
+    data.table::rbindlist(list(cdc_codes, cms_codes), use.name = TRUE),
+    code + dx ~ paste(src, year, sep = "_"),
+    value.var = "dummy"
+  )
 options(warn = old_warn)
 
 # check for FY 1997 - 2005 not needed, cdc only
@@ -121,7 +122,7 @@ stopifnot("all codes with missing desc are headers" =
 
 ################################################################################
 # save
-setDF(icd9)
+data.table::setDF(icd9)
 saveRDS(file = "icd9.rds", object = icd9)
 
 ################################################################################
