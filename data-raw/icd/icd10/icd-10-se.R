@@ -1,5 +1,5 @@
 
-DT <- data.table::fread("icd-10-se.tsv")
+DT <- data.table::fread(file.path("socialstyrelsen", "icd-10-se.tsv"))
 
 # The file is in Swedish.  Translate column nmaes to English.
 old2new <- c(
@@ -92,6 +92,26 @@ for (yr in 1997:2026) {
 }
 
 sets <- data.table::rbindlist(sets)
+
+sets[, code := sub("\\.", "", full_code)]
+
+################################################################################
+# Find headers
+stopifnot(sets[, all(nchar(code) %in% 3:5)])
+
+sets[nchar(code) == 4, `:=`(h3 = substr(code, 1, 3))]
+sets[nchar(code) == 5, `:=`(h3 = substr(code, 1, 3), h4 = substr(code, 1, 4))]
+
+headers <- sets[!is.na(h3) | !is.na(h4), .(code, h3, h4, year)]
+headers <- unique(headers)
+
+sets[headers, header := 1L, on = c("code" = "h3", 'year')]
+sets[headers, header := 1L, on = c("code" = "h4", 'year')]
+
+# all the codes that have not yet been matched are not-headers
+sets[, header := data.table::nafill(header, type = 'const', fill = 0L)]
+data.table::set(sets, j = "h3", value = NULL)
+data.table::set(sets, j = "h4", value = NULL)
 
 data.table::setDF(sets)
 saveRDS(object = sets, file = "icd-10-se.rds")

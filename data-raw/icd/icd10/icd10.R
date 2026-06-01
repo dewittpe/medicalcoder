@@ -19,19 +19,22 @@
 #
 # idempotent: yes (pure joins and save)
 ################################################################################
-cdc_allvalid <- readRDS("./cdc_allvalid.rds")
-who_icd10    <- readRDS("./who_icd10.rds")
-cms_icd10    <- readRDS("./cms_icd10.rds")
-ihacpa_icd10 <- readRDS("./ihacpa_icd10.rds")
+cdc_allvalid <- readRDS("cdc_allvalid.rds")
+who_icd10    <- readRDS("who_icd10.rds")
+cms_icd10    <- readRDS("cms_icd10.rds")
+ihacpa_icd10 <- readRDS("ihacpa_icd10.rds")
+socialstyrelsen <- readRDS("icd-10-se.rds")
 
 data.table::setDT(cdc_allvalid)
 data.table::setDT(who_icd10)
 data.table::setDT(cms_icd10)
 data.table::setDT(ihacpa_icd10)
+data.table::setDT(socialstyrelsen)
 
 who_icd10[, dx := 1L]
 cdc_allvalid[, dx := 1L]
 ihacpa_icd10[, dx := 1L]
+socialstyrelsen[, dx := 1L]
 
 icd10 <-
   merge(
@@ -54,6 +57,15 @@ icd10 <-
   merge(
     x = icd10,
     y = ihacpa_icd10[, .(ihacpa = 1L, code, dx, year, ihacpa_desc = description, ihacpa_header = header)],
+    all = TRUE,
+    by.x = c("code", "dx", "year"),
+    by.y = c("code", "dx", "year")
+  )
+
+icd10 <-
+  merge(
+    x = icd10,
+    y = socialstyrelsen[, .(socialstyrelsen = 1L, code, dx, year, socialstyrelsen_desc = Title, socialstyrelsen_header = header)],
     all = TRUE,
     by.x = c("code", "dx", "year"),
     by.y = c("code", "dx", "year")
