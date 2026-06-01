@@ -21,18 +21,14 @@
 #
 # idempotent: yes (deterministic transformations)
 ################################################################################
-
-library(data.table)
-library(pbapply)
-
 known_icd_codes  <- readRDS("../icd/icd_codes.rds")
-setDT(known_icd_codes)
+data.table::setDT(known_icd_codes)
 
 ################################################################################
 # subconditions - this has conditions, subconditions, ICD codes
 subconditions <- read.table("pccc_v2/subconditions.txt", sep = "\t", skip = 1, header = TRUE, na.strings = "")
-setDT(subconditions)
-setnames(subconditions,
+data.table::setDT(subconditions)
+data.table::setnames(subconditions,
          old = c("Categories", "Subcategories", "ICD.9", "ICD.10"),
          new = c("condition",  "subcondition",   "icd9",  "icd10"))
 
@@ -57,19 +53,19 @@ subconditions <-
   lapply(function(x) {
            icd9  <- trimws(strsplit(x$icd9, split = ",")[[1]])
            icd10 <- trimws(strsplit(x$icd10, split = ",")[[1]])
-           data.table(condition = x$condition[1],
+           data.table::data.table(condition = x$condition[1],
                       subcondition = x$subcondition[1],
                       icdv = c(rep(9L, length(icd9)), rep(10L, length(icd10))),
                       orig_code = c(icd9, icd10))
          }) |>
-  rbindlist()
+  data.table::rbindlist()
 
 # remove rows that are not needed
 subconditions <- subconditions[orig_code != "N/A"]
 subconditions <- subconditions[orig_code != ""]
 
 # Add a dx flag
-subconditions[, dx := fcase(icdv == 10 & grepl("^\\D", orig_code), 1,
+subconditions[, dx := data.table::fcase(icdv == 10 & grepl("^\\D", orig_code), 1,
                             icdv ==  9 & grepl("^\\d{3}(\\.|$)", orig_code), 1,
                             icdv ==  9 & grepl("^\\d{3}-\\d{3}$", orig_code), 1,
                             icdv ==  9 & grepl("^V\\d{2}\\.", orig_code), 1,
@@ -206,7 +202,7 @@ subconditions[orig_code == "33.4", `:=`(icdv = 9, dx = 1, pattern = "^3334")]
 subconditions <-
   subconditions |>
   split(f = 1:nrow(subconditions)) |>
-  pblapply(function(x) {
+  pbapply::pblapply(function(x) {
              idx <-
                (known_icd_codes$dx == x$dx) &
                (known_icd_codes$icdv == x$icdv) &
@@ -214,9 +210,9 @@ subconditions <-
              merge(x, known_icd_codes[idx, ], all = TRUE, by = c("icdv", "dx"))
            },
            cl = 8L) |>
-  rbindlist()
+  data.table::rbindlist()
 
-subconditions[, condition := fcase(
+subconditions[, condition := data.table::fcase(
   condition == "neurologic and neuromuscular",            "neuromusc",
   condition == "cardiovascular",                          "cvd",
   condition == "respiratory",                             "respiratory",
@@ -278,7 +274,7 @@ stopifnot(subconditions[, !any(is.na(code))])
 
 ################################################################################
 # Save objects
-setDT(subconditions)
+data.table::setDF(subconditions)
 saveRDS(subconditions, file = "pccc_v2_subconditions.rds")
 
 ################################################################################

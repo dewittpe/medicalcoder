@@ -21,13 +21,10 @@
 #
 # idempotent: yes (deterministic merges)
 ################################################################################
-
-library(data.table)
-
 icd_codes <- readRDS("../icd/icd_codes.rds")
-setDT(icd_codes)
-set(icd_codes, j = "chap_id", value = NULL)
-set(icd_codes, j = "subchap_id", value = NULL)
+data.table::setDT(icd_codes)
+data.table::set(icd_codes, j = "chap_id", value = NULL)
+data.table::set(icd_codes, j = "subchap_id", value = NULL)
 
 pccc_codes <-
   list(
@@ -36,28 +33,30 @@ pccc_codes <-
     pccc_v3.0 = readRDS("./pccc_v3.0.rds"),
     pccc_v3.1 = readRDS("./pccc_v3.1.rds")
   ) |>
-  lapply(setDT) |>
-  rbindlist(idcol = "version", use.names = TRUE, fill = TRUE)
+  lapply(data.table::setDT) |>
+  data.table::rbindlist(idcol = "version", use.names = TRUE, fill = TRUE)
 
 pccc_codes <- pccc_codes[, .(icdv, dx, code, condition, subcondition, tech_dep_flag, transplant_flag, version, dummy = 1L)]
 pccc_codes <- unique(pccc_codes)
 
 stopifnot("all subconditions are in all versions" =
-  pccc_codes[, .(n = uniqueN(version),
+  pccc_codes[, .(n = data.table::uniqueN(version),
                  vs = paste(sort(unique(version)), collapse = ", ")
                  ), by = .(condition, subcondition)
   ][, all(n == 4)]
 )
 
 pccc_codes <-
-  dcast(pccc_codes,
-        icdv + dx + code + condition + subcondition + tech_dep_flag + transplant_flag ~ version,
-        value.var = "dummy")
+  data.table::dcast(
+    pccc_codes,
+    icdv + dx + code + condition + subcondition + tech_dep_flag + transplant_flag ~ version,
+    value.var = "dummy"
+  )
 
-pccc_codes[, pccc_v2.0 := nafill(pccc_v2.0, fill = 0L, type = "const")]
-pccc_codes[, pccc_v2.1 := nafill(pccc_v2.1, fill = 0L, type = "const")]
-pccc_codes[, pccc_v3.0 := nafill(pccc_v3.0, fill = 0L, type = "const")]
-pccc_codes[, pccc_v3.1 := nafill(pccc_v3.1, fill = 0L, type = "const")]
+pccc_codes[, pccc_v2.0 := data.table::nafill(pccc_v2.0, fill = 0L, type = "const")]
+pccc_codes[, pccc_v2.1 := data.table::nafill(pccc_v2.1, fill = 0L, type = "const")]
+pccc_codes[, pccc_v3.0 := data.table::nafill(pccc_v3.0, fill = 0L, type = "const")]
+pccc_codes[, pccc_v3.1 := data.table::nafill(pccc_v3.1, fill = 0L, type = "const")]
 pccc_codes <- unique(pccc_codes)
 
 # Look for unexpected duplicated codes
@@ -150,20 +149,22 @@ pccc_conditions[, subcondition_label := capitalize_words(subcondition_label)]
 ################################################################################
 # save to disk
 pccc_codes <-
-  merge(x = pccc_codes,
-        y = icd_codes,
-        by = c("icdv", "dx", "code"))
-set(pccc_codes, j = "icdv", value = NULL)
-set(pccc_codes, j = "dx", value = NULL)
-set(pccc_codes, j = "code", value = NULL)
-set(pccc_codes, j = "full_code", value = NULL)
+  merge(
+    x = pccc_codes,
+    y = icd_codes,
+    by = c("icdv", "dx", "code")
+  )
+data.table::set(pccc_codes, j = "icdv", value = NULL)
+data.table::set(pccc_codes, j = "dx", value = NULL)
+data.table::set(pccc_codes, j = "code", value = NULL)
+data.table::set(pccc_codes, j = "full_code", value = NULL)
 
-setcolorder(pccc_codes, c("code_id", "condition", "subcondition", "transplant_flag", "tech_dep_flag", "pccc_v3.1", "pccc_v3.0", "pccc_v2.1", "pccc_v2.0"))
+data.table::setcolorder(pccc_codes, c("code_id", "condition", "subcondition", "transplant_flag", "tech_dep_flag", "pccc_v3.1", "pccc_v3.0", "pccc_v2.1", "pccc_v2.0"))
 
-setDF(pccc_codes)
+data.table::setDF(pccc_codes)
 saveRDS(pccc_codes, "pccc_codes.rds")
 
-setDF(pccc_conditions)
+data.table::setDF(pccc_conditions)
 saveRDS(pccc_conditions, "pccc_conditions.rds")
 ################################################################################
 #                                 End of File                                  #

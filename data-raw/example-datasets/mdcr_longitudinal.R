@@ -16,14 +16,9 @@
 # idempotent: yes (pure read/rename/save)
 #
 ################################################################################
-
-library(data.table)
-
-mdcr_longitudinal <- fread("longitudinal_example_data.dat")
-setnames(mdcr_longitudinal,
-         old = c("icd_type", "icd_code"),
-         new = c("icdv", "code"))
-setDF(mdcr_longitudinal)
+mdcr_longitudinal <- data.table::fread("longitudinal_example_data.dat")
+data.table::setnames(mdcr_longitudinal, old = c("icd_type", "icd_code"), new = c("icdv", "code"))
+data.table::setDF(mdcr_longitudinal)
 save(mdcr_longitudinal, file = "../../data/mdcr_longitudinal.rda", ascii = FALSE, version = 3, compress = "xz", compression_level = 9)
 
 ################################################################################

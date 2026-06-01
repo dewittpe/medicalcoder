@@ -28,13 +28,11 @@
 # file was the result of a copy and paste from Word to Excel to a tab-delimited file.
 #
 # Also import codes from other sources and build a dataset pccc_v2.1
-library(data.table)
-
 known_icd_codes <- readRDS("../icd/icd_codes.rds")
-setDT(known_icd_codes)
+data.table::setDT(known_icd_codes)
 
 V2 <- readRDS("pccc_v2.0.rds")
-setDT(V2)
+data.table::setDT(V2)
 
 # because I will be copying rows with a couple overwrites the code_id might not
 # be consistent.  Just drop it and get it back later.  The chap_id and
@@ -46,10 +44,10 @@ known_icd_codes[, code_id := NULL]
 V2[, code_id := NULL]
 
 subconditions <- readRDS("pccc_v2_subconditions.rds")
-setDT(subconditions)
+data.table::setDT(subconditions)
 
 rss_codes <- readRDS("pccc_v2_r_sas_stata.rds")
-setDT(rss_codes)
+data.table::setDT(rss_codes)
 
 # The R, SAS, and Stata codes only report conditions and mapped transplant and
 # tech_dep to a condition. This really should be condition = 'misc' with
@@ -68,7 +66,7 @@ rss_codes <-
         all.x = TRUE,
         all.y = FALSE,
         by = c("condition", "dx", "icdv", "code"))
-rss_codes[, subcondition := fcoalesce(subcondition.x, subcondition.y)]
+rss_codes[, subcondition := data.table::fcoalesce(subcondition.x, subcondition.y)]
 rss_codes[, subcondition.x := NULL]
 rss_codes[, subcondition.y := NULL]
 rss_codes <- unique(rss_codes)
@@ -87,10 +85,10 @@ v2ref <-
 #  0: code is not in the reference and has been reviewed
 # -1: code is not in the reference and has not been reviewed
 
-v2ref[, docx  := nafill(docx,  fill = -1L, type = "const")]
-v2ref[, r     := nafill(r,     fill = -1L, type = "const")]
-v2ref[, sas   := nafill(sas,   fill = -1L, type = "const")]
-v2ref[, stata := nafill(stata, fill = -1L, type = "const")]
+v2ref[, docx  := data.table::nafill(docx,  fill = -1L, type = "const")]
+v2ref[, r     := data.table::nafill(r,     fill = -1L, type = "const")]
+v2ref[, sas   := data.table::nafill(sas,   fill = -1L, type = "const")]
+v2ref[, stata := data.table::nafill(stata, fill = -1L, type = "const")]
 
 stopifnot(isTRUE(all(v2ref$docx  %in% c(-1, 1))))
 stopifnot(isTRUE(all(v2ref$r     %in% c(-1, 1))))
@@ -121,7 +119,7 @@ v2ref[code %in% c("0050", "0051", "0053", "0054", "0055", "0057") & dx == 0 & ic
 # with device and technology use subcondtion
 devices <- v2ref[subcondition == "device and technology use"]
 devices[, ismisc := condition == "misc"]
-setkey(devices, icdv, dx, code, ismisc)
+data.table::setkey(devices, icdv, dx, code, ismisc)
 devices[, dup := duplicated(.SD, by = c("icdv", "dx", "code"))]
 miscdup <- devices[(ismisc) & (dup)]
 v2ref <- v2ref[!miscdup, on = c("icdv", "dx", "code", "condition", "subcondition")]
@@ -129,7 +127,7 @@ v2ref <- v2ref[!miscdup, on = c("icdv", "dx", "code", "condition", "subcondition
 # Similar issue for transplants
 transplants <- v2ref[subcondition == "transplantation"]
 transplants[, ismisc := condition == "misc"]
-setkey(transplants, icdv, dx, code, ismisc)
+data.table::setkey(transplants, icdv, dx, code, ismisc)
 transplants[, dup := duplicated(.SD, by = c("icdv", "dx", "code"))]
 miscdup <- transplants[(ismisc) & (dup)]
 v2ref <- v2ref[!miscdup, on = c("icdv", "dx", "code", "condition", "subcondition")]
@@ -635,7 +633,7 @@ v2ref <-
 v2ref <- unique(v2ref)
 ################################################################################
 
-setDF(v2ref)
+data.table::setDF(v2ref)
 saveRDS(v2ref, file = "pccc_v2.1.rds")
 
 ################################################################################

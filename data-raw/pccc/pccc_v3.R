@@ -47,24 +47,21 @@
 #
 # Just to make this even more frustrating, the eTable3 that was sent to me seems
 # to be documented by supp3.
-
-library(readxl)
-library(data.table)
-
 ################################################################################
 pccc_v3.0 <-
   list(
-      "eTable2" = read_xlsx("./pccc_v3/eTable2.xlsx", sheet = 2, col_types = "text")
-    , "web02282023" = read_xlsx("./pccc_v3/final-v3-with-rev-code-list-02282023.xlsx", col_types = "text")
+      "eTable2" = readxl::read_xlsx("./pccc_v3/eTable2.xlsx", sheet = 2, col_types = "text")
+    , "web02282023" = readxl::read_xlsx("./pccc_v3/final-v3-with-rev-code-list-02282023.xlsx", col_types = "text")
   )
 
-pccc_v3.0 <- lapply(pccc_v3.0, as.data.table)
-pccc_v3.0 <- rbindlist(pccc_v3.0, idcol = "src")
+pccc_v3.0 <- lapply(pccc_v3.0, data.table::as.data.table)
+pccc_v3.0 <- data.table::rbindlist(pccc_v3.0, idcol = "src")
 
-setnames(pccc_v3.0,
-         old = c("ICD_Code", "ICD_Code_Description", "DX_PR", "CCC_Category", "CCC_Subcategory", "ICD9_ICD10", "Tech_Dep", "Transplant"),
-         new = c("code",     "desc",                 "dxpr",  "condition",     "subcondition",     "icdv",       "tech_dep", "transplant")
-         )
+data.table::setnames(
+  pccc_v3.0,
+  old = c("ICD_Code", "ICD_Code_Description", "DX_PR", "CCC_Category", "CCC_Subcategory", "ICD9_ICD10", "Tech_Dep", "Transplant"),
+  new = c("code",     "desc",                 "dxpr",  "condition",     "subcondition",     "icdv",       "tech_dep", "transplant")
+)
 
 pccc_v3.0[icdv == "0", icdv := "10"]
 pccc_v3.0[, icdv := as.integer(icdv)]
@@ -77,10 +74,12 @@ pccc_v3.0[subcondition == "hypoxic-ischemia encephalopathy", subcondition := "hy
 pccc_v3.0[, dummy := 1L]
 
 pccc_v3.0 <-
-  dcast(pccc_v3.0,
-        code + desc + dx + condition + subcondition + icdv + tech_dep + transplant ~ src,
-        value.var = "dummy",
-        fill = 0L)
+  data.table::dcast(
+    pccc_v3.0,
+    code + desc + dx + condition + subcondition + icdv + tech_dep + transplant ~ src,
+    value.var = "dummy",
+    fill = 0L
+  )
 
 if (interactive()) {
   pccc_v3.0[eTable2 == 0 | web02282023 == 0]
@@ -121,11 +120,13 @@ pccc_v3.0[, web02282023 := NULL]
 pccc_v3.0[, tech_dep := as.integer(tech_dep)]
 pccc_v3.0[, transplant := as.integer(transplant)]
 
-setnames(pccc_v3.0,
-         old = c("tech_dep", "transplant"),
-         new = c("tech_dep_flag", "transplant_flag"))
+data.table::setnames(
+  pccc_v3.0,
+  old = c("tech_dep", "transplant"),
+  new = c("tech_dep_flag", "transplant_flag")
+)
 
-set(pccc_v3.0, j = "desc", value = NULL)
+data.table::set(pccc_v3.0, j = "desc", value = NULL)
 
 # look at setting the condition and subcondition to be consistent with other
 # sets. There should be a misc condition with only tech_dep and transplant
@@ -195,18 +196,19 @@ pccc_v3.1 <-
          path = "./pccc_v3/supp3.xlsx",
          skip = 1,
          col_types = "text") |>
-  rbindlist(use.names = TRUE, fill = TRUE)
+  data.table::rbindlist(use.names = TRUE, fill = TRUE)
 
-set(pccc_v3.1, j = "ICDCode Description", value = NULL)
+data.table::set(pccc_v3.1, j = "ICDCode Description", value = NULL)
 
-setnames(pccc_v3.1,
-         old = c("ICD Code", "DX/PX", "CCC Category", "Subcategory",  "ICD9/ICD10", "Comments", "CF/JF Comments", "CCC Code Type"),
-         new = c("code",     "dxpr",  "condition",    "subcondition", "icdv",       "comments", "cfjf_comments",  "ccc_code_type")
-         )
+data.table::setnames(
+  pccc_v3.1,
+  old = c("ICD Code", "DX/PX", "CCC Category", "Subcategory",  "ICD9/ICD10", "Comments", "CF/JF Comments", "CCC Code Type"),
+  new = c("code",     "dxpr",  "condition",    "subcondition", "icdv",       "comments", "cfjf_comments",  "ccc_code_type")
+)
 
-set(pccc_v3.1, j = "dx", value = as.integer(pccc_v3.1$dxpr == "DX"))
-set(pccc_v3.1, j = "dxpr", value = NULL)
-set(pccc_v3.1, j = "icdv", value = as.integer(pccc_v3.1$icdv))
+data.table::set(pccc_v3.1, j = "dx", value = as.integer(pccc_v3.1$dxpr == "DX"))
+data.table::set(pccc_v3.1, j = "dxpr", value = NULL)
+data.table::set(pccc_v3.1, j = "icdv", value = as.integer(pccc_v3.1$icdv))
 
 pccc_v3.1[subcondition == "N/A", subcondition := NA_character_]
 
@@ -217,9 +219,9 @@ if (interactive()) {
 }
 pccc_v3.1 <- pccc_v3.1[!(ccc_code_type %in% c("Delete from V3", "do not include"))]
 
-set(pccc_v3.1, j = "comments",      value = NULL)
-set(pccc_v3.1, j = "cfjf_comments", value = NULL)
-set(pccc_v3.1, j = "ccc_code_type", value = NULL)
+data.table::set(pccc_v3.1, j = "comments",      value = NULL)
+data.table::set(pccc_v3.1, j = "cfjf_comments", value = NULL)
+data.table::set(pccc_v3.1, j = "ccc_code_type", value = NULL)
 
 # set tech_dep_flag and transplant_flag
 pccc_v3.1[, transplant_flag := as.integer(condition == "Transplant")]
@@ -230,7 +232,7 @@ pccc_v3.1[condition == "Transplant", `:=`(condition = "misc", subcondition = "tr
 pccc_v3.1[condition == "Devices",    `:=`(condition = "misc", subcondition = "device and technology use")]
 
 pccc_v3.1[,
-  condition := fcase(condition == "Cardiovascular", "cvd",
+  condition := data.table::fcase(condition == "Cardiovascular", "cvd",
                      condition == "Gastrointestinal", "gi",
                      condition == "Hematologic Immunologic", "hemato_immu",
                      condition == "Malignancy", "malignancy",
@@ -285,14 +287,19 @@ gi_devices          <- pccc_v3.0[condition == "gi" & subcondition == "device and
 metabolic_devices   <- pccc_v3.0[condition == "metabolic" & subcondition == "device and technology use"]
 
 # some more to add that are missing from v3.0 code
-renal_devices <- rbind(renal_devices,
-                       data.table(code = "06HY33Z",
-                                  dx = 0,
-                                  condition = "renal",
-                                  subcondition = "device and technology use",
-                                  icdv = 10L,
-                                  tech_dep_flag = 1L,
-                                  transplant_flag = 0L))
+renal_devices <-
+  rbind(
+    renal_devices,
+    data.table::data.table(
+      code = "06HY33Z",
+      dx = 0,
+      condition = "renal",
+      subcondition = "device and technology use",
+      icdv = 10L,
+      tech_dep_flag = 1L,
+      transplant_flag = 0L
+    )
+  )
 
 pccc_v3.1[condition == "misc" & subcondition == "device and technology use" &
           code %in% cvd_devices$code &
@@ -876,9 +883,9 @@ pccc_v3.1 <-
 # Based on all known ICD codes, fill in any missing codes via partial string
 # matching!
 known_icd_codes <- readRDS("../icd/icd_codes.rds")
-setDT(known_icd_codes)
-set(known_icd_codes, j = "chap_id", value = NULL)
-set(known_icd_codes, j = "subchap_id", value = NULL)
+data.table::setDT(known_icd_codes)
+data.table::set(known_icd_codes, j = "chap_id", value = NULL)
+data.table::set(known_icd_codes, j = "subchap_id", value = NULL)
 if (interactive()) {
   pccc_v3.1
 }
@@ -893,7 +900,7 @@ foo <- function(i) {
 }
 
 pccc_v3.1 <- pbapply::pblapply(1:nrow(pccc_v3.1), foo, cl = 8L)
-pccc_v3.1 <- rbindlist(pccc_v3.1)
+pccc_v3.1 <- data.table::rbindlist(pccc_v3.1)
 pccc_v3.1 <- unique(pccc_v3.1)
 
 ################################################################################
@@ -966,7 +973,7 @@ if (interactive()) {
   pccc_v3.0[code == "Q753"]
   pccc_v3.1[code == "Q753"]
 
-  gicdc <- get_icd_codes()
+  gicdc <- medicalcoder::get_icd_codes()
   subset(gicdc, startsWith(full_code, "Q75.3"))
 
   x <-
@@ -981,7 +988,7 @@ if (interactive()) {
 
   merge(
     x = x[!pccc_v3.1, on = .NATURAL],
-    y = get_icd_codes(),
+    y = medicalcoder::get_icd_codes(),
     all.x = TRUE,
     all.y = FALSE
   ) |> print(nrow = Inf)
@@ -993,8 +1000,8 @@ if (interactive()) {
 pccc_v3.0 <- unique(pccc_v3.0)
 pccc_v3.1 <- unique(pccc_v3.1)
 
-setDF(pccc_v3.0)
-setDF(pccc_v3.1)
+data.table::setDF(pccc_v3.0)
+data.table::setDF(pccc_v3.1)
 saveRDS(pccc_v3.0, "pccc_v3.0.rds")
 saveRDS(pccc_v3.1, "pccc_v3.1.rds")
 

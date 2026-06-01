@@ -18,28 +18,29 @@
 ################################################################################
 
 set.seed(42)
-library(data.table)
 
-mdcr <- fread("mdcr.csv")
-mdcr <- melt(mdcr
-             , id.vars = c("patid", "icdv")
-             , measure.vars = c("dx", "pr")
-             , variable.name = "dxpr"
-             , value.name = "code"
-             , variable.factor = FALSE)
+mdcr <- data.table::fread("mdcr.csv")
+mdcr <- data.table::melt(
+    data = mdcr
+  , id.vars = c("patid", "icdv")
+  , measure.vars = c("dx", "pr")
+  , variable.name = "dxpr"
+  , value.name = "code"
+  , variable.factor = FALSE
+)
 mdcr <- mdcr[code != ""]
 mdcr[, dx := as.integer(dxpr == "dx")]
 mdcr[, dxpr := NULL]
 
 # generate random and unique patid
-ids <- data.table(patid = unique(mdcr$patid))
+ids <- data.table::data.table(patid = unique(mdcr$patid))
 ids[, patid2 := sample(10000:99999, size = .N)]
 
 mdcr <- merge(mdcr, ids, by = "patid")
 mdcr[, patid := patid2]
 mdcr[, patid2 := NULL]
 
-setDF(mdcr)
+data.table::setDF(mdcr)
 save(mdcr, file = "../../data/mdcr.rda", ascii = FALSE, version = 3, compress = "xz", compression_level = 9)
 
 ################################################################################

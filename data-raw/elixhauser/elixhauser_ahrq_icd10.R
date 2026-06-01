@@ -34,10 +34,8 @@
 #
 # idempotent: yes (deterministic once source archives are fixed)
 ################################################################################
-library(data.table)
-requireNamespace("readxl")
 icd_codes <- readRDS("../icd/icd_codes.rds")
-setDT(icd_codes)
+data.table::setDT(icd_codes)
 
 ################################################################################
 # unzip the elixhauser source files into a temp directory
@@ -104,7 +102,7 @@ get_value_start_stop <- function(fp) {
 
 values <-
   lapply(format_programs, get_value_start_stop) |>
-  rbindlist(idcol = "version")
+  data.table::rbindlist(idcol = "version")
 
 build_comfmt <- function(x) {
   x <- sub(pattern = '=', replacement = "->", x)
@@ -158,16 +156,16 @@ elixhauser_codes <-
 elixhauser_codes <-
   lapply(elixhauser_codes,
     function(x) {
-      rbindlist(
-        lapply(names(x), function(nm) { data.table(condition = nm, code = x[[nm]]) })
+      data.table::rbindlist(
+        lapply(names(x), function(nm) { data.table::data.table(condition = nm, code = x[[nm]]) })
       )
     })
 
-elixhauser_codes <- rbindlist(elixhauser_codes, idcol = "version")
+elixhauser_codes <- data.table::rbindlist(elixhauser_codes, idcol = "version")
 elixhauser_codes[, dummy := 1L]
 
 elixhauser_codes <-
-  dcast(
+  data.table::dcast(
     data = elixhauser_codes,
     formula = condition + code ~ version,
     value.var = "dummy",
@@ -183,14 +181,14 @@ elixhauser_poaexempt <-
   split(elixhauser_poaexempt, by = c("version", "value")) |>
     lapply(function(x) {
       y <-
-        data.table(
+        data.table::data.table(
           version = x$version,
           value   = x$value,
           code    = x[["obj"]][[1]]
           )
       y
     }) |>
-  rbindlist()
+  data.table::rbindlist()
 
 elixhauser_poaexempt <- unique(elixhauser_poaexempt$code)
 
@@ -241,14 +239,14 @@ LABELS <-
   lapply(gsub, pattern = "'", replacement = "") |>
   lapply(gsub, pattern = "CMR_", replacement = "") |>
   lapply(trimws) |>
-  lapply(function(x) fread(text = x, sep = "=", header = FALSE)) |>
-  rbindlist(idcol = "method")
-setnames(LABELS, old = c("V1", "V2"), new = c("condition", "condition_description"))
+  lapply(function(x) data.table::fread(text = x, sep = "=", header = FALSE)) |>
+  data.table::rbindlist(idcol = "method")
+data.table::setnames(LABELS, old = c("V1", "V2"), new = c("condition", "condition_description"))
 
 LABELS[, dummy := 1L]
 
 elixhauser_conditions <-
-  dcast(
+  data.table::dcast(
     LABELS,
     condition + condition_description ~ method,
     value.var = "dummy",
@@ -265,14 +263,14 @@ elixhauser_poa <-
        "ahrq2026" = readxl::read_xlsx(paste0(tmpdir, "/CMR-Reference-File-v2026-1.xlsx"), sheet = 2, skip = 1)
   )
 
-elixhauser_poa <- lapply(elixhauser_poa, setDT)
+elixhauser_poa <- lapply(elixhauser_poa, data.table::setDT)
 
 for (i in seq_along(elixhauser_poa)) {
   data.table::setnames(elixhauser_poa[[i]], old = names(elixhauser_poa[[j]])[1:3], new = c("condition", "desc", "poa_required"))
   elixhauser_poa[[i]] <- subset(elixhauser_poa[[i]], condition != "End of Content")
   elixhauser_poa[[i]][, poa_required := as.integer(poa_required == "Yes")]
-  set(elixhauser_poa[[i]], j = names(elixhauser_poa)[i], value = 1L)
-  set(elixhauser_poa[[i]], j = "desc", value = NULL)
+  data.table::set(elixhauser_poa[[i]], j = names(elixhauser_poa)[i], value = 1L)
+  data.table::set(elixhauser_poa[[i]], j = "desc", value = NULL)
 }
 
 if (interactive()) {
@@ -351,10 +349,10 @@ elixhauser_index_scores <-
   lapply(strsplit, split = "=") |>
   lapply(lapply, trimws) |>
   lapply(do.call, what = rbind) |>
-  lapply(as.data.table)
+  lapply(data.table::as.data.table)
 
 for (i in seq_along(elixhauser_index_scores)) {
-  setnames(
+  data.table::setnames(
     elixhauser_index_scores[[i]],
     old = c("V1", "V2"),
     new = c("condition", names(elixhauser_index_scores)[i])
@@ -367,24 +365,24 @@ elixhauser_index_scores <-
     x = elixhauser_index_scores
   )
 
-elixhauser_index_scores[, index := fifelse(grepl("^rw", condition), "readmission", "mortality")]
+elixhauser_index_scores[, index := data.table::fifelse(grepl("^rw", condition), "readmission", "mortality")]
 elixhauser_index_scores[, condition := sub("^(m|r)w", "", condition)]
 
 for (j in grep("^ahrq\\d{4}", names(elixhauser_index_scores))) {
-  set(elixhauser_index_scores, j = j, value = as.integer(elixhauser_index_scores[[j]]))
+  data.table::set(elixhauser_index_scores, j = j, value = as.integer(elixhauser_index_scores[[j]]))
 }
 
 elixhauser_index_scores[, ahrq_icd10 := get(max(grep("ahrq", names(elixhauser_index_scores), value = TRUE)))]
 
 ################################################################################
 # save to disk
-setDF(elixhauser_index_scores)
+data.table::setDF(elixhauser_index_scores)
 saveRDS(elixhauser_index_scores, "./elixhauser_index_scores_ahrq_icd10.rds")
 
-setDF(elixhauser_poa)
+data.table::setDF(elixhauser_poa)
 saveRDS(elixhauser_poa, "./elixhauser_poa_ahrq_icd10.rds")
 
-setDF(elixhauser_codes)
+data.table::setDF(elixhauser_codes)
 saveRDS(elixhauser_codes, "./elixhauser_codes_ahrq_icd10.rds")
 
 ################################################################################

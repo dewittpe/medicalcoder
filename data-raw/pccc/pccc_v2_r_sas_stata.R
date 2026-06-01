@@ -9,18 +9,13 @@
 #
 # output: pccc_v2_r_sas_stata.rds
 #
-# deps: data.table, pbapply
+# deps: data.table
 #
 # notes:
 #   Untars into tempdir(), parses language-specific code blocks, and records
 #     presence per source.
 #
 # idempotent: yes (deterministic parsing of static sources)
-################################################################################
-
-library(data.table)
-library(pbapply)
-
 ################################################################################
 # import known ICD codes.
 #
@@ -106,15 +101,15 @@ stata_codes <-
                dx <- 1L
              }
            }
-           data.table(stata_variable = x[1],
+           data.table::data.table(stata_variable = x[1],
                       code = x[-1],
                       icdv = icdv,
                       dx = dx)
          })
 
-stata_codes <- rbindlist(stata_codes, idcol = TRUE)
+stata_codes <- data.table::rbindlist(stata_codes, idcol = TRUE)
 stata_codes <- stata_codes[stata_variable != "ccc_class"]
-stata_codes[, condition := fcase(grepl("^nm_", stata_variable), "neuromusc",
+stata_codes[, condition := data.table::fcase(grepl("^nm_", stata_variable), "neuromusc",
                                grepl("^cv_", stata_variable), "cvd",
                                grepl("^rp_", stata_variable), "respiratory",
                                grepl("^rn_", stata_variable), "renal",
@@ -171,7 +166,7 @@ f <- function(x) {
   if (nchar(x[length(x)]) == 0) {
     x <- x[-length(x)]
   }
-  data.table(condition = condition, code = trimws(x))
+  data.table::data.table(condition = condition, code = trimws(x))
 }
 
 sas_dx_code <-
@@ -216,7 +211,7 @@ for (i in seq_along(sas_pr_code_starts)) {
   }
 }
 
-sas_codes <- rbindlist(list("dx" = rbindlist(sas_dx_code), "pr" = rbindlist(sas_pr_code)), idcol = "dxpr")
+sas_codes <- data.table::rbindlist(list("dx" = data.table::rbindlist(sas_dx_code), "pr" = data.table::rbindlist(sas_pr_code)), idcol = "dxpr")
 sas_codes[, condition := tolower(condition)]
 
 if (interactive()) {
@@ -267,7 +262,7 @@ f <- function(x) {
   x <- gsub("\\\"", "", x)
   x <- paste(x, collapse ="")
   x <- strsplit(x, ",")[[1]]
-  data.table(condition = condition, code = trimws(x))
+  data.table::data.table(condition = condition, code = trimws(x))
 }
 
 r_dx_code <- lapply(r_dx_code, FUN = f)
@@ -289,7 +284,7 @@ for (i in seq_along(r_pr_code_starts)) {
   }
 }
 
-r_codes <- rbindlist(list("dx" = rbindlist(r_dx_code), "pr" = rbindlist(r_pr_code)), idcol = "dxpr")
+r_codes <- data.table::rbindlist(list("dx" = data.table::rbindlist(r_dx_code), "pr" = data.table::rbindlist(r_pr_code)), idcol = "dxpr")
 r_codes[, condition := tolower(condition)]
 
 if (interactive()) {
@@ -309,7 +304,7 @@ r_codes[, code := sub("//transplant", "", code)]
 
 ################################################################################
 # look for odd things between the three code sources
-rss_codes <- rbindlist(list(r = r_codes, sas = sas_codes, stata = stata_codes),
+rss_codes <- data.table::rbindlist(list(r = r_codes, sas = sas_codes, stata = stata_codes),
                        use.names = TRUE,
                        idcol = "src")
 rss_codes[, dummy := 1L]
@@ -318,11 +313,11 @@ rss_codes[, condition := sub("fixed_", "", condition)]
 # do not fill in missing values.  expecting missing values to be present when
 # using this object in the pccc_v2.1.R script
 rss_codes <-
-  dcast(rss_codes, condition + dx + icdv + code ~ src, value.var = 'dummy')
+  data.table::dcast(rss_codes, condition + dx + icdv + code ~ src, value.var = 'dummy')
 
 ################################################################################
 # save to disk
-setDF(rss_codes)
+data.table::setDF(rss_codes)
 saveRDS(rss_codes, "pccc_v2_r_sas_stata.rds")
 
 #####  stop()
