@@ -34,13 +34,13 @@ codes <-
 # Found an error in the codes, X27.1 Contact with a platypus should by X27.0
 codes[full_code == "X27.1" & description == "Contact with platypus", full_code := "X27.0"]
 
-codes[full_code == "G82.50", .N == 0]
+#codes[full_code == "G82.50", .N == 0]
 codes[full_code == "G82.51" & description == "Tetraplegia, unspecified", full_code := "G82.50"]
 
-codes[full_code == "S34.70", .N == 0]
+#codes[full_code == "S34.70", .N == 0]
 codes[full_code == "S34.71" & description == "Functional spinal cord injury, lumbar level unspecified", full_code := "S34.70"]
 
-codes[full_code == "U55.20", .N == 0]
+#codes[full_code == "U55.20", .N == 0]
 codes[full_code == "U55.21" & description == "Skiing, alpine and downhill", full_code := "U55.20"]
 
 # There codes W02.7, W02.8, and W02.9 were delted in the fifth edition
@@ -106,8 +106,6 @@ a25 <- data.table::copy(a23); a25[, year := 2025L]
 a26 <- codes[year == 2026L]
 
 codes <- data.table::rbindlist(list(a20, a21, a22, a23, a24, a25, a26))
-
-codes[startsWith(full_code, "A02")]
 
 ################################################################################
 # Find headers
