@@ -217,9 +217,9 @@ default, \code{mapping = "precomputed"}, uses a precomputed table that links
 valid ICD codes to comorbidity conditions. Those links are built from the ICD
 code sources included with medicalcoder: the United States Centers for
 Disease Control and Prevention (CDC), the Centers for Medicare and Medicaid
-Services (CMS), the World Health Organization (WHO), and the Independent
+Services (CMS), the World Health Organization (WHO), the Independent
 Health and Aged Care Pricing Authority (IHACPA) ICD-10 Australian
-Modification (ICD-10-AM) data.
+Modification (ICD-10-AM) data, and Socialstyrelsen ICD-10-SE data.
 
 \code{mapping = "precomputed"} is generally fastest and is the behavior used by
 medicalcoder before the \code{mapping} argument was added. \code{mapping = "regex"}

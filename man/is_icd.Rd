@@ -24,19 +24,21 @@ is_icd(
 \code{10L}. Defaults to both.}
 
 \item{dx}{Integer vector indicating allowed code type(s): \code{1L} for
-diagnostic (ICD-9-CM, ICD-10-CM, CDC mortality, WHO), \code{0L} for procedural
-(ICD-9-PCS, ICD-10-PCS). Defaults to both.}
+diagnostic (ICD-9-CM, ICD-10-CM, ICD-10-AM, ICD-10-SE, CDC mortality,
+WHO), \code{0L} for procedural (ICD-9-PCS, ICD-10-PCS). Defaults to both.}
 
 \item{src}{Character vector of code sources. One or more of \code{"cdc"}, \code{"cms"},
-\code{"ihacpa"}, and \code{"who"}. Defaults to all. CDC and CMS are from the United
-States (ICD-9/10-CM and ICD-9/10-PCS), IHACPA from Australia (ICD-10-AM),
-and the World Health Organization (ICD-10).}
+\code{"ihacpa"}, \code{"socialstyrelsen"}, and \code{"who"}. Defaults to all. CDC and CMS
+are from the United States (ICD-9/10-CM and ICD-9/10-PCS), IHACPA from
+Australia (ICD-10-AM), Socialstyrelsen from Sweden (ICD-10-SE), and the
+World Health Organization (ICD-10).}
 
-\item{year}{Numeric scalar. Calendar or fiscal year to reference. Default
-is the most current year available per source. For ICD-9, CMS data run
-through fiscal year 2015 and CDC extracts through 2012; ICD-10 sources are
-updated annually. Calendar year for WHO and CDC mortality. Fiscal year for
-CMS.}
+\item{year}{Numeric scalar. Calendar, fiscal, or financial year to
+reference. Default is the most current year available per source. For
+ICD-9, CMS data run through fiscal year 2015 and CDC extracts through 2012;
+ICD-10 sources are updated annually. Calendar year for WHO, CDC mortality,
+and Socialstyrelsen. U.S. federal fiscal year for CMS. Australian financial
+year for IHACPA.}
 
 \item{headerok}{Logical scalar. If \code{FALSE} (default), only assignable
 codes are considered valid; if \code{TRUE}, header codes are also accepted.}
@@ -67,10 +69,11 @@ C00.0, C00.1, C00.2, C00.3, C00.4, C00.5, C00.6, C00.7, C00.8, and C00.9
 exist. Those four-character codes are assignable (as of 2025) because no
 five-character descendants (e.g., C00.40) exist.
 
-When the source is the World Health Organization (WHO) or CDC Mortality,
-years refer to calendar years. CDC/CMS sources use the U.S. federal fiscal
-year, which starts on October 1 (e.g., fiscal year 2024 runs 2023-10-01 to
-2024-09-30).
+When the source is the World Health Organization (WHO), CDC Mortality, or
+Socialstyrelsen, years refer to calendar years. CMS sources use the U.S.
+federal fiscal year, which starts on October 1 (e.g., fiscal year 2024 runs
+2023-10-01 to 2024-09-30). IHACPA sources use the Australian financial year,
+which starts on July 1 and ends on June 30.
 }
 \details{
 Similarly for ICD-9-CM: "055" is a header for measles; 055.0, 055.1,

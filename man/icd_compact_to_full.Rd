@@ -13,8 +13,8 @@ icd_compact_to_full(x, icdv, dx)
 \code{10L}. Defaults to both.}
 
 \item{dx}{Integer vector indicating allowed code type(s): \code{1L} for
-diagnostic (ICD-9-CM, ICD-10-CM, CDC mortality, WHO), \code{0L} for procedural
-(ICD-9-PCS, ICD-10-PCS). Defaults to both.}
+diagnostic (ICD-9-CM, ICD-10-CM, ICD-10-AM, ICD-10-SE, CDC mortality,
+WHO), \code{0L} for procedural (ICD-9-PCS, ICD-10-PCS). Defaults to both.}
 }
 \value{
 A character vector the same length as \code{x}.
