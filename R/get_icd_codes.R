@@ -5,37 +5,44 @@
 #' @details
 #'
 #' ## Sources
-#' There are four sources of ICD codes.
+#' There are five sources of ICD codes.
 #' * `cms`: Codes from the ICD-9-CM, ICD-9-PCS, ICD-10-CM, and ICD-10-PCS standards.
 #' * `who`: Codes from World Health Organization.
 #' * `cdc`: Codes from CDC Mortality coding standard.
 #' * `ihacpa`: ICD-10-AM codes from the Independent Health and Aged Care
 #'   Pricing Authority.
+#' * `socialstyrelsen`: ICD-10-SE codes from Sweden's National Board of Health
+#'   and Welfare.
 #'
-#' ## Fiscal and Calendar Years
+#' ## Fiscal, Financial, and Calendar Years
 #'
-#' When reporting years there is a mix of fiscal and calendar years.
+#' When reporting years there is a mix of fiscal, financial, and calendar
+#' years.
 #'
 #' Fiscal years are the United States Federal Government fiscal years, running
 #' from October 1 to September 30. For example, fiscal year 2013 started October
 #' 1 2012 and ended on September 30 2013.
+#'
+#' Financial years are the Australian financial years used for IHACPA data,
+#' running from July 1 to June 30.
 #'
 #' Calendar years run January 1 to December 31.
 #'
 #' Within the ICD data there are columns
 #' `known_start`, `known_end`, `assignable_start`, `assignable_end`,
 #' `desc_start` and `desc_end`. For ICD codes with `src == "cms"`, these are
-#' fiscal years. For codes with `src == "cdc"`, `src == "ihacpa"`, or
-#' `src == "who"` these are calendar years.
+#' fiscal years. For codes with `src == "ihacpa"`, these are financial years.
+#' For codes with `src == "cdc"`, `src == "socialstyrelsen"`, or `src == "who"`
+#' these are calendar years.
 #'
-#' `known_start` is the first fiscal or calendar year (depending on source) that
-#' the medicalcoder package has definitive source data for.  ICD-9-CM started in
-#' the United States in fiscal year 1980.  The CDC extracts included in
-#' medicalcoder span fiscal years 1997--2012; the CMS ICD-9-CM/PCS extracts
-#' start in fiscal year 2006 and run through fiscal year 2015.  As such 1997 is
-#' the earliest "known start" for ICD-9 within medicalcoder.
+#' `known_start` is the first fiscal, financial, or calendar year (depending on
+#' source) that the medicalcoder package has definitive source data for.
+#' ICD-9-CM started in the United States in fiscal year 1980.  The CDC extracts
+#' included in medicalcoder span fiscal years 1997--2012; the CMS ICD-9-CM/PCS
+#' extracts start in fiscal year 2006 and run through fiscal year 2015.  As such
+#' 1997 is the earliest "known start" for ICD-9 within medicalcoder.
 #'
-#' `known_end` is the last fiscal or calendar year (depending on source)
+#' `known_end` is the last fiscal, financial, or calendar year (depending on source)
 #' for which we have definitive source data for.  For ICD-9-CM and ICD-9-PCS,
 #' CMS provides data through fiscal year 2015, while the CDC extracts stop at
 #' fiscal year 2012.  For ICD-10-CM and ICD-10-PCS, which are active, it is just
@@ -70,7 +77,7 @@
 #' The default return has the following columns:
 #'
 #' * `icdv`: Integer vector indicating if the code is from ICD-9 or ICD-10
-#' * `dx`: Integer vector.  1 if the code is a diagnostic, (ICD-9-CM, ICD-10-CM, ICD-10-AM, WHO, CDC Mortality), or 0 if the code is procedural (ICD-9-PCS, ICD-10-PCS)
+#' * `dx`: Integer vector.  1 if the code is a diagnostic, (ICD-9-CM, ICD-10-CM, ICD-10-AM, ICD-10-SE, WHO, CDC Mortality), or 0 if the code is procedural (ICD-9-PCS, ICD-10-PCS)
 #' * `full_code`: Character vector with the ICD code and any relevant decimal point
 #' * `code`: Character vector with the compact ICD code omitting any relevant decimal point
 #' * `src`: Character vector reporting the source of the information.  See Details.

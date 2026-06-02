@@ -60,9 +60,9 @@
 #' valid ICD codes to comorbidity conditions. Those links are built from the ICD
 #' code sources included with medicalcoder: the United States Centers for
 #' Disease Control and Prevention (CDC), the Centers for Medicare and Medicaid
-#' Services (CMS), the World Health Organization (WHO), and the Independent
+#' Services (CMS), the World Health Organization (WHO), the Independent
 #' Health and Aged Care Pricing Authority (IHACPA) ICD-10 Australian
-#' Modification (ICD-10-AM) data.
+#' Modification (ICD-10-AM) data, and Socialstyrelsen ICD-10-SE data.
 #'
 #' `mapping = "precomputed"` is generally fastest and is the behavior used by
 #' medicalcoder before the `mapping` argument was added. `mapping = "regex"`
@@ -837,7 +837,7 @@ map_by_regex <- function(uc, ptrns, icd.codes, by_x, by_y) {
   mapped <- Filter(length, mapped)
   mapped <-
     Map(
-      f = function(nm, i) { 
+      f = function(nm, i) {
         rtn <- mdcr_subset(ptrns, i = i)
         rtn <- mdcr_set(rtn, j = "code_via_regex", value = nm)
         rtn

@@ -9,6 +9,9 @@
 
 * Add ICD-10-AM (Australian Modification) to the ICD database
 
+* Add ICD-10-SE (Swedish) to the ICD database.  Source files from
+  Socialstyrelsen.
+
 ## Improvements
 
 * WHO ICD-10 codes extend 2019 to 2020 and 2021 and the WHO last published in

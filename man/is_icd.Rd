@@ -8,7 +8,7 @@ is_icd(
   x,
   icdv = c(9L, 10L),
   dx = c(1L, 0L),
-  src = c("cdc", "cms", "ihacpa", "who"),
+  src = c("cdc", "cms", "ihacpa", "socialstyrelsen", "who"),
   year,
   headerok = FALSE,
   ever.assignable = missing(year),

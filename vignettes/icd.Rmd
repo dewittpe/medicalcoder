@@ -33,8 +33,10 @@ with International Classification of Diseases (ICD) codes.
 A lookup table for the ICD codes has been built as internal data sets within the
 medicalcoder package.  The sources for these lookup tables come from the Centers
 for Disease Control (CDC) and from the Centers for Medicare & Medicaid Services
-(CMS) and World Health Organization (WHO).  The specific links to the source
-data sets can be found in the source code for the medicalcoder package on
+(CMS), World Health Organization (WHO), Australia's Independent Health and Aged
+Care Pricing Authority (IHACPA), and Sweden's National Board of Health and
+Welfare (Socialstyrelsen).  The specific links to the source data sets can be
+found in the source code for the medicalcoder package on
 [GitHub](https://github.com/dewittpe/medicalcoder).
 
 End users can get a `data.frame` with
@@ -49,8 +51,9 @@ The columns of this data.frame are:
 
 * `icdv`: integer value 9 or 10 indicating ICD-9 or ICD-10
 * `dx`: 1 if the code is a diagnostic code, i.e., from the ICD-9-CM or ICD-10-CM
-  standard.  This also covers codes from the World Health Organization (WHO) and
-  the Center for Disease Control and Prevention (CDC) Mortality codes.
+  standard.  This also covers codes from the World Health Organization (WHO),
+  the Center for Disease Control and Prevention (CDC) Mortality codes, ICD-10-AM
+  codes from IHACPA, and ICD-10-SE codes from Socialstyrelsen.
   `dx` will be 0 if the code is a procedure code, i.e., from the ICD-9-PCS or
   ICD-10-PCS standard.
 * `full_code`: the full ICD code with the decimal point if applicable.
@@ -64,9 +67,12 @@ The columns of this data.frame are:
     For example, fiscal year 2018 started October 1, 2017 and ended on September
     30, 2018.
 
-  * For codes from the World Health Organization (WHO) and the Centers for
-    Disease Control and Prevention (CDC) Mortality coding, the year is
-    _calendar year_.
+  * For ICD-10-AM codes from IHACPA, the year is the Australian _financial
+    year_, July 1 - June 30.
+
+  * For codes from the World Health Organization (WHO), the Centers for Disease
+    Control and Prevention (CDC) Mortality coding, and Socialstyrelsen, the year
+    is _calendar year_.
   * For ICD-9, CDC extracts in medicalcoder span fiscal years 1997--2012 and
     CMS extracts span fiscal years 2006--2015.
 

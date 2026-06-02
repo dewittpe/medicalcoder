@@ -24,15 +24,15 @@ stopifnot("pccc_pers" %in% ls())
 
 # Expected counts in pccc_pers
 stopifnot(
-  pccc_pers[per ==  1, N == 223687],
-  pccc_pers[per ==  2, N ==     20],
+  pccc_pers[per ==  1, N == 226567],
+  pccc_pers[per ==  2, N ==     44],
   pccc_pers[per ==  3, N ==      0],
   pccc_pers[per ==  4, N ==      0],
   pccc_pers[per ==  5, N ==      7],
   pccc_pers[per ==  6, N ==     37],
   pccc_pers[per ==  7, N ==    962],
   pccc_pers[per ==  8, N ==      0],
-  pccc_pers[per ==  9, N ==     68],
+  pccc_pers[per ==  9, N ==     87],
   pccc_pers[per == 10, N ==      0],
   pccc_pers[per == 11, N ==      0],
   pccc_pers[per == 12, N ==      0],
@@ -41,7 +41,7 @@ stopifnot(
   pccc_pers[per == 15, N ==      0],
   pccc_pers[per == 16, N ==     49],
   pccc_pers[per == 17, N ==      0],
-  pccc_pers[per == 18, N ==      2],
+  pccc_pers[per == 18, N ==     11],
   pccc_pers[per == 19, N ==      0],
   pccc_pers[per == 20, N ==      0],
   pccc_pers[per == 21, N ==      0],
@@ -51,7 +51,7 @@ stopifnot(
   pccc_pers[per == 25, N ==      0],
   pccc_pers[per == 26, N ==      0],
   pccc_pers[per == 27, N ==      0],
-  pccc_pers[per == 28, N ==      7],
+  pccc_pers[per == 28, N ==     14],
   pccc_pers[per == 29, N ==      0],
   pccc_pers[per == 30, N ==      0],
   pccc_pers[per == 31, N ==      0],
@@ -66,9 +66,9 @@ stopifnot(
   pccc_pers[per == 40, N ==      0],
   pccc_pers[per == 41, N ==      1],
   pccc_pers[per == 42, N ==      0],
-  pccc_pers[per == 43, N ==     81],
+  pccc_pers[per == 43, N ==     86],
   pccc_pers[per == 44, N ==      0],
-  pccc_pers[per == 45, N ==   1394],
+  pccc_pers[per == 45, N ==   1884],
   pccc_pers[per == 46, N ==      0],
   pccc_pers[per == 47, N ==      3],
   pccc_pers[per == 48, N ==     25],
@@ -81,15 +81,15 @@ stopifnot(
 # Expected counts in pccc_deltas, this should be the same as pccc_pers, but you
 # need to count the rows.
 stopifnot(
-  pccc_deltas[per ==  1, .N == 223687],
-  pccc_deltas[per ==  2, .N ==     20],
+  pccc_deltas[per ==  1, .N == 226567],
+  pccc_deltas[per ==  2, .N ==     44],
   pccc_deltas[per ==  3, .N ==      0],
   pccc_deltas[per ==  4, .N ==      0],
   pccc_deltas[per ==  5, .N ==      7],
   pccc_deltas[per ==  6, .N ==     37],
   pccc_deltas[per ==  7, .N ==    962],
   pccc_deltas[per ==  8, .N ==      0],
-  pccc_deltas[per ==  9, .N ==     68],
+  pccc_deltas[per ==  9, .N ==     87],
   pccc_deltas[per == 10, .N ==      0],
   pccc_deltas[per == 11, .N ==      0],
   pccc_deltas[per == 12, .N ==      0],
@@ -98,7 +98,7 @@ stopifnot(
   pccc_deltas[per == 15, .N ==      0],
   pccc_deltas[per == 16, .N ==     49],
   pccc_deltas[per == 17, .N ==      0],
-  pccc_deltas[per == 18, .N ==      2],
+  pccc_deltas[per == 18, .N ==     11],
   pccc_deltas[per == 19, .N ==      0],
   pccc_deltas[per == 20, .N ==      0],
   pccc_deltas[per == 21, .N ==      0],
@@ -108,7 +108,7 @@ stopifnot(
   pccc_deltas[per == 25, .N ==      0],
   pccc_deltas[per == 26, .N ==      0],
   pccc_deltas[per == 27, .N ==      0],
-  pccc_deltas[per == 28, .N ==      7],
+  pccc_deltas[per == 28, .N ==     14],
   pccc_deltas[per == 29, .N ==      0],
   pccc_deltas[per == 30, .N ==      0],
   pccc_deltas[per == 31, .N ==      0],
@@ -123,9 +123,9 @@ stopifnot(
   pccc_deltas[per == 40, .N ==      0],
   pccc_deltas[per == 41, .N ==      1],
   pccc_deltas[per == 42, .N ==      0],
-  pccc_deltas[per == 43, .N ==     81],
+  pccc_deltas[per == 43, .N ==     86],
   pccc_deltas[per == 44, .N ==      0],
-  pccc_deltas[per == 45, .N ==   1394],
+  pccc_deltas[per == 45, .N ==   1884],
   pccc_deltas[per == 46, .N ==      0],
   pccc_deltas[per == 47, .N ==      3],
   pccc_deltas[per == 48, .N ==     25],
@@ -220,14 +220,27 @@ per2codes <-
     "Q75.31", "Q75.39",
     "Q75.81", "Q75.89",
     paste0("Q87.0", 0:9),
-    paste0("Q92.7", 1:3)
+    paste0("Q92.7", 1:3),
+
+    # ICD-10-SE codes
+    "E70.1A", "E70.1B", "E70.1W", "G26.9", "G91.8A", "G91.8B", "G91.8W",
+    "M32.8A", "M32.8B", "M32.8C", "M32.8D", "M32.8W", "Q87.0A", "Q87.0B",
+    "Q87.0C", "Q87.0D", "Q87.0E", "Q87.0G", "Q87.0J", "Q87.0K", "Q87.0L",
+    "Q87.0M", "Q87.0N", "Q87.0W"
   )
-stopifnot(pccc_deltas[per == 2, full_code %in% per2codes])
+stopifnot(
+  pccc_deltas[per == 2, full_code %in% per2codes]
+)
 
 if (interactive()) {
-  pccc_deltas[per == 2 & full_code %notin% per2codes]
-  subset(get_icd_codes(), startsWith(full_code, "Q92.7"))
-  subset(get_pccc_codes(), startsWith(full_code, "Q92.7"))
+  pccc_deltas[per == 2 & full_code %notin% per2codes][, full_code]
+
+  subset(
+    get_icd_codes(),
+    full_code %in%
+      pccc_deltas[per == 2 & full_code %notin% per2codes][, full_code]
+  )
+
 }
 
 # Tests related to PER 3
@@ -401,7 +414,11 @@ documented_in_eTable3_per43 <-
     "T84.7XXA",
     "T85.79XA",
     "Z46.6",
-    "Z95.9")
+    "Z95.9",
+
+    # ICD-10-SE codes
+    c("C97.9", "E88.8A", "E88.8W", "G31.8A", "G31.8W")
+  )
 
 stopifnot(
   pccc_deltas[per == 43][, all(documented_in_eTable3_per43 %in% full_code)]
@@ -410,6 +427,11 @@ stopifnot(
   ,
   pccc_deltas[per == 43][, all(full_code %in% c(not_documented_in_eTable3_per43, documented_in_eTable3_per43))]
 )
+
+if (interactive()) {
+  pccc_deltas[per == 43 & !(full_code %in% c(not_documented_in_eTable3_per43, documented_in_eTable3_per43))]
+  subset(get_icd_codes(), full_code %in% c("C97.9", "E88.8A", "E88.8W", "G31.8A", "G31.8W"))
+}
 
 # Tests related to PER 44
 

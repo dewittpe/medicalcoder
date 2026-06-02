@@ -61,7 +61,8 @@ icd_descs <-
     icd10[, .(desc = cms_desc)],
     icd10[, .(desc = who_desc)],
     icd10[, .(desc = cdc_desc)],
-    icd10[, .(desc = ihacpa_desc)]
+    icd10[, .(desc = ihacpa_desc)],
+    icd10[, .(desc = socialstyrelsen_desc)]
   )
 icd_descs <- unique(icd_descs)
 icd_descs <- icd_descs[!is.na(desc)]
@@ -105,9 +106,18 @@ ihacpa[, src := "ihacpa"]
 data.table::setorder(ihacpa, code_id, header, start, end, desc_id)
 data.table::setkey(ihacpa, code_id, desc_id)
 
+# Extract the ICD-10-SE
+socialstyrelsen <- icd[socialstyrelsen == 1L, .(code_id, year, header = socialstyrelsen_header, desc = socialstyrelsen_desc)]
+socialstyrelsen <- socialstyrelsen[, .(start = min(year), end = max(year)), by = .(code_id, desc, header)]
+socialstyrelsen <- merge(socialstyrelsen, icd_descs, all.x = TRUE, by = "desc")
+socialstyrelsen[, desc := NULL]
+socialstyrelsen[, src := "socialstyrelsen"]
+data.table::setorder(socialstyrelsen, code_id, header, start, end, desc_id)
+data.table::setkey(socialstyrelsen, code_id, desc_id)
+
 # stack up the ICD sources and build the
 # known_start, known_end, assignable_start, assignable_end columns
-icd_srcs <- data.table::rbindlist(list(cms, who, cdc, ihacpa))
+icd_srcs <- data.table::rbindlist(list(cms, who, cdc, ihacpa, socialstyrelsen))
 
 k <- icd_srcs[,                .(known_start      = min(start), known_end      = max(end)), keyby = .(code_id, src)]
 a <- icd_srcs[header == 0,     .(assignable_start = min(start), assignable_end = max(end)), keyby = .(code_id, src)]
@@ -115,8 +125,8 @@ d <- icd_srcs[!is.na(desc_id), .(desc_start       = min(start), desc_end       =
 
 ka <- merge(x = k, y = a, all = TRUE)
 
-ka[, src := factor(src, levels = c("cms", "cdc", "ihacpa", "who"))]
-d[, src := factor(src, levels = c("cms", "cdc", "ihacpa", "who"))]
+ka[, src := factor(src, levels = c("cms", "cdc", "ihacpa", "socialstyrelsen", "who"))]
+d[, src := factor(src, levels = c("cms", "cdc", "ihacpa", "socialstyrelsen", "who"))]
 data.table::setorder(ka, code_id, src)
 data.table::setorder(d, code_id, desc_id, src)
 

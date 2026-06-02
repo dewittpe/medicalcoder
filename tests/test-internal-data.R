@@ -236,7 +236,7 @@ for (n in grep("^icd_", names(user_visible), value = TRUE)) {
 # Verify that the src column is as expected
 for (n in grep("^icd_", names(user_visible), value = TRUE)) {
   stopifnot(
-    identical(c("cdc", "cms", "ihacpa", "who"), sort(unique(user_visible[[n]][["src"]])))
+    identical(c("cdc", "cms", "ihacpa", "socialstyrelsen", "who"), sort(unique(user_visible[[n]][["src"]])))
   )
 }
 

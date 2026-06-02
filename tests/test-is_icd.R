@@ -212,10 +212,10 @@ stopifnot(inherits(warn, "warning"))
 #   4:    who    10  2008
 w1 <- tryCatchWarning(is_icd("516.3", year = 1979))
 w2 <- tryCatchWarning(is_icd("516.3", year = 1979, icdv = 9))
-w3 <- tryCatchWarning(is_icd("516.3", year = 2000, icdv = 9))
-w4 <- tryCatchWarning(is_icd("516.3", year = 2000, icdv = 10))
-w5 <- tryCatchWarning(is_icd("516.3", year = 2009, icdv = 10))
-w6 <- tryCatchWarning(is_icd("516.3", year = 2009, icdv = 10, src = "cms"))
+w3 <- tryCatchWarning(is_icd("516.3", year = 2000, src = c("cdc", "cms"), icdv = 9))
+w4 <- tryCatchWarning(is_icd("516.3", year = 2000, src = c("cdc", "cms"), icdv = 10))
+w5 <- tryCatchWarning(is_icd("516.3", year = 2009, src = c("cdc", "cms"), icdv = 10))
+w6 <- tryCatchWarning(is_icd("516.3", year = 2009, src = c(       "cms"), icdv = 10))
 
 stopifnot(
   "Year before first known year generates an warning: w1" = inherits(w1, "warning"),
