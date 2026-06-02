@@ -16,7 +16,8 @@ A \code{data.frame} with the following columns:
 }
 \description{
 Retrieve a copy of internal lookup tables of index scores used in assessing
-Charlson comorbidities.
+Charlson comorbidities. The lookup includes score columns for each
+implemented Charlson variant.
 }
 \examples{
 head(get_charlson_index_scores())

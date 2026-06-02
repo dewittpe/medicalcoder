@@ -311,6 +311,12 @@ https://doi.org/10.1093/aje/kwq433. Epub 2011 Feb 17. PMID: 21330339.
 Charlson Comorbidity Index: ICD-9 Update and ICD-10 Translation. Am Health
 Drug Benefits. 2019 Jun-Jul;12(4):188-197. PMID: 31428236; PMCID:
 PMC6684052.
+\item Ludvigsson JF, Appelros P, Askling J, et al. Adaptation of the Charlson
+Comorbidity Index for Register-Based Research in Sweden. Clin Epidemiol.
+2021;13:21-41. https://doi.org/10.2147/CLEP.S282475.
+\item Ludvigsson JF, Appelros P, Askling J, et al. Adaptation of the Charlson
+Comorbidity Index for Register-Based Research in Sweden [Corrigendum].
+Clin Epidemiol. 2023;15:753-754. https://doi.org/10.2147/CLEP.S420607.
 }
 \item Elixhauser Comorbidities:
 \itemize{

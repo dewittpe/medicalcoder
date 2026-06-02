@@ -5,7 +5,10 @@
   mapping between ICD codes and the conditions to be done via precomputed link
   tables or via regex (part of #45)
 
-* Add `charlson_sundararajan_2004`
+* Add `charlson_sundararajan2004`
+
+* Add `charlson_ludvigsson2021`, a Charlson-style Swedish register-based
+  comorbidity method.
 
 * Add ICD-10-AM (Australian Modification) to the ICD database
 

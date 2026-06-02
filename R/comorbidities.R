@@ -157,6 +157,12 @@
 #'       Charlson Comorbidity Index: ICD-9 Update and ICD-10 Translation. Am Health
 #'       Drug Benefits. 2019 Jun-Jul;12(4):188-197. PMID: 31428236; PMCID:
 #'       PMC6684052.
+#'   * Ludvigsson JF, Appelros P, Askling J, et al. Adaptation of the Charlson
+#'       Comorbidity Index for Register-Based Research in Sweden. Clin Epidemiol.
+#'       2021;13:21-41. https://doi.org/10.2147/CLEP.S282475.
+#'   * Ludvigsson JF, Appelros P, Askling J, et al. Adaptation of the Charlson
+#'       Comorbidity Index for Register-Based Research in Sweden \[Corrigendum\].
+#'       Clin Epidemiol. 2023;15:753-754. https://doi.org/10.2147/CLEP.S420607.
 #'
 #' * Elixhauser Comorbidities:
 #'
@@ -810,7 +816,7 @@ print.medicalcoder_comorbidities_with_subconditions <- function(x, ...) {
 comorbidities_methods <- function() {
     c("pccc_v2.0", "pccc_v2.1", "pccc_v3.0", "pccc_v3.1",
       "charlson_deyo1992", "charlson_quan2011", "charlson_quan2005",
-      "charlson_cdmf2019", "charlson_sundararajan2004",
+      "charlson_cdmf2019", "charlson_sundararajan2004", "charlson_ludvigsson2021",
       "elixhauser_elixhauser1988", "elixhauser_ahrq_web", "elixhauser_quan2005",
       "elixhauser_ahrq2022", "elixhauser_ahrq2023", "elixhauser_ahrq2024",
       "elixhauser_ahrq2025", "elixhauser_ahrq2026", "elixhauser_ahrq_icd10")
@@ -867,5 +873,6 @@ map_by_regex <- function(uc, ptrns, icd.codes, by_x, by_y) {
     "elixhauser_ahrq_web", "elixhauser_elixhauser1988", "elixhauser_quan2005",
     "elixhauser_ahrq2022", "elixhauser_ahrq2023", "elixhauser_ahrq2024", "elixhauser_ahrq2025", "elixhauser_ahrq2026",
     "elixhauser_ahrq_icd10",
-    "charlson_cdmf2019", "charlson_deyo1992", "charlson_quan2005", "charlson_quan2011"
+    "charlson_cdmf2019", "charlson_deyo1992", "charlson_ludvigsson2021",
+    "charlson_quan2005", "charlson_quan2011", "charlson_sundararajan2004"
   )

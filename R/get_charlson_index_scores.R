@@ -1,12 +1,13 @@
 #' Get Charlson Index Scores
 #'
 #' Retrieve a copy of internal lookup tables of index scores used in assessing
-#' Charlson comorbidities.
+#' Charlson comorbidities. The lookup includes score columns for each
+#' implemented Charlson variant.
 #'
 #' @seealso
 #' * [`get_charlson_codes()`] for a lookup table of the ICD codes mapping to the
 #'   Charlson comorbidities.
-#' * [comorbidities()] for applying comorbidity algorithms to a data set.
+#' * [`comorbidities()`] for applying comorbidity algorithms to a data set.
 #'
 #' @return A `data.frame` with the following columns:
 #' 

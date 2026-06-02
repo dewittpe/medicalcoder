@@ -131,19 +131,15 @@ m <- sort(m)
 stopifnot(
   identical(
     m,
-    c("charlson_cdmf2019", "charlson_deyo1992", "charlson_quan2005", "charlson_quan2011", "charlson_sundararajan2004")
+    c("charlson_cdmf2019", "charlson_deyo1992", "charlson_ludvigsson2021", "charlson_quan2005", "charlson_quan2011", "charlson_sundararajan2004")
   )
 )
 
 # add an age variable
 mdcr$age <- as.integer(substr(as.character(mdcr$patid), 1, 2))
 
-#mdcr[["rowid"]] <- 1:nrow(mdcr)
-
 commonargs <-
   list(
-    #data = subset(mdcr, patid == "11460"),
-    #id.vars = "rowid",
     data = mdcr,
     id.vars = "patid",
     icdv.var = "icdv",
@@ -179,11 +175,33 @@ stopifnot(all.equal(p, r))
 
 #d <-
 #  merge(
-#    cbind(p$charlson_sundararajan2004, p = 1),
-#    cbind(r$charlson_sundararajan2004, r = 1),
+#    cbind(p$charlson_ludvigsson2021, p = 1),
+#    cbind(r$charlson_ludvigsson2021, r = 1),
 #    all = TRUE
 #  )
 #subset(d, is.na(p)  | is.na(r)) |> head()
+
+#
+#mdcr[["rowid"]] <- 1:nrow(mdcr)
+#
+#commonargs <-
+#  list(
+#    data = subset(mdcr, patid == 12949),
+#    id.vars = "rowid",
+#    icdv.var = "icdv",
+#    icd.codes = "code",
+#    dx.var = "dx",
+#    poa = 1,
+#    primarydx = 0L
+#  )
+#pp <- do.call(comorbidities, c(commonargs, list(method = "charlson_ludvigsson2021", mapping = "precomputed")))
+#rr <- do.call(comorbidities, c(commonargs, list(method = "charlson_ludvigsson2021", mapping = "regex")))
+#
+#dd <- merge(cbind(pp, pp = 1), cbind(rr, rr = 1), all = TRUE)
+#subset(dd, is.na(pp)  | is.na(rr)) |> head()
+#
+#subset(mdcr, rowid == 306040)
+
 
 if (requireNamespace("dplyr", quietly = TRUE)) {
   mdcr <- getExportedValue(name = "as_tibble", ns = "dplyr")(mdcr)
@@ -192,19 +210,12 @@ if (requireNamespace("dplyr", quietly = TRUE)) {
   stopifnot(all.equal(p, r))
 }
 
-
-
-
-
 if (requireNamespace("data.table", quietly = TRUE)) {
   mdcr <- getExportedValue(name = "as.data.table", ns = "data.table")(mdcr)
   eval(e)
   DTclock <- Map(difftime, time1 = tocs, time2 = tics)
   stopifnot(all.equal(p, r))
 }
-
-
-
 
 ################################################################################
 #                                 End of File                                  #

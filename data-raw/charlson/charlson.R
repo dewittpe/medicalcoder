@@ -6,7 +6,8 @@
 #
 # inputs:
 #   ../icd/icd_codes.rds
-#   ./deyo1992.txt, ./cdmf2019.txt, ./quan2005.txt (regex pattern definitions)
+#   ./deyo1992.txt, ./cdmf2019.txt, ./quan2005.txt, ./sundararajan2004.txt,
+#   ./charlson_ludvigsson2021.txt (regex pattern definitions)
 #   ./charlson.txt (condition weights)
 #
 # output: charlson_codes.rds, charlson_index_scores.rds
@@ -29,7 +30,8 @@ regex_patterns <-
     "./deyo1992.txt",
     "./cdmf2019.txt",
     "./quan2005.txt",
-    "./sundararajan2004.txt"
+    "./sundararajan2004.txt",
+    "./charlson_ludvigsson2021.txt"
   ) |>
   lapply(data.table::fread, header = TRUE) |>
   data.table::rbindlist()
@@ -182,6 +184,22 @@ stopifnot(
     subset(charlson_codes, deyo1992 == 1)[["condition"]]
     ,
     subset(charlson_index_scores, !is.na(deyo1992))[["condition"]]
+  )$equal
+)
+
+stopifnot(
+  qwraps2::set_diff(
+    subset(charlson_codes, sundararajan2004 == 1)[["condition"]]
+    ,
+    subset(charlson_index_scores, !is.na(sundararajan2004))[["condition"]]
+  )$equal
+)
+
+stopifnot(
+  qwraps2::set_diff(
+    subset(charlson_codes, ludvigsson2021 == 1)[["condition"]]
+    ,
+    subset(charlson_index_scores, !is.na(ludvigsson2021))[["condition"]]
   )$equal
 )
 

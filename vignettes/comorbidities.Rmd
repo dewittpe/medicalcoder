@@ -47,7 +47,9 @@ implemented in the medicalcoder package:
 2. Charlson
    a. `charlson_deyo1992`: Deyo's original set of codes [@deyo1992adapting;@quan2005]
    b. `charlson_quan2005` and `charlson_quan2011`: Codes and index scoring [@quan2005;@quan2011]
-   c. `charlson_cdmf2019`: [@glasheen2019]
+   c. `charlson_sundararajan2004`: Australian ICD-10-AM adaptation [@sundararajan2004]
+   d. `charlson_cdmf2019`: [@glasheen2019]
+   e. `charlson_ludvigsson2021`: Swedish ICD-10-SE adaptation [@ludvigsson2021adaptation;@ludvigsson2023adaptation]
 
 3. Elixhauser
    a. Based on codes provided by the Agency for Healthcare Research and Quality (AHRQ) for fiscal years 2022 through 2026 [@ahrqicd10]

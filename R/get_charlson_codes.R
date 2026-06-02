@@ -1,7 +1,8 @@
 #' Get Charlson Codes
 #'
-#' Retrieve a copy of internal lookup tables for the ICD codes 
-#' used in assessing Charlson comorbidities.
+#' Retrieve a copy of internal lookup tables for the ICD codes used in assessing
+#' Charlson comorbidities. The lookup includes indicator columns for each
+#' implemented Charlson variant.
 #'
 #' @seealso
 #' * [`get_charlson_index_scores()`] for a lookup table of the by comorbidity index scores.
@@ -19,7 +20,8 @@
 #' * `full_code`: Character vector with the ICD code and any relevant decimal point
 #' * `code`: Character vector with the compact ICD code
 #' * `condition`: Character vector of the conditions
-#' * `charlson_\<variant\>`: Integer vector indicating if the code is part of the \<variant\> of the Charlson comorbidities.
+#' * `charlson_<variant>`: Integer vector indicating if the code is part of the
+#'   `<variant>` of the Charlson comorbidities.
 #'
 #' @examples
 #' head(get_charlson_codes())

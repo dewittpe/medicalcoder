@@ -38,7 +38,9 @@ comorbidities algorithm.
 
 * `charlson_deyo1992`: Deyo's original set of codes [@deyo1992adapting;@quan2005]
 * `charlson_quan2005` and `charlson_quan2011`: Codes and index scoring [@quan2005;@quan2011]
+* `charlson_sundararajan2004`: Australian ICD-10-AM adaptation [@sundararajan2004]
 * `charlson_cdmf2019`: [@glasheen2019]
+* `charlson_ludvigsson2021`: Swedish ICD-10-SE adaptation [@ludvigsson2021adaptation;@ludvigsson2023adaptation]
 
 # ICD Codes and Index Scores
 

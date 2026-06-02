@@ -14,12 +14,14 @@ A \code{data.frame} with the following columns:
 \item \code{full_code}: Character vector with the ICD code and any relevant decimal point
 \item \code{code}: Character vector with the compact ICD code
 \item \code{condition}: Character vector of the conditions
-\item \verb{charlson_\\<variant\\>}: Integer vector indicating if the code is part of the \<variant\> of the Charlson comorbidities.
+\item \verb{charlson_<variant>}: Integer vector indicating if the code is part of the
+\verb{<variant>} of the Charlson comorbidities.
 }
 }
 \description{
-Retrieve a copy of internal lookup tables for the ICD codes
-used in assessing Charlson comorbidities.
+Retrieve a copy of internal lookup tables for the ICD codes used in assessing
+Charlson comorbidities. The lookup includes indicator columns for each
+implemented Charlson variant.
 }
 \examples{
 head(get_charlson_codes())
