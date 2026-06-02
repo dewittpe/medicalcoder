@@ -20,7 +20,9 @@ internal_data_sets <-
     "..mdcr_internal_elixhauser_poa..",
     "..mdcr_internal_icd_chapters..",
     "..mdcr_internal_icd_codes..",
-    "..mdcr_internal_icd_descs..",
+    #"..mdcr_internal_icd_descs..",
+    "..mdcr_internal_desc_tokens..",
+    "..mdcr_internal_icd_desc_token_ids..",
     "..mdcr_internal_icd_subchapters..",
     "..mdcr_internal_known_and_assignable_start_stop..",
     "..mdcr_internal_pccc_codes..",
@@ -41,8 +43,13 @@ stopifnot(
 )
 
 ################################################################################
-# verify all the sets are data.frames and only data.frames
-t01 <-  all(sapply(sapply(internal_data_sets, get, envir = mdcr), inherits, "data.frame"))
+# verify all the sets are data.frames and only data.frames with the exception of
+# ..mdcr_internal_desc_tokens.. which is should be a unnamed character vector
+# and ..mdcr_internal_icd_desc_token_ids.. a unnamed list
+t01 <- sapply(sapply(internal_data_sets, get, envir = mdcr), inherits, "data.frame")
+t01[["..mdcr_internal_icd_desc_token_ids.."]] <- is.list(get("..mdcr_internal_icd_desc_token_ids..", envir = mdcr))
+t01[["..mdcr_internal_desc_tokens.."]] <- is.vector(get("..mdcr_internal_desc_tokens..", envir = mdcr)) & is.character(get("..mdcr_internal_desc_tokens..", envir = mdcr))
+
 t02 <- !any(sapply(sapply(internal_data_sets, get, envir = mdcr), inherits, "data.table"))
 t03 <- !any(sapply(sapply(internal_data_sets, get, envir = mdcr), inherits, "tbl_df"))
 
@@ -61,7 +68,8 @@ expected_internal_names_and_classes <-
     "..mdcr_internal_elixhauser_poa.." = c(condition = "character", poa_required = "integer", elixhauser_ahrq2022 = "integer", elixhauser_ahrq2023 = "integer", elixhauser_ahrq2024 = "integer", elixhauser_ahrq2025 = "integer", elixhauser_ahrq2026 = "integer", elixhauser_ahrq_icd10 = "integer"),
     "..mdcr_internal_icd_chapters.." = c(chapter = "character", chap_id = "integer"),
     "..mdcr_internal_icd_codes.." = c(icdv = "integer", dx = "integer", full_code = "character", code = "character", code_id = "integer", chap_id = "integer", subchap_id = "integer"),
-    "..mdcr_internal_icd_descs.." = c(desc = "character", desc_id = "integer"),
+    "..mdcr_internal_icd_desc_token_ids.." = character(0), ## LIST WITHOUT NAMES
+    "..mdcr_internal_desc_tokens.." = character(0),   ## character vector without names
     "..mdcr_internal_icd_subchapters.." = c(subchapter = "character", subchap_id = "integer"),
     "..mdcr_internal_known_and_assignable_start_stop.." = c(code_id = "integer", src = "factor", known_start = "integer", known_end = "integer", assignable_start = "integer", assignable_end = "integer"),
     "..mdcr_internal_pccc_codes.." = c(code_id = "integer", condition = "character", subcondition = "character", transplant_flag = "integer", tech_dep_flag = "integer", pccc_v3.1 = "integer", pccc_v3.0 = "integer", pccc_v2.1 = "integer", pccc_v2.0 = "integer"),
@@ -70,10 +78,21 @@ expected_internal_names_and_classes <-
 
 current_names_and_classes <- sapply(sapply(internal_data_sets, get, envir = mdcr), sapply, class)
 
-stopifnot(identical(length(current_names_and_classes), length(expected_internal_names_and_classes)))
+stopifnot(
+  identical(
+    length(current_names_and_classes)
+    ,
+    length(expected_internal_names_and_classes)
+  ))
 
 for(n in names(current_names_and_classes)) {
-  z <- identical(current_names_and_classes[[n]], expected_internal_names_and_classes[[n]])
+  if (n == "..mdcr_internal_desc_tokens..") {
+    z <- all(current_names_and_classes[[n]] == "character")
+  } else if (n == "..mdcr_internal_icd_desc_token_ids..") {
+    z <- all(current_names_and_classes[[n]] == "integer")
+  } else {
+    z <- identical(current_names_and_classes[[n]], expected_internal_names_and_classes[[n]])
+  }
   if (!z) {
     stop(sprintf("internal %s does not have the expected structure", n))
   }

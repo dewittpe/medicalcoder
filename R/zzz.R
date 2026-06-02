@@ -13,6 +13,7 @@
                            "assignable_start","assignable_end"), drop = FALSE]
 
   # build icd_codes_with_desc
+
   dkeys <- do.call(paste, c(..mdcr_internal_desc_start_stop..[c("code_id", "src")], sep = "\r"))
   ckeys <- do.call(paste, c(icd_codes[c("code_id", "src")], sep = "\r"))
   idx <- match(dkeys, unique(ckeys))
@@ -20,9 +21,13 @@
   icd_codes_with_desc <- cbind(..mdcr_internal_desc_start_stop..,
                                icd_codes[idx, setdiff(names(icd_codes), c("code_id", "src")), drop = FALSE])
 
-  idx <- match(icd_codes_with_desc[["desc_id"]], ..mdcr_internal_icd_descs..[["desc_id"]])
-  icd_codes_with_desc <- cbind(icd_codes_with_desc,
-                               ..mdcr_internal_icd_descs..[idx, "desc", drop = FALSE])
+  icd_codes_with_desc[["desc"]] <-
+    do.call(c,
+      lapply(icd_codes_with_desc$desc_id,
+        function(i) {
+          paste(..mdcr_internal_desc_tokens..[..mdcr_internal_icd_desc_token_ids..[[i]]], collapse = "")
+        })
+    )
 
   # place the icd_codes and icd_codes_with_desc in the cache
   icd_codes[["src"]] <- as.character(icd_codes[["src"]])

@@ -1,7 +1,8 @@
 include ../../Makevars
 
 ICD_DATA_SETS := icd_codes.rds\
-								 icd_descs.rds\
+								 desc_tokens.rds\
+								 icd_desc_token_ids.rds\
 								 known_and_assignable_start_stop.rds\
 								 desc_start_stop.rds\
 								 icd_chapters.rds\

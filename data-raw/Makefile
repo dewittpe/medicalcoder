@@ -8,7 +8,8 @@ DATASETS := ./charlson/charlson_regex.rds\
 						./elixhauser/elixhauser_poa.rds\
 						./icd/icd_chapters.rds\
 						./icd/icd_codes.rds\
-						./icd/icd_descs.rds\
+						./icd/icd_desc_token_ids.rds\
+						./icd/desc_tokens.rds\
 						./icd/icd_subchapters.rds\
 						./pccc/pccc_codes.rds\
 						./pccc/pccc_conditions.rds

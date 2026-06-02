@@ -39,6 +39,15 @@ icd10[, icdv := 10L]
 icd10[, full_code := icd_compact_to_full(code, icdv = icdv, dx = dx)]
 
 icd <- data.table::rbindlist(list(icd9, icd10), use.names = TRUE, fill = TRUE)
+rm(icd9, icd10)
+
+# Some small clean up of descriptions
+for (j in grep("_desc$", names(icd), value = TRUE)) {
+  # 1. add a space
+  data.table::set(icd, j = j, value = sub('"Light-for-dates"w', '"Light-for-dates" w', icd[[j]]))
+  # 2. remove more than one space
+  data.table::set(icd, j = j, value = sub(' {2,}', ' ', icd[[j]]))
+}
 
 ################################################################################
 # extract just the codes as a lookup table
@@ -53,21 +62,43 @@ icd <- merge(x = icd, y = icd_codes, by = c("icdv", "dx", "full_code", "code"))
 
 ################################################################################
 # Make a lookup table for the descriptions as well
-# storage size
 icd_descs <-
-  rbind(
-    icd9[ , .(desc = cms_desc)],
-    icd9[ , .(desc = cdc_desc)],
-    icd10[, .(desc = cms_desc)],
-    icd10[, .(desc = who_desc)],
-    icd10[, .(desc = cdc_desc)],
-    icd10[, .(desc = ihacpa_desc)],
-    icd10[, .(desc = socialstyrelsen_desc)]
+  data.table::melt(
+    data = icd,
+    id.vars = "code_id",
+    measure.vars = grep("_desc$", names(icd), value = TRUE),
+    value.name = "desc"
   )
-icd_descs <- unique(icd_descs)
+
+icd_descs <- unique(icd_descs[, "desc", drop = FALSE])
 icd_descs <- icd_descs[!is.na(desc)]
 data.table::setorder(icd_descs, desc)
 icd_descs[, desc_id := seq_len(.N)]
+
+# Now, let's tokenize the desc
+pattern <- "(?<=.)(?=[[:space:][:digit:][:punct:]])|(?<=[[:space:][:digit:][:punct:]])(?=.)"
+split_desc <- icd_descs[, data.table::tstrsplit(desc, pattern, perl = TRUE)]
+split_desc[, desc_id := seq_len(.N)]
+
+tokens <- data.table::melt(split_desc, id.vars = "desc_id", value.name = "token", na.rm = TRUE)
+tokens[, variable := NULL]
+tokens[, desc_id := NULL]
+tokens <- unique(tokens)
+tokens[, token_id := seq_len(.N)]
+
+DT <-
+  merge(
+    x = data.table::melt(split_desc, id.vars = "desc_id", na.rm = TRUE),
+    y = tokens,
+    all.x = TRUE,
+    by.x = "value",
+    by.y = "token",
+    sort = FALSE
+  )
+data.table::setkey(DT, desc_id, variable)
+
+icd_desc_token_ids <- split(DT[["token_id"]], f = DT[["desc_id"]])
+desc_tokens <- tokens[["token"]]
 
 ################################################################################
 # Extract the CM and PCS (CMS) variants
@@ -202,12 +233,14 @@ data.table::setDF(d)
 data.table::setDF(icd_chapters)
 data.table::setDF(icd_subchapters)
 
-saveRDS(icd_codes,       file = "icd_codes.rds")
-saveRDS(icd_descs,       file = "icd_descs.rds")
-saveRDS(ka,              file = "known_and_assignable_start_stop.rds")
-saveRDS(d,               file = "desc_start_stop.rds")
-saveRDS(icd_chapters,    file = "icd_chapters.rds")
-saveRDS(icd_subchapters, file = "icd_subchapters.rds")
+saveRDS(icd_codes,          file = "icd_codes.rds")
+#saveRDS(icd_descs,          file = "icd_descs.rds")
+saveRDS(desc_tokens,        file = "desc_tokens.rds")
+saveRDS(icd_desc_token_ids, file = "icd_desc_token_ids.rds")
+saveRDS(ka,                 file = "known_and_assignable_start_stop.rds")
+saveRDS(d,                  file = "desc_start_stop.rds")
+saveRDS(icd_chapters,       file = "icd_chapters.rds")
+saveRDS(icd_subchapters,    file = "icd_subchapters.rds")
 
 ################################################################################
 #                                 End of File                                  #

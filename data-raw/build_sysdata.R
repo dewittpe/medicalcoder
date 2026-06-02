@@ -7,7 +7,8 @@
 #
 # inputs (relative to data-raw/):
 #   ./icd/icd_codes.rds
-#   ./icd/icd_descs.rds
+#   ./icd/icd_desc_token_ids.rds
+#   ./icd/desc_tokens.rds
 #   ./icd/icd_chapters.rds
 #   ./icd/icd_subchapters.rds
 #   ./icd/known_and_assignable_start_stop.rds
@@ -33,7 +34,9 @@
 
 # ICD data sets
 ..mdcr_internal_icd_codes.. <- readRDS("./icd/icd_codes.rds")
-..mdcr_internal_icd_descs.. <- readRDS("./icd/icd_descs.rds")
+#..mdcr_internal_icd_descs.. <- readRDS("./icd/icd_descs.rds")
+..mdcr_internal_desc_tokens.. <- readRDS("./icd/desc_tokens.rds")
+..mdcr_internal_icd_desc_token_ids.. <- readRDS("./icd/icd_desc_token_ids.rds")
 ..mdcr_internal_icd_chapters.. <- readRDS("./icd/icd_chapters.rds")
 ..mdcr_internal_icd_subchapters.. <- readRDS("./icd/icd_subchapters.rds")
 ..mdcr_internal_known_and_assignable_start_stop.. <- readRDS("./icd/known_and_assignable_start_stop.rds")
@@ -61,11 +64,12 @@ save(
   , ..mdcr_internal_pccc_conditions..
 
   , ..mdcr_internal_icd_codes..
-  , ..mdcr_internal_icd_descs..
+  , ..mdcr_internal_icd_desc_token_ids..
   , ..mdcr_internal_icd_chapters..
   , ..mdcr_internal_icd_subchapters..
   , ..mdcr_internal_known_and_assignable_start_stop..
   , ..mdcr_internal_desc_start_stop..
+  , ..mdcr_internal_desc_tokens..
 
   , ..mdcr_internal_charlson_regex..
   , ..mdcr_internal_charlson_codes..
