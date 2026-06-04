@@ -113,12 +113,20 @@ icd9 <-
 
 ################################################################################
 # For convenience, especially with header codes that are listed in the CDC but
-# not CMS, any code that does not have a cdc_desc will get a
+# not CMS, we'll use the CDC description to fill in for the missing CMS
+# description.
 stopifnot("all codes with missing desc are headers" =
   icd9[is.na(cdc_desc) & is.na(cms_desc),
     sum(is.na(cdc_header) | cdc_header == 1L) == .N &
     sum(is.na(cms_header) | cms_header == 1L) == .N]
 )
+
+icd9[
+  is.na(cms_desc) & !is.na(cdc_desc) & cms == 1 & cdc == 1,
+  cms_desc := cdc_desc
+  ]
+
+icd9[cms_header == 1L, cms_desc := zoo::na.locf(cms_desc), by = .(code, dx)]
 
 ################################################################################
 # save
