@@ -1,26 +1,24 @@
 ################################################################################
-library(medicalcoder)
-require(data.table)
-
-################################################################################
 # Helper functions
 get_all_duplicates <- function(x, by = seq_along(x), ...) {
   duplicated(x, by = by, fromLast = FALSE, ...) | duplicated(x, by = by, fromLast = TRUE, ...)
 }
 
 compare_symbols_html <- function(x, y) {
-  fcase(is.na(x) & is.na(y), "——",
-        !is.na(x) & is.na(y), "✔—",
-        is.na(x) & !is.na(y), "—✔",
-        x == y, "✅",
-        x != y, "❌")
+  data.table::fcase(
+    is.na(x) & is.na(y), "——",
+    !is.na(x) & is.na(y), "✔—",
+    is.na(x) & !is.na(y), "—✔",
+    x == y, "✅",
+    x != y, "❌"
+  )
 }
 
 ################################################################################
 # build an icd_codes data.table for use in the articles.  this will require one
 # description per code
-icd_codes <- get_icd_codes(with.descriptions = TRUE)
-setDT(icd_codes)
+icd_codes <- medicalcoder::get_icd_codes(with.descriptions = TRUE)
+data.table::setDT(icd_codes)
 
 # retain the most recent description
 icd_codes[, max_desc_end := max(desc_end), by = .(icdv, dx, full_code, code, src)]
@@ -38,11 +36,11 @@ icd_codes[, .N, keyby = .(srcs, cms, cdc)]
 
 icd_codes <-
   icd_codes[
-    srcs == 1 |                                     
-    (srcs > 1 & cms == 1 & src == "cms") |         
+    srcs == 1 |
+    (srcs > 1 & cms == 1 & src == "cms") |
     (srcs > 1 & cms == 0 & cdc == 1 & src == "cdc") |
     (srcs > 1 & cms == 0 & cdc == 0 & ihacpa == 1 & src == "ihacpa") |
-    (srcs > 1 & cms == 0 & cdc == 0 & ihacpa == 0 & who == 1 & src == "who") 
+    (srcs > 1 & cms == 0 & cdc == 0 & ihacpa == 0 & who == 1 & src == "who")
   ]
 icd_codes[, srcs := NULL]
 icd_codes[, cms := NULL]
@@ -55,13 +53,16 @@ icd_codes[code == "W027"]
 icd_codes[code == "W028"]
 icd_codes[code == "W029"]
 
-icd_codes[, icdsystem := fcase(icdv ==  9 & dx == 0, "ICD-9-PCS",
+icd_codes[, icdsystem := data.table::fcase(icdv ==  9 & dx == 0, "ICD-9-PCS",
                                icdv ==  9 & dx == 1, "ICD-9-CM",
                                icdv == 10 & dx == 0, "ICD-10-PCS",
                                icdv == 10 & dx == 1, "ICD-10-CM")]
 
 stopifnot("No duplicated full codes" =
-  icd_codes[get_all_duplicates(icd_codes, by = c("icdv", "dx", "full_code")), .N == 0L]
+  icd_codes[
+    get_all_duplicates(icd_codes, by = c("icdv", "dx", "full_code")),
+    .N == 0L
+  ]
 )
 # icd_codes[get_all_duplicates(icd_codes, by = c("icdv", "dx", "full_code"))]
 
@@ -69,8 +70,8 @@ stopifnot("No duplicated full codes" =
 # pccc codes
 #
 # Add column with the conditions (subcondition) [flags] for use in reporting
-pccc_codes <- get_pccc_codes()
-setDT(pccc_codes)
+pccc_codes <- medicalcoder::get_pccc_codes()
+data.table::setDT(pccc_codes)
 
 # build the mapping row-wise
 pccc_codes[
@@ -80,7 +81,7 @@ pccc_codes[
 ]
 
 pccc_codes <-
-  melt(
+  data.table::melt(
     pccc_codes,
     id.vars = c("icdv", "dx", "full_code", "code", "map"),
     measure.vars = patterns("pccc"),
@@ -99,15 +100,15 @@ pccc_codes[
 
 pccc_codes <- unique(pccc_codes)
 
-setnames(pccc_codes, old = "map", new = "condition")
+data.table::setnames(pccc_codes, old = "map", new = "condition")
 
 ################################################################################
 # charlson codes
-charlson_codes <- get_charlson_codes()
-setDT(charlson_codes)
+charlson_codes <- medicalcoder::get_charlson_codes()
+data.table::setDT(charlson_codes)
 
 charlson_codes <-
-  melt(
+  data.table::melt(
     charlson_codes,
     id.vars = c("icdv", "dx", "full_code", "code", "condition"),
     measure.vars = patterns("charlson"),
@@ -125,11 +126,11 @@ charlson_codes <- unique(charlson_codes)
 
 ################################################################################
 # elixhauser codes
-elixhauser_codes <- get_elixhauser_codes()
-setDT(elixhauser_codes)
+elixhauser_codes <- medicalcoder::get_elixhauser_codes()
+data.table::setDT(elixhauser_codes)
 
 elixhauser_codes <-
-  melt(
+  data.table::melt(
     elixhauser_codes,
     id.vars = c("icdv", "dx", "full_code", "code", "condition"),
     measure.vars = patterns("elixhauser"),
@@ -148,12 +149,16 @@ elixhauser_codes <- unique(elixhauser_codes)
 ################################################################################
 # All ICD codes and Mappings
 mappings <-
-  rbindlist(list(pccc_codes, charlson_codes, elixhauser_codes),
-            use.names = TRUE)
+  data.table::rbindlist(
+    list(pccc_codes, charlson_codes, elixhauser_codes),
+    use.names = TRUE
+  )
 mappings <-
-  dcast(data = mappings,
-        formula = icdv + dx + full_code + code ~ method,
-        value.var = "condition")
+  data.table::dcast(
+    data = mappings,
+    formula = icdv + dx + full_code + code ~ method,
+    value.var = "condition"
+  )
 
 mappings <-
   merge(x = icd_codes,
@@ -184,8 +189,14 @@ PERS[, v2.1_vs_v3.0 := compare_symbols_html(v2.1, v3.0)]
 PERS[, v2.1_vs_v3.1 := compare_symbols_html(v2.1, v3.1)]
 PERS[, v3.0_vs_v3.1 := compare_symbols_html(v3.0, v3.1)]
 
-PERS <- PERS[, .N, keyby = .(v2.0_eq_v2.1, v2.0_eq_v3.0, v2.0_eq_v3.1, v2.1_eq_v3.0, v2.1_eq_v3.1, v3.0_eq_v3.1,
-                             v2.0_vs_v2.1, v2.0_vs_v3.0, v2.0_vs_v3.1, v2.1_vs_v3.0, v2.1_vs_v3.1, v3.0_vs_v3.1)]
+PERS <-
+  PERS[
+    ,
+    .N,
+    keyby = .(
+      v2.0_eq_v2.1, v2.0_eq_v3.0, v2.0_eq_v3.1, v2.1_eq_v3.0, v2.1_eq_v3.1, v3.0_eq_v3.1,
+      v2.0_vs_v2.1, v2.0_vs_v3.0, v2.0_vs_v3.1, v2.1_vs_v3.0, v2.1_vs_v3.1, v3.0_vs_v3.1)
+  ]
 
 PERS <- PERS[, .SD, .SDcols = patterns("_vs_")]
 PERS[, per := 1:.N]
@@ -266,9 +277,14 @@ pccc_deltas[, v2.1_vs_v3.1 := compare_symbols_html(pccc_v2.1, pccc_v3.1)]
 pccc_deltas[, v3.0_vs_v3.1 := compare_symbols_html(pccc_v3.0, pccc_v3.1)]
 
 pccc_deltas <-
-  merge(pccc_deltas, PERS, all.x = TRUE, by = grep("_vs_", names(PERS), value = TRUE))
+  merge(
+    x = pccc_deltas,
+    y = PERS,
+    all.x = TRUE,
+    by = grep("_vs_", names(PERS), value = TRUE)
+  )
 
-setcolorder(pccc_deltas,
+data.table::setcolorder(pccc_deltas,
             c("icdv", "dx", "full_code", "code",
               "known_start", "known_end",
               "assignable_start", "assignable_end",
@@ -285,7 +301,7 @@ pccc_pers <-
                  v2.0_eq_v2.1, v2.0_eq_v3.0, v2.0_eq_v3.1, v2.1_eq_v3.0, v2.1_eq_v3.1, v3.0_eq_v3.1)
        ]
 pccc_pers <- merge(pccc_pers, PERS, all = TRUE, by = intersect(names(pccc_pers), names(PERS)))
-pccc_pers[, N := nafill(N, fill = 0, type = "const")]
+pccc_pers[, N := data.table::nafill(N, fill = 0, type = "const")]
 
 data.table::setcolorder(pccc_pers, c("per", "per_desc", "N"))
 data.table::setorder(pccc_pers, -N, per)
