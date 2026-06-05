@@ -69,3 +69,9 @@ data.table::setkey(comorbiditycodes, icdv, dx, chapter, subchapter, category, su
 
 pccc_conditions <- unique(medicalcoder::get_pccc_conditions()[, c("condition", "condition_label")])
 pccc_conditions <- stats::setNames(pccc_conditions$condition, pccc_conditions$condition_label)
+
+charlson_conditions <- unique(medicalcoder::get_charlson_index_scores()[, c("condition", "condition_description")])
+charlson_conditions <- stats::setNames(charlson_conditions$condition, charlson_conditions$condition_description)
+
+elixhauser_conditions <- unique(medicalcoder::get_elixhauser_index_scores()[, c("condition"), drop = FALSE])
+elixhauser_conditions <- stats::setNames(elixhauser_conditions$condition, elixhauser_conditions$condition)

@@ -4,8 +4,8 @@ ui <-
     dashboardSidebar(
       sidebarMenu(
         id = "sidebar_tabs",
-        #menuItem("ICD Codes", tabName = "icd", icon = icon("fas fa-book-medical")),
-        menuItem("PCCC", tabName = "pccc", icon = icon("fas fa-home")),
+        menuItem("Overview", tabName = "overview", icon = icon("fas fa-home")),
+        menuItem("PCCC", tabName = "pccc", icon = icon("fas fa-book-medical")),
         conditionalPanel(
           condition = "input.sidebar_tabs == 'pccc'",
           selectInput(
@@ -15,12 +15,33 @@ ui <-
             multiple = TRUE
           )
         ),
-        radioButtons(
-          inputId = "icdv",
-          label = "ICD Version",
-          choices = c(9, 10),
-          selected = character(0),
-          inline = TRUE
+        conditionalPanel(
+          condition = "input.sidebar_tabs == 'charlson'",
+          selectInput(
+            inputId = "charlsonconditions",
+            label = "Select Charlson Condition(s)",
+            choices = charlson_conditions,
+            multiple = TRUE
+          )
+        ),
+        conditionalPanel(
+          condition = "input.sidebar_tabs == 'elixhauser'",
+          selectInput(
+            inputId = "elixhauserconditions",
+            label = "Select Elixhauser Condition(s)",
+            choices = elixhauser_conditions,
+            multiple = TRUE
+          )
+        ),
+        conditionalPanel(
+          condition = "input.sidebar_tabs != 'overview'",
+          radioButtons(
+            inputId = "icdv",
+            label = "ICD Version",
+            choices = c(9, 10),
+            selected = character(0),
+            inline = TRUE
+          )
         ),
         conditionalPanel(
           condition = "(input.icdv == '9' || input.icdv == '10')",
@@ -56,11 +77,15 @@ ui <-
           condition = "input.subclassification",
           selectInput("subsubclassification", "Select a Subsubclassification:", choices = NULL, multiple = FALSE)
         ),
-        actionButton("clear_radiobuttons", "Reset Selectors")
+        conditionalPanel(
+          condition = "input.sidebar_tabs != 'overview'",
+          actionButton("clear_radiobuttons", "Reset Selectors")
+        )
       )
     ),
     dashboardBody(
       tabItems(
+        tabItem(tabName = "overview", includeMarkdown("overview.md")),
         #tabItem(tabName = "icd", DT::dataTableOutput("icdcodes")),
         tabItem(
           tabName = "pccc",
