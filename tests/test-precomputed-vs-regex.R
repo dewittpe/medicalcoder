@@ -1,3 +1,18 @@
+on_cran <- function () {
+    env <- Sys.getenv("NOT_CRAN")
+    if (identical(env, "")) {
+        !interactive()
+    }
+    else {
+        !isTRUE(as.logical(env))
+    }
+}
+
+if (on_cran()) {
+  message("CRAN environment detected: skipping this test file.")
+  q(save = "no", status = 0)
+}
+
 source('utilities.R')
 ################################################################################
 # Test that the regex will capture the same codes as the precomputed codes
