@@ -5,7 +5,11 @@ ui <-
       sidebarMenu(
         id = "sidebar_tabs",
         menuItem("Overview", tabName = "overview", icon = icon("fas fa-home")),
+        menuItem("ICD", tabName = "icd", icon = icon("fas fa-book-medical")),
         menuItem("PCCC", tabName = "pccc", icon = icon("fas fa-book-medical")),
+        menuItem("Charlson", tabName = "charlson", icon = icon("fas fa-book-medical")),
+        menuItem("Elixhauser", tabName = "elixhauser", icon = icon("fas fa-book-medical")),
+        hr(),
         conditionalPanel(
           condition = "input.sidebar_tabs == 'pccc'",
           selectInput(
@@ -34,7 +38,20 @@ ui <-
           )
         ),
         conditionalPanel(
-          condition = "input.sidebar_tabs != 'overview'",
+          condition = "(input.sidebar_tabs == 'icd')",
+          checkboxGroupInput(
+            inputId = "icdcolumns",
+            label = "Select Columns to Display",
+            choices = c("icdv", "dx", "chapter", "subchapter", "category",
+              "subcategory", "subclassification", "subsubclassification",
+              "extension", "full_code", "src", "desc", "known_start",
+              "known_end", "assignable_start", "assignable_end", "desc_start",
+              "desc_end"),
+            selected = c("icdv", "dx", "full_code", "src", "desc")
+          )
+        ),
+        conditionalPanel(
+          condition = "(input.sidebar_tabs != 'overview' && input.sidebar_tabs != 'icd')",
           radioButtons(
             inputId = "icdv",
             label = "ICD Version",
@@ -78,7 +95,7 @@ ui <-
           selectInput("subsubclassification", "Select a Subsubclassification:", choices = NULL, multiple = FALSE)
         ),
         conditionalPanel(
-          condition = "input.sidebar_tabs != 'overview'",
+          condition = "(input.sidebar_tabs != 'overview' && input.sidebar_tabs != 'icd')",
           actionButton("clear_radiobuttons", "Reset Selectors")
         )
       )
@@ -86,7 +103,7 @@ ui <-
     dashboardBody(
       tabItems(
         tabItem(tabName = "overview", includeMarkdown("overview.md")),
-        #tabItem(tabName = "icd", DT::dataTableOutput("icdcodes")),
+        tabItem(tabName = "icd", DT::dataTableOutput("icdcodetable")),
         tabItem(
           tabName = "pccc",
           h1("Counts"),
@@ -94,7 +111,25 @@ ui <-
           h1("ICD Codes and PCCC Condition(s)"),
           DT::dataTableOutput("pccccodesandconditions"),
           h1("ICD Code Descriptions"),
-          DT::dataTableOutput("pccccodes")
+          DT::dataTableOutput("pcccicdcode_table")
+        ),
+        tabItem(
+          tabName = "charlson",
+          h1("Counts"),
+          tableOutput("charlsoncounts"),
+          h1("ICD Codes and Charlson Condition(s)"),
+          DT::dataTableOutput("charlsoncodesandconditions"),
+          h1("ICD Code Descriptions"),
+          DT::dataTableOutput("charlsonicdcode_table")
+        ),
+        tabItem(
+          tabName = "elixhauser",
+          h1("Counts"),
+          tableOutput("elixhausercounts"),
+          h1("ICD Codes and Elixhauser Condition(s)"),
+          DT::dataTableOutput("elixhausercodesandconditions"),
+          h1("ICD Code Descriptions"),
+          DT::dataTableOutput("elixhausericdcode_table")
         )
       )
     )

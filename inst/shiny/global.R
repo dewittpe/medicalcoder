@@ -15,6 +15,11 @@ icdcodes <- data.table::as.data.table(medicalcoder::get_icd_codes(with.descripti
 chapters <- icdcodes[, unique(.SD), .SDcols = c("icdv", "dx", "chapter")]
 icdcodes[, chapter := factor(chapter, levels = chapters$chapter)]
 
+icdcodestable <- data.table::copy(icdcodes)
+icdcodestable[, icdv := factor(icdv, levels = c(9, 10))]
+icdcodestable[, dx := factor(dx, levels = c(0, 1))]
+icdcodestable[, src := factor(src)]
+
 comorbiditycodes <-
   data.table::rbindlist(
     list(

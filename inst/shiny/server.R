@@ -208,7 +208,6 @@ server <- function(input, output, session) {
   })
 
   pccc_count_table <- reactive({
-
     pattern <- paste(input$pcccconditions, collapse = "|")
 
     if (length(input$pcccconditions) == 0 || nchar(pattern) == 0) {
@@ -235,11 +234,110 @@ server <- function(input, output, session) {
     comorbiditycodes[rws()$crws, .(full_code, v3.1 = pccc_v3.1, v3.0 = pccc_v3.0, v2.1 = pccc_v2.1, v2.0 = pccc_v2.0)]
   })
 
-  pccc_icdcode_table <- reactive({
+  charlson_count_table <- reactive({
+    pattern <- paste(input$charlsonconditions, collapse = "|")
+
+    if (length(input$charlsonconditions) == 0 || nchar(pattern) == 0) {
+      pattern <- "NOTTHING HAS BEEN SELECTED"
+    }
+
+    tab <-
+      comorbiditycodes[rws()$crws, .(
+        `known ICD codes`     = .N,
+        `CDMF (2019)`         = sum(grepl(pattern, charlson_cdmf2019)),
+        `Deyo (1992)`         = sum(grepl(pattern, charlson_deyo1992)),
+        `Ludvigsson (2021)`   = sum(grepl(pattern, charlson_ludvigsson2021)),
+        `Quan (2005)`         = sum(grepl(pattern, charlson_quan2005)),
+        `Sundararajan (2004)` = sum(grepl(pattern, charlson_sundararajan2004))
+        ), keyby = eval(js())]
+    for (j in c("CDMF (2019)", "Deyo (1992)", "Ludvigsson (2021)", "Quan (2005)", "Sundararajan (2004)")) {
+      zeros <- which(tab[[j]] == 0)
+      data.table::set(tab, j = j, value = as.character(tab[[j]]))
+      data.table::set(tab, i = zeros, j = j, value = "")
+    }
+    tab[]
+  })
+
+  charlson_codes_and_condtions_table <- reactive({
+    comorbiditycodes[rws()$crws, .(full_code,
+        `CDMF (2019)`         = charlson_cdmf2019,
+        `Deyo (1992)`         = charlson_deyo1992,
+        `Ludvigsson (2021)`   = charlson_ludvigsson2021,
+        `Quan (2005)`         = charlson_quan2005,
+        `Sundararajan (2004)` = charlson_sundararajan2004)]
+  })
+
+  elixhauser_count_table <- reactive({
+    pattern <- paste(input$elixhauserconditions, collapse = "|")
+
+    if (length(input$elixhauserconditions) == 0 || nchar(pattern) == 0) {
+      pattern <- "NOTTHING HAS BEEN SELECTED"
+    }
+
+    tab <-
+      comorbiditycodes[rws()$crws, .(
+        `known ICD codes` = .N,
+        `AHRQ (ICD-9)` = sum(grepl(pattern, elixhauser_ahrq_web)),
+        `Elixhauser (1998)` = sum(grepl(pattern, elixhauser_elixhauser1988)),
+        `Quan (2005)` = sum(grepl(pattern, elixhauser_quan2005)),
+        `AHRQ (2022)` = sum(grepl(pattern, elixhauser_ahrq2022)),
+        `AHRQ (2023)` = sum(grepl(pattern, elixhauser_ahrq2023)),
+        `AHRQ (2024)` = sum(grepl(pattern, elixhauser_ahrq2024)),
+        `AHRQ (2025)` = sum(grepl(pattern, elixhauser_ahrq2025)),
+        `AHRQ (2026)` = sum(grepl(pattern, elixhauser_ahrq2026)),
+        `AHRQ (ICD-10)` = sum(grepl(pattern, elixhauser_ahrq_icd10))
+        ), keyby = eval(js())]
+    for (j in c("Elixhauser (1998)", "Quan (2005)", grep("^AHRQ", names(tab), value = TRUE))) {
+      zeros <- which(tab[[j]] == 0)
+      data.table::set(tab, j = j, value = as.character(tab[[j]]))
+      data.table::set(tab, i = zeros, j = j, value = "")
+    }
+    tab[]
+  })
+
+  elixhauser_codes_and_condtions_table <- reactive({
+    comorbiditycodes[rws()$crws, .(full_code,
+        `AHRQ (ICD-9)`      = elixhauser_ahrq_web,
+        `Elixhauser (1998)` = elixhauser_elixhauser1988,
+        `Quan (2005)`       = elixhauser_quan2005,
+        `AHRQ (2022)`       = elixhauser_ahrq2022,
+        `AHRQ (2023)`       = elixhauser_ahrq2023,
+        `AHRQ (2024)`       = elixhauser_ahrq2024,
+        `AHRQ (2025)`       = elixhauser_ahrq2025,
+        `AHRQ (2026)`       = elixhauser_ahrq2026,
+        `AHRQ (ICD-10)`     = elixhauser_ahrq_icd10
+    )]
+  })
+
+  pcccicdcode_table <- reactive({
+    icdcodes[rws()$irws][, .(full_code, src, desc, known_start, known_end, assignable_start, assignable_end, desc_start, desc_end)]
+  })
+  charlsonicdcode_table <- reactive({
+    icdcodes[rws()$irws][, .(full_code, src, desc, known_start, known_end, assignable_start, assignable_end, desc_start, desc_end)]
+  })
+  elixhausericdcode_table <- reactive({
     icdcodes[rws()$irws][, .(full_code, src, desc, known_start, known_end, assignable_start, assignable_end, desc_start, desc_end)]
   })
 
   output$pccccounts <- shiny::renderTable({pccc_count_table()}, hover = TRUE, align = "r")
   output$pccccodesandconditions <- DT::renderDataTable({pccc_codes_and_condtions_table()})
-  output$pccccodes <- DT::renderDataTable({pccc_icdcode_table()})
+  output$pcccicdcode_table <- DT::renderDataTable({pcccicdcode_table()})
+
+  output$charlsoncounts <- shiny::renderTable({charlson_count_table()}, hover = TRUE, align = "r")
+  output$charlsoncodesandconditions <- DT::renderDataTable({charlson_codes_and_condtions_table()})
+  output$charlsonicdcode_table <- DT::renderDataTable({charlsonicdcode_table()})
+
+  output$elixhausercounts <- shiny::renderTable({elixhauser_count_table()}, hover = TRUE, align = "r")
+  output$elixhausercodesandconditions <- DT::renderDataTable({elixhauser_codes_and_condtions_table()})
+  output$elixhausericdcode_table <- DT::renderDataTable({pcccicdcode_table()})
+
+  icdcolumns <- reactive({
+    input$icdcolumns
+  })
+  output$icdcodetable <- DT::renderDataTable({
+    DT::datatable(
+      data = icdcodestable[, .SD, .SDcols = icdcolumns()],
+      filter = "top"
+    )
+  })
 }
