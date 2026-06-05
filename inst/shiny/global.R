@@ -53,8 +53,19 @@ comorbiditycodes <-
     by = c("icdv", "dx", "full_code")
   )
 
+# NA values in character vectors will be set to "--not applicable--"
+for (j in c("chapter", "subchapter", "category", "subcategory", "subclassification", "subsubclassification")) {
+  if (is.character(comorbiditycodes[[j]])) {
+    i <- which(is.na(comorbiditycodes[[j]]))
+    data.table::set(comorbiditycodes, i = i, j = j, value = "--not applicable--")
+  }
+  if (is.character(icdcodes[[j]])) {
+    i <- which(is.na(icdcodes[[j]]))
+    data.table::set(icdcodes, i = i, j = j, value = "--not applicable--")
+  }
+}
+
 data.table::setkey(comorbiditycodes, icdv, dx, chapter, subchapter, category, subcategory, subclassification, subsubclassification)
 
 pccc_conditions <- unique(medicalcoder::get_pccc_conditions()[, c("condition", "condition_label")])
 pccc_conditions <- stats::setNames(pccc_conditions$condition, pccc_conditions$condition_label)
-

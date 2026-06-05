@@ -22,38 +22,41 @@ ui <-
           selected = character(0),
           inline = TRUE
         ),
-        radioButtons(
-          inputId = "dx",
-          label = "", #"Diagnostic or Procedure Codes",
-          choices = c("Diagnostic" = 1, "Procedure" = 0),
-          selected = character(0),
-          inline = TRUE
+        conditionalPanel(
+          condition = "(input.icdv == '9' || input.icdv == '10')",
+          radioButtons(
+            inputId = "dx",
+            label = "Diagnostic or Procedure Codes",
+            choices = c("Diagnostic" = 1, "Procedure" = 0),
+            selected = character(0),
+            inline = TRUE
+          )
         ),
-        actionButton("clear_radiobuttons", "Reset Radio Buttons"),
         conditionalPanel(
           condition = "(input.icdv == '9' || input.icdv == '10') && (input.dx == '1' || input.dx == '0')",
           selectInput("chapter", "Select a Chapter:", choices = NULL, multiple = FALSE)
         ),
         conditionalPanel(
-          condition = "(input.chapter != '')",
-          selectInput("subchapter", "Select a Subhapter:", choices = NULL, multiple = FALSE)
+          condition = "(input.icdv == '9' || input.icdv == '10') && (input.dx == '1' || input.dx == '0') && input.chapter",
+          selectInput("subchapter", "Select a Subchapter:", choices = NULL, multiple = FALSE)
         ),
         conditionalPanel(
-          condition = "(input.subchapter != '')",
+          condition = "input.subchapter",
           selectInput("category", "Select a Category:", choices = NULL, multiple = FALSE)
         ),
         conditionalPanel(
-          condition = "(input.category != '')",
-          selectInput("subcategory", "Select a Category:", choices = NULL, multiple = FALSE)
+          condition = "input.category",
+          selectInput("subcategory", "Select a Subcategory:", choices = NULL, multiple = FALSE)
         ),
         conditionalPanel(
-          condition = "(input.subcategory != '')",
-          selectInput("subclassification", "Select a Category:", choices = NULL, multiple = FALSE)
+          condition = "input.subcategory",
+          selectInput("subclassification", "Select a Subclassification:", choices = NULL, multiple = FALSE)
         ),
         conditionalPanel(
-          condition = "(input.subclassification != '')",
-          selectInput("subsubclassification", "Select a Category:", choices = NULL, multiple = FALSE)
-        )
+          condition = "input.subclassification",
+          selectInput("subsubclassification", "Select a Subsubclassification:", choices = NULL, multiple = FALSE)
+        ),
+        actionButton("clear_radiobuttons", "Reset Selectors")
       )
     ),
     dashboardBody(
@@ -62,11 +65,12 @@ ui <-
         tabItem(
           tabName = "pccc",
           h1("Counts"),
-          DT::dataTableOutput("pccccounts"),
-          h1("Codes"),
+          tableOutput("pccccounts"),
+          h1("ICD Codes and PCCC Condition(s)"),
+          DT::dataTableOutput("pccccodesandconditions"),
+          h1("ICD Code Descriptions"),
           DT::dataTableOutput("pccccodes")
         )
       )
     )
   )
-
