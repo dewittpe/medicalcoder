@@ -21,4 +21,4 @@
 ^.*\\.Rcheck/*
 ^vignettes/articles/*
 ^\\.DS_Store$
-
+^shiny/*
