@@ -59,6 +59,10 @@ codes <-
             )
         )]
 
+# remove whitesapce within the codes
+codes[, full_code := gsub("\\s", "", full_code)]
+stopifnot(!any(grepl("[[:space:]]", codes[["full_code"]])))
+
 # build the compact codes
 codes[, code := sub("\\.", "", full_code)]
 

@@ -259,6 +259,44 @@ for (n in grep("^icd_", names(user_visible), value = TRUE)) {
   )
 }
 
+# For the biggest set of icd codes let's make sure fields are at least populated
+# as exptected
+stopifnot(
+  !any(is.na(user_visible[["icd_dh"]][["icdv"]])),
+  all(user_visible[["icd_dh"]][["icdv"]] %in% c(9L, 10L)),
+  !any(is.na(user_visible[["icd_dh"]][["dx"]])),
+  all(user_visible[["icd_dh"]][["dx"]] %in% c(0L, 1L)),
+  !any(is.na(user_visible[["icd_dh"]][["full_code"]])),
+  !any(is.na(user_visible[["icd_dh"]][["code"]])),
+  all(user_visible[["icd_dh"]][["code"]] == sub("\\.", "", user_visible[["icd_dh"]][["full_code"]])),
+  !any(is.na(user_visible[["icd_dh"]][["src"]])),
+  all(user_visible[["icd_dh"]][["src"]] %in% c("cdc", "cms", "who", "ihacpa", "socialstyrelsen")),
+  !any(is.na(user_visible[["icd_dh"]][["known_start"]])),
+  !any(is.na(user_visible[["icd_dh"]][["known_end"]])),
+  all(user_visible[["icd_dh"]][["known_start"]] <= user_visible[["icd_dh"]][["known_end"]]),
+  identical(is.na(user_visible[["icd_dh"]][["assignable_start"]]), is.na(user_visible[["icd_dh"]][["assignable_end"]])),
+  all(user_visible[["icd_dh"]][["assignable_start"]] <= user_visible[["icd_dh"]][["assignable_end"]], na.rm = TRUE),
+  !any(is.na(user_visible[["icd_dh"]][["desc"]])),
+  !any(is.na(user_visible[["icd_dh"]][["desc_start"]])),
+  !any(is.na(user_visible[["icd_dh"]][["desc_end"]])),
+  all(user_visible[["icd_dh"]][["desc_start"]] <= user_visible[["icd_dh"]][["desc_end"]]),
+  !any(is.na(user_visible[["icd_dh"]][["chapter"]])),
+  !any(is.na(user_visible[["icd_dh"]][["category"]]))
+)
+
+# check subchapter
+i9d <- which(user_visible[["icd_dh"]][["icdv"]] == 9 & user_visible[["icd_dh"]][["dx"]] == 1)
+i9p <- which(user_visible[["icd_dh"]][["icdv"]] == 9 & user_visible[["icd_dh"]][["dx"]] == 0)
+i10d <- which(user_visible[["icd_dh"]][["icdv"]] == 10 & user_visible[["icd_dh"]][["dx"]] == 1)
+i10p <- which(user_visible[["icd_dh"]][["icdv"]] == 10 & user_visible[["icd_dh"]][["dx"]] == 0)
+stopifnot(
+  !any(is.na(user_visible[["icd_dh"]][["subchapter"]][i9d])),
+  all(is.na(user_visible[["icd_dh"]][["subchapter"]][i9p])),
+  !any(is.na(user_visible[["icd_dh"]][["subchapter"]][i10d])),
+  !any(is.na(user_visible[["icd_dh"]][["subchapter"]][i10p]))
+)
+
+#subset(user_visible[["icd_dh"]], is.na(subchapter) & icdv == 10 & dx == 1) |> head()
 
 
 ################################################################################

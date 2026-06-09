@@ -282,14 +282,48 @@ for (i in seq_len(nrow(charlson_columns))) {
   print(e)
   r <- eval(e)
   print(r)
-  stopifnot(r)
-  charlson_delta[[x]] <- NULL
-  charlson_delta[[y]] <- NULL
+  #stopifnot(r)
+  if (r) {
+    charlson_delta[[x]] <- NULL
+    charlson_delta[[y]] <- NULL
+  }
 }
 ```
 
-The only columns left in the `charlson_delta` object are from medicalcoder
+There are differences between the results returned by medicalcoder and
+comorbidity related to metastatic cancer and the ICD codes C7A.x.
 
+```{r, echo = TRUE}
+subset(charlson_delta, metacanc != mst)
+subset(mdcr, patid %in% c(25628, 90045, 99058) & grepl("^C.[^\\d]", code))
+```
+
+Table 1 of @quan2005 defining the ICD codes mapping to metastatic solid tumor
+as "C77.x--C80.x".   Under CMS codes there are C7A.x and C7B codes.  These codes
+seem applicable to metastatic cancer.
+
+```{r, echo = TRUE, results = "markup"}
+subset(medicalcoder::get_icd_codes(with.descriptions = TRUE), grepl("^C(7[A-Z])", code))
+```
+
+The author of the comorbidity package is aware of this and has commented on
+[GitHub](https://github.com/ellessenne/comorbidity/issues/16#issuecomment-513265712)
+
+> I am a bit hesitant to add these codes to the scoring algorithm - after all, they did not exist at the time and they have not been validated in these settings (I think?). I think this is a much bigger "problem", as comorbidity codes evolve over time, but comorbidity scores barely do: how should researchers deal with this disconnection? ...I suppose there is no right or wrong answer to that! 😃
+
+For medicalcoder, the choice was made to include these codes as C7A and C7B are,
+in the hierachy, between C77 and C80.
+
+This difference in approaches to mapping ICD codes to comorbidities accounts for
+the differences in the metacanc/mst columns, and the score/cci colums.
+```{r}
+charlson_delta[["metacanc"]] <- NULL
+charlson_delta[["mst"]] <- NULL
+charlson_delta[["score"]] <- NULL
+charlson_delta[["cci"]] <- NULL
+```
+
+The remaining columns in `charlson_delta` are:
 ```{r}
 str(charlson_delta)
 ```

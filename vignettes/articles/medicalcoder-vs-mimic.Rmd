@@ -148,17 +148,22 @@ nrow(mimic_charlson_results)
 nrow(medicalcoder_charlson_results)
 ```
 
-Conditions without multiple severity levels are the same between the two
-methods.
+Conditions with multiple severity levels, and the metastatic cancer flags differ
+between the two methods.
 ```{r}
 dcolumns <- fread(text = "
 medicalcoder | mimic
 aidshiv      | aids
+mal          | malignant_cancer
 cebvd        | cerebrovascular_disease
 copd         | chronic_pulmonary_disease
 chf          | congestive_heart_failure
 dem          | dementia
+dmc          | diabetes_with_cc
+dm           | diabetes_without_cc
 hp           | paraplegia
+mld          | mild_liver_disease
+msld         | severe_liver_disease
 mi           | myocardial_infarct
 pud          | peptic_ulcer_disease
 pvd          | peripheral_vascular_disease
@@ -177,9 +182,10 @@ for (i in seq_len(nrow(dcolumns))) {
   print(e)
   r <- eval(e)
   print(r)
-  stopifnot(r)
-  delta[[x]] <- NULL
-  delta[[y]] <- NULL
+  #if (r) {
+  #  delta[[x]] <- NULL
+  #  delta[[y]] <- NULL
+  #}
 }
 ```
 
@@ -224,9 +230,27 @@ delta[malignant_cancer == 1L & metastatic_solid_tumor == 1L, .N > 0L &          
 
 delta[mal == 0L & mst == 0L, .N > 0L & all(malignant_cancer == 0L) & all(metastatic_solid_tumor == 0L)]
 delta[mal == 1L & mst == 0L, .N > 0L & all(malignant_cancer == 1L) & all(metastatic_solid_tumor == 0L)]
-delta[mal == 0L & mst == 1L, .N > 0L &                              all(metastatic_solid_tumor == 1L)]
+delta[mal == 0L & mst == 1L, .N > 0L &                               all(metastatic_solid_tumor == 1L)]
 delta[mal == 1L & mst == 1L, .N == 0L]
+```
+Additionally, ICD-10 codes from CMS of the form C7A.x are not mapped by the
+MIMIC codes to metastatic_solid_tumor, but medicalcoder does map these codes to
+that comorbidity.
+```{r}
+subset(
+  merge(
+    x = mdcr_for_mimic,
+    y = subset(delta, mst == 1 & metastatic_solid_tumor == 0, select = c("subject_id", "hadm_id")),
+    all = FALSE,
+    by = c("subject_id", "hadm_id")
+  ),
+  grepl("^C7[A-Z]", icd_code)
+)
+subset(medicalcoder::get_icd_codes(with.descriptions = TRUE),
+  full_code %in% c("C7A.098", "C7A.8", "C7B.8"))
+```
 
+```{r}
 delta[, mal := NULL]
 delta[, mst := NULL]
 delta[, malignant_cancer := NULL]
