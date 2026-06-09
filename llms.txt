@@ -9,8 +9,9 @@ to look up, validate, and manipulate ICD codes. Designed for portability
 and reproducibility, the package avoids external dependencies—requiring
 only R ≥ 3.5.0—yet offers a rich set of curated ICD code libraries from
 the United States’ Centers for Medicare and Medicaid Services (CMS),
-Centers for Disease Control (CDC), and the World Health Organization
-(WHO).
+Centers for Disease Control (CDC), the World Health Organization (WHO),
+Australia’s Independent Health and Aged Care Pricing Authority (IHACPA),
+and Sweden’s National Board of Health and Welfare (Socialstyrelsen).
 
 The package balances performance with elegance: its internal caching,
 efficient joins, and compact data structures make it practical for
@@ -275,7 +276,7 @@ vignette(topic = "pccc", package = "medicalcoder")
 
 #### Charlson Comorbidities
 
-There are four variants of Charlson comorbidities implemented in
+There are six variants of Charlson comorbidities implemented in
 medicalcoder:
 
 - [Deyo, Cherkin, and Ciol
@@ -283,7 +284,10 @@ medicalcoder:
 - [Quan et
   al. (2005)](https://doi.org/10.1097/01.mlr.0000182534.19832.83)
 - [Quan et al. (2011)](https://doi.org/10.1093/aje/kwq433)
+- [Sundararajan et
+  al. (2004)](https://doi.org/10.1016/j.jclinepi.2004.03.012)
 - [Glasheen (2019)](https://pubmed.ncbi.nlm.nih.gov/31428236/)
+- [Ludvigsson et al. (2021)](https://doi.org/10.2147/CLEP.S282475)
 
 ``` r
 
@@ -377,7 +381,9 @@ vignette(topic = "elixhauser", package = "medicalcoder")
 
 The package contains internal data sets with references for ICD-9 and
 ICD-10 US based diagnostic and procedure codes. These codes are
-supplemented with additional codes from the World Health Organization.
+supplemented with additional codes from the World Health Organization
+and ICD-10-AM codes from IHACPA, and ICD-10-SE codes from
+Socialstyrelsen.
 
 You can get a table of ICD codes via
 [`get_icd_codes()`](http://www.peteredewitt.com/medicalcoder/reference/get_icd_codes.md).
@@ -385,7 +391,7 @@ You can get a table of ICD codes via
 ``` r
 
 str(medicalcoder::get_icd_codes())
-#> 'data.frame':    249819 obs. of  9 variables:
+#> 'data.frame':    330606 obs. of  9 variables:
 #>  $ icdv            : int  9 9 9 9 9 9 9 9 9 9 ...
 #>  $ dx              : int  0 0 0 0 0 0 0 0 0 0 ...
 #>  $ full_code       : chr  "00" "00" "00.0" "00.0" ...
@@ -416,14 +422,20 @@ The columns are:
   - `cms`: The ICD-9-CM, ICD-9-PCS, ICD-10-CM, or ICD-10-PCS codes
     curated by the Centers for Medicare and Medicaid Services (CMS).
   - `cdc`: CDC mortality coding.
+  - `ihacpa`: ICD-10-AM codes from the Independent Health and Aged Care
+    Pricing Authority.
+  - `socialstyrelsen`: ICD-10-SE codes from Sweden’s National Board of
+    Health and Welfare (Socialstyrelsen).
   - `who`: World Health Organization.
 
-- `known_start`: The earliest (fiscal) year when source data for the
-  code was available in the source code for medicalcoder. Codes from CMS
-  are for the United States fiscal year. Codes from CDC and WHO are
-  calendar year. The United States fiscal year starts October 1 and
-  concludes September 30. For example, fiscal year 2013 started October
-  1 2012 and concluded September 30 2013.
+- `known_start`: The earliest source year when source data for the code
+  was available in the source code for medicalcoder. Codes from CMS are
+  for the United States fiscal year. Codes from IHACPA use the
+  Australian financial year, which starts July 1 and ends June 30. Codes
+  from CDC, Socialstyrelsen, and WHO are calendar year. The United
+  States fiscal year starts October 1 and concludes September 30. For
+  example, fiscal year 2013 started October 1 2012 and concluded
+  September 30 2013.
 
   To reemphasize that the year is for the data within medicalcoder. For
   ICD-9-CM, the codes went into effect for fiscal year 1980. The source
@@ -457,19 +469,19 @@ subset(
 #> 1        Z94        2014      2026               NA             NA
 #> 5      Z94.0        2014      2026             2014           2026
 #> 9      Z94.1        2014      2026             2014           2026
-#> 14     Z94.2        2014      2026             2014           2026
+#> 13     Z94.2        2014      2026             2014           2026
 #> 17     Z94.3        2014      2026             2014           2026
-#> 22     Z94.4        2014      2026             2014           2026
+#> 21     Z94.4        2014      2026             2014           2026
 #> 25     Z94.5        2014      2026             2014           2026
 #> 29     Z94.6        2014      2026             2014           2026
 #> 33     Z94.7        2014      2026             2014           2026
-#> 38     Z94.8        2014      2026               NA             NA
+#> 37     Z94.8        2014      2026               NA             NA
 #> 41    Z94.81        2014      2026             2014           2026
-#> 42    Z94.82        2014      2026             2014           2026
-#> 43    Z94.83        2014      2026             2014           2026
-#> 44    Z94.84        2014      2026             2014           2026
-#> 45    Z94.89        2014      2026             2014           2026
-#> 46     Z94.9        2014      2026             2014           2026
+#> 43    Z94.82        2014      2026             2014           2026
+#> 45    Z94.83        2014      2026             2014           2026
+#> 47    Z94.84        2014      2026             2014           2026
+#> 50    Z94.89        2014      2026             2014           2026
+#> 52     Z94.9        2014      2026             2014           2026
 ```
 
 Additionally, the

@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>ICD Codes • medicalcoder</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="ICD Codes">
 </head>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -106,16 +106,18 @@ just format the input string appropriately.</li>
 <p>A lookup table for the ICD codes has been built as internal data sets
 within the medicalcoder package. The sources for these lookup tables
 come from the Centers for Disease Control (CDC) and from the Centers for
-Medicare &amp; Medicaid Services (CMS) and World Health Organization
-(WHO). The specific links to the source data sets can be found in the
-source code for the medicalcoder package on <a href="https://github.com/dewittpe/medicalcoder" class="external-link">GitHub</a>.</p>
+Medicare &amp; Medicaid Services (CMS), World Health Organization (WHO),
+Australia’s Independent Health and Aged Care Pricing Authority (IHACPA),
+and Sweden’s National Board of Health and Welfare (Socialstyrelsen). The
+specific links to the source data sets can be found in the source code
+for the medicalcoder package on <a href="https://github.com/dewittpe/medicalcoder" class="external-link">GitHub</a>.</p>
 <p>End users can get a <code>data.frame</code> with ICD-9 diagnostic,
 ICD-9 procedure, ICD-10 diagnostic, and ICD-10 procedure codes.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.peteredewitt.com/medicalcoder/">medicalcoder</a></span><span class="op">)</span></span>
 <span><span class="va">icd_codes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_icd_codes.html">get_icd_codes</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">icd_codes</span><span class="op">)</span></span>
-<span><span class="co">## 'data.frame':    249819 obs. of  9 variables:</span></span>
+<span><span class="co">## 'data.frame':    330606 obs. of  9 variables:</span></span>
 <span><span class="co">##  $ icdv            : int  9 9 9 9 9 9 9 9 9 9 ...</span></span>
 <span><span class="co">##  $ dx              : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span><span class="co">##  $ full_code       : chr  "00" "00" "00.0" "00.0" ...</span></span>
@@ -131,9 +133,10 @@ ICD-9 procedure, ICD-10 diagnostic, and ICD-10 procedure codes.</p>
 ICD-10</p></li>
 <li><p><code>dx</code>: 1 if the code is a diagnostic code, i.e., from
 the ICD-9-CM or ICD-10-CM standard. This also covers codes from the
-World Health Organization (WHO) and the Center for Disease Control and
-Prevention (CDC) Mortality codes. <code>dx</code> will be 0 if the code
-is a procedure code, i.e., from the ICD-9-PCS or ICD-10-PCS
+World Health Organization (WHO), the Center for Disease Control and
+Prevention (CDC) Mortality codes, ICD-10-AM codes from IHACPA, and
+ICD-10-SE codes from Socialstyrelsen. <code>dx</code> will be 0 if the
+code is a procedure code, i.e., from the ICD-9-PCS or ICD-10-PCS
 standard.</p></li>
 <li><p><code>full_code</code>: the full ICD code with the decimal point
 if applicable.</p></li>
@@ -149,9 +152,11 @@ package has data for this code.</p>
 standards the year is the <em>fiscal year</em> for the United States
 Federal Government; October 1 - September 30. For example, fiscal year
 2018 started October 1, 2017 and ended on September 30, 2018.</p></li>
-<li><p>For codes from the World Health Organization (WHO) and the
-Centers for Disease Control and Prevention (CDC) Mortality coding, the
-year is <em>calendar year</em>.</p></li>
+<li><p>For ICD-10-AM codes from IHACPA, the year is the Australian
+<em>financial year</em>, July 1 - June 30.</p></li>
+<li><p>For codes from the World Health Organization (WHO), the Centers
+for Disease Control and Prevention (CDC) Mortality coding, and
+Socialstyrelsen, the year is <em>calendar year</em>.</p></li>
 <li><p>For ICD-9, CDC extracts in medicalcoder span fiscal years
 1997–2012 and CMS extracts span fiscal years 2006–2015.</p></li>
 </ul>
@@ -187,19 +192,19 @@ assignable.</p></li>
 <code>with.descriptions = TRUE</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_icd_codes.html">get_icd_codes</a></span><span class="op">(</span>with.descriptions <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## 'data.frame':    251433 obs. of  12 variables:</span></span>
+<span><span class="co">## 'data.frame':    346582 obs. of  12 variables:</span></span>
 <span><span class="co">##  $ icdv            : int  9 9 9 9 9 9 9 9 9 9 ...</span></span>
 <span><span class="co">##  $ dx              : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ full_code       : chr  "00" "00.0" "00.01" "00.01" ...</span></span>
-<span><span class="co">##  $ code            : chr  "00" "000" "0001" "0001" ...</span></span>
-<span><span class="co">##  $ src             : chr  "cdc" "cdc" "cms" "cdc" ...</span></span>
-<span><span class="co">##  $ known_start     : int  2003 2003 2006 2003 2006 2003 2006 2003 2006 2003 ...</span></span>
-<span><span class="co">##  $ known_end       : int  2012 2012 2015 2012 2015 2012 2015 2012 2015 2012 ...</span></span>
-<span><span class="co">##  $ assignable_start: int  NA NA 2006 2003 2006 2003 2006 2003 2006 2003 ...</span></span>
-<span><span class="co">##  $ assignable_end  : int  NA NA 2015 2012 2015 2012 2015 2012 2015 2012 ...</span></span>
-<span><span class="co">##  $ desc            : chr  "Procedures and interventions, Not Elsewhere Classified" "Therapeutic ultrasound" "Therapeutic ultrasound of vessels of head and neck" "Therapeutic ultrasound of vessels of head and neck" ...</span></span>
-<span><span class="co">##  $ desc_start      : int  2003 2003 2010 2003 2010 2003 2010 2003 2010 2003 ...</span></span>
-<span><span class="co">##  $ desc_end        : int  2012 2012 2015 2012 2015 2012 2015 2012 2015 2012 ...</span></span></code></pre></div>
+<span><span class="co">##  $ full_code       : chr  "00" "00" "00.0" "00.0" ...</span></span>
+<span><span class="co">##  $ code            : chr  "00" "00" "000" "000" ...</span></span>
+<span><span class="co">##  $ src             : chr  "cms" "cdc" "cms" "cdc" ...</span></span>
+<span><span class="co">##  $ known_start     : int  2006 2003 2006 2003 2006 2003 2006 2003 2006 2003 ...</span></span>
+<span><span class="co">##  $ known_end       : int  2015 2012 2015 2012 2015 2012 2015 2012 2015 2012 ...</span></span>
+<span><span class="co">##  $ assignable_start: int  NA NA NA NA 2006 2003 2006 2003 2006 2003 ...</span></span>
+<span><span class="co">##  $ assignable_end  : int  NA NA NA NA 2015 2012 2015 2012 2015 2012 ...</span></span>
+<span><span class="co">##  $ desc            : chr  "Procedures and interventions, Not Elsewhere Classified" "Procedures and interventions, Not Elsewhere Classified" "Therapeutic ultrasound" "Therapeutic ultrasound" ...</span></span>
+<span><span class="co">##  $ desc_start      : int  2006 2003 2006 2003 2006 2003 2006 2003 2006 2003 ...</span></span>
+<span><span class="co">##  $ desc_end        : int  2015 2012 2015 2012 2015 2012 2015 2012 2015 2012 ...</span></span></code></pre></div>
 <p>The return has the additional columns:</p>
 <ul>
 <li>
@@ -240,13 +245,21 @@ below have several examples.</p>
 <tbody>
 <tr class="odd">
 <td align="left">010.93</td>
+<td align="left">cms</td>
+<td align="left">Primary tuberculous infection, unspecified tubercle
+bacilli found (in sputum) by microscopy</td>
+<td align="right">2006</td>
+<td align="right">2009</td>
+</tr>
+<tr class="even">
+<td align="left">010.93</td>
 <td align="left">cdc</td>
 <td align="left">Primary tuberculous infection, unspecified tubercle
 bacilli found (in sputum) by microscopy</td>
 <td align="right">1997</td>
 <td align="right">2012</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">010.93</td>
 <td align="left">cms</td>
 <td align="left">Primary tuberculous infection, unspecified, tubercle
@@ -261,11 +274,11 @@ bacilli found (in sputum) by microscopy</td>
 <code>who</code>.</p>
 <table class="table">
 <colgroup>
-<col width="12%">
-<col width="4%">
-<col width="59%">
-<col width="13%">
+<col width="9%">
+<col width="14%">
+<col width="57%">
 <col width="10%">
+<col width="8%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">full_code</th>
@@ -291,10 +304,25 @@ bacilli found (in sputum) by microscopy</td>
 </tr>
 <tr class="odd">
 <td align="left">Z88.7</td>
+<td align="left">ihacpa</td>
+<td align="left">Personal history of allergy to serum and vaccine</td>
+<td align="right">2020</td>
+<td align="right">2026</td>
+</tr>
+<tr class="even">
+<td align="left">Z88.7</td>
 <td align="left">who</td>
 <td align="left">Personal history of allergy to serum and vaccine</td>
 <td align="right">2008</td>
-<td align="right">2019</td>
+<td align="right">2021</td>
+</tr>
+<tr class="odd">
+<td align="left">Z88.7</td>
+<td align="left">socialstyrelsen</td>
+<td align="left">Överkänslighet mot serum och vaccin i den egna
+sjukhistorien</td>
+<td align="right">1997</td>
+<td align="right">2026</td>
 </tr>
 </tbody>
 </table>
@@ -304,11 +332,11 @@ description may still require consideration of the header codes to fully
 understand.</p>
 <table class="table">
 <colgroup>
-<col width="10%">
+<col width="5%">
+<col width="8%">
+<col width="77%">
+<col width="5%">
 <col width="4%">
-<col width="62%">
-<col width="12%">
-<col width="9%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">full_code</th>
@@ -327,18 +355,42 @@ understand.</p>
 </tr>
 <tr class="even">
 <td align="left">V76.49</td>
+<td align="left">cms</td>
+<td align="left">Other sites</td>
+<td align="right">2006</td>
+<td align="right">2009</td>
+</tr>
+<tr class="odd">
+<td align="left">V76.49</td>
 <td align="left">cdc</td>
 <td align="left">Other sites</td>
 <td align="right">2001</td>
 <td align="right">2012</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">V76.49</td>
 <td align="left">cms</td>
 <td align="left">Special screening for malignant neoplasms of other
 sites</td>
 <td align="right">2010</td>
 <td align="right">2015</td>
+</tr>
+<tr class="odd">
+<td align="left">V76.49</td>
+<td align="left">ihacpa</td>
+<td align="left">Bus occupant injured in collision with other nonmotor
+vehicle, while boarding or alighting, during unspecified activity</td>
+<td align="right">2020</td>
+<td align="right">2026</td>
+</tr>
+<tr class="even">
+<td align="left">V76.49</td>
+<td align="left">socialstyrelsen</td>
+<td align="left">Förare av eller passagerare i buss skadad i kollision
+med annat icke motordrivet fordon - person skadad vid på- och avstigning
+- aktivitet, ospecificerad</td>
+<td align="right">1997</td>
+<td align="right">2026</td>
 </tr>
 </tbody>
 </table>
@@ -351,7 +403,7 @@ argument <code>with.hierarchy</code> which will provide additional
 details for the codes.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_icd_codes.html">get_icd_codes</a></span><span class="op">(</span>with.hierarchy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## 'data.frame':    249819 obs. of  16 variables:</span></span>
+<span><span class="co">## 'data.frame':    330606 obs. of  16 variables:</span></span>
 <span><span class="co">##  $ icdv                : int  10 10 10 10 10 10 10 10 10 10 ...</span></span>
 <span><span class="co">##  $ dx                  : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span><span class="co">##  $ full_code           : chr  "001" "0016070" "0016071" "0016072" ...</span></span>
@@ -400,17 +452,17 @@ assignable.</p>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="../reference/lookup_icd_codes.html">lookup_icd_codes</a></span><span class="op">(</span><span class="va">codes</span><span class="op">)</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="10%">
-<col width="12%">
+<col width="9%">
+<col width="11%">
 <col width="4%">
 <col width="2%">
-<col width="9%">
+<col width="8%">
 <col width="4%">
-<col width="3%">
-<col width="11%">
-<col width="9%">
-<col width="16%">
+<col width="13%">
+<col width="10%">
+<col width="8%">
 <col width="14%">
+<col width="12%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">input_code</th>
@@ -615,11 +667,11 @@ assignable.</p>
 <td align="right">1</td>
 <td align="left">A92.4</td>
 <td align="left">A924</td>
-<td align="left">who</td>
-<td align="right">2008</td>
-<td align="right">2019</td>
-<td align="right">2008</td>
-<td align="right">2019</td>
+<td align="left">cdc</td>
+<td align="right">2001</td>
+<td align="right">2025</td>
+<td align="right">2001</td>
+<td align="right">2025</td>
 </tr>
 <tr class="even">
 <td align="left">A924</td>
@@ -628,11 +680,37 @@ assignable.</p>
 <td align="right">1</td>
 <td align="left">A92.4</td>
 <td align="left">A924</td>
-<td align="left">cdc</td>
-<td align="right">2001</td>
-<td align="right">2025</td>
-<td align="right">2001</td>
-<td align="right">2025</td>
+<td align="left">ihacpa</td>
+<td align="right">2020</td>
+<td align="right">2026</td>
+<td align="right">2020</td>
+<td align="right">2026</td>
+</tr>
+<tr class="odd">
+<td align="left">A924</td>
+<td align="left">compact_code</td>
+<td align="right">10</td>
+<td align="right">1</td>
+<td align="left">A92.4</td>
+<td align="left">A924</td>
+<td align="left">socialstyrelsen</td>
+<td align="right">1997</td>
+<td align="right">2026</td>
+<td align="right">1997</td>
+<td align="right">2026</td>
+</tr>
+<tr class="even">
+<td align="left">A924</td>
+<td align="left">compact_code</td>
+<td align="right">10</td>
+<td align="right">1</td>
+<td align="left">A92.4</td>
+<td align="left">A924</td>
+<td align="left">who</td>
+<td align="right">2008</td>
+<td align="right">2021</td>
+<td align="right">2008</td>
+<td align="right">2021</td>
 </tr>
 <tr class="odd">
 <td align="left">A9248</td>
@@ -680,9 +758,35 @@ assignable.</p>
 <td align="right">1</td>
 <td align="left">Z00</td>
 <td align="left">Z00</td>
+<td align="left">ihacpa</td>
+<td align="right">2020</td>
+<td align="right">2026</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Z00</td>
+<td align="left">full_code</td>
+<td align="right">10</td>
+<td align="right">1</td>
+<td align="left">Z00</td>
+<td align="left">Z00</td>
+<td align="left">socialstyrelsen</td>
+<td align="right">1997</td>
+<td align="right">2026</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Z00</td>
+<td align="left">full_code</td>
+<td align="right">10</td>
+<td align="right">1</td>
+<td align="left">Z00</td>
+<td align="left">Z00</td>
 <td align="left">who</td>
 <td align="right">2008</td>
-<td align="right">2019</td>
+<td align="right">2021</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -699,17 +803,17 @@ considered.</p>
 <span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="10%">
-<col width="12%">
+<col width="9%">
+<col width="11%">
 <col width="4%">
 <col width="2%">
-<col width="9%">
+<col width="8%">
 <col width="4%">
-<col width="3%">
-<col width="11%">
-<col width="9%">
-<col width="16%">
+<col width="13%">
+<col width="10%">
+<col width="8%">
 <col width="14%">
+<col width="12%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">input_code</th>
@@ -901,11 +1005,11 @@ considered.</p>
 <td align="right">1</td>
 <td align="left">A92.4</td>
 <td align="left">A924</td>
-<td align="left">who</td>
-<td align="right">2008</td>
-<td align="right">2019</td>
-<td align="right">2008</td>
-<td align="right">2019</td>
+<td align="left">cdc</td>
+<td align="right">2001</td>
+<td align="right">2025</td>
+<td align="right">2001</td>
+<td align="right">2025</td>
 </tr>
 <tr class="odd">
 <td align="left">A924</td>
@@ -914,11 +1018,37 @@ considered.</p>
 <td align="right">1</td>
 <td align="left">A92.4</td>
 <td align="left">A924</td>
-<td align="left">cdc</td>
-<td align="right">2001</td>
-<td align="right">2025</td>
-<td align="right">2001</td>
-<td align="right">2025</td>
+<td align="left">ihacpa</td>
+<td align="right">2020</td>
+<td align="right">2026</td>
+<td align="right">2020</td>
+<td align="right">2026</td>
+</tr>
+<tr class="even">
+<td align="left">A924</td>
+<td align="left">compact_code</td>
+<td align="right">10</td>
+<td align="right">1</td>
+<td align="left">A92.4</td>
+<td align="left">A924</td>
+<td align="left">socialstyrelsen</td>
+<td align="right">1997</td>
+<td align="right">2026</td>
+<td align="right">1997</td>
+<td align="right">2026</td>
+</tr>
+<tr class="odd">
+<td align="left">A924</td>
+<td align="left">compact_code</td>
+<td align="right">10</td>
+<td align="right">1</td>
+<td align="left">A92.4</td>
+<td align="left">A924</td>
+<td align="left">who</td>
+<td align="right">2008</td>
+<td align="right">2021</td>
+<td align="right">2008</td>
+<td align="right">2021</td>
 </tr>
 <tr class="even">
 <td align="left">A9248</td>
@@ -966,9 +1096,35 @@ considered.</p>
 <td align="right">1</td>
 <td align="left">Z00</td>
 <td align="left">Z00</td>
+<td align="left">ihacpa</td>
+<td align="right">2020</td>
+<td align="right">2026</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Z00</td>
+<td align="left">compact_code</td>
+<td align="right">10</td>
+<td align="right">1</td>
+<td align="left">Z00</td>
+<td align="left">Z00</td>
+<td align="left">socialstyrelsen</td>
+<td align="right">1997</td>
+<td align="right">2026</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Z00</td>
+<td align="left">compact_code</td>
+<td align="right">10</td>
+<td align="right">1</td>
+<td align="left">Z00</td>
+<td align="left">Z00</td>
 <td align="left">who</td>
 <td align="right">2008</td>
-<td align="right">2019</td>
+<td align="right">2021</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -981,19 +1137,19 @@ codes.</p>
 <span>  <span class="fu"><a href="../reference/lookup_icd_codes.html">lookup_icd_codes</a></span><span class="op">(</span><span class="va">codes</span>, compact.codes <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
 <span>  row.names <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<table class="table">
+<table style="width:100%;" class="table">
 <colgroup>
-<col width="10%">
-<col width="10%">
+<col width="9%">
+<col width="9%">
 <col width="4%">
 <col width="2%">
-<col width="9%">
+<col width="8%">
 <col width="4%">
-<col width="3%">
-<col width="11%">
-<col width="9%">
-<col width="16%">
+<col width="13%">
+<col width="10%">
+<col width="8%">
 <col width="14%">
+<col width="13%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">input_code</th>
@@ -1159,9 +1315,35 @@ codes.</p>
 <td align="right">1</td>
 <td align="left">Z00</td>
 <td align="left">Z00</td>
+<td align="left">ihacpa</td>
+<td align="right">2020</td>
+<td align="right">2026</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Z00</td>
+<td align="left">full_code</td>
+<td align="right">10</td>
+<td align="right">1</td>
+<td align="left">Z00</td>
+<td align="left">Z00</td>
+<td align="left">socialstyrelsen</td>
+<td align="right">1997</td>
+<td align="right">2026</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Z00</td>
+<td align="left">full_code</td>
+<td align="right">10</td>
+<td align="right">1</td>
+<td align="left">Z00</td>
+<td align="left">Z00</td>
 <td align="left">who</td>
 <td align="right">2008</td>
-<td align="right">2019</td>
+<td align="right">2021</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -1273,15 +1455,15 @@ procedure code.</p>
 <span><span class="co">## [1] FALSE</span></span>
 <span><span class="fu"><a href="../reference/lookup_icd_codes.html">lookup_icd_codes</a></span><span class="op">(</span><span class="st">"7993"</span><span class="op">)</span></span>
 <span><span class="co">##   input_code   match_type icdv dx full_code code src known_start known_end</span></span>
-<span><span class="co">## 4       7993 compact_code    9  0     79.93 7993 cms        2006      2015</span></span>
+<span><span class="co">## 1       7993 compact_code    9  0     79.93 7993 cms        2006      2015</span></span>
 <span><span class="co">## 2       7993 compact_code    9  0     79.93 7993 cdc        1997      2012</span></span>
-<span><span class="co">## 1       7993 compact_code    9  1     799.3 7993 cms        2006      2015</span></span>
-<span><span class="co">## 3       7993 compact_code    9  1     799.3 7993 cdc        1997      2012</span></span>
+<span><span class="co">## 3       7993 compact_code    9  1     799.3 7993 cms        2006      2015</span></span>
+<span><span class="co">## 4       7993 compact_code    9  1     799.3 7993 cdc        1997      2012</span></span>
 <span><span class="co">##   assignable_start assignable_end</span></span>
-<span><span class="co">## 4             2006           2015</span></span>
-<span><span class="co">## 2             1997           2012</span></span>
 <span><span class="co">## 1             2006           2015</span></span>
-<span><span class="co">## 3             1997           2012</span></span></code></pre></div>
+<span><span class="co">## 2             1997           2012</span></span>
+<span><span class="co">## 3             2006           2015</span></span>
+<span><span class="co">## 4             1997           2012</span></span></code></pre></div>
 <p>A vector of possible codes:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"7993"</span>, <span class="st">"A924"</span>, <span class="st">"7993"</span>, <span class="st">"A924"</span>, <span class="st">"no"</span>, <span class="st">"A92"</span>, <span class="st">"516"</span>, <span class="st">"5163"</span>, <span class="st">"51631"</span>, <span class="st">"A00"</span><span class="op">)</span></span>
@@ -1490,7 +1672,6 @@ assignable.</p>
 <code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="../reference/lookup_icd_codes.html">lookup_icd_codes</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="2%">
 <col width="10%">
 <col width="10%">
 <col width="4%">
@@ -1500,11 +1681,10 @@ assignable.</p>
 <col width="3%">
 <col width="11%">
 <col width="9%">
-<col width="15%">
+<col width="16%">
 <col width="14%">
 </colgroup>
 <thead><tr class="header">
-<th align="left"></th>
 <th align="left">input_code</th>
 <th align="left">match_type</th>
 <th align="right">icdv</th>
@@ -1519,7 +1699,6 @@ assignable.</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
 <td align="left">516.3</td>
 <td align="left">full_code</td>
 <td align="right">9</td>
@@ -1533,7 +1712,6 @@ assignable.</p>
 <td align="right">2011</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
 <td align="left">516.3</td>
 <td align="left">full_code</td>
 <td align="right">9</td>
@@ -1547,7 +1725,6 @@ assignable.</p>
 <td align="right">2011</td>
 </tr>
 <tr class="odd">
-<td align="left">4</td>
 <td align="left">516.30</td>
 <td align="left">full_code</td>
 <td align="right">9</td>
@@ -1561,7 +1738,6 @@ assignable.</p>
 <td align="right">2015</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
 <td align="left">516.30</td>
 <td align="left">full_code</td>
 <td align="right">9</td>
@@ -1575,7 +1751,6 @@ assignable.</p>
 <td align="right">2012</td>
 </tr>
 <tr class="odd">
-<td align="left">5</td>
 <td align="left">516.31</td>
 <td align="left">full_code</td>
 <td align="right">9</td>
@@ -1589,7 +1764,6 @@ assignable.</p>
 <td align="right">2015</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
 <td align="left">516.31</td>
 <td align="left">full_code</td>
 <td align="right">9</td>
@@ -1603,7 +1777,6 @@ assignable.</p>
 <td align="right">2012</td>
 </tr>
 <tr class="odd">
-<td align="left">8</td>
 <td align="left">516.32</td>
 <td align="left">full_code</td>
 <td align="right">9</td>
@@ -1617,7 +1790,6 @@ assignable.</p>
 <td align="right">2015</td>
 </tr>
 <tr class="even">
-<td align="left">7</td>
 <td align="left">516.32</td>
 <td align="left">full_code</td>
 <td align="right">9</td>
@@ -1631,7 +1803,6 @@ assignable.</p>
 <td align="right">2012</td>
 </tr>
 <tr class="odd">
-<td align="left">9</td>
 <td align="left">516.33</td>
 <td align="left">full_code</td>
 <td align="right">9</td>
@@ -1645,7 +1816,6 @@ assignable.</p>
 <td align="right">2015</td>
 </tr>
 <tr class="even">
-<td align="left">10</td>
 <td align="left">516.33</td>
 <td align="left">full_code</td>
 <td align="right">9</td>
@@ -1659,7 +1829,6 @@ assignable.</p>
 <td align="right">2012</td>
 </tr>
 <tr class="odd">
-<td align="left">12</td>
 <td align="left">516.34</td>
 <td align="left">full_code</td>
 <td align="right">9</td>
@@ -1673,7 +1842,6 @@ assignable.</p>
 <td align="right">2015</td>
 </tr>
 <tr class="even">
-<td align="left">11</td>
 <td align="left">516.34</td>
 <td align="left">full_code</td>
 <td align="right">9</td>
@@ -1687,7 +1855,6 @@ assignable.</p>
 <td align="right">2012</td>
 </tr>
 <tr class="odd">
-<td align="left">13</td>
 <td align="left">516.35</td>
 <td align="left">full_code</td>
 <td align="right">9</td>
@@ -1701,7 +1868,6 @@ assignable.</p>
 <td align="right">2015</td>
 </tr>
 <tr class="even">
-<td align="left">14</td>
 <td align="left">516.35</td>
 <td align="left">full_code</td>
 <td align="right">9</td>
@@ -1715,7 +1881,6 @@ assignable.</p>
 <td align="right">2012</td>
 </tr>
 <tr class="odd">
-<td align="left">16</td>
 <td align="left">516.36</td>
 <td align="left">full_code</td>
 <td align="right">9</td>
@@ -1729,7 +1894,6 @@ assignable.</p>
 <td align="right">2015</td>
 </tr>
 <tr class="even">
-<td align="left">15</td>
 <td align="left">516.36</td>
 <td align="left">full_code</td>
 <td align="right">9</td>
@@ -1743,7 +1907,6 @@ assignable.</p>
 <td align="right">2012</td>
 </tr>
 <tr class="odd">
-<td align="left">18</td>
 <td align="left">516.37</td>
 <td align="left">full_code</td>
 <td align="right">9</td>
@@ -1757,7 +1920,6 @@ assignable.</p>
 <td align="right">2015</td>
 </tr>
 <tr class="even">
-<td align="left">17</td>
 <td align="left">516.37</td>
 <td align="left">full_code</td>
 <td align="right">9</td>
@@ -1771,7 +1933,6 @@ assignable.</p>
 <td align="right">2012</td>
 </tr>
 <tr class="odd">
-<td align="left">19</td>
 <td align="left">516.38</td>
 <td align="left">NA</td>
 <td align="right">NA</td>
@@ -1785,7 +1946,6 @@ assignable.</p>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="left">20</td>
 <td align="left">516.39</td>
 <td align="left">NA</td>
 <td align="right">NA</td>
@@ -2002,9 +2162,9 @@ is not a valid ICD code. We use this string as an example.</p>
 <span></span>
 <span><span class="fu"><a href="../reference/lookup_icd_codes.html">lookup_icd_codes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"E1234"</span>, <span class="st">"E123.4"</span>, <span class="st">"E12.34"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"input_code"</span>, <span class="st">"match_type"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">##   input_code match_type</span></span>
-<span><span class="co">## 3     E12.34       &lt;NA&gt;</span></span>
+<span><span class="co">## 1     E12.34       &lt;NA&gt;</span></span>
 <span><span class="co">## 2     E123.4       &lt;NA&gt;</span></span>
-<span><span class="co">## 1      E1234       &lt;NA&gt;</span></span></code></pre></div>
+<span><span class="co">## 3      E1234       &lt;NA&gt;</span></span></code></pre></div>
 <p>Notice that no change to the string is made when trying to convert to
 a full procedure code.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">

@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Comorbidities • medicalcoder</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Comorbidities">
 </head>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,7 +82,7 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.peteredewitt.com/medicalcoder/">medicalcoder</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"medicalcoder"</span><span class="op">)</span></span>
-<span><span class="co">## [1] '0.8.1'</span></span></code></pre></div>
+<span><span class="co">## [1] '0.8.1.9000'</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="comorbidity-algorithms">Comorbidity Algorithms<a class="anchor" aria-label="anchor" href="#comorbidity-algorithms"></a>
 </h2>
@@ -126,8 +126,17 @@ Codes and index scoring <span class="citation">(Quan et al. 2005,
 2011)</span>
 </li>
 <li>
+<code>charlson_sundararajan2004</code>: Australian ICD-10-AM
+adaptation <span class="citation">(Sundararajan et al. 2004)</span>
+</li>
+<li>
 <code>charlson_cdmf2019</code>: <span class="citation">(Glasheen et
 al. 2019)</span>
+</li>
+<li>
+<code>charlson_ludvigsson2021</code>: Swedish ICD-10-SE adaptation
+<span class="citation">(<span class="nocase">Ludvigsson et al.</span>
+2021, 2023)</span>
 </li>
 </ol>
 </li>
@@ -179,11 +188,12 @@ non-exported function. In general, the methods are listed in the form of
 <span><span class="co">##  [3] "pccc_v3.0"                 "pccc_v3.1"                </span></span>
 <span><span class="co">##  [5] "charlson_deyo1992"         "charlson_quan2011"        </span></span>
 <span><span class="co">##  [7] "charlson_quan2005"         "charlson_cdmf2019"        </span></span>
-<span><span class="co">##  [9] "elixhauser_elixhauser1988" "elixhauser_ahrq_web"      </span></span>
-<span><span class="co">## [11] "elixhauser_quan2005"       "elixhauser_ahrq2022"      </span></span>
-<span><span class="co">## [13] "elixhauser_ahrq2023"       "elixhauser_ahrq2024"      </span></span>
-<span><span class="co">## [15] "elixhauser_ahrq2025"       "elixhauser_ahrq2026"      </span></span>
-<span><span class="co">## [17] "elixhauser_ahrq_icd10"</span></span></code></pre></div>
+<span><span class="co">##  [9] "charlson_sundararajan2004" "charlson_ludvigsson2021"  </span></span>
+<span><span class="co">## [11] "elixhauser_elixhauser1988" "elixhauser_ahrq_web"      </span></span>
+<span><span class="co">## [13] "elixhauser_quan2005"       "elixhauser_ahrq2022"      </span></span>
+<span><span class="co">## [15] "elixhauser_ahrq2023"       "elixhauser_ahrq2024"      </span></span>
+<span><span class="co">## [17] "elixhauser_ahrq2025"       "elixhauser_ahrq2026"      </span></span>
+<span><span class="co">## [19] "elixhauser_ahrq_icd10"</span></span></code></pre></div>
 <p>Vignettes for each of the major methods are available.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"pccc"</span>,       package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span></span>
@@ -200,7 +210,7 @@ non-exported function. In general, the methods are listed in the form of
 <span><span class="co">##     icdv = NULL, dx.var = NULL, dx = NULL, poa.var = NULL, poa = NULL, </span></span>
 <span><span class="co">##     age.var = NULL, primarydx.var = NULL, primarydx = NULL, flag.method = c("current", </span></span>
 <span><span class="co">##         "cumulative"), full.codes = TRUE, compact.codes = TRUE, </span></span>
-<span><span class="co">##     subconditions = FALSE) </span></span>
+<span><span class="co">##     subconditions = FALSE, mapping = c("precomputed", "regex")) </span></span>
 <span><span class="co">## NULL</span></span></code></pre></div>
 <p>We highlight a general concept for the arguments. Note that several
 arguments are in pairs, e.g., <code>dx.var</code> and <code>dx</code>
@@ -1238,7 +1248,7 @@ condition and other method specific flags are provided. Lastly, there
 are indicator columns for the variant of each method</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_pccc_codes.html">get_pccc_codes</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## 'data.frame':    7906 obs. of  12 variables:</span></span>
+<span><span class="co">## 'data.frame':    8900 obs. of  12 variables:</span></span>
 <span><span class="co">##  $ icdv           : int  9 9 9 9 9 9 9 9 9 9 ...</span></span>
 <span><span class="co">##  $ dx             : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span><span class="co">##  $ full_code      : chr  "00.10" "00.50" "00.51" "00.53" ...</span></span>
@@ -1252,18 +1262,20 @@ are indicator columns for the variant of each method</p>
 <span><span class="co">##  $ pccc_v2.1      : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
 <span><span class="co">##  $ pccc_v2.0      : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_charlson_codes.html">get_charlson_codes</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## 'data.frame':    7410 obs. of  9 variables:</span></span>
-<span><span class="co">##  $ icdv             : int  9 9 9 9 9 9 9 9 9 9 ...</span></span>
-<span><span class="co">##  $ dx               : int  0 1 1 1 1 1 1 1 1 1 ...</span></span>
-<span><span class="co">##  $ full_code        : chr  "38.48" "003.1" "007.2" "007.4" ...</span></span>
-<span><span class="co">##  $ code             : chr  "3848" "0031" "0072" "0074" ...</span></span>
-<span><span class="co">##  $ condition        : chr  "pvd" "aids" "aids" "aids" ...</span></span>
-<span><span class="co">##  $ charlson_cdmf2019: int  0 1 1 1 1 1 1 1 1 1 ...</span></span>
-<span><span class="co">##  $ charlson_deyo1992: int  1 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ charlson_quan2005: int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ charlson_quan2011: int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">## 'data.frame':    9145 obs. of  11 variables:</span></span>
+<span><span class="co">##  $ icdv                     : int  9 9 9 9 9 9 9 9 9 9 ...</span></span>
+<span><span class="co">##  $ dx                       : int  0 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span><span class="co">##  $ full_code                : chr  "38.48" "003.1" "007.2" "007.4" ...</span></span>
+<span><span class="co">##  $ code                     : chr  "3848" "0031" "0072" "0074" ...</span></span>
+<span><span class="co">##  $ condition                : chr  "pvd" "aids" "aids" "aids" ...</span></span>
+<span><span class="co">##  $ charlson_cdmf2019        : int  0 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span><span class="co">##  $ charlson_deyo1992        : int  1 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ charlson_ludvigsson2021  : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ charlson_quan2005        : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ charlson_sundararajan2004: int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ charlson_quan2011        : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_elixhauser_codes.html">get_elixhauser_codes</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## 'data.frame':    10455 obs. of  15 variables:</span></span>
+<span><span class="co">## 'data.frame':    11293 obs. of  15 variables:</span></span>
 <span><span class="co">##  $ icdv                     : int  9 9 9 9 9 9 9 9 9 9 ...</span></span>
 <span><span class="co">##  $ dx                       : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
 <span><span class="co">##  $ full_code                : chr  "042" "070.22" "070.23" "070.32" ...</span></span>
@@ -1391,6 +1403,18 @@ Healthcare Research, Agency for, and Quality (AHRQ). 2025.
 <em>Elixhauser Comorbidity Software Refined for ICD-10-CM Healthcare
 Cost and Utilization Project (HCUP)</em>. <a href="https://hcup-us.ahrq.gov/toolssoftware/comorbidityicd10/comorbidity_icd10.jsp" class="external-link">https://hcup-us.ahrq.gov/toolssoftware/comorbidityicd10/comorbidity_icd10.jsp</a>.
 </div>
+<div id="ref-ludvigsson2021adaptation" class="csl-entry">
+<span class="nocase">Ludvigsson, Jonas F, Peter Appelros, Johan Askling,
+et al.</span> 2021. <span>“Adaptation of the Charlson Comorbidity Index
+for Register-Based Research in Sweden.”</span> <em>Clinical
+Epidemiology</em>, 21–41. https://doi.org/<a href="https://doi.org/10.2147/CLEP.S282475" class="external-link">https://doi.org/10.2147/CLEP.S282475</a>.
+</div>
+<div id="ref-ludvigsson2023adaptation" class="csl-entry">
+<span class="nocase">Ludvigsson, Jonas F, Peter Appelros, Johan Askling,
+et al.</span> 2023. <span>“Adaptation of the Charlson Comorbidity Index
+for Register-Based Research in Sweden [Corrigendum].”</span>
+<em>Clinical Epidemiology</em> 15: 753–54. https://doi.org/<a href="https://doi.org/10.2147/clep.s425901" class="external-link">https://doi.org/10.2147/clep.s425901</a>.
+</div>
 <div id="ref-quan2011" class="csl-entry">
 Quan, Hude, Bo Li, Colette M. Couris, et al. 2011. <span>“Updating and
 Validating the Charlson Comorbidity Index and Score for Risk Adjustment
@@ -1402,6 +1426,12 @@ Quan, Hude, Vijaya Sundararajan, Patricia Halfon, et al. 2005.
 <span>“Coding Algorithms for Defining Comorbidities in ICD-9-CM and
 ICD-10 Administrative Data.”</span> <em>Medical Care</em> 43 (11):
 1130–39. <a href="https://doi.org/10.1097/01.mlr.0000182534.19832.83" class="external-link">https://doi.org/10.1097/01.mlr.0000182534.19832.83</a>.
+</div>
+<div id="ref-sundararajan2004" class="csl-entry">
+Sundararajan, Vijaya, Toni Henderson, Catherine Perry, Amanda Muggivan,
+Hude Quan, and William A Ghali. 2004. <span>“New ICD-10 Version of the
+Charlson Comorbidity Index Predicted in-Hospital Mortality.”</span>
+<em>Journal of Clinical Epidemiology</em> 57 (12): 1288–94.
 </div>
 </div>
 </div>

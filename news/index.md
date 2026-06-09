@@ -1,5 +1,30 @@
 # Changelog
 
+## medicalcoder 0.8.1.9000
+
+### New Features
+
+- [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+  gains a new argument to allow end users to specify the mapping between
+  ICD codes and the conditions to be done via precomputed link tables or
+  via regex (part of
+  [\#45](https://github.com/dewittpe/medicalcoder/issues/45))
+
+- Add `charlson_sundararajan2004`
+
+- Add `charlson_ludvigsson2021`, a Charlson-style Swedish register-based
+  comorbidity method.
+
+- Add ICD-10-AM (Australian Modification) to the ICD database
+
+- Add ICD-10-SE (Swedish) to the ICD database. Source files from
+  Socialstyrelsen.
+
+### Improvements
+
+- WHO ICD-10 codes extend 2019 to 2020 and 2021 and the WHO last
+  published in 2019 and then transiitoned to ICD-11 January 1 2022.
+
 ## medicalcoder 0.8.1
 
 CRAN release: 2026-05-05

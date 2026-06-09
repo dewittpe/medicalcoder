@@ -4,7 +4,7 @@
 
 library(medicalcoder)
 packageVersion("medicalcoder")
-## [1] '0.8.1'
+## [1] '0.8.1.9000'
 ```
 
 ## Comorbidity Algorithms
@@ -31,7 +31,11 @@ implemented in the medicalcoder package:
         1992; Quan et al. 2005)
     2.  `charlson_quan2005` and `charlson_quan2011`: Codes and index
         scoring (Quan et al. 2005, 2011)
-    3.  `charlson_cdmf2019`: (Glasheen et al. 2019)
+    3.  `charlson_sundararajan2004`: Australian ICD-10-AM adaptation
+        (Sundararajan et al. 2004)
+    4.  `charlson_cdmf2019`: (Glasheen et al. 2019)
+    5.  `charlson_ludvigsson2021`: Swedish ICD-10-SE adaptation
+        (Ludvigsson et al. 2021, 2023)
 3.  Elixhauser
     1.  Based on codes provided by the Agency for Healthcare Research
         and Quality (AHRQ) for fiscal years 2022 through 2026
@@ -66,11 +70,12 @@ medicalcoder:::comorbidities_methods()
 ##  [3] "pccc_v3.0"                 "pccc_v3.1"                
 ##  [5] "charlson_deyo1992"         "charlson_quan2011"        
 ##  [7] "charlson_quan2005"         "charlson_cdmf2019"        
-##  [9] "elixhauser_elixhauser1988" "elixhauser_ahrq_web"      
-## [11] "elixhauser_quan2005"       "elixhauser_ahrq2022"      
-## [13] "elixhauser_ahrq2023"       "elixhauser_ahrq2024"      
-## [15] "elixhauser_ahrq2025"       "elixhauser_ahrq2026"      
-## [17] "elixhauser_ahrq_icd10"
+##  [9] "charlson_sundararajan2004" "charlson_ludvigsson2021"  
+## [11] "elixhauser_elixhauser1988" "elixhauser_ahrq_web"      
+## [13] "elixhauser_quan2005"       "elixhauser_ahrq2022"      
+## [15] "elixhauser_ahrq2023"       "elixhauser_ahrq2024"      
+## [17] "elixhauser_ahrq2025"       "elixhauser_ahrq2026"      
+## [19] "elixhauser_ahrq_icd10"
 ```
 
 Vignettes for each of the major methods are available.
@@ -100,7 +105,7 @@ args(comorbidities)
 ##     icdv = NULL, dx.var = NULL, dx = NULL, poa.var = NULL, poa = NULL, 
 ##     age.var = NULL, primarydx.var = NULL, primarydx = NULL, flag.method = c("current", 
 ##         "cumulative"), full.codes = TRUE, compact.codes = TRUE, 
-##     subconditions = FALSE) 
+##     subconditions = FALSE, mapping = c("precomputed", "regex")) 
 ## NULL
 ```
 
@@ -254,7 +259,7 @@ each method
 ``` r
 
 str(get_pccc_codes())
-## 'data.frame':    7906 obs. of  12 variables:
+## 'data.frame':    8900 obs. of  12 variables:
 ##  $ icdv           : int  9 9 9 9 9 9 9 9 9 9 ...
 ##  $ dx             : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ full_code      : chr  "00.10" "00.50" "00.51" "00.53" ...
@@ -268,18 +273,20 @@ str(get_pccc_codes())
 ##  $ pccc_v2.1      : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ pccc_v2.0      : int  1 1 1 1 1 1 1 1 1 1 ...
 str(get_charlson_codes())
-## 'data.frame':    7410 obs. of  9 variables:
-##  $ icdv             : int  9 9 9 9 9 9 9 9 9 9 ...
-##  $ dx               : int  0 1 1 1 1 1 1 1 1 1 ...
-##  $ full_code        : chr  "38.48" "003.1" "007.2" "007.4" ...
-##  $ code             : chr  "3848" "0031" "0072" "0074" ...
-##  $ condition        : chr  "pvd" "aids" "aids" "aids" ...
-##  $ charlson_cdmf2019: int  0 1 1 1 1 1 1 1 1 1 ...
-##  $ charlson_deyo1992: int  1 0 0 0 0 0 0 0 0 0 ...
-##  $ charlson_quan2005: int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ charlson_quan2011: int  0 0 0 0 0 0 0 0 0 0 ...
+## 'data.frame':    9145 obs. of  11 variables:
+##  $ icdv                     : int  9 9 9 9 9 9 9 9 9 9 ...
+##  $ dx                       : int  0 1 1 1 1 1 1 1 1 1 ...
+##  $ full_code                : chr  "38.48" "003.1" "007.2" "007.4" ...
+##  $ code                     : chr  "3848" "0031" "0072" "0074" ...
+##  $ condition                : chr  "pvd" "aids" "aids" "aids" ...
+##  $ charlson_cdmf2019        : int  0 1 1 1 1 1 1 1 1 1 ...
+##  $ charlson_deyo1992        : int  1 0 0 0 0 0 0 0 0 0 ...
+##  $ charlson_ludvigsson2021  : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ charlson_quan2005        : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ charlson_sundararajan2004: int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ charlson_quan2011        : int  0 0 0 0 0 0 0 0 0 0 ...
 str(get_elixhauser_codes())
-## 'data.frame':    10455 obs. of  15 variables:
+## 'data.frame':    11293 obs. of  15 variables:
 ##  $ icdv                     : int  9 9 9 9 9 9 9 9 9 9 ...
 ##  $ dx                       : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ full_code                : chr  "042" "070.22" "070.23" "070.32" ...
@@ -407,6 +414,16 @@ Comorbidity Software Refined for ICD-10-CM Healthcare Cost and
 Utilization Project (HCUP)*.
 <https://hcup-us.ahrq.gov/toolssoftware/comorbidityicd10/comorbidity_icd10.jsp>.
 
+Ludvigsson, Jonas F, Peter Appelros, Johan Askling, et al. 2021.
+“Adaptation of the Charlson Comorbidity Index for Register-Based
+Research in Sweden.” *Clinical Epidemiology*, 21–41.
+https://doi.org/<https://doi.org/10.2147/CLEP.S282475>.
+
+Ludvigsson, Jonas F, Peter Appelros, Johan Askling, et al. 2023.
+“Adaptation of the Charlson Comorbidity Index for Register-Based
+Research in Sweden \[Corrigendum\].” *Clinical Epidemiology* 15: 753–54.
+https://doi.org/<https://doi.org/10.2147/clep.s425901>.
+
 Quan, Hude, Bo Li, Colette M. Couris, et al. 2011. “Updating and
 Validating the Charlson Comorbidity Index and Score for Risk Adjustment
 in Hospital Discharge Abstracts Using Data from 6 Countries.” *American
@@ -417,3 +434,8 @@ Quan, Hude, Vijaya Sundararajan, Patricia Halfon, et al. 2005. “Coding
 Algorithms for Defining Comorbidities in ICD-9-CM and ICD-10
 Administrative Data.” *Medical Care* 43 (11): 1130–39.
 <https://doi.org/10.1097/01.mlr.0000182534.19832.83>.
+
+Sundararajan, Vijaya, Toni Henderson, Catherine Perry, Amanda Muggivan,
+Hude Quan, and William A Ghali. 2004. “New ICD-10 Version of the
+Charlson Comorbidity Index Predicted in-Hospital Mortality.” *Journal of
+Clinical Epidemiology* 57 (12): 1288–94.

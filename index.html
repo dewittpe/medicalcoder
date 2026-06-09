@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>A Unified and Longitudinally Aware Framework for ICD-Based Comorbidity Assessment • medicalcoder</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="A Unified and Longitudinally Aware Framework for ICD-Based Comorbidity Assessment">
 <meta name="description" content="Provides comorbidity classification algorithms such as the Pediatric Complex Chronic Conditions (PCCC), Charlson, and Elixhauser indices, supports longitudinal comorbidity flagging across encounters, and includes utilities for working with medical coding schemas such as the International Classification of Diseases (ICD).">
@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,7 +71,7 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>medicalcoder is a lightweight, base-R package for working with ICD-9 and ICD-10 diagnosis and procedure codes. It implements widely used comorbidity algorithms such as Charlson, Elixhauser, and the Pediatric Complex Chronic Conditions (PCCC), supports longitudinal comorbidity flagging across encounters, and provides fast, dependency-free utilities to look up, validate, and manipulate ICD codes. Designed for portability and reproducibility, the package avoids external dependencies—requiring only R ≥ 3.5.0—yet offers a rich set of curated ICD code libraries from the United States’ Centers for Medicare and Medicaid Services (CMS), Centers for Disease Control (CDC), and the World Health Organization (WHO).</p>
+<p>medicalcoder is a lightweight, base-R package for working with ICD-9 and ICD-10 diagnosis and procedure codes. It implements widely used comorbidity algorithms such as Charlson, Elixhauser, and the Pediatric Complex Chronic Conditions (PCCC), supports longitudinal comorbidity flagging across encounters, and provides fast, dependency-free utilities to look up, validate, and manipulate ICD codes. Designed for portability and reproducibility, the package avoids external dependencies—requiring only R ≥ 3.5.0—yet offers a rich set of curated ICD code libraries from the United States’ Centers for Medicare and Medicaid Services (CMS), Centers for Disease Control (CDC), the World Health Organization (WHO), Australia’s Independent Health and Aged Care Pricing Authority (IHACPA), and Sweden’s National Board of Health and Welfare (Socialstyrelsen).</p>
 <p>The package balances performance with elegance: its internal caching, efficient joins, and compact data structures make it practical for large-scale health data analyses, while its clean design makes it easy to extend or audit. Whether you need to flag comorbidities, explore ICD hierarchies, or standardize clinical coding workflows, medicalcoder provides a robust, transparent foundation for research and applied work in biomedical informatics.</p>
 <p>The primary objectives of medicalcoder are:</p>
 <ol style="list-style-type: decimal">
@@ -282,12 +282,14 @@
 <div class="section level4">
 <h4 id="charlson-comorbidities">Charlson Comorbidities<a class="anchor" aria-label="anchor" href="#charlson-comorbidities"></a>
 </h4>
-<p>There are four variants of Charlson comorbidities implemented in medicalcoder:</p>
+<p>There are six variants of Charlson comorbidities implemented in medicalcoder:</p>
 <ul>
 <li><a href="https://doi.org/10.1016/0895-4356(92)90133-8" class="external-link">Deyo, Cherkin, and Ciol (1992)</a></li>
 <li><a href="https://doi.org/10.1097/01.mlr.0000182534.19832.83" class="external-link">Quan et al. (2005)</a></li>
 <li><a href="https://doi.org/10.1093/aje/kwq433" class="external-link">Quan et al. (2011)</a></li>
+<li><a href="https://doi.org/10.1016/j.jclinepi.2004.03.012" class="external-link">Sundararajan et al. (2004)</a></li>
 <li><a href="https://pubmed.ncbi.nlm.nih.gov/31428236/" class="external-link">Glasheen (2019)</a></li>
+<li><a href="https://doi.org/10.2147/CLEP.S282475" class="external-link">Ludvigsson et al. (2021)</a></li>
 </ul>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Charlson example</span></span>
@@ -371,11 +373,11 @@
 <div class="section level3">
 <h3 id="icd">ICD<a class="anchor" aria-label="anchor" href="#icd"></a>
 </h3>
-<p>The package contains internal data sets with references for ICD-9 and ICD-10 US based diagnostic and procedure codes. These codes are supplemented with additional codes from the World Health Organization.</p>
+<p>The package contains internal data sets with references for ICD-9 and ICD-10 US based diagnostic and procedure codes. These codes are supplemented with additional codes from the World Health Organization and ICD-10-AM codes from IHACPA, and ICD-10-SE codes from Socialstyrelsen.</p>
 <p>You can get a table of ICD codes via <code><a href="reference/get_icd_codes.html">get_icd_codes()</a></code>.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">medicalcoder</span><span class="fu">::</span><span class="fu"><a href="reference/get_icd_codes.html">get_icd_codes</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'data.frame':    249819 obs. of  9 variables:</span></span>
+<span><span class="co">#&gt; 'data.frame':    330606 obs. of  9 variables:</span></span>
 <span><span class="co">#&gt;  $ icdv            : int  9 9 9 9 9 9 9 9 9 9 ...</span></span>
 <span><span class="co">#&gt;  $ dx              : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span><span class="co">#&gt;  $ full_code       : chr  "00" "00" "00.0" "00.0" ...</span></span>
@@ -399,11 +401,15 @@
 <li>
 <code>cdc</code>: CDC mortality coding.</li>
 <li>
+<code>ihacpa</code>: ICD-10-AM codes from the Independent Health and Aged Care Pricing Authority.</li>
+<li>
+<code>socialstyrelsen</code>: ICD-10-SE codes from Sweden’s National Board of Health and Welfare (Socialstyrelsen).</li>
+<li>
 <code>who</code>: World Health Organization.</li>
 </ul>
 </li>
 <li>
-<p><code>known_start</code>: The earliest (fiscal) year when source data for the code was available in the source code for medicalcoder. Codes from CMS are for the United States fiscal year. Codes from CDC and WHO are calendar year. The United States fiscal year starts October 1 and concludes September 30. For example, fiscal year 2013 started October 1 2012 and concluded September 30 2013.</p>
+<p><code>known_start</code>: The earliest source year when source data for the code was available in the source code for medicalcoder. Codes from CMS are for the United States fiscal year. Codes from IHACPA use the Australian financial year, which starts July 1 and ends June 30. Codes from CDC, Socialstyrelsen, and WHO are calendar year. The United States fiscal year starts October 1 and concludes September 30. For example, fiscal year 2013 started October 1 2012 and concluded September 30 2013.</p>
 <p>To reemphasize that the year is for the data within medicalcoder. For ICD-9-CM, the codes went into effect for fiscal year 1980. The source code only has documented source files for the codes dating back to</p>
 <ol start="1997" style="list-style-type: decimal"><li>
 </li></ol>
@@ -429,19 +435,19 @@
 <span><span class="co">#&gt; 1        Z94        2014      2026               NA             NA</span></span>
 <span><span class="co">#&gt; 5      Z94.0        2014      2026             2014           2026</span></span>
 <span><span class="co">#&gt; 9      Z94.1        2014      2026             2014           2026</span></span>
-<span><span class="co">#&gt; 14     Z94.2        2014      2026             2014           2026</span></span>
+<span><span class="co">#&gt; 13     Z94.2        2014      2026             2014           2026</span></span>
 <span><span class="co">#&gt; 17     Z94.3        2014      2026             2014           2026</span></span>
-<span><span class="co">#&gt; 22     Z94.4        2014      2026             2014           2026</span></span>
+<span><span class="co">#&gt; 21     Z94.4        2014      2026             2014           2026</span></span>
 <span><span class="co">#&gt; 25     Z94.5        2014      2026             2014           2026</span></span>
 <span><span class="co">#&gt; 29     Z94.6        2014      2026             2014           2026</span></span>
 <span><span class="co">#&gt; 33     Z94.7        2014      2026             2014           2026</span></span>
-<span><span class="co">#&gt; 38     Z94.8        2014      2026               NA             NA</span></span>
+<span><span class="co">#&gt; 37     Z94.8        2014      2026               NA             NA</span></span>
 <span><span class="co">#&gt; 41    Z94.81        2014      2026             2014           2026</span></span>
-<span><span class="co">#&gt; 42    Z94.82        2014      2026             2014           2026</span></span>
-<span><span class="co">#&gt; 43    Z94.83        2014      2026             2014           2026</span></span>
-<span><span class="co">#&gt; 44    Z94.84        2014      2026             2014           2026</span></span>
-<span><span class="co">#&gt; 45    Z94.89        2014      2026             2014           2026</span></span>
-<span><span class="co">#&gt; 46     Z94.9        2014      2026             2014           2026</span></span></code></pre></div>
+<span><span class="co">#&gt; 43    Z94.82        2014      2026             2014           2026</span></span>
+<span><span class="co">#&gt; 45    Z94.83        2014      2026             2014           2026</span></span>
+<span><span class="co">#&gt; 47    Z94.84        2014      2026             2014           2026</span></span>
+<span><span class="co">#&gt; 50    Z94.89        2014      2026             2014           2026</span></span>
+<span><span class="co">#&gt; 52     Z94.9        2014      2026             2014           2026</span></span></code></pre></div>
 <p>Additionally, the <code><a href="reference/get_icd_codes.html">get_icd_codes()</a></code> method can provide descriptions and the ICD hierarchy by using the <code>with.descriptions</code> and/or <code>with.hierarchy</code> arguments.</p>
 <p>Functions <code><a href="reference/lookup_icd_codes.html">lookup_icd_codes()</a></code>, <code><a href="reference/is_icd.html">is_icd()</a></code>, and <code><a href="reference/icd_compact_to_full.html">icd_compact_to_full()</a></code> are also provided for working with ICD codes.</p>
 <p>More details and examples are in the vignette:</p>
