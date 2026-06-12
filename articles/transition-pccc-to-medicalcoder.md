@@ -465,15 +465,15 @@ medicalcoder_dt_time <- difftime(toc, tic, units = "secs")
 ``` r
 
 pccc_ccc_tbl_time
-## Time difference of 9.642976 secs
+## Time difference of 9.620985 secs
 pccc_ccc_dt_time
-## Time difference of 7.56383 secs
+## Time difference of 7.435807 secs
 medicalcoder_df_time
-## Time difference of 0.8538818 secs
+## Time difference of 0.8740761 secs
 medicalcoder_tbl_time
-## Time difference of 0.2857575 secs
+## Time difference of 0.2841589 secs
 medicalcoder_dt_time
-## Time difference of 0.3112953 secs
+## Time difference of 0.3144436 secs
 ```
 
 ### Summary of results
