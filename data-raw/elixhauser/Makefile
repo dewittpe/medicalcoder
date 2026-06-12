@@ -8,8 +8,6 @@ ELIXHAUSER_QUAN2005_TARGETS := elixhauser_codes_quan2005.rds elixhauser_index_sc
 
 FINAL_TARGETS := elixhauser_codes.rds elixhauser_index_scores.rds elixhauser_poa.rds
 
-.INTERMEDIATE: $(ELIXHAUSER_QUAN2005_TARGETS) $(ELIXHAUSER_AHRQ_ICD10_TARGETS)
-
 .PHONY: all clean
 
 all: $(FINAL_TARGETS)
