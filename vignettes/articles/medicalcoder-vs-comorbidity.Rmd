@@ -37,6 +37,10 @@ packageDescription("comorbidity")$Title
 cat(packageDescription("comorbidity")$Description)
 ```
 
+```{r, include = FALSE}
+stopifnot(packageVersion("comorbidity") == "1.1.0")
+```
+
 The following table is a partial list of similarities and differences between
 medicalcoder and comorbidity.
 
@@ -697,11 +701,13 @@ cmrb_results <-
 
 elixhauser_delta <-
   merge(
-    x = comorbidity_elixhauser_results,
-    y = medicalcoder_elixhauser_results,
+    x = cmrb_results,
+    y = mdcr_results,
     all = TRUE,
-    by = "patid"
+    by = "code_id"
   )
+
+data.table::setDT(elixhauser_delta)
 
 for (i in seq_len(nrow(elixhauser_columns))) {
   x <- elixhauser_columns[["comorbidity"]][i]
@@ -714,14 +720,23 @@ for (i in seq_len(nrow(elixhauser_columns))) {
   print(e)
   r <- eval(e)
   print(r)
-  stopifnot(r)
-  elixhauser_delta[[x]] <- NULL
-  elixhauser_delta[[y]] <- NULL
+  if (r) {
+    elixhauser_delta[[x]] <- NULL
+    elixhauser_delta[[y]] <- NULL
+  }
 }
 ```
 
+```{r, include = FALSE}
+stopifnot(identical(names(elixhauser_delta), c("code_id", "HTN_C", "num_cmrb", "cmrb_flag", "mortality_index", "readmission_index")))
+```
 
+The only differences between the resulting data sets are columns unique to
+medicalcoder.
 
+```{r}
+str(elixhauser_delta)
+```
 
 # Benchmarking
 
