@@ -91,6 +91,53 @@ data.table::setnames(
 )
 
 ################################################################################
+# check headers
+
+# Procedure codes: all headers are three digits, all other codes are seven
+# digits
+stopifnot(
+  cms_files[dx == 0 & cms_header == 1, all(nchar(code) == 3L)],
+  cms_files[dx == 0 & cms_header == 0, all(nchar(code) == 7L)]
+)
+
+# diagnostic codes are all three, four, five, six, or seven characters
+stopifnot(
+  cms_files[dx == 1, sort(unique(nchar(code))) == c(3L, 4L, 5L, 6L, 7L)]
+)
+
+# correctly marked headers
+dxheaders <- data.table::copy(cms_files)
+dxheaders <- dxheaders[dx == 1L]
+
+# get the parts of each code
+dxheaders[nchar(code) >= 3, d3 := substr(code, 1, 3)]
+dxheaders[nchar(code) >= 4, d4 := substr(code, 1, 4)]
+dxheaders[nchar(code) >= 5, d5 := substr(code, 1, 5)]
+dxheaders[nchar(code) >= 6, d6 := substr(code, 1, 6)]
+dxheaders[nchar(code) >= 7, d7 := substr(code, 1, 7)]
+
+# if d3 appears once, it is not a header, if d3 appears more than once it is a
+# header.  Similar for d4, d5, d6, and d7
+dxheaders[, d3n := .N, by = .(year, d3)]
+dxheaders[, d4n := .N, by = .(year, d4)]
+dxheaders[, d5n := .N, by = .(year, d5)]
+dxheaders[, d6n := .N, by = .(year, d6)]
+dxheaders[, d7n := .N, by = .(year, d7)]
+
+stopifnot(
+  dxheaders[d3n == 1L, all(cms_header == 0L)],
+  dxheaders[d3n >  1L, all(cms_header >= 0L)],
+  dxheaders[d4n == 1L, all(cms_header == 0L)],
+  dxheaders[d4n >  1L, all(cms_header >= 0L)],
+  dxheaders[d5n == 1L, all(cms_header == 0L)],
+  dxheaders[d5n >  1L, all(cms_header >= 0L)],
+  dxheaders[d6n == 1L, all(cms_header == 0L)],
+  dxheaders[d6n >  1L, all(cms_header >= 0L)],
+  dxheaders[d7n == 1L, all(cms_header == 0L)],
+  dxheaders[d7n >  1L, all(cms_header >= 0L)]
+)
+
+################################################################################
 data.table::setDF(cms_files)
 saveRDS(cms_files, file = "cms_icd10.rds")
 
