@@ -11,8 +11,6 @@
 - [medicalcoder vs
   comorbidity](http://www.peteredewitt.com/medicalcoder/articles/medicalcoder-vs-comorbidity.md):
 - [medicalcoder vs
-  icdcomorbid](http://www.peteredewitt.com/medicalcoder/articles/medicalcoder-vs-icdcomorbid.md):
-- [medicalcoder vs
   mimic](http://www.peteredewitt.com/medicalcoder/articles/medicalcoder-vs-mimic.md):
 - [medicalcoder vs
   multimorbidity](http://www.peteredewitt.com/medicalcoder/articles/medicalcoder-vs-multimorbidity.md):
