@@ -490,7 +490,7 @@ for more details.</p>
 <span><span class="va">tic</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">medicalcoder_results</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">medicalcoder</span><span class="fu">::</span><span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">mdcr_tbl</span>,</span>
+<span>    data <span class="op">=</span> <span class="va">mdcr_DT</span>,</span>
 <span>    id.vars <span class="op">=</span> <span class="st">"patid"</span>,</span>
 <span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
 <span>    icdv.var <span class="op">=</span> <span class="st">"icdv"</span>,</span>
@@ -502,15 +502,15 @@ for more details.</p>
 <span><span class="va">medicalcoder_dt_time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/difftime.html" class="external-link">difftime</a></span><span class="op">(</span><span class="va">toc</span>, <span class="va">tic</span>, units <span class="op">=</span> <span class="st">"secs"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pccc_ccc_tbl_time</span></span>
-<span><span class="co">## Time difference of 8.980607 secs</span></span>
+<span><span class="co">## Time difference of 9.858503 secs</span></span>
 <span><span class="va">pccc_ccc_dt_time</span></span>
-<span><span class="co">## Time difference of 6.757657 secs</span></span>
+<span><span class="co">## Time difference of 7.482346 secs</span></span>
 <span><span class="va">medicalcoder_df_time</span></span>
-<span><span class="co">## Time difference of 1.008518 secs</span></span>
+<span><span class="co">## Time difference of 0.94016 secs</span></span>
 <span><span class="va">medicalcoder_tbl_time</span></span>
-<span><span class="co">## Time difference of 0.3161545 secs</span></span>
+<span><span class="co">## Time difference of 0.2983365 secs</span></span>
 <span><span class="va">medicalcoder_dt_time</span></span>
-<span><span class="co">## Time difference of 0.3406773 secs</span></span></code></pre></div>
+<span><span class="co">## Time difference of 0.1525707 secs</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="summary-of-results">Summary of results<a class="anchor" aria-label="anchor" href="#summary-of-results"></a>
@@ -894,7 +894,7 @@ storage_disorders
 <div class="section level2">
 <h2 id="pccc-version-3">PCCC version 3<a class="anchor" aria-label="anchor" href="#pccc-version-3"></a>
 </h2>
-<p>For more detail on the differences between PCCC v2 <span class="citation">(Feudtner et al. 2014)</span> and PCCC v3 <span class="citation">(Feudtner et al. 2014)</span> see the <a href="https://www.peteredewitt.com/medicalcoder/articles/pccc.html#pccc-version-2-0-vs-pccc-version-3-0" class="external-link">PCCC
+<p>For more detail on the differences between PCCC v2 <span class="citation">(Feudtner et al. 2014)</span> and PCCC v3 <span class="citation">(Feinstein et al. 2024)</span> see the <a href="https://www.peteredewitt.com/medicalcoder/articles/pccc.html#pccc-version-2-0-vs-pccc-version-3-0" class="external-link">PCCC
 article</a>.</p>
 </div>
 <div class="section level2">

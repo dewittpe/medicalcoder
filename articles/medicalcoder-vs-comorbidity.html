@@ -171,7 +171,7 @@ Charlson (Ludvigsson et al., 2021)
 ✅
 </td>
 <td style="text-align:center;">
-❌
+✅
 </td>
 </tr>
 <tr>
@@ -1613,8 +1613,6 @@ specific to medicalcoder, save patid.</p>
 <span><span class="co">##  $ cmrb_flag        : int  1 1 1 0 0 1 1 1 0 1 ...</span></span>
 <span><span class="co">##  $ mortality_index  : int  3 -10 14 0 0 16 19 5 0 -5 ...</span></span>
 <span><span class="co">##  $ readmission_index: int  8 1 21 0 0 15 17 6 0 4 ...</span></span></code></pre></div>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">elixhauser_delta</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"patid"</span>, <span class="st">"HTN_C"</span>, <span class="st">"num_cmrb"</span>, <span class="st">"cmrb_flag"</span>, <span class="st">"mortality_index"</span>, <span class="st">"readmission_index"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <ul>
 <li><p><code>HTN_C</code>: <em>any</em> hypertension - added to simplify
 the calculation of the mortality and readmission indices based on
@@ -1629,7 +1627,7 @@ index scores based on the AHRQ weights <span class="citation">(Healthcare Cost a
 <p>An addition feature of the medicalcoder package provides that the
 comorbidity package does not, is a summary method for the results, which
 can be used to build nice tables via <a href="https://CRAN.R-project.org/package=kableExtra" class="external-link">kableExtra</a>.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">medicalcoder_elixhauser_results</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"condition"</span>, <span class="st">"count"</span>, <span class="st">"percent"</span><span class="op">)</span><span class="op">]</span></span>
 <span></span>
 <span><span class="fu">kbl</span><span class="op">(</span></span>
@@ -2088,7 +2086,7 @@ WGHTLOSS
 <p>Here we check for consistency in the mappings between
 <em>medicalcoder</em> and <em>comorbidity</em> using all known ICD codes
 within <em>medicalcoder</em>.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">all_dx_codes</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span></span>
 <span>    x      <span class="op">=</span> <span class="fu">medicalcoder</span><span class="fu">::</span><span class="fu"><a href="../reference/get_icd_codes.html">get_icd_codes</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -2101,7 +2099,7 @@ within <em>medicalcoder</em>.</p>
 <div class="section level3">
 <h3 id="charlson">Charlson<a class="anchor" aria-label="anchor" href="#charlson"></a>
 </h3>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mdcr_results</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">medicalcoder</span><span class="fu">::</span><span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
 <span>    data <span class="op">=</span> <span class="va">all_dx_codes</span>,</span>
@@ -2226,7 +2224,7 @@ utilities. The implementation used by
 applied to the data and the omitted C4A is why the code is not flagged.
 <code><a href="../reference/comorbidities.html">medicalcoder::comorbidities()</a></code> builds a table with valid ICD
 codes to join against and has the C4A.x codes</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># comorbidity:::.maps$charlson_icd10_quan$canc</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"^C4"</span>, <span class="fu">comorbidity</span><span class="fu">:::</span><span class="va">.maps</span><span class="op">$</span><span class="va">charlson_icd10_quan</span><span class="op">$</span><span class="va">canc</span>, value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">## [1] "C40" "C41" "C43" "C45" "C46" "C47" "C48" "C49"</span></span>
@@ -2244,7 +2242,7 @@ codes to join against and has the C4A.x codes</p>
 <span><span class="co">## [29] "C4A.70"  "C4A.71"  "C4A.72"  "C4A.8"   "C4A.9"</span></span></code></pre></div>
 <p>The implementation of <code><a href="https://ellessenne.github.io/comorbidity/reference/comorbidity.html" class="external-link">comorbidity::comorbidity()</a></code> can
 result in false positives when invalid codes are submitted.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"pat1"</span>, code <span class="op">=</span> <span class="st">"C40-NOT-AN-ICD-CODE"</span><span class="op">)</span></span>
 <span><span class="fu">comorbidity</span><span class="fu">::</span><span class="fu"><a href="https://ellessenne.github.io/comorbidity/reference/comorbidity.html" class="external-link">comorbidity</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">df</span>, id <span class="op">=</span> <span class="st">"id"</span>, code <span class="op">=</span> <span class="st">"code"</span>, assign0 <span class="op">=</span> <span class="cn">TRUE</span>, map <span class="op">=</span> <span class="st">"charlson_icd10_quan"</span><span class="op">)</span></span>
 <span><span class="co">##     id mi chf pvd cevd dementia cpd rheumd pud mld diab diabwc hp rend canc</span></span>
@@ -2263,7 +2261,7 @@ result in false positives when invalid codes are submitted.</p>
 <div class="section level3">
 <h3 id="elixhauser">Elixhauser<a class="anchor" aria-label="anchor" href="#elixhauser"></a>
 </h3>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mdcr_results</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">medicalcoder</span><span class="fu">::</span><span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
 <span>    data <span class="op">=</span> <span class="va">all_dx_codes</span>,</span>
@@ -2404,7 +2402,7 @@ work we make some copies of the input data and set the copies to be
 <code>data.tables</code>.</p>
 <details><summary>
 Code (click to toggle view/fold)
-</summary><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mdcrDT</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">mdcr</span><span class="op">)</span></span>
 <span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/setDT.html" class="external-link">setDT</a></span><span class="op">(</span><span class="va">mdcrDT</span><span class="op">)</span></span>
 <span><span class="va">mdcr_icd9dxDT</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">mdcr_icd9dx</span><span class="op">)</span></span>
@@ -2415,7 +2413,7 @@ Code (click to toggle view/fold)
 times.</p>
 <details><summary>
 Code (click to toggle view/fold)
-</summary><div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">medicalcoder_charlson_results</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">medicalcoder</span><span class="fu">::</span><span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
 <span>    data <span class="op">=</span> <span class="va">mdcr</span>,</span>
@@ -2531,7 +2529,7 @@ Code (click to toggle view/fold)
 execution time, in seconds, for each evaluation.</p>
 <details><summary>
 Code (click to toggle view/fold)
-</summary><div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">medicalcoder_times</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span>
 <span><span class="va">medicalcoder_times_DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span>
 <span><span class="va">comorbidity_times</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span>
@@ -2606,22 +2604,22 @@ Max.
 medicalcoder_times_DT
 </td>
 <td style="text-align:right;">
-0.100
+0.105
 </td>
 <td style="text-align:right;">
-0.102
+0.107
 </td>
 <td style="text-align:right;">
-0.103
+0.109
 </td>
 <td style="text-align:right;">
-0.121
+0.126
 </td>
 <td style="text-align:right;">
-0.147
+0.155
 </td>
 <td style="text-align:right;">
-0.161
+0.175
 </td>
 </tr>
 <tr>
@@ -2629,22 +2627,22 @@ medicalcoder_times_DT
 medicalcoder_times
 </td>
 <td style="text-align:right;">
-0.397
+0.363
 </td>
 <td style="text-align:right;">
-0.411
+0.408
+</td>
+<td style="text-align:right;">
+0.413
+</td>
+<td style="text-align:right;">
+0.412
 </td>
 <td style="text-align:right;">
 0.418
 </td>
 <td style="text-align:right;">
-0.417
-</td>
-<td style="text-align:right;">
-0.424
-</td>
-<td style="text-align:right;">
-0.431
+0.427
 </td>
 </tr>
 <tr>
@@ -2652,22 +2650,22 @@ medicalcoder_times
 comorbidity_times_DT
 </td>
 <td style="text-align:right;">
-1.495
+1.596
 </td>
 <td style="text-align:right;">
-1.512
+1.633
 </td>
 <td style="text-align:right;">
-1.691
+1.765
 </td>
 <td style="text-align:right;">
-1.650
+1.740
 </td>
 <td style="text-align:right;">
-1.733
+1.811
 </td>
 <td style="text-align:right;">
-1.961
+2.063
 </td>
 </tr>
 <tr>
@@ -2675,22 +2673,22 @@ comorbidity_times_DT
 comorbidity_times
 </td>
 <td style="text-align:right;">
-1.434
+1.531
 </td>
 <td style="text-align:right;">
-1.525
+1.620
 </td>
 <td style="text-align:right;">
-1.536
+1.631
 </td>
 <td style="text-align:right;">
-1.549
+1.642
 </td>
 <td style="text-align:right;">
-1.557
+1.668
 </td>
 <td style="text-align:right;">
-1.708
+1.778
 </td>
 </tr>
 </tbody>

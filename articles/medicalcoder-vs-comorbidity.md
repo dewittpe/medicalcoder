@@ -883,11 +883,6 @@ str(elixhauser_delta)
 ##  $ readmission_index: int  8 1 21 0 0 15 17 6 0 4 ...
 ```
 
-``` r
-
-stopifnot(identical(names(elixhauser_delta), c("patid", "HTN_C", "num_cmrb", "cmrb_flag", "mortality_index", "readmission_index")))
-```
-
 - `HTN_C`: *any* hypertension - added to simplify the calculation of the
   mortality and readmission indices based on weights from AHRQ.
 
