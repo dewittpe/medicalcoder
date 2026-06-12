@@ -47,7 +47,7 @@ Charlson [@quan2005]                                  | &#9989;      | &#9989;
 Charlson [@quan2011]                                  | &#10060;     | &#9989;
 Charlson [@deyo1992adapting]                          | &#10060;     | &#9989;
 Charlson [@glasheen2019]                              | &#10060;     | &#9989;
-Charlson (Ludvigsson et al., 2021)                    | &#9989;      | &#10060;
+Charlson (Ludvigsson et al., 2021)                    | &#9989;      | &#9989;
 Charlson (Sundararajan et al., 2004)                  | &#9989;      | &#9989;
 Elixhauser [@quan2005]                                | &#9989;      | &#9989;
 Elixhauser [@elixhauser1998]                          | &#10060;     | &#9989;
@@ -533,7 +533,7 @@ medicalcoder, save patid.
 str(elixhauser_delta)
 ```
 
-```{r, inlcude = FALSE}
+```{r, include = FALSE}
 stopifnot(identical(names(elixhauser_delta), c("patid", "HTN_C", "num_cmrb", "cmrb_flag", "mortality_index", "readmission_index")))
 ```
 
