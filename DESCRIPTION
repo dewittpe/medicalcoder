@@ -26,8 +26,10 @@ Suggests:
     kableExtra,
     knitr,
     R.utils,
-    rmarkdown
+    rmarkdown,
+    tibble,
+    tidyr
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
-Config/Needs/website: pkgdown, comorbidity, icdcomorbid, multimorbidity, dplyr, odbc, DBI, RSQLite, pccc
+Config/Needs/website: pkgdown, comorbidity, icdcomorbid, multimorbidity, dplyr, tidyr, tibble, odbc, DBI, RSQLite, pccc
 Config/roxygen2/version: 8.0.0

@@ -397,7 +397,7 @@ mdcr_DT <- data.table::as.data.table(data.table::copy(mdcr))
 tic <- Sys.time()
 medicalcoder_results <-
   medicalcoder::comorbidities(
-    data = mdcr_tbl,
+    data = mdcr_DT,
     id.vars = "patid",
     icd.codes = "code",
     icdv.var = "icdv",
@@ -490,7 +490,7 @@ kableExtra::pack_rows(index = table(cvd_and_metabolic$condition))
 
 # PCCC version 3
 For more detail on the differences between PCCC v2 [@feudtner2014pediatric] and
-PCCC v3 [@feudtner2014pediatric] see the
+PCCC v3 [@feinstein2024pediatric] see the
 [PCCC article](https://www.peteredewitt.com/medicalcoder/articles/pccc.html#pccc-version-2-0-vs-pccc-version-3-0).
 
 
