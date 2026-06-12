@@ -2292,11 +2292,13 @@ result in false positives when invalid codes are submitted.</p>
 <span></span>
 <span><span class="va">elixhauser_delta</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge</a></span><span class="op">(</span></span>
-<span>    x <span class="op">=</span> <span class="va">comorbidity_elixhauser_results</span>,</span>
-<span>    y <span class="op">=</span> <span class="va">medicalcoder_elixhauser_results</span>,</span>
+<span>    x <span class="op">=</span> <span class="va">cmrb_results</span>,</span>
+<span>    y <span class="op">=</span> <span class="va">mdcr_results</span>,</span>
 <span>    all <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    by <span class="op">=</span> <span class="st">"patid"</span></span>
+<span>    by <span class="op">=</span> <span class="st">"code_id"</span></span>
 <span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/setDT.html" class="external-link">setDT</a></span><span class="op">(</span><span class="va">elixhauser_delta</span><span class="op">)</span></span>
 <span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">elixhauser_columns</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">elixhauser_columns</span><span class="op">[[</span><span class="st">"comorbidity"</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="va">i</span><span class="op">]</span></span>
@@ -2309,9 +2311,10 @@ result in false positives when invalid codes are submitted.</p>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
 <span>  <span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/eval.html" class="external-link">eval</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
-<span>  <span class="va">elixhauser_delta</span><span class="op">[[</span><span class="va">x</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
-<span>  <span class="va">elixhauser_delta</span><span class="op">[[</span><span class="va">y</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">r</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">elixhauser_delta</span><span class="op">[[</span><span class="va">x</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span>    <span class="va">elixhauser_delta</span><span class="op">[[</span><span class="va">y</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span>  <span class="op">}</span></span>
 <span><span class="op">}</span></span>
 <span><span class="co">## identical(elixhauser_delta[["aids"]], elixhauser_delta[["AIDS"]])</span></span>
 <span><span class="co">## [1] TRUE</span></span>
@@ -2375,6 +2378,18 @@ result in false positives when invalid codes are submitted.</p>
 <span><span class="co">## [1] TRUE</span></span>
 <span><span class="co">## identical(elixhauser_delta[["wloss"]], elixhauser_delta[["WGHTLOSS"]])</span></span>
 <span><span class="co">## [1] TRUE</span></span></code></pre></div>
+<p>The only differences between the resulting data sets are columns
+unique to medicalcoder.</p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">elixhauser_delta</span><span class="op">)</span></span>
+<span><span class="co">## Classes 'data.table' and 'data.frame':   125918 obs. of  6 variables:</span></span>
+<span><span class="co">##  $ code_id          : chr  "ICD-10 A00.0" "ICD-10 A00.1" "ICD-10 A00.9" "ICD-10 A01.0" ...</span></span>
+<span><span class="co">##  $ HTN_C            : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ num_cmrb         : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ cmrb_flag        : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ mortality_index  : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ readmission_index: int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  - attr(*, ".internal.selfref")=&lt;pointer: 0x5566d89cfee0&gt;</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -2402,7 +2417,7 @@ work we make some copies of the input data and set the copies to be
 <code>data.tables</code>.</p>
 <details><summary>
 Code (click to toggle view/fold)
-</summary><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mdcrDT</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">mdcr</span><span class="op">)</span></span>
 <span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/setDT.html" class="external-link">setDT</a></span><span class="op">(</span><span class="va">mdcrDT</span><span class="op">)</span></span>
 <span><span class="va">mdcr_icd9dxDT</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">mdcr_icd9dx</span><span class="op">)</span></span>
@@ -2413,7 +2428,7 @@ Code (click to toggle view/fold)
 times.</p>
 <details><summary>
 Code (click to toggle view/fold)
-</summary><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">medicalcoder_charlson_results</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">medicalcoder</span><span class="fu">::</span><span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
 <span>    data <span class="op">=</span> <span class="va">mdcr</span>,</span>
@@ -2529,7 +2544,7 @@ Code (click to toggle view/fold)
 execution time, in seconds, for each evaluation.</p>
 <details><summary>
 Code (click to toggle view/fold)
-</summary><div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">medicalcoder_times</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span>
 <span><span class="va">medicalcoder_times_DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span>
 <span><span class="va">comorbidity_times</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span>
@@ -2604,22 +2619,22 @@ Max.
 medicalcoder_times_DT
 </td>
 <td style="text-align:right;">
-0.105
+0.081
 </td>
 <td style="text-align:right;">
-0.107
+0.097
 </td>
 <td style="text-align:right;">
-0.109
+0.097
 </td>
 <td style="text-align:right;">
-0.126
+0.101
 </td>
 <td style="text-align:right;">
-0.155
+0.098
 </td>
 <td style="text-align:right;">
-0.175
+0.152
 </td>
 </tr>
 <tr>
@@ -2627,22 +2642,22 @@ medicalcoder_times_DT
 medicalcoder_times
 </td>
 <td style="text-align:right;">
-0.363
+0.344
 </td>
 <td style="text-align:right;">
-0.408
+0.385
 </td>
 <td style="text-align:right;">
-0.413
+0.394
 </td>
 <td style="text-align:right;">
-0.412
+0.393
 </td>
 <td style="text-align:right;">
-0.418
+0.398
 </td>
 <td style="text-align:right;">
-0.427
+0.534
 </td>
 </tr>
 <tr>
@@ -2650,22 +2665,22 @@ medicalcoder_times
 comorbidity_times_DT
 </td>
 <td style="text-align:right;">
-1.596
+1.445
 </td>
 <td style="text-align:right;">
-1.633
+1.467
 </td>
 <td style="text-align:right;">
-1.765
+1.477
 </td>
 <td style="text-align:right;">
-1.740
+1.506
 </td>
 <td style="text-align:right;">
-1.811
+1.505
 </td>
 <td style="text-align:right;">
-2.063
+1.664
 </td>
 </tr>
 <tr>
@@ -2673,22 +2688,22 @@ comorbidity_times_DT
 comorbidity_times
 </td>
 <td style="text-align:right;">
-1.531
+1.421
 </td>
 <td style="text-align:right;">
-1.620
+1.456
 </td>
 <td style="text-align:right;">
-1.631
+1.473
 </td>
 <td style="text-align:right;">
-1.642
+1.480
 </td>
 <td style="text-align:right;">
-1.668
+1.495
 </td>
 <td style="text-align:right;">
-1.778
+1.674
 </td>
 </tr>
 </tbody>

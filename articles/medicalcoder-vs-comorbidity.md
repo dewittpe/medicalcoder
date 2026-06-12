@@ -1180,11 +1180,13 @@ cmrb_results <-
 
 elixhauser_delta <-
   merge(
-    x = comorbidity_elixhauser_results,
-    y = medicalcoder_elixhauser_results,
+    x = cmrb_results,
+    y = mdcr_results,
     all = TRUE,
-    by = "patid"
+    by = "code_id"
   )
+
+data.table::setDT(elixhauser_delta)
 
 for (i in seq_len(nrow(elixhauser_columns))) {
   x <- elixhauser_columns[["comorbidity"]][i]
@@ -1197,9 +1199,10 @@ for (i in seq_len(nrow(elixhauser_columns))) {
   print(e)
   r <- eval(e)
   print(r)
-  stopifnot(r)
-  elixhauser_delta[[x]] <- NULL
-  elixhauser_delta[[y]] <- NULL
+  if (r) {
+    elixhauser_delta[[x]] <- NULL
+    elixhauser_delta[[y]] <- NULL
+  }
 }
 ## identical(elixhauser_delta[["aids"]], elixhauser_delta[["AIDS"]])
 ## [1] TRUE
@@ -1263,6 +1266,22 @@ for (i in seq_len(nrow(elixhauser_columns))) {
 ## [1] TRUE
 ## identical(elixhauser_delta[["wloss"]], elixhauser_delta[["WGHTLOSS"]])
 ## [1] TRUE
+```
+
+The only differences between the resulting data sets are columns unique
+to medicalcoder.
+
+``` r
+
+str(elixhauser_delta)
+## Classes 'data.table' and 'data.frame':   125918 obs. of  6 variables:
+##  $ code_id          : chr  "ICD-10 A00.0" "ICD-10 A00.1" "ICD-10 A00.9" "ICD-10 A01.0" ...
+##  $ HTN_C            : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ num_cmrb         : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ cmrb_flag        : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ mortality_index  : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ readmission_index: int  0 0 0 0 0 0 0 0 0 0 ...
+##  - attr(*, ".internal.selfref")=<pointer: 0x5566d89cfee0>
 ```
 
 ## Benchmarking

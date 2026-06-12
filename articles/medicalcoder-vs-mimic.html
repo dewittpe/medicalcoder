@@ -97,10 +97,17 @@ Physiology (MIT_LCP) on GitHub. The code is expected to run on Google
 Big Query on the MIMIC-IV data. We make a few small modifications to the
 code so we can evaluate the SQL locally via RSQLite and on a local data
 set.</p>
+<p>The SQL file used here is vendored from <a href="https://raw.githubusercontent.com/MIT-LCP/mimic-code/278df75ec30991ff3a6f5ceb6d2221635a085e9f/mimic-iv/concepts/comorbidity/charlson.sql" class="external-link"><code>mimic-code</code>
+commit <code>278df75ec30991ff3a6f5ceb6d2221635a085e9f</code></a> so this
+article does not depend on network access during rendering.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mimic_charson_query</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/scan.html" class="external-link">scan</a></span><span class="op">(</span></span>
-<span>    file <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/MIT-LCP/mimic-code/278df75ec30991ff3a6f5ceb6d2221635a085e9f/mimic-iv/concepts/comorbidity/charlson.sql"</span>,</span>
+<span>    file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
+<span>      <span class="st">"sql"</span>, <span class="st">"mimic-iv-charlson-278df75.sql"</span>,</span>
+<span>      package <span class="op">=</span> <span class="st">"medicalcoder"</span>,</span>
+<span>      mustWork <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>    <span class="op">)</span>,</span>
 <span>    what <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    sep <span class="op">=</span> <span class="st">"\n"</span></span>
 <span>  <span class="op">)</span></span>
@@ -441,7 +448,7 @@ comorbidities flagged and indicator for any comorbidity.</p>
 <span><span class="co">##  $ renal_disease              : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span><span class="co">##  $ aids                       : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span><span class="co">##  $ charlson_comorbidity_index : int  1 0 6 0 0 0 0 2 0 0 ...</span></span>
-<span><span class="co">##  - attr(*, ".internal.selfref")=&lt;pointer: 0x5649dc243ee0&gt; </span></span>
+<span><span class="co">##  - attr(*, ".internal.selfref")=&lt;pointer: 0x564c726dfee0&gt; </span></span>
 <span><span class="co">##  - attr(*, "sorted")= chr [1:2] "subject_id" "hadm_id"</span></span>
 <span><span class="co">##  - attr(*, "index")= int(0)</span></span></code></pre></div>
 </div>

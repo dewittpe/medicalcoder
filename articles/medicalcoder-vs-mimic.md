@@ -20,11 +20,19 @@ data is available from MIT Laboratory for Computational Physiology
 the MIMIC-IV data. We make a few small modifications to the code so we
 can evaluate the SQL locally via RSQLite and on a local data set.
 
+The SQL file used here is vendored from [`mimic-code` commit
+`278df75ec30991ff3a6f5ceb6d2221635a085e9f`](https://raw.githubusercontent.com/MIT-LCP/mimic-code/278df75ec30991ff3a6f5ceb6d2221635a085e9f/mimic-iv/concepts/comorbidity/charlson.sql)
+so this article does not depend on network access during rendering.
+
 ``` r
 
 mimic_charson_query <-
   scan(
-    file = "https://raw.githubusercontent.com/MIT-LCP/mimic-code/278df75ec30991ff3a6f5ceb6d2221635a085e9f/mimic-iv/concepts/comorbidity/charlson.sql",
+    file = system.file(
+      "sql", "mimic-iv-charlson-278df75.sql",
+      package = "medicalcoder",
+      mustWork = TRUE
+    ),
     what = character(),
     sep = "\n"
   )
@@ -415,7 +423,7 @@ str(delta)
 ##  $ renal_disease              : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ aids                       : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ charlson_comorbidity_index : int  1 0 6 0 0 0 0 2 0 0 ...
-##  - attr(*, ".internal.selfref")=<pointer: 0x5649dc243ee0> 
+##  - attr(*, ".internal.selfref")=<pointer: 0x564c726dfee0> 
 ##  - attr(*, "sorted")= chr [1:2] "subject_id" "hadm_id"
 ##  - attr(*, "index")= int(0)
 ```
