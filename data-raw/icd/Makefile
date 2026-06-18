@@ -10,10 +10,13 @@ ICD_DATA_SETS := icd_codes.rds\
 
 .PHONY: all clean
 
-all:
-	$(MAKE) -C icd9
-	$(MAKE) -C icd10
-	$(MAKE) $(ICD_DATA_SETS)
+all: $(ICD_DATA_SETS)
+
+icd9/icd9.rds:
+	$(MAKE) -C icd9 icd9.rds
+
+icd10/icd10.rds:
+	$(MAKE) -C icd10 icd10.rds
 
 $(ICD_DATA_SETS) &: icd_codes.R icd9/icd9.rds icd10/icd10.rds icd_chapters_subchapters.dat ../../R/icd_compact_to_full.R
 	$(RSCRIPT) $<

@@ -27,9 +27,7 @@ TARBALL   := $(PKG_NAME)_$(PKG_VERSION).tar.gz
 # Default
 # =============================================================================
 
-all:
-	$(MAKE) data-raw    # ensure the internal data is up to date
-	$(MAKE) $(TARBALL)  #
+all: $(TARBALL)
 
 # =============================================================================
 # Build the package
@@ -37,6 +35,12 @@ all:
 
 $(TARBALL): .install_dev_deps.Rout .document.Rout $(VIGNETTES) $(TESTS) $(DATA)
 	$(R) CMD build --md5 "$(PKG_ROOT)"
+
+# The data-raw makefiles own the detailed dependency graph for generated data.
+# Always ask them to update it before considering package data targets, while
+# keeping the dependency order-only so unchanged data do not rebuild the package.
+$(DATA): | data-raw
+	@test -e "$@"
 
 # Run data-raw with parallelism you can override
 data-raw:
@@ -60,13 +64,12 @@ data-raw:
 	  -e "devtools::document('$(PKG_ROOT)')" \
 	  > $@ 2>&1
 
-# README depends on dev deps because it uses devtools::load_all()
-README.md: $(PKG_ROOT)/README.Rmd $(PKG_ROOT)/DESCRIPTION .install_dev_deps.Rout
+# README depends on generated package data and dev deps because it uses
+# devtools::load_all().  Declare the data dependency explicitly: make does not
+# guarantee that the prerequisites of $(TARBALL) are built left to right.
+README.md: $(PKG_ROOT)/README.Rmd $(PKG_ROOT)/DESCRIPTION $(DATA) .install_dev_deps.Rout
 	$(RSCRIPT) -e "devtools::load_all('$(PKG_ROOT)')" \
 	  -e "knitr::knit('$(PKG_ROOT)/README.Rmd', output='README.md')"
-
-$(PKG_ROOT)/R/sysdata.rda:
-	$(MAKE) -C data-raw ../R/sysdata.rda
 
 # =============================================================================
 # Check / Install
@@ -78,7 +81,7 @@ check: $(TARBALL) .install_dev_deps.Rout
 check-as-cran: $(TARBALL) .install_dev_deps.Rout
 	$(R) CMD check --as-cran $(TARBALL)
 
-install: data-raw $(TARBALL)
+install: $(TARBALL)
 	$(R) CMD INSTALL $(TARBALL)
 
 uninstall:

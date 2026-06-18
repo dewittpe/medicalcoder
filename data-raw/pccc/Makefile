@@ -7,6 +7,9 @@ ICD_KNOWN_AND_ASSIGNABLE := ../icd/known_and_assignable_start_stop.rds
 
 all: pccc_codes.rds pccc_conditions.rds
 
+$(ICD_CODES) $(ICD_KNOWN_AND_ASSIGNABLE):
+	$(MAKE) -C ../icd $(@F)
+
 pccc_v2.0.rds: pccc_v2.0.R pccc_v2_subconditions.rds $(ICD_CODES) $(ICD_KNOWN_AND_ASSIGNABLE)
 	$(RSCRIPT) $<
 

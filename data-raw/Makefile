@@ -14,18 +14,26 @@ DATASETS := ./charlson/charlson_regex.rds\
 						./pccc/pccc_codes.rds\
 						./pccc/pccc_conditions.rds
 
-.PHONY: all clean
+.PHONY: all clean datasets example-datasets
 
-all: | rpkgs.Rout
+all: datasets example-datasets ../R/sysdata.rda
+
+datasets: | rpkgs.Rout
 	$(MAKE) -C icd
 	$(MAKE) -C pccc
 	$(MAKE) -C charlson
 	$(MAKE) -C elixhauser
+
+example-datasets: | rpkgs.Rout
 	$(MAKE) -C example-datasets
-	$(MAKE) ../R/sysdata.rda
 
 rpkgs.Rout: rpkgs.R
 	$(RCMDBATCH) $< $@
+
+# These files are owned by the component makefiles above.  The order-only
+# prerequisite ensures a direct request for sysdata also builds missing inputs.
+$(DATASETS): | datasets
+	@test -e "$@"
 
 ../R/sysdata.rda: build_sysdata.R $(DATASETS)
 	$(RSCRIPT) $<

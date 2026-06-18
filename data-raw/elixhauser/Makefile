@@ -12,6 +12,9 @@ FINAL_TARGETS := elixhauser_codes.rds elixhauser_index_scores.rds elixhauser_poa
 
 all: $(FINAL_TARGETS)
 
+../icd/icd_codes.rds:
+	$(MAKE) -C ../icd $(@F)
+
 $(ELIXHAUSER_AHRQ_ICD10_TARGETS) &: elixhauser_ahrq_icd10.R $(ELIXHAUSER_AHRQ_ICD10_INPUTS)
 	$(RSCRIPT) $<
 
@@ -23,4 +26,3 @@ $(FINAL_TARGETS) &: elixhauser.R elixhauser_codes_ahrq_icd10.rds elixhauser_inde
 
 clean:
 	$(RM) *.rds
-
