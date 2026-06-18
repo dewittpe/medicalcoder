@@ -29,7 +29,7 @@ Suggests:
     rmarkdown,
     tibble,
     tidyr
-VignetteBuilder: knitr
+VignetteBuilder: knitr, rmarkdown
 Roxygen: list(markdown = TRUE)
 Config/Needs/website: pkgdown, comorbidity, icdcomorbid, multimorbidity, dplyr, tidyr, tibble, odbc, DBI, RSQLite, pccc
 Config/roxygen2/version: 8.0.0
