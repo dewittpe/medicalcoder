@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,7 +73,7 @@
       <h1>Charlson Comorbidities</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/dewittpe/medicalcoder/blob/v0.8.0/vignettes/charlson.Rmd" class="external-link"><code>vignettes/charlson.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/dewittpe/medicalcoder/blob/v0.8.1/vignettes/charlson.Rmd" class="external-link"><code>vignettes/charlson.Rmd</code></a></small>
       <div class="d-none name"><code>charlson.Rmd</code></div>
     </div>
 
@@ -82,7 +82,7 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.peteredewitt.com/medicalcoder/">medicalcoder</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"medicalcoder"</span><span class="op">)</span></span>
-<span><span class="co">## [1] '0.8.0'</span></span></code></pre></div>
+<span><span class="co">## [1] '0.8.1'</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -114,12 +114,12 @@ and ICD-10 codes to conditions and the index scoring in
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_charlson_codes.html">get_charlson_codes</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">## 'data.frame':    7410 obs. of  9 variables:</span></span>
 <span><span class="co">##  $ icdv             : int  9 9 9 9 9 9 9 9 9 9 ...</span></span>
-<span><span class="co">##  $ dx               : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
-<span><span class="co">##  $ full_code        : chr  "003.1" "007.2" "007.4" "010" ...</span></span>
-<span><span class="co">##  $ code             : chr  "0031" "0072" "0074" "010" ...</span></span>
-<span><span class="co">##  $ condition        : chr  "aids" "aids" "aids" "aids" ...</span></span>
-<span><span class="co">##  $ charlson_cdmf2019: int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
-<span><span class="co">##  $ charlson_deyo1992: int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ dx               : int  0 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span><span class="co">##  $ full_code        : chr  "38.48" "003.1" "007.2" "007.4" ...</span></span>
+<span><span class="co">##  $ code             : chr  "3848" "0031" "0072" "0074" ...</span></span>
+<span><span class="co">##  $ condition        : chr  "pvd" "aids" "aids" "aids" ...</span></span>
+<span><span class="co">##  $ charlson_cdmf2019: int  0 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span><span class="co">##  $ charlson_deyo1992: int  1 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span><span class="co">##  $ charlson_quan2005: int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span><span class="co">##  $ charlson_quan2011: int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_charlson_index_scores.html">get_charlson_index_scores</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>

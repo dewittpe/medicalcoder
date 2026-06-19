@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,7 +73,7 @@
       <h1>Pediatric Complex Chronic Conditions</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/dewittpe/medicalcoder/blob/v0.8.0/vignettes/pccc.Rmd" class="external-link"><code>vignettes/pccc.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/dewittpe/medicalcoder/blob/v0.8.1/vignettes/pccc.Rmd" class="external-link"><code>vignettes/pccc.Rmd</code></a></small>
       <div class="d-none name"><code>pccc.Rmd</code></div>
     </div>
 
@@ -1797,17 +1797,17 @@ omitted from the <code><a href="../reference/comorbidities.html">comorbidities()
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_icd_codes.html">get_icd_codes</a></span><span class="op">(</span>with.descriptions <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="va">full_code</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"56.41"</span>, <span class="st">"564.1"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">##       icdv dx full_code code src known_start known_end assignable_start</span></span>
-<span><span class="co">## 17502    9  0     56.41 5641 cdc        1997      2012             1997</span></span>
-<span><span class="co">## 17503    9  0     56.41 5641 cms        2006      2015             2006</span></span>
-<span><span class="co">## 17504    9  1     564.1 5641 cdc        1997      2012             1997</span></span>
-<span><span class="co">## 17505    9  1     564.1 5641 cms        2006      2015             2006</span></span>
-<span><span class="co">## 17506    9  1     564.1 5641 cdc        1997      2012             1997</span></span>
+<span><span class="co">## 4280     9  0     56.41 5641 cms        2006      2015             2006</span></span>
+<span><span class="co">## 4281     9  0     56.41 5641 cdc        1997      2012             1997</span></span>
+<span><span class="co">## 22015    9  1     564.1 5641 cms        2006      2015             2006</span></span>
+<span><span class="co">## 22016    9  1     564.1 5641 cdc        1997      2012             1997</span></span>
+<span><span class="co">## 22017    9  1     564.1 5641 cdc        1997      2012             1997</span></span>
 <span><span class="co">##       assignable_end                     desc desc_start desc_end</span></span>
-<span><span class="co">## 17502           2012     Partial ureterectomy       1997     2012</span></span>
-<span><span class="co">## 17503           2015     Partial ureterectomy       2010     2015</span></span>
-<span><span class="co">## 17504           2012 Irritable bowel syndrome       2001     2012</span></span>
-<span><span class="co">## 17505           2015 Irritable bowel syndrome       2010     2015</span></span>
-<span><span class="co">## 17506           2012          Irritable colon       1997     1999</span></span></code></pre></div>
+<span><span class="co">## 4280            2015     Partial ureterectomy       2010     2015</span></span>
+<span><span class="co">## 4281            2012     Partial ureterectomy       1997     2012</span></span>
+<span><span class="co">## 22015           2015 Irritable bowel syndrome       2010     2015</span></span>
+<span><span class="co">## 22016           2012 Irritable bowel syndrome       2001     2012</span></span>
+<span><span class="co">## 22017           2012          Irritable colon       1997     1999</span></span></code></pre></div>
 <p>In the above, the compact code “5641” matches procedure code 56.41
 for a renal condition. In <code>mdcr_results_v2.1_01</code> and
 <code>mdcr_results_v3.1_01</code> where no distinction was made between
@@ -2000,17 +2000,17 @@ status of the code.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/lookup_icd_codes.html">lookup_icd_codes</a></span><span class="op">(</span><span class="st">"E030"</span><span class="op">)</span></span>
 <span><span class="co">##   input_code   match_type icdv dx full_code code src known_start known_end</span></span>
-<span><span class="co">## 1       E030    full_code    9  1      E030 E030 cdc        2010      2012</span></span>
-<span><span class="co">## 2       E030    full_code    9  1      E030 E030 cms        2010      2015</span></span>
-<span><span class="co">## 3       E030 compact_code   10  1     E03.0 E030 cdc        2001      2025</span></span>
-<span><span class="co">## 4       E030 compact_code   10  1     E03.0 E030 cms        2014      2026</span></span>
-<span><span class="co">## 5       E030 compact_code   10  1     E03.0 E030 who        2008      2019</span></span>
+<span><span class="co">## 1       E030    full_code    9  1      E030 E030 cms        2010      2015</span></span>
+<span><span class="co">## 2       E030    full_code    9  1      E030 E030 cdc        2010      2012</span></span>
+<span><span class="co">## 5       E030 compact_code   10  1     E03.0 E030 cms        2014      2026</span></span>
+<span><span class="co">## 3       E030 compact_code   10  1     E03.0 E030 who        2008      2019</span></span>
+<span><span class="co">## 4       E030 compact_code   10  1     E03.0 E030 cdc        2001      2025</span></span>
 <span><span class="co">##   assignable_start assignable_end</span></span>
-<span><span class="co">## 1             2010           2012</span></span>
-<span><span class="co">## 2             2010           2015</span></span>
-<span><span class="co">## 3             2001           2025</span></span>
-<span><span class="co">## 4             2014           2026</span></span>
-<span><span class="co">## 5             2008           2019</span></span>
+<span><span class="co">## 1             2010           2015</span></span>
+<span><span class="co">## 2             2010           2012</span></span>
+<span><span class="co">## 5             2014           2026</span></span>
+<span><span class="co">## 3             2008           2019</span></span>
+<span><span class="co">## 4             2001           2025</span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Ambiguous compact code"</span>, <span class="st">"Full ICD-9 code"</span>, <span class="st">"Full ICD-10 code"</span><span class="op">)</span>,</span>
 <span>                   code  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"E030"</span>, <span class="st">"E030"</span>, <span class="st">"E03.0"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">data</span></span>
@@ -3998,7 +3998,7 @@ encounters 2, 4, and 6.</p>
 <span><span class="co">##  $ encounter_id: int  1 2 ...</span></span>
 <span><span class="co">##  $ code        : chr  NA ...</span></span>
 <span><span class="co">##  $ plabel      : chr  "Permutation 1: H49.811, J84.111, Z96.41" ...</span></span>
-<span><span class="co">##  - attr(*, ".internal.selfref")=&lt;pointer: 0x564718ed2ee0&gt;</span></span></code></pre></div>
+<span><span class="co">##  - attr(*, ".internal.selfref")=&lt;pointer: 0x55dd68cf9ee0&gt;</span></span></code></pre></div>
 <ul>
 <li>Permutation 1: H49.811, J84.111, Z96.41</li>
 <li>Permutation 2: H49.811, Z96.41, J84.111</li>

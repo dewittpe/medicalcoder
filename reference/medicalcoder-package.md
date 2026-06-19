@@ -90,6 +90,11 @@ cached.
 **Maintainer**: Peter DeWitt <peter.dewitt@cuanschutz.edu>
 ([ORCID](https://orcid.org/0000-0002-6391-0795)) \[cover designer\]
 
+Authors:
+
+- Peter DeWitt <peter.dewitt@cuanschutz.edu>
+  ([ORCID](https://orcid.org/0000-0002-6391-0795)) \[cover designer\]
+
 Other contributors:
 
 - Tell Bennett <tell.bennett@cuanschutz.edu>

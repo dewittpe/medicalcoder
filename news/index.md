@@ -1,5 +1,23 @@
 # Changelog
 
+## medicalcoder 0.8.1
+
+CRAN release: 2026-05-05
+
+### Bug Fixes
+
+- Fix Charlson `age.var` handling when `id.vars` is missing or has
+  multiple ages per ID.
+  ([\#43](https://github.com/dewittpe/medicalcoder/issues/43))
+
+- Fix [`summary()`](https://rdrr.io/r/base/summary.html) for Charlson
+  results when `age.var` is omitted and `age_score` is all missing.
+
+- Account for possible zero nrow sets in `mdcr_set()`
+
+- Harden sort order for the results from
+  [`lookup_icd_codes()`](http://www.peteredewitt.com/medicalcoder/reference/lookup_icd_codes.md)
+
 ## medicalcoder 0.8.0
 
 CRAN release: 2026-02-22

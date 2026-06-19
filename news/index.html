@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,9 +47,19 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/dewittpe/medicalcoder/blob/v0.8.0/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/dewittpe/medicalcoder/blob/v0.8.1/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.8.1" id="medicalcoder-081">medicalcoder 0.8.1<a class="anchor" aria-label="anchor" href="#medicalcoder-081"></a></h2><p class="text-muted">CRAN release: 2026-05-05</p>
+<div class="section level3">
+<h3 id="bug-fixes-0-8-1">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-8-1"></a></h3>
+<ul><li><p>Fix Charlson <code>age.var</code> handling when <code>id.vars</code> is missing or has multiple ages per ID. (<a href="https://github.com/dewittpe/medicalcoder/issues/43" class="external-link">#43</a>)</p></li>
+<li><p>Fix <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> for Charlson results when <code>age.var</code> is omitted and <code>age_score</code> is all missing.</p></li>
+<li><p>Account for possible zero nrow sets in <code>mdcr_set()</code></p></li>
+<li><p>Harden sort order for the results from <code><a href="../reference/lookup_icd_codes.html">lookup_icd_codes()</a></code></p></li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.8.0" id="medicalcoder-080">medicalcoder 0.8.0<a class="anchor" aria-label="anchor" href="#medicalcoder-080"></a></h2><p class="text-muted">CRAN release: 2026-02-22</p>
 <div class="section level3">
