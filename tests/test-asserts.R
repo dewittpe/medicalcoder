@@ -1,7 +1,7 @@
 library(medicalcoder)
 source("utilities.R")
 ################################################################################
-# testing assert_scaler_logical
+# testing assert_scalar_logical and assert_column
 #
 # Tests:
 #
@@ -24,10 +24,20 @@ source("utilities.R")
 #
 #   t06: verify an error is thrown when with.hierarchy is not a length-1
 #        non-missing logical when calling get_icd_codes()
+#
+#   t07:
+#     a: verify assert_column is in the namespace
+#     b: verify assert_column is not exported
+#
+#   t08: verify assert_column returns TRUE invisibly for a valid column name
+#
+#   t09: verify assert_column throws an error for invalid column names
 
 stopifnot(
   t01a = "assert_scalar_logical" %in% ls(getNamespace("medicalcoder"), all.names = TRUE),
-  t01b = !("assert_scalar_logical" %in% getNamespaceExports("medicalcoder"))
+  t01b = !("assert_scalar_logical" %in% getNamespaceExports("medicalcoder")),
+  t07a = "assert_column" %in% ls(getNamespace("medicalcoder"), all.names = TRUE),
+  t07b = !("assert_column" %in% getNamespaceExports("medicalcoder"))
 )
 
 common_args <- list(data = mdcr, method = "pccc_v3.1", icd.codes = "code", poa = 1L)
@@ -66,6 +76,17 @@ t06c <- tryCatchError(get_icd_codes(with.hierarchy = logical(0)))
 t06d <- tryCatchError(get_icd_codes(with.hierarchy = NA))
 t06e <- tryCatchError(get_icd_codes(with.hierarchy = "yes"))
 t06f <- tryCatchError(get_icd_codes(with.hierarchy = 3))
+
+assert_column <- getFromNamespace("assert_column", "medicalcoder")
+cols <- c("patient_id", "code")
+
+t08 <- assert_column("code", cols)
+
+t09a <- tryCatchError(assert_column("missing", cols))
+t09b <- tryCatchError(assert_column(character(0), cols))
+t09c <- tryCatchError(assert_column(c("patient_id", "code"), cols))
+t09d <- tryCatchError(assert_column(NA_character_, cols))
+t09e <- tryCatchError(assert_column(1L, cols))
 
 stopifnot(
   inherits(t02a, "medicalcoder_comorbidities"),
@@ -117,7 +138,13 @@ stopifnot(
   t06c[["message"]] == "The value passed to 'with.hierarchy' is expected to be a length-1 non-missing logical.",
   t06d[["message"]] == "The value passed to 'with.hierarchy' is expected to be a length-1 non-missing logical.",
   t06e[["message"]] == "The value passed to 'with.hierarchy' is expected to be a length-1 non-missing logical.",
-  t06f[["message"]] == "The value passed to 'with.hierarchy' is expected to be a length-1 non-missing logical."
+  t06f[["message"]] == "The value passed to 'with.hierarchy' is expected to be a length-1 non-missing logical.",
+  isTRUE(t08),
+  inherits(t09a, "error"),
+  inherits(t09b, "error"),
+  inherits(t09c, "error"),
+  inherits(t09d, "error"),
+  inherits(t09e, "error")
 )
 
 ################################################################################

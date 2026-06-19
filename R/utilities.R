@@ -385,7 +385,7 @@ mdcr_cbind <- function(x, ...) {
 #' medicalcoder:::assert_scalar_logical(c(TRUE, TRUE)) # fail, throw error
 #' ```
 #'
-#' @param x a R object
+#' @param x an R object
 #'
 #' @return `TRUE`, invisibly if the assertion is TRUE, otherwise an error is
 #' thrown.
@@ -396,6 +396,26 @@ assert_scalar_logical <- function(x) {
   z <- is.logical(x) && length(x) == 1L && !is.na(x)
   if (!z) {
     stop(sprintf("The value passed to '%s' is expected to be a length-1 non-missing logical.", deparse(substitute(x))), call. = FALSE)
+  }
+  invisible(z)
+}
+
+#' Assert a column name
+#'
+#' Check that `x` is a length-one character value contained in `cols`.
+#'
+#' @param x an R object
+#' @param cols a character vector of column names
+#'
+#' @return `TRUE`, invisibly, if the assertion succeeds; otherwise an error is
+#' thrown.
+#'
+#' @noRd
+#' @keywords internal
+assert_column <- function(x, cols) {
+  z <- is.character(x) && length(x) == 1L && x %in% cols
+  if (!z) {
+    stop(sprintf("%s is not a column name", deparse(substitute(x))), call. = FALSE)
   }
   invisible(z)
 }

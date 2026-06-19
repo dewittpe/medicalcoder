@@ -230,15 +230,11 @@ comorbidities.data.frame <- function(data,
 
   mapping <- match.arg(arg = mapping, choices = c("precomputed", "regex"), several.ok = FALSE)
 
-  is_a_column <- function(x, cols) {
-    stopifnot(is.character(x) && length(x) == 1L && x %in% cols)
-  }
-
-  is_a_column(icd.codes, names(data))
+  assert_column(icd.codes, names(data))
 
   if (!is.null(id.vars)) {
     for (x in id.vars) {
-      is_a_column(x, names(data))
+      assert_column(x, names(data))
     }
     pn <- which(id.vars %in% ..protected_names..)
     if (length(pn)) {
@@ -251,7 +247,7 @@ comorbidities.data.frame <- function(data,
   }
 
   if (!is.null(poa.var)) {
-    is_a_column(poa.var, names(data))
+    assert_column(poa.var, names(data))
     if (!is.numeric(data[[poa.var]])) {
       stop(sprintf("Column '%s' must be numeric (0/1/NA) when supplied as poa.var.", poa.var), call. = FALSE)
     }
@@ -267,7 +263,7 @@ comorbidities.data.frame <- function(data,
   }
 
   if ((startsWith(method, "elixhauser") | startsWith(method, "charlson")) & !is.null(primarydx.var)) {
-    is_a_column(primarydx.var, names(data))
+    assert_column(primarydx.var, names(data))
     if (!is.numeric(data[[primarydx.var]])) {
       stop(sprintf("Column '%s' must be numeric (0/1/NA) when supplied as primarydx.var.", primarydx.var), call. = FALSE)
     }
@@ -288,7 +284,7 @@ comorbidities.data.frame <- function(data,
   flag.method <- match.arg(flag.method, choices = c("current", "cumulative"), several.ok = FALSE)
 
   if (startsWith(method, "charlson") && !is.null(age.var)) {
-    is_a_column(age.var, names(data))
+    assert_column(age.var, names(data))
   }
 
   assert_scalar_logical(subconditions)
@@ -314,7 +310,7 @@ comorbidities.data.frame <- function(data,
       warning("'icdv.var' and 'icdv' were both specified; ignoring 'icdv'", call. = FALSE)
       icdv <- NULL
     } else {
-      is_a_column(icdv.var, names(data))
+      assert_column(icdv.var, names(data))
       if (!is.numeric(data[[icdv.var]])) {
         stop(sprintf("Column '%s' must be numeric (9/10/NA) when supplied as icdv.var.", icdv.var), call. = FALSE)
       }
@@ -339,7 +335,7 @@ comorbidities.data.frame <- function(data,
       warning("'dx.var' and 'dx' were both specified; ignoring 'dx'", call. = FALSE)
       dx <- NULL
     } else{
-      is_a_column(dx.var, names(data))
+      assert_column(dx.var, names(data))
       if (!is.numeric(data[[dx.var]])) {
         stop(sprintf("Column '%s' must be numeric (0/1/NA) when supplied as dx.var.", dx.var), call. = FALSE)
       }
@@ -574,7 +570,7 @@ comorbidities.data.frame <- function(data,
     if (!is.null(poa)) {
       warning("'poa.var' and 'poa' were both specified; ignoring 'poa'", call. = FALSE)
     }
-    is_a_column(poa.var, nms)
+    assert_column(poa.var, nms)
   }
 
   if (startsWith(method, "elixhauser") | startsWith(method, "charlson")) {
@@ -598,7 +594,7 @@ comorbidities.data.frame <- function(data,
       if (!is.null(primarydx)) {
         warning("'primarydx.var' and 'primarydx' were both specified; ignoring 'primarydx'", call. = FALSE)
       }
-      is_a_column(primarydx.var, nms)
+      assert_column(primarydx.var, nms)
     }
   }
 
