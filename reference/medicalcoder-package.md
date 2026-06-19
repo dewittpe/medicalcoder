@@ -10,10 +10,12 @@ tools to look up, validate, and manipulate ICD codes, while also
 implementing widely used comorbidity algorithms such as Charlson,
 Elixhauser, and the Pediatric Complex Chronic Conditions (PCCC).
 Designed for portability and reproducibility, the package avoids
-external dependencies—requiring only R \>= 3.5.0—yet offers a rich set
-of curated ICD code libraries from the United States' Centers for
-Medicare and Medicaid Services (CMS), Centers for Disease Control (CDC),
-and the World Health Organization (WHO).
+external dependencies, requiring only R= 3.5.0, yet offers a rich set of
+curated ICD code libraries from the UnitedStates' Centers for Medicare
+and Medicaid Services (CMS), Centers for DiseaseControl (CDC), the World
+Health Organization (WHO), the Independent Healthand Aged Care Pricing
+Authority (IHACPA), and from Sweden's National Board ofHealth and
+Welfare (Socialstyrelsen).
 
 The package balances performance with elegance: its internal caching,
 efficient joins, and compact data structures make it practical for
@@ -34,21 +36,14 @@ purposes of installation and use.
 
 This design choice was made for several reasons.
 
-1.  Ease of installation:
+1.  Ease of installation: \* Only requirement is R \>= 3.5.0. \* No need
+    for external files, downloads, or other packages for the ICD
+    database.
 
-    - Only requirement is R \>= 3.5.0.
-
-    - No need for external files, downloads, or other packages for the
-      ICD database.
-
-2.  Works well with different data paradigms
-
-    - Base R `data.frames`,
-
-    - [tidyverse](https://tidyverse.org/) `tibble`s, and
-
-    - `data.table`s from the
-      [data.table](https://rdatatable.gitlab.io/data.table/) package.
+2.  Works well with different data paradigms \* Base R `data.frames`, \*
+    [tidyverse](https://tidyverse.org/) `tibble`s, and \* `data.table`s
+    from the [data.table](https://rdatatable.gitlab.io/data.table/)
+    package.
 
 One of the reasons for focusing on building a self-contained package
 with no need for additional namespaces is to make installation and use
@@ -71,19 +66,16 @@ cached.
 [`get_icd_codes()`](http://www.peteredewitt.com/medicalcoder/reference/get_icd_codes.md),
 [`is_icd()`](http://www.peteredewitt.com/medicalcoder/reference/is_icd.md),
 
-- Vignette for working with ICD codes:
-
-  - [`vignette(topic = "icd", package = "medicalcoder")`](http://www.peteredewitt.com/medicalcoder/articles/icd.md)
-
-- Vignettes for applying comorbidities:
-
-  - [`vignette(topic = "comorbidities", package = "medicalcoder")`](http://www.peteredewitt.com/medicalcoder/articles/comorbidities.md)
-
-  - [`vignette(topic = "pccc", package = "medicalcoder")`](http://www.peteredewitt.com/medicalcoder/articles/pccc.md)
-
-  - [`vignette(topic = "charlson", package = "medicalcoder")`](http://www.peteredewitt.com/medicalcoder/articles/charlson.md)
-
-  - [`vignette(topic = "elixhauser", package = "medicalcoder")`](http://www.peteredewitt.com/medicalcoder/articles/elixhauser.md)
+- Vignette for working with ICD codes: \*
+  [`vignette(topic = "icd", package = "medicalcoder")`](http://www.peteredewitt.com/medicalcoder/articles/icd.md)
+  \* Vignettes for applying comorbidities: \*
+  [`vignette(topic = "comorbidities", package = "medicalcoder")`](http://www.peteredewitt.com/medicalcoder/articles/comorbidities.md)
+  \*
+  [`vignette(topic = "pccc", package = "medicalcoder")`](http://www.peteredewitt.com/medicalcoder/articles/pccc.md)
+  \*
+  [`vignette(topic = "charlson", package = "medicalcoder")`](http://www.peteredewitt.com/medicalcoder/articles/charlson.md)
+  \*
+  [`vignette(topic = "elixhauser", package = "medicalcoder")`](http://www.peteredewitt.com/medicalcoder/articles/elixhauser.md)
 
 ## Author
 

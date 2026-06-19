@@ -24,7 +24,8 @@ comorbidities(
   flag.method = c("current", "cumulative"),
   full.codes = TRUE,
   compact.codes = TRUE,
-  subconditions = FALSE
+  subconditions = FALSE,
+  mapping = c("precomputed", "regex")
 )
 ```
 
@@ -140,6 +141,14 @@ comorbidities(
   Logical scalar; when `TRUE`, report both conditions and subconditions
   (PCCC only).
 
+- mapping:
+
+  Character string specifying how `data[[icd.codes]]` should be mapped
+  to comorbidity conditions. `mapping = "precomputed"` uses the
+  precomputed ICD code-condition links included with medicalcoder and is
+  the default. `mapping = "regex"` applies the method's regular
+  expressions directly to the input ICD codes. See Details.
+
 ## Value
 
 The return object will be slightly different depending on the value of
@@ -249,6 +258,24 @@ supplied, then all codes will be considered present-on-admission. If poa
 was assumed to be 0, then in this case the only conditions that could be
 flagged are the Elixhauser conditions which are poa-exempt.
 
+The `mapping` option controls how ICD codes are mapped to conditions.
+The default, `mapping = "precomputed"`, uses a precomputed table that
+links valid ICD codes to comorbidity conditions. Those links are built
+from the ICD code sources included with medicalcoder: the United States
+Centers for Disease Control and Prevention (CDC), the Centers for
+Medicare and Medicaid Services (CMS), the World Health Organization
+(WHO), the Independent Health and Aged Care Pricing Authority (IHACPA)
+ICD-10 Australian Modification (ICD-10-AM) data, and Socialstyrelsen
+ICD-10-SE data.
+
+`mapping = "precomputed"` is generally fastest and is the behavior used
+by medicalcoder before the `mapping` argument was added.
+`mapping = "regex"` applies the method's regular expressions directly to
+the input ICD codes. Regex mapping is currently implemented for Charlson
+methods and is useful when codes come from an ICD modification that may
+not be completely covered by the precomputed code-condition links, or
+when auditing a method.
+
 ## References
 
 - Pediatric Complex Chronic Conditions:
@@ -277,6 +304,11 @@ flagged are the Elixhauser conditions which are poa-exempt.
     1992 Jun;45(6):613-9. https://doi.org/10.1016/0895-4356(92)90133-8.
     PMID: 1607900.
 
+  - Sundararajan V, Henderson T, Perry C, Muggivan A, Quan H, Ghali WA.
+    New ICD-10 version of the Charlson comorbidity index predicted
+    in-hospital mortality. J Clin Epidemiol. 2004 Dec;57(12):1288-94.
+    https://doi.org/10.1016/j.jclinepi.2004.03.012. PMID: 15617955.
+
   - Quan H, Sundararajan V, Halfon P, Fong A, Burnand B, Luthi JC,
     Saunders LD, Beck CA, Feasby TE, Ghali WA. Coding algorithms for
     defining comorbidities in ICD-9-CM and ICD-10 administrative data.
@@ -294,6 +326,15 @@ flagged are the Elixhauser conditions which are poa-exempt.
     Charlson Comorbidity Index: ICD-9 Update and ICD-10 Translation. Am
     Health Drug Benefits. 2019 Jun-Jul;12(4):188-197. PMID: 31428236;
     PMCID: PMC6684052.
+
+  - Ludvigsson JF, Appelros P, Askling J, et al. Adaptation of the
+    Charlson Comorbidity Index for Register-Based Research in Sweden.
+    Clin Epidemiol. 2021;13:21-41. https://doi.org/10.2147/CLEP.S282475.
+
+  - Ludvigsson JF, Appelros P, Askling J, et al. Adaptation of the
+    Charlson Comorbidity Index for Register-Based Research in Sweden
+    \[Corrigendum\]. Clin Epidemiol. 2023;15:753-754.
+    https://doi.org/10.2147/CLEP.S420607.
 
 - Elixhauser Comorbidities:
 
@@ -600,13 +641,13 @@ summary(charlson_results)
 #> 9                Hemiplegia or paraplegia        hp  1177  3.076159113
 #> 10                    Liver disease, mild       mld   593  1.549840573
 #> 11      Liver disease, moderate to severe      msld   206  0.538393184
-#> 12                 Metastatic solid tumor       mst   453  1.183942293
+#> 12                 Metastatic solid tumor       mst   456  1.191782970
 #> 13                  Myocardial infarction        mi    10  0.026135591
 #> 14                   Peptic ulcer disease       pud    45  0.117610162
 #> 15            Peripheral vascular disease       pvd   217  0.567142334
 #> 16                          Renal disease       rnd   898  2.346976112
 #> 17                      Rheumatic disease       rhd   136  0.355444044
-#> 18                                   >= 1      <NA>  9841 25.720035544
+#> 18                                   >= 1      <NA>  9844 25.727876222
 #> 19                                   >= 2      <NA>  1075  2.809576081
 #> 20                                   >= 3      <NA>    94  0.245674560
 #> 21                                   >= 4      <NA>     9  0.023522032

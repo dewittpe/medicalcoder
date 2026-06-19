@@ -17,8 +17,8 @@ a `data.frame` with the following columns
 - `icdv`: Integer vector indicating if the code is from ICD-9 or ICD-10.
 
 - `dx`: Integer vector. 1 if the code is a diagnostic, (ICD-9-CM,
-  ICD-10-CM, WHO, CDC Mortality), or 0 if the code is procedural
-  (ICD-9-PCS, ICD-10-PCS).
+  ICD-10-CM, ICD-10-AM, ICD-10-SE, WHO, CDC Mortality), or 0 if the code
+  is procedural (ICD-9-PCS, ICD-10-PCS).
 
 - `full_code`: Character vector with the ICD code and any relevant
   decimal point.
@@ -69,7 +69,7 @@ head(get_pccc_codes())
 #> 5             1         1         1         1         1
 #> 6             1         1         1         1         1
 str(get_pccc_codes())
-#> 'data.frame':    7906 obs. of  12 variables:
+#> 'data.frame':    8900 obs. of  12 variables:
 #>  $ icdv           : int  9 9 9 9 9 9 9 9 9 9 ...
 #>  $ dx             : int  0 0 0 0 0 0 0 0 0 0 ...
 #>  $ full_code      : chr  "00.10" "00.50" "00.51" "00.53" ...

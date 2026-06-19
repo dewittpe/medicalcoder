@@ -450,7 +450,7 @@ mdcr_DT <- data.table::as.data.table(data.table::copy(mdcr))
 tic <- Sys.time()
 medicalcoder_results <-
   medicalcoder::comorbidities(
-    data = mdcr_tbl,
+    data = mdcr_DT,
     id.vars = "patid",
     icd.codes = "code",
     icdv.var = "icdv",
@@ -465,15 +465,15 @@ medicalcoder_dt_time <- difftime(toc, tic, units = "secs")
 ``` r
 
 pccc_ccc_tbl_time
-## Time difference of 9.816007 secs
+## Time difference of 9.662906 secs
 pccc_ccc_dt_time
-## Time difference of 7.229753 secs
+## Time difference of 7.288372 secs
 medicalcoder_df_time
-## Time difference of 0.6240842 secs
+## Time difference of 0.8612735 secs
 medicalcoder_tbl_time
-## Time difference of 0.360836 secs
+## Time difference of 0.2883685 secs
 medicalcoder_dt_time
-## Time difference of 0.5159974 secs
+## Time difference of 0.1433921 secs
 ```
 
 ### Summary of results
@@ -628,7 +628,7 @@ style="margin-left: auto; margin-right: auto;"}
 ## PCCC version 3
 
 For more detail on the differences between PCCC v2 (Feudtner et al.
-2014) and PCCC v3 (Feudtner et al. 2014) see the [PCCC
+2014) and PCCC v3 (Feinstein et al. 2024) see the [PCCC
 article](https://www.peteredewitt.com/medicalcoder/articles/pccc.html#pccc-version-2-0-vs-pccc-version-3-0).
 
 ## References

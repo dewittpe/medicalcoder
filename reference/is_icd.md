@@ -10,10 +10,11 @@ C00.0, C00.1, C00.2, C00.3, C00.4, C00.5, C00.6, C00.7, C00.8, and C00.9
 exist. Those four-character codes are assignable (as of 2025) because no
 five-character descendants (e.g., C00.40) exist.
 
-When the source is the World Health Organization (WHO) or CDC Mortality,
-years refer to calendar years. CDC/CMS sources use the U.S. federal
-fiscal year, which starts on October 1 (e.g., fiscal year 2024 runs
-2023-10-01 to 2024-09-30).
+When the source is the World Health Organization (WHO), CDC Mortality,
+or Socialstyrelsen, years refer to calendar years. CMS sources use the
+U.S. federal fiscal year, which starts on October 1 (e.g., fiscal year
+2024 runs 2023-10-01 to 2024-09-30). IHACPA sources use the Australian
+financial year, which starts on July 1 and ends on June 30.
 
 ## Usage
 
@@ -22,7 +23,7 @@ is_icd(
   x,
   icdv = c(9L, 10L),
   dx = c(1L, 0L),
-  src = c("cms", "who", "cdc"),
+  src = c("cdc", "cms", "ihacpa", "socialstyrelsen", "who"),
   year,
   headerok = FALSE,
   ever.assignable = missing(year),
@@ -46,21 +47,25 @@ is_icd(
 - dx:
 
   Integer vector indicating allowed code type(s): `1L` for diagnostic
-  (ICD-9-CM, ICD-10-CM, CDC mortality, WHO), `0L` for procedural
-  (ICD-9-PCS, ICD-10-PCS). Defaults to both.
+  (ICD-9-CM, ICD-10-CM, ICD-10-AM, ICD-10-SE, CDC mortality, WHO), `0L`
+  for procedural (ICD-9-PCS, ICD-10-PCS). Defaults to both.
 
 - src:
 
-  Character vector of code sources. One or more of `"cms"`, `"who"`,
-  `"cdc"`. Defaults to all.
+  Character vector of code sources. One or more of `"cdc"`, `"cms"`,
+  `"ihacpa"`, `"socialstyrelsen"`, and `"who"`. Defaults to all. CDC and
+  CMS are from the United States (ICD-9/10-CM and ICD-9/10-PCS), IHACPA
+  from Australia (ICD-10-AM), Socialstyrelsen from Sweden (ICD-10-SE),
+  and the World Health Organization (ICD-10).
 
 - year:
 
-  Numeric scalar. Calendar or fiscal year to reference. Default is the
-  most current year available per source. For ICD-9, CMS data run
-  through fiscal year 2015 and CDC extracts through 2012; ICD-10 sources
-  are updated annually. Calendar year for WHO and CDC mortality. Fiscal
-  year for CMS.
+  Numeric scalar. Calendar, fiscal, or financial year to reference.
+  Default is the most current year available per source. For ICD-9, CMS
+  data run through fiscal year 2015 and CDC extracts through 2012;
+  ICD-10 sources are updated annually. Calendar year for WHO, CDC
+  mortality, and Socialstyrelsen. U.S. federal fiscal year for CMS.
+  Australian financial year for IHACPA.
 
 - headerok:
 
@@ -166,43 +171,43 @@ lookup_icd_codes(paste0("516.3", c("", as.character(0:9))))
 #>    input_code match_type icdv dx full_code  code  src known_start known_end
 #> 1       516.3  full_code    9  1     516.3  5163  cms        2006      2015
 #> 2       516.3  full_code    9  1     516.3  5163  cdc        1997      2012
-#> 4      516.30  full_code    9  1    516.30 51630  cms        2012      2015
-#> 3      516.30  full_code    9  1    516.30 51630  cdc        2012      2012
+#> 3      516.30  full_code    9  1    516.30 51630  cms        2012      2015
+#> 4      516.30  full_code    9  1    516.30 51630  cdc        2012      2012
 #> 5      516.31  full_code    9  1    516.31 51631  cms        2012      2015
 #> 6      516.31  full_code    9  1    516.31 51631  cdc        2012      2012
-#> 8      516.32  full_code    9  1    516.32 51632  cms        2012      2015
-#> 7      516.32  full_code    9  1    516.32 51632  cdc        2012      2012
+#> 7      516.32  full_code    9  1    516.32 51632  cms        2012      2015
+#> 8      516.32  full_code    9  1    516.32 51632  cdc        2012      2012
 #> 9      516.33  full_code    9  1    516.33 51633  cms        2012      2015
 #> 10     516.33  full_code    9  1    516.33 51633  cdc        2012      2012
-#> 12     516.34  full_code    9  1    516.34 51634  cms        2012      2015
-#> 11     516.34  full_code    9  1    516.34 51634  cdc        2012      2012
+#> 11     516.34  full_code    9  1    516.34 51634  cms        2012      2015
+#> 12     516.34  full_code    9  1    516.34 51634  cdc        2012      2012
 #> 13     516.35  full_code    9  1    516.35 51635  cms        2012      2015
 #> 14     516.35  full_code    9  1    516.35 51635  cdc        2012      2012
-#> 16     516.36  full_code    9  1    516.36 51636  cms        2012      2015
-#> 15     516.36  full_code    9  1    516.36 51636  cdc        2012      2012
-#> 18     516.37  full_code    9  1    516.37 51637  cms        2012      2015
-#> 17     516.37  full_code    9  1    516.37 51637  cdc        2012      2012
+#> 15     516.36  full_code    9  1    516.36 51636  cms        2012      2015
+#> 16     516.36  full_code    9  1    516.36 51636  cdc        2012      2012
+#> 17     516.37  full_code    9  1    516.37 51637  cms        2012      2015
+#> 18     516.37  full_code    9  1    516.37 51637  cdc        2012      2012
 #> 19     516.38       <NA>   NA NA      <NA>  <NA> <NA>          NA        NA
 #> 20     516.39       <NA>   NA NA      <NA>  <NA> <NA>          NA        NA
 #>    assignable_start assignable_end
 #> 1              2006           2011
 #> 2              1997           2011
-#> 4              2012           2015
-#> 3              2012           2012
+#> 3              2012           2015
+#> 4              2012           2012
 #> 5              2012           2015
 #> 6              2012           2012
-#> 8              2012           2015
-#> 7              2012           2012
+#> 7              2012           2015
+#> 8              2012           2012
 #> 9              2012           2015
 #> 10             2012           2012
-#> 12             2012           2015
-#> 11             2012           2012
+#> 11             2012           2015
+#> 12             2012           2012
 #> 13             2012           2015
 #> 14             2012           2012
-#> 16             2012           2015
-#> 15             2012           2012
-#> 18             2012           2015
-#> 17             2012           2012
+#> 15             2012           2015
+#> 16             2012           2012
+#> 17             2012           2015
+#> 18             2012           2012
 #> 19               NA             NA
 #> 20               NA             NA
 
@@ -234,34 +239,55 @@ is_icd("516.3", year = 2015, ever.assignable = TRUE)
 #   - This could be a ICD-9-CM full code
 #   - Could be a ICD-10-CM compact code
 lookup_icd_codes("E010")
-#>   input_code   match_type icdv dx full_code code src known_start known_end
-#> 1       E010    full_code    9  1      E010 E010 cms        2010      2015
-#> 2       E010    full_code    9  1      E010 E010 cdc        2010      2012
-#> 3       E010 compact_code   10  1     E01.0 E010 cms        2014      2026
-#> 5       E010 compact_code   10  1     E01.0 E010 who        2008      2019
-#> 4       E010 compact_code   10  1     E01.0 E010 cdc        2001      2025
-#>   assignable_start assignable_end
-#> 1               NA             NA
-#> 2               NA             NA
-#> 3             2014           2026
-#> 5             2008           2019
-#> 4             2001           2025
+#>   input_code   match_type icdv dx full_code code             src known_start
+#> 1       E010    full_code    9  1      E010 E010             cms        2010
+#> 2       E010    full_code    9  1      E010 E010             cdc        2010
+#> 3       E010 compact_code   10  1     E01.0 E010             cms        2014
+#> 4       E010 compact_code   10  1     E01.0 E010             cdc        2001
+#> 5       E010 compact_code   10  1     E01.0 E010          ihacpa        2020
+#> 6       E010 compact_code   10  1     E01.0 E010 socialstyrelsen        1997
+#> 7       E010 compact_code   10  1     E01.0 E010             who        2008
+#>   known_end assignable_start assignable_end
+#> 1      2015               NA             NA
+#> 2      2012               NA             NA
+#> 3      2026             2014           2026
+#> 4      2025             2001           2025
+#> 5      2026             2020           2026
+#> 6      2026             1997           2026
+#> 7      2021             2008           2021
 subset(get_icd_codes(with.descriptions = TRUE), grepl("^E010$", code))
-#>        icdv dx full_code code src known_start known_end assignable_start
-#> 36603     9  1      E010 E010 cdc        2010      2012               NA
-#> 135667   10  1     E01.0 E010 cms        2014      2026             2014
-#> 135668   10  1     E01.0 E010 cdc        2001      2025             2001
-#> 135669   10  1     E01.0 E010 who        2008      2019             2008
-#>        assignable_end                                                    desc
-#> 36603              NA Activity involving other muscle strengthening exercises
-#> 135667           2026      Iodine-deficiency related diffuse (endemic) goiter
-#> 135668           2025      Iodine-deficiency-related diffuse (endemic) goiter
-#> 135669           2019      Iodine-deficiency-related diffuse (endemic) goitre
-#>        desc_start desc_end
-#> 36603        2010     2012
-#> 135667       2014     2026
-#> 135668       2001     2025
-#> 135669       2008     2019
+#>        icdv dx full_code code             src known_start known_end
+#> 47745     9  1      E010 E010             cms        2010      2015
+#> 47746     9  1      E010 E010             cdc        2010      2012
+#> 153669   10  1     E01.0 E010             cms        2014      2026
+#> 153670   10  1     E01.0 E010             cdc        2001      2025
+#> 153671   10  1     E01.0 E010          ihacpa        2020      2026
+#> 153672   10  1     E01.0 E010             who        2008      2021
+#> 153673   10  1     E01.0 E010 socialstyrelsen        1997      2026
+#>        assignable_start assignable_end
+#> 47745                NA             NA
+#> 47746                NA             NA
+#> 153669             2014           2026
+#> 153670             2001           2025
+#> 153671             2020           2026
+#> 153672             2008           2021
+#> 153673             1997           2026
+#>                                                           desc desc_start
+#> 47745  Activity involving other muscle strengthening exercises       2010
+#> 47746  Activity involving other muscle strengthening exercises       2010
+#> 153669      Iodine-deficiency related diffuse (endemic) goiter       2014
+#> 153670      Iodine-deficiency-related diffuse (endemic) goiter       2001
+#> 153671      Iodine-deficiency-related diffuse (endemic) goitre       2020
+#> 153672      Iodine-deficiency-related diffuse (endemic) goitre       2008
+#> 153673              Jodbristrelaterad diffus (endemisk) struma       1997
+#>        desc_end
+#> 47745      2015
+#> 47746      2012
+#> 153669     2026
+#> 153670     2025
+#> 153671     2026
+#> 153672     2021
+#> 153673     2026
 
 is_icd("E010")
 #> [1] TRUE

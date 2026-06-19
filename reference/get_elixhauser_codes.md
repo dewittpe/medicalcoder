@@ -16,8 +16,8 @@ A `data.frame` with the following columns:
 - `icdv`: Integer vector indicating if the code is from ICD-9 or ICD-10
 
 - `dx`: Integer vector. 1 if the code is a diagnostic, (ICD-9-CM,
-  ICD-10-CM, WHO, CDC Mortality), or 0 if the code is procedural
-  (ICD-9-PCS, ICD-10-PCS)
+  ICD-10-CM, ICD-10-AM, ICD-10-SE, WHO, CDC Mortality), or 0 if the code
+  is procedural (ICD-9-PCS, ICD-10-PCS)
 
 - `full_code`: Character vector with the ICD code and any relevant
   decimal point
@@ -86,7 +86,7 @@ head(get_elixhauser_codes())
 #> 5                  NA                    NA
 #> 6                  NA                    NA
 str(get_elixhauser_codes())
-#> 'data.frame':    10455 obs. of  15 variables:
+#> 'data.frame':    11294 obs. of  15 variables:
 #>  $ icdv                     : int  9 9 9 9 9 9 9 9 9 9 ...
 #>  $ dx                       : int  1 1 1 1 1 1 1 1 1 1 ...
 #>  $ full_code                : chr  "042" "070.22" "070.23" "070.32" ...

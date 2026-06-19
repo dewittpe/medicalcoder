@@ -1,7 +1,8 @@
 # Get Charlson Codes
 
 Retrieve a copy of internal lookup tables for the ICD codes used in
-assessing Charlson comorbidities.
+assessing Charlson comorbidities. The lookup includes indicator columns
+for each implemented Charlson variant.
 
 ## Usage
 
@@ -16,8 +17,8 @@ A `data.frame` with the following columns:
 - `icdv`: Integer vector indicating if the code is from ICD-9 or ICD-10
 
 - `dx`: Integer vector. 1 if the code is a diagnostic, (ICD-9-CM,
-  ICD-10-CM, WHO, CDC Mortality), or 0 if the code is procedural
-  (ICD-9-PCS, ICD-10-PCS)
+  ICD-10-CM, ICD-10-AM, ICD-10-SE, WHO, CDC Mortality), or 0 if the code
+  is procedural (ICD-9-PCS, ICD-10-PCS)
 
 - `full_code`: Character vector with the ICD code and any relevant
   decimal point
@@ -26,8 +27,8 @@ A `data.frame` with the following columns:
 
 - `condition`: Character vector of the conditions
 
-- `charlson_\<variant\>`: Integer vector indicating if the code is part
-  of the \\variant\\ of the Charlson comorbidities.
+- `charlson_<variant>`: Integer vector indicating if the code is part of
+  the `<variant>` of the Charlson comorbidities.
 
 ## See also
 
@@ -58,22 +59,31 @@ head(get_charlson_codes())
 #> 4    9  1     007.4 0074      aids                 1                 0
 #> 5    9  1       010  010      aids                 1                 0
 #> 6    9  1     010.0 0100      aids                 1                 0
-#>   charlson_quan2005 charlson_quan2011
-#> 1                 0                 0
-#> 2                 0                 0
-#> 3                 0                 0
-#> 4                 0                 0
-#> 5                 0                 0
-#> 6                 0                 0
+#>   charlson_ludvigsson2021 charlson_quan2005 charlson_sundararajan2004
+#> 1                       0                 0                         0
+#> 2                       0                 0                         0
+#> 3                       0                 0                         0
+#> 4                       0                 0                         0
+#> 5                       0                 0                         0
+#> 6                       0                 0                         0
+#>   charlson_quan2011
+#> 1                 0
+#> 2                 0
+#> 3                 0
+#> 4                 0
+#> 5                 0
+#> 6                 0
 str(get_charlson_codes())
-#> 'data.frame':    7410 obs. of  9 variables:
-#>  $ icdv             : int  9 9 9 9 9 9 9 9 9 9 ...
-#>  $ dx               : int  0 1 1 1 1 1 1 1 1 1 ...
-#>  $ full_code        : chr  "38.48" "003.1" "007.2" "007.4" ...
-#>  $ code             : chr  "3848" "0031" "0072" "0074" ...
-#>  $ condition        : chr  "pvd" "aids" "aids" "aids" ...
-#>  $ charlson_cdmf2019: int  0 1 1 1 1 1 1 1 1 1 ...
-#>  $ charlson_deyo1992: int  1 0 0 0 0 0 0 0 0 0 ...
-#>  $ charlson_quan2005: int  0 0 0 0 0 0 0 0 0 0 ...
-#>  $ charlson_quan2011: int  0 0 0 0 0 0 0 0 0 0 ...
+#> 'data.frame':    9145 obs. of  11 variables:
+#>  $ icdv                     : int  9 9 9 9 9 9 9 9 9 9 ...
+#>  $ dx                       : int  0 1 1 1 1 1 1 1 1 1 ...
+#>  $ full_code                : chr  "38.48" "003.1" "007.2" "007.4" ...
+#>  $ code                     : chr  "3848" "0031" "0072" "0074" ...
+#>  $ condition                : chr  "pvd" "aids" "aids" "aids" ...
+#>  $ charlson_cdmf2019        : int  0 1 1 1 1 1 1 1 1 1 ...
+#>  $ charlson_deyo1992        : int  1 0 0 0 0 0 0 0 0 0 ...
+#>  $ charlson_ludvigsson2021  : int  0 0 0 0 0 0 0 0 0 0 ...
+#>  $ charlson_quan2005        : int  0 0 0 0 0 0 0 0 0 0 ...
+#>  $ charlson_sundararajan2004: int  0 0 0 0 0 0 0 0 0 0 ...
+#>  $ charlson_quan2011        : int  0 0 0 0 0 0 0 0 0 0 ...
 ```

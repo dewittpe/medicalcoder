@@ -136,13 +136,13 @@ summary(charlson_results)
 #> 9                Hemiplegia or paraplegia        hp  1177  3.076159113
 #> 10                    Liver disease, mild       mld   593  1.549840573
 #> 11      Liver disease, moderate to severe      msld   206  0.538393184
-#> 12                 Metastatic solid tumor       mst   453  1.183942293
+#> 12                 Metastatic solid tumor       mst   456  1.191782970
 #> 13                  Myocardial infarction        mi    10  0.026135591
 #> 14                   Peptic ulcer disease       pud    45  0.117610162
 #> 15            Peripheral vascular disease       pvd   217  0.567142334
 #> 16                          Renal disease       rnd   898  2.346976112
 #> 17                      Rheumatic disease       rhd   136  0.355444044
-#> 18                                   >= 1      <NA>  9841 25.720035544
+#> 18                                   >= 1      <NA>  9844 25.727876222
 #> 19                                   >= 2      <NA>  1075  2.809576081
 #> 20                                   >= 3      <NA>    94  0.245674560
 #> 21                                   >= 4      <NA>     9  0.023522032
