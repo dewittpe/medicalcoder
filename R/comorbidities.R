@@ -604,9 +604,14 @@ comorbidities.data.frame <- function(data,
       mdcr_select(on_comp, c(id.vars, poa.var, primarydx.var, method, lookup_to_keep))
     )
 
-  # retain only meaningful rows, that is, unique rows.  If a condition is
-  # reported more than once with the same information except for poa, then keep
-  # a row for poa = 1 and omit the other poa = 1 row(s) and any poa = 0 row(s).
+  # Retain only meaningful rows. If a condition is reported more than once with
+  # the same information except for poa, keep one row with poa = 1 when one is
+  # available. Primary-diagnosis status is part of the grouping key, so rows
+  # with primarydx = 0 and primarydx = 1 are retained separately and POA is
+  # resolved independently within each status. Downstream Charlson and
+  # Elixhauser processing removes primary-diagnosis rows. Consequently, when a
+  # condition is represented by both primary and non-primary diagnoses, it is
+  # flagged only when the non-primary row satisfies that method's POA rules.
   cmrb <- mdcr_setorder(cmrb, by = c(names(cmrb)[names(cmrb) != poa.var], poa.var))
   keep <- !mdcr_duplicated(cmrb, by = names(cmrb)[names(cmrb) != poa.var], fromLast = TRUE)
   cmrb <- mdcr_subset(cmrb, keep)
