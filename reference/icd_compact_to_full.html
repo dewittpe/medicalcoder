@@ -11,7 +11,7 @@ only formats strings and does not validate the code(s)."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,6 +35,7 @@ only formats strings and does not validate the code(s)."></head><body>
     <li><h6 class="dropdown-header" data-toc-skip>medicalcoder versus ...</h6></li>
     <li><a class="dropdown-item" href="../articles/medicalcoder-vs-comorbidity.html">R package comorbidity</a></li>
     <li><a class="dropdown-item" href="../articles/medicalcoder-vs-mimic.html">MIMIC-IV Charlson SQL</a></li>
+    <li><a class="dropdown-item" href="../articles/medicalcoder-vs-icdcomorbid.html">R package icdcomorbid</a></li>
     <li><a class="dropdown-item" href="../articles/medicalcoder-vs-multimorbidity.html">R package multimorbidity</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -50,7 +51,7 @@ only formats strings and does not validate the code(s)."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Convert ICD Compact Codes to Full Codes</h1>
-      <small class="dont-index">Source: <a href="https://github.com/dewittpe/medicalcoder/blob/main/R/icd_compact_to_full.R" class="external-link"><code>R/icd_compact_to_full.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/dewittpe/medicalcoder/blob/v0.8.0/R/icd_compact_to_full.R" class="external-link"><code>R/icd_compact_to_full.R</code></a></small>
       <div class="d-none name"><code>icd_compact_to_full.Rd</code></div>
     </div>
 
@@ -80,8 +81,8 @@ only formats strings and does not validate the code(s).</p>
 
 <dt id="arg-dx">dx<a class="anchor" aria-label="anchor" href="#arg-dx"></a></dt>
 <dd><p>Integer vector indicating allowed code type(s): <code>1L</code> for
-diagnostic (ICD-9-CM, ICD-10-CM, ICD-10-AM, ICD-10-SE, CDC mortality,
-WHO), <code>0L</code> for procedural (ICD-9-PCS, ICD-10-PCS). Defaults to both.</p></dd>
+diagnostic (ICD-9-CM, ICD-10-CM, CDC mortality, WHO), <code>0L</code> for procedural
+(ICD-9-PCS, ICD-10-PCS). Defaults to both.</p></dd>
 
 </dl></div>
     <div class="section level2">

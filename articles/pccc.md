@@ -86,7 +86,7 @@ returns a data.frame.
 
 pccc_codes <- get_pccc_codes()
 str(pccc_codes)
-## 'data.frame':    8900 obs. of  12 variables:
+## 'data.frame':    7906 obs. of  12 variables:
 ##  $ icdv           : int  9 9 9 9 9 9 9 9 9 9 ...
 ##  $ dx             : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ full_code      : chr  "00.10" "00.50" "00.51" "00.53" ...
@@ -557,17 +557,17 @@ subset(mdcr_results_v3.1_02, patid == "87420", select = c("cmrb_flag", "renal_dx
 
 subset(get_icd_codes(with.descriptions = TRUE), full_code %in% c("56.41", "564.1"))
 ##       icdv dx full_code code src known_start known_end assignable_start
-## 4884     9  0     56.41 5641 cms        2006      2015             2006
-## 4885     9  0     56.41 5641 cdc        1997      2012             1997
-## 27424    9  1     564.1 5641 cms        2006      2015             2006
-## 27425    9  1     564.1 5641 cdc        1997      2012             1997
-## 27426    9  1     564.1 5641 cdc        1997      2012             1997
+## 17502    9  0     56.41 5641 cdc        1997      2012             1997
+## 17503    9  0     56.41 5641 cms        2006      2015             2006
+## 17504    9  1     564.1 5641 cdc        1997      2012             1997
+## 17505    9  1     564.1 5641 cms        2006      2015             2006
+## 17506    9  1     564.1 5641 cdc        1997      2012             1997
 ##       assignable_end                     desc desc_start desc_end
-## 4884            2015     Partial ureterectomy       2006     2015
-## 4885            2012     Partial ureterectomy       1997     2012
-## 27424           2015 Irritable bowel syndrome       2006     2015
-## 27425           2012 Irritable bowel syndrome       2001     2012
-## 27426           2012          Irritable colon       1997     1999
+## 17502           2012     Partial ureterectomy       1997     2012
+## 17503           2015     Partial ureterectomy       2010     2015
+## 17504           2012 Irritable bowel syndrome       2001     2012
+## 17505           2015 Irritable bowel syndrome       2010     2015
+## 17506           2012          Irritable colon       1997     1999
 ```
 
 In the above, the compact code “5641” matches procedure code 56.41 for a
@@ -777,22 +777,18 @@ status of the code.
 ``` r
 
 lookup_icd_codes("E030")
-##   input_code   match_type icdv dx full_code code             src known_start
-## 1       E030    full_code    9  1      E030 E030             cms        2010
-## 2       E030    full_code    9  1      E030 E030             cdc        2010
-## 3       E030 compact_code   10  1     E03.0 E030             cms        2014
-## 4       E030 compact_code   10  1     E03.0 E030             cdc        2001
-## 5       E030 compact_code   10  1     E03.0 E030          ihacpa        2020
-## 6       E030 compact_code   10  1     E03.0 E030 socialstyrelsen        1997
-## 7       E030 compact_code   10  1     E03.0 E030             who        2008
-##   known_end assignable_start assignable_end
-## 1      2015             2010           2015
-## 2      2012             2010           2012
-## 3      2026             2014           2026
-## 4      2025             2001           2025
-## 5      2026             2020           2026
-## 6      2026             1997           2026
-## 7      2021             2008           2021
+##   input_code   match_type icdv dx full_code code src known_start known_end
+## 1       E030    full_code    9  1      E030 E030 cdc        2010      2012
+## 2       E030    full_code    9  1      E030 E030 cms        2010      2015
+## 3       E030 compact_code   10  1     E03.0 E030 cdc        2001      2025
+## 4       E030 compact_code   10  1     E03.0 E030 cms        2014      2026
+## 5       E030 compact_code   10  1     E03.0 E030 who        2008      2019
+##   assignable_start assignable_end
+## 1             2010           2012
+## 2             2010           2015
+## 3             2001           2025
+## 4             2014           2026
+## 5             2008           2019
 data <- data.frame(id = c("Ambiguous compact code", "Full ICD-9 code", "Full ICD-10 code"),
                    code  = c("E030", "E030", "E03.0"))
 data
@@ -1005,13 +1001,13 @@ The codes we’ll use are:
 codes <- c("H49.811", "J84.111", "Z96.41")
 subset(get_pccc_codes(), full_code %in% codes)
 ##      icdv dx full_code   code   condition                 subcondition
-## 6987   10  1   H49.811 H49811   metabolic    other_metabolic_disorders
-## 7276   10  1   J84.111 J84111 respiratory chronic_respiratory_diseases
-## 8892   10  1    Z96.41  Z9641   metabolic    device_and_technology_use
+## 6438   10  1   H49.811 H49811   metabolic    other_metabolic_disorders
+## 6705   10  1   J84.111 J84111 respiratory chronic_respiratory_diseases
+## 7898   10  1    Z96.41  Z9641   metabolic    device_and_technology_use
 ##      transplant_flag tech_dep_flag pccc_v3.1 pccc_v3.0 pccc_v2.1 pccc_v2.0
-## 6987               0             0         1         1         1         1
-## 7276               0             0         1         1         0         0
-## 8892               0             1         1         1         1         1
+## 6438               0             0         1         1         1         1
+## 6705               0             0         1         1         0         0
+## 7898               0             1         1         1         1         1
 ```
 
 The constructed data and permutations are:
@@ -1039,7 +1035,7 @@ str(permutations, vec.len = 1)
 ##  $ encounter_id: int  1 2 ...
 ##  $ code        : chr  NA ...
 ##  $ plabel      : chr  "Permutation 1: H49.811, J84.111, Z96.41" ...
-##  - attr(*, ".internal.selfref")=<pointer: 0x559df4c4dee0>
+##  - attr(*, ".internal.selfref")=<pointer: 0x564718ed2ee0>
 ```
 
 - Permutation 1: H49.811, J84.111, Z96.41
@@ -1392,9 +1388,8 @@ the primary respiratory condition is flagged.
 
 ``` r
 
-stopifnot(
-  all(rslts$subconditions$respiratory$chronic_respiratory_diseases == 1)
-)
+all(rslts$subconditions$respiratory$chronic_respiratory_diseases == 1)
+## [1] TRUE
 sapply(rslts$subconditions$respiratory[, -(1:3)], max)
 ## chronic_respiratory_diseases              cystic_fibrosis 
 ##                            1                            0 

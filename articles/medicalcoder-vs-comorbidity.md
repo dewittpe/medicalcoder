@@ -249,18 +249,16 @@ for (i in seq_len(nrow(charlson_columns))) {
   print(e)
   r <- eval(e)
   print(r)
-  #stopifnot(r)
-  if (r) {
-    charlson_delta[[x]] <- NULL
-    charlson_delta[[y]] <- NULL
-  }
+  stopifnot(r)
+  charlson_delta[[x]] <- NULL
+  charlson_delta[[y]] <- NULL
 }
 ## identical(charlson_delta[["aids"]], charlson_delta[["aidshiv"]])
 ## [1] TRUE
 ## identical(charlson_delta[["canc"]], charlson_delta[["mal"]])
 ## [1] TRUE
 ## identical(charlson_delta[["metacanc"]], charlson_delta[["mst"]])
-## [1] FALSE
+## [1] TRUE
 ## identical(charlson_delta[["cevd"]], charlson_delta[["cebvd"]])
 ## [1] TRUE
 ## identical(charlson_delta[["cpd"]], charlson_delta[["copd"]])
@@ -290,231 +288,11 @@ for (i in seq_len(nrow(charlson_columns))) {
 ## identical(charlson_delta[["msld.x"]], charlson_delta[["msld.y"]])
 ## [1] TRUE
 ## identical(charlson_delta[["score"]], charlson_delta[["cci"]])
-## [1] FALSE
+## [1] TRUE
 ```
 
-There are differences between the results returned by medicalcoder and
-comorbidity related to metastatic cancer and the ICD codes C7A.x.
-
-``` r
-
-subset(charlson_delta, metacanc != mst)
-##       patid metacanc score mst num_cmrb cmrb_flag cci age_score
-## 6682  25628        0     0   1        1         1   6        NA
-## 34002 90045        0     0   1        1         1   6        NA
-## 37839 99058        0     0   1        1         1   6        NA
-subset(mdcr, patid %in% c(25628, 90045, 99058) & grepl("^C.[^\\d]", code))
-##        patid icdv   code dx
-## 187451 90045   10   C7A8  1
-## 187452 90045   10   C7B8  1
-## 267024 25628   10 C7A098  1
-## 276892 99058   10   C7A8  1
-```
-
-Table 1 of Quan et al. (2005) defining the ICD codes mapping to
-metastatic solid tumor as “C77.x–C80.x”. Under CMS codes there are C7A.x
-and C7B codes. These codes seem applicable to metastatic cancer.
-
-``` r
-
-subset(medicalcoder::get_icd_codes(with.descriptions = TRUE), grepl("^C(7[A-Z])", code))
-##        icdv dx full_code   code src known_start known_end assignable_start
-## 148784   10  1       C7A    C7A cms        2014      2026               NA
-## 148785   10  1     C7A.0   C7A0 cms        2014      2026               NA
-## 148786   10  1    C7A.00  C7A00 cms        2014      2026             2014
-## 148787   10  1    C7A.01  C7A01 cms        2014      2026               NA
-## 148788   10  1   C7A.010 C7A010 cms        2014      2026             2014
-## 148789   10  1   C7A.011 C7A011 cms        2014      2026             2014
-## 148790   10  1   C7A.012 C7A012 cms        2014      2026             2014
-## 148791   10  1   C7A.019 C7A019 cms        2014      2026             2014
-## 148792   10  1    C7A.02  C7A02 cms        2014      2026               NA
-## 148793   10  1   C7A.020 C7A020 cms        2014      2026             2014
-## 148794   10  1   C7A.021 C7A021 cms        2014      2026             2014
-## 148795   10  1   C7A.022 C7A022 cms        2014      2026             2014
-## 148796   10  1   C7A.023 C7A023 cms        2014      2026             2014
-## 148797   10  1   C7A.024 C7A024 cms        2014      2026             2014
-## 148798   10  1   C7A.025 C7A025 cms        2014      2026             2014
-## 148799   10  1   C7A.026 C7A026 cms        2014      2026             2014
-## 148800   10  1   C7A.029 C7A029 cms        2014      2026             2014
-## 148801   10  1    C7A.09  C7A09 cms        2014      2026               NA
-## 148802   10  1   C7A.090 C7A090 cms        2014      2026             2014
-## 148803   10  1   C7A.091 C7A091 cms        2014      2026             2014
-## 148804   10  1   C7A.092 C7A092 cms        2014      2026             2014
-## 148805   10  1   C7A.093 C7A093 cms        2014      2026             2014
-## 148806   10  1   C7A.094 C7A094 cms        2014      2026             2014
-## 148807   10  1   C7A.094 C7A094 cms        2014      2026             2014
-## 148808   10  1   C7A.095 C7A095 cms        2014      2026             2014
-## 148809   10  1   C7A.095 C7A095 cms        2014      2026             2014
-## 148810   10  1   C7A.096 C7A096 cms        2014      2026             2014
-## 148811   10  1   C7A.096 C7A096 cms        2014      2026             2014
-## 148812   10  1   C7A.098 C7A098 cms        2014      2026             2014
-## 148813   10  1     C7A.1   C7A1 cms        2014      2026             2014
-## 148814   10  1     C7A.8   C7A8 cms        2014      2026             2014
-## 148815   10  1       C7B    C7B cms        2014      2026               NA
-## 148816   10  1     C7B.0   C7B0 cms        2014      2026               NA
-## 148817   10  1    C7B.00  C7B00 cms        2014      2026             2014
-## 148818   10  1    C7B.01  C7B01 cms        2014      2026             2014
-## 148819   10  1    C7B.02  C7B02 cms        2014      2026             2014
-## 148820   10  1    C7B.03  C7B03 cms        2014      2026             2014
-## 148821   10  1    C7B.04  C7B04 cms        2014      2026             2014
-## 148822   10  1    C7B.09  C7B09 cms        2014      2026             2014
-## 148823   10  1     C7B.1   C7B1 cms        2014      2026             2014
-## 148824   10  1     C7B.8   C7B8 cms        2014      2026             2014
-##        assignable_end
-## 148784             NA
-## 148785             NA
-## 148786           2026
-## 148787             NA
-## 148788           2026
-## 148789           2026
-## 148790           2026
-## 148791           2026
-## 148792             NA
-## 148793           2026
-## 148794           2026
-## 148795           2026
-## 148796           2026
-## 148797           2026
-## 148798           2026
-## 148799           2026
-## 148800           2026
-## 148801             NA
-## 148802           2026
-## 148803           2026
-## 148804           2026
-## 148805           2026
-## 148806           2026
-## 148807           2026
-## 148808           2026
-## 148809           2026
-## 148810           2026
-## 148811           2026
-## 148812           2026
-## 148813           2026
-## 148814           2026
-## 148815             NA
-## 148816             NA
-## 148817           2026
-## 148818           2026
-## 148819           2026
-## 148820           2026
-## 148821           2026
-## 148822           2026
-## 148823           2026
-## 148824           2026
-##                                                                           desc
-## 148784                                         Malignant neuroendocrine tumors
-## 148785                                              Malignant carcinoid tumors
-## 148786                           Malignant carcinoid tumor of unspecified site
-## 148787                       Malignant carcinoid tumors of the small intestine
-## 148788                               Malignant carcinoid tumor of the duodenum
-## 148789                                Malignant carcinoid tumor of the jejunum
-## 148790                                  Malignant carcinoid tumor of the ileum
-## 148791   Malignant carcinoid tumor of the small intestine, unspecified portion
-## 148792 Malignant carcinoid tumors of the appendix, large intestine, and rectum
-## 148793                               Malignant carcinoid tumor of the appendix
-## 148794                                  Malignant carcinoid tumor of the cecum
-## 148795                        Malignant carcinoid tumor of the ascending colon
-## 148796                       Malignant carcinoid tumor of the transverse colon
-## 148797                       Malignant carcinoid tumor of the descending colon
-## 148798                          Malignant carcinoid tumor of the sigmoid colon
-## 148799                                 Malignant carcinoid tumor of the rectum
-## 148800   Malignant carcinoid tumor of the large intestine, unspecified portion
-## 148801                               Malignant carcinoid tumors of other sites
-## 148802                      Malignant carcinoid tumor of the bronchus and lung
-## 148803                                 Malignant carcinoid tumor of the thymus
-## 148804                                Malignant carcinoid tumor of the stomach
-## 148805                                 Malignant carcinoid tumor of the kidney
-## 148806                            Malignant carcinoid tumor of the foregut NOS
-## 148807                   Malignant carcinoid tumor of the foregut, unspecified
-## 148808                             Malignant carcinoid tumor of the midgut NOS
-## 148809                    Malignant carcinoid tumor of the midgut, unspecified
-## 148810                            Malignant carcinoid tumor of the hindgut NOS
-## 148811                   Malignant carcinoid tumor of the hindgut, unspecified
-## 148812                               Malignant carcinoid tumors of other sites
-## 148813                   Malignant poorly differentiated neuroendocrine tumors
-## 148814                                   Other malignant neuroendocrine tumors
-## 148815                                         Secondary neuroendocrine tumors
-## 148816                                              Secondary carcinoid tumors
-## 148817                            Secondary carcinoid tumors, unspecified site
-## 148818                       Secondary carcinoid tumors of distant lymph nodes
-## 148819                                     Secondary carcinoid tumors of liver
-## 148820                                      Secondary carcinoid tumors of bone
-## 148821                                Secondary carcinoid tumors of peritoneum
-## 148822                               Secondary carcinoid tumors of other sites
-## 148823                                         Secondary Merkel cell carcinoma
-## 148824                                   Other secondary neuroendocrine tumors
-##        desc_start desc_end
-## 148784       2014     2026
-## 148785       2014     2026
-## 148786       2014     2026
-## 148787       2014     2026
-## 148788       2014     2026
-## 148789       2014     2026
-## 148790       2014     2026
-## 148791       2014     2026
-## 148792       2014     2026
-## 148793       2014     2026
-## 148794       2014     2026
-## 148795       2014     2026
-## 148796       2014     2026
-## 148797       2014     2026
-## 148798       2014     2026
-## 148799       2014     2026
-## 148800       2014     2026
-## 148801       2014     2026
-## 148802       2014     2026
-## 148803       2014     2026
-## 148804       2014     2026
-## 148805       2014     2026
-## 148806       2014     2016
-## 148807       2017     2026
-## 148808       2014     2016
-## 148809       2017     2026
-## 148810       2014     2016
-## 148811       2017     2026
-## 148812       2014     2026
-## 148813       2014     2026
-## 148814       2014     2026
-## 148815       2014     2026
-## 148816       2014     2026
-## 148817       2014     2026
-## 148818       2014     2026
-## 148819       2014     2026
-## 148820       2014     2026
-## 148821       2014     2026
-## 148822       2014     2026
-## 148823       2014     2026
-## 148824       2014     2026
-```
-
-The author of the comorbidity package is aware of this and has commented
-on
-[GitHub](https://github.com/ellessenne/comorbidity/issues/16#issuecomment-513265712)
-
-> I am a bit hesitant to add these codes to the scoring algorithm -
-> after all, they did not exist at the time and they have not been
-> validated in these settings (I think?). I think this is a much bigger
-> “problem”, as comorbidity codes evolve over time, but comorbidity
-> scores barely do: how should researchers deal with this disconnection?
-> …I suppose there is no right or wrong answer to that! 😃
-
-For medicalcoder, the choice was made to include these codes as C7A and
-C7B are, in the hierachy, between C77 and C80.
-
-This difference in approaches to mapping ICD codes to comorbidities
-accounts for the differences in the metacanc/mst columns, and the
-score/cci colums.
-
-``` r
-
-charlson_delta[["metacanc"]] <- NULL
-charlson_delta[["mst"]] <- NULL
-charlson_delta[["score"]] <- NULL
-charlson_delta[["cci"]] <- NULL
-```
-
-The remaining columns in `charlson_delta` are:
+The only columns left in the `charlson_delta` object are from
+medicalcoder
 
 ``` r
 
@@ -572,14 +350,14 @@ pack_rows("Number of Comorbidities", start_row = 18, end_row = nrow(x))
 | Hemiplegia or paraplegia               | 1177  | 3.08       |
 | Liver disease, mild                    | 562   | 1.47       |
 | Liver disease, moderate to severe      | 206   | 0.54       |
-| Metastatic solid tumor                 | 456   | 1.19       |
+| Metastatic solid tumor                 | 453   | 1.18       |
 | Myocardial infarction                  | 10    | 0.03       |
 | Peptic ulcer disease                   | 45    | 0.12       |
 | Peripheral vascular disease            | 217   | 0.57       |
 | Renal disease                          | 877   | 2.29       |
 | Rheumatic disease                      | 136   | 0.36       |
 | **Number of Comorbidities**            |       |            |
-| \>= 1                                  | 9792  | 25.59      |
+| \>= 1                                  | 9789  | 25.58      |
 | \>= 2                                  | 1075  | 2.81       |
 | \>= 3                                  | 94    | 0.25       |
 | \>= 4                                  | 9     | 0.02       |
@@ -883,6 +661,11 @@ str(elixhauser_delta)
 ##  $ readmission_index: int  8 1 21 0 0 15 17 6 0 4 ...
 ```
 
+``` r
+
+stopifnot(identical(names(elixhauser_delta), c("patid", "HTN_C", "num_cmrb", "cmrb_flag", "mortality_index", "readmission_index")))
+```
+
 - `HTN_C`: *any* hypertension - added to simplify the calculation of the
   mortality and readmission indices based on weights from AHRQ.
 
@@ -1028,7 +811,7 @@ for (i in seq_len(nrow(charlson_columns))) {
 ## identical(charlson_delta[["canc"]], charlson_delta[["mal"]])
 ## [1] FALSE
 ## identical(charlson_delta[["metacanc"]], charlson_delta[["mst"]])
-## [1] FALSE
+## [1] TRUE
 ## identical(charlson_delta[["cevd"]], charlson_delta[["cebvd"]])
 ## [1] TRUE
 ## identical(charlson_delta[["cpd"]], charlson_delta[["copd"]])
@@ -1180,13 +963,11 @@ cmrb_results <-
 
 elixhauser_delta <-
   merge(
-    x = cmrb_results,
-    y = mdcr_results,
+    x = comorbidity_elixhauser_results,
+    y = medicalcoder_elixhauser_results,
     all = TRUE,
-    by = "code_id"
+    by = "patid"
   )
-
-data.table::setDT(elixhauser_delta)
 
 for (i in seq_len(nrow(elixhauser_columns))) {
   x <- elixhauser_columns[["comorbidity"]][i]
@@ -1199,10 +980,9 @@ for (i in seq_len(nrow(elixhauser_columns))) {
   print(e)
   r <- eval(e)
   print(r)
-  if (r) {
-    elixhauser_delta[[x]] <- NULL
-    elixhauser_delta[[y]] <- NULL
-  }
+  stopifnot(r)
+  elixhauser_delta[[x]] <- NULL
+  elixhauser_delta[[y]] <- NULL
 }
 ## identical(elixhauser_delta[["aids"]], elixhauser_delta[["AIDS"]])
 ## [1] TRUE
@@ -1266,22 +1046,6 @@ for (i in seq_len(nrow(elixhauser_columns))) {
 ## [1] TRUE
 ## identical(elixhauser_delta[["wloss"]], elixhauser_delta[["WGHTLOSS"]])
 ## [1] TRUE
-```
-
-The only differences between the resulting data sets are columns unique
-to medicalcoder.
-
-``` r
-
-str(elixhauser_delta)
-## Classes 'data.table' and 'data.frame':   125918 obs. of  6 variables:
-##  $ code_id          : chr  "ICD-10 A00.0" "ICD-10 A00.1" "ICD-10 A00.9" "ICD-10 A01.0" ...
-##  $ HTN_C            : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ num_cmrb         : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ cmrb_flag        : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ mortality_index  : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ readmission_index: int  0 0 0 0 0 0 0 0 0 0 ...
-##  - attr(*, ".internal.selfref")=<pointer: 0x555b6e60fee0>
 ```
 
 ## Benchmarking

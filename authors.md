@@ -19,16 +19,16 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/dewittpe/medicalcoder/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/dewittpe/medicalcoder/blob/v0.8.0/DESCRIPTION)
 
 DeWitt P (2026). *medicalcoder: A Unified and Longitudinally Aware
 Framework for ICD-Based Comorbidity Assessment*. R package version
-0.8.1.9000, <http://www.peteredewitt.com/medicalcoder/>.
+0.8.0, <http://www.peteredewitt.com/medicalcoder/>.
 
     @Manual{,
       title = {medicalcoder: A Unified and Longitudinally Aware Framework for ICD-Based Comorbidity Assessment},
       author = {Peter DeWitt},
       year = {2026},
-      note = {R package version 0.8.1.9000},
+      note = {R package version 0.8.0},
       url = {http://www.peteredewitt.com/medicalcoder/},
     }

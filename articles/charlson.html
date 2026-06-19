@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,6 +46,7 @@
     <li><h6 class="dropdown-header" data-toc-skip>medicalcoder versus ...</h6></li>
     <li><a class="dropdown-item" href="../articles/medicalcoder-vs-comorbidity.html">R package comorbidity</a></li>
     <li><a class="dropdown-item" href="../articles/medicalcoder-vs-mimic.html">MIMIC-IV Charlson SQL</a></li>
+    <li><a class="dropdown-item" href="../articles/medicalcoder-vs-icdcomorbid.html">R package icdcomorbid</a></li>
     <li><a class="dropdown-item" href="../articles/medicalcoder-vs-multimorbidity.html">R package multimorbidity</a></li>
   </ul>
 </li>
@@ -72,7 +73,7 @@
       <h1>Charlson Comorbidities</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/dewittpe/medicalcoder/blob/main/vignettes/charlson.Rmd" class="external-link"><code>vignettes/charlson.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/dewittpe/medicalcoder/blob/v0.8.0/vignettes/charlson.Rmd" class="external-link"><code>vignettes/charlson.Rmd</code></a></small>
       <div class="d-none name"><code>charlson.Rmd</code></div>
     </div>
 
@@ -81,7 +82,7 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.peteredewitt.com/medicalcoder/">medicalcoder</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"medicalcoder"</span><span class="op">)</span></span>
-<span><span class="co">## [1] '0.8.1.9000'</span></span></code></pre></div>
+<span><span class="co">## [1] '0.8.0'</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -97,17 +98,8 @@ Codes and index scoring <span class="citation">(Quan et al. 2005,
 2011)</span>
 </li>
 <li>
-<code>charlson_sundararajan2004</code>: Australian ICD-10-AM
-adaptation <span class="citation">(Sundararajan et al. 2004)</span>
-</li>
-<li>
 <code>charlson_cdmf2019</code>: <span class="citation">(Glasheen et
 al. 2019)</span>
-</li>
-<li>
-<code>charlson_ludvigsson2021</code>: Swedish ICD-10-SE adaptation
-<span class="citation">(<span class="nocase">Ludvigsson et al.</span>
-2021, 2023)</span>
 </li>
 </ul>
 </div>
@@ -120,28 +112,24 @@ and ICD-10 codes to conditions and the index scoring in
 <code><a href="../reference/get_charlson_index_scores.html">get_charlson_index_scores()</a></code> calls respectively.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_charlson_codes.html">get_charlson_codes</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## 'data.frame':    9145 obs. of  11 variables:</span></span>
-<span><span class="co">##  $ icdv                     : int  9 9 9 9 9 9 9 9 9 9 ...</span></span>
-<span><span class="co">##  $ dx                       : int  0 1 1 1 1 1 1 1 1 1 ...</span></span>
-<span><span class="co">##  $ full_code                : chr  "38.48" "003.1" "007.2" "007.4" ...</span></span>
-<span><span class="co">##  $ code                     : chr  "3848" "0031" "0072" "0074" ...</span></span>
-<span><span class="co">##  $ condition                : chr  "pvd" "aids" "aids" "aids" ...</span></span>
-<span><span class="co">##  $ charlson_cdmf2019        : int  0 1 1 1 1 1 1 1 1 1 ...</span></span>
-<span><span class="co">##  $ charlson_deyo1992        : int  1 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ charlson_ludvigsson2021  : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ charlson_quan2005        : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ charlson_sundararajan2004: int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ charlson_quan2011        : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">## 'data.frame':    7410 obs. of  9 variables:</span></span>
+<span><span class="co">##  $ icdv             : int  9 9 9 9 9 9 9 9 9 9 ...</span></span>
+<span><span class="co">##  $ dx               : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span><span class="co">##  $ full_code        : chr  "003.1" "007.2" "007.4" "010" ...</span></span>
+<span><span class="co">##  $ code             : chr  "0031" "0072" "0074" "010" ...</span></span>
+<span><span class="co">##  $ condition        : chr  "aids" "aids" "aids" "aids" ...</span></span>
+<span><span class="co">##  $ charlson_cdmf2019: int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span><span class="co">##  $ charlson_deyo1992: int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ charlson_quan2005: int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">##  $ charlson_quan2011: int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_charlson_index_scores.html">get_charlson_index_scores</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## 'data.frame':    22 obs. of  8 variables:</span></span>
-<span><span class="co">##  $ condition_description    : chr  "AIDS" "AIDS/HIV" "HIV infection, no AIDS" "Any malignancy" ...</span></span>
-<span><span class="co">##  $ condition                : chr  "aids" "aidshiv" "hiv" "mal" ...</span></span>
-<span><span class="co">##  $ charlson_cdmf2019        : int  6 NA 3 2 1 1 1 1 2 1 ...</span></span>
-<span><span class="co">##  $ charlson_quan2011        : int  NA 4 NA 2 0 1 2 2 1 0 ...</span></span>
-<span><span class="co">##  $ charlson_quan2005        : int  NA 6 NA 2 1 1 1 1 2 1 ...</span></span>
-<span><span class="co">##  $ charlson_deyo1992        : int  NA 6 NA 2 1 1 1 1 2 1 ...</span></span>
-<span><span class="co">##  $ charlson_sundararajan2004: int  NA 6 NA 2 1 1 1 1 2 1 ...</span></span>
-<span><span class="co">##  $ charlson_ludvigsson2021  : int  NA 6 NA 2 1 1 1 1 2 1 ...</span></span></code></pre></div>
+<span><span class="co">## 'data.frame':    21 obs. of  6 variables:</span></span>
+<span><span class="co">##  $ condition_description: chr  "AIDS" "AIDS/HIV" "HIV infection, no AIDS" "Any malignancy" ...</span></span>
+<span><span class="co">##  $ condition            : chr  "aids" "aidshiv" "hiv" "mal" ...</span></span>
+<span><span class="co">##  $ charlson_cdmf2019    : int  6 NA 3 2 1 1 1 1 2 1 ...</span></span>
+<span><span class="co">##  $ charlson_quan2011    : int  NA 4 NA 2 0 1 2 2 1 0 ...</span></span>
+<span><span class="co">##  $ charlson_quan2005    : int  NA 6 NA 2 1 1 1 1 2 1 ...</span></span>
+<span><span class="co">##  $ charlson_deyo1992    : int  NA 6 NA 2 1 1 1 1 2 1 ...</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="applying-charlson">Applying Charlson<a class="anchor" aria-label="anchor" href="#applying-charlson"></a>
@@ -364,10 +352,10 @@ Liver disease, moderate to severe
 Metastatic solid tumor
 </td>
 <td style="text-align:right;">
-456
+453
 </td>
 <td style="text-align:right;">
-1.192
+1.184
 </td>
 </tr>
 <tr>
@@ -435,10 +423,10 @@ Rheumatic disease
 &gt;= 1
 </td>
 <td style="text-align:right;">
-9792
+9789
 </td>
 <td style="text-align:right;">
-25.592
+25.584
 </td>
 </tr>
 <tr>
@@ -507,18 +495,6 @@ Davis, and Andrew Renda. 2019. <span>“Charlson Comorbidity Index: ICD-9
 Update and ICD-10 Translation.”</span> <em>American Health &amp; Drug
 Benefits</em> 12 (4): 188. <a href="https://pubmed.ncbi.nlm.nih.gov/31428236/" class="external-link">https://pubmed.ncbi.nlm.nih.gov/31428236/</a>.
 </div>
-<div id="ref-ludvigsson2021adaptation" class="csl-entry">
-<span class="nocase">Ludvigsson, Jonas F, Peter Appelros, Johan Askling,
-et al.</span> 2021. <span>“Adaptation of the Charlson Comorbidity Index
-for Register-Based Research in Sweden.”</span> <em>Clinical
-Epidemiology</em>, 21–41. https://doi.org/<a href="https://doi.org/10.2147/CLEP.S282475" class="external-link">https://doi.org/10.2147/CLEP.S282475</a>.
-</div>
-<div id="ref-ludvigsson2023adaptation" class="csl-entry">
-<span class="nocase">Ludvigsson, Jonas F, Peter Appelros, Johan Askling,
-et al.</span> 2023. <span>“Adaptation of the Charlson Comorbidity Index
-for Register-Based Research in Sweden [Corrigendum].”</span>
-<em>Clinical Epidemiology</em> 15: 753–54. https://doi.org/<a href="https://doi.org/10.2147/clep.s425901" class="external-link">https://doi.org/10.2147/clep.s425901</a>.
-</div>
 <div id="ref-quan2011" class="csl-entry">
 Quan, Hude, Bo Li, Colette M. Couris, et al. 2011. <span>“Updating and
 Validating the Charlson Comorbidity Index and Score for Risk Adjustment
@@ -530,12 +506,6 @@ Quan, Hude, Vijaya Sundararajan, Patricia Halfon, et al. 2005.
 <span>“Coding Algorithms for Defining Comorbidities in ICD-9-CM and
 ICD-10 Administrative Data.”</span> <em>Medical Care</em> 43 (11):
 1130–39. <a href="https://doi.org/10.1097/01.mlr.0000182534.19832.83" class="external-link">https://doi.org/10.1097/01.mlr.0000182534.19832.83</a>.
-</div>
-<div id="ref-sundararajan2004" class="csl-entry">
-Sundararajan, Vijaya, Toni Henderson, Catherine Perry, Amanda Muggivan,
-Hude Quan, and William A Ghali. 2004. <span>“New ICD-10 Version of the
-Charlson Comorbidity Index Predicted in-Hospital Mortality.”</span>
-<em>Journal of Clinical Epidemiology</em> 57 (12): 1288–94.
 </div>
 </div>
 </div>

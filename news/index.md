@@ -1,53 +1,5 @@
 # Changelog
 
-## medicalcoder 0.8.1.9000
-
-### New Features
-
-- [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
-  gains a new argument to allow end users to specify the mapping between
-  ICD codes and the conditions to be done via precomputed link tables or
-  via regex (part of
-  [\#45](https://github.com/dewittpe/medicalcoder/issues/45))
-
-- Add `charlson_sundararajan2004`
-
-- Add `charlson_ludvigsson2021`, a Charlson-style Swedish register-based
-  comorbidity method.
-
-- Add ICD-10-AM (Australian Modification) to the ICD database
-
-- Add ICD-10-SE (Swedish) to the ICD database. Source files from
-  Socialstyrelsen.
-
-### Bug Fixes
-
-- ICD-10 Z49.1 has been added to elixhauser_quan2005; it was missing by
-  error in the prior version of medicalcoder.
-
-### Improvements
-
-- WHO ICD-10 codes extend 2019 to 2020 and 2021 and the WHO last
-  published in 2019 and then transiitoned to ICD-11 January 1 2022.
-
-## medicalcoder 0.8.1
-
-CRAN release: 2026-05-05
-
-### Bug Fixes
-
-- Fix Charlson `age.var` handling when `id.vars` is missing or has
-  multiple ages per ID.
-  ([\#43](https://github.com/dewittpe/medicalcoder/issues/43))
-
-- Fix [`summary()`](https://rdrr.io/r/base/summary.html) for Charlson
-  results when `age.var` is omitted and `age_score` is all missing.
-
-- Account for possible zero nrow sets in `mdcr_set()`
-
-- Harden sort order for the results from
-  [`lookup_icd_codes()`](http://www.peteredewitt.com/medicalcoder/reference/lookup_icd_codes.md)
-
 ## medicalcoder 0.8.0
 
 CRAN release: 2026-02-22

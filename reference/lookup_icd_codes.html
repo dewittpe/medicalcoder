@@ -4,20 +4,18 @@ ICD-10 code "C00" is a header code because the four-character codes
 C00.0, C00.1, C00.2, C00.3, C00.4, C00.5, C00.6, C00.7, C00.8, and C00.9
 exist. Those four-character codes are assignable (as of 2025) because no
 five-character descendants (e.g., C00.40) exist.
-When the source is the World Health Organization (WHO), CDC Mortality, or
-Socialstyrelsen, years refer to calendar years. CMS sources use the U.S.
-federal fiscal year, which starts on October 1 (e.g., fiscal year 2024 runs
-2023-10-01 to 2024-09-30). IHACPA sources use the Australian financial year,
-which starts on July 1 and ends on June 30.'><meta property="og:description" content='Functions for working with ICD codes.
+When the source is the World Health Organization (WHO) or CDC Mortality,
+years refer to calendar years. CDC/CMS sources use the U.S. federal fiscal
+year, which starts on October 1 (e.g., fiscal year 2024 runs 2023-10-01 to
+2024-09-30).'><meta property="og:description" content='Functions for working with ICD codes.
 ICD-10 code "C00" is a header code because the four-character codes
 C00.0, C00.1, C00.2, C00.3, C00.4, C00.5, C00.6, C00.7, C00.8, and C00.9
 exist. Those four-character codes are assignable (as of 2025) because no
 five-character descendants (e.g., C00.40) exist.
-When the source is the World Health Organization (WHO), CDC Mortality, or
-Socialstyrelsen, years refer to calendar years. CMS sources use the U.S.
-federal fiscal year, which starts on October 1 (e.g., fiscal year 2024 runs
-2023-10-01 to 2024-09-30). IHACPA sources use the Australian financial year,
-which starts on July 1 and ends on June 30.'></head><body>
+When the source is the World Health Organization (WHO) or CDC Mortality,
+years refer to calendar years. CDC/CMS sources use the U.S. federal fiscal
+year, which starts on October 1 (e.g., fiscal year 2024 runs 2023-10-01 to
+2024-09-30).'></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -25,7 +23,7 @@ which starts on July 1 and ends on June 30.'></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,6 +47,7 @@ which starts on July 1 and ends on June 30.'></head><body>
     <li><h6 class="dropdown-header" data-toc-skip>medicalcoder versus ...</h6></li>
     <li><a class="dropdown-item" href="../articles/medicalcoder-vs-comorbidity.html">R package comorbidity</a></li>
     <li><a class="dropdown-item" href="../articles/medicalcoder-vs-mimic.html">MIMIC-IV Charlson SQL</a></li>
+    <li><a class="dropdown-item" href="../articles/medicalcoder-vs-icdcomorbid.html">R package icdcomorbid</a></li>
     <li><a class="dropdown-item" href="../articles/medicalcoder-vs-multimorbidity.html">R package multimorbidity</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -64,7 +63,7 @@ which starts on July 1 and ends on June 30.'></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Lookup ICD Codes</h1>
-      <small class="dont-index">Source: <a href="https://github.com/dewittpe/medicalcoder/blob/main/R/lookup_icd_codes.R" class="external-link"><code>R/lookup_icd_codes.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/dewittpe/medicalcoder/blob/v0.8.0/R/lookup_icd_codes.R" class="external-link"><code>R/lookup_icd_codes.R</code></a></small>
       <div class="d-none name"><code>lookup_icd_codes.Rd</code></div>
     </div>
 
@@ -74,11 +73,10 @@ which starts on July 1 and ends on June 30.'></head><body>
 C00.0, C00.1, C00.2, C00.3, C00.4, C00.5, C00.6, C00.7, C00.8, and C00.9
 exist. Those four-character codes are assignable (as of 2025) because no
 five-character descendants (e.g., C00.40) exist.</p>
-<p>When the source is the World Health Organization (WHO), CDC Mortality, or
-Socialstyrelsen, years refer to calendar years. CMS sources use the U.S.
-federal fiscal year, which starts on October 1 (e.g., fiscal year 2024 runs
-2023-10-01 to 2024-09-30). IHACPA sources use the Australian financial year,
-which starts on July 1 and ends on June 30.</p>
+<p>When the source is the World Health Organization (WHO) or CDC Mortality,
+years refer to calendar years. CDC/CMS sources use the U.S. federal fiscal
+year, which starts on October 1 (e.g., fiscal year 2024 runs 2023-10-01 to
+2024-09-30).</p>
     </div>
 
     <div class="section level2">

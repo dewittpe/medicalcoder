@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,6 +46,7 @@
     <li><h6 class="dropdown-header" data-toc-skip>medicalcoder versus ...</h6></li>
     <li><a class="dropdown-item" href="../articles/medicalcoder-vs-comorbidity.html">R package comorbidity</a></li>
     <li><a class="dropdown-item" href="../articles/medicalcoder-vs-mimic.html">MIMIC-IV Charlson SQL</a></li>
+    <li><a class="dropdown-item" href="../articles/medicalcoder-vs-icdcomorbid.html">R package icdcomorbid</a></li>
     <li><a class="dropdown-item" href="../articles/medicalcoder-vs-multimorbidity.html">R package multimorbidity</a></li>
   </ul>
 </li>
@@ -72,7 +73,7 @@
       <h1>medicalcoder vs comorbidity</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/dewittpe/medicalcoder/blob/main/vignettes/articles/medicalcoder-vs-comorbidity.Rmd" class="external-link"><code>vignettes/articles/medicalcoder-vs-comorbidity.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/dewittpe/medicalcoder/blob/v0.8.0/vignettes/articles/medicalcoder-vs-comorbidity.Rmd" class="external-link"><code>vignettes/articles/medicalcoder-vs-comorbidity.Rmd</code></a></small>
       <div class="d-none name"><code>medicalcoder-vs-comorbidity.Rmd</code></div>
     </div>
 
@@ -171,7 +172,7 @@ Charlson (Ludvigsson et al., 2021)
 ✅
 </td>
 <td style="text-align:center;">
-✅
+❌
 </td>
 </tr>
 <tr>
@@ -182,7 +183,7 @@ Charlson (Sundararajan et al., 2004)
 ✅
 </td>
 <td style="text-align:center;">
-✅
+❌
 </td>
 </tr>
 <tr>
@@ -555,56 +556,16 @@ CMS
 Diagnosis
 </td>
 <td style="text-align:center;">
-IHACPA
-</td>
-<td style="text-align:center;">
-2020
-</td>
-<td style="text-align:center;">
-2026
-</td>
-<td style="text-align:center;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:center;">
-10
-</td>
-<td style="text-align:center;">
-Diagnosis
-</td>
-<td style="text-align:center;">
-SOCIALSTYRELSEN
-</td>
-<td style="text-align:center;">
-1997
-</td>
-<td style="text-align:center;">
-2026
-</td>
-<td style="text-align:center;">
-26
-</td>
-</tr>
-<tr>
-<td style="text-align:center;">
-10
-</td>
-<td style="text-align:center;">
-Diagnosis
-</td>
-<td style="text-align:center;">
 WHO
 </td>
 <td style="text-align:center;">
 2008
 </td>
 <td style="text-align:center;">
-2021
+2019
 </td>
 <td style="text-align:center;">
-10
+9
 </td>
 </tr>
 </tbody>
@@ -795,18 +756,16 @@ columns.</p>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
 <span>  <span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/eval.html" class="external-link">eval</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
-<span>  <span class="co">#stopifnot(r)</span></span>
-<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">r</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">charlson_delta</span><span class="op">[[</span><span class="va">x</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
-<span>    <span class="va">charlson_delta</span><span class="op">[[</span><span class="va">y</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
-<span>  <span class="op">}</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
+<span>  <span class="va">charlson_delta</span><span class="op">[[</span><span class="va">x</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span>  <span class="va">charlson_delta</span><span class="op">[[</span><span class="va">y</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
 <span><span class="op">}</span></span>
 <span><span class="co">## identical(charlson_delta[["aids"]], charlson_delta[["aidshiv"]])</span></span>
 <span><span class="co">## [1] TRUE</span></span>
 <span><span class="co">## identical(charlson_delta[["canc"]], charlson_delta[["mal"]])</span></span>
 <span><span class="co">## [1] TRUE</span></span>
 <span><span class="co">## identical(charlson_delta[["metacanc"]], charlson_delta[["mst"]])</span></span>
-<span><span class="co">## [1] FALSE</span></span>
+<span><span class="co">## [1] TRUE</span></span>
 <span><span class="co">## identical(charlson_delta[["cevd"]], charlson_delta[["cebvd"]])</span></span>
 <span><span class="co">## [1] TRUE</span></span>
 <span><span class="co">## identical(charlson_delta[["cpd"]], charlson_delta[["copd"]])</span></span>
@@ -836,218 +795,10 @@ columns.</p>
 <span><span class="co">## identical(charlson_delta[["msld.x"]], charlson_delta[["msld.y"]])</span></span>
 <span><span class="co">## [1] TRUE</span></span>
 <span><span class="co">## identical(charlson_delta[["score"]], charlson_delta[["cci"]])</span></span>
-<span><span class="co">## [1] FALSE</span></span></code></pre></div>
-<p>There are differences between the results returned by medicalcoder
-and comorbidity related to metastatic cancer and the ICD codes
-C7A.x.</p>
+<span><span class="co">## [1] TRUE</span></span></code></pre></div>
+<p>The only columns left in the <code>charlson_delta</code> object are
+from medicalcoder</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">charlson_delta</span>, <span class="va">metacanc</span> <span class="op">!=</span> <span class="va">mst</span><span class="op">)</span></span>
-<span><span class="co">##       patid metacanc score mst num_cmrb cmrb_flag cci age_score</span></span>
-<span><span class="co">## 6682  25628        0     0   1        1         1   6        NA</span></span>
-<span><span class="co">## 34002 90045        0     0   1        1         1   6        NA</span></span>
-<span><span class="co">## 37839 99058        0     0   1        1         1   6        NA</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">mdcr</span>, <span class="va">patid</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">25628</span>, <span class="fl">90045</span>, <span class="fl">99058</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^C.[^\\d]"</span>, <span class="va">code</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">##        patid icdv   code dx</span></span>
-<span><span class="co">## 187451 90045   10   C7A8  1</span></span>
-<span><span class="co">## 187452 90045   10   C7B8  1</span></span>
-<span><span class="co">## 267024 25628   10 C7A098  1</span></span>
-<span><span class="co">## 276892 99058   10   C7A8  1</span></span></code></pre></div>
-<p>Table 1 of <span class="citation">Quan et al. (2005)</span> defining
-the ICD codes mapping to metastatic solid tumor as “C77.x–C80.x”. Under
-CMS codes there are C7A.x and C7B codes. These codes seem applicable to
-metastatic cancer.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="fu">medicalcoder</span><span class="fu">::</span><span class="fu"><a href="../reference/get_icd_codes.html">get_icd_codes</a></span><span class="op">(</span>with.descriptions <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^C(7[A-Z])"</span>, <span class="va">code</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">##        icdv dx full_code   code src known_start known_end assignable_start</span></span>
-<span><span class="co">## 148784   10  1       C7A    C7A cms        2014      2026               NA</span></span>
-<span><span class="co">## 148785   10  1     C7A.0   C7A0 cms        2014      2026               NA</span></span>
-<span><span class="co">## 148786   10  1    C7A.00  C7A00 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148787   10  1    C7A.01  C7A01 cms        2014      2026               NA</span></span>
-<span><span class="co">## 148788   10  1   C7A.010 C7A010 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148789   10  1   C7A.011 C7A011 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148790   10  1   C7A.012 C7A012 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148791   10  1   C7A.019 C7A019 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148792   10  1    C7A.02  C7A02 cms        2014      2026               NA</span></span>
-<span><span class="co">## 148793   10  1   C7A.020 C7A020 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148794   10  1   C7A.021 C7A021 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148795   10  1   C7A.022 C7A022 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148796   10  1   C7A.023 C7A023 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148797   10  1   C7A.024 C7A024 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148798   10  1   C7A.025 C7A025 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148799   10  1   C7A.026 C7A026 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148800   10  1   C7A.029 C7A029 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148801   10  1    C7A.09  C7A09 cms        2014      2026               NA</span></span>
-<span><span class="co">## 148802   10  1   C7A.090 C7A090 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148803   10  1   C7A.091 C7A091 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148804   10  1   C7A.092 C7A092 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148805   10  1   C7A.093 C7A093 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148806   10  1   C7A.094 C7A094 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148807   10  1   C7A.094 C7A094 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148808   10  1   C7A.095 C7A095 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148809   10  1   C7A.095 C7A095 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148810   10  1   C7A.096 C7A096 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148811   10  1   C7A.096 C7A096 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148812   10  1   C7A.098 C7A098 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148813   10  1     C7A.1   C7A1 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148814   10  1     C7A.8   C7A8 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148815   10  1       C7B    C7B cms        2014      2026               NA</span></span>
-<span><span class="co">## 148816   10  1     C7B.0   C7B0 cms        2014      2026               NA</span></span>
-<span><span class="co">## 148817   10  1    C7B.00  C7B00 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148818   10  1    C7B.01  C7B01 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148819   10  1    C7B.02  C7B02 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148820   10  1    C7B.03  C7B03 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148821   10  1    C7B.04  C7B04 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148822   10  1    C7B.09  C7B09 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148823   10  1     C7B.1   C7B1 cms        2014      2026             2014</span></span>
-<span><span class="co">## 148824   10  1     C7B.8   C7B8 cms        2014      2026             2014</span></span>
-<span><span class="co">##        assignable_end</span></span>
-<span><span class="co">## 148784             NA</span></span>
-<span><span class="co">## 148785             NA</span></span>
-<span><span class="co">## 148786           2026</span></span>
-<span><span class="co">## 148787             NA</span></span>
-<span><span class="co">## 148788           2026</span></span>
-<span><span class="co">## 148789           2026</span></span>
-<span><span class="co">## 148790           2026</span></span>
-<span><span class="co">## 148791           2026</span></span>
-<span><span class="co">## 148792             NA</span></span>
-<span><span class="co">## 148793           2026</span></span>
-<span><span class="co">## 148794           2026</span></span>
-<span><span class="co">## 148795           2026</span></span>
-<span><span class="co">## 148796           2026</span></span>
-<span><span class="co">## 148797           2026</span></span>
-<span><span class="co">## 148798           2026</span></span>
-<span><span class="co">## 148799           2026</span></span>
-<span><span class="co">## 148800           2026</span></span>
-<span><span class="co">## 148801             NA</span></span>
-<span><span class="co">## 148802           2026</span></span>
-<span><span class="co">## 148803           2026</span></span>
-<span><span class="co">## 148804           2026</span></span>
-<span><span class="co">## 148805           2026</span></span>
-<span><span class="co">## 148806           2026</span></span>
-<span><span class="co">## 148807           2026</span></span>
-<span><span class="co">## 148808           2026</span></span>
-<span><span class="co">## 148809           2026</span></span>
-<span><span class="co">## 148810           2026</span></span>
-<span><span class="co">## 148811           2026</span></span>
-<span><span class="co">## 148812           2026</span></span>
-<span><span class="co">## 148813           2026</span></span>
-<span><span class="co">## 148814           2026</span></span>
-<span><span class="co">## 148815             NA</span></span>
-<span><span class="co">## 148816             NA</span></span>
-<span><span class="co">## 148817           2026</span></span>
-<span><span class="co">## 148818           2026</span></span>
-<span><span class="co">## 148819           2026</span></span>
-<span><span class="co">## 148820           2026</span></span>
-<span><span class="co">## 148821           2026</span></span>
-<span><span class="co">## 148822           2026</span></span>
-<span><span class="co">## 148823           2026</span></span>
-<span><span class="co">## 148824           2026</span></span>
-<span><span class="co">##                                                                           desc</span></span>
-<span><span class="co">## 148784                                         Malignant neuroendocrine tumors</span></span>
-<span><span class="co">## 148785                                              Malignant carcinoid tumors</span></span>
-<span><span class="co">## 148786                           Malignant carcinoid tumor of unspecified site</span></span>
-<span><span class="co">## 148787                       Malignant carcinoid tumors of the small intestine</span></span>
-<span><span class="co">## 148788                               Malignant carcinoid tumor of the duodenum</span></span>
-<span><span class="co">## 148789                                Malignant carcinoid tumor of the jejunum</span></span>
-<span><span class="co">## 148790                                  Malignant carcinoid tumor of the ileum</span></span>
-<span><span class="co">## 148791   Malignant carcinoid tumor of the small intestine, unspecified portion</span></span>
-<span><span class="co">## 148792 Malignant carcinoid tumors of the appendix, large intestine, and rectum</span></span>
-<span><span class="co">## 148793                               Malignant carcinoid tumor of the appendix</span></span>
-<span><span class="co">## 148794                                  Malignant carcinoid tumor of the cecum</span></span>
-<span><span class="co">## 148795                        Malignant carcinoid tumor of the ascending colon</span></span>
-<span><span class="co">## 148796                       Malignant carcinoid tumor of the transverse colon</span></span>
-<span><span class="co">## 148797                       Malignant carcinoid tumor of the descending colon</span></span>
-<span><span class="co">## 148798                          Malignant carcinoid tumor of the sigmoid colon</span></span>
-<span><span class="co">## 148799                                 Malignant carcinoid tumor of the rectum</span></span>
-<span><span class="co">## 148800   Malignant carcinoid tumor of the large intestine, unspecified portion</span></span>
-<span><span class="co">## 148801                               Malignant carcinoid tumors of other sites</span></span>
-<span><span class="co">## 148802                      Malignant carcinoid tumor of the bronchus and lung</span></span>
-<span><span class="co">## 148803                                 Malignant carcinoid tumor of the thymus</span></span>
-<span><span class="co">## 148804                                Malignant carcinoid tumor of the stomach</span></span>
-<span><span class="co">## 148805                                 Malignant carcinoid tumor of the kidney</span></span>
-<span><span class="co">## 148806                            Malignant carcinoid tumor of the foregut NOS</span></span>
-<span><span class="co">## 148807                   Malignant carcinoid tumor of the foregut, unspecified</span></span>
-<span><span class="co">## 148808                             Malignant carcinoid tumor of the midgut NOS</span></span>
-<span><span class="co">## 148809                    Malignant carcinoid tumor of the midgut, unspecified</span></span>
-<span><span class="co">## 148810                            Malignant carcinoid tumor of the hindgut NOS</span></span>
-<span><span class="co">## 148811                   Malignant carcinoid tumor of the hindgut, unspecified</span></span>
-<span><span class="co">## 148812                               Malignant carcinoid tumors of other sites</span></span>
-<span><span class="co">## 148813                   Malignant poorly differentiated neuroendocrine tumors</span></span>
-<span><span class="co">## 148814                                   Other malignant neuroendocrine tumors</span></span>
-<span><span class="co">## 148815                                         Secondary neuroendocrine tumors</span></span>
-<span><span class="co">## 148816                                              Secondary carcinoid tumors</span></span>
-<span><span class="co">## 148817                            Secondary carcinoid tumors, unspecified site</span></span>
-<span><span class="co">## 148818                       Secondary carcinoid tumors of distant lymph nodes</span></span>
-<span><span class="co">## 148819                                     Secondary carcinoid tumors of liver</span></span>
-<span><span class="co">## 148820                                      Secondary carcinoid tumors of bone</span></span>
-<span><span class="co">## 148821                                Secondary carcinoid tumors of peritoneum</span></span>
-<span><span class="co">## 148822                               Secondary carcinoid tumors of other sites</span></span>
-<span><span class="co">## 148823                                         Secondary Merkel cell carcinoma</span></span>
-<span><span class="co">## 148824                                   Other secondary neuroendocrine tumors</span></span>
-<span><span class="co">##        desc_start desc_end</span></span>
-<span><span class="co">## 148784       2014     2026</span></span>
-<span><span class="co">## 148785       2014     2026</span></span>
-<span><span class="co">## 148786       2014     2026</span></span>
-<span><span class="co">## 148787       2014     2026</span></span>
-<span><span class="co">## 148788       2014     2026</span></span>
-<span><span class="co">## 148789       2014     2026</span></span>
-<span><span class="co">## 148790       2014     2026</span></span>
-<span><span class="co">## 148791       2014     2026</span></span>
-<span><span class="co">## 148792       2014     2026</span></span>
-<span><span class="co">## 148793       2014     2026</span></span>
-<span><span class="co">## 148794       2014     2026</span></span>
-<span><span class="co">## 148795       2014     2026</span></span>
-<span><span class="co">## 148796       2014     2026</span></span>
-<span><span class="co">## 148797       2014     2026</span></span>
-<span><span class="co">## 148798       2014     2026</span></span>
-<span><span class="co">## 148799       2014     2026</span></span>
-<span><span class="co">## 148800       2014     2026</span></span>
-<span><span class="co">## 148801       2014     2026</span></span>
-<span><span class="co">## 148802       2014     2026</span></span>
-<span><span class="co">## 148803       2014     2026</span></span>
-<span><span class="co">## 148804       2014     2026</span></span>
-<span><span class="co">## 148805       2014     2026</span></span>
-<span><span class="co">## 148806       2014     2016</span></span>
-<span><span class="co">## 148807       2017     2026</span></span>
-<span><span class="co">## 148808       2014     2016</span></span>
-<span><span class="co">## 148809       2017     2026</span></span>
-<span><span class="co">## 148810       2014     2016</span></span>
-<span><span class="co">## 148811       2017     2026</span></span>
-<span><span class="co">## 148812       2014     2026</span></span>
-<span><span class="co">## 148813       2014     2026</span></span>
-<span><span class="co">## 148814       2014     2026</span></span>
-<span><span class="co">## 148815       2014     2026</span></span>
-<span><span class="co">## 148816       2014     2026</span></span>
-<span><span class="co">## 148817       2014     2026</span></span>
-<span><span class="co">## 148818       2014     2026</span></span>
-<span><span class="co">## 148819       2014     2026</span></span>
-<span><span class="co">## 148820       2014     2026</span></span>
-<span><span class="co">## 148821       2014     2026</span></span>
-<span><span class="co">## 148822       2014     2026</span></span>
-<span><span class="co">## 148823       2014     2026</span></span>
-<span><span class="co">## 148824       2014     2026</span></span></code></pre></div>
-<p>The author of the comorbidity package is aware of this and has
-commented on <a href="https://github.com/ellessenne/comorbidity/issues/16#issuecomment-513265712" class="external-link">GitHub</a></p>
-<blockquote>
-<p>I am a bit hesitant to add these codes to the scoring algorithm -
-after all, they did not exist at the time and they have not been
-validated in these settings (I think?). I think this is a much bigger
-“problem”, as comorbidity codes evolve over time, but comorbidity scores
-barely do: how should researchers deal with this disconnection? …I
-suppose there is no right or wrong answer to that! 😃</p>
-</blockquote>
-<p>For medicalcoder, the choice was made to include these codes as C7A
-and C7B are, in the hierachy, between C77 and C80.</p>
-<p>This difference in approaches to mapping ICD codes to comorbidities
-accounts for the differences in the metacanc/mst columns, and the
-score/cci colums.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">charlson_delta</span><span class="op">[[</span><span class="st">"metacanc"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
-<span><span class="va">charlson_delta</span><span class="op">[[</span><span class="st">"mst"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
-<span><span class="va">charlson_delta</span><span class="op">[[</span><span class="st">"score"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
-<span><span class="va">charlson_delta</span><span class="op">[[</span><span class="st">"cci"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span></code></pre></div>
-<p>The remaining columns in <code>charlson_delta</code> are:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">charlson_delta</span><span class="op">)</span></span>
 <span><span class="co">## 'data.frame':    38262 obs. of  4 variables:</span></span>
 <span><span class="co">##  $ patid    : int  10000 10002 10005 10006 10008 10010 10014 10015 10017 10018 ...</span></span>
@@ -1063,7 +814,7 @@ score/cci colums.</p>
 <code>age_score</code>: a score adjustment based on age <em>if</em>
 age is provided.</li>
 </ul>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">charlson_delta</span><span class="op">)</span>,</span>
@@ -1073,7 +824,7 @@ age is provided.</li>
 <p>An addition feature the medicalcoder package provides that the
 comorbidity package does not, is a summary method for the results, which
 can be used to build nice tables via <a href="https://CRAN.R-project.org/package=kableExtra" class="external-link">kableExtra</a>.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">medicalcoder_charlson_results</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"condition_description"</span>, <span class="st">"count"</span>, <span class="st">"percent"</span><span class="op">)</span><span class="op">]</span></span>
 <span></span>
 <span><span class="fu">kbl</span><span class="op">(</span></span>
@@ -1226,10 +977,10 @@ Liver disease, moderate to severe
 Metastatic solid tumor
 </td>
 <td style="text-align:right;">
-456
+453
 </td>
 <td style="text-align:right;">
-1.19
+1.18
 </td>
 </tr>
 <tr>
@@ -1297,10 +1048,10 @@ Rheumatic disease
 &gt;= 1
 </td>
 <td style="text-align:right;">
-9792
+9789
 </td>
 <td style="text-align:right;">
-25.59
+25.58
 </td>
 </tr>
 <tr>
@@ -1356,7 +1107,7 @@ Rheumatic disease
 <p>Applying the Elixhauser comorbidities to the <code>mdcr</code> data
 set via <code><a href="../reference/comorbidities.html">medicalcoder::comorbidities()</a></code> is done as
 follows.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">medicalcoder_elixhauser_results</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">medicalcoder</span><span class="fu">::</span><span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
 <span>    data <span class="op">=</span> <span class="va">mdcr</span>,</span>
@@ -1371,7 +1122,7 @@ follows.</p>
 <p>For <code><a href="https://ellessenne.github.io/comorbidity/reference/comorbidity.html" class="external-link">comorbidity::comorbidity()</a></code>, we will need to make two
 calls, one for the ICD-9 codes and one for the ICD-10 codes. We will
 then need to combine the results and then apply a scoring function.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">comorbidity_elixhauser_icd9_results</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">comorbidity</span><span class="fu">::</span><span class="fu"><a href="https://ellessenne.github.io/comorbidity/reference/comorbidity.html" class="external-link">comorbidity</a></span><span class="op">(</span></span>
 <span>    x <span class="op">=</span> <span class="va">mdcr_icd9dx</span>,</span>
@@ -1399,7 +1150,7 @@ then need to combine the results and then apply a scoring function.</p>
 <p>We can now compare the comorbidity flags between the two packages.
 First we check that we have the same number of rows and all the patid
 are accounted for.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">medicalcoder_elixhauser_results</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">comorbidity_elixhauser_results</span><span class="op">)</span></span>
 <span><span class="co">## [1] TRUE</span></span>
 <span></span>
@@ -1414,7 +1165,7 @@ are accounted for.</p>
 <span><span class="co">## [1] TRUE</span></span></code></pre></div>
 <p>There are differences in the results in terms of the names and
 numbers of columns returned.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">medicalcoder_elixhauser_results</span><span class="op">)</span></span>
 <span><span class="co">## [1] 38262    37</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">medicalcoder_elixhauser_results</span><span class="op">)</span></span>
@@ -1443,7 +1194,7 @@ numbers of columns returned.</p>
 <span><span class="co">## [31] "psycho"   "depre"</span></span></code></pre></div>
 <p>We will compare results column by column. First, we merge the data
 sets together by patid.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">elixhauser_delta</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge</a></span><span class="op">(</span></span>
 <span>    x <span class="op">=</span> <span class="va">comorbidity_elixhauser_results</span>,</span>
@@ -1455,7 +1206,7 @@ sets together by patid.</p>
 <p>The following data.frame reports the condition and the corresponding
 column from <code><a href="https://ellessenne.github.io/comorbidity/reference/comorbidity.html" class="external-link">comorbidity::comorbidity()</a></code> and from
 <code><a href="../reference/comorbidities.html">medicalcoder::comorbidities()</a></code>.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">elixhauser_columns</span></span>
 <span><span class="co">##                                        Condition comorbidity</span></span>
 <span><span class="co">## 1                                       AIDS/HIV        aids</span></span>
@@ -1524,7 +1275,7 @@ column from <code><a href="https://ellessenne.github.io/comorbidity/reference/co
 <p>For each row in <code>elixhauser_columns</code> we will verify that
 the results are identical in <code>elixhauser_delta</code> and remove
 the columns.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">elixhauser_columns</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">elixhauser_columns</span><span class="op">[[</span><span class="st">"comorbidity"</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="va">i</span><span class="op">]</span></span>
 <span>  <span class="va">y</span> <span class="op">&lt;-</span> <span class="va">elixhauser_columns</span><span class="op">[[</span><span class="st">"medicalcoder"</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="va">i</span><span class="op">]</span></span>
@@ -1604,7 +1355,7 @@ the columns.</p>
 <span><span class="co">## [1] TRUE</span></span></code></pre></div>
 <p>The remaining columns in the <code>elixhauser_delta</code> object are
 specific to medicalcoder, save patid.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">elixhauser_delta</span><span class="op">)</span></span>
 <span><span class="co">## 'data.frame':    38262 obs. of  6 variables:</span></span>
 <span><span class="co">##  $ patid            : int  10000 10002 10005 10006 10008 10010 10014 10015 10017 10018 ...</span></span>
@@ -1613,6 +1364,8 @@ specific to medicalcoder, save patid.</p>
 <span><span class="co">##  $ cmrb_flag        : int  1 1 1 0 0 1 1 1 0 1 ...</span></span>
 <span><span class="co">##  $ mortality_index  : int  3 -10 14 0 0 16 19 5 0 -5 ...</span></span>
 <span><span class="co">##  $ readmission_index: int  8 1 21 0 0 15 17 6 0 4 ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">elixhauser_delta</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"patid"</span>, <span class="st">"HTN_C"</span>, <span class="st">"num_cmrb"</span>, <span class="st">"cmrb_flag"</span>, <span class="st">"mortality_index"</span>, <span class="st">"readmission_index"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <ul>
 <li><p><code>HTN_C</code>: <em>any</em> hypertension - added to simplify
 the calculation of the mortality and readmission indices based on
@@ -1627,7 +1380,7 @@ index scores based on the AHRQ weights <span class="citation">(Healthcare Cost a
 <p>An addition feature of the medicalcoder package provides that the
 comorbidity package does not, is a summary method for the results, which
 can be used to build nice tables via <a href="https://CRAN.R-project.org/package=kableExtra" class="external-link">kableExtra</a>.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">medicalcoder_elixhauser_results</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"condition"</span>, <span class="st">"count"</span>, <span class="st">"percent"</span><span class="op">)</span><span class="op">]</span></span>
 <span></span>
 <span><span class="fu">kbl</span><span class="op">(</span></span>
@@ -2086,7 +1839,7 @@ WGHTLOSS
 <p>Here we check for consistency in the mappings between
 <em>medicalcoder</em> and <em>comorbidity</em> using all known ICD codes
 within <em>medicalcoder</em>.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">all_dx_codes</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span></span>
 <span>    x      <span class="op">=</span> <span class="fu">medicalcoder</span><span class="fu">::</span><span class="fu"><a href="../reference/get_icd_codes.html">get_icd_codes</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -2099,7 +1852,7 @@ within <em>medicalcoder</em>.</p>
 <div class="section level3">
 <h3 id="charlson">Charlson<a class="anchor" aria-label="anchor" href="#charlson"></a>
 </h3>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mdcr_results</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">medicalcoder</span><span class="fu">::</span><span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
 <span>    data <span class="op">=</span> <span class="va">all_dx_codes</span>,</span>
@@ -2152,7 +1905,7 @@ within <em>medicalcoder</em>.</p>
 <span><span class="co">## identical(charlson_delta[["canc"]], charlson_delta[["mal"]])</span></span>
 <span><span class="co">## [1] FALSE</span></span>
 <span><span class="co">## identical(charlson_delta[["metacanc"]], charlson_delta[["mst"]])</span></span>
-<span><span class="co">## [1] FALSE</span></span>
+<span><span class="co">## [1] TRUE</span></span>
 <span><span class="co">## identical(charlson_delta[["cevd"]], charlson_delta[["cebvd"]])</span></span>
 <span><span class="co">## [1] TRUE</span></span>
 <span><span class="co">## identical(charlson_delta[["cpd"]], charlson_delta[["copd"]])</span></span>
@@ -2224,7 +1977,7 @@ utilities. The implementation used by
 applied to the data and the omitted C4A is why the code is not flagged.
 <code><a href="../reference/comorbidities.html">medicalcoder::comorbidities()</a></code> builds a table with valid ICD
 codes to join against and has the C4A.x codes</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># comorbidity:::.maps$charlson_icd10_quan$canc</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"^C4"</span>, <span class="fu">comorbidity</span><span class="fu">:::</span><span class="va">.maps</span><span class="op">$</span><span class="va">charlson_icd10_quan</span><span class="op">$</span><span class="va">canc</span>, value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">## [1] "C40" "C41" "C43" "C45" "C46" "C47" "C48" "C49"</span></span>
@@ -2242,7 +1995,7 @@ codes to join against and has the C4A.x codes</p>
 <span><span class="co">## [29] "C4A.70"  "C4A.71"  "C4A.72"  "C4A.8"   "C4A.9"</span></span></code></pre></div>
 <p>The implementation of <code><a href="https://ellessenne.github.io/comorbidity/reference/comorbidity.html" class="external-link">comorbidity::comorbidity()</a></code> can
 result in false positives when invalid codes are submitted.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"pat1"</span>, code <span class="op">=</span> <span class="st">"C40-NOT-AN-ICD-CODE"</span><span class="op">)</span></span>
 <span><span class="fu">comorbidity</span><span class="fu">::</span><span class="fu"><a href="https://ellessenne.github.io/comorbidity/reference/comorbidity.html" class="external-link">comorbidity</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">df</span>, id <span class="op">=</span> <span class="st">"id"</span>, code <span class="op">=</span> <span class="st">"code"</span>, assign0 <span class="op">=</span> <span class="cn">TRUE</span>, map <span class="op">=</span> <span class="st">"charlson_icd10_quan"</span><span class="op">)</span></span>
 <span><span class="co">##     id mi chf pvd cevd dementia cpd rheumd pud mld diab diabwc hp rend canc</span></span>
@@ -2261,7 +2014,7 @@ result in false positives when invalid codes are submitted.</p>
 <div class="section level3">
 <h3 id="elixhauser">Elixhauser<a class="anchor" aria-label="anchor" href="#elixhauser"></a>
 </h3>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mdcr_results</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">medicalcoder</span><span class="fu">::</span><span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
 <span>    data <span class="op">=</span> <span class="va">all_dx_codes</span>,</span>
@@ -2292,13 +2045,11 @@ result in false positives when invalid codes are submitted.</p>
 <span></span>
 <span><span class="va">elixhauser_delta</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge</a></span><span class="op">(</span></span>
-<span>    x <span class="op">=</span> <span class="va">cmrb_results</span>,</span>
-<span>    y <span class="op">=</span> <span class="va">mdcr_results</span>,</span>
+<span>    x <span class="op">=</span> <span class="va">comorbidity_elixhauser_results</span>,</span>
+<span>    y <span class="op">=</span> <span class="va">medicalcoder_elixhauser_results</span>,</span>
 <span>    all <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    by <span class="op">=</span> <span class="st">"code_id"</span></span>
+<span>    by <span class="op">=</span> <span class="st">"patid"</span></span>
 <span>  <span class="op">)</span></span>
-<span></span>
-<span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/setDT.html" class="external-link">setDT</a></span><span class="op">(</span><span class="va">elixhauser_delta</span><span class="op">)</span></span>
 <span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">elixhauser_columns</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">elixhauser_columns</span><span class="op">[[</span><span class="st">"comorbidity"</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="va">i</span><span class="op">]</span></span>
@@ -2311,10 +2062,9 @@ result in false positives when invalid codes are submitted.</p>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
 <span>  <span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/eval.html" class="external-link">eval</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
-<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">r</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">elixhauser_delta</span><span class="op">[[</span><span class="va">x</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
-<span>    <span class="va">elixhauser_delta</span><span class="op">[[</span><span class="va">y</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
-<span>  <span class="op">}</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
+<span>  <span class="va">elixhauser_delta</span><span class="op">[[</span><span class="va">x</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span>  <span class="va">elixhauser_delta</span><span class="op">[[</span><span class="va">y</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
 <span><span class="op">}</span></span>
 <span><span class="co">## identical(elixhauser_delta[["aids"]], elixhauser_delta[["AIDS"]])</span></span>
 <span><span class="co">## [1] TRUE</span></span>
@@ -2378,18 +2128,6 @@ result in false positives when invalid codes are submitted.</p>
 <span><span class="co">## [1] TRUE</span></span>
 <span><span class="co">## identical(elixhauser_delta[["wloss"]], elixhauser_delta[["WGHTLOSS"]])</span></span>
 <span><span class="co">## [1] TRUE</span></span></code></pre></div>
-<p>The only differences between the resulting data sets are columns
-unique to medicalcoder.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">elixhauser_delta</span><span class="op">)</span></span>
-<span><span class="co">## Classes 'data.table' and 'data.frame':   125918 obs. of  6 variables:</span></span>
-<span><span class="co">##  $ code_id          : chr  "ICD-10 A00.0" "ICD-10 A00.1" "ICD-10 A00.9" "ICD-10 A01.0" ...</span></span>
-<span><span class="co">##  $ HTN_C            : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ num_cmrb         : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ cmrb_flag        : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ mortality_index  : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  $ readmission_index: int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
-<span><span class="co">##  - attr(*, ".internal.selfref")=&lt;pointer: 0x555b6e60fee0&gt;</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -2417,7 +2155,7 @@ work we make some copies of the input data and set the copies to be
 <code>data.tables</code>.</p>
 <details><summary>
 Code (click to toggle view/fold)
-</summary><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mdcrDT</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">mdcr</span><span class="op">)</span></span>
 <span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/setDT.html" class="external-link">setDT</a></span><span class="op">(</span><span class="va">mdcrDT</span><span class="op">)</span></span>
 <span><span class="va">mdcr_icd9dxDT</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">mdcr_icd9dx</span><span class="op">)</span></span>
@@ -2428,7 +2166,7 @@ Code (click to toggle view/fold)
 times.</p>
 <details><summary>
 Code (click to toggle view/fold)
-</summary><div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">medicalcoder_charlson_results</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">medicalcoder</span><span class="fu">::</span><span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
 <span>    data <span class="op">=</span> <span class="va">mdcr</span>,</span>
@@ -2544,7 +2282,7 @@ Code (click to toggle view/fold)
 execution time, in seconds, for each evaluation.</p>
 <details><summary>
 Code (click to toggle view/fold)
-</summary><div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">medicalcoder_times</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span>
 <span><span class="va">medicalcoder_times_DT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span>
 <span><span class="va">comorbidity_times</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span>
@@ -2619,22 +2357,22 @@ Max.
 medicalcoder_times_DT
 </td>
 <td style="text-align:right;">
-0.069
-</td>
-<td style="text-align:right;">
-0.084
-</td>
-<td style="text-align:right;">
-0.086
-</td>
-<td style="text-align:right;">
-0.089
-</td>
-<td style="text-align:right;">
 0.087
 </td>
 <td style="text-align:right;">
-0.136
+0.102
+</td>
+<td style="text-align:right;">
+0.103
+</td>
+<td style="text-align:right;">
+0.105
+</td>
+<td style="text-align:right;">
+0.104
+</td>
+<td style="text-align:right;">
+0.137
 </td>
 </tr>
 <tr>
@@ -2642,22 +2380,22 @@ medicalcoder_times_DT
 medicalcoder_times
 </td>
 <td style="text-align:right;">
-0.284
+0.350
 </td>
 <td style="text-align:right;">
-0.320
+0.378
 </td>
 <td style="text-align:right;">
-0.329
+0.380
 </td>
 <td style="text-align:right;">
-0.330
+0.379
 </td>
 <td style="text-align:right;">
-0.336
+0.383
 </td>
 <td style="text-align:right;">
-0.458
+0.392
 </td>
 </tr>
 <tr>
@@ -2665,22 +2403,22 @@ medicalcoder_times
 comorbidity_times_DT
 </td>
 <td style="text-align:right;">
-1.142
+1.587
 </td>
 <td style="text-align:right;">
-1.172
+1.620
 </td>
 <td style="text-align:right;">
-1.195
+1.652
 </td>
 <td style="text-align:right;">
-1.216
+1.662
 </td>
 <td style="text-align:right;">
-1.225
+1.704
 </td>
 <td style="text-align:right;">
-1.379
+1.777
 </td>
 </tr>
 <tr>
@@ -2688,22 +2426,22 @@ comorbidity_times_DT
 comorbidity_times
 </td>
 <td style="text-align:right;">
-1.128
+1.611
 </td>
 <td style="text-align:right;">
-1.164
+1.657
 </td>
 <td style="text-align:right;">
-1.174
+1.686
 </td>
 <td style="text-align:right;">
-1.184
+1.695
 </td>
 <td style="text-align:right;">
-1.190
+1.716
 </td>
 <td style="text-align:right;">
-1.363
+1.836
 </td>
 </tr>
 </tbody>
