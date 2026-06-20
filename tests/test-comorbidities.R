@@ -66,7 +66,7 @@ x <-
     comorbidities(
       data = mdcr2,
       icd.codes = "code",
-      poa.vars = c("condition"),
+      poa.var = "condition",
       method = "pccc_v3.1"
     )
   )
@@ -181,7 +181,7 @@ stopifnot(
 # comorbidities() so that we can capture these test with covr
 
 # Verify these methods are non-exported
-stopifnot(!("check_and_set_id_vars" %in% getNamespaceExports("medicalcoder")))
+stopifnot(isTRUE(!("check_and_set_id_vars" %in% getNamespaceExports("medicalcoder"))))
 
 # The following data frames are used to test check_and_set_id_vars.
 # `..medicalcoder_id..` is the initial name used in the check and set when
@@ -261,17 +261,17 @@ expected_names <-
     "cmrb_flag"
   )
 
-stopifnot(identical(names(OUT0), expected_names))
-stopifnot(identical(names(OUT1), expected_names))
-stopifnot(identical(names(OUT2), expected_names))
+stopifnot(identical(names(OUT0[["conditions"]]), expected_names))
+stopifnot(identical(names(OUT1[["conditions"]]), expected_names))
+stopifnot(identical(names(OUT2[["conditions"]]), expected_names))
 
 OUT0 <- comorbidities(data = DF0, id.vars = "pid", icd.codes = "code", method = "pccc_v3.0", poa = 1)
 OUT1 <- comorbidities(data = DF1, id.vars = "medicalcoder_id", icd.codes = "code", method = "pccc_v3.0", poa = 1)
 OUT2 <- comorbidities(data = DF2, id.vars = "..medicalcoder_id..", icd.codes = "code", method = "pccc_v3.0", poa = 1)
 
-stopifnot(identical(names(OUT0), c("pid", expected_names)))
-stopifnot(identical(names(OUT1), c("medicalcoder_id", expected_names)))
-stopifnot(identical(names(OUT2), c("..medicalcoder_id..", expected_names)))
+stopifnot(identical(names(OUT0[["conditions"]]), c("pid", expected_names)))
+stopifnot(identical(names(OUT1[["conditions"]]), c("medicalcoder_id", expected_names)))
+stopifnot(identical(names(OUT2[["conditions"]]), c("..medicalcoder_id..", expected_names)))
 
 ################################################################################
 # Check for "protected" names in id.vars.
@@ -392,7 +392,10 @@ out_no_error <-
       do.call(comorbidities, c(common_args, list(id.vars = NULL, age.var = "age")))
     )
   )
-stopifnot(inherits(out_no_error, "medicalcoder_comorbidities"), nrow(out_no_error) == 2L)
+stopifnot(
+  inherits(out_no_error, "medicalcoder_comorbidities"),
+  isTRUE(nrow(out_no_error[["conditions"]]) == 2L)
+)
 
 # if id.vars = NULL, or id.vars = "ptid", for the example, data, the return will
 # have three rows becuase the ages are distinct.  This should give a warning
@@ -406,8 +409,8 @@ out1_warning <-
   )
 stopifnot(inherits(out0_warning, "warning"), inherits(out1_warning, "warning"))
 stopifnot(
-  out0_warning$message == "There is more than one unique value for age.  Since `id.vars = NULL` the expectation is there would be one unique age value.  The return will have more than one row, one for each unique age.",
-  out1_warning$message == "There is at least one set of id.vars with more than one age value.  The expectation is that there is only one age value for each unique set of id.vars.  The return will have more than one row for each unique set of id.vars."
+  isTRUE(out0_warning$message == "There is more than one unique value for age.  Since `id.vars = NULL` the expectation is there would be one unique age value.  The return will have more than one row, one for each unique age."),
+  isTRUE(out1_warning$message == "There is at least one set of id.vars with more than one age value.  The expectation is that there is only one age value for each unique set of id.vars.  The return will have more than one row for each unique set of id.vars.")
 )
 
 out0 <-
@@ -419,8 +422,8 @@ out1 <-
     do.call(comorbidities, c(common_args, list(id.vars = "pid", age.var = "age")))
   )
 stopifnot(
-  inherits(out0, "medicalcoder_comorbidities"), nrow(out0) == 2L,
-  inherits(out1, "medicalcoder_comorbidities"), nrow(out1) == 3L
+  inherits(out0, "medicalcoder_comorbidities"), isTRUE(nrow(out0[["conditions"]]) == 2L),
+  inherits(out1, "medicalcoder_comorbidities"), isTRUE(nrow(out1[["conditions"]]) == 3L)
 )
 
 ################################################################################
