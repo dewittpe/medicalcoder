@@ -27,11 +27,12 @@ explicit_poa <- comorbidities(
   poa         = 1L,
   primarydx   = 0L
 )
+explicit_poa <- explicit_poa[["conditions"]]
 
-stopifnot(any(explicit_poa[["cmrb_flag"]]))
+stopifnot(isTRUE(any(explicit_poa[["cmrb_flag"]])))
 stopifnot(
-  explicit_poa$cmrb_flag[explicit_poa$enc == 1L] == 1L,
-  explicit_poa$cmrb_flag[explicit_poa$enc == 2L] == 1L
+  isTRUE(explicit_poa$cmrb_flag[explicit_poa$enc == 1L] == 1L),
+  isTRUE(explicit_poa$cmrb_flag[explicit_poa$enc == 2L] == 1L)
 )
 
 # Without specifying poa/poa.var, encounter 1 should remain unflagged and
@@ -46,8 +47,9 @@ default_poa <- comorbidities(
   flag.method = "cumulative",
   primarydx   = 0L
 )
+default_poa <- default_poa[["conditions"]]
 
 stopifnot(
-  default_poa$cmrb_flag[default_poa$enc == 1L] == 0L,
-  default_poa$cmrb_flag[default_poa$enc == 2L] == 1L
+  isTRUE(default_poa$cmrb_flag[default_poa$enc == 1L] == 0L),
+  isTRUE(default_poa$cmrb_flag[default_poa$enc == 2L] == 1L)
 )
