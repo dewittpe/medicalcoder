@@ -71,42 +71,38 @@
 #' when codes come from an ICD modification that may not be completely covered
 #' by the precomputed code-condition links, or when auditing a method.
 #'
-#' @return The structure of the return object has been drastically changed in
-#' v0.9.0.  This change was needed to unify the structure and make it consistent
-#' regardless of the inputs to `comorbidities`.  Prior to v0.9.0 there were two
-#' possible strucutes and with the addition of `export_inferred_conditions` that
-#' would have bencome four possible structures.  We now return one structure in
-#' all cases.  
+#' @return An object of class `medicalcoder_comorbidities`. The object is always
+#' a named list with four elements, regardless of the selected method or
+#' optional outputs:
 #'
-#' The return is an object of class `medicalcoder_comorbidities` and is a list
-#' type object with the following elements:
+#' * `conditions`: A table with one row per unique set of `id.vars`, condition
+#'   indicator columns, `num_cmrb` (the number of flagged conditions), and
+#'   `cmrb_flag` (an integer indicator for at least one flagged condition). When
+#'   possible, this table retains the storage class of `data`: `data.frame`,
+#'   `tbl_df`, or `data.table`.
+#' * `subconditions`: When `subconditions = TRUE`, a named list of PCCC
+#'   subcondition indicator tables. Each table contains the applicable
+#'   `id.vars` and one column per subcondition. Otherwise, `NULL`.
+#' * `inferred_conditions`: When `export_inferred_conditions = TRUE` and
+#'   `flag.method = "cumulative"`, a table containing `id.vars`, `condition`,
+#'   reported and inferred POA status, reported and inferred primary-diagnosis
+#'   status when applicable, and `occurrence`. The occurrence number identifies
+#'   successive reports of a condition and helps distinguish a condition
+#'   reported during an encounter from one carried forward from an earlier
+#'   encounter. Otherwise, `NULL`.
+#' * `metadata`: A named list containing `method`, `id.vars`, `flag.method`, and
+#'   `mapping`.
 #'
-#' * "conditions" - a `data.frame`
-#' * "subconditions" - if `subconditions = TRUE`, a named list of `data.frame`s
-#'   with indicators for subconditions within each condition.  If `subconditions
-#'   = FALSE` then this element is `NULL`
-#' * "inferred_conditions" - if `export_inferred_conditions = TRUE` and
-#'   `flag.method = "cumulative"` then a `data.frame`, otherwise `NULL`.  This
-#'   `data.frame` has columns for the `id.vars`, the condition, the reported and
-#'   inferred POA and primarydx status, and the column `occurrence` indexes when
-#'   the condition has been reported allowing end users to infer when the
-#'   condition on a given encounter is due to being reported on that encounter
-#'   or is the result of carry-forward logic.
-#' * "metadata" - a named list with the value of a subset of the arguments
-#'   passed to `comorbidities()`
-#' 
-#' All the `data.frames` have common columns for the `id.vars`, `num_cmrb` a
-#' count of comorbidities/conditions flagged `cmrb_flag` a 0/1 integer indicator
-#' for at least one comorbidity/condition.
+#' Access the primary result table with `result[["conditions"]]`. These values
+#' are list elements rather than attributes of the result object.
 #'
-#' Additional columns:
+#' The condition columns depend on `method`:
 #'
-#' * PCCC methods:
 #' * For `method = "pccc_v2.0"` and `method = "pccc_v2.1"`, there is one
-#'   indicator column per condition.
+#'   indicator column per PCCC condition.
 #'
-#'   * For `method = "pccc_v3.0"` and `method = "pccc_v3.1"`, there are four
-#'     columns per condition:
+#' * For `method = "pccc_v3.0"` and `method = "pccc_v3.1"`, there are four
+#'   columns per PCCC condition:
 #'     * `<condition>_dxpr_or_tech`: the condition was flagged due to the
 #'        presence of either a diagnostic or procedure code, or was flagged due
 #'        to the presence of a technology dependence code along with at least
@@ -119,11 +115,11 @@
 #'     * `<condition>_dxpr_and_tech`: The patient had both diagnostic or
 #'       procedure codes and a technology dependence code for the condition.
 #'
-#' * For Charlson variants, indicator columns are returned for the relevant
+#' * For Charlson methods, indicator columns are returned for the relevant
 #'   conditions, `cci` (Charlson Comorbidity Index), and `age_score`.
 #'
-#' * For Elixhauser variants, indicator columns are returned for all relevant
-#'   comorbidities, mortality, and readmission indices.
+#' * For Elixhauser methods, indicator columns are returned for all relevant
+#'   conditions, along with `mortality_index` and `readmission_index`.
 #'
 #' @references
 #'

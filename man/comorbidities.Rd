@@ -104,7 +104,8 @@ group A, as the cause of disease classified elsewhere,” whereas \code{B950}
 is the associated compact code.}
 
 \item{subconditions}{Logical scalar; when \code{TRUE}, report both conditions and
-subconditions (PCCC only).}
+subconditions (PCCC only). Subcondition tables are returned in the
+\code{subconditions} element of the result.}
 
 \item{mapping}{Character string specifying how \code{data[[icd.codes]]} should be
 mapped to comorbidity conditions. \code{mapping = "precomputed"} uses the
@@ -113,46 +114,43 @@ default. \code{mapping = "regex"} applies the method's regular expressions
 directly to the input ICD codes. See Details.}
 
 \item{export_inferred_conditions}{Logical scalar; when \code{TRUE} and
-\code{flag.method = "cumulative"} a data.frame with the inferred conditions by
-\code{id.vars} is included in the return.}
+\code{flag.method = "cumulative"}, include a table describing reported and
+carried-forward conditions in the \code{inferred_conditions} element of the
+result. For other flagging methods, \code{inferred_conditions} is \code{NULL}.}
 }
 \value{
-The structure of the return object has been drastically changed in
-v0.9.0.  This change was needed to unify the structure and make it consistent
-regardless of the inputs to \code{comorbidities}.  Prior to v0.9.0 there were two
-possible strucutes and with the addition of \code{export_inferred_conditions} that
-would have bencome four possible structures.  We now return one structure in
-all cases.
-
-The return is an object of class \code{medicalcoder_comorbidities} and is a list
-type object with the following elements:
+An object of class \code{medicalcoder_comorbidities}. The object is always
+a named list with four elements, regardless of the selected method or
+optional outputs:
 \itemize{
-\item "conditions" - a \code{data.frame}
-\item "subconditions" - if \code{subconditions = TRUE}, a named list of \code{data.frame}s
-with indicators for subconditions within each condition.  If \code{subconditions = FALSE} then this element is \code{NULL}
-\item "inferred_conditions" - if \code{export_inferred_conditions = TRUE} and
-\code{flag.method = "cumulative"} then a \code{data.frame}, otherwise \code{NULL}.  This
-\code{data.frame} has columns for the \code{id.vars}, the condition, the reported and
-inferred POA and primarydx status, and the column \code{occurrence} indexes when
-the condition has been reported allowing end users to infer when the
-condition on a given encounter is due to being reported on that encounter
-or is the result of carry-forward logic.
-\item "metadata" - a named list with the value of a subset of the arguments
-passed to \code{comorbidities()}
+\item \code{conditions}: A table with one row per unique set of \code{id.vars}, condition
+indicator columns, \code{num_cmrb} (the number of flagged conditions), and
+\code{cmrb_flag} (an integer indicator for at least one flagged condition). When
+possible, this table retains the storage class of \code{data}: \code{data.frame},
+\code{tbl_df}, or \code{data.table}.
+\item \code{subconditions}: When \code{subconditions = TRUE}, a named list of PCCC
+subcondition indicator tables. Each table contains the applicable
+\code{id.vars} and one column per subcondition. Otherwise, \code{NULL}.
+\item \code{inferred_conditions}: When \code{export_inferred_conditions = TRUE} and
+\code{flag.method = "cumulative"}, a table containing \code{id.vars}, \code{condition},
+reported and inferred POA status, reported and inferred primary-diagnosis
+status when applicable, and \code{occurrence}. The occurrence number identifies
+successive reports of a condition and helps distinguish a condition
+reported during an encounter from one carried forward from an earlier
+encounter. Otherwise, \code{NULL}.
+\item \code{metadata}: A named list containing \code{method}, \code{id.vars}, \code{flag.method}, and
+\code{mapping}.
 }
 
-All the \code{data.frames} have common columns for the \code{id.vars}, \code{num_cmrb} a
-count of comorbidities/conditions flagged \code{cmrb_flag} a 0/1 integer indicator
-for at least one comorbidity/condition.
+Access the primary result table with \code{result[["conditions"]]}. These values
+are list elements rather than attributes of the result object.
 
-Additional columns:
+The condition columns depend on \code{method}:
 \itemize{
-\item PCCC methods:
 \item For \code{method = "pccc_v2.0"} and \code{method = "pccc_v2.1"}, there is one
-indicator column per condition.
-\itemize{
+indicator column per PCCC condition.
 \item For \code{method = "pccc_v3.0"} and \code{method = "pccc_v3.1"}, there are four
-columns per condition:
+columns per PCCC condition:
 \itemize{
 \item \verb{<condition>_dxpr_or_tech}: the condition was flagged due to the
 presence of either a diagnostic or procedure code, or was flagged due
@@ -166,11 +164,10 @@ was flagged by a non-technology dependent code.
 \item \verb{<condition>_dxpr_and_tech}: The patient had both diagnostic or
 procedure codes and a technology dependence code for the condition.
 }
-}
-\item For Charlson variants, indicator columns are returned for the relevant
+\item For Charlson methods, indicator columns are returned for the relevant
 conditions, \code{cci} (Charlson Comorbidity Index), and \code{age_score}.
-\item For Elixhauser variants, indicator columns are returned for all relevant
-comorbidities, mortality, and readmission indices.
+\item For Elixhauser methods, indicator columns are returned for all relevant
+conditions, along with \code{mortality_index} and \code{readmission_index}.
 }
 }
 \description{
@@ -284,7 +281,7 @@ elixhauser_results <-
                 id.vars = "patid",
                 dx.var = "dx",
                 method = "elixhauser_ahrq2025",
-                primarydx = 1,
+                primarydx = 0,
                 flag.method = 'current',
                 poa = 1)
 summary(elixhauser_results)

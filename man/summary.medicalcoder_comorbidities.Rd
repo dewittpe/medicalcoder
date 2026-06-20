@@ -13,23 +13,29 @@
 \item{...}{additional parameters, not currently used}
 }
 \value{
-The return will vary based on the \code{method} and \code{subconditions} of the
-object to summarize.
+The return value depends on the comorbidity method and whether the
+object contains PCCC subconditions:
 \itemize{
-\item \code{subconditions = FALSE}
+\item PCCC without subconditions returns a \code{data.frame}. Version 2 methods report
+\code{condition}, \code{label}, \code{count}, and \code{percent}. Version 3 methods report
+counts and percentages separately for \code{dxpr_or_tech}, \code{dxpr_only},
+\code{tech_only}, and \code{dxpr_and_tech}.
+\item Charlson returns a named list containing \code{conditions}, \code{age_summary}, and
+\code{index_summary} data frames.
+\item Elixhauser returns a named list containing \code{conditions} and \code{index_summary}
+data frames.
+\item PCCC with subconditions returns a \code{data.frame} with five columns:
 \itemize{
-\item Charlson methods: a list of several summaries
-*
-\item Elixhauser methods: a list of several summaries
-*
-\item PCCC methods: a \code{data.frame}
-\enumerate{
-\item \code{condition} the primary condition
-\item \code{subcondition} the subcondition(s) within the \code{condition}.  There will be a row where \code{subcondition} is \code{NA} which is used to report the \code{count} and \code{percent_of_cohort} for the \code{condition} overall.
-\item \code{count} the number of rows in \code{object} with the applicable \code{condition} and \code{subcondition}.
-\item \code{percent_of_cohort}: a numeric value within [0, 100] for the percent of rows in \code{object} with the flagged \code{condition} and \code{subcondition}.
-\item \code{percent_of_those_with_condition}: a numeric value within [0, 100] for the subset of rows in \code{object} with the primary \code{condition} and the flagged \code{subcondition}.  Will be \code{NA} for the primary \code{condition}.
-}
+\item \code{condition}: the primary PCCC condition.
+\item \code{subcondition}: the subcondition. A row with \code{NA} reports the overall
+condition.
+\item \code{count}: the number of rows in \code{object[["conditions"]]} with the
+condition or subcondition.
+\item \code{percent_of_cohort}: the percentage of rows with the condition or
+subcondition.
+\item \code{percent_of_those_with_condition}: the percentage of rows with the
+primary condition that also have the subcondition. This is \code{NA} for the
+overall condition row.
 }
 }
 }

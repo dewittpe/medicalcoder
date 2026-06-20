@@ -39,7 +39,7 @@ elixhauser_results <-
                 id.vars = "patid",
                 dx.var = "dx",
                 method = "elixhauser_ahrq2025",
-                primarydx = 1,
+                primarydx = 0,
                 flag.method = 'current',
                 poa = 1)
 summary(elixhauser_results)

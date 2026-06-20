@@ -75,7 +75,8 @@
 #'   apply to `data`.
 #'
 #' @param subconditions Logical scalar; when `TRUE`, report both conditions and
-#'   subconditions (PCCC only).
+#'   subconditions (PCCC only). Subcondition tables are returned in the
+#'   `subconditions` element of the result.
 #'
 #' @param mapping Character string specifying how `data[[icd.codes]]` should be
 #'   mapped to comorbidity conditions. `mapping = "precomputed"` uses the
@@ -84,5 +85,6 @@
 #'   directly to the input ICD codes. See Details.
 #'
 #' @param export_inferred_conditions Logical scalar; when `TRUE` and
-#' `flag.method = "cumulative"` a data.frame with the inferred conditions by
-#' `id.vars` is included in the return.
+#'   `flag.method = "cumulative"`, include a table describing reported and
+#'   carried-forward conditions in the `inferred_conditions` element of the
+#'   result. For other flagging methods, `inferred_conditions` is `NULL`.

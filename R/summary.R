@@ -40,30 +40,28 @@
 #'                 poa = 1)
 #' summary(elixhauser_results)
 #'
-#' @return The return will vary based on the `method` and `subconditions` of the
-#' object to summarize.
+#' @return The return value depends on the comorbidity method and whether the
+#' object contains PCCC subconditions:
 #'
-#' * `subconditions = FALSE`
-#'   * Charlson methods: a list of several summaries
-#'     *
-#'
-#'   * Elixhauser methods: a list of several summaries
-#'     *
-#'
-#'   * PCCC methods: a `data.frame`
-#
-#  * `subconditions = TRUE`
-#    * This is only applicable to PCCC.  The return is a `data.frame` with five columns.
-#'
-#'      1. `condition` the primary condition
-#'
-#'      2. `subcondition` the subcondition(s) within the `condition`.  There will be a row where `subcondition` is `NA` which is used to report the `count` and `percent_of_cohort` for the `condition` overall.
-#'
-#'      3. `count` the number of rows in `object` with the applicable `condition` and `subcondition`.
-#'
-#'      4. `percent_of_cohort`: a numeric value within \[0, 100\] for the percent of rows in `object` with the flagged `condition` and `subcondition`.
-#'
-#'      5. `percent_of_those_with_condition`: a numeric value within \[0, 100\] for the subset of rows in `object` with the primary `condition` and the flagged `subcondition`.  Will be `NA` for the primary `condition`.
+#' * PCCC without subconditions returns a `data.frame`. Version 2 methods report
+#'   `condition`, `label`, `count`, and `percent`. Version 3 methods report
+#'   counts and percentages separately for `dxpr_or_tech`, `dxpr_only`,
+#'   `tech_only`, and `dxpr_and_tech`.
+#' * Charlson returns a named list containing `conditions`, `age_summary`, and
+#'   `index_summary` data frames.
+#' * Elixhauser returns a named list containing `conditions` and `index_summary`
+#'   data frames.
+#' * PCCC with subconditions returns a `data.frame` with five columns:
+#'   * `condition`: the primary PCCC condition.
+#'   * `subcondition`: the subcondition. A row with `NA` reports the overall
+#'     condition.
+#'   * `count`: the number of rows in `object[["conditions"]]` with the
+#'     condition or subcondition.
+#'   * `percent_of_cohort`: the percentage of rows with the condition or
+#'     subcondition.
+#'   * `percent_of_those_with_condition`: the percentage of rows with the
+#'     primary condition that also have the subcondition. This is `NA` for the
+#'     overall condition row.
 #'
 #' @export
 summary.medicalcoder_comorbidities <- function(object, ...) {
