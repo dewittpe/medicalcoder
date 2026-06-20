@@ -175,7 +175,7 @@ e <- expression({
       tics[[x]] <- Sys.time()
       assign(
         x = thism,
-        value = do.call(comorbidities, c(commonargs, list(method = thism, mapping = mapping))),
+        value = do.call(comorbidities, c(commonargs, list(method = thism, mapping = mapping)))[["conditions"]],
         envir = if(mapping == "precomputed") p else r
       )
       tocs[[x]] <- Sys.time()
@@ -186,7 +186,7 @@ e <- expression({
 
 eval(e)
 DFclock <- Map(difftime, time1 = tocs, time2 = tics)
-stopifnot(all.equal(p, r))
+stopifnot(isTRUE(all.equal(p, r)))
 
 #d <-
 #  merge(
@@ -222,14 +222,14 @@ if (requireNamespace("dplyr", quietly = TRUE)) {
   mdcr <- getExportedValue(name = "as_tibble", ns = "dplyr")(mdcr)
   eval(e)
   TBLclock <- Map(difftime, time1 = tocs, time2 = tics)
-  stopifnot(all.equal(p, r))
+  stopifnot(isTRUE(all.equal(p, r)))
 }
 
 if (requireNamespace("data.table", quietly = TRUE)) {
   mdcr <- getExportedValue(name = "as.data.table", ns = "data.table")(mdcr)
   eval(e)
   DTclock <- Map(difftime, time1 = tocs, time2 = tics)
-  stopifnot(all.equal(p, r))
+  stopifnot(isTRUE(all.equal(p, r)))
 }
 
 ################################################################################
