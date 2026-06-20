@@ -18,20 +18,20 @@ library(medicalcoder)
 ###   if (n <= 2) {
 ###     x <-
 ###       intersect(
-###         intersect(which(c1$num_cmrb == n), which(c2$num_cmrb == n)),
-###         intersect(which(c1$num_cmrb == n), which(c3$num_cmrb == n))
+###         intersect(which(c1[["conditions"]]$num_cmrb == n), which(c2[["conditions"]]$num_cmrb == n)),
+###         intersect(which(c1[["conditions"]]$num_cmrb == n), which(c3[["conditions"]]$num_cmrb == n))
 ###       )
 ###   } else {
 ###     x <-
 ###       intersect(
-###         intersect(which(c1$num_cmrb >= n), which(c2$num_cmrb >= n)),
-###         intersect(which(c1$num_cmrb >= n), which(c3$num_cmrb >= n))
+###         intersect(which(c1[["conditions"]]$num_cmrb >= n), which(c2[["conditions"]]$num_cmrb >= n)),
+###         intersect(which(c1[["conditions"]]$num_cmrb >= n), which(c3[["conditions"]]$num_cmrb >= n))
 ###       )
 ###   }
 ###   sample(x, size = min(c(size, length(x))))
 ### }
 ###
-### x <- mdcr[mdcr$patid %in% c1[c(foo(0), foo(1), foo(2), foo(3), foo(4)), "patid"], ]
+### x <- mdcr[mdcr$patid %in% c1[["conditions"]][c(foo(0), foo(1), foo(2), foo(3), foo(4)), "patid"], ]
 ###
 ### saveRDS(x, file = "mdcr_subset_DF.rds", compress = "xz")
 ### saveRDS(dplyr::as_tibble(x), file = "mdcr_subset_TBL.rds", compress = "xz")
@@ -86,23 +86,12 @@ stopifnot(
   identical(sort(ls(envir = DFS, all.names = TRUE)), sort(ls(envir = TBLS, all.names = TRUE)))
 )
 
-# All objects should be medicalcoder_comorbidities objects
-# only those with the _with_subconditions suffix should be
-# medicalcoder_comorbidities_with_subconditions objects
 for (obj in ls(envir = DFS, all.names = TRUE)) {
-  xDF  <- DFS[[obj]]
-  xDT  <- DTS[[obj]]
-  xTBL <- TBLS[[obj]]
-
-  stopifnot(inherits(xDF,  "medicalcoder_comorbidities"))
-  stopifnot(inherits(xDT,  "medicalcoder_comorbidities"))
-  stopifnot(inherits(xTBL, "medicalcoder_comorbidities"))
-
-  sbcnd <- endsWith(obj, "_with_subconditions")
-
-  stopifnot(identical(sbcnd, inherits(get(x = obj, envir = DFS),  "medicalcoder_comorbidities_with_subconditions")))
-  stopifnot(identical(sbcnd, inherits(get(x = obj, envir = DTS),  "medicalcoder_comorbidities_with_subconditions")))
-  stopifnot(identical(sbcnd, inherits(get(x = obj, envir = TBLS), "medicalcoder_comorbidities_with_subconditions")))
+  stopifnot(
+    inherits(DFS[[obj]], "medicalcoder_comorbidities"),
+    inherits(DTS[[obj]], "medicalcoder_comorbidities"),
+    inherits(TBLS[[obj]], "medicalcoder_comorbidities")
+  )
 }
 
 # All the results should be identical save the attributes (class).
@@ -110,23 +99,23 @@ for (obj in ls(envir = DFS, all.names = TRUE)) {
   xDF  <- DFS[[obj]]
   xTBL <- TBLS[[obj]]
   xDT  <- DTS[[obj]]
-  stopifnot(all.equal(xDF, xTBL, check.attributes = FALSE))
-  stopifnot(all.equal(xDF, xDT, check.attributes = FALSE))
+  stopifnot(isTRUE(all.equal(xDF, xTBL, check.attributes = FALSE)))
+  stopifnot(isTRUE(all.equal(xDF, xDT, check.attributes = FALSE)))
 }
 
 # check that the print method returns the input object
 for (obj in ls(envir = DFS, all.names = TRUE)) {
-  x <- print(DFS[[obj]])
+  capture.output(x <- print(DFS[[obj]]))
   z <- identical(x, DFS[[obj]])
   if (!z) {
     stop(sprintf("print(DFS[['%s']]) does not return identical %s", obj, obj))
   }
-  x <- print(TBLS[[obj]])
+  capture.output(x <- print(TBLS[[obj]]))
   z <- identical(x, TBLS[[obj]])
   if (!z) {
     stop(sprintf("print(TBLS[['%s']]) does not return identical %s", obj, obj))
   }
-  x <- print(DTS[[obj]])
+  capture.output(x <- print(DTS[[obj]]))
   z <- identical(x, DTS[[obj]])
   if (!z) {
     stop(sprintf("print(DTS[['%s']]) does not return identical %s", obj, obj))
@@ -143,17 +132,13 @@ if (requireNamespace("data.table", quietly = TRUE)) {
   stopifnot(is.data.frame(mdcrDT))
   stopifnot(data.table::is.data.table(mdcrDT))
   for (obj in ls(envir = DTS, all.names = TRUE)) {
-    if (grepl("_with_subconditions", obj)) {
-      stopifnot(data.table::is.data.table(DTS[[obj]][["conditions"]]))
-      data.table::setDF(DTS[[obj]][["conditions"]])
+    stopifnot(data.table::is.data.table(DTS[[obj]][["conditions"]]))
+    data.table::setDF(DTS[[obj]][["conditions"]])
+    if (!is.null(DTS[[obj]][["subconditions"]])) {
       for (sc in names(DTS[[obj]][["subconditions"]])) {
         stopifnot(data.table::is.data.table(DTS[[obj]][["subconditions"]][[sc]]))
         data.table::setDF(DTS[[obj]][["subconditions"]][[sc]])
       }
-    } else {
-      stopifnot(data.table::is.data.table(DTS[[obj]]))
-      data.table::setDF(DTS[[obj]])
-      class(DTS[[obj]]) <- c("medicalcoder_comorbidities", class(DTS[[obj]]))
     }
   }
 }
@@ -177,17 +162,13 @@ if (requireNamespace("dplyr", quietly = TRUE)) {
   stopifnot(is.data.frame(mdcrTBL))
   stopifnot(inherits(mdcrTBL, "tbl_df"))
   for (obj in ls(envir = TBLS, all.names = TRUE)) {
-    if (grepl("_with_subconditions", obj)) {
-      stopifnot(inherits(TBLS[[obj]][["conditions"]], "tbl_df"))
-      TBLS[[obj]][["conditions"]] <- as.data.frame(TBLS[[obj]][["conditions"]])
+    stopifnot(inherits(TBLS[[obj]][["conditions"]], "tbl_df"))
+    TBLS[[obj]][["conditions"]] <- as.data.frame(TBLS[[obj]][["conditions"]])
+    if (!is.null(TBLS[[obj]][["subconditions"]])) {
       for (sc in names(TBLS[[obj]][["subconditions"]])) {
         stopifnot(inherits(TBLS[[obj]][["subconditions"]][[sc]], "tbl_df"))
         TBLS[[obj]][["subconditions"]][[sc]] <- as.data.frame(TBLS[[obj]][["subconditions"]][[sc]])
       }
-    } else {
-      stopifnot(inherits(TBLS[[obj]], "tbl_df"))
-      TBLS[[obj]] <- as.data.frame(TBLS[[obj]])
-      class(TBLS[[obj]]) <- c("medicalcoder_comorbidities", class(TBLS[[obj]]))
     }
   }
 }
