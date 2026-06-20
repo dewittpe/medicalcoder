@@ -34,12 +34,12 @@ stopifnot(
   is.numeric(summary_current[["count"]]),
   is.numeric(summary_current[["percent_of_cohort"]]),
   is.numeric(summary_current[["percent_of_those_with_condition"]]),
-  all(summary_current[["count"]] >= 0),
-  all(summary_current[["percent_of_cohort"]] >= 0),
-  all(summary_current[["percent_of_cohort"]] <= 100),
-  all(is.na(summary_current[["percent_of_those_with_condition"]][is.na(summary_current[["subcondition"]])])),
-  all(summary_current[["percent_of_those_with_condition"]][!is.na(summary_current[["subcondition"]]) & summary_current[["count"]] > 0] >= 0),
-  all(summary_current[["percent_of_those_with_condition"]][!is.na(summary_current[["subcondition"]]) & summary_current[["count"]] > 0] <= 100)
+  isTRUE(all(summary_current[["count"]] >= 0)),
+  isTRUE(all(summary_current[["percent_of_cohort"]] >= 0)),
+  isTRUE(all(summary_current[["percent_of_cohort"]] <= 100)),
+  isTRUE(all(is.na(summary_current[["percent_of_those_with_condition"]][is.na(summary_current[["subcondition"]])]))),
+  isTRUE(all(summary_current[["percent_of_those_with_condition"]][!is.na(summary_current[["subcondition"]]) & summary_current[["count"]] > 0] >= 0)),
+  isTRUE(all(summary_current[["percent_of_those_with_condition"]][!is.na(summary_current[["subcondition"]]) & summary_current[["count"]] > 0] <= 100))
 )
 
 ################################################################################
@@ -53,8 +53,8 @@ cvd_row <- summary_current[
 ]
 
 stopifnot(
-  nrow(cvd_row) == 1L,
-  cvd_row[["count"]] == cvd_total,
+  isTRUE(nrow(cvd_row) == 1L),
+  isTRUE(cvd_row[["count"]] == cvd_total),
   isTRUE(all.equal(cvd_row[["percent_of_cohort"]], 100 * cvd_total / N)),
   is.na(cvd_row[["percent_of_those_with_condition"]])
 )
@@ -66,8 +66,8 @@ resp_row <- summary_current[
 ]
 
 stopifnot(
-  nrow(resp_row) == 1L,
-  resp_row[["count"]] == resp_total,
+  isTRUE(nrow(resp_row) == 1L),
+  isTRUE(resp_row[["count"]] == resp_total),
   isTRUE(all.equal(resp_row[["percent_of_cohort"]], 100 * resp_total / N)),
   is.na(resp_row[["percent_of_those_with_condition"]])
 )
@@ -84,8 +84,8 @@ cvd_hgvm_idx <- which(
 cvd_hgvm_row <- summary_current[cvd_hgvm_idx, , drop = FALSE]
 
 stopifnot(
-  nrow(cvd_hgvm_row) == 1L,
-  cvd_hgvm_row[["count"]] == cvd_hgvm,
+  isTRUE(nrow(cvd_hgvm_row) == 1L),
+  isTRUE(cvd_hgvm_row[["count"]] == cvd_hgvm),
   isTRUE(all.equal(cvd_hgvm_row[["percent_of_cohort"]], 100 * cvd_hgvm / N)),
   isTRUE(all.equal(cvd_hgvm_row[["percent_of_those_with_condition"]], 100 * cvd_hgvm / cvd_total))
 )
@@ -100,8 +100,8 @@ resp_cf_idx <- which(
 resp_cf_row <- summary_current[resp_cf_idx, , drop = FALSE]
 
 stopifnot(
-  nrow(resp_cf_row) == 1L,
-  resp_cf_row[["count"]] == resp_cystic_fibrosis,
+  isTRUE(nrow(resp_cf_row) == 1L),
+  isTRUE(resp_cf_row[["count"]] == resp_cystic_fibrosis),
   isTRUE(all.equal(resp_cf_row[["percent_of_cohort"]], 100 * resp_cystic_fibrosis / N)),
   isTRUE(all.equal(resp_cf_row[["percent_of_those_with_condition"]], 100 * resp_cystic_fibrosis / resp_total))
 )
@@ -109,7 +109,7 @@ stopifnot(
 ################################################################################
 # A non-current flag.method emits a warning but returns the same summary
 pccc_sub_cumulative <- pccc_sub
-attr(pccc_sub_cumulative, "flag.method") <- "cumulative"
+pccc_sub_cumulative[["metadata"]][["flag.method"]] <- "cumulative"
 
 warn_obj <- tryCatchWarning(summary(pccc_sub_cumulative))
 
@@ -151,11 +151,11 @@ summary_empty <- summary(pccc_empty)
 
 stopifnot(
   inherits(summary_empty, "data.frame"),
-  all(summary_empty$count == 0),
-  all(summary_empty$percent_of_cohort == 0),
-  !any(is.nan(summary_empty$percent_of_cohort)),
-  all(is.na(summary_empty$percent_of_those_with_condition) | summary_empty$percent_of_those_with_condition == 0),
-  !any(is.nan(summary_empty$percent_of_those_with_condition))
+  isTRUE(all(summary_empty$count == 0)),
+  isTRUE(all(summary_empty$percent_of_cohort == 0)),
+  isTRUE(!any(is.nan(summary_empty$percent_of_cohort))),
+  isTRUE(all(is.na(summary_empty$percent_of_those_with_condition) | summary_empty$percent_of_those_with_condition == 0)),
+  isTRUE(!any(is.nan(summary_empty$percent_of_those_with_condition)))
 )
 
 ################################################################################
