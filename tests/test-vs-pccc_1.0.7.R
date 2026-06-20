@@ -60,7 +60,7 @@ icd_codes[["code_id"]] <- seq_len(nrow(icd_codes))
 oldpccc <- readRDS(file = "results_pccc_1.0.7.rds")
 
 newpccc <-
-  medicalcoder::comorbidities(
+  comorbidities(
       data = icd_codes
     , icd.codes = "full_code"
     , id.vars = "code_id"
@@ -77,7 +77,7 @@ newpccc <-
     , full.codes = TRUE
     , compact.codes = TRUE
     , method = "pccc_v2.0"
-  )
+  )[["conditions"]]
 
 old_vs_mdcr <-
   merge(
@@ -95,8 +95,8 @@ old_vs_mdcr <-
     by = "code_id"
   )
 
-stopifnot(!any(is.na(old_vs_mdcr)))
-stopifnot(nrow(old_vs_mdcr) == nrow(icd_codes))
+stopifnot(isTRUE(!any(is.na(old_vs_mdcr))))
+stopifnot(isTRUE(nrow(old_vs_mdcr) == nrow(icd_codes)))
 
 # expect no difference in the following conditions:
 #   cvd
@@ -110,21 +110,21 @@ stopifnot(nrow(old_vs_mdcr) == nrow(icd_codes))
 #   malignancy
 #   neonatal
 stopifnot(
-  with(old_vs_mdcr, all(cvd_old == cvd_mdcr)),
-  with(old_vs_mdcr, all(neuromusc_old == neuromusc_mdcr)),
-  with(old_vs_mdcr, all(respiratory_old == respiratory_mdcr)),
-  with(old_vs_mdcr, all(renal_old == renal_mdcr)),
-  with(old_vs_mdcr, all(gi_old == gi_mdcr)),
-  with(old_vs_mdcr, all(hemato_immu_old == hemato_immu_mdcr)),
-  with(old_vs_mdcr, all(metabolic_old == metabolic_mdcr)),
-  with(old_vs_mdcr, all(congeni_genetic_old == congeni_genetic_mdcr)),
-  with(old_vs_mdcr, all(malignancy_old == malignancy_mdcr)),
-  with(old_vs_mdcr, all(neonatal_old == neonatal_mdcr))
+  isTRUE(with(old_vs_mdcr, all(cvd_old == cvd_mdcr))),
+  isTRUE(with(old_vs_mdcr, all(neuromusc_old == neuromusc_mdcr))),
+  isTRUE(with(old_vs_mdcr, all(respiratory_old == respiratory_mdcr))),
+  isTRUE(with(old_vs_mdcr, all(renal_old == renal_mdcr))),
+  isTRUE(with(old_vs_mdcr, all(gi_old == gi_mdcr))),
+  isTRUE(with(old_vs_mdcr, all(hemato_immu_old == hemato_immu_mdcr))),
+  isTRUE(with(old_vs_mdcr, all(metabolic_old == metabolic_mdcr))),
+  isTRUE(with(old_vs_mdcr, all(congeni_genetic_old == congeni_genetic_mdcr))),
+  isTRUE(with(old_vs_mdcr, all(malignancy_old == malignancy_mdcr))),
+  isTRUE(with(old_vs_mdcr, all(neonatal_old == neonatal_mdcr)))
 )
 
 # we expect there is no difference in the ccc_flag (old) vs cmrb_flag (new)
 stopifnot(
-  with(old_vs_mdcr, all(ccc_flag == cmrb_flag))
+  isTRUE(with(old_vs_mdcr, all(ccc_flag == cmrb_flag)))
 )
 
 #
@@ -167,11 +167,11 @@ stopifnot(
 
 mismatch_tech_dep <- old_vs_mdcr[old_vs_mdcr$tech_dep != old_vs_mdcr$any_tech_dep, ]
 
-stopifnot(nrow(mismatch_tech_dep) == 32L)
+stopifnot(isTRUE(nrow(mismatch_tech_dep) == 32L))
 
 stopifnot(
-  all(mismatch_tech_dep$tech_dep == 0L),
-  all(mismatch_tech_dep$any_tech_dep == 1L)
+  isTRUE(all(mismatch_tech_dep$tech_dep == 0L)),
+  isTRUE(all(mismatch_tech_dep$any_tech_dep == 1L))
 )
 
 stopifnot(
@@ -216,11 +216,11 @@ stopifnot(
 #subset(get_icd_codes(with.descriptions = TRUE), grepl("^Z94", full_code) & icdv == 10)
 
 mismatch_transplant <- old_vs_mdcr[old_vs_mdcr$transplant != old_vs_mdcr$any_transplant, ]
-stopifnot(nrow(mismatch_transplant) == 22L)
-stopifnot(mismatch_transplant$full_code %in% c("V42.0", "Z94.1", "Z94.2", "Z94.4", "Z94.81", "Z94.82", "Z94.83", "Z94.84"))
+stopifnot(isTRUE(nrow(mismatch_transplant) == 22L))
+stopifnot(isTRUE(length(mismatch_transplant$full_code) > 0L && all(mismatch_transplant$full_code %in% c("V42.0", "Z94.1", "Z94.2", "Z94.4", "Z94.81", "Z94.82", "Z94.83", "Z94.84"))))
 stopifnot(
-  all(mismatch_transplant$transplant == 0L),
-  all(mismatch_transplant$any_transplant == 1L)
+  isTRUE(all(mismatch_transplant$transplant == 0L)),
+  isTRUE(all(mismatch_transplant$any_transplant == 1L))
 )
 
 stopifnot(
