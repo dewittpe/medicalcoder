@@ -203,10 +203,13 @@ pat1_pccc_v3.1 <-
     poa = 1
   )
 
-all.equal(pat1_pccc_v3.0, pat1_pccc_v3.1, check.attributes = FALSE)
+all.equal(
+  pat1_pccc_v3.0[["conditions"]],
+  pat1_pccc_v3.1[["conditions"]]
+)
 
 # retain the needed columns, there are four columns for each condition in v3
-pat1_pccc_v3.0[, grep("^(cmrb_flag|num_cmrb|neuromus|metabolic|tech_dep_flag)", names(pat1_pccc_v3.0))]
+pat1_pccc_v3.0[["conditions"]][, grep("^(cmrb_flag|num_cmrb|neuromus|metabolic|tech_dep_flag)", names(pat1_pccc_v3.0[["conditions"]]))]
 ```
 
 In the output from version 3, we have four 0/1 indicator columns for each of the
@@ -277,7 +280,7 @@ pat2_pccc_v2.1 <-
     flag.method = 'current',
     poa = 1
   )
-Filter(f = function(x) x > 0, pat2_pccc_v2.1)
+Filter(f = function(x) x > 0, pat2_pccc_v2.1[["conditions"]])
 ```
 
 Under version 3 of the PCCC, this patient will have no conditions. This is
@@ -295,7 +298,7 @@ pat2_pccc_v3.1 <-
     flag.method = 'current',
     poa = 1
   )
-Filter(f = function(x) x > 0, pat2_pccc_v3.1)
+Filter(f = function(x) x > 0, pat2_pccc_v3.1[["conditions"]])
 ```
 
 # Expected Data Structures
@@ -497,11 +500,11 @@ subset(get_pccc_codes(), code %in% c("78321", "5641"))
 ```
 
 ```{r}
-subset(mdcr_results_v2.1_01, patid == "87420", select = c("cmrb_flag", "renal"))
-subset(mdcr_results_v2.1_02, patid == "87420", select = c("cmrb_flag", "renal"))
+subset(mdcr_results_v2.1_01[["conditions"]], patid == "87420", select = c("cmrb_flag", "renal"))
+subset(mdcr_results_v2.1_02[["conditions"]], patid == "87420", select = c("cmrb_flag", "renal"))
 
-subset(mdcr_results_v3.1_01, patid == "87420", select = c("cmrb_flag", "renal_dxpr_or_tech"))
-subset(mdcr_results_v3.1_02, patid == "87420", select = c("cmrb_flag", "renal_dxpr_or_tech"))
+subset(mdcr_results_v3.1_01[["conditions"]], patid == "87420", select = c("cmrb_flag", "renal_dxpr_or_tech"))
+subset(mdcr_results_v3.1_02[["conditions"]], patid == "87420", select = c("cmrb_flag", "renal_dxpr_or_tech"))
 
 subset(get_icd_codes(with.descriptions = TRUE), full_code %in% c("56.41", "564.1"))
 ```
@@ -555,7 +558,7 @@ comorbidities(
   icd.codes = "code",
   poa = 1,
   method = "pccc_v3.1"
-)[, c("id", "cmrb_flag", "renal_dxpr_or_tech")]
+)[["conditions"]][, c("id", "cmrb_flag", "renal_dxpr_or_tech")]
 
 # false positive for the compact dx
 comorbidities(
@@ -564,7 +567,7 @@ comorbidities(
   icd.codes = "code",
   poa = 1,
   method = "pccc_v3.1"
-)[, c("id", "cmrb_flag", "renal_dxpr_or_tech")]
+)[["conditions"]][, c("id", "cmrb_flag", "renal_dxpr_or_tech")]
 
 # false negative for compact pr
 comorbidities(
@@ -575,7 +578,7 @@ comorbidities(
   full.code = TRUE,
   compact.codes = FALSE,
   method = "pccc_v3.1"
-)[, c("id", "cmrb_flag", "renal_dxpr_or_tech")]
+)[["conditions"]][, c("id", "cmrb_flag", "renal_dxpr_or_tech")]
 
 # false positive for compact dx
 comorbidities(
@@ -586,7 +589,7 @@ comorbidities(
   full.code = FALSE,
   compact.codes = TRUE,
   method = "pccc_v3.1"
-)[, c("id", "cmrb_flag", "renal_dxpr_or_tech")]
+)[["conditions"]][, c("id", "cmrb_flag", "renal_dxpr_or_tech")]
 
 # false negatives for compact and full pr
 comorbidities(
@@ -598,7 +601,7 @@ comorbidities(
   full.code = FALSE,
   compact.codes = TRUE,
   method = "pccc_v3.1"
-)[, c("id", "cmrb_flag", "renal_dxpr_or_tech")]
+)[["conditions"]][, c("id", "cmrb_flag", "renal_dxpr_or_tech")]
 ```
 
 ## Accounting for ICD Version
@@ -629,7 +632,7 @@ comorbidities(
   icdv = 9L,
   poa = 1,
   method = "pccc_v3.1"
-)[, c('patid', 'cmrb_flag')]
+)[["conditions"]][, c('patid', 'cmrb_flag')]
 
 # flag because icdv = 10 - same as using `icdv.var = "icdv"`
 comorbidities(
@@ -640,7 +643,7 @@ comorbidities(
   icdv = 10L,
   poa = 1,
   method = "pccc_v3.1"
-)[, c('patid', 'cmrb_flag')]
+)[["conditions"]][, c('patid', 'cmrb_flag')]
 
 comorbidities(
   data = subset(mdcr, patid == "95471"),
@@ -650,7 +653,7 @@ comorbidities(
   icdv.var = "icdv",
   poa = 1,
   method = "pccc_v3.0"
-)[, c('patid', 'cmrb_flag')]
+)[["conditions"]][, c('patid', 'cmrb_flag')]
 ```
 
 Lastly, it should be noted that a lot of the ambiguity resulting from compact
@@ -682,9 +685,9 @@ full_only <-
 compact_only <-
   do.call(comorbidities, c(args, list(full.codes = FALSE, compact.codes = TRUE )))
 
-default[,       c("id", "cmrb_flag")]
-full_only[,     c("id", "cmrb_flag")]
-compact_only[,  c("id", "cmrb_flag")]
+default[["conditions"]][,       c("id", "cmrb_flag")]
+full_only[["conditions"]][,     c("id", "cmrb_flag")]
+compact_only[["conditions"]][,  c("id", "cmrb_flag")]
 ```
 
 With no information about the "E030" being ICD-9 or ICD-10, full or compact,
@@ -725,7 +728,7 @@ longitudinal_v2_patid <-
     flag.method = "current",
     poa = 1
   )
-tab <- kableExtra::kbl(longitudinal_v2_patid)
+tab <- kableExtra::kbl(longitudinal_v2_patid[["conditions"]])
 tab <- kableExtra::kable_styling(tab, bootstrap_options = c("striped"), font_size = 10)
 tab
 ```
@@ -748,7 +751,7 @@ longitudinal_v2_patid_date <-
 ```{r, echo = FALSE, results = 'asis'}
 tab <-
   kableExtra::kbl(
-    subset(longitudinal_v2_patid_date, patid == "9663901"),
+    subset(longitudinal_v2_patid_date[["conditions"]], patid == "9663901"),
     row.names = FALSE
   )
 tab <- kableExtra::kable_styling(tab, bootstrap_options = c("striped"), font_size = 10)
@@ -780,7 +783,7 @@ longitudinal_v2_patid_date_cumulative_poa0 <-
 ```{r, echo = FALSE, results = 'asis'}
 tab <-
   kableExtra::kbl(
-    subset(longitudinal_v2_patid_date_cumulative_poa0, patid == "9663901"),
+    subset(longitudinal_v2_patid_date_cumulative_poa0[["conditions"]], patid == "9663901"),
     row.names = FALSE
   )
 tab <- kableExtra::kable_styling(tab, bootstrap_options = c("striped"), font_size = 10)
@@ -803,7 +806,7 @@ longitudinal_v2_patid_date_cumulative_poa1 <-
 ```{r, echo = FALSE, results = 'asis'}
 tab <-
   kableExtra::kbl(
-    subset(longitudinal_v2_patid_date_cumulative_poa1, patid == "9663901"),
+    subset(longitudinal_v2_patid_date_cumulative_poa1[["conditions"]], patid == "9663901"),
     row.names = FALSE
   )
 tab <- kableExtra::kable_styling(tab, bootstrap_options = c("striped"), font_size = 10)
@@ -877,7 +880,7 @@ rtn <-
 rtn_wide <-
   data.table::dcast(
     encounter_id ~ plabel,
-    data = rtn,
+    data = rtn[["conditions"]],
     value.var = c("metabolic_dxpr_or_tech", "metabolic_dxpr_only",
                   "metabolic_tech_only", "metabolic_dxpr_and_tech",
                   "respiratory_dxpr_or_tech", "respiratory_dxpr_only",
@@ -897,7 +900,7 @@ pkbl <- function(permutation = 1) {
                     grep(paste0("Permutation ", permutation), names(rtn_wide), value = TRUE))
        ]
 
-  pl <- rtn[["plabel"]][rtn$permutation == permutation][1]
+  pl <- rtn[["conditions"]][["plabel"]][rtn[["conditions"]][["permutation"]] == permutation][1]
 
   tab <-
     kableExtra::kbl(
@@ -1048,11 +1051,9 @@ elements.  The first element, `conditions`, is identical to the results
 of calling `comorbidities()` with `subconditions = FALSE`.
 
 ```{r}
-with_subconditions
-
 all.equal(
-  with_subconditions$conditions,
-  without_subconditions,
+  with_subconditions[["conditions"]],
+  without_subconditions[["conditions"]],
   check.attributes = FALSE
 )
 ```

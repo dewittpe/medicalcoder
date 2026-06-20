@@ -13,7 +13,25 @@
 \item{...}{additional parameters, not currently used}
 }
 \value{
-either a list or a data \code{data.frame}
+The return will vary based on the \code{method} and \code{subconditions} of the
+object to summarize.
+\itemize{
+\item \code{subconditions = FALSE}
+\itemize{
+\item Charlson methods: a list of several summaries
+*
+\item Elixhauser methods: a list of several summaries
+*
+\item PCCC methods: a \code{data.frame}
+\enumerate{
+\item \code{condition} the primary condition
+\item \code{subcondition} the subcondition(s) within the \code{condition}.  There will be a row where \code{subcondition} is \code{NA} which is used to report the \code{count} and \code{percent_of_cohort} for the \code{condition} overall.
+\item \code{count} the number of rows in \code{object} with the applicable \code{condition} and \code{subcondition}.
+\item \code{percent_of_cohort}: a numeric value within [0, 100] for the percent of rows in \code{object} with the flagged \code{condition} and \code{subcondition}.
+\item \code{percent_of_those_with_condition}: a numeric value within [0, 100] for the subset of rows in \code{object} with the primary \code{condition} and the flagged \code{subcondition}.  Will be \code{NA} for the primary \code{condition}.
+}
+}
+}
 }
 \description{
 Build summaries (counts and percentages) for each comorbidity and other

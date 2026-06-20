@@ -6,6 +6,7 @@ pccc_v3.1_results <-
                 method = "pccc_v3.1",
                 flag.method = 'current',
                 poa = 1)
+str(pccc_v3.1_results)
 summary(pccc_v3.1_results)
 
 pccc_v3.1_subcondition_results <-

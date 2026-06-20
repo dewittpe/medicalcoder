@@ -78,8 +78,11 @@
 #'   subconditions (PCCC only).
 #'
 #' @param mapping Character string specifying how `data[[icd.codes]]` should be
-#' mapped to comorbidity conditions. `mapping = "precomputed"` uses the
-#' precomputed ICD code-condition links included with medicalcoder and is the
-#' default. `mapping = "regex"` applies the method's regular expressions
-#' directly to the input ICD codes. See Details.
+#'   mapped to comorbidity conditions. `mapping = "precomputed"` uses the
+#'   precomputed ICD code-condition links included with medicalcoder and is the
+#'   default. `mapping = "regex"` applies the method's regular expressions
+#'   directly to the input ICD codes. See Details.
 #'
+#' @param export_inferred_conditions Logical scalar; when `TRUE` and
+#' `flag.method = "cumulative"` a data.frame with the inferred conditions by
+#' `id.vars` is included in the return.

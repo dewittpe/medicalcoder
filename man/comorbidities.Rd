@@ -22,7 +22,8 @@ comorbidities(
   full.codes = TRUE,
   compact.codes = TRUE,
   subconditions = FALSE,
-  mapping = c("precomputed", "regex")
+  mapping = c("precomputed", "regex"),
+  export_inferred_conditions = FALSE
 )
 }
 \arguments{
@@ -110,40 +111,58 @@ mapped to comorbidity conditions. \code{mapping = "precomputed"} uses the
 precomputed ICD code-condition links included with medicalcoder and is the
 default. \code{mapping = "regex"} applies the method's regular expressions
 directly to the input ICD codes. See Details.}
+
+\item{export_inferred_conditions}{Logical scalar; when \code{TRUE} and
+\code{flag.method = "cumulative"} a data.frame with the inferred conditions by
+\code{id.vars} is included in the return.}
 }
 \value{
-The return object will be slightly different depending on the value of
-\code{method} and \code{subconditions}.
+The structure of the return object has been drastically changed in
+v0.9.0.  This change was needed to unify the structure and make it consistent
+regardless of the inputs to \code{comorbidities}.  Prior to v0.9.0 there were two
+possible strucutes and with the addition of \code{export_inferred_conditions} that
+would have bencome four possible structures.  We now return one structure in
+all cases.
+
+The return is an object of class \code{medicalcoder_comorbidities} and is a list
+type object with the following elements:
 \itemize{
-\item When \code{subconditions = FALSE}, a \code{medicalcoder_comorbidities} object (a
-\code{data.frame} with attributes) is returned.  Column(s) for \code{id.vars}, if
-defined in the function call.  For all methods there will be the following
-columns:
-\itemize{
-\item \code{num_cmrb} a count of comorbidities/conditions flagged
-\item \code{cmrb_flag} a 0/1 integer indicator for at least one
-comorbidity/condition.
+\item "conditions" - a \code{data.frame}
+\item "subconditions" - if \code{subconditions = TRUE}, a named list of \code{data.frame}s
+with indicators for subconditions within each condition.  If \code{subconditions = FALSE} then this element is \code{NULL}
+\item "inferred_conditions" - if \code{export_inferred_conditions = TRUE} and
+\code{flag.method = "cumulative"} then a \code{data.frame}, otherwise \code{NULL}.  This
+\code{data.frame} has columns for the \code{id.vars}, the condition, the reported and
+inferred POA and primarydx status, and the column \code{occurrence} indexes when
+the condition has been reported allowing end users to infer when the
+condition on a given encounter is due to being reported on that encounter
+or is the result of carry-forward logic.
+\item "metadata" - a named list with the value of a subset of the arguments
+passed to \code{comorbidities()}
 }
+
+All the \code{data.frames} have common columns for the \code{id.vars}, \code{num_cmrb} a
+count of comorbidities/conditions flagged \code{cmrb_flag} a 0/1 integer indicator
+for at least one comorbidity/condition.
 
 Additional columns:
 \itemize{
 \item PCCC methods:
-\itemize{
 \item For \code{method = "pccc_v2.0"} and \code{method = "pccc_v2.1"}, there is one
 indicator column per condition.
-\item For \code{method = "pccc_v3.0"} and \code{method = "pccc_v3.1"},
-there are four columns per condition:
+\itemize{
+\item For \code{method = "pccc_v3.0"} and \code{method = "pccc_v3.1"}, there are four
+columns per condition:
 \itemize{
 \item \verb{<condition>_dxpr_or_tech}: the condition was flagged due to the
-presence of either a diagnostic or procedure code, or was flagged due to
-the presence of a technology dependence code along with at least one
-comorbidity being flagged by a diagnostic or procedure code.
-\item \verb{<condition>_dxpr_only}: the condition was flagged due to the
-presence of a non-technology dependent diagnostic or procedure code
-only.
-\item \verb{<condition>_tech_only}: the condition was flagged due to the
-presence of a technology dependent code only and at least one other
-comorbidity was flagged by a non-technology dependent code.
+presence of either a diagnostic or procedure code, or was flagged due
+to the presence of a technology dependence code along with at least
+one comorbidity being flagged by a diagnostic or procedure code.
+\item \verb{<condition>_dxpr_only}: the condition was flagged due to the presence
+of a non-technology dependent diagnostic or procedure code only.
+\item \verb{<condition>_tech_only}: the condition was flagged due to the presence
+of a technology dependent code only and at least one other comorbidity
+was flagged by a non-technology dependent code.
 \item \verb{<condition>_dxpr_and_tech}: The patient had both diagnostic or
 procedure codes and a technology dependence code for the condition.
 }
@@ -152,11 +171,6 @@ procedure codes and a technology dependence code for the condition.
 conditions, \code{cci} (Charlson Comorbidity Index), and \code{age_score}.
 \item For Elixhauser variants, indicator columns are returned for all relevant
 comorbidities, mortality, and readmission indices.
-}
-\item When \code{subconditions = TRUE} and the method is a PCCC variant,
-a list of length two is returned: the first element contains condition
-indicators; the second element is a named list of \code{data.frame}s with
-indicators for subconditions within each condition.
 }
 }
 \description{
@@ -237,6 +251,7 @@ pccc_v3.1_results <-
                 method = "pccc_v3.1",
                 flag.method = 'current',
                 poa = 1)
+str(pccc_v3.1_results)
 summary(pccc_v3.1_results)
 
 pccc_v3.1_subcondition_results <-

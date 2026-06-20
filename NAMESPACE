@@ -2,9 +2,7 @@
 
 S3method(comorbidities,data.frame)
 S3method(print,medicalcoder_comorbidities)
-S3method(print,medicalcoder_comorbidities_with_subconditions)
 S3method(summary,medicalcoder_comorbidities)
-S3method(summary,medicalcoder_comorbidities_with_subconditions)
 export(comorbidities)
 export(get_charlson_codes)
 export(get_charlson_index_scores)

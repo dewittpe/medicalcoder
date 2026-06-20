@@ -71,50 +71,59 @@
 #' when codes come from an ICD modification that may not be completely covered
 #' by the precomputed code-condition links, or when auditing a method.
 #'
-#' @return
+#' @return The structure of the return object has been drastically changed in
+#' v0.9.0.  This change was needed to unify the structure and make it consistent
+#' regardless of the inputs to `comorbidities`.  Prior to v0.9.0 there were two
+#' possible strucutes and with the addition of `export_inferred_conditions` that
+#' would have bencome four possible structures.  We now return one structure in
+#' all cases.  
 #'
-#' The return object will be slightly different depending on the value of
-#' `method` and `subconditions`.
+#' The return is an object of class `medicalcoder_comorbidities` and is a list
+#' type object with the following elements:
 #'
-#' * When `subconditions = FALSE`, a `medicalcoder_comorbidities` object (a
-#'   `data.frame` with attributes) is returned.  Column(s) for `id.vars`, if
-#'   defined in the function call.  For all methods there will be the following
-#'   columns:
-#'   * `num_cmrb` a count of comorbidities/conditions flagged
-#'   * `cmrb_flag` a 0/1 integer indicator for at least one
-#'   comorbidity/condition.
+#' * "conditions" - a `data.frame`
+#' * "subconditions" - if `subconditions = TRUE`, a named list of `data.frame`s
+#'   with indicators for subconditions within each condition.  If `subconditions
+#'   = FALSE` then this element is `NULL`
+#' * "inferred_conditions" - if `export_inferred_conditions = TRUE` and
+#'   `flag.method = "cumulative"` then a `data.frame`, otherwise `NULL`.  This
+#'   `data.frame` has columns for the `id.vars`, the condition, the reported and
+#'   inferred POA and primarydx status, and the column `occurrence` indexes when
+#'   the condition has been reported allowing end users to infer when the
+#'   condition on a given encounter is due to being reported on that encounter
+#'   or is the result of carry-forward logic.
+#' * "metadata" - a named list with the value of a subset of the arguments
+#'   passed to `comorbidities()`
+#' 
+#' All the `data.frames` have common columns for the `id.vars`, `num_cmrb` a
+#' count of comorbidities/conditions flagged `cmrb_flag` a 0/1 integer indicator
+#' for at least one comorbidity/condition.
 #'
-#'   Additional columns:
+#' Additional columns:
 #'
-#'   * PCCC methods:
-#'     * For `method = "pccc_v2.0"` and `method = "pccc_v2.1"`, there is one
-#'     indicator column per condition.
+#' * PCCC methods:
+#' * For `method = "pccc_v2.0"` and `method = "pccc_v2.1"`, there is one
+#'   indicator column per condition.
 #'
-#'     * For `method = "pccc_v3.0"` and `method = "pccc_v3.1"`,
-#'       there are four columns per condition:
-#'       * `<condition>_dxpr_or_tech`: the condition was flagged due to the
-#'         presence of either a diagnostic or procedure code, or was flagged due to
-#'         the presence of a technology dependence code along with at least one
-#'         comorbidity being flagged by a diagnostic or procedure code.
-#'       * `<condition>_dxpr_only`: the condition was flagged due to the
-#'         presence of a non-technology dependent diagnostic or procedure code
-#'         only.
-#'       * `<condition>_tech_only`: the condition was flagged due to the
-#'         presence of a technology dependent code only and at least one other
-#'         comorbidity was flagged by a non-technology dependent code.
-#'       * `<condition>_dxpr_and_tech`: The patient had both diagnostic or
-#'         procedure codes and a technology dependence code for the condition.
+#'   * For `method = "pccc_v3.0"` and `method = "pccc_v3.1"`, there are four
+#'     columns per condition:
+#'     * `<condition>_dxpr_or_tech`: the condition was flagged due to the
+#'        presence of either a diagnostic or procedure code, or was flagged due
+#'        to the presence of a technology dependence code along with at least
+#'        one comorbidity being flagged by a diagnostic or procedure code.
+#'     * `<condition>_dxpr_only`: the condition was flagged due to the presence
+#'       of a non-technology dependent diagnostic or procedure code only.
+#'     * `<condition>_tech_only`: the condition was flagged due to the presence
+#'       of a technology dependent code only and at least one other comorbidity
+#'       was flagged by a non-technology dependent code.
+#'     * `<condition>_dxpr_and_tech`: The patient had both diagnostic or
+#'       procedure codes and a technology dependence code for the condition.
 #'
-#'   * For Charlson variants, indicator columns are returned for the relevant
-#'     conditions, `cci` (Charlson Comorbidity Index), and `age_score`.
+#' * For Charlson variants, indicator columns are returned for the relevant
+#'   conditions, `cci` (Charlson Comorbidity Index), and `age_score`.
 #'
-#'   * For Elixhauser variants, indicator columns are returned for all relevant
-#'     comorbidities, mortality, and readmission indices.
-#'
-#' * When `subconditions = TRUE` and the method is a PCCC variant,
-#'   a list of length two is returned: the first element contains condition
-#'   indicators; the second element is a named list of `data.frame`s with
-#'   indicators for subconditions within each condition.
+#' * For Elixhauser variants, indicator columns are returned for all relevant
+#'   comorbidities, mortality, and readmission indices.
 #'
 #' @references
 #'
@@ -193,7 +202,8 @@ comorbidities <- function(data,
                           full.codes = TRUE,
                           compact.codes = TRUE,
                           subconditions = FALSE,
-                          mapping = c("precomputed", "regex")
+                          mapping = c("precomputed", "regex"),
+                          export_inferred_conditions = FALSE
                           ) {
   UseMethod("comorbidities")
 }
@@ -212,7 +222,8 @@ comorbidities.data.frame <- function(data,
                                      full.codes = TRUE,
                                      compact.codes = TRUE,
                                      subconditions = FALSE,
-                                     mapping = c("precomputed", "regex")
+                                     mapping = c("precomputed", "regex"),
+                                     export_inferred_conditions = FALSE
                                      ) {
 
   ##############################################################################
@@ -220,15 +231,11 @@ comorbidities.data.frame <- function(data,
   assert_scalar_logical(full.codes)
   assert_scalar_logical(compact.codes)
   stopifnot(full.codes | compact.codes)
+  assert_scalar_logical(export_inferred_conditions)
 
-  method <-
-    match.arg(
-      method,
-      choices = comorbidities_methods(),
-      several.ok = FALSE
-    )
-
+  method <- match.arg(arg = method, choices = comorbidities_methods(), several.ok = FALSE)
   mapping <- match.arg(arg = mapping, choices = c("precomputed", "regex"), several.ok = FALSE)
+  flag.method <- match.arg(flag.method, choices = c("current", "cumulative"), several.ok = FALSE)
 
   assert_column(icd.codes, names(data))
 
@@ -281,8 +288,6 @@ comorbidities.data.frame <- function(data,
     primarydx.var <- primarydx <- NULL
   }
 
-  flag.method <- match.arg(flag.method, choices = c("current", "cumulative"), several.ok = FALSE)
-
   if (startsWith(method, "charlson") && !is.null(age.var)) {
     assert_column(age.var, names(data))
   }
@@ -293,11 +298,6 @@ comorbidities.data.frame <- function(data,
     subconditions <- FALSE
   }
 
-  # Cumulative flagging carries a condition forward from its first encounter.
-  # Identify the earliest encounter per condition (and subcondition for PCCC),
-  # replicate that flag across later encounters for the same id.vars stack, and
-  # flip poa to 1L after the first occurrence so downstream methods treat the
-  # condition as persistent.
   if (flag.method == "cumulative" & length(id.vars) < 2L) {
     stop("When using `flag.method = 'cumulative'` the `id.vars` are expected to be provided and have a minimum length of 2, e.g., c('subject_id', 'encounter_number')", call. = FALSE)
   }
@@ -350,6 +350,11 @@ comorbidities.data.frame <- function(data,
       # both dx.var and dx are NULL
       # do nothing
     }
+  }
+
+  if (export_inferred_conditions && flag.method == "current") {
+    warning("`export_inferred_conditions = TRUE` is only meaningful when `flag.method = 'cumulative'.", call. = FALSE)
+    export_inferred_conditions <- FALSE
   }
 
   ##############################################################################
@@ -637,22 +642,28 @@ comorbidities.data.frame <- function(data,
   # flag.method would get to this point in the code.
   #
   # Also, expected, and verified above, that there are at least two id.vars.
+  #
+  # Cumulative flagging carries a condition forward from its first encounter.
+  # Identify the earliest encounter per condition (and subcondition for PCCC),
+  # replicate that flag across later encounters for the same id.vars stack, and
+  # flip poa to 1L after the first occurrence so downstream methods treat the
+  # condition as persistent.
   if (flag.method == "cumulative" & nrow(cmrb) > 0L) {
     id.vars2 <- id.vars[-length(id.vars)]
     encid <- id.vars[length(id.vars)]
 
-    # find the first occurance of each condition
+    # find the first occurrence of each condition
     grps <- c(id.vars2, "condition")
     byconditions <- c("condition")
     if (startsWith(method, "pccc")) {
       grps <- c(grps, "subcondition")
       byconditions <- c(byconditions, "subcondition")
     }
-    # identify first occurrence per id/condition then retain encounters on/after it
-    tmp <- mdcr_select(cmrb, c(grps, encid))
-    tmp <- mdcr_setorder(tmp, c(grps, encid))
-    keep <- !mdcr_duplicated(tmp, by = grps)
-    foc <- mdcr_subset(tmp, keep)
+    # identify first occurrence (foc) per id/condition then retain encounters on/after it
+    grps_encs <- mdcr_select(cmrb, c(grps, encid))
+    grps_encs <- mdcr_setorder(grps_encs, c(grps, encid))
+    keep <- !mdcr_duplicated(grps_encs, by = grps)
+    foc <- mdcr_subset(grps_encs, keep)
 
     # add the first occurrence on to the cmrb data.frame
     foc <-
@@ -661,7 +672,7 @@ comorbidities.data.frame <- function(data,
         y = foc,
         by = c(id.vars2, encid, byconditions)
       )
-    foc <- mdcr_setnames(foc, old = encid, new = "first_occurrance")
+    foc <- mdcr_setnames(foc, old = encid, new = "first_occurrence")
 
     iddf2 <-
       mdcr_inner_join(
@@ -677,13 +688,12 @@ comorbidities.data.frame <- function(data,
     }
     foc <- lapply(foc, mdcr_unique)
 
-
     foc <-
       lapply(foc,
              function(y) {
                rtn <- mdcr_left_join(x = iddf2, y = y, by = c(id.vars2))
                rtn <- mdcr_subset(rtn, i = !is.na(rtn[["condition"]]))
-               i <- rtn[[encid]] >= rtn[["first_occurrance"]]
+               i <- rtn[[encid]] >= rtn[["first_occurrence"]]
                mdcr_subset(rtn, i = i)
              })
 
@@ -693,14 +703,58 @@ comorbidities.data.frame <- function(data,
     # primarydx to 0 on later encounters so downstream POA filtering keeps
     # all post-first-occurrence rows and the first-occurrence row only if poa =
     # 1 (via poa.var or poa) for the first-occurrence
-    idx <- cmrb[[encid]] > cmrb[["first_occurrance"]]
+    #
+    # If the user wants the inferred_conditions exported, this is where that
+    # data object needs to be built
+    if (export_inferred_conditions) {
+      inferred_conditions <- mdcr_copy(x = cmrb)
+      inferred_conditions <- mdcr_set(x = inferred_conditions, j = method, value = NULL)
+      inferred_conditions <- mdcr_setnames(x = inferred_conditions, old = poa.var, new = "reported_poa")
+      if (!is.null(primarydx.var)) {
+        inferred_conditions <- mdcr_setnames(x = inferred_conditions, old = primarydx.var, new = "reported_primarydx")
+      }
+    }
+
+    idx <- cmrb[[encid]] > cmrb[["first_occurrence"]]
     cmrb[[poa.var]][idx] <- 1L
     if (!is.null(primarydx.var)) {
-      cmrb[[primarydx.var]][cmrb[[encid]] > cmrb[["first_occurrance"]]] <- 0L
+      cmrb[[primarydx.var]][cmrb[[encid]] > cmrb[["first_occurrence"]]] <- 0L
     }
-    cmrb <- mdcr_set(cmrb, j = "first_occurrance", value =  NULL)
+
+    if (export_inferred_conditions) {
+      inferred_conditions <- mdcr_set(inferred_conditions, j = "inferred_poa", value = cmrb[[poa.var]])
+      if (!is.null(primarydx.var)) {
+        inferred_conditions <- mdcr_set(inferred_conditions, j = "inferred_primarydx", value = cmrb[[primarydx.var]])
+      }
+    }
+
+    cmrb <- mdcr_set(cmrb, j = "first_occurrence", value =  NULL)
 
     cmrb <- mdcr_unique(cmrb)
+
+    if (export_inferred_conditions) {
+      inferred_conditions <- mdcr_unique(inferred_conditions)
+
+      inferred_conditions <-
+        mdcr_left_join(
+          x = inferred_conditions,
+          y = mdcr_cbind(grps_encs, occurrence = 1L),
+          by = c(id.vars, "condition")
+        )
+      inferred_conditions <- mdcr_setorder(inferred_conditions, by = id.vars)
+
+      occurrence <-
+          tapply(
+            X     = ifelse(!is.na(inferred_conditions[["occurrence"]]), 1L, 0L),
+            INDEX = inferred_conditions[[id.vars2]],
+            FUN   = cumsum
+          )
+      occurrence <- do.call(c,occurrence)
+
+      inferred_conditions <- mdcr_set(inferred_conditions, j = "occurrence", value = occurrence)
+
+      rownames(inferred_conditions) <- NULL
+    }
   }
 
   ##############################################################################
@@ -775,14 +829,7 @@ comorbidities.data.frame <- function(data,
   }
 
   ##############################################################################
-  # set attributes and return
-  attr(ccc, "method") <- method
-  attr(ccc, "id.vars") <- id.vars
-  attr(ccc, "flag.method") <- flag.method
-  class(ccc) <- c("medicalcoder_comorbidities", class(ccc))
-
   if (subconditions) {
-    class(ccc) <- c("medicalcoder_comorbidities_with_subconditions", class(ccc))
     rownames(ccc[["conditions"]]) <- NULL
     for (i in seq_along(ccc[["subconditions"]])) {
       rownames(ccc[["subconditions"]][[i]]) <- NULL
@@ -791,23 +838,39 @@ comorbidities.data.frame <- function(data,
     rownames(ccc) <- NULL
   }
 
-  ccc
+  ##############################################################################
+  # Build the output object
+  rtn <-
+    list(
+      conditions = if (subconditions) ccc[["conditions"]] else ccc,
+      subconditions = if (subconditions) ccc[["subconditions"]] else NULL,
+      inferred_conditions = if (export_inferred_conditions) inferred_conditions else NULL,
+      metadata = list(
+        method = method,
+        id.vars = id.vars,
+        flag.method = flag.method,
+        mapping = mapping
+      )
+    )
+  class(rtn) <- c("medicalcoder_comorbidities", class(rtn))
+
+  rtn
 }
 
 #' @export
 print.medicalcoder_comorbidities <- function(x, ...) {
-  cat(sprintf("\nComorbidities via %s\n\n", attr(x, "method")))
-  NextMethod(generic = "print", object = x, ...)
-  invisible(x)
-}
 
-#' @export
-print.medicalcoder_comorbidities_with_subconditions <- function(x, ...) {
-  cat(sprintf("\nComorbidities and Subconditions via %s\n\n", attr(x, "method")))
-  l1 <- utils::capture.output(utils::str(x, max.level = 1, give.attr = FALSE))
-  l2 <- utils::capture.output(utils::str(x[["subconditions"]], max.level = 1, give.attr = FALSE))
-  l2 <- sub("^\\s\\$", "  ..$", l2)
-  cat(c(l1, l2[-1], "\n"), sep = "\n")
+  if (!is.null(x[["subconditions"]])) {
+    cat(sprintf("\nComorbidities via %s\n\n", x[["method"]]))
+    NextMethod(generic = "print", object = x[["conditions"]], ...)
+  } else {
+    cat(sprintf("\nComorbidities and Subconditions via %s\n\n", x[["method"]]))
+    l1 <- utils::capture.output(utils::str(x[["conditions"]], max.level = 1, give.attr = FALSE))
+    l2 <- utils::capture.output(utils::str(x[["subconditions"]], max.level = 1, give.attr = FALSE))
+    l2 <- sub("^\\s\\$", "  ..$", l2)
+    cat(c(l1, l2[-1], "\n"), sep = "\n")
+  }
+
   invisible(x)
 }
 

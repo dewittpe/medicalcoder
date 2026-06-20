@@ -364,6 +364,20 @@ mdcr_cbind <- function(x, ...) {
   rtn
 }
 
+#'
+#' @rdname mdcr_data_frame_tools
+#' @family data.frame tools
+#' @noRd
+#' @keywords internal
+mdcr_copy <- function(x, ...) {
+  stopifnot(is.data.frame(x))
+  if (requireNamespace(package = "data.table", quietly = TRUE) && inherits(x, "data.table")) {
+    return(getExportedValue(name = "copy", ns = "data.table")(x))
+  } else {
+    return(x)
+  }
+}
+
 
 ################################################################################
 
