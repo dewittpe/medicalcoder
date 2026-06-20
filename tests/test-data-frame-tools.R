@@ -14,20 +14,21 @@ dataframetools <-
     "mdcr_inner_join",
     "mdcr_full_outer_join",
     "mdcr_left_join",
-    "mdcr_cbind"
+    "mdcr_cbind",
+    "mdcr_copy"
   )
 
 mdcr <- getNamespace("medicalcoder")
 
 # are all the dataframetools in the namespcae
-stopifnot(all(dataframetools %in% names(mdcr)))
+stopifnot(isTRUE(all(dataframetools %in% names(mdcr))))
 
 # check that there are not unaccounted for data sets.  the ..mdcr_internal_
 # prefix and .. suffix is expected.  noted in the data-raw/build_sysdata.R
 stopifnot(
-  all(
+  isTRUE(all(
     grep("^mdcr_", names(mdcr), value = TRUE) %in% dataframetools
-  )
+  ))
 )
 
 ################################################################################
@@ -44,6 +45,31 @@ if (requireNamespace("data.table", quietly = TRUE)) {
 } else {
   DT <- DF
 }
+
+################################################################################
+# testing mdcr_copy
+DF_copy  <- getFromNamespace(x = "mdcr_copy", ns = "medicalcoder")(DF)
+TBL_copy <- getFromNamespace(x = "mdcr_copy", ns = "medicalcoder")(TBL)
+DT_copy  <- getFromNamespace(x = "mdcr_copy", ns = "medicalcoder")(DT)
+
+stopifnot(
+  identical(DF_copy, DF),
+  identical(TBL_copy, TBL),
+  identical(DT_copy, DT)
+)
+
+DF_copy  <- getFromNamespace(x = "mdcr_set", ns = "medicalcoder")(DF_copy,  j = "copy_test", value = rep(1L, nrow(DF_copy)))
+TBL_copy <- getFromNamespace(x = "mdcr_set", ns = "medicalcoder")(TBL_copy, j = "copy_test", value = rep(1L, nrow(TBL_copy)))
+DT_copy  <- getFromNamespace(x = "mdcr_set", ns = "medicalcoder")(DT_copy,  j = "copy_test", value = rep(1L, nrow(DT_copy)))
+
+stopifnot(
+  is.null(DF[["copy_test"]]),
+  is.null(TBL[["copy_test"]]),
+  is.null(DT[["copy_test"]]),
+  identical(DF_copy[["copy_test"]], rep(1L, nrow(DF_copy))),
+  identical(TBL_copy[["copy_test"]], rep(1L, nrow(TBL_copy))),
+  identical(DT_copy[["copy_test"]], rep(1L, nrow(DT_copy)))
+)
 
 ################################################################################
 # set the value of column C in row 5
@@ -317,9 +343,9 @@ stopifnot(
 # testing mdcr_duplicated
 
 stopifnot(
-  !any(getFromNamespace(x = "mdcr_duplicated", ns = "medicalcoder")(DF)),
-  !any(getFromNamespace(x = "mdcr_duplicated", ns = "medicalcoder")(TBL)),
-  !any(getFromNamespace(x = "mdcr_duplicated", ns = "medicalcoder")(DT))
+  isTRUE(!any(getFromNamespace(x = "mdcr_duplicated", ns = "medicalcoder")(DF))),
+  isTRUE(!any(getFromNamespace(x = "mdcr_duplicated", ns = "medicalcoder")(TBL))),
+  isTRUE(!any(getFromNamespace(x = "mdcr_duplicated", ns = "medicalcoder")(DT)))
 )
 
 expected <- rep(FALSE, 10)
@@ -714,9 +740,9 @@ if (requireNamespace("data.table", quietly = TRUE)) {
 uDF <- unique(DF)
 
 stopifnot(
-  all.equal(uDF, getFromNamespace(x = "mdcr_unique", ns = "medicalcoder")(DF), check.attributes = FALSE),
-  all.equal(uDF, getFromNamespace(x = "mdcr_unique", ns = "medicalcoder")(DT), check.attributes = FALSE),
-  all.equal(uDF, getFromNamespace(x = "mdcr_unique", ns = "medicalcoder")(TBL), check.attributes = FALSE)
+  isTRUE(all.equal(uDF, getFromNamespace(x = "mdcr_unique", ns = "medicalcoder")(DF), check.attributes = FALSE)),
+  isTRUE(all.equal(uDF, getFromNamespace(x = "mdcr_unique", ns = "medicalcoder")(DT), check.attributes = FALSE)),
+  isTRUE(all.equal(uDF, getFromNamespace(x = "mdcr_unique", ns = "medicalcoder")(TBL), check.attributes = FALSE))
 )
 
 
