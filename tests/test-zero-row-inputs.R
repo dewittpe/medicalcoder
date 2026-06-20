@@ -42,37 +42,19 @@ for (m in names(rtns)) {
   if (!inherits(rtns[[m]], "medicalcoder_comorbidities")) {
     stop(sprintf("rtns[[%s]] does not inherit `medicalcoder_comorbidities`", m))
   }
-
-  if (!startsWith(m, "pccc") & inherits(rtns[[m]], "medicalcoder_comorbidities_with_subconditions")) {
-    stop(sprintf("rtns[[%s]] incorrectly inherits `medicalcoder_comorbidities_with_subconditions`", m))
-  } else {
-    if (endsWith(m, "s") & !inherits(rtns[[m]], "medicalcoder_comorbidities_with_subconditions")) {
-      stop(sprintf("rtns[[%s]] does not inherit `medicalcoder_comorbidities_with_subconditions`", m))
-    } else if (!endsWith(m, "s") & inherits(rtns[[m]], "medicalcoder_comorbidities_with_subconditions")) {
-      stop(sprintf("rtns[[%s]] incorrectly inherits `medicalcoder_comorbidities_with_subconditions`", m))
-    }
-  }
 }
 
 # verify that all the non subcondition rtns are data.frames
 for (m in names(rtns)) {
   if (!startsWith(m, "pccc")) {
-    if (!inherits(rtns[[m]], "data.frame")) {
-      stop(sprintf("rtns[[%s]] is not a data.frame", m))
+    if (!inherits(rtns[[m]][["conditions"]], "data.frame")) {
+      stop(sprintf("rtns[['%s']][['conditions']] is not a data.frame", m))
     }
-    if (nrow(rtns[[m]]) != 0L) {
-      stop(sprintf("nrow(rtns[[%s]]) != 0", m))
+    if (nrow(rtns[[m]][["conditions"]]) != 0L) {
+      stop(sprintf("nrow(rtns[['%s']][['conditions']]) != 0", m))
     }
   } else {
     if (endsWith(m, "s")) {
-
-      if (!inherits(rtns[[m]], "list")) {
-        stop(sprintf("rtns[[%s]] is not a list", m))
-      }
-
-      if (length(rtns[[m]]) != 2L) {
-        stop(sprintf("length(rtns[[%s]]) != 2L", m))
-      }
 
       if (!inherits(rtns[[m]][['conditions']], "data.frame")) {
         stop(sprintf("rtns[[%s]][['conditions']] is not a data.frame", m))
@@ -95,10 +77,10 @@ for (m in names(rtns)) {
       }
 
     } else {
-      if (!inherits(rtns[[m]], "data.frame")) {
+      if (!inherits(rtns[[m]][["conditions"]], "data.frame")) {
         stop(sprintf("rtns[[%s]] is not a data.frame", m))
       }
-      if (nrow(rtns[[m]]) != 0L) {
+      if (nrow(rtns[[m]][["conditions"]]) != 0L) {
         stop(sprintf("nrow(rtns[[%s]]) != 0", m))
       }
     }
