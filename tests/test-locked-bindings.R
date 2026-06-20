@@ -27,18 +27,18 @@ x <- medicalcoder:::..mdcr_internal_icd_codes..
 
 # bad user, don't modify things, even if you can!
 x[, icdv := 8L]
-stopifnot(medicalcoder:::..mdcr_internal_icd_codes..[, all(icdv == 8L)])
+stopifnot(isTRUE(medicalcoder:::..mdcr_internal_icd_codes..[, .N > 0L && all(icdv == 8L)]))
 
 # but the good news is that when the namespace was loaded the data set that
 # needed to be provided to the user and is called within the package via
 # get_icd_codes is not modified!
 x <- medicalcoder::get_icd_codes()
-stopifnot(x[["icdv"]] %in% c(9L, 10L))
+stopifnot(isTRUE(length(x[["icdv"]]) > 0L && all(x[["icdv"]] %in% c(9L, 10L))))
 
 # now, what about getting at the built objects?
 # first, the ..mdcr_data_env.. is not accessable other than by :::
 library(medicalcoder)
-stopifnot(medicalcoder:::..mdcr_internal_icd_codes..[, all(icdv == 8L)])  # still bad, but...
+stopifnot(isTRUE(medicalcoder:::..mdcr_internal_icd_codes..[, .N > 0L && all(icdv == 8L)]))  # still bad, but...
 
 # the environment is hard to get to
 x <- tryCatchError(..mdcr_data_env..)
@@ -69,9 +69,9 @@ stopifnot(
 
 # so now, end user could modify the object and the return from get_icd_codes()
 # will reflect this change
-stopifnot(all(get_icd_codes()[["icdv"]] %in% c(9L, 10L)))
+stopifnot(isTRUE(length(get_icd_codes()[["icdv"]]) > 0L && all(get_icd_codes()[["icdv"]] %in% c(9L, 10L))))
 medicalcoder:::..mdcr_data_env..$icd_codes[, icdv := 98L]
-stopifnot(all(get_icd_codes()[["icdv"]] == 98L))
+stopifnot(isTRUE(length(get_icd_codes()[["icdv"]]) > 0L && all(get_icd_codes()[["icdv"]] == 98L)))
 
 # so, yeah, end users could mess things up but if someone does this that is on
 # them.  Importantly, the get_x functions use
@@ -89,9 +89,9 @@ x[, icdv := 42L]
 z <- get_icd_codes()
 
 stopifnot(
-  all(y[["icdv"]] %in% c(9L, 10L)),
-  all(z[["icdv"]] %in% c(9L, 10L)),
-  all(x[["icdv"]] == 42L)
+  isTRUE(length(y[["icdv"]]) > 0L && all(y[["icdv"]] %in% c(9L, 10L))),
+  isTRUE(length(z[["icdv"]]) > 0L && all(z[["icdv"]] %in% c(9L, 10L))),
+  isTRUE(length(x[["icdv"]]) > 0L && all(x[["icdv"]] == 42L))
 )
 
 ################################################################################
