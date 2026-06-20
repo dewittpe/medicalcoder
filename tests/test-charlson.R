@@ -32,55 +32,59 @@ quan2011_withage <- comorbidities(data = mdcr, id.vars = "patid", icdv.var = "ic
 # verify that a row is returned for each and every id.var
 npatid <- length(unique(mdcr[["patid"]]))
 stopifnot(
-  nrow(cdmf) == npatid,
-  nrow(cdmf_withage) == npatid,
-  nrow(deyo) == npatid,
-  nrow(deyo_withage) == npatid,
-  nrow(quan2005) == npatid,
-  nrow(quan2005_withage) == npatid,
-  nrow(quan2011) == npatid,
-  nrow(quan2011_withage) == npatid
+  isTRUE(nrow(cdmf[["conditions"]]) == npatid),
+  isTRUE(nrow(cdmf_withage[["conditions"]]) == npatid),
+  isTRUE(nrow(deyo[["conditions"]]) == npatid),
+  isTRUE(nrow(deyo_withage[["conditions"]]) == npatid),
+  isTRUE(nrow(quan2005[["conditions"]]) == npatid),
+  isTRUE(nrow(quan2005_withage[["conditions"]]) == npatid),
+  isTRUE(nrow(quan2011[["conditions"]]) == npatid),
+  isTRUE(nrow(quan2011_withage[["conditions"]]) == npatid)
 )
 
 # verify that age_score are NA or known
 stopifnot(
-   all(is.na(cdmf$age_score)),
-  !any(is.na(cdmf_withage$age_score)),
-   all(is.na(deyo$age_score)),
-  !any(is.na(deyo_withage$age_score)),
-   all(is.na(quan2005$age_score)),
-  !any(is.na(quan2005_withage$age_score)),
-   all(is.na(quan2011$age_score)),
-  !any(is.na(quan2011_withage$age_score))
+  identical(cdmf[["conditions"]][["age_score"]], rep(NA_integer_, npatid)),
+  isTRUE(length(cdmf_withage[["conditions"]][["age_score"]]) == npatid && !anyNA(cdmf_withage[["conditions"]][["age_score"]])),
+  identical(deyo[["conditions"]][["age_score"]], rep(NA_integer_, npatid)),
+  isTRUE(length(deyo_withage[["conditions"]][["age_score"]]) == npatid && !anyNA(deyo_withage[["conditions"]][["age_score"]])),
+  identical(quan2005[["conditions"]][["age_score"]], rep(NA_integer_, npatid)),
+  isTRUE(length(quan2005_withage[["conditions"]][["age_score"]]) == npatid && !anyNA(quan2005_withage[["conditions"]][["age_score"]])),
+  identical(quan2011[["conditions"]][["age_score"]], rep(NA_integer_, npatid)),
+  isTRUE(length(quan2011_withage[["conditions"]][["age_score"]]) == npatid && !anyNA(quan2011_withage[["conditions"]][["age_score"]]))
 )
 
 # verify that the cci is known and that the cci sans age <= cci with age
-CDMF <- merge(cdmf, cdmf_withage, by = "patid")
+CDMF <- merge(cdmf[["conditions"]], cdmf_withage[["conditions"]], by = "patid")
 stopifnot(
-  !any(is.na(CDMF[["cci.x"]])),
-  !any(is.na(CDMF[["cci.y"]])),
-  all(CDMF[["cci.x"]] <= CDMF[["cci.y"]])
+  isTRUE(nrow(CDMF) == npatid),
+  isTRUE(!any(is.na(CDMF[["cci.x"]]))),
+  isTRUE(!any(is.na(CDMF[["cci.y"]]))),
+  isTRUE(all(CDMF[["cci.x"]] <= CDMF[["cci.y"]]))
 )
 
-DEYO <- merge(deyo, deyo_withage, by = "patid")
+DEYO <- merge(deyo[["conditions"]], deyo_withage[["conditions"]], by = "patid")
 stopifnot(
-  !any(is.na(DEYO[["cci.x"]])),
-  !any(is.na(DEYO[["cci.y"]])),
-  all(DEYO[["cci.x"]] <= DEYO[["cci.y"]])
+  isTRUE(nrow(DEYO) == npatid),
+  isTRUE(!any(is.na(DEYO[["cci.x"]]))),
+  isTRUE(!any(is.na(DEYO[["cci.y"]]))),
+  isTRUE(all(DEYO[["cci.x"]] <= DEYO[["cci.y"]]))
 )
 
-QUAN05 <- merge(quan2005, quan2005_withage, by = "patid")
+QUAN05 <- merge(quan2005[["conditions"]], quan2005_withage[["conditions"]], by = "patid")
 stopifnot(
-  !any(is.na(QUAN05[["cci.x"]])),
-  !any(is.na(QUAN05[["cci.y"]])),
-  all(QUAN05[["cci.x"]] <= QUAN05[["cci.y"]])
+  isTRUE(nrow(QUAN05) == npatid),
+  isTRUE(!any(is.na(QUAN05[["cci.x"]]))),
+  isTRUE(!any(is.na(QUAN05[["cci.y"]]))),
+  isTRUE(all(QUAN05[["cci.x"]] <= QUAN05[["cci.y"]]))
 )
 
-QUAN11 <- merge(quan2011, quan2011_withage, by = "patid")
+QUAN11 <- merge(quan2011[["conditions"]], quan2011_withage[["conditions"]], by = "patid")
 stopifnot(
-  !any(is.na(QUAN11[["cci.x"]])),
-  !any(is.na(QUAN11[["cci.y"]])),
-  all(QUAN11[["cci.x"]] <= QUAN11[["cci.y"]])
+  isTRUE(nrow(QUAN11) == npatid),
+  isTRUE(!any(is.na(QUAN11[["cci.x"]]))),
+  isTRUE(!any(is.na(QUAN11[["cci.y"]]))),
+  isTRUE(all(QUAN11[["cci.x"]] <= QUAN11[["cci.y"]]))
 )
 
 ################################################################################
@@ -90,11 +94,13 @@ stopifnot(
 # comorbidities vignette that will need to be updated too.
 
 cdmf_eg <-
-  merge(x = mdcr,
-        y = subset(get_charlson_codes(),
-                   condition %in% c("aids", "hiv") &
-                   charlson_cdmf2019 == 1),
-        by = c("icdv", "dx", "code"))
+  merge(
+    x = mdcr,
+    y = subset(get_charlson_codes(),
+      condition %in% c("aids", "hiv") &
+        charlson_cdmf2019 == 1),
+      by = c("icdv", "dx", "code")
+  )
 
 cdmf_eg <-
   aggregate(
@@ -134,7 +140,7 @@ cmdf_mdcr <-
 
 stopifnot(
   identical(
-    table(cmdf_mdcr[, c("hiv", "aids")]),
+    table(cmdf_mdcr[["conditions"]][, c("hiv", "aids")]),
     structure(c(38255L, 6L, 0L, 1L), dim = c(2L, 2L), dimnames = list(hiv = c("0", "1"), aids = c("0", "1")), class = "table")
   )
 )
@@ -194,22 +200,22 @@ out09 <- do.call(comorbidities, c(cargs, list(                   dx = 0)))
 out10 <- do.call(comorbidities, c(cargs, list(                   dx = 1)))
 out11 <- do.call(comorbidities, cargs)
 
-expected_out_false_positive <- structure(list(patid = 0, aidshiv = 0L, mal = 0L, cebvd = 0L, copd = 0L, chf = 0L, dem = 0L, dmc = 0L, dm = 0L, hp = 0L, mld = 0L, msld = 0L, mst = 0L, mi = 0L, pud = 0L, pvd = 0L, rnd = 1L, rhd = 0L, num_cmrb = 1L, cmrb_flag = 1L, cci = 2L, age_score = NA_integer_), row.names = c(NA, -1L), class = c("medicalcoder_comorbidities", "data.frame"), method = "charlson_quan2005", id.vars = "patid", flag.method = "current")
-expected_out <- structure(list(patid = 0, aidshiv = 0L, mal = 0L, cebvd = 0L, copd = 0L, chf = 0L, dem = 0L, dmc = 0L, dm = 0L, hp = 0L, mld = 0L, msld = 0L, mst = 0L, mi = 0L, pud = 0L, pvd = 0L, rnd = 0L, rhd = 0L, num_cmrb = 0L, cmrb_flag = 0L, cci = 0L, age_score = NA_integer_), row.names = c(NA, -1L), class = c("medicalcoder_comorbidities", "data.frame"), method = "charlson_quan2005", id.vars = "patid", flag.method = "current")
+expected_out_false_positive <- structure(list(patid = 0, aidshiv = 0L, mal = 0L, cebvd = 0L, copd = 0L, chf = 0L, dem = 0L, dmc = 0L, dm = 0L, hp = 0L, mld = 0L, msld = 0L, mst = 0L, mi = 0L, pud = 0L, pvd = 0L, rnd = 1L, rhd = 0L, num_cmrb = 1L, cmrb_flag = 1L, cci = 2L, age_score = NA_integer_), row.names = c(NA, -1L), class = "data.frame")
+expected_out <- structure(list(patid = 0, aidshiv = 0L, mal = 0L, cebvd = 0L, copd = 0L, chf = 0L, dem = 0L, dmc = 0L, dm = 0L, hp = 0L, mld = 0L, msld = 0L, mst = 0L, mi = 0L, pud = 0L, pvd = 0L, rnd = 0L, rhd = 0L, num_cmrb = 0L, cmrb_flag = 0L, cci = 0L, age_score = NA_integer_), row.names = c(NA, -1L), class = "data.frame")
 
 stopifnot(
-  identical(out00, expected_out),
-  identical(out01, expected_out),
-  identical(out02, expected_out),
-  identical(out03, expected_out),
-  identical(out04, expected_out_false_positive),
-  identical(out05, expected_out),
-  identical(out06, expected_out_false_positive),
-  identical(out07, expected_out),
-  identical(out08, expected_out_false_positive),
-  identical(out09, expected_out),
-  identical(out10, expected_out_false_positive),
-  identical(out11, expected_out_false_positive)
+  identical(out00[["conditions"]], expected_out),
+  identical(out01[["conditions"]], expected_out),
+  identical(out02[["conditions"]], expected_out),
+  identical(out03[["conditions"]], expected_out),
+  identical(out04[["conditions"]], expected_out_false_positive),
+  identical(out05[["conditions"]], expected_out),
+  identical(out06[["conditions"]], expected_out_false_positive),
+  identical(out07[["conditions"]], expected_out),
+  identical(out08[["conditions"]], expected_out_false_positive),
+  identical(out09[["conditions"]], expected_out),
+  identical(out10[["conditions"]], expected_out_false_positive),
+  identical(out11[["conditions"]], expected_out_false_positive)
 )
 
 # More general: common arguments for the calls to comorbidities
@@ -237,27 +243,27 @@ out06 <- do.call(comorbidities, c(cargs, list(icdv.var = "icdv", dx = 1       ))
 # will treat al the input codes as diagnostic and will have the same false
 # positives.
 stopifnot(
-  !isTRUE(all.equal(out00, out01)),
-  !isTRUE(all.equal(out00, out02)),
-  !isTRUE(all.equal(out00, out03)),
-  !isTRUE(all.equal(out00, out04)),
-  !isTRUE(all.equal(out00, out05)),
-  !isTRUE(all.equal(out00, out06)),
-  !isTRUE(all.equal(out01, out02)),
-  !isTRUE(all.equal(out01, out03)),
-  !isTRUE(all.equal(out01, out04)),
-  !isTRUE(all.equal(out01, out05)),
-  !isTRUE(all.equal(out01, out06)),
-  !isTRUE(all.equal(out02, out03)),
-  !isTRUE(all.equal(out02, out04)),
-  !isTRUE(all.equal(out02, out05)),
-  !isTRUE(all.equal(out02, out06)),
-  !isTRUE(all.equal(out03, out04)),
-  !isTRUE(all.equal(out03, out05)),
-  !isTRUE(all.equal(out03, out06)),
-  !isTRUE(all.equal(out04, out05)),
-   isTRUE(all.equal(out04, out06)),
-  !isTRUE(all.equal(out05, out06))
+  !isTRUE(all.equal(out00[["conditions"]], out01[["conditions"]])),
+  !isTRUE(all.equal(out00[["conditions"]], out02[["conditions"]])),
+  !isTRUE(all.equal(out00[["conditions"]], out03[["conditions"]])),
+  !isTRUE(all.equal(out00[["conditions"]], out04[["conditions"]])),
+  !isTRUE(all.equal(out00[["conditions"]], out05[["conditions"]])),
+  !isTRUE(all.equal(out00[["conditions"]], out06[["conditions"]])),
+  !isTRUE(all.equal(out01[["conditions"]], out02[["conditions"]])),
+  !isTRUE(all.equal(out01[["conditions"]], out03[["conditions"]])),
+  !isTRUE(all.equal(out01[["conditions"]], out04[["conditions"]])),
+  !isTRUE(all.equal(out01[["conditions"]], out05[["conditions"]])),
+  !isTRUE(all.equal(out01[["conditions"]], out06[["conditions"]])),
+  !isTRUE(all.equal(out02[["conditions"]], out03[["conditions"]])),
+  !isTRUE(all.equal(out02[["conditions"]], out04[["conditions"]])),
+  !isTRUE(all.equal(out02[["conditions"]], out05[["conditions"]])),
+  !isTRUE(all.equal(out02[["conditions"]], out06[["conditions"]])),
+  !isTRUE(all.equal(out03[["conditions"]], out04[["conditions"]])),
+  !isTRUE(all.equal(out03[["conditions"]], out05[["conditions"]])),
+  !isTRUE(all.equal(out03[["conditions"]], out06[["conditions"]])),
+  !isTRUE(all.equal(out04[["conditions"]], out05[["conditions"]])),
+   isTRUE(all.equal(out04[["conditions"]], out06[["conditions"]])),
+  !isTRUE(all.equal(out05[["conditions"]], out06[["conditions"]]))
 )
 
 ################################################################################
