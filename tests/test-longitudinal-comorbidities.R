@@ -199,6 +199,20 @@ CMRBSTBL <-
 
 CMRBS <- list(DF = CMRBS, DT = CMRBSDT, TBL = CMRBSTBL)
 
+# Normalize the unified comorbidities return object to the structures this test
+# exercises. The assertions below destructively verify and remove condition and
+# subcondition results until CMRBS is empty; metadata and inferred conditions
+# are outside the scope of this test.
+for (i in seq_along(CMRBS)) {
+  for (nm in names(CMRBS[[i]])) {
+    if (startsWith(nm, "spccc_")) {
+      CMRBS[[i]][[nm]] <- CMRBS[[i]][[nm]][c("conditions", "subconditions")]
+    } else {
+      CMRBS[[i]][[nm]] <- CMRBS[[i]][[nm]][["conditions"]]
+    }
+  }
+}
+
 ################################################################################
 # for the testing - check for the expected results and then remove the object
 # from the CMRBS until it is empty.
@@ -215,7 +229,7 @@ for (i in seq_len(length(CMRBS))) {
         current = CMRBS[[i]][[paste0("s", x)]][["conditions"]],
         check.attributes = FALSE
       )
-    if (check) {
+    if (isTRUE(check)) {
       CMRBS[[i]][[paste0("s", x)]][["conditions"]] <- NULL
     } else {
       stop(sprintf('CMRBS[[%d]][[s%s]][["conditions"]] is not all.equal to CMRBS[[%s]]', i, x, x))
@@ -228,12 +242,12 @@ for (i in seq_len(length(CMRBS))) {
 for (i in seq_len(length(CMRBS))) {
   for (cnd in c("respiratory", "neuromusc", "neonatal", "misc", "metabolic", "hemato_immu", "gi", "congeni_genetic")) {
     stopifnot(
-      nrow(CMRBS[[i]][["spccc_current_0"]][["subconditions"]][[cnd]]) == 0L,
-      nrow(CMRBS[[i]][["spccc_current_1"]][["subconditions"]][[cnd]]) == 0L,
-      nrow(CMRBS[[i]][["spccc_current_v"]][["subconditions"]][[cnd]]) == 0L,
-      nrow(CMRBS[[i]][["spccc_cumulative_0"]][["subconditions"]][[cnd]]) == 0L,
-      nrow(CMRBS[[i]][["spccc_cumulative_1"]][["subconditions"]][[cnd]]) == 0L,
-      nrow(CMRBS[[i]][["spccc_cumulative_v"]][["subconditions"]][[cnd]]) == 0L
+      isTRUE(nrow(CMRBS[[i]][["spccc_current_0"]][["subconditions"]][[cnd]]) == 0L),
+      isTRUE(nrow(CMRBS[[i]][["spccc_current_1"]][["subconditions"]][[cnd]]) == 0L),
+      isTRUE(nrow(CMRBS[[i]][["spccc_current_v"]][["subconditions"]][[cnd]]) == 0L),
+      isTRUE(nrow(CMRBS[[i]][["spccc_cumulative_0"]][["subconditions"]][[cnd]]) == 0L),
+      isTRUE(nrow(CMRBS[[i]][["spccc_cumulative_1"]][["subconditions"]][[cnd]]) == 0L),
+      isTRUE(nrow(CMRBS[[i]][["spccc_cumulative_v"]][["subconditions"]][[cnd]]) == 0L)
     )
     CMRBS[[i]][["spccc_current_0"]][["subconditions"]][[cnd]] <- NULL
     CMRBS[[i]][["spccc_current_1"]][["subconditions"]][[cnd]] <- NULL
@@ -478,7 +492,7 @@ for (i in seq_len(length(CMRBS))) {
   CMRBS[[i]][["charlson_current_0"]][["patid"]] <- NULL
   stopifnot(identical(CMRBS[[i]][["charlson_current_0"]][["encid"]], expected_encid))
   CMRBS[[i]][["charlson_current_0"]][["encid"]] <- NULL
-  stopifnot(all(CMRBS[[i]][["charlson_current_0"]] == 0))
+  stopifnot(isTRUE(all(CMRBS[[i]][["charlson_current_0"]] == 0)))
   CMRBS[[i]][["charlson_current_0"]] <- NULL
 }
 
@@ -489,7 +503,7 @@ for (i in seq_len(length(CMRBS))) {
   CMRBS[[i]][["pccc_current_0"]][["patid"]] <- NULL
   stopifnot(identical(CMRBS[[i]][["pccc_current_0"]][["encid"]], expected_encid))
   CMRBS[[i]][["pccc_current_0"]][["encid"]] <- NULL
-  stopifnot(all(CMRBS[[i]][["pccc_current_0"]] == 0))
+  stopifnot(isTRUE(all(CMRBS[[i]][["pccc_current_0"]] == 0)))
   CMRBS[[i]][["pccc_current_0"]] <- NULL
 }
 
@@ -516,7 +530,7 @@ for (i in seq_len(length(CMRBS))) {
   stopifnot(identical(CMRBS[[i]][["elixhauser_current_0"]][["num_cmrb"]], c(0L, 1L, 0L, 0L, 1L, rep(0L, 7))))
   CMRBS[[i]][["elixhauser_current_0"]][["num_cmrb"]] <- NULL
 
-  stopifnot(all(CMRBS[[i]][["elixhauser_current_0"]] == 0))
+  stopifnot(isTRUE(all(CMRBS[[i]][["elixhauser_current_0"]] == 0)))
   CMRBS[[i]][["elixhauser_current_0"]] <- NULL
 }
 
@@ -549,7 +563,7 @@ for (i in seq_len(length(CMRBS))) {
   stopifnot(identical(CMRBS[[i]][["charlson_current_1"]][["cci"]], c(0L, 6L, 1L, 2L, 7L, 0L, 0L, 2L, 0L, 0L, 2L, 0L)))
   CMRBS[[i]][["charlson_current_1"]][["cci"]] <- NULL
 
-  stopifnot(all(CMRBS[[i]][["charlson_current_1"]] == 0))
+  stopifnot(isTRUE(all(CMRBS[[i]][["charlson_current_1"]] == 0)))
   CMRBS[[i]][["charlson_current_1"]] <- NULL
 }
 
@@ -574,7 +588,7 @@ for (i in seq_len(length(CMRBS))) {
   CMRBS[[i]][["charlson_current_v"]][["cmrb_flag"]] <- NULL
   stopifnot(identical(CMRBS[[i]][["charlson_current_v"]][["cci"]], c(0L, 0L, 1L, 2L, 6L, 0L, 0L, 2L, 0L, 0L, 0L, 0L)))
   CMRBS[[i]][["charlson_current_v"]][["cci"]] <- NULL
-  stopifnot(all(CMRBS[[i]][["charlson_current_v"]] == 0))
+  stopifnot(isTRUE(all(CMRBS[[i]][["charlson_current_v"]] == 0)))
   CMRBS[[i]][["charlson_current_v"]] <- NULL
 }
 
@@ -600,7 +614,7 @@ for (i in seq_len(length(CMRBS))) {
   stopifnot(identical(CMRBS[[i]][["charlson_cumulative_0"]][["cci"]], c(0L, 0L, 6L, 7L, 9L, 9L, 9L, 0L, 2L, 2L, 2L, 2L)))
   CMRBS[[i]][["charlson_cumulative_0"]][["cci"]] <- NULL
 
-  stopifnot(all(CMRBS[[i]][["charlson_cumulative_0"]] == 0))
+  stopifnot(isTRUE(all(CMRBS[[i]][["charlson_cumulative_0"]] == 0)))
   CMRBS[[i]][["charlson_cumulative_0"]] <- NULL
 }
 
@@ -626,7 +640,7 @@ for (i in seq_len(length(CMRBS))) {
   stopifnot(identical(CMRBS[[i]][["charlson_cumulative_1"]][["cci"]], c(0L, 6L, 7L, 9L, 9L, 9L, 9L, 2L, 2L, 2L, 2L, 2L)))
   CMRBS[[i]][["charlson_cumulative_1"]][["cci"]] <- NULL
 
-  stopifnot(all(CMRBS[[i]][["charlson_cumulative_1"]] == 0))
+  stopifnot(isTRUE(all(CMRBS[[i]][["charlson_cumulative_1"]] == 0)))
   CMRBS[[i]][["charlson_cumulative_1"]] <- NULL
 }
 
@@ -652,7 +666,7 @@ for (i in seq_len(length(CMRBS))) {
   stopifnot(identical(CMRBS[[i]][["charlson_cumulative_v"]][["cci"]], c(0L, 0L, 7L, 9L, 9L, 9L, 9L, 2L, 2L, 2L, 2L, 2L)))
   CMRBS[[i]][["charlson_cumulative_v"]][["cci"]] <- NULL
 
-  stopifnot(all(CMRBS[[i]][["charlson_cumulative_v"]] == 0))
+  stopifnot(isTRUE(all(CMRBS[[i]][["charlson_cumulative_v"]] == 0)))
   CMRBS[[i]][["charlson_cumulative_v"]] <- NULL
 }
 
@@ -680,7 +694,7 @@ for (i in seq_len(length(CMRBS))) {
   stopifnot(identical(CMRBS[[i]][["pccc_current_1"]][["num_cmrb"]], c(0L, 1L, 1L, 1L, 2L, 0L, 0L, 1L, 0L, 0L, 1L, 0L)))
   CMRBS[[i]][["pccc_current_1"]][["num_cmrb"]] <- NULL
 
-  stopifnot(all(CMRBS[[i]][["pccc_current_1"]] == 0))
+  stopifnot(isTRUE(all(CMRBS[[i]][["pccc_current_1"]] == 0)))
   CMRBS[[i]][["pccc_current_1"]] <- NULL
 }
 
@@ -708,7 +722,7 @@ for (i in seq_len(length(CMRBS))) {
   stopifnot(identical(CMRBS[[i]][["pccc_current_v"]][["num_cmrb"]], c(0L, 0L, 1L, 1L, 1L, 0L, 0L, 1L, 0L, 0L, 0L, 0L)))
   CMRBS[[i]][["pccc_current_v"]][["num_cmrb"]] <- NULL
 
-  stopifnot(all(CMRBS[[i]][["pccc_current_v"]] == 0))
+  stopifnot(isTRUE(all(CMRBS[[i]][["pccc_current_v"]] == 0)))
   CMRBS[[i]][["pccc_current_v"]] <- NULL
 }
 
@@ -736,7 +750,7 @@ for (i in seq_len(length(CMRBS))) {
   stopifnot(identical(CMRBS[[i]][["pccc_cumulative_0"]][["cmrb_flag"]], c(0L, 0L, 1L, 1L, 1L, 1L, 1L, 0L, 1L, 1L, 1L, 1L)))
   CMRBS[[i]][["pccc_cumulative_0"]][["cmrb_flag"]] <- NULL
 
-  stopifnot(all(CMRBS[[i]][["pccc_cumulative_0"]] == 0))
+  stopifnot(isTRUE(all(CMRBS[[i]][["pccc_cumulative_0"]] == 0)))
   CMRBS[[i]][["pccc_cumulative_0"]] <- NULL
 }
 
@@ -764,7 +778,7 @@ for (i in seq_len(length(CMRBS))) {
   stopifnot(identical(CMRBS[[i]][["pccc_cumulative_1"]][["cmrb_flag"]], c(0L, rep(1L, 11L))))
   CMRBS[[i]][["pccc_cumulative_1"]][["cmrb_flag"]] <- NULL
 
-  stopifnot(all(CMRBS[[i]][["pccc_cumulative_1"]] == 0))
+  stopifnot(isTRUE(all(CMRBS[[i]][["pccc_cumulative_1"]] == 0)))
   CMRBS[[i]][["pccc_cumulative_1"]] <- NULL
 }
 
@@ -792,7 +806,7 @@ for (i in seq_len(length(CMRBS))) {
   stopifnot(identical(CMRBS[[i]][["pccc_cumulative_v"]][["cmrb_flag"]], c(0L, 0L, rep(1L, 10L))))
   CMRBS[[i]][["pccc_cumulative_v"]][["cmrb_flag"]] <- NULL
 
-  stopifnot(all(CMRBS[[i]][["pccc_cumulative_v"]] == 0))
+  stopifnot(isTRUE(all(CMRBS[[i]][["pccc_cumulative_v"]] == 0)))
   CMRBS[[i]][["pccc_cumulative_v"]] <- NULL
 }
 
@@ -818,7 +832,7 @@ for (i in seq_len(length(CMRBS))) {
   stopifnot(identical(CMRBS[[i]][["elixhauser_current_1"]][["readmission_index"]], c(0L, 11L, 7L, 8L, 18L, 0L, 0L, 8L, 0L, 0L, 8L, 0L)))
   CMRBS[[i]][["elixhauser_current_1"]][["readmission_index"]] <- NULL
 
-  stopifnot(all(CMRBS[[i]][["elixhauser_current_1"]] == 0))
+  stopifnot(isTRUE(all(CMRBS[[i]][["elixhauser_current_1"]] == 0)))
   CMRBS[[i]][["elixhauser_current_1"]] <- NULL
 }
 
@@ -844,7 +858,7 @@ for (i in seq_len(length(CMRBS))) {
   stopifnot(identical(CMRBS[[i]][["elixhauser_current_v"]][["readmission_index"]], c(0L, 11L, 7L, 8L, 11L, 0L, 0L, 8L, 0L, 0L, 0L, 0L)))
   CMRBS[[i]][["elixhauser_current_v"]][["readmission_index"]] <- NULL
 
-  stopifnot(all(CMRBS[[i]][["elixhauser_current_v"]] == 0))
+  stopifnot(isTRUE(all(CMRBS[[i]][["elixhauser_current_v"]] == 0)))
   CMRBS[[i]][["elixhauser_current_v"]] <- NULL
 }
 
@@ -870,7 +884,7 @@ for (i in seq_len(length(CMRBS))) {
   stopifnot(identical(CMRBS[[i]][["elixhauser_cumulative_0"]][["readmission_index"]], c(0L, 11L, 11L, 18L, 26L, 26L, 26L, 0L, 8L, 8L, 8L, 8L)))
   CMRBS[[i]][["elixhauser_cumulative_0"]][["readmission_index"]] <- NULL
 
-  stopifnot(all(CMRBS[[i]][["elixhauser_cumulative_0"]] == 0))
+  stopifnot(isTRUE(all(CMRBS[[i]][["elixhauser_cumulative_0"]] == 0)))
   CMRBS[[i]][["elixhauser_cumulative_0"]] <- NULL
 }
 
@@ -896,7 +910,7 @@ for (i in seq_len(length(CMRBS))) {
   stopifnot(identical(CMRBS[[i]][["elixhauser_cumulative_1"]][["readmission_index"]], c(0L, 11L, 18L, 26L, 26L, 26L, 26L, 8L, 8L, 8L, 8L, 8L)))
   CMRBS[[i]][["elixhauser_cumulative_1"]][["readmission_index"]] <- NULL
 
-  stopifnot(all(CMRBS[[i]][["elixhauser_cumulative_1"]] == 0))
+  stopifnot(isTRUE(all(CMRBS[[i]][["elixhauser_cumulative_1"]] == 0)))
   CMRBS[[i]][["elixhauser_cumulative_1"]] <- NULL
 }
 
@@ -922,7 +936,7 @@ for (i in seq_len(length(CMRBS))) {
   stopifnot(identical(CMRBS[[i]][["elixhauser_cumulative_v"]][["readmission_index"]], c(0L, 11L, 18L, 26L, 26L, 26L, 26L, 8L, 8L, 8L, 8L, 8L)))
   CMRBS[[i]][["elixhauser_cumulative_v"]][["readmission_index"]] <- NULL
 
-  stopifnot(all(CMRBS[[i]][["elixhauser_cumulative_v"]] == 0))
+  stopifnot(isTRUE(all(CMRBS[[i]][["elixhauser_cumulative_v"]] == 0)))
   CMRBS[[i]][["elixhauser_cumulative_v"]] <- NULL
 }
 
