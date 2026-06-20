@@ -8,25 +8,25 @@ dat <- data.frame(patid = 1:26,
                   pr1 = 1:26,
                   icdv = sample(9:10, size = 26, replace = TRUE))
 
-stopifnot(sum(
-    comorbidities(data = dat, icd.codes = "icd", poa = 1, flag.method = "current", method = "pccc_v3.0")
-    , na.rm = TRUE) == 0)
+stopifnot(isTRUE(sum(
+    comorbidities(data = dat, icd.codes = "icd", poa = 1, flag.method = "current", method = "pccc_v3.0")[["conditions"]]
+    , na.rm = TRUE) == 0))
 
-stopifnot(sum(comorbidities(data = dat, id.vars = "patid", icd.codes = "icd",                    poa = 1, flag.method = "current", method = "pccc_v3.0"), na.rm = TRUE) == sum(1:26))
-stopifnot(sum(comorbidities(data = dat, id.vars = "patid", icd.codes = "icd", icdv.var = "icdv", poa = 1, flag.method = "current", method = "pccc_v3.0"), na.rm = TRUE) == sum(1:26))
-stopifnot(sum(comorbidities(data = dat, id.vars = "patid", icd.codes = "icd", icdv = 9,          poa = 1, flag.method = "current", method = "pccc_v3.0"), na.rm = TRUE) == sum(1:26))
-stopifnot(sum(comorbidities(data = dat, id.vars = "patid", icd.codes = "icd", icdv = 10,         poa = 1, flag.method = "current", method = "pccc_v3.0"), na.rm = TRUE) == sum(1:26))
-stopifnot(sum(comorbidities(data = dat, id.vars = "patid", icd.codes = "icd", dx = 1L,       poa = 1, flag.method = "current", method = "pccc_v3.0"), na.rm = TRUE) == sum(1:26))
-stopifnot(sum(comorbidities(data = dat, id.vars = "patid", icd.codes = "icd", dx = 0L,       poa = 1, flag.method = "current", method = "pccc_v3.0"), na.rm = TRUE) == sum(1:26))
+stopifnot(isTRUE(sum(comorbidities(data = dat, id.vars = "patid", icd.codes = "icd",                    poa = 1, flag.method = "current", method = "pccc_v3.0")[["conditions"]], na.rm = TRUE) == sum(1:26)))
+stopifnot(isTRUE(sum(comorbidities(data = dat, id.vars = "patid", icd.codes = "icd", icdv.var = "icdv", poa = 1, flag.method = "current", method = "pccc_v3.0")[["conditions"]], na.rm = TRUE) == sum(1:26)))
+stopifnot(isTRUE(sum(comorbidities(data = dat, id.vars = "patid", icd.codes = "icd", icdv = 9,          poa = 1, flag.method = "current", method = "pccc_v3.0")[["conditions"]], na.rm = TRUE) == sum(1:26)))
+stopifnot(isTRUE(sum(comorbidities(data = dat, id.vars = "patid", icd.codes = "icd", icdv = 10,         poa = 1, flag.method = "current", method = "pccc_v3.0")[["conditions"]], na.rm = TRUE) == sum(1:26)))
+stopifnot(isTRUE(sum(comorbidities(data = dat, id.vars = "patid", icd.codes = "icd", dx = 1L,           poa = 1, flag.method = "current", method = "pccc_v3.0")[["conditions"]], na.rm = TRUE) == sum(1:26)))
+stopifnot(isTRUE(sum(comorbidities(data = dat, id.vars = "patid", icd.codes = "icd", dx = 0L,           poa = 1, flag.method = "current", method = "pccc_v3.0")[["conditions"]], na.rm = TRUE) == sum(1:26)))
 
-stopifnot(sum(comorbidities(data = dat, icd.codes = "icd", method = "pccc_v2.0", poa = 1, flag.method = "current"), na.rm = TRUE) == 0)
+stopifnot(isTRUE(sum(comorbidities(data = dat, icd.codes = "icd", method = "pccc_v2.0", poa = 1, flag.method = "current")[["conditions"]], na.rm = TRUE) == 0))
 
-stopifnot(sum(comorbidities(data = dat, id.vars = "patid", icd.codes = "icd",                    poa = 1, flag.method = "current", method = "pccc_v2.0"), na.rm = TRUE) == sum(1:26))
-stopifnot(sum(comorbidities(data = dat, id.vars = "patid", icd.codes = "icd", icdv.var = "icdv", poa = 1, flag.method = "current", method = "pccc_v2.0"), na.rm = TRUE) == sum(1:26))
-stopifnot(sum(comorbidities(data = dat, id.vars = "patid", icd.codes = "icd", icdv = 9,          poa = 1, flag.method = "current", method = "pccc_v2.0"), na.rm = TRUE) == sum(1:26))
-stopifnot(sum(comorbidities(data = dat, id.vars = "patid", icd.codes = "icd", icdv = 10,         poa = 1, flag.method = "current", method = "pccc_v2.0"), na.rm = TRUE) == sum(1:26))
-stopifnot(sum(comorbidities(data = dat, id.vars = "patid", icd.codes = "icd", dx = 1L,       poa = 1, flag.method = "current", method = "pccc_v2.0"), na.rm = TRUE) == sum(1:26))
-stopifnot(sum(comorbidities(data = dat, id.vars = "patid", icd.codes = "icd", dx = 0L,       poa = 1, flag.method = "current", method = "pccc_v2.0"), na.rm = TRUE) == sum(1:26))
+stopifnot(isTRUE(sum(comorbidities(data = dat, id.vars = "patid", icd.codes = "icd",                    poa = 1, flag.method = "current", method = "pccc_v2.0")[["conditions"]], na.rm = TRUE) == sum(1:26)))
+stopifnot(isTRUE(sum(comorbidities(data = dat, id.vars = "patid", icd.codes = "icd", icdv.var = "icdv", poa = 1, flag.method = "current", method = "pccc_v2.0")[["conditions"]], na.rm = TRUE) == sum(1:26)))
+stopifnot(isTRUE(sum(comorbidities(data = dat, id.vars = "patid", icd.codes = "icd", icdv = 9,          poa = 1, flag.method = "current", method = "pccc_v2.0")[["conditions"]], na.rm = TRUE) == sum(1:26)))
+stopifnot(isTRUE(sum(comorbidities(data = dat, id.vars = "patid", icd.codes = "icd", icdv = 10,         poa = 1, flag.method = "current", method = "pccc_v2.0")[["conditions"]], na.rm = TRUE) == sum(1:26)))
+stopifnot(isTRUE(sum(comorbidities(data = dat, id.vars = "patid", icd.codes = "icd", dx = 1L,           poa = 1, flag.method = "current", method = "pccc_v2.0")[["conditions"]], na.rm = TRUE) == sum(1:26)))
+stopifnot(isTRUE(sum(comorbidities(data = dat, id.vars = "patid", icd.codes = "icd", dx = 0L,           poa = 1, flag.method = "current", method = "pccc_v2.0")[["conditions"]], na.rm = TRUE) == sum(1:26)))
 
 ################################################################################
 # Verify the output of the pccc call
@@ -86,15 +86,12 @@ expected_rtn <-
       cmrb_flag = 1L
     ),
     row.names = c(NA, -1L),
-    class = c("medicalcoder_comorbidities", "data.frame"),
-    method = "pccc_v3.0",
-    id.vars = "..medicalcoder_id..",
-    flag.method = "current"
+    class = "data.frame"
   )
 
 stopifnot(
-  "pccc v3 with mdcr is as all.equal" = isTRUE(all.equal(rtn, expected_rtn)),
-  "pccc v3 with mdcr is as expected" = isTRUE(identical(rtn, expected_rtn))
+  "pccc v3 with mdcr is as all.equal" = isTRUE(all.equal(rtn[["conditions"]], expected_rtn)),
+  "pccc v3 with mdcr is as expected" = isTRUE(identical(rtn[["conditions"]], expected_rtn))
 )
 
 ################################################################################
@@ -110,8 +107,8 @@ current <-
     pccc_cumulative_v3.0 = do.call(comorbidities, c(args, list(flag.method = "cumulative", method = "pccc_v3.0"))),
     pccc_current_v2.1    = do.call(comorbidities, c(args, list(flag.method = 'current',    method = "pccc_v2.1"))),
     pccc_cumulative_v2.1 = do.call(comorbidities, c(args, list(flag.method = "cumulative", method = "pccc_v2.1"))),
-    pccc_current_v2.1    = do.call(comorbidities, c(args, list(flag.method = 'current',    method = "pccc_v2.0"))),
-    pccc_cumulative_v2.1 = do.call(comorbidities, c(args, list(flag.method = "cumulative", method = "pccc_v2.0")))
+    pccc_current_v2.0    = do.call(comorbidities, c(args, list(flag.method = 'current',    method = "pccc_v2.0"))),
+    pccc_cumulative_v2.0 = do.call(comorbidities, c(args, list(flag.method = "cumulative", method = "pccc_v2.0")))
 )
 
 # if the expected results need to be updated:
@@ -128,7 +125,14 @@ names(expected) <- sub("\\.rds", "", basename(expected))
 expected <- sapply(expected, readRDS, simplify = FALSE)
 
 for (obj in names(current)) {
-  stopifnot(all.equal(expected[[obj]], current[[obj]]))
+  expected_conditions <- expected[[obj]]
+  class(expected_conditions) <- "data.frame"
+  attr(expected_conditions, "method") <- NULL
+  attr(expected_conditions, "id.vars") <- NULL
+  attr(expected_conditions, "flag.method") <- NULL
+  names(expected_conditions)[names(expected_conditions) == "num_ccc"] <- "num_cmrb"
+  names(expected_conditions)[names(expected_conditions) == "ccc_flag"] <- "cmrb_flag"
+  stopifnot(isTRUE(all.equal(expected_conditions, current[[obj]][["conditions"]])))
 }
 
 ################################################################################
@@ -154,6 +158,15 @@ out04 <- do.call(comorbidities, c(cargs, list(icdv.var = "icdv"               ))
 out05 <- do.call(comorbidities, c(cargs, list(icdv.var = "icdv", dx = 0       )))
 out06 <- do.call(comorbidities, c(cargs, list(icdv.var = "icdv", dx = 1       )))
 out07 <- do.call(comorbidities, c(cargs))
+
+out00 <- out00[["conditions"]]
+out01 <- out01[["conditions"]]
+out02 <- out02[["conditions"]]
+out03 <- out03[["conditions"]]
+out04 <- out04[["conditions"]]
+out05 <- out05[["conditions"]]
+out06 <- out06[["conditions"]]
+out07 <- out07[["conditions"]]
 
 # all the outputs should be unique
 stopifnot(
@@ -195,8 +208,8 @@ stopifnot(
 
 # out00 should be "correct", out01 and out04 should only have false positives
 stopifnot(
-  all(out00$num_cmrb <= out01$num_cmrb),
-  all(out00$num_cmrb <= out04$num_cmrb)
+  isTRUE(all(out00$num_cmrb <= out01$num_cmrb)),
+  isTRUE(all(out00$num_cmrb <= out04$num_cmrb))
 )
 
 # for out02, out03, out05, and out06, there will be false positives and false
@@ -223,14 +236,15 @@ techtrans_results <-
     method = "pccc_v3.1",
     poa = 1
   )
+techtrans_results <- techtrans_results[["conditions"]]
 
 for (j in colnames(techtrans_results)) {
   if (j == "rid") {
-    stopifnot(techtrans_results[[j]] == 1:6)
+    stopifnot(isTRUE(length(techtrans_results[[j]]) == 6L && all(techtrans_results[[j]] == 1:6)))
   } else if (j %in% c("cvd_tech_only", "cvd_dxpr_or_tech", "any_tech_dep", "any_transplant", "num_cmrb", "cmrb_flag")) {
-    stopifnot(techtrans_results[[j]] == rep(1L, 6))
+    stopifnot(isTRUE(length(techtrans_results[[j]]) == 6L && all(techtrans_results[[j]] == rep(1L, 6))))
   } else {
-    stopifnot(techtrans_results[[j]] == rep(0L, 6))
+    stopifnot(isTRUE(length(techtrans_results[[j]]) == 6L && all(techtrans_results[[j]] == rep(0L, 6))))
   }
 }
 
