@@ -67,15 +67,16 @@ args <-
 #list2env(args, .GlobalEnv)
 
 rtn <- do.call(comorbidities, args)
+rtn <- rtn[["conditions"]]
 
 ################################################################################
 # verify that the permutations are as expected
-stopifnot(rtn[rtn$permutation == 1, "plabel"] == "Permutation 1: H49.811, J84.111, Z96.41")
-stopifnot(rtn[rtn$permutation == 2, "plabel"] == "Permutation 2: H49.811, Z96.41, J84.111")
-stopifnot(rtn[rtn$permutation == 3, "plabel"] == "Permutation 3: J84.111, H49.811, Z96.41")
-stopifnot(rtn[rtn$permutation == 4, "plabel"] == "Permutation 4: J84.111, Z96.41, H49.811")
-stopifnot(rtn[rtn$permutation == 5, "plabel"] == "Permutation 5: Z96.41, H49.811, J84.111")
-stopifnot(rtn[rtn$permutation == 6, "plabel"] == "Permutation 6: Z96.41, J84.111, H49.811")
+stopifnot(identical(rtn[rtn$permutation == 1, "plabel"], rep("Permutation 1: H49.811, J84.111, Z96.41", 7L)))
+stopifnot(identical(rtn[rtn$permutation == 2, "plabel"], rep("Permutation 2: H49.811, Z96.41, J84.111", 7L)))
+stopifnot(identical(rtn[rtn$permutation == 3, "plabel"], rep("Permutation 3: J84.111, H49.811, Z96.41", 7L)))
+stopifnot(identical(rtn[rtn$permutation == 4, "plabel"], rep("Permutation 4: J84.111, Z96.41, H49.811", 7L)))
+stopifnot(identical(rtn[rtn$permutation == 5, "plabel"], rep("Permutation 5: Z96.41, H49.811, J84.111", 7L)))
+stopifnot(identical(rtn[rtn$permutation == 6, "plabel"], rep("Permutation 6: Z96.41, J84.111, H49.811", 7L)))
 
 # Permutation 1
 #   The sequnce of conditions:
@@ -170,10 +171,11 @@ expected_respiratory_dxpr_and_tech_6 = c(0L, 0L, 0L, 0L, 0L, 0L, 0L)
 for (cnd in c("metabolic", "respiratory")) {
   for (col in c("dxpr_or_tech", "dxpr_only", "tech_only", "dxpr_and_tech")) {
     for (prm in 1:6) {
-      check <-
-        rtn[rtn[["permutation"]] == prm, paste(cnd, col, sep = "_")] ==
+      check <- identical(
+        rtn[rtn[["permutation"]] == prm, paste(cnd, col, sep = "_")],
         get(paste("expected", cnd, col, prm, sep = "_"))
-      if (!all(check)) {
+      )
+      if (!check) {
         stop(sprintf("test for %s failed", paste("expected", cnd, col, prm, sep = "_")))
       }
     }
