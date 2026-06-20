@@ -189,6 +189,25 @@ vignette
 vignette(topic = "comorbidities", package = "medicalcoder")
 ```
 
+Every call to `comorbidities()` returns a `medicalcoder_comorbidities` object.
+This is a named list with a consistent structure:
+
+* `conditions`: the condition indicators and summary columns for each set of
+  `id.vars`. This table retains the data storage class of the input when
+  possible.
+* `subconditions`: a named list of subcondition indicator tables when
+  `subconditions = TRUE`; otherwise `NULL`.
+* `inferred_conditions`: details about conditions carried forward from earlier
+  encounters when `export_inferred_conditions = TRUE` and
+  `flag.method = "cumulative"`; otherwise `NULL`.
+* `metadata`: the method, ID variables, flagging method, and mapping strategy
+  used to produce the result.
+
+The primary results are therefore accessed with `result[["conditions"]]`,
+rather than as columns of `result` itself. The stable list structure means code
+can use the same access pattern regardless of whether subconditions or inferred
+conditions were requested.
+
 #### Pediatric Complex Chronic Conditions (PCCC)
 
   * Version 2.0
@@ -229,16 +248,20 @@ cmrbs3 <-
     poa = 1,  # consider all codes to be present on admission
     method = "pccc_v3.1"
   )
-str(cmrbs2, max.level = 0)
-#> Classes 'medicalcoder_comorbidities' and 'data.frame':	38262 obs. of  16 variables:
-#>  - attr(*, "method")= chr "pccc_v2.1"
-#>  - attr(*, "id.vars")= chr "patid"
-#>  - attr(*, "flag.method")= chr "current"
-str(cmrbs3, max.level = 0)
-#> Classes 'medicalcoder_comorbidities' and 'data.frame':	38262 obs. of  49 variables:
-#>  - attr(*, "method")= chr "pccc_v3.1"
-#>  - attr(*, "id.vars")= chr "patid"
-#>  - attr(*, "flag.method")= chr "current"
+str(cmrbs2, max.level = 1)
+#> List of 4
+#>  $ conditions         :'data.frame':	38262 obs. of  16 variables:
+#>  $ subconditions      : NULL
+#>  $ inferred_conditions: NULL
+#>  $ metadata           :List of 4
+#>  - attr(*, "class")= chr [1:2] "medicalcoder_comorbidities" "list"
+str(cmrbs3, max.level = 1)
+#> List of 4
+#>  $ conditions         :'data.frame':	38262 obs. of  49 variables:
+#>  $ subconditions      : NULL
+#>  $ inferred_conditions: NULL
+#>  $ metadata           :List of 4
+#>  - attr(*, "class")= chr [1:2] "medicalcoder_comorbidities" "list"
 ```
 
 A summary of the flagged conditions is generated with a call to `summary()`.
