@@ -23,11 +23,11 @@ icd10dx <- is_icd(one_char_codes, icdv = 10L, dx = 1L)
 icd10pr <- is_icd(one_char_codes, icdv = 10L, dx = 0L)
 
 stopifnot(
-  code_length_one_default = length(default) == 36L && !any(default),
-  code_length_one_icd9dx  = length(icd9dx)  == 36L && !any(icd9dx),
-  code_length_one_icd9pr  = length(icd9pr)  == 36L && !any(icd9pr),
-  code_length_one_icd10dx = length(icd10dx) == 36L && !any(icd10dx),
-  code_length_one_icd10pr = length(icd10pr) == 36L && !any(icd10pr)
+  code_length_one_default = isTRUE(length(default) == 36L && !any(default)),
+  code_length_one_icd9dx  = isTRUE(length(icd9dx)  == 36L && !any(icd9dx)),
+  code_length_one_icd9pr  = isTRUE(length(icd9pr)  == 36L && !any(icd9pr)),
+  code_length_one_icd10dx = isTRUE(length(icd10dx) == 36L && !any(icd10dx)),
+  code_length_one_icd10pr = isTRUE(length(icd10pr) == 36L && !any(icd10pr))
 )
 
 ################################################################################
@@ -64,8 +64,8 @@ f <- factor(x)
 stopifnot(
   identical(is_icd(x, icdv =  9, dx = 1L), c(TRUE, FALSE, FALSE, FALSE, TRUE, FALSE)),
   identical(is_icd(x, icdv =  9, dx = 0L), c(TRUE, FALSE, FALSE, TRUE, FALSE, FALSE)),
-  !any(is_icd(x, icdv = 10, dx = 1L)),
-  !any(is_icd(x, icdv = 10, dx = 0L)),
+  isTRUE(!any(is_icd(x, icdv = 10, dx = 1L))),
+  isTRUE(!any(is_icd(x, icdv = 10, dx = 0L))),
   identical(is_icd(x, icdv =  9, dx = 1L), is_icd(f, icdv =  9, dx = 1L)),
   identical(is_icd(x, icdv =  9, dx = 0L), is_icd(f, icdv =  9, dx = 0L)),
   identical(is_icd(x, icdv = 10, dx = 1L), is_icd(f, icdv = 10, dx = 1L)),
@@ -92,9 +92,9 @@ x <- c("C441121",
 f <- factor(x)
 stopifnot(
   identical(is_icd(x, icdv = 10, dx = 1L), c(TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE)),
-  !any(is_icd(x, icdv = 9, dx = 1L)),
-  !any(is_icd(x, icdv = 9, dx = 0L)),
-  !any(is_icd(x, icdv = 10, dx = 0L)),
+  isTRUE(!any(is_icd(x, icdv = 9, dx = 1L))),
+  isTRUE(!any(is_icd(x, icdv = 9, dx = 0L))),
+  isTRUE(!any(is_icd(x, icdv = 10, dx = 0L))),
   identical(is_icd(x, icdv =  9, dx = 1L), is_icd(f, icdv =  9, dx = 1L)),
   identical(is_icd(x, icdv =  9, dx = 0L), is_icd(f, icdv =  9, dx = 0L)),
   identical(is_icd(x, icdv = 10, dx = 1L), is_icd(f, icdv = 10, dx = 1L)),
@@ -115,9 +115,9 @@ f <- factor(x)
 stopifnot(
   identical(is_icd(x), c(TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE)),
   identical(is_icd(x, icdv = 10, dx = 1L), c(TRUE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE)),
-  !any(is_icd(x, icdv = 9, dx = 1L)),
-  !any(is_icd(x, icdv = 9, dx = 0L)),
-  !any(is_icd(x, icdv = 10, dx = 0L)),
+  isTRUE(!any(is_icd(x, icdv = 9, dx = 1L))),
+  isTRUE(!any(is_icd(x, icdv = 9, dx = 0L))),
+  isTRUE(!any(is_icd(x, icdv = 10, dx = 0L))),
   identical(is_icd(x, icdv =  9, dx = 1L), is_icd(f, icdv =  9, dx = 1L)),
   identical(is_icd(x, icdv =  9, dx = 0L), is_icd(f, icdv =  9, dx = 0L)),
   identical(is_icd(x, icdv = 10, dx = 1L), is_icd(f, icdv = 10, dx = 1L)),
@@ -138,9 +138,9 @@ f <- factor(x)
 stopifnot(
   identical(is_icd(x), c(TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE)),
   identical(is_icd(x, icdv = 10, dx = 0L), c(TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE)),
-  !any(is_icd(x, icdv = 9, dx = 1L)),
-  !any(is_icd(x, icdv = 9, dx = 0L)),
-  !any(is_icd(x, icdv = 10, dx = 1L)),
+  isTRUE(!any(is_icd(x, icdv = 9, dx = 1L))),
+  isTRUE(!any(is_icd(x, icdv = 9, dx = 0L))),
+  isTRUE(!any(is_icd(x, icdv = 10, dx = 1L))),
   identical(is_icd(x, icdv =  9, dx = 1L), is_icd(f, icdv =  9, dx = 1L)),
   identical(is_icd(x, icdv =  9, dx = 0L), is_icd(f, icdv =  9, dx = 0L)),
   identical(is_icd(x, icdv = 10, dx = 1L), is_icd(f, icdv = 10, dx = 1L)),
@@ -151,27 +151,27 @@ stopifnot(
 # Ever assignable status of ICD-9 516.3
 # lookup_icd_codes("516\\.3", regex = TRUE)
 stopifnot(
-    is_icd("516.3")              # TRUE, because it was assignable through 2011
-  , is_icd("516.3", year = 1998) # TRUE, it was assignable
-  , is_icd("516.3", year = 1999) # TRUE, it was assignable
-  , is_icd("516.3", year = 2000) # TRUE, it was assignable
-  , is_icd("516.3", year = 2001) # TRUE, it was assignable
-  , is_icd("516.3", year = 2002) # TRUE, it was assignable
-  , is_icd("516.3", year = 2003) # TRUE, it was assignable
-  , is_icd("516.3", year = 2004) # TRUE, it was assignable
-  , is_icd("516.3", year = 2004) # TRUE, it was assignable
-  , is_icd("516.3", year = 2005) # TRUE, it was assignable
-  , is_icd("516.3", year = 2006) # TRUE, it was assignable
-  , is_icd("516.3", year = 2007) # TRUE, it was assignable
-  , is_icd("516.3", year = 2008) # TRUE, it was assignable
-  , is_icd("516.3", year = 2009) # TRUE, it was assignable
-  , is_icd("516.3", year = 2010) # TRUE, it was assignable
-  , is_icd("516.3", year = 2011) # TRUE, it was assignable
-  , !is_icd("516.3", year = 2012) # FALSE, not assignable
-  , !is_icd("516.3", year = 2013) # FALSE, not assignable
-  , !is_icd("516.3", year = 2014) # FALSE, not assignable
-  , !is_icd("516.3", year = 2015) # FALSE, not assignable
-  , !is_icd("516.3", year = 2016) # FALSE, not assignable
+    isTRUE(is_icd("516.3"))              # TRUE, because it was assignable through 2011
+  , isTRUE(is_icd("516.3", year = 1998)) # TRUE, it was assignable
+  , isTRUE(is_icd("516.3", year = 1999)) # TRUE, it was assignable
+  , isTRUE(is_icd("516.3", year = 2000)) # TRUE, it was assignable
+  , isTRUE(is_icd("516.3", year = 2001)) # TRUE, it was assignable
+  , isTRUE(is_icd("516.3", year = 2002)) # TRUE, it was assignable
+  , isTRUE(is_icd("516.3", year = 2003)) # TRUE, it was assignable
+  , isTRUE(is_icd("516.3", year = 2004)) # TRUE, it was assignable
+  , isTRUE(is_icd("516.3", year = 2004)) # TRUE, it was assignable
+  , isTRUE(is_icd("516.3", year = 2005)) # TRUE, it was assignable
+  , isTRUE(is_icd("516.3", year = 2006)) # TRUE, it was assignable
+  , isTRUE(is_icd("516.3", year = 2007)) # TRUE, it was assignable
+  , isTRUE(is_icd("516.3", year = 2008)) # TRUE, it was assignable
+  , isTRUE(is_icd("516.3", year = 2009)) # TRUE, it was assignable
+  , isTRUE(is_icd("516.3", year = 2010)) # TRUE, it was assignable
+  , isTRUE(is_icd("516.3", year = 2011)) # TRUE, it was assignable
+  , isTRUE(!is_icd("516.3", year = 2012)) # FALSE, not assignable
+  , isTRUE(!is_icd("516.3", year = 2013)) # FALSE, not assignable
+  , isTRUE(!is_icd("516.3", year = 2014)) # FALSE, not assignable
+  , isTRUE(!is_icd("516.3", year = 2015)) # FALSE, not assignable
+  , isTRUE(!is_icd("516.3", year = 2016)) # FALSE, not assignable
 )
 
 ################################################################################
@@ -257,12 +257,12 @@ stopifnot(
 #   516.3 was assignable in 2011
 
 stopifnot(
-  "t1" =  is_icd("516.3"),
-  "t2" =  is_icd("516.3", ever.assignable = TRUE),
-  "t3" = !is_icd("516.3", ever.assignable = FALSE),
-  "t4" = !is_icd("516.3", ever.assignable = FALSE, year = 2012),
-  "t5" =  is_icd("516.3", ever.assignable = TRUE, year = 2012),
-  "t6" =  is_icd("516.3", ever.assignable = FALSE, year = 2011)
+  "t1" =  isTRUE(is_icd("516.3")),
+  "t2" =  isTRUE(is_icd("516.3", ever.assignable = TRUE)),
+  "t3" = isTRUE(!is_icd("516.3", ever.assignable = FALSE)),
+  "t4" = isTRUE(!is_icd("516.3", ever.assignable = FALSE, year = 2012)),
+  "t5" =  isTRUE(is_icd("516.3", ever.assignable = TRUE, year = 2012)),
+  "t6" =  isTRUE(is_icd("516.3", ever.assignable = FALSE, year = 2011))
   )
 
 ################################################################################
