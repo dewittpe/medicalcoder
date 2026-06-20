@@ -26,9 +26,10 @@ stopifnot(
 ec <- get_elixhauser_codes()
 
 ahrqYYYY <- ec[, grep("elixhauser_ahrq\\d{4}", names(ec), value = TRUE)]
-stopifnot(
-  sum(as.integer(rowSums(ahrqYYYY, na.rm = TRUE) > 0)) == sum(ec[["elixhauser_ahrq_icd10"]], na.rm = TRUE)
-)
+covered_by_ahrqYYYY <- as.integer(rowSums(ahrqYYYY, na.rm = TRUE) > 0L)
+covered_by_ahrq_icd10 <- as.integer(!is.na(ec[["elixhauser_ahrq_icd10"]]) & ec[["elixhauser_ahrq_icd10"]] == 1L)
+
+stopifnot(identical(covered_by_ahrqYYYY, covered_by_ahrq_icd10))
 
 ################################################################################
 #                                 End of File                                  #
