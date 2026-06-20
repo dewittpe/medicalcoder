@@ -19,8 +19,8 @@ source(
   verbose = interactive()
 )
 
-stopifnot("pccc_deltas" %in% ls())
-stopifnot("pccc_pers" %in% ls())
+stopifnot(isTRUE("pccc_deltas" %in% ls()))
+stopifnot(isTRUE("pccc_pers" %in% ls()))
 
 # Expected counts in pccc_pers
 stopifnot(
@@ -196,7 +196,7 @@ stopifnot(
 # codes.  There are ICD-10 procedure codes starting with D which should not be
 # in any mapping.
 stopifnot(
-  pccc_deltas[per != 1 & icdv == 10 & dx == 0 & grepl("^D", code), .N == 0]
+  isTRUE(pccc_deltas[per != 1 & icdv == 10 & dx == 0 & grepl("^D", code), .N == 0])
 )
 
 # Tests related to PER 2
@@ -229,7 +229,7 @@ per2codes <-
     "Q87.0M", "Q87.0N", "Q87.0W"
   )
 stopifnot(
-  pccc_deltas[per == 2, full_code %in% per2codes]
+  identical(sort(pccc_deltas[per == 2, full_code]), sort(per2codes))
 )
 
 if (interactive()) {
