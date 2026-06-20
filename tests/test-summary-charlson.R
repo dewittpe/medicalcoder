@@ -21,6 +21,7 @@ charlson <- comorbidities(
 )
 
 summary_current <- summary(charlson)
+charlson_conditions <- charlson[["conditions"]]
 
 stopifnot(
   is.list(summary_current),
@@ -34,9 +35,9 @@ stopifnot(
   is.character(summary_current$conditions$condition),
   is.numeric(summary_current$conditions$count),
   is.numeric(summary_current$conditions$percent),
-  all(summary_current$conditions$count >= 0),
-  all(summary_current$conditions$percent >= 0),
-  all(summary_current$conditions$percent <= 100)
+  isTRUE(all(summary_current$conditions$count >= 0)),
+  isTRUE(all(summary_current$conditions$percent >= 0)),
+  isTRUE(all(summary_current$conditions$percent <= 100))
 )
 
 ################################################################################
@@ -53,8 +54,8 @@ copd_count <- summary_current$conditions[
 ]
 
 stopifnot(
-  aidshiv_count == sum(charlson$aidshiv),
-  copd_count   == sum(charlson$copd)
+  isTRUE(aidshiv_count == sum(charlson_conditions$aidshiv)),
+  isTRUE(copd_count   == sum(charlson_conditions$copd))
 )
 
 num_ge_1 <- summary_current$conditions[
@@ -69,15 +70,15 @@ num_ge_2 <- summary_current$conditions[
 ]
 
 stopifnot(
-  num_ge_1 == sum(charlson$num_cmrb >= 1),
-  num_ge_2 == sum(charlson$num_cmrb >= 2)
+  isTRUE(num_ge_1 == sum(charlson_conditions$num_cmrb >= 1)),
+  isTRUE(num_ge_2 == sum(charlson_conditions$num_cmrb >= 2))
 )
 
 ################################################################################
 # Age and index summaries align with expected calculations
 expected_age_summary <-
   {
-    age_count <- table(charlson$age_score, useNA = "always")
+    age_count <- table(charlson_conditions$age_score, useNA = "always")
     age_percent <- 100 * prop.table(age_count)
     data.frame(
       age_score = unname(names(age_count)),
@@ -91,11 +92,11 @@ stopifnot(identical(summary_current$age_summary, expected_age_summary))
 
 expected_index_summary <-
   data.frame(
-    min    = min(charlson$cci),
-    q1     = stats::quantile(charlson$cci, prob = 0.25),
-    median = stats::median(charlson$cci),
-    q3     = stats::quantile(charlson$cci, prob = 0.75),
-    max    = max(charlson$cci),
+    min    = min(charlson_conditions$cci),
+    q1     = stats::quantile(charlson_conditions$cci, prob = 0.25),
+    median = stats::median(charlson_conditions$cci),
+    q3     = stats::quantile(charlson_conditions$cci, prob = 0.75),
+    max    = max(charlson_conditions$cci),
     row.names = NULL
   )
 
@@ -119,7 +120,7 @@ summary_no_age <- summary(charlson_no_age)
 
 stopifnot(
   identical(summary_no_age$age_summary$age_score, NA_character_),
-  identical(summary_no_age$age_summary$count, nrow(charlson_no_age)),
+  identical(summary_no_age$age_summary$count, nrow(charlson_no_age[["conditions"]])),
   identical(summary_no_age$age_summary$percent, 100),
   !anyNA(row.names(summary_no_age$age_summary))
 )
@@ -127,7 +128,7 @@ stopifnot(
 ################################################################################
 # A non-current flag.method generates a warning but still returns the summary
 charlson_cumulative <- charlson
-attr(charlson_cumulative, "flag.method") <- "cumulative"
+charlson_cumulative[["metadata"]][["flag.method"]] <- "cumulative"
 
 warn_obj <- tryCatchWarning(summary(charlson_cumulative))
 
@@ -176,10 +177,10 @@ summary_zero <- summary(charlson_zero)
 stopifnot(
   is.list(summary_zero),
   identical(names(summary_zero), c("conditions", "age_summary", "index_summary")),
-  all(summary_zero$conditions$count == 0L),
-  !any(is.nan(summary_zero$conditions$percent)),
-  all(is.na(summary_zero$conditions$percent)),
-  all(summary_zero$index_summary == 0 | is.na(summary_zero$index_summary))
+  isTRUE(all(summary_zero$conditions$count == 0L)),
+  isTRUE(!any(is.nan(summary_zero$conditions$percent))),
+  isTRUE(all(is.na(summary_zero$conditions$percent))),
+  isTRUE(all(summary_zero$index_summary == 0 | is.na(summary_zero$index_summary)))
 )
 
 ################################################################################

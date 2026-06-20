@@ -18,6 +18,7 @@ elixhauser <- comorbidities(
 )
 
 summary_current <- summary(elixhauser)
+elixhauser_conditions <- elixhauser[["conditions"]]
 
 stopifnot(
   is.list(summary_current),
@@ -30,9 +31,9 @@ stopifnot(
   is.character(summary_current$conditions$condition),
   is.numeric(summary_current$conditions$count),
   is.numeric(summary_current$conditions$percent),
-  all(summary_current$conditions$count >= 0),
-  all(summary_current$conditions$percent >= 0),
-  all(summary_current$conditions$percent <= 100)
+  isTRUE(all(summary_current$conditions$count >= 0)),
+  isTRUE(all(summary_current$conditions$percent >= 0)),
+  isTRUE(all(summary_current$conditions$percent <= 100))
 )
 
 ################################################################################
@@ -47,8 +48,8 @@ diab_cx_count <- summary_current$conditions[
 ]
 
 stopifnot(
-  hf_count == sum(elixhauser$HF),
-  diab_cx_count == sum(elixhauser$DIAB_CX)
+  isTRUE(hf_count == sum(elixhauser_conditions$HF)),
+  isTRUE(diab_cx_count == sum(elixhauser_conditions$DIAB_CX))
 )
 
 num_ge_1 <- summary_current$conditions[
@@ -61,8 +62,8 @@ num_ge_2 <- summary_current$conditions[
 ]
 
 stopifnot(
-  num_ge_1 == sum(elixhauser$num_cmrb >= 1),
-  num_ge_2 == sum(elixhauser$num_cmrb >= 2)
+  isTRUE(num_ge_1 == sum(elixhauser_conditions$num_cmrb >= 1)),
+  isTRUE(num_ge_2 == sum(elixhauser_conditions$num_cmrb >= 2))
 )
 
 ################################################################################
@@ -84,16 +85,16 @@ stopifnot(
 expected_index_summary <-
   data.frame(
     index  = c("readmission", "mortality"),
-    min    = c(min(elixhauser$readmission_index),
-               min(elixhauser$mortality_index)),
-    q1     = c(stats::quantile(elixhauser$readmission_index, prob = 0.25),
-               stats::quantile(elixhauser$mortality_index, prob = 0.25)),
-    median = c(stats::median(elixhauser$readmission_index),
-               stats::median(elixhauser$mortality_index)),
-    q3     = c(stats::quantile(elixhauser$readmission_index, prob = 0.75),
-               stats::quantile(elixhauser$mortality_index, prob = 0.75)),
-    max    = c(max(elixhauser$readmission_index),
-               max(elixhauser$mortality_index)),
+    min    = c(min(elixhauser_conditions$readmission_index),
+               min(elixhauser_conditions$mortality_index)),
+    q1     = c(stats::quantile(elixhauser_conditions$readmission_index, prob = 0.25),
+               stats::quantile(elixhauser_conditions$mortality_index, prob = 0.25)),
+    median = c(stats::median(elixhauser_conditions$readmission_index),
+               stats::median(elixhauser_conditions$mortality_index)),
+    q3     = c(stats::quantile(elixhauser_conditions$readmission_index, prob = 0.75),
+               stats::quantile(elixhauser_conditions$mortality_index, prob = 0.75)),
+    max    = c(max(elixhauser_conditions$readmission_index),
+               max(elixhauser_conditions$mortality_index)),
     row.names = NULL,
     stringsAsFactors = FALSE
   )
@@ -103,7 +104,7 @@ stopifnot(identical(summary_current$index_summary, expected_index_summary))
 ################################################################################
 # A non-current flag.method generates a warning but still returns the summary
 elixhauser_cumulative <- elixhauser
-attr(elixhauser_cumulative, "flag.method") <- "cumulative"
+elixhauser_cumulative[["metadata"]][["flag.method"]] <- "cumulative"
 
 warn_obj <- tryCatchWarning(summary(elixhauser_cumulative))
 
@@ -149,14 +150,14 @@ summary_zero <- summary(elixhauser_zero)
 stopifnot(
   is.list(summary_zero),
   identical(names(summary_zero), c("conditions", "index_summary")),
-  all(summary_zero$conditions$count == 0L),
-  !any(is.nan(summary_zero$conditions$percent)),
-  all(is.na(summary_zero$conditions$percent)),
-  all(is.na(summary_zero$index_summary$min)),
-  all(is.na(summary_zero$index_summary$q1)),
-  all(is.na(summary_zero$index_summary$median)),
-  all(is.na(summary_zero$index_summary$q3)),
-  all(is.na(summary_zero$index_summary$max))
+  isTRUE(all(summary_zero$conditions$count == 0L)),
+  isTRUE(!any(is.nan(summary_zero$conditions$percent))),
+  isTRUE(all(is.na(summary_zero$conditions$percent))),
+  isTRUE(all(is.na(summary_zero$index_summary$min))),
+  isTRUE(all(is.na(summary_zero$index_summary$q1))),
+  isTRUE(all(is.na(summary_zero$index_summary$median))),
+  isTRUE(all(is.na(summary_zero$index_summary$q3))),
+  isTRUE(all(is.na(summary_zero$index_summary$max)))
 )
 
 ################################################################################
