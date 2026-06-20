@@ -33,22 +33,23 @@ res <- comorbidities(
   primarydx   = 0,
   flag.method = "current"
 )
+conditions <- res[["conditions"]]
 
 # P1: congestive heart failure and HTN_C
-stopifnot(res[["CHF"]][res[["patid"]] == "P1"] == 1L)
-stopifnot(res[["HTN_C"]][res[["patid"]] == "P1"] == 1L)
-stopifnot(res[["num_cmrb"]][res[["patid"]] == "P1"] == 2L)
+stopifnot(isTRUE(conditions[["CHF"]][conditions[["patid"]] == "P1"] == 1L))
+stopifnot(isTRUE(conditions[["HTN_C"]][conditions[["patid"]] == "P1"] == 1L))
+stopifnot(isTRUE(conditions[["num_cmrb"]][conditions[["patid"]] == "P1"] == 2L))
 
 # P2: diabetes (with and without complications) + obesity - the patient should
 # flag both but only have with complications reported.
-stopifnot(res[["DM"]][res[["patid"]] == "P2"]  == 0L)
-stopifnot(res[["DMCX"]][res[["patid"]] == "P2"] == 1L)
-stopifnot(res[["OBESE"]][res[["patid"]] == "P2"] == 1L)
-stopifnot(res[["num_cmrb"]][res[["patid"]] == "P2"] == 2L)
+stopifnot(isTRUE(conditions[["DM"]][conditions[["patid"]] == "P2"]  == 0L))
+stopifnot(isTRUE(conditions[["DMCX"]][conditions[["patid"]] == "P2"] == 1L))
+stopifnot(isTRUE(conditions[["OBESE"]][conditions[["patid"]] == "P2"] == 1L))
+stopifnot(isTRUE(conditions[["num_cmrb"]][conditions[["patid"]] == "P2"] == 2L))
 
 # P3: renal failure only
-stopifnot(res[["RENLFAIL"]][res[["patid"]] == "P3"] == 1L)
-stopifnot(res[["num_cmrb"]][res[["patid"]] == "P3"] == 1L)
+stopifnot(isTRUE(conditions[["RENLFAIL"]][conditions[["patid"]] == "P3"] == 1L))
+stopifnot(isTRUE(conditions[["num_cmrb"]][conditions[["patid"]] == "P3"] == 1L))
 
 ################################################################################
 #                                 End of File                                  #
