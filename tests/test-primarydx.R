@@ -44,9 +44,9 @@ resv <- comorbidities(
   primarydx.var = "primarydx"
 )
 
-stopifnot(identical(res0[["cmrb_flag"]], c(1L, 1L)))
-stopifnot(identical(res1[["cmrb_flag"]], c(0L, 0L)))
-stopifnot(identical(resv[["cmrb_flag"]], c(1L, 0L)))
+stopifnot(identical(res0[["conditions"]][["cmrb_flag"]], c(1L, 1L)))
+stopifnot(identical(res1[["conditions"]][["cmrb_flag"]], c(0L, 0L)))
+stopifnot(identical(resv[["conditions"]][["cmrb_flag"]], c(1L, 0L)))
 
 ################################################################################
 #                                 End of File                                  #
