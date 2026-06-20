@@ -23,16 +23,16 @@ rtn <- comorbidities(
 rtn <-
   merge(
     x = codes[, c("patid", "poaexempt", "condition")],
-    y = rtn,
+    y = rtn[["conditions"]],
     by = "patid"
   )
 
 # verify
 # ICD codes which are POA exempt should all flag to 1
 poaexempt_codes <- subset(rtn, poaexempt == 1L)
-for (cn in unique(rtn[["condition"]])) {
+for (cn in unique(poaexempt_codes[["condition"]])) {
   x <- subset(poaexempt_codes, condition == cn)
-  stopifnot(all(x[[cn]] == 1L))
+  stopifnot(isTRUE(nrow(x) > 0L && all(x[[cn]] == 1L)))
 }
 
 # now for the conditions
@@ -48,10 +48,10 @@ poa_not_required_conds <-
   poa_tbl[["condition"]][poa_tbl[[method]] == 1L & poa_tbl$poa_required == 0L]
 
 for (cn in poa_required_conds) {
-  stopifnot(all(rtn[[cn]] == 0L))
+  stopifnot(isTRUE(nrow(rtn) > 0L && all(rtn[[cn]] == 0L)))
 }
 
 for (cn in poa_not_required_conds) {
   x <- subset(rtn, condition == cn)
-  stopifnot(all(x[[cn]] == 1L))
+  stopifnot(isTRUE(nrow(x) > 0L && all(x[[cn]] == 1L)))
 }
