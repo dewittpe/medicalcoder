@@ -7,27 +7,29 @@ lf <- lookup_icd_codes(factor(c("E11.9","I50.9")), regex = FALSE)
 lr <- lookup_icd_codes(c("^E11\\.9$","^I50\\.9$"), regex = TRUE)
 stopifnot(
   identical(lx, lf),
-  all(lx$full_code %in% lr$full_code),
-  all(lr$full_code %in% lx$full_code)
+  isTRUE(nrow(lx) > 0L),
+  isTRUE(nrow(lr) > 0L),
+  isTRUE(all(lx$full_code %in% lr$full_code)),
+  isTRUE(all(lr$full_code %in% lx$full_code))
 )
 
 # verify that a zero length regex will throw an error
 m0 <- tryCatchError(lookup_icd_codes(x = "", regex = TRUE))
 stopifnot(
   inherits(m0, "error"),
-  m0[["message"]] == "When regex = TRUE, x must be non-empty strings."
+  isTRUE(m0[["message"]] == "When regex = TRUE, x must be non-empty strings.")
 )
 
 m00 <- tryCatchError(lookup_icd_codes(x = c("^C4A", ""), regex = TRUE))
 stopifnot(
   inherits(m00, "error"),
-  m00[["message"]] == "When regex = TRUE, x must be non-empty strings."
+  isTRUE(m00[["message"]] == "When regex = TRUE, x must be non-empty strings.")
 )
 
 m000 <- tryCatchError(lookup_icd_codes(x = character(0), regex = TRUE))
 stopifnot(
   inherits(m000, "error"),
-  m000[["message"]] == "When regex = TRUE, x must be non-empty strings."
+  isTRUE(m000[["message"]] == "When regex = TRUE, x must be non-empty strings.")
 )
 
 # out of the data.frame should be the same columns with or without matches
