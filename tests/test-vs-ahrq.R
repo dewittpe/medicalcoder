@@ -44,11 +44,11 @@ common_args <-
     flag.method = "current"
   )
 
-mdcr_2022 <- do.call(comorbidities, c(common_args, list(data = subset(codes, CMR_VERSION == 2022.1), method = "elixhauser_ahrq2022")))
-mdcr_2023 <- do.call(comorbidities, c(common_args, list(data = subset(codes, CMR_VERSION == 2023.1), method = "elixhauser_ahrq2023")))
-mdcr_2024 <- do.call(comorbidities, c(common_args, list(data = subset(codes, CMR_VERSION == 2024.1), method = "elixhauser_ahrq2024")))
-mdcr_2025 <- do.call(comorbidities, c(common_args, list(data = subset(codes, CMR_VERSION == 2025.1), method = "elixhauser_ahrq2025")))
-mdcr_2026 <- do.call(comorbidities, c(common_args, list(data = subset(codes, CMR_VERSION == 2026.1), method = "elixhauser_ahrq2026")))
+mdcr_2022 <- do.call(comorbidities, c(common_args, list(data = subset(codes, CMR_VERSION == 2022.1), method = "elixhauser_ahrq2022")))[["conditions"]]
+mdcr_2023 <- do.call(comorbidities, c(common_args, list(data = subset(codes, CMR_VERSION == 2023.1), method = "elixhauser_ahrq2023")))[["conditions"]]
+mdcr_2024 <- do.call(comorbidities, c(common_args, list(data = subset(codes, CMR_VERSION == 2024.1), method = "elixhauser_ahrq2024")))[["conditions"]]
+mdcr_2025 <- do.call(comorbidities, c(common_args, list(data = subset(codes, CMR_VERSION == 2025.1), method = "elixhauser_ahrq2025")))[["conditions"]]
+mdcr_2026 <- do.call(comorbidities, c(common_args, list(data = subset(codes, CMR_VERSION == 2026.1), method = "elixhauser_ahrq2026")))[["conditions"]]
 
 mdcr_vs_ahrq_2022 <- merge(x = mdcr_2022, y = ahrq_results, all.x = TRUE, by = c("CMR_VERSION", "PATID"))
 mdcr_vs_ahrq_2023 <- merge(x = mdcr_2023, y = ahrq_results, all.x = TRUE, by = c("CMR_VERSION", "PATID"))
@@ -56,11 +56,11 @@ mdcr_vs_ahrq_2024 <- merge(x = mdcr_2024, y = ahrq_results, all.x = TRUE, by = c
 mdcr_vs_ahrq_2025 <- merge(x = mdcr_2025, y = ahrq_results, all.x = TRUE, by = c("CMR_VERSION", "PATID"))
 mdcr_vs_ahrq_2026 <- merge(x = mdcr_2026, y = ahrq_results, all.x = TRUE, by = c("CMR_VERSION", "PATID"))
 
-stopifnot("same number of rows (2022)" = nrow(mdcr_2022) == nrow(subset(ahrq_results, CMR_VERSION == 2022.1)) & nrow(mdcr_2022) == nrow(mdcr_vs_ahrq_2022))
-stopifnot("same number of rows (2023)" = nrow(mdcr_2023) == nrow(subset(ahrq_results, CMR_VERSION == 2023.1)) & nrow(mdcr_2023) == nrow(mdcr_vs_ahrq_2023))
-stopifnot("same number of rows (2024)" = nrow(mdcr_2024) == nrow(subset(ahrq_results, CMR_VERSION == 2024.1)) & nrow(mdcr_2024) == nrow(mdcr_vs_ahrq_2024))
-stopifnot("same number of rows (2025)" = nrow(mdcr_2025) == nrow(subset(ahrq_results, CMR_VERSION == 2025.1)) & nrow(mdcr_2025) == nrow(mdcr_vs_ahrq_2025))
-stopifnot("same number of rows (2026)" = nrow(mdcr_2026) == nrow(subset(ahrq_results, CMR_VERSION == 2026.1)) & nrow(mdcr_2026) == nrow(mdcr_vs_ahrq_2026))
+stopifnot("same number of rows (2022)" = isTRUE(nrow(mdcr_2022) == nrow(subset(ahrq_results, CMR_VERSION == 2022.1)) & nrow(mdcr_2022) == nrow(mdcr_vs_ahrq_2022)))
+stopifnot("same number of rows (2023)" = isTRUE(nrow(mdcr_2023) == nrow(subset(ahrq_results, CMR_VERSION == 2023.1)) & nrow(mdcr_2023) == nrow(mdcr_vs_ahrq_2023)))
+stopifnot("same number of rows (2024)" = isTRUE(nrow(mdcr_2024) == nrow(subset(ahrq_results, CMR_VERSION == 2024.1)) & nrow(mdcr_2024) == nrow(mdcr_vs_ahrq_2024)))
+stopifnot("same number of rows (2025)" = isTRUE(nrow(mdcr_2025) == nrow(subset(ahrq_results, CMR_VERSION == 2025.1)) & nrow(mdcr_2025) == nrow(mdcr_vs_ahrq_2025)))
+stopifnot("same number of rows (2026)" = isTRUE(nrow(mdcr_2026) == nrow(subset(ahrq_results, CMR_VERSION == 2026.1)) & nrow(mdcr_2026) == nrow(mdcr_vs_ahrq_2026)))
 
 # check each condition - this can change year to year
 cnds_2022 <- subset(get_elixhauser_index_scores(), !is.na(elixhauser_ahrq2022), select = "condition", drop = TRUE)
@@ -113,20 +113,20 @@ for (j in cnds_2026) {
   }
 }
 
-stopifnot(mdcr_vs_ahrq_2022[["mortality_index"]]   == mdcr_vs_ahrq_2022[["CMR_Index_Mortality"]])
-stopifnot(mdcr_vs_ahrq_2022[["readmission_index"]] == mdcr_vs_ahrq_2022[["CMR_Index_Readmission"]])
+stopifnot(isTRUE(all(mdcr_vs_ahrq_2022[["mortality_index"]]   == mdcr_vs_ahrq_2022[["CMR_Index_Mortality"]])))
+stopifnot(isTRUE(all(mdcr_vs_ahrq_2022[["readmission_index"]] == mdcr_vs_ahrq_2022[["CMR_Index_Readmission"]])))
 
-stopifnot(mdcr_vs_ahrq_2023[["mortality_index"]]   == mdcr_vs_ahrq_2023[["CMR_Index_Mortality"]])
-stopifnot(mdcr_vs_ahrq_2023[["readmission_index"]] == mdcr_vs_ahrq_2023[["CMR_Index_Readmission"]])
+stopifnot(isTRUE(all(mdcr_vs_ahrq_2023[["mortality_index"]]   == mdcr_vs_ahrq_2023[["CMR_Index_Mortality"]])))
+stopifnot(isTRUE(all(mdcr_vs_ahrq_2023[["readmission_index"]] == mdcr_vs_ahrq_2023[["CMR_Index_Readmission"]])))
 
-stopifnot(mdcr_vs_ahrq_2024[["mortality_index"]]   == mdcr_vs_ahrq_2024[["CMR_Index_Mortality"]])
-stopifnot(mdcr_vs_ahrq_2024[["readmission_index"]] == mdcr_vs_ahrq_2024[["CMR_Index_Readmission"]])
+stopifnot(isTRUE(all(mdcr_vs_ahrq_2024[["mortality_index"]]   == mdcr_vs_ahrq_2024[["CMR_Index_Mortality"]])))
+stopifnot(isTRUE(all(mdcr_vs_ahrq_2024[["readmission_index"]] == mdcr_vs_ahrq_2024[["CMR_Index_Readmission"]])))
 
-stopifnot(mdcr_vs_ahrq_2025[["mortality_index"]]   == mdcr_vs_ahrq_2025[["CMR_Index_Mortality"]])
-stopifnot(mdcr_vs_ahrq_2025[["readmission_index"]] == mdcr_vs_ahrq_2025[["CMR_Index_Readmission"]])
+stopifnot(isTRUE(all(mdcr_vs_ahrq_2025[["mortality_index"]]   == mdcr_vs_ahrq_2025[["CMR_Index_Mortality"]])))
+stopifnot(isTRUE(all(mdcr_vs_ahrq_2025[["readmission_index"]] == mdcr_vs_ahrq_2025[["CMR_Index_Readmission"]])))
 
-stopifnot(mdcr_vs_ahrq_2026[["mortality_index"]]   == mdcr_vs_ahrq_2026[["CMR_Index_Mortality"]])
-stopifnot(mdcr_vs_ahrq_2026[["readmission_index"]] == mdcr_vs_ahrq_2026[["CMR_Index_Readmission"]])
+stopifnot(isTRUE(all(mdcr_vs_ahrq_2026[["mortality_index"]]   == mdcr_vs_ahrq_2026[["CMR_Index_Mortality"]])))
+stopifnot(isTRUE(all(mdcr_vs_ahrq_2026[["readmission_index"]] == mdcr_vs_ahrq_2026[["CMR_Index_Readmission"]])))
 
 ################################################################################
 #                                 End of File                                  #
