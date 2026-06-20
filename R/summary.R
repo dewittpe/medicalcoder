@@ -25,7 +25,8 @@
 #'                 dx.var = "dx",
 #'                 method = "charlson_quan2011",
 #'                 flag.method = 'current',
-#'                 poa = 1)
+#'                 poa = 1,
+#'                 primarydx = 0)
 #' summary(charlson_results)
 #'
 #' elixhauser_results <-
@@ -34,7 +35,7 @@
 #'                 id.vars = "patid",
 #'                 dx.var = "dx",
 #'                 method = "elixhauser_ahrq2025",
-#'                 primarydx = 1,
+#'                 primarydx = 0,
 #'                 flag.method = 'current',
 #'                 poa = 1)
 #' summary(elixhauser_results)

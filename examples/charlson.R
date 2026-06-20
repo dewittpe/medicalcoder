@@ -1,9 +1,8 @@
 mdcr_charlson_flags <-
-  comorbidities(data = mdcr, id.vars = "patid", icd.codes = "code", poa = 1, method = "charlson_quan2005")
+  comorbidities(data = mdcr, id.vars = "patid", icd.codes = "code", poa = 1, primarydx = 0, method = "charlson_quan2005")
 
-#charlson_index_scores
-
-#charlson_summary_table(mdcr_charlson_flags)
+head(mdcr_charlson_flags[["conditions"]])
+summary(mdcr_charlson_flags)
 
 
 #data          = mdcr
@@ -11,8 +10,8 @@ mdcr_charlson_flags <-
 #icd.codes     = "code"
 #icdv.var      = "icdv"
 #icdv          = NULL
-#dxpr.var      = "dxpr"
-#dxpr          = NULL
+#dx.var        = "dx"
+#dx            = NULL
 #age.var       = "age"
 #primarydx     = NULL
 #primarydx.var = NULL

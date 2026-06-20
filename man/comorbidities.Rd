@@ -251,7 +251,8 @@ pccc_v3.1_results <-
                 method = "pccc_v3.1",
                 flag.method = 'current',
                 poa = 1)
-str(pccc_v3.1_results)
+str(pccc_v3.1_results, max.level = 1)
+head(pccc_v3.1_results[["conditions"]])
 summary(pccc_v3.1_results)
 
 pccc_v3.1_subcondition_results <-
@@ -263,6 +264,7 @@ pccc_v3.1_subcondition_results <-
                 flag.method = 'current',
                 poa = 1,
                 subconditions = TRUE)
+str(pccc_v3.1_subcondition_results[["subconditions"]], max.level = 1)
 summary(pccc_v3.1_subcondition_results)
 
 charlson_results <-
@@ -272,7 +274,8 @@ charlson_results <-
                 dx.var = "dx",
                 method = "charlson_quan2011",
                 flag.method = 'current',
-                poa = 1)
+                poa = 1,
+                primarydx = 0)
 summary(charlson_results)
 
 elixhauser_results <-
