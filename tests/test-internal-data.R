@@ -32,14 +32,14 @@ internal_data_sets <-
 mdcr <- getNamespace("medicalcoder")
 
 # are all the expected sets in the medicalcoder namespace?
-stopifnot(all(internal_data_sets %in% names(mdcr)))
+stopifnot(isTRUE(all(internal_data_sets %in% names(mdcr))))
 
 # check that there are not unaccounted for data sets.  the ..mdcr_internal_
 # prefix and .. suffix is expected.  noted in the data-raw/build_sysdata.R
 stopifnot(
-  all(
+  isTRUE(all(
     grep("\\.\\.mdcr_internal_.+\\.\\.$", names(mdcr), value = TRUE) %in% internal_data_sets
-  )
+  ))
 )
 
 ################################################################################
@@ -115,8 +115,8 @@ user_visible_get_methods <-
   )
 
 # check that the expected methods are accounted for
-stopifnot(all(user_visible_get_methods %in% names(mdcr)))
-stopifnot(all(grep("get_.+", names(mdcr), value = TRUE) %in% user_visible_get_methods))
+stopifnot(isTRUE(all(user_visible_get_methods %in% names(mdcr))))
+stopifnot(isTRUE(all(grep("get_.+", names(mdcr), value = TRUE) %in% user_visible_get_methods)))
 
 # all the get_* methods have zero arguments except for get_icd_codes
 for (m in user_visible_get_methods) {
@@ -227,7 +227,7 @@ ns <-
     by = user_visible[["pccc_codes"]][c("icdv", "dx", "code")],
     FUN = sum
   )
-stopifnot(unlist(ns[variants]) %in% c(0L, 1L, 2L))
+stopifnot(isTRUE(all(unlist(ns[variants]) %in% c(0L, 1L, 2L))))
 
 ################################################################################
 # ICD code specific checks
@@ -262,26 +262,26 @@ for (n in grep("^icd_", names(user_visible), value = TRUE)) {
 # For the biggest set of icd codes let's make sure fields are at least populated
 # as exptected
 stopifnot(
-  !any(is.na(user_visible[["icd_dh"]][["icdv"]])),
-  all(user_visible[["icd_dh"]][["icdv"]] %in% c(9L, 10L)),
-  !any(is.na(user_visible[["icd_dh"]][["dx"]])),
-  all(user_visible[["icd_dh"]][["dx"]] %in% c(0L, 1L)),
-  !any(is.na(user_visible[["icd_dh"]][["full_code"]])),
-  !any(is.na(user_visible[["icd_dh"]][["code"]])),
-  all(user_visible[["icd_dh"]][["code"]] == sub("\\.", "", user_visible[["icd_dh"]][["full_code"]])),
-  !any(is.na(user_visible[["icd_dh"]][["src"]])),
-  all(user_visible[["icd_dh"]][["src"]] %in% c("cdc", "cms", "who", "ihacpa", "socialstyrelsen")),
-  !any(is.na(user_visible[["icd_dh"]][["known_start"]])),
-  !any(is.na(user_visible[["icd_dh"]][["known_end"]])),
-  all(user_visible[["icd_dh"]][["known_start"]] <= user_visible[["icd_dh"]][["known_end"]]),
+  isTRUE(!any(is.na(user_visible[["icd_dh"]][["icdv"]]))),
+  isTRUE(all(user_visible[["icd_dh"]][["icdv"]] %in% c(9L, 10L))),
+  isTRUE(!any(is.na(user_visible[["icd_dh"]][["dx"]]))),
+  isTRUE(all(user_visible[["icd_dh"]][["dx"]] %in% c(0L, 1L))),
+  isTRUE(!any(is.na(user_visible[["icd_dh"]][["full_code"]]))),
+  isTRUE(!any(is.na(user_visible[["icd_dh"]][["code"]]))),
+  isTRUE(all(user_visible[["icd_dh"]][["code"]] == sub("\\.", "", user_visible[["icd_dh"]][["full_code"]]))),
+  isTRUE(!any(is.na(user_visible[["icd_dh"]][["src"]]))),
+  isTRUE(all(user_visible[["icd_dh"]][["src"]] %in% c("cdc", "cms", "who", "ihacpa", "socialstyrelsen"))),
+  isTRUE(!any(is.na(user_visible[["icd_dh"]][["known_start"]]))),
+  isTRUE(!any(is.na(user_visible[["icd_dh"]][["known_end"]]))),
+  isTRUE(all(user_visible[["icd_dh"]][["known_start"]] <= user_visible[["icd_dh"]][["known_end"]])),
   identical(is.na(user_visible[["icd_dh"]][["assignable_start"]]), is.na(user_visible[["icd_dh"]][["assignable_end"]])),
-  all(user_visible[["icd_dh"]][["assignable_start"]] <= user_visible[["icd_dh"]][["assignable_end"]], na.rm = TRUE),
-  !any(is.na(user_visible[["icd_dh"]][["desc"]])),
-  !any(is.na(user_visible[["icd_dh"]][["desc_start"]])),
-  !any(is.na(user_visible[["icd_dh"]][["desc_end"]])),
-  all(user_visible[["icd_dh"]][["desc_start"]] <= user_visible[["icd_dh"]][["desc_end"]]),
-  !any(is.na(user_visible[["icd_dh"]][["chapter"]])),
-  !any(is.na(user_visible[["icd_dh"]][["category"]]))
+  isTRUE(all(user_visible[["icd_dh"]][["assignable_start"]] <= user_visible[["icd_dh"]][["assignable_end"]], na.rm = TRUE)),
+  isTRUE(!any(is.na(user_visible[["icd_dh"]][["desc"]]))),
+  isTRUE(!any(is.na(user_visible[["icd_dh"]][["desc_start"]]))),
+  isTRUE(!any(is.na(user_visible[["icd_dh"]][["desc_end"]]))),
+  isTRUE(all(user_visible[["icd_dh"]][["desc_start"]] <= user_visible[["icd_dh"]][["desc_end"]])),
+  isTRUE(!any(is.na(user_visible[["icd_dh"]][["chapter"]]))),
+  isTRUE(!any(is.na(user_visible[["icd_dh"]][["category"]])))
 )
 
 # check subchapter
@@ -290,10 +290,10 @@ i9p <- which(user_visible[["icd_dh"]][["icdv"]] == 9 & user_visible[["icd_dh"]][
 i10d <- which(user_visible[["icd_dh"]][["icdv"]] == 10 & user_visible[["icd_dh"]][["dx"]] == 1)
 i10p <- which(user_visible[["icd_dh"]][["icdv"]] == 10 & user_visible[["icd_dh"]][["dx"]] == 0)
 stopifnot(
-  !any(is.na(user_visible[["icd_dh"]][["subchapter"]][i9d])),
-  all(is.na(user_visible[["icd_dh"]][["subchapter"]][i9p])),
-  !any(is.na(user_visible[["icd_dh"]][["subchapter"]][i10d])),
-  !any(is.na(user_visible[["icd_dh"]][["subchapter"]][i10p]))
+  isTRUE(!any(is.na(user_visible[["icd_dh"]][["subchapter"]][i9d]))),
+  isTRUE(all(is.na(user_visible[["icd_dh"]][["subchapter"]][i9p]))),
+  isTRUE(!any(is.na(user_visible[["icd_dh"]][["subchapter"]][i10d]))),
+  isTRUE(!any(is.na(user_visible[["icd_dh"]][["subchapter"]][i10p])))
 )
 
 #subset(user_visible[["icd_dh"]], is.na(subchapter) & icdv == 10 & dx == 1) |> head()
