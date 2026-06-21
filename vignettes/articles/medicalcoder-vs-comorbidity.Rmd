@@ -153,6 +153,11 @@ medicalcoder_charlson_results <-
     method = "charlson_quan2011"
   )
 ```
+The return from `medicalcoder::comorbidities()` is a list object. We only need
+the "conditions" element for this following comparisons.
+```{r}
+str(medicalcoder_charlson_results, max.level = 1)
+```
 
 For `comorbidity::comorbidity()`, we will need to make two calls, one for the
 ICD-9 codes and one for the ICD-10 codes.  We will then need to combine the
@@ -205,10 +210,10 @@ We can now compare the comorbidity flags between the two packages.  First we
 check that we have the same number of rows and all the patid are accounted for.
 
 ```{r}
-nrow(medicalcoder_charlson_results) == nrow(comorbidity_charlson_results)
+nrow(medicalcoder_charlson_results[["conditions"]]) == nrow(comorbidity_charlson_results)
 
-all(mdcr$patid %in% medicalcoder_charlson_results$patid)
-all(medicalcoder_charlson_results$patid %in% mdcr$patid)
+all(mdcr$patid %in% medicalcoder_charlson_results[["conditions"]][["patid"]])
+all(medicalcoder_charlson_results[["conditions"]][["patid"]] %in% mdcr$patid)
 
 all(mdcr$patid %in% comorbidity_charlson_results$patid)
 all(comorbidity_charlson_results$patid %in% mdcr$patid)
@@ -218,8 +223,8 @@ There are differences in the results in terms of the names and numbers of
 columns returned.
 
 ```{r}
-dim(medicalcoder_charlson_results)
-names(medicalcoder_charlson_results)
+dim(medicalcoder_charlson_results[["conditions"]])
+names(medicalcoder_charlson_results[["conditions"]])
 
 dim(comorbidity_charlson_results)
 names(comorbidity_charlson_results)
@@ -232,7 +237,7 @@ together by patid.
 charlson_delta <-
   merge(
     x = comorbidity_charlson_results,
-    y = medicalcoder_charlson_results,
+    y = medicalcoder_charlson_results[["conditions"]],
     all = TRUE,
     by = "patid"
   )
@@ -351,7 +356,7 @@ build nice tables via
 [kableExtra](https://CRAN.R-project.org/package=kableExtra).
 
 ```{r}
-x <- summary(medicalcoder_charlson_results)[[1]][, c("condition_description", "count", "percent")]
+x <- summary(medicalcoder_charlson_results)[["conditions"]][, c("condition_description", "count", "percent")]
 
 kbl(
   x = x,
@@ -379,6 +384,11 @@ medicalcoder_elixhauser_results <-
     primarydx = 0L, # assume all codes are secondary diagnoses
     method = "elixhauser_quan2005"
   )
+```
+Again, for the following comparisons we are only interested in the "conditions"
+element of the return.
+```{r}
+str(medicalcoder_elixhauser_results, max.level = 1)
 ```
 
 For `comorbidity::comorbidity()`, we will need to make two calls, one for the
@@ -416,10 +426,10 @@ We can now compare the comorbidity flags between the two packages.  First we
 check that we have the same number of rows and all the patid are accounted for.
 
 ```{r}
-nrow(medicalcoder_elixhauser_results) == nrow(comorbidity_elixhauser_results)
+nrow(medicalcoder_elixhauser_results[["conditions"]]) == nrow(comorbidity_elixhauser_results)
 
-all(mdcr$patid %in% medicalcoder_elixhauser_results$patid)
-all(medicalcoder_elixhauser_results$patid %in% mdcr$patid)
+all(mdcr$patid %in% medicalcoder_elixhauser_results[["conditions"]][["patid"]])
+all(medicalcoder_elixhauser_results[["conditions"]][["patid"]] %in% mdcr$patid)
 
 all(mdcr$patid %in% comorbidity_elixhauser_results$patid)
 all(comorbidity_elixhauser_results$patid %in% mdcr$patid)
@@ -429,8 +439,8 @@ There are differences in the results in terms of the names and numbers of
 columns returned.
 
 ```{r}
-dim(medicalcoder_elixhauser_results)
-names(medicalcoder_elixhauser_results)
+dim(medicalcoder_elixhauser_results[["conditions"]])
+names(medicalcoder_elixhauser_results[["conditions"]])
 
 dim(comorbidity_elixhauser_results)
 names(comorbidity_elixhauser_results)
@@ -443,7 +453,7 @@ together by patid.
 elixhauser_delta <-
   merge(
     x = comorbidity_elixhauser_results,
-    y = medicalcoder_elixhauser_results,
+    y = medicalcoder_elixhauser_results[["conditions"]],
     all = TRUE,
     by = "patid"
   )
@@ -503,10 +513,10 @@ identical in `elixhauser_delta` and remove the columns.
 # the HTN_C is only in the medicalcoder results
 stopifnot(
   identical(
-    medicalcoder_elixhauser_results[["HTN_C"]],
+    medicalcoder_elixhauser_results[["conditions"]][["HTN_C"]],
     as.integer(
-      medicalcoder_elixhauser_results[["HTN_UNCX"]] |
-        medicalcoder_elixhauser_results[["HTN_CX"]]
+      medicalcoder_elixhauser_results[["conditions"]][["HTN_UNCX"]] |
+        medicalcoder_elixhauser_results[["conditions"]][["HTN_CX"]]
     )
   )
 )
@@ -557,7 +567,7 @@ be used to build nice tables via
 [kableExtra](https://CRAN.R-project.org/package=kableExtra).
 
 ```{r}
-x <- summary(medicalcoder_elixhauser_results)[[1]][, c("condition", "count", "percent")]
+x <- summary(medicalcoder_elixhauser_results)[["conditions"]][, c("condition", "count", "percent")]
 
 kbl(
   x = x,
@@ -597,6 +607,7 @@ mdcr_results <-
     method = "charlson_quan2005",
     poa = 1,
     primarydx = 0L)
+mdcr_results <- mdcr_results[["conditions"]]
 
 cmrb_results <-
   rbind(
@@ -666,7 +677,7 @@ when invalid codes are submitted.
 ```{r}
 df <- data.frame(id = "pat1", code = "C40-NOT-AN-ICD-CODE")
 comorbidity::comorbidity(x = df, id = "id", code = "code", assign0 = TRUE, map = "charlson_icd10_quan")
-medicalcoder::comorbidities(data = df, id.var = "id", icd.codes = "code", method = "charlson_quan2005", poa = 1, primarydx = 0)
+medicalcoder::comorbidities(data = df, id.vars = "id", icd.codes = "code", method = "charlson_quan2005", poa = 1, primarydx = 0)[["conditions"]]
 ```
 
 ## Elixhauser
@@ -680,6 +691,7 @@ mdcr_results <-
     method = "elixhauser_quan2005",
     poa = 1,
     primarydx = 0L)
+mdcr_results <- mdcr_results[["conditions"]]
 
 cmrb_results <-
   rbind(
