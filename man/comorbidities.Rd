@@ -111,7 +111,8 @@ subconditions (PCCC only). Subcondition tables are returned in the
 mapped to comorbidity conditions. \code{mapping = "precomputed"} uses the
 precomputed ICD code-condition links included with medicalcoder and is the
 default. \code{mapping = "regex"} applies the method's regular expressions
-directly to the input ICD codes. See Details.}
+directly to the input ICD codes and is currently available only for
+Charlson methods. See Details.}
 
 \item{export_inferred_conditions}{Logical scalar; when \code{TRUE} and
 \code{flag.method = "cumulative"}, include a table describing reported and
@@ -344,9 +345,9 @@ https://www.hcup-us.ahrq.gov/toolssoftware/comorbidityicd10/comorbidity_icd10.js
 }
 \seealso{
 \itemize{
-\item \code{vignettes(topic = "comorbidities", package = "medicalcoder")}
-\item \code{vignettes(topic = "pccc", package = "medicalcoder")}
-\item \code{vignettes(topic = "charlson", package = "medicalcoder")}
-\item \code{vignettes(topic = "elixhauser", package = "medicalcoder")}
+\item \code{vignette(topic = "comorbidities", package = "medicalcoder")}
+\item \code{vignette(topic = "pccc", package = "medicalcoder")}
+\item \code{vignette(topic = "charlson", package = "medicalcoder")}
+\item \code{vignette(topic = "elixhauser", package = "medicalcoder")}
 }
 }

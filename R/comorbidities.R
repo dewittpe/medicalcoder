@@ -177,10 +177,10 @@
 #'     https://www.hcup-us.ahrq.gov/toolssoftware/comorbidityicd10/comorbidity_icd10.jsp
 #'
 #' @seealso
-#' * `vignettes(topic = "comorbidities", package = "medicalcoder")`
-#' * `vignettes(topic = "pccc", package = "medicalcoder")`
-#' * `vignettes(topic = "charlson", package = "medicalcoder")`
-#' * `vignettes(topic = "elixhauser", package = "medicalcoder")`
+#' * `vignette(topic = "comorbidities", package = "medicalcoder")`
+#' * `vignette(topic = "pccc", package = "medicalcoder")`
+#' * `vignette(topic = "charlson", package = "medicalcoder")`
+#' * `vignette(topic = "elixhauser", package = "medicalcoder")`
 #'
 #' @example examples/comorbidities.R
 #'
