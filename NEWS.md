@@ -30,7 +30,12 @@
   mapping between ICD codes and the conditions to be done via precomputed link
   tables or via regex (part of #45)
 
-* Add `charlson_sundararajan2004`
+* The `comorbidities()` gains a new argument `inferred.conditions`.  When `TRUE`
+  and `flag.method = "cumulative"` a `data.frame` will be returned as part of
+  the `medicalcoder_comorbidities` object with the reported and inferred
+  comorbidities.
+
+* Add `charlson_sundararajan2004`, (re #45)
 
 * Add `charlson_ludvigsson2021`, a Charlson-style Swedish register-based
   comorbidity method.

@@ -23,7 +23,7 @@ comorbidities(
   compact.codes = TRUE,
   subconditions = FALSE,
   mapping = c("precomputed", "regex"),
-  export_inferred_conditions = FALSE
+  inferred.conditions = FALSE
 )
 }
 \arguments{
@@ -114,7 +114,7 @@ default. \code{mapping = "regex"} applies the method's regular expressions
 directly to the input ICD codes and is currently available only for
 Charlson methods. See Details.}
 
-\item{export_inferred_conditions}{Logical scalar; when \code{TRUE} and
+\item{inferred.conditions}{Logical scalar; when \code{TRUE} and
 \code{flag.method = "cumulative"}, include a table describing reported and
 carried-forward conditions in the \code{inferred_conditions} element of the
 result. For other flagging methods, \code{inferred_conditions} is \code{NULL}.}
@@ -132,7 +132,7 @@ possible, this table retains the storage class of \code{data}: \code{data.frame}
 \item \code{subconditions}: When \code{subconditions = TRUE}, a named list of PCCC
 subcondition indicator tables. Each table contains the applicable
 \code{id.vars} and one column per subcondition. Otherwise, \code{NULL}.
-\item \code{inferred_conditions}: When \code{export_inferred_conditions = TRUE} and
+\item \code{inferred_conditions}: When \code{inferred.conditions = TRUE} and
 \code{flag.method = "cumulative"}, a table containing \code{id.vars}, \code{condition},
 reported and inferred POA status, reported and inferred primary-diagnosis
 status when applicable, and \code{occurrence}. The occurrence number identifies

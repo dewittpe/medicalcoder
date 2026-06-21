@@ -85,7 +85,7 @@
 #'   directly to the input ICD codes and is currently available only for
 #'   Charlson methods. See Details.
 #'
-#' @param export_inferred_conditions Logical scalar; when `TRUE` and
+#' @param inferred.conditions Logical scalar; when `TRUE` and
 #'   `flag.method = "cumulative"`, include a table describing reported and
 #'   carried-forward conditions in the `inferred_conditions` element of the
 #'   result. For other flagging methods, `inferred_conditions` is `NULL`.

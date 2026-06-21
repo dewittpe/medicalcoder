@@ -99,7 +99,7 @@ stopifnot(
       "    age.var = NULL, primarydx.var = NULL, primarydx = NULL, flag.method = c(\"current\", ",
       "        \"cumulative\"), full.codes = TRUE, compact.codes = TRUE, ",
       "    subconditions = FALSE, mapping = c(\"precomputed\", \"regex\"), ",
-      "    export_inferred_conditions = FALSE) ",
+      "    inferred.conditions = FALSE) ",
       "NULL")
 )
 ```

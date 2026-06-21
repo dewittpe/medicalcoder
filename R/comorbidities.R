@@ -83,7 +83,7 @@
 #' * `subconditions`: When `subconditions = TRUE`, a named list of PCCC
 #'   subcondition indicator tables. Each table contains the applicable
 #'   `id.vars` and one column per subcondition. Otherwise, `NULL`.
-#' * `inferred_conditions`: When `export_inferred_conditions = TRUE` and
+#' * `inferred_conditions`: When `inferred.conditions = TRUE` and
 #'   `flag.method = "cumulative"`, a table containing `id.vars`, `condition`,
 #'   reported and inferred POA status, reported and inferred primary-diagnosis
 #'   status when applicable, and `occurrence`. The occurrence number identifies
@@ -199,7 +199,7 @@ comorbidities <- function(data,
                           compact.codes = TRUE,
                           subconditions = FALSE,
                           mapping = c("precomputed", "regex"),
-                          export_inferred_conditions = FALSE
+                          inferred.conditions = FALSE
                           ) {
   UseMethod("comorbidities")
 }
@@ -219,7 +219,7 @@ comorbidities.data.frame <- function(data,
                                      compact.codes = TRUE,
                                      subconditions = FALSE,
                                      mapping = c("precomputed", "regex"),
-                                     export_inferred_conditions = FALSE
+                                     inferred.conditions = FALSE
                                      ) {
 
   ##############################################################################
@@ -227,7 +227,7 @@ comorbidities.data.frame <- function(data,
   assert_scalar_logical(full.codes)
   assert_scalar_logical(compact.codes)
   stopifnot(full.codes | compact.codes)
-  assert_scalar_logical(export_inferred_conditions)
+  assert_scalar_logical(inferred.conditions)
 
   method <- match.arg(arg = method, choices = comorbidities_methods(), several.ok = FALSE)
   mapping <- match.arg(arg = mapping, choices = c("precomputed", "regex"), several.ok = FALSE)
@@ -348,9 +348,9 @@ comorbidities.data.frame <- function(data,
     }
   }
 
-  if (export_inferred_conditions && flag.method == "current") {
-    warning("`export_inferred_conditions = TRUE` is only meaningful when `flag.method = 'cumulative'.", call. = FALSE)
-    export_inferred_conditions <- FALSE
+  if (inferred.conditions && flag.method == "current") {
+    warning("`inferred.conditions = TRUE` is only meaningful when `flag.method = 'cumulative'.", call. = FALSE)
+    inferred.conditions <- FALSE
   }
 
   ##############################################################################
@@ -702,7 +702,7 @@ comorbidities.data.frame <- function(data,
     #
     # If the user wants the inferred_conditions exported, this is where that
     # data object needs to be built
-    if (export_inferred_conditions) {
+    if (inferred.conditions) {
       inferred_conditions <- mdcr_copy(x = cmrb)
       inferred_conditions <- mdcr_set(x = inferred_conditions, j = method, value = NULL)
       inferred_conditions <- mdcr_setnames(x = inferred_conditions, old = poa.var, new = "reported_poa")
@@ -717,7 +717,7 @@ comorbidities.data.frame <- function(data,
       cmrb[[primarydx.var]][cmrb[[encid]] > cmrb[["first_occurrence"]]] <- 0L
     }
 
-    if (export_inferred_conditions) {
+    if (inferred.conditions) {
       inferred_conditions <- mdcr_set(inferred_conditions, j = "inferred_poa", value = cmrb[[poa.var]])
       if (!is.null(primarydx.var)) {
         inferred_conditions <- mdcr_set(inferred_conditions, j = "inferred_primarydx", value = cmrb[[primarydx.var]])
@@ -728,7 +728,7 @@ comorbidities.data.frame <- function(data,
 
     cmrb <- mdcr_unique(cmrb)
 
-    if (export_inferred_conditions) {
+    if (inferred.conditions) {
       inferred_conditions <- mdcr_unique(inferred_conditions)
 
       inferred_conditions <-
@@ -840,7 +840,7 @@ comorbidities.data.frame <- function(data,
     list(
       conditions = if (subconditions) ccc[["conditions"]] else ccc,
       subconditions = if (subconditions) ccc[["subconditions"]] else NULL,
-      inferred_conditions = if (export_inferred_conditions) inferred_conditions else NULL,
+      inferred_conditions = if (inferred.conditions) inferred_conditions else NULL,
       metadata = list(
         method = method,
         id.vars = id.vars,

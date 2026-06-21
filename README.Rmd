@@ -175,7 +175,7 @@ This is a named list with a consistent structure:
 * `subconditions`: a named list of subcondition indicator tables when
   `subconditions = TRUE`; otherwise `NULL`.
 * `inferred_conditions`: details about conditions carried forward from earlier
-  encounters when `export_inferred_conditions = TRUE` and
+  encounters when `inferred.conditions = TRUE` and
   `flag.method = "cumulative"`; otherwise `NULL`.
 * `metadata`: the method, ID variables, flagging method, and mapping strategy
   used to produce the result.
