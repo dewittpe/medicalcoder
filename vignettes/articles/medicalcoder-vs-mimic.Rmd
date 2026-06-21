@@ -43,16 +43,14 @@ a local data set.
 
 The SQL file used here is vendored from
 [`mimic-code` commit `278df75ec30991ff3a6f5ceb6d2221635a085e9f`](https://raw.githubusercontent.com/MIT-LCP/mimic-code/278df75ec30991ff3a6f5ceb6d2221635a085e9f/mimic-iv/concepts/comorbidity/charlson.sql)
-so this article does not depend on network access during rendering.
+and is included with the article source at
+`vignettes/articles/charlson-mimic-iv/mimic-iv-charlson-278df75.sql`.
 
 ```{r}
+sql_file <- file.path("charlson-mimic-iv", "mimic-iv-charlson-278df75.sql")
 mimic_charson_query <-
   scan(
-    file = system.file(
-      "sql", "mimic-iv-charlson-278df75.sql",
-      package = "medicalcoder",
-      mustWork = TRUE
-    ),
+    file = sql_file,
     what = character(),
     sep = "\n"
   )

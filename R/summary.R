@@ -102,7 +102,7 @@ summary.medicalcoder_comorbidities <- function(object, ...) {
       lapply(object[["subconditions"]],
         function(x) {
           cols <- names(x)
-          cols <- cols[-which(cols %in% object[["metadata"]][["id.vars"]])]
+          cols <- cols[!(cols %in% object[["metadata"]][["id.vars"]])]
           colSums(mdcr_select(x, cols))
         })
 

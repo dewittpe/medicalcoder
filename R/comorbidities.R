@@ -234,6 +234,7 @@ comorbidities.data.frame <- function(data,
   assert_scalar_logical(compact.codes)
   stopifnot(full.codes | compact.codes)
   assert_scalar_logical(inferred.conditions)
+  inferred_conditions <- NULL
 
   method <- match.arg(arg = method, choices = comorbidities_methods(), several.ok = FALSE)
   mapping <- match.arg(arg = mapping, choices = c("precomputed", "regex"), several.ok = FALSE)
@@ -745,13 +746,15 @@ comorbidities.data.frame <- function(data,
         )
       inferred_conditions <- mdcr_setorder(inferred_conditions, by = id.vars)
 
+      grp <- interaction(inferred_conditions[id.vars2], drop = TRUE, lex.order = TRUE)
       occurrence <-
-          tapply(
-            X     = ifelse(!is.na(inferred_conditions[["occurrence"]]), 1L, 0L),
-            INDEX = inferred_conditions[[id.vars2]],
-            FUN   = cumsum
+        as.integer(
+          stats::ave(
+            ifelse(!is.na(inferred_conditions[["occurrence"]]), 1L, 0L),
+            grp,
+            FUN = cumsum
           )
-      occurrence <- do.call(c,occurrence)
+        )
 
       inferred_conditions <- mdcr_set(inferred_conditions, j = "occurrence", value = occurrence)
 
@@ -861,9 +864,9 @@ comorbidities.data.frame <- function(data,
 
 #' @export
 print.medicalcoder_comorbidities <- function(x, ...) {
-  if (!is.null(x[["subconditions"]])) {
+  if (is.null(x[["subconditions"]])) {
     cat(sprintf("\nComorbidities via %s\n\n", x[["metadata"]][["method"]]))
-    NextMethod(generic = "print", object = x[["conditions"]], ...)
+    print(x[["conditions"]], ...)
   } else {
     cat(sprintf("\nComorbidities and Subconditions via %s\n\n", x[["metadata"]][["method"]]))
     l1 <- utils::capture.output(utils::str(x[["conditions"]], max.level = 1, give.attr = FALSE))
