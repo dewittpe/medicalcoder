@@ -58,7 +58,10 @@ The columns of this data.frame are:
   ICD-10-PCS standard.
 * `full_code`: the full ICD code with the decimal point if applicable.
 * `code`: compact code, any applicable decimal point has been omitted.
-* `src`: a character vector denoting the source of the information.
+* `src`: a character vector denoting the source of the information: `cms` for
+  U.S. ICD-9/10-CM and ICD-9/10-PCS, `cdc` for U.S. ICD-9-CM/PCS extracts and
+  ICD-10 mortality codes, `ihacpa` for Australian ICD-10-AM,
+  `socialstyrelsen` for Swedish ICD-10-SE, and `who` for WHO ICD-10.
 * `known_start`: The first year that the medicalcoder package has data for this
   code.
   * For codes based on the ICD-9-CM, ICD-9-PCS, ICD-10-CM, ICD-10-PCS standards
@@ -70,17 +73,21 @@ The columns of this data.frame are:
   * For ICD-10-AM codes from IHACPA, the year is the Australian _financial
     year_, July 1 - June 30.
 
-  * For codes from the World Health Organization (WHO), the Centers for Disease
-    Control and Prevention (CDC) Mortality coding, and Socialstyrelsen, the year
-    is _calendar year_.
+  * For codes from the World Health Organization (WHO), CDC ICD-10 Mortality,
+    and Socialstyrelsen, the year is the _calendar year_.
   * For ICD-9, CDC extracts in medicalcoder span fiscal years 1997--2012 and
     CMS extracts span fiscal years 2006--2015.
 
 * `known_end`: the last year the code was part of the standard, or that the
   medicalcoder package has data for.
   * ICD-9 CMS extracts run through FY 2015; CDC ICD-9 extracts end at FY 2012.
-  * ICD-10 is active.  The current version of medicalcoder has details on ICD-10
-    codes through FY `r max(icd_codes[["known_end"]][icd_codes[["icdv"]] == 10L])`.
+  * ICD-10 is active. The current version of medicalcoder has details on ICD-10
+    codes through year `r max(icd_codes[["known_end"]][icd_codes[["icdv"]] == 10L])`;
+    whether that is a fiscal, financial, or calendar year depends on the source.
+  * WHO last published the ICD-10 list used here in 2019. medicalcoder carries
+    that list forward for calendar years 2020 and 2021 before WHO's transition
+    to ICD-11 on January 1, 2022. WHO `known_end` and `assignable_end` values may
+    therefore be 2021 without representing a new publication in those years.
 
 ```{r, label = "example-for-assignable", include = FALSE}
 d4 <- lookup_icd_codes(x = "^C84\\.6", regex = TRUE, compact.codes = FALSE)
@@ -89,8 +96,9 @@ d4 <- unique(d4)
 d4
 ```
 
-* `assignable_start`: The first year (fiscal or calendar based on src) a code
-  was assignable. `NA` indicates the code was never assignable.  Assignable
+* `assignable_start`: The first fiscal, financial, or calendar year (based on
+  source and code system) a code was assignable. `NA` indicates the code was
+  never assignable. Assignable
   status can vary from source to source. For example the code "C84.6" is an
   assignable code using the WHO ICD-10 codes because there is no code with more
   granularity.  The same code is not assignable under ICD-10-CM because codes
@@ -111,8 +119,10 @@ str(get_icd_codes(with.descriptions = TRUE))
 The return has the additional columns:
 
 * `desc`: the description of the code
-* `desc_start`: the first fiscal_year that the description was documented
-* `desc_end`: the last fiscal_year that the description was documented
+* `desc_start`: the first applicable fiscal, financial, or calendar year that
+  the description was documented.
+* `desc_end`: the last applicable fiscal, financial, or calendar year that the
+  description was documented.
 
 Over time the descriptions for some ICD codes were modified within sources.
 There are also many differences between sources.  The tables below have several

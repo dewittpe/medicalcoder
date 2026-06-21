@@ -28,17 +28,19 @@ diagnostic (ICD-9-CM, ICD-10-CM, ICD-10-AM, ICD-10-SE, CDC mortality,
 WHO), \code{0L} for procedural (ICD-9-PCS, ICD-10-PCS). Defaults to both.}
 
 \item{src}{Character vector of code sources. One or more of \code{"cdc"}, \code{"cms"},
-\code{"ihacpa"}, \code{"socialstyrelsen"}, and \code{"who"}. Defaults to all. CDC and CMS
-are from the United States (ICD-9/10-CM and ICD-9/10-PCS), IHACPA from
-Australia (ICD-10-AM), Socialstyrelsen from Sweden (ICD-10-SE), and the
-World Health Organization (ICD-10).}
+\code{"ihacpa"}, \code{"socialstyrelsen"}, and \code{"who"}. Defaults to all. CMS provides
+U.S. ICD-9/10-CM and ICD-9/10-PCS data. CDC provides U.S. ICD-9-CM/PCS
+extracts and ICD-10 mortality data. IHACPA provides Australian ICD-10-AM,
+Socialstyrelsen provides Swedish ICD-10-SE, and WHO provides ICD-10.}
 
 \item{year}{Numeric scalar. Calendar, fiscal, or financial year to
 reference. Default is the most current year available per source. For
 ICD-9, CMS data run through fiscal year 2015 and CDC extracts through 2012;
-ICD-10 sources are updated annually. Calendar year for WHO, CDC mortality,
-and Socialstyrelsen. U.S. federal fiscal year for CMS. Australian financial
-year for IHACPA.}
+ICD-10 sources have source-specific coverage. Calendar years apply to WHO,
+CDC ICD-10 mortality, and Socialstyrelsen. U.S. federal fiscal years apply
+to CMS and CDC ICD-9-CM/PCS. Australian financial years apply to IHACPA.
+The WHO 2019 ICD-10 list is carried forward through calendar year 2021;
+this does not represent new WHO publications for 2020 or 2021.}
 
 \item{headerok}{Logical scalar. If \code{FALSE} (default), only assignable
 codes are considered valid; if \code{TRUE}, header codes are also accepted.}
@@ -69,11 +71,11 @@ C00.0, C00.1, C00.2, C00.3, C00.4, C00.5, C00.6, C00.7, C00.8, and C00.9
 exist. Those four-character codes are assignable (as of 2025) because no
 five-character descendants (e.g., C00.40) exist.
 
-When the source is the World Health Organization (WHO), CDC Mortality, or
-Socialstyrelsen, years refer to calendar years. CMS sources use the U.S.
-federal fiscal year, which starts on October 1 (e.g., fiscal year 2024 runs
-2023-10-01 to 2024-09-30). IHACPA sources use the Australian financial year,
-which starts on July 1 and ends on June 30.
+WHO, CDC ICD-10 mortality, and Socialstyrelsen years are calendar years. CMS
+and CDC ICD-9-CM/PCS years are U.S. federal fiscal years, which start on
+October 1 (e.g., fiscal year 2024 runs 2023-10-01 to 2024-09-30). IHACPA
+years are Australian financial years, which start on July 1 and end on June
+30.
 }
 \details{
 Similarly for ICD-9-CM: "055" is a header for measles; 055.0, 055.1,
@@ -81,8 +83,14 @@ Similarly for ICD-9-CM: "055" is a header for measles; 055.0, 055.1,
 Code 055.7 is a header because 055.71 and 055.72 exist.
 
 Some codes change status across years. For example, ICD-9-CM 516.3 was
-assignable in fiscal years 1997–2011 for the CDC extracts (2006–2011 for CMS)
-and became a header in 2012–2015.
+assignable in fiscal years 1997–2011 for the CDC ICD-9-CM extracts
+(2006–2011 for CMS) and became a header in 2012–2015.
+
+WHO last published the ICD-10 code list used here in 2019. Because WHO
+transitioned to ICD-11 on January 1, 2022, medicalcoder carries the 2019
+ICD-10 list forward for calendar years 2020 and 2021. Thus WHO rows may have
+\code{known_end} or \code{assignable_end} equal to 2021; this does not indicate that WHO
+published new ICD-10 lists in 2020 or 2021.
 }
 \examples{
 ################################################################################

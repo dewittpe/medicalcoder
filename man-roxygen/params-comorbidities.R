@@ -82,7 +82,8 @@
 #'   mapped to comorbidity conditions. `mapping = "precomputed"` uses the
 #'   precomputed ICD code-condition links included with medicalcoder and is the
 #'   default. `mapping = "regex"` applies the method's regular expressions
-#'   directly to the input ICD codes. See Details.
+#'   directly to the input ICD codes and is currently available only for
+#'   Charlson methods. See Details.
 #'
 #' @param export_inferred_conditions Logical scalar; when `TRUE` and
 #'   `flag.method = "cumulative"`, include a table describing reported and

@@ -30,7 +30,8 @@
 #' * `dx`: diagnostic code (1) or procedure code (0)
 #' * `full_code`: the full code string
 #' * `code`: the compact codes string
-#' * `src`: the source - CMS, CDC, or WHO.
+#' * `src`: the source: CMS, CDC, IHACPA, Socialstyrelsen, or WHO. See
+#'   [get_icd_codes()] for source and year details.
 #' * year ranges (`known_*`, `assignable_*`).
 #'
 #' @family ICD tools

@@ -1,5 +1,5 @@
 #' @param src Character vector of code sources. One or more of `"cdc"`, `"cms"`,
-#' `"ihacpa"`, `"socialstyrelsen"`, and `"who"`. Defaults to all. CDC and CMS
-#' are from the United States (ICD-9/10-CM and ICD-9/10-PCS), IHACPA from
-#' Australia (ICD-10-AM), Socialstyrelsen from Sweden (ICD-10-SE), and the
-#' World Health Organization (ICD-10).
+#' `"ihacpa"`, `"socialstyrelsen"`, and `"who"`. Defaults to all. CMS provides
+#' U.S. ICD-9/10-CM and ICD-9/10-PCS data. CDC provides U.S. ICD-9-CM/PCS
+#' extracts and ICD-10 mortality data. IHACPA provides Australian ICD-10-AM,
+#' Socialstyrelsen provides Swedish ICD-10-SE, and WHO provides ICD-10.

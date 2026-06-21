@@ -358,7 +358,8 @@ The columns are:
 * `src`: character string denoting the source of the ICD code information.
     * `cms`: The ICD-9-CM, ICD-9-PCS, ICD-10-CM, or ICD-10-PCS codes curated
       by the Centers for Medicare and Medicaid Services (CMS).
-    * `cdc`: CDC mortality coding.
+    * `cdc`: U.S. ICD-9-CM/PCS extracts and ICD-10 mortality coding from the
+      Centers for Disease Control and Prevention (CDC).
     * `ihacpa`: ICD-10-AM codes from the Independent Health and Aged Care
       Pricing Authority.
     * `socialstyrelsen`: ICD-10-SE codes from Sweden's National Board of
@@ -366,20 +367,24 @@ The columns are:
     * `who`: World Health Organization.
 
 * `known_start`: The earliest source year when source data for the code was
-  available in the source code for medicalcoder.  Codes from CMS are for the
-  United States fiscal year. Codes from IHACPA use the Australian financial
-  year, which starts July 1 and ends June 30. Codes from CDC, Socialstyrelsen,
-  and WHO are calendar year. The United States fiscal year starts October 1 and
-  concludes September 30. For example, fiscal year 2013 started October 1 2012
-  and concluded September 30 2013.
+  available in medicalcoder. CMS and CDC ICD-9-CM/PCS years are United States
+  fiscal years. CDC ICD-10 mortality, Socialstyrelsen, and WHO years are
+  calendar years. IHACPA uses the Australian financial year, which starts July
+  1 and ends June 30. The United States fiscal year starts October 1 and ends
+  September 30. For example, fiscal year 2013 started October 1, 2012 and ended
+  September 30, 2013.
 
   To reemphasize that the year is for the data within medicalcoder.  For
   ICD-9-CM, the codes went into effect for fiscal year 1980.  The source code
   only has documented source files for the codes dating back to
   `r min(get_icd_codes()$known_start)`.
 
-* `known_end`: The latest (fiscal) year when the code was part of the ICD
-  system and/or known within the medicalcoder lookup tables.
+* `known_end`: The latest fiscal, financial, or calendar year, as applicable,
+  when the code is represented in the medicalcoder lookup tables. WHO last
+  published the ICD-10 list used here in 2019. medicalcoder carries that list
+  forward through calendar years 2020 and 2021, before WHO's transition to
+  ICD-11 on January 1, 2022. Thus a WHO `known_end` of 2021 does not indicate a
+  new WHO publication in 2020 or 2021.
 
 * Assignable codes.  Some codes are header codes, e.g., ICD-10-CM three-digit
   code Z94 is a header code because the four-digit codes Z94.0, Z94.1, Z94.2,
@@ -387,8 +392,10 @@ The columns are:
   assignable codes because no five-digit codes with the same initial four-digits
   exist.  Z94.8 is a header code because the five-digit codes Z94.81, Z94.82,
   Z94.83, Z94.84, and Z94.89 exist.
-    * `assignable_start`: Earliest (fiscal) year when the code was assignable.
-    * `assignable_end`: Latest (fiscal) year when the code was assignable.
+    * `assignable_start`: Earliest applicable fiscal, financial, or calendar
+      year when the code was assignable.
+    * `assignable_end`: Latest applicable fiscal, financial, or calendar year
+      when the code was assignable.
 
 ```{r z94, echo = TRUE, results = "markup"}
 subset(

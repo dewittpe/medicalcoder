@@ -36,7 +36,8 @@ A \code{data.frame} with one or more rows per input, including columns
 \item \code{dx}: diagnostic code (1) or procedure code (0)
 \item \code{full_code}: the full code string
 \item \code{code}: the compact codes string
-\item \code{src}: the source - CMS, CDC, or WHO.
+\item \code{src}: the source: CMS, CDC, IHACPA, Socialstyrelsen, or WHO. See
+\code{\link[=get_icd_codes]{get_icd_codes()}} for source and year details.
 \item year ranges (\verb{known_*}, \verb{assignable_*}).
 }
 }
@@ -48,11 +49,11 @@ C00.0, C00.1, C00.2, C00.3, C00.4, C00.5, C00.6, C00.7, C00.8, and C00.9
 exist. Those four-character codes are assignable (as of 2025) because no
 five-character descendants (e.g., C00.40) exist.
 
-When the source is the World Health Organization (WHO), CDC Mortality, or
-Socialstyrelsen, years refer to calendar years. CMS sources use the U.S.
-federal fiscal year, which starts on October 1 (e.g., fiscal year 2024 runs
-2023-10-01 to 2024-09-30). IHACPA sources use the Australian financial year,
-which starts on July 1 and ends on June 30.
+WHO, CDC ICD-10 mortality, and Socialstyrelsen years are calendar years. CMS
+and CDC ICD-9-CM/PCS years are U.S. federal fiscal years, which start on
+October 1 (e.g., fiscal year 2024 runs 2023-10-01 to 2024-09-30). IHACPA
+years are Australian financial years, which start on July 1 and end on June
+30.
 }
 \details{
 ICD codes should be character vectors. These tools work with either
@@ -64,8 +65,14 @@ Similarly for ICD-9-CM: "055" is a header for measles; 055.0, 055.1,
 Code 055.7 is a header because 055.71 and 055.72 exist.
 
 Some codes change status across years. For example, ICD-9-CM 516.3 was
-assignable in fiscal years 1997–2011 for the CDC extracts (2006–2011 for CMS)
-and became a header in 2012–2015.
+assignable in fiscal years 1997–2011 for the CDC ICD-9-CM extracts
+(2006–2011 for CMS) and became a header in 2012–2015.
+
+WHO last published the ICD-10 code list used here in 2019. Because WHO
+transitioned to ICD-11 on January 1, 2022, medicalcoder carries the 2019
+ICD-10 list forward for calendar years 2020 and 2021. Thus WHO rows may have
+\code{known_end} or \code{assignable_end} equal to 2021; this does not indicate that WHO
+published new ICD-10 lists in 2020 or 2021.
 }
 \seealso{
 \itemize{

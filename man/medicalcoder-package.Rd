@@ -32,10 +32,20 @@ of installation and use.
 
 This design choice was made for several reasons.
 \enumerate{
-\item Ease of installation: * Only requirement is R >= 3.5.0. * No need for
-external files, downloads, or other packages for the ICD database.
-\item Works well with different data paradigms * Base R \code{data.frames}, *
-\href{https://tidyverse.org/}{tidyverse} \code{tibble}s, and * \code{data.table}s from the
+\item Ease of installation:
+}
+\itemize{
+\item Only requirement is R >= 3.5.0.
+\item No need for external files, downloads, or other packages for the ICD
+database.
+}
+\enumerate{
+\item Works well with different data paradigms
+}
+\itemize{
+\item Base R \code{data.frames},
+\item \href{https://tidyverse.org/}{tidyverse} \code{tibble}s, and
+\item \code{data.table}s from the
 \href{https://rdatatable.gitlab.io/data.table/}{data.table} package.
 }
 
@@ -56,7 +66,15 @@ loaded, the needed internal lookup tables are generated and cached.
 \seealso{
 \code{\link[=comorbidities]{comorbidities()}}, \code{\link[=get_icd_codes]{get_icd_codes()}}, \code{\link[=is_icd]{is_icd()}},
 \itemize{
-\item Vignette for working with ICD codes: * \code{vignette(topic = "icd", package = "medicalcoder")} * Vignettes for applying comorbidities: * \code{vignette(topic = "comorbidities", package = "medicalcoder")} * \code{vignette(topic = "pccc", package = "medicalcoder")} * \code{vignette(topic = "charlson", package = "medicalcoder")} * \code{vignette(topic = "elixhauser", package = "medicalcoder")}
+\item Vignette for working with ICD codes:
+\itemize{
+\item \code{vignette(topic = "icd", package = "medicalcoder")}
+\item Vignettes for applying comorbidities:
+\item \code{vignette(topic = "comorbidities", package = "medicalcoder")}
+\item \code{vignette(topic = "pccc", package = "medicalcoder")}
+\item \code{vignette(topic = "charlson", package = "medicalcoder")}
+\item \code{vignette(topic = "elixhauser", package = "medicalcoder")}
+}
 }
 }
 \author{

@@ -7,8 +7,9 @@
 #' ## Sources
 #' There are five sources of ICD codes.
 #' * `cms`: Codes from the ICD-9-CM, ICD-9-PCS, ICD-10-CM, and ICD-10-PCS standards.
-#' * `who`: Codes from World Health Organization.
-#' * `cdc`: Codes from CDC Mortality coding standard.
+#' * `who`: ICD-10 codes from the World Health Organization.
+#' * `cdc`: U.S. ICD-9-CM/PCS extracts and ICD-10 mortality codes from the
+#'   Centers for Disease Control and Prevention.
 #' * `ihacpa`: ICD-10-AM codes from the Independent Health and Aged Care
 #'   Pricing Authority.
 #' * `socialstyrelsen`: ICD-10-SE codes from Sweden's National Board of Health
@@ -32,8 +33,9 @@
 #' `known_start`, `known_end`, `assignable_start`, `assignable_end`,
 #' `desc_start` and `desc_end`. For ICD codes with `src == "cms"`, these are
 #' fiscal years. For codes with `src == "ihacpa"`, these are financial years.
-#' For codes with `src == "cdc"`, `src == "socialstyrelsen"`, or `src == "who"`
-#' these are calendar years.
+#' For codes with `src == "who"` or `src == "socialstyrelsen"`, these are
+#' calendar years. CDC depends on the code system: CDC ICD-9-CM/PCS extracts use
+#' U.S. fiscal years, while CDC ICD-10 mortality data use calendar years.
 #'
 #' `known_start` is the first fiscal, financial, or calendar year (depending on
 #' source) that the medicalcoder package has definitive source data for.
@@ -42,11 +44,17 @@
 #' extracts start in fiscal year 2006 and run through fiscal year 2015.  As such
 #' 1997 is the earliest "known start" for ICD-9 within medicalcoder.
 #'
-#' `known_end` is the last fiscal, financial, or calendar year (depending on source)
-#' for which we have definitive source data for.  For ICD-9-CM and ICD-9-PCS,
-#' CMS provides data through fiscal year 2015, while the CDC extracts stop at
-#' fiscal year 2012.  For ICD-10-CM and ICD-10-PCS, which are active, it is just
-#' the last year of known data.  ICD-10 from the WHO ends in 2019.
+#' `known_end` is the last fiscal, financial, or calendar year (depending on
+#' source and code system) for which the code is represented in medicalcoder.
+#' For ICD-9-CM and ICD-9-PCS, CMS provides data through fiscal year 2015, while
+#' the CDC extracts stop at fiscal year 2012. For active code systems, it is the
+#' last year represented by the available source data.
+#'
+#' WHO last published the ICD-10 list used here in 2019. Because WHO
+#' transitioned to ICD-11 on January 1, 2022, medicalcoder carries the 2019 list
+#' forward for calendar years 2020 and 2021. WHO rows may therefore have
+#' `known_end` or `assignable_end` equal to 2021, without implying a new WHO
+#' publication in either year.
 #'
 #' ## Header and Assignable Codes
 #'

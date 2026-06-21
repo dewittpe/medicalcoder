@@ -32,12 +32,21 @@
 #'
 #' This design choice was made for several reasons.
 #'
-#' 1. Ease of installation: * Only requirement is R >= 3.5.0. * No need for
-#' external files, downloads, or other packages for the ICD database.
+#' 1. Ease of installation:
 #'
-#' 2. Works well with different data paradigms * Base R `data.frames`, *
-#' [tidyverse](https://tidyverse.org/) `tibble`s, and * `data.table`s from the
-#' [data.table](https://rdatatable.gitlab.io/data.table/) package.
+#'   * Only requirement is R >= 3.5.0.
+#'
+#'   * No need for external files, downloads, or other packages for the ICD
+#'   database.
+#'
+#' 2. Works well with different data paradigms
+#'
+#'   * Base R `data.frames`,
+#'
+#'   * [tidyverse](https://tidyverse.org/) `tibble`s, and
+#'
+#'   * `data.table`s from the
+#'   [data.table](https://rdatatable.gitlab.io/data.table/) package.
 #'
 #' One of the reasons for focusing on building a self-contained package with no
 #' need for additional namespaces is to make installation and use in a
@@ -54,11 +63,19 @@
 #'
 #' @seealso [comorbidities()], [get_icd_codes()], [is_icd()],
 #'
-#' * Vignette for working with ICD codes: * `vignette(topic = "icd", package =
-#' "medicalcoder")` * Vignettes for applying comorbidities: * `vignette(topic =
-#' "comorbidities", package = "medicalcoder")` * `vignette(topic = "pccc",
-#' package = "medicalcoder")` * `vignette(topic = "charlson", package =
-#' "medicalcoder")` * `vignette(topic = "elixhauser", package = "medicalcoder")`
+#' * Vignette for working with ICD codes:
+#'
+#'   * `vignette(topic = "icd", package = "medicalcoder")`
+#'
+#'   * Vignettes for applying comorbidities:
+#'
+#'   * `vignette(topic = "comorbidities", package = "medicalcoder")`
+#'
+#'   * `vignette(topic = "pccc", package = "medicalcoder")`
+#'
+#'   * `vignette(topic = "charlson", package = "medicalcoder")`
+#'
+#'   * `vignette(topic = "elixhauser", package = "medicalcoder")`
 #'
 #' @keywords internal
 "_PACKAGE"

@@ -47,8 +47,9 @@
 
 ## Improvements
 
-* WHO ICD-10 codes extend 2019 to 2020 and 2021 and the WHO last published in
-  2019 and then transitioned to ICD-11 January 1 2022.
+* Treat the WHO ICD-10 list published in 2019 as applicable in calendar years
+  2020 and 2021. WHO did not publish new ICD-10 lists for those years and
+  transitioned to ICD-11 on January 1, 2022.
 
 
 # medicalcoder 0.8.1
