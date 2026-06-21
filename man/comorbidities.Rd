@@ -95,9 +95,13 @@ associated with the current \code{id.vars} are considered when flagging
 comorbidities.  When \code{flag.method = 'cumulative'} then all prior encounters
 are considered when flagging comorbidities. See \strong{Details}.}
 
-\item{full.codes, compact.codes}{Logical; when \code{TRUE} compare
-\code{data[[icd.codes]]} against full and/or compact ICD codes in the
-method’s lookup tables. Full ICD codes include a decimal point (when
+\item{full.codes, compact.codes}{Logical values indicating whether dotted
+ICD codes, compact ICD codes, or both should be considered when
+\code{mapping = "precomputed"}. When \code{mapping = "regex"}, code-format
+tolerance is built into the package-supplied regular expressions, so
+submitted codes may be dotted or compact without separate expansion.
+
+Full ICD codes include a decimal point (when
 applicable) and compact codes omit the decimal point. For example:
 \code{B95.0} is the full ICD-10-CM diagnostic code for “Streptococcus,
 group A, as the cause of disease classified elsewhere,” whereas \code{B950}
@@ -107,12 +111,18 @@ is the associated compact code.}
 subconditions (PCCC only). Subcondition tables are returned in the
 \code{subconditions} element of the result.}
 
-\item{mapping}{Character string specifying how \code{data[[icd.codes]]} should be
-mapped to comorbidity conditions. \code{mapping = "precomputed"} uses the
-precomputed ICD code-condition links included with medicalcoder and is the
-default. \code{mapping = "regex"} applies the method's regular expressions
-directly to the input ICD codes and is currently available only for
-Charlson methods. See Details.}
+\item{mapping}{The mapping strategy to use. The default,
+\code{"precomputed"}, matches submitted ICD codes against package data
+containing the relevant code-to-comorbidity relationships.
+\code{"regex"} matches submitted ICD codes against regular expressions
+derived from the published comorbidity definitions.
+
+The regular expressions used by \code{"regex"} are written to match both
+dotted and compact ICD code formats. For example, a pattern such as
+\code{"^F02\\\\.?4"} matches both \code{"F02.4"} and \code{"F024"}. The expressions
+are anchored at the start of the code and are generally intended to
+match ICD code prefixes, so descendant codes also match when implied by
+the comorbidity definition.}
 
 \item{inferred.conditions}{Logical scalar; when \code{TRUE} and
 \code{flag.method = "cumulative"}, include a table describing reported and
@@ -239,6 +249,12 @@ applies the method's regular expressions directly to the input ICD codes.
 Regex mapping is currently implemented for Charlson methods and is useful
 when codes come from an ICD modification that may not be completely covered
 by the precomputed code-condition links, or when auditing a method.
+
+The regex and precomputed strategies are intended to give equivalent
+condition assignments for supported mappings. The regex strategy is useful
+for checking the published pattern definitions directly, while the
+precomputed strategy is generally preferred for speed and for strict
+validation against known ICD code lists.
 }
 \examples{
 pccc_v3.1_results <-

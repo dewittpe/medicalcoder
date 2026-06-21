@@ -71,6 +71,12 @@
 #' when codes come from an ICD modification that may not be completely covered
 #' by the precomputed code-condition links, or when auditing a method.
 #'
+#' The regex and precomputed strategies are intended to give equivalent
+#' condition assignments for supported mappings. The regex strategy is useful
+#' for checking the published pattern definitions directly, while the
+#' precomputed strategy is generally preferred for speed and for strict
+#' validation against known ICD code lists.
+#'
 #' @return An object of class `medicalcoder_comorbidities`. The object is always
 #' a named list with four elements, regardless of the selected method or
 #' optional outputs:

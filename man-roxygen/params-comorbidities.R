@@ -63,9 +63,13 @@
 #' comorbidities.  When `flag.method = 'cumulative'` then all prior encounters
 #' are considered when flagging comorbidities. See **Details**.
 #'
-#' @param full.codes,compact.codes Logical; when `TRUE` compare
-#'   `data[[icd.codes]]` against full and/or compact ICD codes in the
-#'   method’s lookup tables. Full ICD codes include a decimal point (when
+#' @param full.codes,compact.codes Logical values indicating whether dotted
+#'   ICD codes, compact ICD codes, or both should be considered when
+#'   `mapping = "precomputed"`. When `mapping = "regex"`, code-format
+#'   tolerance is built into the package-supplied regular expressions, so
+#'   submitted codes may be dotted or compact without separate expansion.
+#'
+#'   Full ICD codes include a decimal point (when
 #'   applicable) and compact codes omit the decimal point. For example:
 #'   `B95.0` is the full ICD-10-CM diagnostic code for “Streptococcus,
 #'   group A, as the cause of disease classified elsewhere,” whereas `B950`
@@ -78,12 +82,19 @@
 #'   subconditions (PCCC only). Subcondition tables are returned in the
 #'   `subconditions` element of the result.
 #'
-#' @param mapping Character string specifying how `data[[icd.codes]]` should be
-#'   mapped to comorbidity conditions. `mapping = "precomputed"` uses the
-#'   precomputed ICD code-condition links included with medicalcoder and is the
-#'   default. `mapping = "regex"` applies the method's regular expressions
-#'   directly to the input ICD codes and is currently available only for
-#'   Charlson methods. See Details.
+#' @param mapping The mapping strategy to use. The default,
+#'   `"precomputed"`, matches submitted ICD codes against package data
+#'   containing the relevant code-to-comorbidity relationships.
+#'   `"regex"` matches submitted ICD codes against regular expressions
+#'   derived from the published comorbidity definitions.
+#'
+#'   The regular expressions used by `"regex"` are written to match both
+#'   dotted and compact ICD code formats. For example, a pattern such as
+#'   `"^F02\\.?4"` matches both `"F02.4"` and `"F024"`. The expressions
+#'   are anchored at the start of the code and are generally intended to
+#'   match ICD code prefixes, so descendant codes also match when implied by
+#'   the comorbidity definition.
+#'
 #'
 #' @param inferred.conditions Logical scalar; when `TRUE` and
 #'   `flag.method = "cumulative"`, include a table describing reported and
