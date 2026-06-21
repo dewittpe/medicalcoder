@@ -142,7 +142,7 @@ medicalcoder_charlson_results <-
 ```{r}
 delta <-
   merge(
-    x = medicalcoder_charlson_results,
+    x = medicalcoder_charlson_results[["conditions"]],
     y = mimic_charlson_results,
     all = TRUE,
     by = c("subject_id", "hadm_id")
