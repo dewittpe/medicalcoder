@@ -843,7 +843,7 @@ comorbidities.data.frame <- function(data,
       inferred_conditions = if (inferred.conditions) inferred_conditions else NULL,
       metadata = list(
         method = method,
-        id.vars = id.vars,
+        id.vars = if (!id.vars.created) id.vars else NULL,
         flag.method = flag.method,
         mapping = mapping
       )
