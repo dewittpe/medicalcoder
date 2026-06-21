@@ -172,8 +172,8 @@ pat1_pccc_v2.1 <-
     poa = 1
   )
 
-all.equal(pat1_pccc_v2.0, pat1_pccc_v2.1, check.attributes = FALSE)
-pat1_pccc_v2.1
+all.equal(pat1_pccc_v2.0[["conditions"]], pat1_pccc_v2.1[["conditions"]], check.attributes = FALSE)
+pat1_pccc_v2.1[["conditions"]]
 ```
 
 Under version 3 of the PCCC, this patient has two conditions: neuromuscular and
@@ -448,27 +448,27 @@ mdcr_results_v3.1_02 <-
 ```
 
 Specificity is increased by using the diagnostic/procedure flag.
-Using `pccc_v2.1` there are `r sum(mdcr_results_v2.1_02$cmrb_flag != mdcr_results_v2.1_01$cmrb_flag)`
+Using `pccc_v2.1` there are `r sum(mdcr_results_v2.1_02[["conditions"]]$cmrb_flag != mdcr_results_v2.1_01[["conditions"]]$cmrb_flag)`
 false positive flags when the diagnostic/procedure flag is omitted from the
 `comorbidities()` call.
-Using `pccc_v3.1` there are `r sum(mdcr_results_v3.1_02$cmrb_flag != mdcr_results_v3.1_01$cmrb_flag)`
+Using `pccc_v3.1` there are `r sum(mdcr_results_v3.1_02[["conditions"]]$cmrb_flag != mdcr_results_v3.1_01[["conditions"]]$cmrb_flag)`
 false positive flags when the diagnostic/procedure flag is omitted from the
 `comorbidities()` call.
 
 ```{r}
 # verify that the cmrb_flag and number of conditions is the same or less after
 # accounting for the diagnostic/procedure flag in the comorbidities call
-stopifnot(all(mdcr_results_v2.1_02$cmrb_flag <= mdcr_results_v2.1_01$cmrb_flag))
-stopifnot(all(mdcr_results_v2.1_02$num_cmrb  <= mdcr_results_v2.1_01$num_cmrb))
+stopifnot(all(mdcr_results_v2.1_02[["conditions"]]$cmrb_flag <= mdcr_results_v2.1_01[["conditions"]]$cmrb_flag))
+stopifnot(all(mdcr_results_v2.1_02[["conditions"]]$num_cmrb  <= mdcr_results_v2.1_01[["conditions"]]$num_cmrb))
 
-sum(mdcr_results_v2.1_02$cmrb_flag != mdcr_results_v2.1_01$cmrb_flag)
-sum(mdcr_results_v2.1_02$num_cmrb  != mdcr_results_v2.1_01$num_cmrb)
+sum(mdcr_results_v2.1_02[["conditions"]]$cmrb_flag != mdcr_results_v2.1_01[["conditions"]]$cmrb_flag)
+sum(mdcr_results_v2.1_02[["conditions"]]$num_cmrb  != mdcr_results_v2.1_01[["conditions"]]$num_cmrb)
 
-stopifnot(all(mdcr_results_v3.1_02$cmrb_flag <= mdcr_results_v3.1_01$cmrb_flag))
-stopifnot(all(mdcr_results_v3.1_02$num_cmrb  <= mdcr_results_v3.1_01$num_cmrb))
+stopifnot(all(mdcr_results_v3.1_02[["conditions"]]$cmrb_flag <= mdcr_results_v3.1_01[["conditions"]]$cmrb_flag))
+stopifnot(all(mdcr_results_v3.1_02[["conditions"]]$num_cmrb  <= mdcr_results_v3.1_01[["conditions"]]$num_cmrb))
 
-sum(mdcr_results_v3.1_02$cmrb_flag != mdcr_results_v3.1_01$cmrb_flag)
-sum(mdcr_results_v3.1_02$num_cmrb  != mdcr_results_v3.1_01$num_cmrb)
+sum(mdcr_results_v3.1_02[["conditions"]]$cmrb_flag != mdcr_results_v3.1_01[["conditions"]]$cmrb_flag)
+sum(mdcr_results_v3.1_02[["conditions"]]$num_cmrb  != mdcr_results_v3.1_01[["conditions"]]$num_cmrb)
 ```
 
 Let's explore the record for patient 87420.
@@ -1046,9 +1046,9 @@ with_subconditions <-
   )
 ```
 
-The structure of the return object `with_subconditions` is a list with two
-elements.  The first element, `conditions`, is identical to the results
-of calling `comorbidities()` with `subconditions = FALSE`.
+The return object `with_subconditions` has the same four-element structure as
+every `medicalcoder_comorbidities` object. Its `conditions` element is identical
+to the corresponding element returned with `subconditions = FALSE`.
 
 ```{r}
 all.equal(
@@ -1058,8 +1058,9 @@ all.equal(
 )
 ```
 
-The second element of `with_subconditions` is list of `data.frame`s, one for
-each condition, with indicators for only those with the condition.
+The `subconditions` element is a list of tables, one for each condition, with
+indicators for the applicable subconditions. The `inferred_conditions` element
+is `NULL` here, and `metadata` records the method and other call settings.
 
 A quick and easy way to get a summary of the subconditions is to call
 `summary()`.

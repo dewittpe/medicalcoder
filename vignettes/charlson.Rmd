@@ -73,14 +73,14 @@ mdcr_results <-
   )
 ```
 
-The return object is a `data.frame` with 0/1 integer indicator columns for the
-relevant conditions, the id.vars (if applicable), `age_score` (if age, in years,
-is supplied), `num_cmrb` the number of comorbidities, `cmrb_flag` a 0/1
-indicator for presence of at least one comorbidity, and `cci` the Charlson
-Comorbidity Index.
+The return object is a `medicalcoder_comorbidities` list. Its `conditions`
+element contains the ID variables and 0/1 integer indicator columns for the
+relevant conditions, along with `age_score` (if age in years is supplied),
+`num_cmrb`, `cmrb_flag`, and `cci`, the Charlson Comorbidity Index.
 
 ```{r}
-str(mdcr_results)
+str(mdcr_results, max.level = 1)
+head(mdcr_results[["conditions"]])
 ```
 
 Call `summary()` on the return object for a list of summary objects.  These can be

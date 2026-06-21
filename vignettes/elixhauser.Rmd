@@ -115,13 +115,14 @@ mdcr_results <-
 identical(mdcr_results, mdcr_results0)
 ```
 
-The return object is a `data.frame` with 0/1 integer indicator columns for the
-relevant conditions, the id.vars (if applicable), `num_cmrb`, the number of
-comorbidities, `cmrb_flag`, a 0/1 indicator for presence of at least one
-comorbidity, and the mortality and readmission index scores.
+The return object is a `medicalcoder_comorbidities` list. Its `conditions`
+element contains the ID variables and 0/1 integer indicator columns for the
+relevant conditions, along with `num_cmrb`, `cmrb_flag`, `mortality_index`, and
+`readmission_index`.
 
 ```{r}
-str(mdcr_results)
+str(mdcr_results, max.level = 1)
+head(mdcr_results[["conditions"]])
 ```
 
 Call `summary()` to get a list of summaries which can be used to generate summary

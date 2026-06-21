@@ -131,6 +131,19 @@ head(mdcr)
 head(mdcr_longitudinal)
 ```
 
+# Return structure
+
+Every call returns a `medicalcoder_comorbidities` object with the same four
+elements. `conditions` contains the primary condition indicators and summary
+columns. `subconditions` contains PCCC subcondition tables when requested,
+`inferred_conditions` describes longitudinal carry-forward results when
+requested, and `metadata` records the method, ID variables, flagging method, and
+mapping strategy. Optional elements are `NULL` when they were not requested.
+
+Use `result[["conditions"]]` to access the primary result table. The table
+retains the input storage class (`data.frame`, `tbl_df`, or `data.table`) when
+possible.
+
 # When are conditions flagged?
 
 Whether or not the code is present on admission (POA) is useful when applying
