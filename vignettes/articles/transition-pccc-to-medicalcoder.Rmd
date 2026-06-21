@@ -276,7 +276,7 @@ medicalcoder_df_time <- difftime(toc, tic)
 old_vs_new <-
   merge(
     x = pccc_results_DT,
-    y = medicalcoder_results,
+    y = medicalcoder_results[["conditions"]],
     all = TRUE,
     by = "patid",
     suffixes = c("_old", "_new")
@@ -419,8 +419,8 @@ medicalcoder_dt_time
 
 ## Summary of results
 
-A simple call to `summary()` will return a data.frame with counts and
-percentages for the
+A simple call to `summary()` returns a data frame with counts and percentages
+for the PCCC conditions.
 
 ```{r}
 summary(medicalcoder_results)
@@ -458,7 +458,7 @@ with_subconditions <-
     subconditions = TRUE
   )
 
-with_subconditions
+str(with_subconditions, max.level = 1)
 ```
 
 The summary includes counts and percentages as before.  Additionally, for a
