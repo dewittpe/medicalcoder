@@ -855,12 +855,11 @@ comorbidities.data.frame <- function(data,
 
 #' @export
 print.medicalcoder_comorbidities <- function(x, ...) {
-
   if (!is.null(x[["subconditions"]])) {
-    cat(sprintf("\nComorbidities via %s\n\n", x[["method"]]))
+    cat(sprintf("\nComorbidities via %s\n\n", x[["metadata"]][["method"]]))
     NextMethod(generic = "print", object = x[["conditions"]], ...)
   } else {
-    cat(sprintf("\nComorbidities and Subconditions via %s\n\n", x[["method"]]))
+    cat(sprintf("\nComorbidities and Subconditions via %s\n\n", x[["metadata"]][["method"]]))
     l1 <- utils::capture.output(utils::str(x[["conditions"]], max.level = 1, give.attr = FALSE))
     l2 <- utils::capture.output(utils::str(x[["subconditions"]], max.level = 1, give.attr = FALSE))
     l2 <- sub("^\\s\\$", "  ..$", l2)
