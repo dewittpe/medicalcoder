@@ -12,7 +12,7 @@
 #' `data.frame` denoting if the condition was identified by an ICD code that
 #' was or was not present on admission.
 #' @param primarydx.var Character (scalar) with the name of the column in
-#' `cmrb` denoting if the condition was flaged as a primary diagnostic or not.
+#' `cmrb` denoting if the condition was flagged as a primary diagnostic or not.
 #' @param method Character scalar; name of the Charlson variant to assess
 #'
 #' @return A `data.frame` with `id.vars`, per-condition 0/1
@@ -173,7 +173,7 @@
   storage.mode(X) <- "integer"
 
   ##############################################################################
-  # exclusions for for less severe condiitons
+  # exclusions for for less severe conditions
   sev_less <-
     c("DIAB_CX" = "DIAB_UNCX",
       "HTN_CX" = "HTN_UNCX",
@@ -223,7 +223,7 @@
 }
 
 .elixhauser_pre2022 <- function(ccc, id.vars, iddf, cmrb, poa.var, primarydx.var, method) {
-  # what are the relevent coniditions
+  # what are the relevant conditions
   conditions <-
     unique(..mdcr_internal_elixhauser_codes..[["condition"]][which(..mdcr_internal_elixhauser_codes..[[method]] == 1L)])
 

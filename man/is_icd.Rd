@@ -143,7 +143,7 @@ is_icd("516.3", year = 2011)
 is_icd("516.3", year = 2015, ever.assignable = TRUE)
 
 ################################################################################
-# Consiser the string E010
+# Consider the string E010
 #   - This could be a ICD-9-CM full code
 #   - Could be a ICD-10-CM compact code
 lookup_icd_codes("E010")

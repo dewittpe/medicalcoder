@@ -381,7 +381,7 @@ comorbidities.data.frame <- function(data,
     if (mapping == "precomputed") {
       lookup <- get(x = "pccc_codes", envir = ..mdcr_data_env.., inherits = FALSE)
     } else {
-      stop('mapping = "regex" for PCCC methods has not yet been implimented')
+      stop('mapping = "regex" for PCCC methods has not yet been implemented')
       #lookup <- ..mdcr_internal_pccc_regex..
     }
     lookup_to_keep <- c(lookup_to_keep, "subcondition", "transplant_flag", "tech_dep_flag")
@@ -396,7 +396,7 @@ comorbidities.data.frame <- function(data,
     if (mapping == "precomputed") {
       lookup <- get("elixhauser_codes", envir = ..mdcr_data_env.., inherits = FALSE)
     } else {
-      stop('mapping = "regex" for Elixhauser methods has not yet been implimented')
+      stop('mapping = "regex" for Elixhauser methods has not yet been implemented')
       # lookup <- ..mdcr_internal_elixhauser_regex..
     }
     lookup_to_keep <- c(lookup_to_keep, "poaexempt")
@@ -438,7 +438,7 @@ comorbidities.data.frame <- function(data,
     # use the names on_comp and on_full
     # As of v0.8.1, the only mapping between icd codes and conditions was done
     # by precomputed link tables of ICD codes and conditions.
-    # An extension to use regex is begin built, and at least for the intial,
+    # An extension to use regex is begin built, and at least for the initial,
     # "get it done" reuse these names here.  Let on_comp be empty and on_full be
     # based on the regex matching.
     on_comp <-
