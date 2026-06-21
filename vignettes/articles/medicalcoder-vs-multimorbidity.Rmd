@@ -105,8 +105,8 @@ difftime(toc, tic, units = "secs")
 
 We build a `data.frame` `deltas` to explore the differences in the results between
 `medicalcoder::comorbidities()` and `multimorbidity::charlson()`.  One important
-difference is that `medicalcoder::comorbidities()` returns a `data.frame` with
-the id variable names as passed to the function whereas
+difference is that the `conditions` element returned by
+`medicalcoder::comorbidities()` retains the ID variable names whereas
 `multimorbidity::charlson()` returns a `data.frame` with the id column named id.
 
 Also, there is a difference in the storage mode for the indicator columns.
@@ -120,7 +120,7 @@ multimorbidity_charlson_results <-
 
 deltas <-
   merge(
-    x = medicalcoder_charlson_results,
+    x = medicalcoder_charlson_results[["conditions"]],
     y = multimorbidity_charlson_results,
     all = TRUE,
     by.x = "patid",
