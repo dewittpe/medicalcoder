@@ -1,4 +1,29 @@
-# medicalcoder 0.8.1.9000
+# medicalcoder 0.9.0
+
+## Breaking changes
+
+* `comorbidities()` now always returns a `medicalcoder_comorbidities`
+  object: a named list with `conditions`, `subconditions`,
+  `inferred_conditions`, and `metadata`.
+
+    * The condition-level data frame that was returned directly in previous
+      releases is now available as `x[["conditions"]]`.
+
+    * Metadata previously stored in attributes is now available as
+      `x[["metadata"]]`.
+
+    * The older subconditions-specific return class has been replaced by the
+      unified `medicalcoder_comorbidities` object.
+
+        # old
+        x <- comorbidities(dat, ...)
+        x$num_cmrb
+        attr(x, "method")
+
+        # new
+        x <- comorbidities(dat, ...)
+        x[["conditions"]][["num_cmrb"]]
+        x[["metadata"]][["method"]]
 
 ## New Features
 * `comorbidities()` gains a new argument to allow end users to specify the
@@ -23,7 +48,7 @@
 ## Improvements
 
 * WHO ICD-10 codes extend 2019 to 2020 and 2021 and the WHO last published in
-  2019 and then transiitoned to ICD-11 January 1 2022.
+  2019 and then transitioned to ICD-11 January 1 2022.
 
 
 # medicalcoder 0.8.1
