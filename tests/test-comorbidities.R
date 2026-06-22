@@ -427,5 +427,100 @@ stopifnot(
 )
 
 ################################################################################
+# print, subcondition summary, and regex mapping regressions
+
+# Use a known PCCC v3.1 code to keep the print and summary regressions small
+# while ensuring that at least one condition and subcondition can be reported.
+pccc_code <- subset(get_pccc_codes(), pccc_v3.1 == 1L)[1L, ]
+dat <-
+  data.frame(
+    code = pccc_code[["code"]],
+    icdv = pccc_code[["icdv"]],
+    dx = pccc_code[["dx"]],
+    stringsAsFactors = FALSE
+  )
+
+without_subconditions <-
+  comorbidities(
+    data = dat,
+    icd.codes = "code",
+    icdv.var = "icdv",
+    dx.var = "dx",
+    method = "pccc_v3.1",
+    poa = 1L
+  )
+
+# The print branches were previously reversed during the refactor between
+# v0.8.1 and v0.9.0. Without subconditions, print() must identify the simple
+# comorbidities result and return its input invisibly.
+out <- utils::capture.output(printed <- print(without_subconditions))
+stopifnot(
+  identical(printed, without_subconditions),
+  any(grepl("^Comorbidities via pccc_v3.1$", out))
+)
+
+with_subconditions <-
+  comorbidities(
+    data = dat,
+    icd.codes = "code",
+    icdv.var = "icdv",
+    dx.var = "dx",
+    method = "pccc_v3.1",
+    poa = 1L,
+    subconditions = TRUE
+  )
+
+# With subconditions, print() must use the condition/subcondition structure
+# branch and still return the original object invisibly.
+out <- utils::capture.output(printed <- print(with_subconditions))
+stopifnot(
+  identical(printed, with_subconditions),
+  any(grepl("^Comorbidities and Subconditions via pccc_v3.1$", out))
+)
+
+# When id.vars is NULL, removing ID columns used to evaluate cols[-integer(0)]
+# and drop every subcondition column. The summary must remain nonempty and have
+# its documented columns.
+subcondition_summary <- summary(with_subconditions)
+stopifnot(
+  is.data.frame(subcondition_summary),
+  nrow(subcondition_summary) > 0L,
+  identical(
+    names(subcondition_summary),
+    c("condition", "subcondition", "count", "percent_of_cohort",
+      "percent_of_those_with_condition")
+  )
+)
+
+regex_data <-
+  data.frame(
+    id = c(1L, 2L),
+    code = c("F02.4", "F024"),
+    stringsAsFactors = FALSE
+  )
+
+# Keep a small, non-skipped smoke test for regex mapping. The exhaustive regex
+# comparison is skipped on CRAN, so this protects the public regex path there
+# and verifies both dotted and compact forms of the same ICD-10 code.
+regex_result <-
+  comorbidities(
+    data = regex_data,
+    id.vars = "id",
+    icd.codes = "code",
+    icdv = 10L,
+    dx = 1L,
+    poa = 1L,
+    primarydx = 0L,
+    method = "charlson_ludvigsson2021",
+    mapping = "regex"
+  )
+
+stopifnot(
+  inherits(regex_result, "medicalcoder_comorbidities"),
+  is.data.frame(regex_result[["conditions"]]),
+  nrow(regex_result[["conditions"]]) == 2L
+)
+
+################################################################################
 #                                 End of File                                  #
 ################################################################################
