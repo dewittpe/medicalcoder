@@ -358,7 +358,7 @@ for (m in ms) {
     stop(sprintf("no warning given for subconditions = TRUE with method = '%s'", m))
   }
   if (x$message != "subconditions only implemented for PCCC") {
-    stop(sprintf("unexpected warning message for subcondtions = TRUE with method = '%s'", m))
+    stop(sprintf("unexpected warning message for subconditions = TRUE with method = '%s'", m))
   }
 }
 

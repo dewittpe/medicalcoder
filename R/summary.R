@@ -79,7 +79,7 @@ summary.medicalcoder_comorbidities <- function(object, ...) {
     }
   } else {
     if (!startsWith(object[["metadata"]][["method"]], "pccc")) {
-      stop("objects with subcondtions for non-pccc comorbidities do not yet have a summary method defined.", call. = FALSE)
+      stop("objects with subconditions for non-pccc comorbidities do not yet have a summary method defined.", call. = FALSE)
     }
     if (object[["metadata"]][["flag.method"]] != "current") {
       warning(sprintf("Logic for pccc_summary_table has been implemented for flag.method = 'current'.  Using this function for flag.method = '%s' may not provide a meaningful summary.", object[["metadata"]][["flag.method"]]))

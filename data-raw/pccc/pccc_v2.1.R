@@ -116,7 +116,7 @@ v2ref[code %in% c("0050", "0051", "0053", "0054", "0055", "0057") & dx == 0 & ic
 # affect a lot of codes.
 #
 # let's omit the misc; device and technology use iff there is a non-misc condition
-# with device and technology use subcondtion
+# with device and technology use subcondition
 devices <- v2ref[subcondition == "device and technology use"]
 devices[, ismisc := condition == "misc"]
 data.table::setkey(devices, icdv, dx, code, ismisc)
