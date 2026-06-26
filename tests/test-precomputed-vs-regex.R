@@ -1,11 +1,11 @@
 on_cran <- function () {
-    env <- Sys.getenv("NOT_CRAN")
-    if (identical(env, "")) {
-        !interactive()
-    }
-    else {
-        !isTRUE(as.logical(env))
-    }
+  env <- Sys.getenv("NOT_CRAN")
+  if (identical(env, "")) {
+    !interactive()
+  }
+  else {
+    !isTRUE(as.logical(env))
+  }
 }
 
 if (on_cran()) {
@@ -20,14 +20,14 @@ library(medicalcoder)
 
 js <- c("icdv", "dx", "full_code", "code")
 jsc <- c(js, "condition")
-all_codes <- get_icd_codes()[, js]
+all_codes <- unique(get_icd_codes()[, js])
 all_codes_split <- split(all_codes, f = all_codes[c("icdv", "dx")])
 
 charlson_codes <- get_charlson_codes()
 
-p <- new.env()
-rf <- new.env()
-rc <- new.env()
+p <- new.env()   # store precomputed results
+rf <- new.env()  # store regex on full codes
+rc <- new.env()  # sotre regex on compact codes
 
 tic <- Sys.time()
 for (m in names(charlson_codes)[which(!(names(charlson_codes) %in% jsc))]) {
@@ -118,23 +118,28 @@ for (m in names(charlson_codes)[which(!(names(charlson_codes) %in% jsc))]) {
   rownames(by_regex) <- NULL
 
   assign(x = m, value = by_regex, envir = rc)
-}
-difftime(Sys.time(), tic)
 
-#z <-
-#  merge(
-#    x = cbind(p$charlson_quan2005, p = 1),
-#    y = cbind(rf$charlson_quan2005, r = 1),
-#    all = TRUE
-#  )
-#subset(z, is.na(p) | is.na(r))
-#
-#stopifnot(isTRUE(all.equal(p, rf)))
-#stopifnot(isTRUE(all.equal(p, rc)))
-#
-#cat("\n\n\n\n\nALL GOOD\n\n\n\n\n")
-#
-#stop()
+  # Test to see if there are any differences
+  z <-
+    merge(
+      merge(
+        x = cbind(p[[m]], p = 1),
+        y = cbind(rf[[m]], rf = 1),
+        all = TRUE,
+        by = c(jsc, m)
+        ),
+      cbind(rc[[m]], rc = 1),
+      all = TRUE,
+      by = c(jsc, m)
+    )
+
+  if (identical(z[["p"]], z[["rf"]]) & identical(z[["p"]], z[["rc"]])) {
+    message("  [INFO] precomputed vs regex is the same for ", m)
+    message("  [INFO] assement completed in ", round(difftime(Sys.time(), tic, units = "secs"), 2), " seconds")
+  } else {
+    stop("precomputed vs regex is not the smae for ", m, call. = FALSE)
+  }
+}
 
 ################################################################################
 # test that you get the same results when icdv and dx are specified.  There
@@ -187,50 +192,6 @@ e <- expression({
 eval(e)
 DFclock <- Map(difftime, time1 = tocs, time2 = tics)
 stopifnot(all.equal(p, r))
-
-#d <-
-#  merge(
-#    cbind(p$charlson_ludvigsson2021, p = 1),
-#    cbind(r$charlson_ludvigsson2021, r = 1),
-#    all = TRUE
-#  )
-#subset(d, is.na(p)  | is.na(r)) |> head()
-
-#
-#mdcr[["rowid"]] <- 1:nrow(mdcr)
-#
-#commonargs <-
-#  list(
-#    data = subset(mdcr, patid == 12949),
-#    id.vars = "rowid",
-#    icdv.var = "icdv",
-#    icd.codes = "code",
-#    dx.var = "dx",
-#    poa = 1,
-#    primarydx = 0L
-#  )
-#pp <- do.call(comorbidities, c(commonargs, list(method = "charlson_ludvigsson2021", mapping = "precomputed")))
-#rr <- do.call(comorbidities, c(commonargs, list(method = "charlson_ludvigsson2021", mapping = "regex")))
-#
-#dd <- merge(cbind(pp, pp = 1), cbind(rr, rr = 1), all = TRUE)
-#subset(dd, is.na(pp)  | is.na(rr)) |> head()
-#
-#subset(mdcr, rowid == 306040)
-
-
-if (requireNamespace("dplyr", quietly = TRUE)) {
-  mdcr <- getExportedValue(name = "as_tibble", ns = "dplyr")(mdcr)
-  eval(e)
-  TBLclock <- Map(difftime, time1 = tocs, time2 = tics)
-  stopifnot(all.equal(p, r))
-}
-
-if (requireNamespace("data.table", quietly = TRUE)) {
-  mdcr <- getExportedValue(name = "as.data.table", ns = "data.table")(mdcr)
-  eval(e)
-  DTclock <- Map(difftime, time1 = tocs, time2 = tics)
-  stopifnot(all.equal(p, r))
-}
 
 ################################################################################
 #                                 End of File                                  #
