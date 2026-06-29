@@ -5,14 +5,20 @@
 #          weights from published references.
 #
 # inputs:
-#   ../icd/icd_codes.rds
-#   ./deyo1992.txt, ./cdmf2019.txt, ./quan2005.txt, ./sundararajan2004.txt,
-#   ./charlson_ludvigsson2021.txt (regex pattern definitions)
-#   ./charlson.txt (condition weights)
+#   ../icd/icd_codes.rds                       (known ICD codes)
+#   ./deyo1992.txt,                            (regex)
+#   ./cdmf2019.txt,                            (regex)
+#   ./quan2005.txt,                            (regex)
+#   ./sundararajan2004.txt,                    (regex)
+#   ./charlson_ludvigsson2021.txt              (regex pattern definitions)
+#   ./ICD10 CCI_Code Set_FINAL_forzenodo.xlsx  (ICD codes for beyrer2021)
+#   ./charlson.txt                             (condition weights)
+#
+#   ../../R/icd_compact_to_full.R
 #
 # output: charlson_codes.rds, charlson_index_scores.rds
 #
-# deps: data.table, pbapply, qwraps2
+# deps: data.table, pbapply, qwraps2, readxl
 #
 # notes:
 #   Expands regex patterns across ICD universes and harmonises method-specific
@@ -20,7 +26,8 @@
 #
 # idempotent: yes (deterministic transformations)
 ################################################################################
-icd_codes <- readRDS("../icd/icd_codes.rds")
+source(file.path("..", "..", "R", "icd_compact_to_full.R"))
+icd_codes <- readRDS(file.path("..", "icd", "icd_codes.rds"))
 data.table::setDT(icd_codes)
 
 ################################################################################
@@ -89,12 +96,53 @@ stopifnot(!any(is.na(codes[["dx"]])))
 stopifnot(!any(is.na(codes[["method"]])))
 stopifnot(!any(is.na(codes[["full_code"]])))
 
-# get the compact codes to use as well
+# Get the ICD codes for Beyrer et.al (2021)
+beyrer2021 <- readxl::read_xlsx("ICD10 CCI_Code Set_FINAL_forzenodo.xlsx")
+data.table::setDT(beyrer2021)
+beyrer2021 <- beyrer2021[`Lilly CCI` == 1]
+beyrer2021[, icdv := 10L]
+beyrer2021[, dx   := data.table::fifelse(startsWith(`CODE TYPE`, "ICD-10-CM"), 1L, 0L)]
+beyrer2021[, code := CODE]
+beyrer2021[, full_code := icd_compact_to_full(x = code, icdv = icdv, dx = dx)]
+beyrer2021[, method := "beyrer2021"]
+beyrer2021[,
+  condition :=
+    data.table::fcase(
+      CONDITION == "Any malignancy, including lymphoma and leukemia", "mal",
+      CONDITION == "Cerebrovascular disease", "cebvd",
+      CONDITION == "Chronic pulmonary disease", "copd",
+      CONDITION == "Congestive heart failure", "chf",
+      CONDITION == "Dementia", "dem",
+      CONDITION == "Diabetes (mild to moderate)", "dm",
+      CONDITION == "Diabetes with chronic complications", "dmc",
+      CONDITION == "HIV", "aidshiv",
+      CONDITION == "Hemiplegia or paraplegia", "hp",
+      CONDITION == "Metastatic solid tumor", "mst",
+      CONDITION == "Mild liver disease", "mld",
+      CONDITION == "Moderate or severe liver disease", "msld",
+      CONDITION == "Peptic ulcer disease", "pud",
+      CONDITION == "Renal disease", "rnd",
+      CONDITION == "Rheumatologic disease", "rhd",
+      CONDITION == "Peripheral vascular disease", "pvd",
+      CONDITION == "Myocardial infarction", "mi",
+      default = NA_character_
+    )
+  ]
+
+codes[, code := sub("\\.", "", full_code)]
+
+codes <-
+  rbind(
+    codes,
+    beyrer2021[, .(condition, icdv, dx, method, full_code, code)]
+  )
+
+# get the code_id from known icd codes
 charlson_codes <-
   merge(x = codes,
         y = icd_codes[, .(icdv, dx, full_code, code, code_id)],
         all.x = TRUE,
-        by = c("icdv", "dx", "full_code"))
+        by = c("icdv", "dx", "full_code", "code"))
 
 charlson_codes <- unique(charlson_codes)
 
