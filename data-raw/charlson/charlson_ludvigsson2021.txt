@@ -92,16 +92,11 @@ mal       | 10   | 1  | ludvigsson2021 | ^C23
 mal       | 10   | 1  | ludvigsson2021 | ^C24
 mal       | 10   | 1  | ludvigsson2021 | ^C25
 mal       | 10   | 1  | ludvigsson2021 | ^C26
-mal       | 10   | 1  | ludvigsson2021 | ^C27
-mal       | 10   | 1  | ludvigsson2021 | ^C28
-mal       | 10   | 1  | ludvigsson2021 | ^C29
 mal       | 10   | 1  | ludvigsson2021 | ^C30
 mal       | 10   | 1  | ludvigsson2021 | ^C31
 mal       | 10   | 1  | ludvigsson2021 | ^C32
 mal       | 10   | 1  | ludvigsson2021 | ^C33
 mal       | 10   | 1  | ludvigsson2021 | ^C34
-mal       | 10   | 1  | ludvigsson2021 | ^C35
-mal       | 10   | 1  | ludvigsson2021 | ^C36
 mal       | 10   | 1  | ludvigsson2021 | ^C37
 mal       | 10   | 1  | ludvigsson2021 | ^C38
 mal       | 10   | 1  | ludvigsson2021 | ^C39
@@ -146,7 +141,6 @@ mal       | 10   | 1  | ludvigsson2021 | ^C84
 mal       | 10   | 1  | ludvigsson2021 | ^C85
 mal       | 10   | 1  | ludvigsson2021 | ^C86
 mal       | 10   | 1  | ludvigsson2021 | ^C88
-mal       | 10   | 1  | ludvigsson2021 | ^C89
 mal       | 10   | 1  | ludvigsson2021 | ^C90
 mal       | 10   | 1  | ludvigsson2021 | ^C91
 mal       | 10   | 1  | ludvigsson2021 | ^C92
