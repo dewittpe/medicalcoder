@@ -29,9 +29,49 @@ p <- new.env()   # store precomputed results
 rf <- new.env()  # store regex on full codes
 rc <- new.env()  # sotre regex on compact codes
 
-tic <- Sys.time()
+map_by_regex_wrapper <- function(uc, ptrns, full_code = TRUE) {
+  # define the lapply to use
+  if (requireNamespace("parallel", quietly = TRUE)) {
+    listapply <- getExportedValue(ns = "parallel", name = "mclapply")
+    options("mc.cores" = max(floor(parallel::detectCores() / 2L), 1L))
+  } else {
+    listapply <- lapply
+  }
+
+  if (full_code) {
+    rtn <-
+      listapply(
+        split(ptrns, f = ptrns["pattern"]),
+        medicalcoder:::map_by_regex,
+        uc = uc,
+        icd.codes = "full_code",
+        by_x = c("full_code", "icdv", "dx"),
+        by_y = c("icdv", "dx")
+      )
+  } else {
+    rtn <-
+      listapply(
+        split(ptrns, f = ptrns["pattern"]),
+        medicalcoder:::map_by_regex,
+        uc = uc,
+        icd.codes = "code",
+        by_x = c("code", "icdv", "dx"),
+        by_y = c("icdv", "dx")
+      )
+  }
+  rtn <- do.call(rbind, rtn)
+  rtn
+}
+
 for (m in names(charlson_codes)[which(!(names(charlson_codes) %in% jsc))]) {
-#for (m in "charlson_quan2005") {
+
+  if (m == "charlson_beyrer2021") {
+    # skip for now, no regex yet
+    next
+  }
+
+  tic <- Sys.time()
+
   if (interactive()) message(m)
 
   v <- medicalcoder:::mdcr_subset(charlson_codes, charlson_codes[[m]] == 1L, c(jsc, m))
@@ -42,78 +82,57 @@ for (m in names(charlson_codes)[which(!(names(charlson_codes) %in% jsc))]) {
   lookup <- medicalcoder:::mdcr_subset(lookup, lookup[[m]] == 1L)
 
   # by full codes
-  m9.0 <- medicalcoder:::map_by_regex(
+  m9.0f <- map_by_regex_wrapper(
     uc = all_codes_split[["9.0"]],
-    ptrns = medicalcoder:::mdcr_subset(lookup, lookup[["icdv"]] == 9L & lookup[["dx"]] == 0L),
-    icd.codes = "full_code",
-    by_x = c("full_code", "icdv", "dx"),
-    by_y = c("icdv", "dx")
+    ptrns = medicalcoder:::mdcr_subset(lookup, lookup[["icdv"]] == 9L & lookup[["dx"]] == 0L)
   )
 
-  m9.1 <- medicalcoder:::map_by_regex(
+  m9.1f <- map_by_regex_wrapper(
     uc = all_codes_split[["9.1"]],
-    ptrns = medicalcoder:::mdcr_subset(lookup, lookup[["icdv"]] == 9L & lookup[["dx"]] == 1L),
-    icd.codes = "full_code",
-    by_x = c("full_code", "icdv", "dx"),
-    by_y = c("icdv", "dx")
+    ptrns = medicalcoder:::mdcr_subset(lookup, lookup[["icdv"]] == 9L & lookup[["dx"]] == 1L)
   )
 
-  m10.0 <- medicalcoder:::map_by_regex(
+  m10.0f <- map_by_regex_wrapper(
     uc = all_codes_split[["10.0"]],
-    medicalcoder:::mdcr_subset(lookup, lookup[["icdv"]] == 10L & lookup[["dx"]] == 0L),
-    icd.codes = "full_code",
-    by_x = c("full_code", "icdv", "dx"),
-    by_y = c("icdv", "dx")
+    ptrns = medicalcoder:::mdcr_subset(lookup, lookup[["icdv"]] == 10L & lookup[["dx"]] == 0L)
   )
 
-  m10.1 <- medicalcoder:::map_by_regex(
+  m10.1f <- map_by_regex_wrapper(
     uc = all_codes_split[["10.1"]],
-    ptrns = medicalcoder:::mdcr_subset(lookup, lookup[["icdv"]] == 10L & lookup[["dx"]] == 1L),
-    icd.codes = "full_code",
-    by_x = c("full_code", "icdv", "dx"),
-    by_y = c("icdv", "dx")
+    ptrns = medicalcoder:::mdcr_subset(lookup, lookup[["icdv"]] == 10L & lookup[["dx"]] == 1L)
   )
 
-  by_regex <- rbind(m9.0, m9.1, m10.0, m10.1)[, c(jsc, m)]
+  by_regex <- rbind(m9.0f, m9.1f, m10.0f, m10.1f)[, c(jsc, m)]
   by_regex <- unique(by_regex)
   rownames(by_regex) <- NULL
-
   assign(x = m, value = by_regex, envir = rf)
 
-  # by compact code
-  m9.0 <- medicalcoder:::map_by_regex(
+  # by compact codes
+  m9.0c <- map_by_regex_wrapper(
     uc = all_codes_split[["9.0"]],
     ptrns = medicalcoder:::mdcr_subset(lookup, lookup[["icdv"]] == 9L & lookup[["dx"]] == 0L),
-    icd.codes = "code",
-    by_x = c("code", "icdv", "dx"),
-    by_y = c("icdv", "dx")
+    full_code = FALSE
   )
 
-  m9.1 <- medicalcoder:::map_by_regex(
+  m9.1c <- map_by_regex_wrapper(
     uc = all_codes_split[["9.1"]],
     ptrns = medicalcoder:::mdcr_subset(lookup, lookup[["icdv"]] == 9L & lookup[["dx"]] == 1L),
-    icd.codes = "code",
-    by_x = c("code", "icdv", "dx"),
-    by_y = c("icdv", "dx")
+    full_code = FALSE
   )
 
-  m10.0 <- medicalcoder:::map_by_regex(
+  m10.0c <- map_by_regex_wrapper(
     uc = all_codes_split[["10.0"]],
-    medicalcoder:::mdcr_subset(lookup, lookup[["icdv"]] == 10L & lookup[["dx"]] == 0L),
-    icd.codes = "code",
-    by_x = c("code", "icdv", "dx"),
-    by_y = c("icdv", "dx")
+    ptrns = medicalcoder:::mdcr_subset(lookup, lookup[["icdv"]] == 10L & lookup[["dx"]] == 0L),
+    full_code = FALSE
   )
 
-  m10.1 <- medicalcoder:::map_by_regex(
+  m10.1c <- map_by_regex_wrapper(
     uc = all_codes_split[["10.1"]],
     ptrns = medicalcoder:::mdcr_subset(lookup, lookup[["icdv"]] == 10L & lookup[["dx"]] == 1L),
-    icd.codes = "code",
-    by_x = c("code", "icdv", "dx"),
-    by_y = c("icdv", "dx")
+    full_code = FALSE
   )
 
-  by_regex <- rbind(m9.0, m9.1, m10.0, m10.1)[, c(jsc, m)]
+  by_regex <- rbind(m9.0c, m9.1c, m10.0c, m10.1c)[, c(jsc, m)]
   by_regex <- unique(by_regex)
   rownames(by_regex) <- NULL
 
@@ -133,12 +152,16 @@ for (m in names(charlson_codes)[which(!(names(charlson_codes) %in% jsc))]) {
       by = c(jsc, m)
     )
 
-  if (identical(z[["p"]], z[["rf"]]) & identical(z[["p"]], z[["rc"]])) {
+  message("  [INFO] assement completed in ", round(difftime(Sys.time(), tic, units = "secs"), 2), " seconds")
+
+  if (!identical(z[["rf"]], z[["rc"]])) {
+    stop("regex on full codes is not the same as for compact codes for ", m, call. = FALSE)
+  } else if (identical(z[["p"]], z[["rf"]]) & identical(z[["p"]], z[["rc"]])) {
     message("  [INFO] precomputed vs regex is the same for ", m)
-    message("  [INFO] assement completed in ", round(difftime(Sys.time(), tic, units = "secs"), 2), " seconds")
   } else {
-    stop("precomputed vs regex is not the smae for ", m, call. = FALSE)
+    stop("precomputed vs regex is not the same for ", m, call. = FALSE)
   }
+
 }
 
 ################################################################################
