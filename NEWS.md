@@ -1,4 +1,4 @@
-# medicalcoder 0.8.1.9000
+# medicalcoder 0.8.1.9002
 
 ## New Features
 * `comorbidities()` gains a new argument to allow end users to specify the
@@ -9,6 +9,14 @@
 
 * Add `charlson_ludvigsson2021`, a Charlson-style Swedish register-based
   comorbidity method.
+
+* Add `charlson_mimicivcode`, a mapping between ICD-10 codes and Charlson
+  comorbidities to be consistent with
+  [mimiciv-code](https://github.com/MIT-LCP/mimic-code/blob/57069783095e7770e66ea97da264c0200078ddbf/mimic-iv/concepts/comorbidity/charlson.sql)
+
+* Add `charlson_beyrery2021`, a Charlson style comorbidity based on U.S.
+  ICD-10-CM diagnostic and ICD-10-PCS (procedure) codes from [Beyrey et al.
+  (2021)](https://doi.org/10.1002/pds.5204)
 
 * Add ICD-10-AM (Australian Modification) to the ICD database
 
