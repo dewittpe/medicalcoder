@@ -374,7 +374,7 @@ comorbidities.data.frame <- function(data,
     if (mapping == "precomputed") {
       lookup <- get(x = "pccc_codes", envir = ..mdcr_data_env.., inherits = FALSE)
     } else {
-      stop('mapping = "regex" for PCCC methods has not yet been implimented')
+      stop('mapping = "regex" for PCCC methods has not yet been implimented', call. = FALSE)
       #lookup <- ..mdcr_internal_pccc_regex..
     }
     lookup_to_keep <- c(lookup_to_keep, "subcondition", "transplant_flag", "tech_dep_flag")
@@ -382,6 +382,9 @@ comorbidities.data.frame <- function(data,
     if (mapping == "precomputed") {
       lookup <- get("charlson_codes", envir = ..mdcr_data_env.., inherits = FALSE)
     } else {
+      if (method == "charlson_beyrer2021") {
+        stop("method = 'charlson_beyrer2021' does not have a regex variant.  Exact ICD codes only to be consistent with the publication.", call. = FALSE)
+      }
       lookup <- ..mdcr_internal_charlson_regex..
     }
     lookup_to_keep <- c(lookup_to_keep)
@@ -389,7 +392,7 @@ comorbidities.data.frame <- function(data,
     if (mapping == "precomputed") {
       lookup <- get("elixhauser_codes", envir = ..mdcr_data_env.., inherits = FALSE)
     } else {
-      stop('mapping = "regex" for Elixhauser methods has not yet been implimented')
+      stop('mapping = "regex" for Elixhauser methods has not yet been implimented', call. = FALSE)
       # lookup <- ..mdcr_internal_elixhauser_regex..
     }
     lookup_to_keep <- c(lookup_to_keep, "poaexempt")
@@ -818,6 +821,7 @@ comorbidities_methods <- function() {
     c("pccc_v2.0", "pccc_v2.1", "pccc_v3.0", "pccc_v3.1",
       "charlson_deyo1992", "charlson_quan2011", "charlson_quan2005",
       "charlson_cdmf2019", "charlson_sundararajan2004", "charlson_ludvigsson2021",
+      "charlson_beyrer2021",
       "elixhauser_elixhauser1988", "elixhauser_ahrq_web", "elixhauser_quan2005",
       "elixhauser_ahrq2022", "elixhauser_ahrq2023", "elixhauser_ahrq2024",
       "elixhauser_ahrq2025", "elixhauser_ahrq2026", "elixhauser_ahrq_icd10")
