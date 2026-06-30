@@ -9,6 +9,7 @@
 #   ./deyo1992.txt,                            (regex)
 #   ./cdmf2019.txt,                            (regex)
 #   ./quan2005.txt,                            (regex)
+#   ./mimicivcode.txt,                         (regex)
 #   ./sundararajan2004.txt,                    (regex)
 #   ./charlson_ludvigsson2021.txt              (regex pattern definitions)
 #   ./ICD10 CCI_Code Set_FINAL_forzenodo.xlsx  (ICD codes for beyrer2021)
@@ -37,6 +38,7 @@ regex_patterns <-
     "./deyo1992.txt",
     "./cdmf2019.txt",
     "./quan2005.txt",
+    "./mimicivcode.txt",
     "./sundararajan2004.txt",
     "./charlson_ludvigsson2021.txt"
   ) |>

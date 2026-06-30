@@ -821,7 +821,7 @@ comorbidities_methods <- function() {
     c("pccc_v2.0", "pccc_v2.1", "pccc_v3.0", "pccc_v3.1",
       "charlson_deyo1992", "charlson_quan2011", "charlson_quan2005",
       "charlson_cdmf2019", "charlson_sundararajan2004", "charlson_ludvigsson2021",
-      "charlson_beyrer2021",
+      "charlson_beyrer2021", "charlson_mimicivcode",
       "elixhauser_elixhauser1988", "elixhauser_ahrq_web", "elixhauser_quan2005",
       "elixhauser_ahrq2022", "elixhauser_ahrq2023", "elixhauser_ahrq2024",
       "elixhauser_ahrq2025", "elixhauser_ahrq2026", "elixhauser_ahrq_icd10")
