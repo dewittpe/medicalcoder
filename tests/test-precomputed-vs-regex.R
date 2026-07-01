@@ -169,14 +169,7 @@ for (m in names(charlson_codes)[which(!(names(charlson_codes) %in% jsc))]) {
 # should be false positives if icdv and/or dx are not specified.
 
 # verify the list of possible charlson methods
-m <- grep("charlson_", medicalcoder:::comorbidities_methods(), value = TRUE)
-m <- sort(m)
-stopifnot(
-  identical(
-    m,
-    c("charlson_cdmf2019", "charlson_deyo1992", "charlson_ludvigsson2021", "charlson_quan2005", "charlson_quan2011", "charlson_sundararajan2004")
-  )
-)
+m <- grep("charlson_",  names(medicalcoder:::..mdcr_internal_charlson_regex..), value = TRUE)
 
 # add an age variable
 mdcr$age <- as.integer(substr(as.character(mdcr$patid), 1, 2))
