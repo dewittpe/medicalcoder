@@ -30,9 +30,9 @@
 #'   (with a warning) if `icdv.var` is provided.
 #'
 #' @param dx.var Character scalar naming the column in `data` that indicates
-#'   diagnostic (`1`) vs procedural (`0`) codes. If present it must be integer
-#'   values `0` or `1`.  `dx.var` takes precedence over `dx` if both are
-#'   provided.
+#'   diagnostic (`1`) vs procedural (`0`) codes. If present it must be numeric.
+#'   Rows with values other than `0` or `1` will not be used to map ICD codes to
+#'   comorbidities. `dx.var` takes precedence over `dx` if both are provided.
 #'
 #' @param dx An integer indicating that all `data[[icd.codes]]` are
 #'   diagnostic (`1`) or procedure (`0`) codes. Ignored (with a

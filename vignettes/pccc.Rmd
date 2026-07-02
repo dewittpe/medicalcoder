@@ -418,7 +418,9 @@ table(mdcr[mdcr$code == "3321", "dx"])
 ```
 
 To account for the diagnostic or procedure status of the codes specify a value
-for the `dx.var` argument.
+for the `dx.var` argument. When calling `comorbidities()` with a variable to
+indicate diagnostic or procedure status, values other than `0` or `1` will not be
+joined against and the codes are ignored resulting in no condition being flagged.
 
 ```{r, label = "mdcr-results-02"}
 mdcr_results_v2.1_02 <-

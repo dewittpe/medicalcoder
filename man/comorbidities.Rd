@@ -61,9 +61,9 @@ the ICD version. If present it must be numeric. Rows with values other than
 (with a warning) if \code{icdv.var} is provided.}
 
 \item{dx.var}{Character scalar naming the column in \code{data} that indicates
-diagnostic (\code{1}) vs procedural (\code{0}) codes. If present it must be integer
-values \code{0} or \code{1}.  \code{dx.var} takes precedence over \code{dx} if both are
-provided.}
+diagnostic (\code{1}) vs procedural (\code{0}) codes. If present it must be numeric.
+Rows with values other than \code{0} or \code{1} will not be used to map ICD codes to
+comorbidities. \code{dx.var} takes precedence over \code{dx} if both are provided.}
 
 \item{dx}{An integer indicating that all \code{data[[icd.codes]]} are
 diagnostic (\code{1}) or procedure (\code{0}) codes. Ignored (with a
