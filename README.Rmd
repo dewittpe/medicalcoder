@@ -233,7 +233,7 @@ vignette(topic = "pccc", package = "medicalcoder")
 ```
 
 #### Charlson Comorbidities
-There are six variants of Charlson comorbidities implemented in medicalcoder:
+There are eight variants of Charlson comorbidities implemented in medicalcoder:
 
 * [Deyo, Cherkin, and Ciol (1992)](https://doi.org/10.1016/0895-4356(92)90133-8)
 * [Quan et al. (2005)](https://doi.org/10.1097/01.mlr.0000182534.19832.83)
@@ -241,6 +241,9 @@ There are six variants of Charlson comorbidities implemented in medicalcoder:
 * [Sundararajan et al. (2004)](https://doi.org/10.1016/j.jclinepi.2004.03.012)
 * [Glasheen (2019)](https://pubmed.ncbi.nlm.nih.gov/31428236/)
 * [Ludvigsson et al. (2021)](https://doi.org/10.2147/CLEP.S282475)
+* [Beyrer et al. (2021)](https://doi.org/10.1002/pds.5204)
+* MIMIC-IV Charlson SQL from
+  [`mimic-code`](https://github.com/MIT-LCP/mimic-code)
 
 ```{r}
 # Charlson example
@@ -403,7 +406,8 @@ comorbidity algorithm to a data set are:
    use and reduce computation time. When a `tibble` is passed and the tidyverse
    namespaces are available, the tibble-aware paths improve performance over a
    base `data.frame`, but `data.table` remains fastest.
-3. `flag.method`: "current" will take less time than the "cumulative" method.
+3. `flag.method`: `"current"` will take less time than the experimental
+   `"cumulative"` method.
 
 Details on the benchmarking method, summary graphics, and tables,  can be found
 on the medicalcoder GitHub
