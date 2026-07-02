@@ -44,9 +44,10 @@ apply to \code{data}.}
 
 \item{id.vars}{Optional character vector of column names. When
 missing, the entire input \code{data} is treated as a single encounter from a
-single patient. If you want to set \code{flag.method = "cumulative"} then
-\code{length(id.vars) >= 2} is expected. The last element should be the
-encounter order (must be sortable).}
+single patient. If you want to set the experimental
+\code{flag.method = "cumulative"} option then \code{length(id.vars) >= 2} is
+expected. The last element should be the encounter order (must be
+sortable).}
 
 \item{icdv.var}{Character scalar naming the column in \code{data} that indicates
 the ICD version (9 or 10). If present it must be integer values \code{9} or
@@ -89,10 +90,10 @@ comorbidities and is ignored when the method is a PCCC variant.
 treat all codes as non-primary diagnoses; if \code{1}, treat all codes as
 primary diagnoses. Ignored, with a warning, if \code{primarydx.var} is provided.}
 
-\item{flag.method}{When \code{flag.method = 'current'} (default) only codes
+\item{flag.method}{When \code{flag.method = "current"} (default) only codes
 associated with the current \code{id.vars} are considered when flagging
-comorbidities.  When \code{flag.method = 'cumulative'} then all prior encounters
-are considered when flagging comorbidities. See \strong{Details}.}
+comorbidities. The experimental \code{flag.method = "cumulative"} option also
+considers prior encounters when flagging comorbidities. See \strong{Details}.}
 
 \item{full.codes, compact.codes}{Logical; when \code{TRUE} compare
 \code{data[[icd.codes]]} against full and/or compact ICD codes in the
@@ -166,15 +167,15 @@ Elixhauser, and the Pediatric Complex Chronic Conditions (PCCC).
 }
 \details{
 When \code{flag.method = "current"}, only codes from the index encounter
-contribute to flags. When a longitudinal method is selected (e.g.,
-\code{"cumulative"}), prior encounters for the same \code{id.vars}
-combination may contribute to condition flags. For the cumulative method to
-work, \code{id.vars} needs to be a character vector of length 2 or more. The last
-element is treated as the encounter identifier and must be sortable. For
-example, say you have data with a hospital, patient, and encounter id. The
-\code{id.vars} could be one of two entries: \code{c("hospital", "patient", "encounter")}
-or \code{c("patient", "hospital", "encounter")}. In both cases the return will be
-the same because the encounter identifier is unchanged regardless of whether
+contribute to flags. The experimental \code{flag.method = "cumulative"} option
+lets prior encounters for the same \code{id.vars} combination contribute to
+condition flags. For the experimental cumulative method to work, \code{id.vars}
+needs to be a character vector of length 2 or more. The last element is
+treated as the encounter identifier and must be sortable. For example, say
+you have data with a hospital, patient, and encounter id. The \code{id.vars} could
+be one of two entries: \code{c("hospital", "patient", "encounter")} or
+\code{c("patient", "hospital", "encounter")}. In both cases the return will be the
+same because the encounter identifier is unchanged regardless of whether
 hospital or patient is listed first.
 
 It is critically important that the \code{data[[tail(id.vars, 1)]]} variable can
@@ -200,7 +201,7 @@ and calling \code{comorbidities()} with \code{id.vars = c("patid", "enc_seq")} w
 have better performance than using the date and will clear up any possible
 issues with non-sequential encounter ids from the source data.
 
-\strong{Cumulative + POA defaults:}
+\strong{Experimental cumulative + POA defaults:}
 
 When \code{flag.method = "cumulative"} and neither
 \code{poa} nor \code{poa.var} is supplied, the first encounter for a condition is

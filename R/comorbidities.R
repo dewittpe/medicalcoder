@@ -8,15 +8,15 @@
 #'
 #' @details
 #' When `flag.method = "current"`, only codes from the index encounter
-#' contribute to flags. When a longitudinal method is selected (e.g.,
-#' `"cumulative"`), prior encounters for the same `id.vars`
-#' combination may contribute to condition flags. For the cumulative method to
-#' work, `id.vars` needs to be a character vector of length 2 or more. The last
-#' element is treated as the encounter identifier and must be sortable. For
-#' example, say you have data with a hospital, patient, and encounter id. The
-#' `id.vars` could be one of two entries: `c("hospital", "patient", "encounter")`
-#' or `c("patient", "hospital", "encounter")`. In both cases the return will be
-#' the same because the encounter identifier is unchanged regardless of whether
+#' contribute to flags. The experimental `flag.method = "cumulative"` option
+#' lets prior encounters for the same `id.vars` combination contribute to
+#' condition flags. For the experimental cumulative method to work, `id.vars`
+#' needs to be a character vector of length 2 or more. The last element is
+#' treated as the encounter identifier and must be sortable. For example, say
+#' you have data with a hospital, patient, and encounter id. The `id.vars` could
+#' be one of two entries: `c("hospital", "patient", "encounter")` or
+#' `c("patient", "hospital", "encounter")`. In both cases the return will be the
+#' same because the encounter identifier is unchanged regardless of whether
 #' hospital or patient is listed first.
 #'
 #' It is critically important that the `data[[tail(id.vars, 1)]]` variable can
@@ -43,7 +43,7 @@
 #' have better performance than using the date and will clear up any possible
 #' issues with non-sequential encounter ids from the source data.
 #'
-#' **Cumulative + POA defaults:**
+#' **Experimental cumulative + POA defaults:**
 #'
 #' When `flag.method = "cumulative"` and neither
 #' `poa` nor `poa.var` is supplied, the first encounter for a condition is
@@ -374,7 +374,7 @@ comorbidities.data.frame <- function(data,
     if (mapping == "precomputed") {
       lookup <- get(x = "pccc_codes", envir = ..mdcr_data_env.., inherits = FALSE)
     } else {
-      stop('mapping = "regex" for PCCC methods has not yet been implimented', call. = FALSE)
+      stop('mapping = "regex" for PCCC methods has not yet been implemented', call. = FALSE)
       #lookup <- ..mdcr_internal_pccc_regex..
     }
     lookup_to_keep <- c(lookup_to_keep, "subcondition", "transplant_flag", "tech_dep_flag")
@@ -392,7 +392,7 @@ comorbidities.data.frame <- function(data,
     if (mapping == "precomputed") {
       lookup <- get("elixhauser_codes", envir = ..mdcr_data_env.., inherits = FALSE)
     } else {
-      stop('mapping = "regex" for Elixhauser methods has not yet been implimented', call. = FALSE)
+      stop('mapping = "regex" for Elixhauser methods has not yet been implemented', call. = FALSE)
       # lookup <- ..mdcr_internal_elixhauser_regex..
     }
     lookup_to_keep <- c(lookup_to_keep, "poaexempt")
@@ -434,7 +434,7 @@ comorbidities.data.frame <- function(data,
     # use the names on_comp and on_full
     # As of v0.8.1, the only mapping between icd codes and conditions was done
     # by precomputed link tables of ICD codes and conditions.
-    # An extension to use regex is begin built, and at least for the intial,
+    # An extension to use regex is being built, and at least for the initial,
     # "get it done" reuse these names here.  Let on_comp be empty and on_full be
     # based on the regex matching.
     on_comp <-
