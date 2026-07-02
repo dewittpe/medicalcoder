@@ -50,6 +50,9 @@ implemented in the medicalcoder package:
    c. `charlson_sundararajan2004`: Australian ICD-10-AM adaptation [@sundararajan2004]
    d. `charlson_cdmf2019`: [@glasheen2019]
    e. `charlson_ludvigsson2021`: Swedish ICD-10-SE adaptation [@ludvigsson2021adaptation;@ludvigsson2023adaptation]
+   f. `charlson_beyrer2021`: U.S. ICD-10-CM and ICD-10-PCS adaptation [@beyrer2021validation;@beyrer_2020_3968784]
+   g. `charlson_mimicivcode`: mapping used by the MIMIC-IV Charlson SQL in
+      [`mimic-code`](https://github.com/MIT-LCP/mimic-code)
 
 3. Elixhauser
    a. Based on codes provided by the Agency for Healthcare Research and Quality (AHRQ) for fiscal years 2022 through 2026 [@ahrqicd10]
@@ -182,7 +185,9 @@ to be considered POA or not, the functional argument `poa` can be used to set a
 common status without adding a column to the input data set.
 
 Additionally, medicalcoder provides a `flag.method` argument for longitudinal
-data sets.
+data sets. The default `flag.method = "current"` evaluates each encounter on
+its own. The experimental `flag.method = "cumulative"` option also considers
+prior encounters for the same patient or grouping.
 
 **Example:** Let's assume we have a patient record for six encounters.  We use
 ICD-10 diagnostic codes C78.4 and I50.40 which maps to a cancer and heart
@@ -227,7 +232,8 @@ record <-
 ```
 
 We will call `comorbidities()` for the three methods using static POA flags and
-dynamic POA flags, and both flag methods.  Results are shown in the following
+dynamic POA flags, the default current-encounter flagging method, and the
+experimental cumulative flagging method. Results are shown in the following
 table.
 
 ```{r, include = FALSE}
@@ -310,9 +316,10 @@ tab
 
 ### Flag method and POA defaults
 
-When `flag.method = "cumulative"` and you do *not* supply `poa` or `poa.var`,
-`comorbidities()` treats the first encounter where a condition appears as
-`poa = 0` and carries that condition forward with `poa = 1` on later encounters.
+When the experimental `flag.method = "cumulative"` option is used and you do
+*not* supply `poa` or `poa.var`, `comorbidities()` treats the first encounter
+where a condition appears as `poa = 0` and carries that condition forward with
+`poa = 1` on later encounters.
 
 When `flag.method = "current"` and you do *not* supply `poa` or `poa.var`,
 `comorbidities()` treats all ICD codes as `poa = 1`.

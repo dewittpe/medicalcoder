@@ -760,8 +760,9 @@ at different moments in time and the condition the patient has change overtime.
 Because these are chronic conditions, once the condition is observed, it should
 be considered to exist in perpetuity.
 
-For `pccc_v2.1` a simple carry-forward method can be applied to the data set
-to mark the presence of a condition at the time of reporting and thereafter.
+For `pccc_v2.1` the experimental `flag.method = "cumulative"` option can be
+used as a simple carry-forward method to mark the presence of a condition at
+the time of reporting and thereafter.
 
 
 ```{r}
@@ -856,7 +857,8 @@ str(permutations, vec.len = 1)
 cat(paste("*", permutations[, unique(plabel)]), sep = "\n")
 ```
 
-We'll apply the `pccc_v3.1` to this code set with `flag.method = "cumulative"`
+We'll apply the `pccc_v3.1` to this code set with the experimental
+`flag.method = "cumulative"` option.
 and all codes considered to be present-on-admission.
 
 ```{r}
@@ -1226,9 +1228,9 @@ tabs[["respiratory"]]
 ```
 
 ## Longitudinal
-The longitudinal assessment for subconditions work as well.  Using the same
-`permutations` data set from above we will look at the metabolic and respiratory
-conditions and subconditions.
+The experimental longitudinal assessment for subconditions works as well. Using
+the same `permutations` data set from above we will look at the metabolic and
+respiratory conditions and subconditions.
 
 ```{r}
 rslts <-

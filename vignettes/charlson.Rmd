@@ -41,6 +41,9 @@ comorbidities algorithm.
 * `charlson_sundararajan2004`: Australian ICD-10-AM adaptation [@sundararajan2004]
 * `charlson_cdmf2019`: [@glasheen2019]
 * `charlson_ludvigsson2021`: Swedish ICD-10-SE adaptation [@ludvigsson2021adaptation;@ludvigsson2023adaptation]
+* `charlson_beyrer2021`: U.S. ICD-10-CM and ICD-10-PCS adaptation [@beyrer2021validation;@beyrer_2020_3968784]
+* `charlson_mimicivcode`: mapping used by the MIMIC-IV Charlson SQL in
+  [`mimic-code`](https://github.com/MIT-LCP/mimic-code)
 
 # ICD Codes and Index Scores
 
