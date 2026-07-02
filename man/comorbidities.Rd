@@ -52,8 +52,9 @@ character, \code{Date}, or \code{POSIXt}. Character encounter order columns are
 allowed with a warning because they are sorted lexicographically.}
 
 \item{icdv.var}{Character scalar naming the column in \code{data} that indicates
-the ICD version (9 or 10). If present it must be integer values \code{9} or
-\code{10}.  \code{icdv.var} takes precedence over \code{icdv} if both are provided.}
+the ICD version. If present it must be numeric. Rows with values other than
+\code{9} or \code{10} will not be used to map ICD codes to comorbidities.
+\code{icdv.var} takes precedence over \code{icdv} if both are provided.}
 
 \item{icdv}{An integer value of \code{9L} or \code{10L} indicating that all
 \code{data[[icd.codes]]} are ICD version 9 or 10, respectively. Ignored

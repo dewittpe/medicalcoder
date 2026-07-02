@@ -44,6 +44,9 @@
 
 ## Improvements
 
+* Clarify that rows with `icdv.var` values other than `9` or `10` are not used
+  when mapping ICD codes to comorbidities.
+
 * WHO ICD-10 codes extend 2019 to 2020 and 2021. WHO last published ICD-10 in
   2019 and transitioned to ICD-11 on January 1, 2022.
 

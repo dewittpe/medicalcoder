@@ -21,8 +21,9 @@
 #'   allowed with a warning because they are sorted lexicographically.
 #'
 #' @param icdv.var Character scalar naming the column in `data` that indicates
-#'   the ICD version (9 or 10). If present it must be integer values `9` or
-#'   `10`.  `icdv.var` takes precedence over `icdv` if both are provided.
+#'   the ICD version. If present it must be numeric. Rows with values other than
+#'   `9` or `10` will not be used to map ICD codes to comorbidities.
+#'   `icdv.var` takes precedence over `icdv` if both are provided.
 #'
 #' @param icdv An integer value of `9L` or `10L` indicating that all
 #'   `data[[icd.codes]]` are ICD version 9 or 10, respectively. Ignored

@@ -612,10 +612,11 @@ ICD-10 version being related to a chronic complex condition.
 
 Inputs to the `comorbidities()` call for the ICD version will impact the output.
 When calling `comorbidities()` with a variable to indicate the ICD version `NA`
-values will not be joined against and the codes are ignored resulting in no
-condition being flagged.  If we know that we only want to compare against ICD-9
-or ICD-10 values then using the `icdv` argument can simplify the call and in
-this case, no condition for ICD-9 and a condition is flagged for ICD-10.
+values, or values other than `9` or `10`, will not be joined against and the
+codes are ignored resulting in no condition being flagged. If we know that we
+only want to compare against ICD-9 or ICD-10 values then using the `icdv`
+argument can simplify the call and in this case, no condition for ICD-9 and a
+condition is flagged for ICD-10.
 
 ```{r, label = "patid95471"}
 subset(mdcr, patid == "95471")
