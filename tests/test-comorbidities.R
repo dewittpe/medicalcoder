@@ -66,7 +66,7 @@ x <-
     comorbidities(
       data = mdcr2,
       icd.codes = "code",
-      poa.vars = c("condition"),
+      poa.var = c("condition"),
       method = "pccc_v3.1"
     )
   )
