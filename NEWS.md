@@ -36,6 +36,9 @@
 
 ## Bug Fixes
 
+* Prevent unrelated input columns from colliding with internal lookup columns
+  while mapping ICD codes to comorbidities in `comorbidities()`.
+
 * ICD-10 Z49.1 has been added to elixhauser_quan2005; it was missing by error in
   the prior version of medicalcoder.
 

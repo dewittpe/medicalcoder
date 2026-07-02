@@ -418,6 +418,13 @@ comorbidities.data.frame <- function(data,
     by_y <- c(by_y, "dx")
   }
 
+  data_for_lookup <-
+    mdcr_select(
+      data,
+      cols = unique(c(icd.codes, id.vars, icdv.var, dx.var, poa.var, primarydx.var))
+    )
+  empty_data_for_lookup <- mdcr_subset(data_for_lookup, i = integer(0))
+
   ##############################################################################
   # Determine the lookup table and the columns for the lookup table to keep
   lookup_to_keep <- c("condition")
@@ -466,7 +473,7 @@ comorbidities.data.frame <- function(data,
   if (mapping == "precomputed") {
     on_full <-
       mdcr_inner_join(
-        x = if (full.codes) {data} else {data[0, ]},
+        x = if (full.codes) {data_for_lookup} else {empty_data_for_lookup},
         y = lookup,
         by.x = by_x,
         by.y = c("full_code", by_y),
@@ -475,7 +482,7 @@ comorbidities.data.frame <- function(data,
 
     on_comp <-
       mdcr_inner_join(
-        x = if (compact.codes) {data} else {data[0, ]},
+        x = if (compact.codes) {data_for_lookup} else {empty_data_for_lookup},
         y = lookup,
         by.x = by_x,
         by.y = c("code", by_y),
@@ -490,7 +497,7 @@ comorbidities.data.frame <- function(data,
     # based on the regex matching.
     on_comp <-
       mdcr_inner_join(
-        x = data[0, ],
+        x = empty_data_for_lookup,
         y = lookup,
         by.x = by_x[-1],
         by.y = by_y,
@@ -498,10 +505,10 @@ comorbidities.data.frame <- function(data,
       )
 
     if (is.null(dx.var) & is.null(icdv.var)) {
-      unique_codes <- mdcr_unique(data, by = icd.codes)
+      unique_codes <- mdcr_unique(data_for_lookup, by = icd.codes)
       on_full <- map_by_regex(unique_codes, lookup, icd.codes, by_x, by_y)
     } else if (!is.null(dx.var) & is.null(icdv.var)) {
-      unique_codes <- mdcr_unique(data, by = c(icd.codes, dx.var))
+      unique_codes <- mdcr_unique(data_for_lookup, by = c(icd.codes, dx.var))
       unique_codes <- split(x = unique_codes, f = unique_codes[[dx.var]])
       m0 <- map_by_regex(
         unique_codes[["0"]],
@@ -519,7 +526,7 @@ comorbidities.data.frame <- function(data,
       )
       on_full <- rbind(m0, m1)
     } else if (is.null(dx.var) & !is.null(icdv.var)) {
-      unique_codes <- mdcr_unique(data, by = c(icd.codes, icdv.var))
+      unique_codes <- mdcr_unique(data_for_lookup, by = c(icd.codes, icdv.var))
       unique_codes <- split(x = unique_codes, f = unique_codes[[icdv.var]])
       m9 <- map_by_regex(
         unique_codes[["9"]],
@@ -537,7 +544,7 @@ comorbidities.data.frame <- function(data,
       )
       on_full <- rbind(m9, m10)
     } else if (!is.null(dx.var) & !is.null(icdv.var)) {
-      unique_codes <- mdcr_unique(data, by = c(icd.codes, icdv.var, dx.var))
+      unique_codes <- mdcr_unique(data_for_lookup, by = c(icd.codes, icdv.var, dx.var))
       unique_codes <- split(x = unique_codes, f = unique_codes[c(icdv.var, dx.var)])
       m9.0 <- map_by_regex(
         uc = unique_codes[["9.0"]],

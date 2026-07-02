@@ -274,6 +274,53 @@ stopifnot(identical(names(OUT1), c("medicalcoder_id", expected_names)))
 stopifnot(identical(names(OUT2), c("..medicalcoder_id..", expected_names)))
 
 ################################################################################
+# Extra columns with names used internally by lookup tables should not affect
+# condition mapping.
+
+collision_data <-
+  data.frame(
+    id = "p1",
+    code = "I50.9",
+    icdv = 10L,
+    dx = 1L,
+    condition = "user_supplied_condition",
+    charlson_quan2011 = 0L,
+    poaexempt = 0L,
+    stringsAsFactors = FALSE
+  )
+
+no_collision_data <- collision_data[, c("id", "code", "icdv", "dx")]
+
+collision_args <-
+  list(
+    id.vars = "id",
+    icd.codes = "code",
+    icdv.var = "icdv",
+    dx.var = "dx",
+    poa = 1L,
+    primarydx = 0L,
+    method = "charlson_quan2011"
+  )
+
+collision_result <-
+  do.call(
+    comorbidities,
+    c(list(data = collision_data), collision_args)
+  )
+
+no_collision_result <-
+  do.call(
+    comorbidities,
+    c(list(data = no_collision_data), collision_args)
+  )
+
+stopifnot(
+  identical(collision_result, no_collision_result),
+  collision_result[["chf"]] == 1L,
+  collision_result[["cmrb_flag"]] == 1L
+)
+
+################################################################################
 # Check for "protected" names in id.vars.
 #
 # During development I had been using id.vars such as:
