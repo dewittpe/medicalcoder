@@ -1,9 +1,15 @@
 # medicalcoder 0.8.1.9002
 
 ## New Features
-* `comorbidities()` gains a new argument to allow end users to specify the
-  mapping between ICD codes and the conditions to be done via precomputed link
-  tables or via regex (part of #45)
+* `comorbidities()` gains a `mapping` argument. The default
+  `mapping = "precomputed"` uses the precomputed ICD code-condition links
+  included with medicalcoder. `mapping = "regex"` applies method regular
+  expressions directly to input ICD codes. Regex mapping is currently available
+  for Charlson methods except `charlson_beyrer2021`. (part of #45)
+
+* Document `flag.method = "cumulative"` as experimental. This option remains
+  available for longitudinal data, but users should validate encounter ordering
+  and POA behavior carefully for their study design.
 
 * Add `charlson_sundararajan2004`
 
@@ -14,7 +20,7 @@
   comorbidities to be consistent with
   [mimiciv-code](https://github.com/MIT-LCP/mimic-code/blob/57069783095e7770e66ea97da264c0200078ddbf/mimic-iv/concepts/comorbidity/charlson.sql)
 
-* Add `charlson_beyrery2021`, a Charlson style comorbidity based on U.S.
+* Add `charlson_beyrer2021`, a Charlson style comorbidity based on U.S.
   ICD-10-CM diagnostic and ICD-10-PCS (procedure) codes from [Beyrey et al.
   (2021)](https://doi.org/10.1002/pds.5204)
 
@@ -30,8 +36,8 @@
 
 ## Improvements
 
-* WHO ICD-10 codes extend 2019 to 2020 and 2021 and the WHO last published in
-  2019 and then transiitoned to ICD-11 January 1 2022.
+* WHO ICD-10 codes extend 2019 to 2020 and 2021. WHO last published ICD-10 in
+  2019 and transitioned to ICD-11 on January 1, 2022.
 
 
 # medicalcoder 0.8.1
