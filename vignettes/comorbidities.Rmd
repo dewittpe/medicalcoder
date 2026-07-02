@@ -324,6 +324,12 @@ where a condition appears as `poa = 0` and carries that condition forward with
 When `flag.method = "current"` and you do *not* supply `poa` or `poa.var`,
 `comorbidities()` treats all ICD codes as `poa = 1`.
 
+For `flag.method = "cumulative"`, the last column named in `id.vars` is the
+encounter order column. It must not contain missing values, must not be a
+factor, and must be numeric, character, `Date`, or `POSIXt`. Character encounter
+order columns are allowed with a warning because they are sorted
+lexicographically.
+
 # Mapping ICD Codes to Comorbidities
 
 End users can quickly assess the lookup table for all the ICD codes associated

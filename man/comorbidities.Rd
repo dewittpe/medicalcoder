@@ -46,8 +46,10 @@ apply to \code{data}.}
 missing, the entire input \code{data} is treated as a single encounter from a
 single patient. If you want to set the experimental
 \code{flag.method = "cumulative"} option then \code{length(id.vars) >= 2} is
-expected. The last element should be the encounter order (must be
-sortable).}
+expected. The last element should be the encounter order. It must not
+contain missing values, must not be a factor, and must be numeric,
+character, \code{Date}, or \code{POSIXt}. Character encounter order columns are
+allowed with a warning because they are sorted lexicographically.}
 
 \item{icdv.var}{Character scalar naming the column in \code{data} that indicates
 the ICD version (9 or 10). If present it must be integer values \code{9} or
@@ -200,6 +202,12 @@ correctly stored. Adding a column \code{enc_seq}, e.g.,\tabular{cccc}{
 and calling \code{comorbidities()} with \code{id.vars = c("patid", "enc_seq")} will
 have better performance than using the date and will clear up any possible
 issues with non-sequential encounter ids from the source data.
+
+For \code{flag.method = "cumulative"}, the encounter order column must not contain
+missing values, must not be a factor, and must be numeric, character, \code{Date},
+or \code{POSIXt}. Character encounter order columns are allowed, but they are
+sorted lexicographically; use an integer sequence, \code{Date}, or \code{POSIXt} column
+when possible.
 
 \strong{Experimental cumulative + POA defaults:}
 

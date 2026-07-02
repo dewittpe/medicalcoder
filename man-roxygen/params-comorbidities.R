@@ -15,8 +15,10 @@
 #'   missing, the entire input `data` is treated as a single encounter from a
 #'   single patient. If you want to set the experimental
 #'   `flag.method = "cumulative"` option then `length(id.vars) >= 2` is
-#'   expected. The last element should be the encounter order (must be
-#'   sortable).
+#'   expected. The last element should be the encounter order. It must not
+#'   contain missing values, must not be a factor, and must be numeric,
+#'   character, `Date`, or `POSIXt`. Character encounter order columns are
+#'   allowed with a warning because they are sorted lexicographically.
 #'
 #' @param icdv.var Character scalar naming the column in `data` that indicates
 #'   the ICD version (9 or 10). If present it must be integer values `9` or

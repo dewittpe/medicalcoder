@@ -43,6 +43,12 @@
 #' have better performance than using the date and will clear up any possible
 #' issues with non-sequential encounter ids from the source data.
 #'
+#' For `flag.method = "cumulative"`, the encounter order column must not contain
+#' missing values, must not be a factor, and must be numeric, character, `Date`,
+#' or `POSIXt`. Character encounter order columns are allowed, but they are
+#' sorted lexicographically; use an integer sequence, `Date`, or `POSIXt` column
+#' when possible.
+#'
 #' **Experimental cumulative + POA defaults:**
 #'
 #' When `flag.method = "cumulative"` and neither
@@ -300,6 +306,51 @@ comorbidities.data.frame <- function(data,
   # condition as persistent.
   if (flag.method == "cumulative" & length(id.vars) < 2L) {
     stop("When using `flag.method = 'cumulative'` the `id.vars` are expected to be provided and have a minimum length of 2, e.g., c('subject_id', 'encounter_number')", call. = FALSE)
+  }
+
+  if (flag.method == "cumulative") {
+    encid <- id.vars[length(id.vars)]
+    enc <- data[[encid]]
+
+    if (any(is.na(enc))) {
+      stop(
+        sprintf(
+          "When using `flag.method = 'cumulative'`, the encounter order column '%s' must not contain missing values.",
+          encid
+        ),
+        call. = FALSE
+      )
+    }
+
+    if (is.factor(enc)) {
+      stop(
+        sprintf(
+          "When using `flag.method = 'cumulative'`, the encounter order column '%s' must not be a factor. Use an integer sequence, Date, POSIXt, or character column with the intended sort order.",
+          encid
+        ),
+        call. = FALSE
+      )
+    }
+
+    if (!(is.numeric(enc) || is.character(enc) || inherits(enc, "Date") || inherits(enc, "POSIXt"))) {
+      stop(
+        sprintf(
+          "When using `flag.method = 'cumulative'`, the encounter order column '%s' must be numeric, character, Date, or POSIXt.",
+          encid
+        ),
+        call. = FALSE
+      )
+    }
+
+    if (is.character(enc)) {
+      warning(
+        sprintf(
+          "When using `flag.method = 'cumulative'`, the encounter order column '%s' is character and will be sorted lexicographically. Use an integer sequence, Date, or POSIXt column when possible.",
+          encid
+        ),
+        call. = FALSE
+      )
+    }
   }
 
   # Check if icdv.var and/or icdv have been specified and check for expected

@@ -11,6 +11,11 @@
   available for longitudinal data, but users should validate encounter ordering
   and POA behavior carefully for their study design.
 
+* Add validation for the encounter-order column used by
+  `flag.method = "cumulative"`. Missing values and factor columns now error;
+  character columns are allowed with a warning because they are sorted
+  lexicographically.
+
 * Add `charlson_sundararajan2004`
 
 * Add `charlson_ludvigsson2021`, a Charlson-style Swedish register-based
