@@ -5,7 +5,7 @@
 #' implemented Charlson variant.
 #'
 #' @seealso
-#' * [`get_charlson_index_scores()`] for a lookup table of the by comorbidity index scores.
+#' * [`get_charlson_index_scores()`] for a lookup table of comorbidity index scores.
 #' * [`get_icd_codes()`] for the lookup table of all ICD codes.
 #' * [`get_pccc_codes()`] for the lookup table of ICD codes used for the PCCC.
 #' * [`get_elixhauser_codes()`] for the lookup table of ICD codes used for the Elixhauser comorbidities.

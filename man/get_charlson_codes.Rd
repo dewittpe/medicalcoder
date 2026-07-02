@@ -30,7 +30,7 @@ str(get_charlson_codes())
 }
 \seealso{
 \itemize{
-\item \code{\link[=get_charlson_index_scores]{get_charlson_index_scores()}} for a lookup table of the by comorbidity index scores.
+\item \code{\link[=get_charlson_index_scores]{get_charlson_index_scores()}} for a lookup table of comorbidity index scores.
 \item \code{\link[=get_icd_codes]{get_icd_codes()}} for the lookup table of all ICD codes.
 \item \code{\link[=get_pccc_codes]{get_pccc_codes()}} for the lookup table of ICD codes used for the PCCC.
 \item \code{\link[=get_elixhauser_codes]{get_elixhauser_codes()}} for the lookup table of ICD codes used for the Elixhauser comorbidities.
