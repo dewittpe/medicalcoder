@@ -13,9 +13,10 @@
 #'
 #' @param id.vars Optional character vector of column names. When
 #'   missing, the entire input `data` is treated as a single encounter from a
-#'   single patient. If you want to set `flag.method = "cumulative"` then
-#'   `length(id.vars) >= 2` is expected. The last element should be the
-#'   encounter order (must be sortable).
+#'   single patient. If you want to set the experimental
+#'   `flag.method = "cumulative"` option then `length(id.vars) >= 2` is
+#'   expected. The last element should be the encounter order (must be
+#'   sortable).
 #'
 #' @param icdv.var Character scalar naming the column in `data` that indicates
 #'   the ICD version (9 or 10). If present it must be integer values `9` or
@@ -58,10 +59,10 @@
 #' @param age.var Character scalar naming the column in `data` that contains
 #'   patient age in years. Only applicable to Charlson comorbidities.
 #'
-#' @param flag.method When `flag.method = 'current'` (default) only codes
-#' associated with the current `id.vars` are considered when flagging
-#' comorbidities.  When `flag.method = 'cumulative'` then all prior encounters
-#' are considered when flagging comorbidities. See **Details**.
+#' @param flag.method When `flag.method = "current"` (default) only codes
+#'   associated with the current `id.vars` are considered when flagging
+#'   comorbidities. The experimental `flag.method = "cumulative"` option also
+#'   considers prior encounters when flagging comorbidities. See **Details**.
 #'
 #' @param full.codes,compact.codes Logical; when `TRUE` compare
 #'   `data[[icd.codes]]` against full and/or compact ICD codes in the
@@ -78,8 +79,8 @@
 #'   subconditions (PCCC only).
 #'
 #' @param mapping Character string specifying how `data[[icd.codes]]` should be
-#' mapped to comorbidity conditions. `mapping = "precomputed"` uses the
-#' precomputed ICD code-condition links included with medicalcoder and is the
-#' default. `mapping = "regex"` applies the method's regular expressions
-#' directly to the input ICD codes. See Details.
+#'   mapped to comorbidity conditions. `mapping = "precomputed"` uses the
+#'   precomputed ICD code-condition links included with medicalcoder and is the
+#'   default. `mapping = "regex"` applies the method's regular expressions
+#'   directly to the input ICD codes. See Details.
 #'
