@@ -19,6 +19,11 @@ either a list or a data \code{data.frame}
 Build summaries (counts and percentages) for each comorbidity and other
 summary statistics by method.
 }
+\details{
+If a \code{medicalcoder_comorbidities} object has been modified so that it no
+longer has the structure required by medicalcoder's summary methods, summary
+falls back to the next applicable summary method with a warning.
+}
 \examples{
 pccc_v3.1_results <-
   comorbidities(data = mdcr,

@@ -36,6 +36,10 @@
 
 ## Bug Fixes
 
+* `summary()` and `print()` now fall back to the next applicable method with a
+  warning when a modified `medicalcoder_comorbidities` object no longer has the
+  structure required by medicalcoder's methods.
+
 * Prevent unrelated input columns from colliding with internal lookup columns
   while mapping ICD codes to comorbidities in `comorbidities()`.
 
