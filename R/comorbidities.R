@@ -857,45 +857,21 @@ comorbidities.data.frame <- function(data,
 
 #' @export
 print.medicalcoder_comorbidities <- function(x, ...) {
-  if (!is_valid_medicalcoder_comorbidities(x)) {
-    return(fallback_print_medicalcoder_comorbidities(x, ...))
+  m <- attr(x, "method")
+  if (!is.null(m)) {
+    cat(sprintf("\nComorbidities via %s\n\n", m))
   }
-
-  cat(sprintf("\nComorbidities via %s\n\n", attr(x, "method")))
   NextMethod(generic = "print", object = x, ...)
   invisible(x)
 }
 
 #' @export
 print.medicalcoder_comorbidities_with_subconditions <- function(x, ...) {
-  if (!is_valid_medicalcoder_comorbidities_with_subconditions(x)) {
-    return(fallback_print_medicalcoder_comorbidities(x, ...))
-  }
-
   cat(sprintf("\nComorbidities and Subconditions via %s\n\n", attr(x, "method")))
   l1 <- utils::capture.output(utils::str(x, max.level = 1, give.attr = FALSE))
   l2 <- utils::capture.output(utils::str(x[["subconditions"]], max.level = 1, give.attr = FALSE))
   l2 <- sub("^\\s\\$", "  ..$", l2)
   cat(c(l1, l2[-1], "\n"), sep = "\n")
-  invisible(x)
-}
-
-remove_medicalcoder_comorbidities_classes <- function(x) {
-  class(x) <-
-    setdiff(
-      class(x),
-      c("medicalcoder_comorbidities_with_subconditions", "medicalcoder_comorbidities")
-    )
-  x
-}
-
-fallback_print_medicalcoder_comorbidities <- function(x, ...) {
-  warning(
-    "This object no longer appears to be a valid medicalcoder_comorbidities object; using the next print method.",
-    call. = FALSE
-  )
-
-  print(remove_medicalcoder_comorbidities_classes(x), ...)
   invisible(x)
 }
 
