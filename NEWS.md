@@ -48,6 +48,10 @@
 
 ## Improvements
 
+* Clarify that AHRQ SAS present-on-admission indicators should be converted to
+  numeric values before using `poa.var`: `"Y"` and `"W"` map to `1L`, `"N"` and
+  `"U"` map to `0L`, and blank or missing values map to `NA_integer_`.
+
 * Clarify that rows with `icdv.var` values other than `9` or `10` are not used
   when mapping ICD codes to comorbidities.
 

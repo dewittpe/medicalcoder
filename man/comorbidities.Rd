@@ -71,6 +71,9 @@ warning) if \code{dx.var} is provided.}
 
 \item{poa.var}{Character scalar naming the column with present-on-admission
 flags: integer \code{1L} (present), \code{0L} (not present), or \code{NA}.
+For AHRQ SAS-compatible present-on-admission indicators, convert \code{"Y"}
+and \code{"W"} to \code{1L}, convert \code{"N"} and \code{"U"} to \code{0L}, and convert blank or
+missing values to \code{NA_integer_} before calling \code{comorbidities()}.
 PCCC and Charlson will only flag conditions when the code is
 present-on-admission. Elixhauser has a mix of conditions; some require
 present-on-admission while others do not. \code{poa.var} takes precedence over
