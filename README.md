@@ -477,8 +477,8 @@ comorbidity algorithm to a data set are:
    use and reduce computation time. When a `tibble` is passed and the tidyverse
    namespaces are available, the tibble-aware paths improve performance over a
    base `data.frame`, but `data.table` remains fastest.
-3. `flag.method`: `"current"` will take less time than the experimental
-   `"cumulative"` method.
+3. `flag.method`: `"current"` will take less time than the `"cumulative"`
+   method.
 
 Details on the benchmarking method, summary graphics, and tables,  can be found
 on the medicalcoder GitHub

@@ -8,9 +8,9 @@
 #'
 #' @details
 #' When `flag.method = "current"`, only codes from the index encounter
-#' contribute to flags. The experimental `flag.method = "cumulative"` option
+#' contribute to flags. The `flag.method = "cumulative"` option
 #' lets prior encounters for the same `id.vars` combination contribute to
-#' condition flags. For the experimental cumulative method to work, `id.vars`
+#' condition flags. For the cumulative method to work, `id.vars`
 #' needs to be a character vector of length 2 or more. The last element is
 #' treated as the encounter identifier and must be sortable. For example, say
 #' you have data with a hospital, patient, and encounter id. The `id.vars` could
@@ -49,7 +49,7 @@
 #' sorted lexicographically; use an integer sequence, `Date`, or `POSIXt` column
 #' when possible.
 #'
-#' **Experimental cumulative + POA defaults:**
+#' **Cumulative flagging + POA defaults:**
 #'
 #' When `flag.method = "cumulative"` and neither
 #' `poa` nor `poa.var` is supplied, the first encounter for a condition is

@@ -13,8 +13,8 @@
 #'
 #' @param id.vars Optional character vector of column names. When
 #'   missing, the entire input `data` is treated as a single encounter from a
-#'   single patient. If you want to set the experimental
-#'   `flag.method = "cumulative"` option then `length(id.vars) >= 2` is
+#'   single patient. If you want to set `flag.method = "cumulative"` then
+#'   `length(id.vars) >= 2` is
 #'   expected. The last element should be the encounter order. It must not
 #'   contain missing values, must not be a factor, and must be numeric,
 #'   character, `Date`, or `POSIXt`. Character encounter order columns are
@@ -67,7 +67,7 @@
 #'
 #' @param flag.method When `flag.method = "current"` (default) only codes
 #'   associated with the current `id.vars` are considered when flagging
-#'   comorbidities. The experimental `flag.method = "cumulative"` option also
+#'   comorbidities. The `flag.method = "cumulative"` option also
 #'   considers prior encounters when flagging comorbidities. See **Details**.
 #'
 #' @param full.codes,compact.codes Logical; when `TRUE` compare

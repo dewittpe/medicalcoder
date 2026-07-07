@@ -186,7 +186,7 @@ common status without adding a column to the input data set.
 
 Additionally, medicalcoder provides a `flag.method` argument for longitudinal
 data sets. The default `flag.method = "current"` evaluates each encounter on
-its own. The experimental `flag.method = "cumulative"` option also considers
+its own. The `flag.method = "cumulative"` option also considers
 prior encounters for the same patient or grouping.
 
 **Example:** Let's assume we have a patient record for six encounters.  We use
@@ -233,7 +233,7 @@ record <-
 
 We will call `comorbidities()` for the three methods using static POA flags and
 dynamic POA flags, the default current-encounter flagging method, and the
-experimental cumulative flagging method. Results are shown in the following
+cumulative flagging method. Results are shown in the following
 table.
 
 ```{r, include = FALSE}
@@ -316,7 +316,7 @@ tab
 
 ### Flag method and POA defaults
 
-When the experimental `flag.method = "cumulative"` option is used and you do
+When `flag.method = "cumulative"` is used and you do
 *not* supply `poa` or `poa.var`, `comorbidities()` treats the first encounter
 where a condition appears as `poa = 0` and carries that condition forward with
 `poa = 1` on later encounters.

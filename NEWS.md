@@ -7,9 +7,9 @@
   expressions directly to input ICD codes. Regex mapping is currently available
   for Charlson methods except `charlson_beyrer2021`. (part of #45)
 
-* Document `flag.method = "cumulative"` as experimental. This option remains
-  available for longitudinal data, but users should validate encounter ordering
-  and POA behavior carefully for their study design.
+* Clarify `flag.method = "cumulative"` documentation for longitudinal data.
+  Users should validate encounter ordering and POA behavior carefully for their
+  study design.
 
 * Add validation for the encounter-order column used by
   `flag.method = "cumulative"`. Missing values and factor columns now error;
