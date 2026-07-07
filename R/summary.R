@@ -501,9 +501,7 @@ fallback_summary_medicalcoder_comorbidities <- function(object, ...) {
     "This object no longer appears to be a valid medicalcoder_comorbidities object; using the next summary method.",
     call. = FALSE
   )
-
-  object <- remove_medicalcoder_comorbidities_classes(object)
-  summary(object, ...)
+  NextMethod(generic = "summary", object = object, ...)
 }
 
 ################################################################################
