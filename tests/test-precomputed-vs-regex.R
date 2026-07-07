@@ -106,6 +106,61 @@ stopifnot(
   unsupported_beyrer[["message"]] == "method = 'charlson_beyrer2021' does not have a regex variant.  Exact ICD codes only to be consistent with the publication."
 )
 
+################################################################################
+# Regex patterns should require at least an ICD category prefix.  This prevents
+# short fragments such as "C0" or "49" from flagging while preserving prefix
+# matching for overspecified non-package ICD variants after a valid category.
+
+chars <- c(LETTERS, as.character(0:9))
+short_code_fragments <- unique(c(chars, as.vector(outer(chars, chars, paste0))))
+short_regex_hits <-
+  lapply(
+    medicalcoder:::..mdcr_internal_charlson_regex..[["pattern"]],
+    function(pattern) short_code_fragments[grepl(pattern, short_code_fragments)]
+  )
+
+stopifnot(!any(lengths(short_regex_hits) > 0L))
+
+short_fragment_data <-
+  data.frame(
+    id = c("C0", "C0A", "C1", "C1A", "C6", "C6A", "49", "49A"),
+    code = c("C0", "C0A", "C1", "C1A", "C6", "C6A", "49", "49A"),
+    icdv = c(10L, 10L, 10L, 10L, 10L, 10L, 9L, 9L),
+    dx = 1L,
+    stringsAsFactors = FALSE
+  )
+
+short_fragment_quan <-
+  comorbidities(
+    data = subset(short_fragment_data, icdv == 10L),
+    id.vars = "id",
+    icd.codes = "code",
+    icdv.var = "icdv",
+    dx.var = "dx",
+    poa = 1L,
+    primarydx = 0L,
+    method = "charlson_quan2011",
+    mapping = "regex"
+  )
+
+short_fragment_deyo <-
+  comorbidities(
+    data = subset(short_fragment_data, icdv == 9L),
+    id.vars = "id",
+    icd.codes = "code",
+    icdv.var = "icdv",
+    dx.var = "dx",
+    poa = 1L,
+    primarydx = 0L,
+    method = "charlson_deyo1992",
+    mapping = "regex"
+  )
+
+stopifnot(
+  all(short_fragment_quan[["cmrb_flag"]] == 0L),
+  all(short_fragment_deyo[["cmrb_flag"]] == 0L)
+)
+
 if (on_cran()) {
   message("CRAN environment detected: skipping this test file.")
   q(save = "no", status = 0)
@@ -129,7 +184,9 @@ map_by_regex_wrapper <- function(uc, ptrns, full_code = TRUE) {
   # define the lapply to use
   if (requireNamespace("parallel", quietly = TRUE)) {
     listapply <- getExportedValue(ns = "parallel", name = "mclapply")
-    options("mc.cores" = max(floor(parallel::detectCores() / 2L), 1L))
+    cores <- parallel::detectCores()
+    cores <- if (is.na(cores)) 1L else max(floor(cores / 2L), 1L)
+    options("mc.cores" = cores)
   } else {
     listapply <- lapply
   }
