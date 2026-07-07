@@ -266,7 +266,7 @@ elixhauser_poa <-
 elixhauser_poa <- lapply(elixhauser_poa, data.table::setDT)
 
 for (i in seq_along(elixhauser_poa)) {
-  data.table::setnames(elixhauser_poa[[i]], old = names(elixhauser_poa[[j]])[1:3], new = c("condition", "desc", "poa_required"))
+  data.table::setnames(elixhauser_poa[[i]], old = names(elixhauser_poa[[i]])[1:3], new = c("condition", "desc", "poa_required"))
   elixhauser_poa[[i]] <- subset(elixhauser_poa[[i]], condition != "End of Content")
   elixhauser_poa[[i]][, poa_required := as.integer(poa_required == "Yes")]
   data.table::set(elixhauser_poa[[i]], j = names(elixhauser_poa)[i], value = 1L)
