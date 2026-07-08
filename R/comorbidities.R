@@ -72,7 +72,11 @@
 #'
 #' `mapping = "precomputed"` is generally fastest and is the behavior used by
 #' medicalcoder before the `mapping` argument was added. `mapping = "regex"`
-#' applies the method's regular expressions directly to the input ICD codes.
+#' applies the method's regular expressions directly to the input ICD codes. For
+#' regex mapping, regular-expression tokens of the form `\\.?` are treated as
+#' optional decimal points when `full.codes = TRUE` and `compact.codes = TRUE`;
+#' they are treated as literal decimal points when only `full.codes = TRUE`, and
+#' removed when only `compact.codes = TRUE`.
 #' Regex mapping is currently implemented for Charlson methods and is useful
 #' when codes come from an ICD modification that may not be completely covered
 #' by the precomputed code-condition links, or when auditing a method.
@@ -495,6 +499,13 @@ comorbidities.data.frame <- function(data,
     # An extension to use regex is being built, and at least for the initial,
     # "get it done" reuse these names here.  Let on_comp be empty and on_full be
     # based on the regex matching.
+    lookup <-
+      specialize_regex_decimal_points(
+        lookup,
+        full.codes = full.codes,
+        compact.codes = compact.codes
+      )
+
     on_comp <-
       mdcr_inner_join(
         x = empty_data_for_lookup,
@@ -582,13 +593,6 @@ comorbidities.data.frame <- function(data,
     if (is.null(on_full)) {
       on_full <- on_comp[0, , drop = FALSE]
     }
-    #on_full <-
-    #  mdcr_inner_join(
-    #    x = data,
-    #    y = on_full,
-    #    by.x = by_x,
-    #    by.y = c("code", by_y)
-    #  )
   }
 
   ##############################################################################
@@ -886,6 +890,16 @@ comorbidities_methods <- function() {
       "elixhauser_elixhauser1988", "elixhauser_ahrq_web", "elixhauser_quan2005",
       "elixhauser_ahrq2022", "elixhauser_ahrq2023", "elixhauser_ahrq2024",
       "elixhauser_ahrq2025", "elixhauser_ahrq2026", "elixhauser_ahrq_icd10")
+}
+
+specialize_regex_decimal_points <- function(ptrns, full.codes, compact.codes) {
+  if (is.null(ptrns) || nrow(ptrns) == 0L || (full.codes && compact.codes)) {
+    return(ptrns)
+  }
+
+  replacement <- if (full.codes) "\\." else ""
+  ptrns[["pattern"]] <- gsub("\\.?", replacement, ptrns[["pattern"]], fixed = TRUE)
+  ptrns
 }
 
 # map_by_regex is used to...

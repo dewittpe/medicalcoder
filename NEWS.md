@@ -1,4 +1,4 @@
-# medicalcoder 0.8.1.9002
+e medicalcoder 0.8.1.9002
 
 ## New Features
 * `comorbidities()` gains a `mapping` argument. The default
@@ -6,6 +6,10 @@
   included with medicalcoder. `mapping = "regex"` applies method regular
   expressions directly to input ICD codes. Regex mapping is currently available
   for Charlson methods except `charlson_beyrer2021`. (part of #45)
+  `mapping = "regex"` specialize optional decimal points according to
+  `full.codes` and `compact.codes`. Regex tokens written as `\\.?` now remain
+  optional when both are `TRUE`, become `\\.` when only `full.codes = TRUE`, and
+  are removed when only `compact.codes = TRUE`.
 
 * Clarify `flag.method = "cumulative"` documentation for longitudinal data.
   Users should validate encounter ordering and POA behavior carefully for their
