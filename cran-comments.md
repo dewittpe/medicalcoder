@@ -1,6 +1,6 @@
 # Version 0.8.1
 
-Bug fixes - Imporantly fixing a CRAN check error on two fedora instances.
+Bug fixes - Importantly fixing a CRAN check error on two fedora instances.
 
 ## R CMD check results
 
