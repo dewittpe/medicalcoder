@@ -88,6 +88,5 @@
 #'   mapped to comorbidity conditions. `mapping = "precomputed"` uses the
 #'   precomputed ICD code-condition links included with medicalcoder and is the
 #'   default. `mapping = "regex"` applies the method's regular expressions
-#'   directly to the input ICD codes. See Details for how regex mapping uses
-#'   `full.codes` and `compact.codes`.
+#'   directly to the input ICD codes. See Details.
 #'

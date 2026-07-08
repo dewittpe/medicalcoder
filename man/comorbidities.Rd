@@ -116,8 +116,7 @@ subconditions (PCCC only).}
 mapped to comorbidity conditions. \code{mapping = "precomputed"} uses the
 precomputed ICD code-condition links included with medicalcoder and is the
 default. \code{mapping = "regex"} applies the method's regular expressions
-directly to the input ICD codes. See Details for how regex mapping uses
-\code{full.codes} and \code{compact.codes}.}
+directly to the input ICD codes. See Details.}
 }
 \value{
 The return object will be slightly different depending on the value of
@@ -237,11 +236,7 @@ Modification (ICD-10-AM) data, and Socialstyrelsen ICD-10-SE data.
 
 \code{mapping = "precomputed"} is generally fastest and is the behavior used by
 medicalcoder before the \code{mapping} argument was added. \code{mapping = "regex"}
-applies the method's regular expressions directly to the input ICD codes. For
-regex mapping, regular-expression tokens of the form \verb{\\\\.?} are treated as
-optional decimal points when \code{full.codes = TRUE} and \code{compact.codes = TRUE};
-they are treated as literal decimal points when only \code{full.codes = TRUE}, and
-removed when only \code{compact.codes = TRUE}.
+applies the method's regular expressions directly to the input ICD codes.
 Regex mapping is currently implemented for Charlson methods and is useful
 when codes come from an ICD modification that may not be completely covered
 by the precomputed code-condition links, or when auditing a method.

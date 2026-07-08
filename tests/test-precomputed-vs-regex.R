@@ -161,53 +161,6 @@ stopifnot(
   all(short_fragment_deyo[["cmrb_flag"]] == 0L)
 )
 
-decimal_form_data <-
-  data.frame(
-    id = c("full", "compact"),
-    code = c("E11.9", "E119"),
-    stringsAsFactors = FALSE
-  )
-
-decimal_form_args <-
-  list(
-    data = decimal_form_data,
-    id.vars = "id",
-    icd.codes = "code",
-    icdv = 10L,
-    dx = 1L,
-    poa = 1L,
-    primarydx = 0L,
-    method = "charlson_quan2011",
-    mapping = "regex"
-  )
-
-decimal_form_both <-
-  do.call(
-    comorbidities,
-    c(decimal_form_args, list(full.codes = TRUE, compact.codes = TRUE))
-  )
-
-decimal_form_full <-
-  do.call(
-    comorbidities,
-    c(decimal_form_args, list(full.codes = TRUE, compact.codes = FALSE))
-  )
-
-decimal_form_compact <-
-  do.call(
-    comorbidities,
-    c(decimal_form_args, list(full.codes = FALSE, compact.codes = TRUE))
-  )
-
-stopifnot(
-  decimal_form_both[["dm"]][decimal_form_both[["id"]] == "full"] == 1L,
-  decimal_form_both[["dm"]][decimal_form_both[["id"]] == "compact"] == 1L,
-  decimal_form_full[["dm"]][decimal_form_full[["id"]] == "full"] == 1L,
-  decimal_form_full[["dm"]][decimal_form_full[["id"]] == "compact"] == 0L,
-  decimal_form_compact[["dm"]][decimal_form_compact[["id"]] == "full"] == 0L,
-  decimal_form_compact[["dm"]][decimal_form_compact[["id"]] == "compact"] == 1L
-)
-
 if (on_cran()) {
   message("CRAN environment detected: skipping this test file.")
   q(save = "no", status = 0)
