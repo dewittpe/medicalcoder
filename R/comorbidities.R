@@ -257,6 +257,13 @@ comorbidities.data.frame <- function(data,
     if (!is.numeric(data[[poa.var]])) {
       stop(sprintf("Column '%s' must be numeric (0/1/NA) when supplied as poa.var.", poa.var), call. = FALSE)
     }
+    warn_unexpected_column_values(
+      data = data,
+      var = poa.var,
+      allowed = c(0L, 1L),
+      allowed_text = "0/1/NA",
+      consequence = "Values outside 0/1/NA may be ignored by present-on-admission logic."
+    )
     pn <- poa.var %in% ..protected_names..
     if (pn) {
       stop(
@@ -273,6 +280,13 @@ comorbidities.data.frame <- function(data,
     if (!is.numeric(data[[primarydx.var]])) {
       stop(sprintf("Column '%s' must be numeric (0/1/NA) when supplied as primarydx.var.", primarydx.var), call. = FALSE)
     }
+    warn_unexpected_column_values(
+      data = data,
+      var = primarydx.var,
+      allowed = c(0L, 1L),
+      allowed_text = "0/1/NA",
+      consequence = "Values outside 0/1/NA may be ignored by primary-diagnosis logic."
+    )
     pn <- primarydx.var %in% ..protected_names..
     if (pn) {
       stop(
@@ -365,6 +379,13 @@ comorbidities.data.frame <- function(data,
       if (!is.numeric(data[[icdv.var]])) {
         stop(sprintf("Column '%s' must be numeric (9/10/NA) when supplied as icdv.var.", icdv.var), call. = FALSE)
       }
+      warn_unexpected_column_values(
+        data = data,
+        var = icdv.var,
+        allowed = c(9L, 10L),
+        allowed_text = "9/10/NA",
+        consequence = "Rows with other ICD versions are not used by comorbidity methods that only map ICD-9 and ICD-10 codes."
+      )
     }
   } else {
     if (!is.null(icdv)) {
@@ -390,6 +411,13 @@ comorbidities.data.frame <- function(data,
       if (!is.numeric(data[[dx.var]])) {
         stop(sprintf("Column '%s' must be numeric (0/1/NA) when supplied as dx.var.", dx.var), call. = FALSE)
       }
+      warn_unexpected_column_values(
+        data = data,
+        var = dx.var,
+        allowed = c(0L, 1L),
+        allowed_text = "0/1/NA",
+        consequence = "Rows with other code-type values are not used by comorbidity methods that only map procedure and diagnosis indicators 0 and 1."
+      )
     }
   } else {
     if (!is.null(dx)) {
@@ -886,6 +914,26 @@ comorbidities_methods <- function() {
       "elixhauser_elixhauser1988", "elixhauser_ahrq_web", "elixhauser_quan2005",
       "elixhauser_ahrq2022", "elixhauser_ahrq2023", "elixhauser_ahrq2024",
       "elixhauser_ahrq2025", "elixhauser_ahrq2026", "elixhauser_ahrq_icd10")
+}
+
+warn_unexpected_column_values <- function(data, var, allowed, allowed_text, consequence) {
+  vals <- unique(data[[var]][!is.na(data[[var]])])
+  unexpected <- vals[!(vals %in% allowed)]
+
+  if (length(unexpected) > 0L) {
+    warning(
+      sprintf(
+        "Column '%s' contains value(s) outside %s: %s. %s",
+        var,
+        allowed_text,
+        paste(sort(unexpected), collapse = ", "),
+        consequence
+      ),
+      call. = FALSE
+    )
+  }
+
+  invisible(NULL)
 }
 
 # map_by_regex is used to...

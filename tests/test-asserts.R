@@ -88,6 +88,54 @@ t09c <- tryCatchError(assert_column(c("patient_id", "code"), cols))
 t09d <- tryCatchError(assert_column(NA_character_, cols))
 t09e <- tryCatchError(assert_column(1L, cols))
 
+unexpected_value_data <-
+  data.frame(
+    id = 1L,
+    code = "I50.9",
+    icdv = 10L,
+    dx = 1L,
+    poa = 1L,
+    primarydx = 0L,
+    stringsAsFactors = FALSE
+  )
+
+unexpected_icdv <- unexpected_value_data
+unexpected_icdv[["icdv"]] <- 11L
+unexpected_dx <- unexpected_value_data
+unexpected_dx[["dx"]] <- 2L
+unexpected_poa <- unexpected_value_data
+unexpected_poa[["poa"]] <- 2L
+unexpected_primarydx <- unexpected_value_data
+unexpected_primarydx[["primarydx"]] <- 2L
+
+unexpected_args <-
+  list(
+    id.vars = "id",
+    icd.codes = "code",
+    icdv.var = "icdv",
+    dx.var = "dx",
+    poa.var = "poa",
+    primarydx.var = "primarydx",
+    method = "charlson_quan2011"
+  )
+
+t10a <-
+  tryCatchWarning(
+    do.call(comorbidities, c(list(data = unexpected_icdv), unexpected_args))
+  )
+t10b <-
+  tryCatchWarning(
+    do.call(comorbidities, c(list(data = unexpected_dx), unexpected_args))
+  )
+t10c <-
+  tryCatchWarning(
+    do.call(comorbidities, c(list(data = unexpected_poa), unexpected_args))
+  )
+t10d <-
+  tryCatchWarning(
+    do.call(comorbidities, c(list(data = unexpected_primarydx), unexpected_args))
+  )
+
 stopifnot(
   inherits(t02a, "medicalcoder_comorbidities"),
   inherits(t02b, "medicalcoder_comorbidities"),
@@ -144,7 +192,15 @@ stopifnot(
   inherits(t09b, "error"),
   inherits(t09c, "error"),
   inherits(t09d, "error"),
-  inherits(t09e, "error")
+  inherits(t09e, "error"),
+  inherits(t10a, "warning"),
+  inherits(t10b, "warning"),
+  inherits(t10c, "warning"),
+  inherits(t10d, "warning"),
+  grepl("Column 'icdv' contains value\\(s\\) outside 9/10/NA: 11", t10a[["message"]]),
+  grepl("Column 'dx' contains value\\(s\\) outside 0/1/NA: 2", t10b[["message"]]),
+  grepl("Column 'poa' contains value\\(s\\) outside 0/1/NA: 2", t10c[["message"]]),
+  grepl("Column 'primarydx' contains value\\(s\\) outside 0/1/NA: 2", t10d[["message"]])
 )
 
 ################################################################################

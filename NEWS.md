@@ -48,6 +48,10 @@
 
 ## Improvements
 
+* `comorbidities()` now warns, without stopping, when column-backed
+  `icdv.var`, `dx.var`, `poa.var`, or `primarydx.var` values fall outside the
+  values used by the supported comorbidity mappings.
+
 * Clarify that AHRQ SAS present-on-admission indicators should be converted to
   numeric values before using `poa.var`: `"Y"` and `"W"` map to `1L`, `"N"` and
   `"U"` map to `0L`, and blank or missing values map to `NA_integer_`.
