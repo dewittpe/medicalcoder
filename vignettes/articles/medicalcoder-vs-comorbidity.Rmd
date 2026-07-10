@@ -294,40 +294,11 @@ for (i in seq_len(nrow(charlson_columns))) {
 }
 ```
 
-There are differences between the results returned by medicalcoder and
-comorbidity related to metastatic cancer and the ICD codes C7A.x.
-
-```{r, echo = TRUE}
-subset(charlson_delta, metacanc != mst)
-subset(mdcr, patid %in% c(25628, 90045, 99058) & grepl("^C.[^\\d]", code))
+The remaining columns in `charlson_delta` are the `patid` and three columns
+unique to _medicalcoder_
+```{r, include = FALSE}
+stopifnot(identical(names(charlson_delta), c("patid", "num_cmrb", "cmrb_flag", "age_score")))
 ```
-
-Table 1 of @quan2005 defining the ICD codes mapping to metastatic solid tumor
-as "C77.x--C80.x".   Under CMS codes there are C7A.x and C7B codes.  These codes
-seem applicable to metastatic cancer.
-
-```{r, echo = TRUE, results = "markup"}
-subset(medicalcoder::get_icd_codes(with.descriptions = TRUE), grepl("^C(7[A-Z])", code))
-```
-
-The author of the comorbidity package is aware of this and has commented on
-[GitHub](https://github.com/ellessenne/comorbidity/issues/16#issuecomment-513265712)
-
-> I am a bit hesitant to add these codes to the scoring algorithm - after all, they did not exist at the time and they have not been validated in these settings (I think?). I think this is a much bigger "problem", as comorbidity codes evolve over time, but comorbidity scores barely do: how should researchers deal with this disconnection? ...I suppose there is no right or wrong answer to that! 😃
-
-For medicalcoder, the choice was made to include these codes as C7A and C7B are,
-in the hierachy, between C77 and C80.
-
-This difference in approaches to mapping ICD codes to comorbidities accounts for
-the differences in the metacanc/mst columns, and the score/cci colums.
-```{r}
-charlson_delta[["metacanc"]] <- NULL
-charlson_delta[["mst"]] <- NULL
-charlson_delta[["score"]] <- NULL
-charlson_delta[["cci"]] <- NULL
-```
-
-The remaining columns in `charlson_delta` are:
 ```{r}
 str(charlson_delta)
 ```
@@ -531,7 +502,7 @@ for (i in seq_len(nrow(elixhauser_columns))) {
 ```
 
 The remaining columns in the `elixhauser_delta` object are specific to
-medicalcoder, save patid.
+medicalcoder, save the patient id `patid`.
 
 ```{r}
 str(elixhauser_delta)
@@ -594,7 +565,7 @@ mdcr_results <-
     icd.codes = "code",
     id.vars = "code_id",
     icdv.var = "icdv",
-    method = "charlson_quan2005",
+    method = "charlson_quan2011",
     poa = 1,
     primarydx = 0L)
 
@@ -622,6 +593,7 @@ charlson_delta <-
 for (i in seq_len(nrow(charlson_columns))) {
   x <- charlson_columns[["comorbidity"]][i]
   y <- charlson_columns[["medicalcoder"]][i]
+  if (y == "cci") next
   if (x == y) {
     x <- paste0(x, ".x")
     y <- paste0(y, ".y")
@@ -635,29 +607,18 @@ for (i in seq_len(nrow(charlson_columns))) {
     charlson_delta[[y]] <- NULL
   }
 }
-
-print(charlson_delta[mal != canc, .(code_id, mal, canc)], nrow = Inf)
 ```
 
-```{r}
-#| include: false
-stopifnot(packageVersion("comorbidity") == "1.1.0")
-stopifnot(charlson_delta[mal != canc, .N == 26L])
-```
-
-The ICD-10 codes C4A.x are not flagged as malignancies via
-`comorbidity::comorbidity()`.  This is likely due to the mapping missing.  Here
-we can see the mappings used between the two utilities.  The implementation used
-by `comorbidity::comorbidity()` relies on regular expressions applied to the
-data and the omitted C4A is why the code is not flagged.
-`medicalcoder::comorbidities()` builds a table with valid ICD codes to join
-against and has the C4A.x codes
-
-```{r}
-# comorbidity:::.maps$charlson_icd10_quan$canc
-grep("^C4", comorbidity:::.maps$charlson_icd10_quan$canc, value = TRUE)
-grep("^C4A", medicalcoder::get_charlson_codes()$code, value = TRUE)
-grep("^C4A", medicalcoder::get_charlson_codes()$full_code, value = TRUE)
+```{r, include = FALSE}
+# verify that there are no differences, the only things that should be retained
+# are medicalcoder specific columns.  The cci is here because the comorbidity
+# results were not scored
+stopifnot(
+  identical(
+    names(charlson_delta),
+    c("code_id", "num_cmrb", "cmrb_flag", "cci", "age_score")
+  )
+)
 ```
 
 The implementation of `comorbidity::comorbidity()` can result in false positives
