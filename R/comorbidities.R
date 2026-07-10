@@ -527,8 +527,8 @@ comorbidities.data.frame <- function(data,
       mdcr_inner_join(
         x = empty_data_for_lookup,
         y = lookup,
-        by.x = by_x[-1],
-        by.y = by_y,
+        by.x = by_x,
+        by.y = c("pattern", by_y),
         suffixes = c("", ".y")
       )
 
@@ -610,13 +610,6 @@ comorbidities.data.frame <- function(data,
     if (is.null(on_full)) {
       on_full <- on_comp[0, , drop = FALSE]
     }
-    #on_full <-
-    #  mdcr_inner_join(
-    #    x = data,
-    #    y = on_full,
-    #    by.x = by_x,
-    #    by.y = c("code", by_y)
-    #  )
   }
 
   ##############################################################################
