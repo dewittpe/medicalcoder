@@ -33,7 +33,7 @@ packageVersion("medicalcoder")
 
 # Introduction
 
-The medicalcoder package implements several variants of the Elixhauser
+The _medicalcoder_ package implements several variants of the Elixhauser
 comorbidity algorithm.
 
 * Based on codes provided by the Agency for Healthcare Research and Quality (AHRQ) for fiscal years 2022 through 2026 [@ahrqicd10]
@@ -50,7 +50,7 @@ comorbidity algorithm.
   * `elixhauser_quan2005`: [@quan2005]
 
 **IMPORTANT NOTE:** Elixhauser 1998 and AHRQ Web used diagnosis-related
-group (DRG) codes as part of the methods.  The medicalcoder
+group (DRG) codes as part of the methods. The _medicalcoder_
 package _does not_ use DRG codes.  This is consistent with the way these
 methods were implemented in @quan2005.
 
@@ -89,35 +89,33 @@ for either argument.
 mdcr_results0 <-
   comorbidities(
     data = mdcr,
-    id.vars = "patid",
-    icdv.var = "icdv",
+    id.vars   = "patid",
+    icdv.var  = "icdv",
     icd.codes = "code",
-    dx.var = "dx",
-    flag.method = "current",
-    poa = 1,
-    method = "elixhauser_ahrq2025"
+    dx.var    = "dx",
+    poa       = 1L,
+    method    = "elixhauser_ahrq2025"
   )
 
 # no warning
 mdcr_results <-
   comorbidities(
-    data = mdcr,
-    id.vars = "patid",
-    icdv.var = "icdv",
+    data      = mdcr,
+    id.vars   = "patid",
+    icdv.var  = "icdv",
     icd.codes = "code",
-    dx.var = "dx",
-    flag.method = "current",
-    poa = 1,
-    method = "elixhauser_ahrq2025",
-    primarydx = 0
+    dx.var    = "dx",
+    poa       = 1L,
+    method    = "elixhauser_ahrq2025",
+    primarydx = 0L
   )
 
 identical(mdcr_results, mdcr_results0)
 ```
 
-The return object is a `data.frame` with 0/1 integer indicator columns for the
+The return object is a `data.frame` with `0L`/`1L` integer indicator columns for the
 relevant conditions, the id.vars (if applicable), `num_cmrb`, the number of
-comorbidities, `cmrb_flag`, a 0/1 indicator for presence of at least one
+comorbidities, `cmrb_flag`, a `0L`/`1L` indicator for presence of at least one
 comorbidity, and the mortality and readmission index scores.
 
 ```{r}
@@ -137,7 +135,7 @@ tab <-
   kableExtra::kbl(
     x = x,
     format = "html",
-    caption = "Counts and percentages of patients in the mdcr example data sets with the Elixhauser @quan2005 comorbidities.",
+    caption = "Counts and percentages of patients in the mdcr example datasets with the Elixhauser @quan2005 comorbidities.",
     col.names = c("", "Count", "Percentage"),
     digits = 3
   )
