@@ -159,5 +159,30 @@ stopifnot(
 )
 
 ################################################################################
+# Internal validity helper guards
+
+required_summary_columns <- getFromNamespace("required_summary_columns", "medicalcoder")
+is_valid_subconditions <- getFromNamespace("is_valid_medicalcoder_comorbidities_with_subconditions", "medicalcoder")
+
+not_a_method <- required_summary_columns(NA_character_)
+unknown_method <- required_summary_columns("not_a_method")
+
+not_a_list <- is_valid_subconditions(data.frame(x = 1L))
+
+charlson_like_subconditions <- list(
+  conditions = data.frame(x = 1L),
+  subconditions = list()
+)
+attr(charlson_like_subconditions, "method") <- "charlson_quan2005"
+attr(charlson_like_subconditions, "flag.method") <- "current"
+
+stopifnot(
+  identical(not_a_method, character(0)),
+  identical(unknown_method, character(0)),
+  identical(not_a_list, FALSE),
+  identical(is_valid_subconditions(charlson_like_subconditions), FALSE)
+)
+
+################################################################################
 #                                 End of File                                  #
 ################################################################################
