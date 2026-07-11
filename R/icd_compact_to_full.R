@@ -1,7 +1,7 @@
 #' Convert ICD Compact Codes to Full Codes
 #'
 #' Take an assumed ICD compact code string and convert to a full code based on
-#' the ICD version (9 or 10) and type (diagnostic or procedure).  This method
+#' the ICD version (`9L` or `10L`) and type (diagnostic or procedure). This method
 #' only formats strings and does not validate the code(s).
 #'
 #' @param x Character vector
@@ -25,7 +25,7 @@ icd_compact_to_full <- function(x, icdv, dx) {
   stopifnot(inherits(x, "character"))
 
   # standardize icdv/dx lengths
-  # icdv and dx need to be length 1 or the same length as x
+  # icdv and dx need to be length 1L or the same length as x
   stopifnot(length(icdv) == 1L || length(icdv) == length(x))
   stopifnot(length(dx)   == 1L || length(dx)   == length(x))
   if (length(icdv) == 1L) icdv <- rep_len(icdv, length(x))

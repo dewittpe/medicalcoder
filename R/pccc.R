@@ -6,10 +6,10 @@
 #' @param id.vars A character vector of the id variables
 #'
 #' @param iddf A `data.frame` with the unique `id.vars` columns from
-#'   the `data` passed to [comorbidities()].
+#'   the `data` passed to [`comorbidities()`].
 #'
 #' @param cmrb A `data.frame` with the unique conditions and possible
-#'   subconditions flagged by ICD in [comorbidities()].
+#'   subconditions flagged by ICD in [`comorbidities()`].
 #'
 #' @param subconditions Logic scalar, if TRUE build subcondition results.
 #'
@@ -94,9 +94,9 @@
   dxpr_or_tech_X <- (dxpr_X | techtrans_X)
 
   # If at least one condition is flagged in dxpr_or_tech_X then the tech_X
-  # indicator will remain as a 0 or 1.  If there is no condition flagged in
+  # indicator will remain as 0L or 1L. If there is no condition flagged in
   # dxpr_or_tech_X, then the corresponding rows in tech_X are set to
-  # NA_integer_.  For the moment, keep the 0/1 in the tech_X and use it to build
+  # NA_integer_. For the moment, keep the 0L/1L in the tech_X and use it to build
   # the updated dxpr_or_tech_X.
   non_tech_condition <- rowSums(dxpr_or_tech_X) > 0L
   tech_X[!non_tech_condition, ] <- 0L

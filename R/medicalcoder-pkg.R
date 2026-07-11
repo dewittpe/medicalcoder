@@ -33,7 +33,7 @@
 #' This design choice was made for several reasons.
 #'
 #' 1. Ease of installation:
-#'    * Only requirement is `R >= 3.5.0`.
+#'    * The only requirement is `R >= 3.5.0`.
 #'    * No need for external files, downloads, or other packages for the ICD database.
 #'
 #' 2. Works well with different data paradigms:
@@ -43,18 +43,18 @@
 #'
 #' One of the reasons for focusing on building a self-contained package with no
 #' need for additional namespaces is to make installation and use in a
-#' restricted and secured system easier. The author of this package routinely
+#' restricted and secure systems easier. The author of this package routinely
 #' works on machines with extremely limited access to the world-wide web. As
 #' such, relying on any system dependencies or other R packages can become
-#' difficult as the machine may or may not have the needed software. So long as
+#' difficult because the machine may or may not have the needed software. So long as
 #' R >= 3.5.0 is available, medicalcoder will work.
 #'
 #' A great deal of thought went into performance of the methods and the size of
-#' the package.  The internal data sets, for example, are not stored in a
+#' the package.  The internal datasets, for example, are not stored in a
 #' structure that is easy to use for end users. When the package namespace is
 #' loaded, the needed internal lookup tables are generated and cached.
 #'
-#' @seealso [comorbidities()], [get_icd_codes()], [is_icd()],
+#' @seealso [`comorbidities()`], [`get_icd_codes()`], [`is_icd()`],
 #'
 #' * Vignette for working with ICD codes:
 #'   * `vignette(topic = "icd", package = "medicalcoder")`

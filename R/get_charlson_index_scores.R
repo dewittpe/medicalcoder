@@ -7,13 +7,14 @@
 #' @seealso
 #' * [`get_charlson_codes()`] for a lookup table of the ICD codes mapping to the
 #'   Charlson comorbidities.
-#' * [`comorbidities()`] for applying comorbidity algorithms to a data set.
+#' * [`comorbidities()`] for applying comorbidity algorithms to a dataset.
 #'
 #' @return A `data.frame` with the following columns:
 #' 
 #' * `condition`: Character vector of the conditions
-#' * `index`: Character vector indicating if the score is for the mortality or the readmission index score
-#' * `charlson_<variant>`:  the index scores for the variant
+#' * `index`: Character vector indicating whether the score is for the
+#'   mortality or readmission index.
+#' * `charlson_<variant>`: The index scores for the variant.
 #'
 #' @examples
 #' head(get_charlson_index_scores())

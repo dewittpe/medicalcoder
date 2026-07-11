@@ -6,15 +6,16 @@
 #' @seealso
 #' * [`get_elixhauser_codes()`] for the lookup table of ICD codes mapping to the
 #'   Elixhauser comorbidities.
-#' * [`get_elixhauser_poa()`] for the lookup table of the conditions which do an
+#' * [`get_elixhauser_poa()`] for the lookup table of the conditions which do and
 #'   do not require associated ICD codes to be present-on-admission to flag the
 #'   comorbidity.
-#' * [comorbidities()] for applying comorbidity algorithms to a data set.
+#' * [`comorbidities()`] for applying comorbidity algorithms to a dataset.
 #' 
 #' @return A `data.frame` with the following columns:
 #' * `condition`: Character vector of the conditions
-#' * `index`: Character vector indicating if the score is for the mortality or the readmission index score
-#' * `elixhauser_<variant>`: integer vector of the scores 
+#' * `index`: Character vector indicating whether the score is for the
+#'   mortality or readmission index.
+#' * `elixhauser_<variant>`: Integer vector of the scores.
 #'
 #' @examples
 #' head(get_elixhauser_index_scores())
