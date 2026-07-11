@@ -20,5 +20,5 @@
 ^.*\\.tar\\.gz$
 ^.*\\.Rcheck/*
 ^vignettes/articles/*
-^\\.DS_Store$
+(^|/)\\.DS_Store$
 ^shiny/*
