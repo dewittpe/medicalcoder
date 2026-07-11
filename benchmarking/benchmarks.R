@@ -12,9 +12,9 @@ benchmarks <-
   rbindlist(idcol = "set")
 
 ################################################################################
-# from the standpoint of implimentation, the extra compuational cost of
-# `flag.method = "cumulative"` is due to finding the first occurance of a
-# condition and then the population of a data set reflecting that condition for
+# from the standpoint of implementation, the extra computational cost of
+# `flag.method = "cumulative"` is due to finding the first occurrence of a
+# condition and then populating a dataset reflecting that condition for
 # all following encounters within a subject.
 facet_spec <- . ~ fifelse(subconditions, paste(method, "(with subconditions)"), method) + data_class
 

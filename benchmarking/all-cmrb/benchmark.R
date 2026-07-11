@@ -93,8 +93,8 @@ x <-
       id.vars = c("sid", "eid"),
       icdv.var = "icdv",
       dx.var = "dx",
-      poa = 1,
-      primarydx = 0,
+      poa = 1L,
+      primarydx = 0L,
       flag.method = "current"
     )
   )
@@ -110,8 +110,8 @@ tic <- Sys.time()
       id.vars = c("sid", "eid"),
       icdv.var = "icdv",
       dx.var = "dx",
-      poa = 1,
-      primarydx = 0,
+      poa = 1L,
+      primarydx = 0L,
       flag.method = flag_method,
       subconditions = subconditions
     )

@@ -38,7 +38,7 @@ procedures <- data.table::fread(files[endsWith(files, "procedures_icd.csv.gz")])
 ################################################################################
 # Build Variables
 
-## flag for diagnosic or procedure codes
+## flag for diagnostic or procedure codes
 diagnoses[, dx := 1L]
 procedures[, dx := 0L]
 
@@ -50,10 +50,10 @@ diagnoses[, primarydx := seq_num == 1]
 admissions[, hadm_seq := order(admittime), by = .(subject_id)]
 
 ################################################################################
-## Present on Admission
+## Present-on-admission
 
-# MIMIC-IV does not have an explicit present on admission (POA) varaible.  We
-# will build one.  If a ICD code "XXXX" is not on admission 1 but is listed on
+# MIMIC-IV does not have an explicit present-on-admission (POA) variable.  We
+# will build one.  If an ICD code "XXXX" is not on admission 1 but is listed on
 # admission 2 and admission 3, then the code will be considered present on
 # admission for admission 3.
 poa <-

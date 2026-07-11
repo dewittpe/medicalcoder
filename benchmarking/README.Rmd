@@ -11,22 +11,22 @@ library(kableExtra)
 suppressPackageStartupMessages(library(data.table))
 ```
 
-# Benchmarking `medicalcoder`
+# Benchmarking _medicalcoder_
 
 The major factors impacting the expected computation time for applying a
-comorbidity algorithm to a data set are:
+comorbidity algorithm to a dataset are:
 
 1. Data size: number of encounters.
-2. Data storage class: `medicalcoder` has been built such that no imports of
-   other namespaces is required. That said, when a `data.table` is passed to
-   `comorbidities()` and the `data.table` namespace is available, then S3
+2. Data storage class: _medicalcoder_ has been built such that no imports of
+   other namespaces are required. That said, when a `data.table` is passed to
+   `comorbidities()` and the _data.table_ namespace is available, then S3
    dispatch for `merge` is used, along with some other methods, to reduce memory
    use and reduce computation time. When a `tibble` is passed and tidyverse
    namespaces are available, the tibble-aware path reduces time relative to a
    base `data.frame`, though `data.table` remains the fastest option.
-3. flag.method: "current" will take less time than the "cumulative" method.
+3. `flag.method`: `"current"` will take less time than the `"cumulative"` method.
 
-In the following examples, each generated data set was benchmark by
+In the following examples, each generated dataset was benchmark by
 
 * `method`:
     * charlson_quan2005
@@ -58,7 +58,7 @@ mimicivpcccv3 <- medicalcoder::comorbidities(
   id.vars = c("subject_id"),
   icd.codes = "icd_code",
   dx.var = "dx",
-  poa = 1,
+  poa = 1L,
   flag.method = "current",
   method = "pccc_v3.1"
 )
@@ -70,10 +70,10 @@ mimicivcharlson <- medicalcoder::comorbidities(
   id.vars = c("subject_id"),
   icd.codes = "icd_code",
   dx.var = "dx",
-  poa = 1,
+  poa = 1L,
   flag.method = "current",
   method = "charlson_quan2005",
-  primarydx = 0
+  primarydx = 0L
 )
 ```
 
@@ -83,10 +83,10 @@ mimicivelixhauser <- medicalcoder::comorbidities(
   id.vars = c("subject_id"),
   icd.codes = "icd_code",
   dx.var = "dx",
-  poa = 1,
+  poa = 1L,
   flag.method = "current",
   method = "elixhauser_quan2005",
-  primarydx = 0
+  primarydx = 0L
 )
 ```
 
@@ -94,9 +94,9 @@ mimicivelixhauser <- medicalcoder::comorbidities(
 ## MIMIC-IV Demo Data
 
 The following summary is based on resampling the [MIMIC-IV Clinical Database
-Demo](https://physionet.org/content/mimic-iv-demo/2.2/) data set provided by
+Demo](https://physionet.org/content/mimic-iv-demo/2.2/) dataset provided by
 PhysioNet.[^1][^2] Using the MIMIC-IV Clinical Database Demo set will allow others to benchmark
-`medicalcoder` on their system with the same data as used here.
+_medicalcoder_ on their system with the same data as used here.
 
 [^1]: Johnson, A., Bulgarelli, L., Pollard, T., Horng, S., Celi, L. A., & Mark, R. (2023). MIMIC-IV Clinical Database Demo (version 2.2). PhysioNet. RRID:SCR_007345. https://doi.org/10.13026/dp1f-ex47
 
@@ -115,7 +115,7 @@ of the subjects had at least one Charlson comorbidity, and
 `r qwraps2::n_perc(mimicivelixhauser[["cmrb_flag"]])`
 of the subjects had at least one Elixhauser comorbidity.
 
-The subjects were resampled to generate data sets with upto 1,000,000 subjects.
+The subjects were resampled to generate datasets with up to 1,000,000 subjects.
 
 <img src="benchmark_mimiciv_composite.svg"/>
 
@@ -131,7 +131,7 @@ the time of a `data.frame`.
 
 Some of the computational expense in building the indicators for the
 comorbidities is due to the number of subjects/encounters with at least one
-comorbidity. We generated data sets where all subjects on all encounters had at
+comorbidity. We generated datasets where all subjects on all encounters had at
 least one ICD code mapping to a comorbidity.  The benchmarking results are
 summarized in the following graphic.
 

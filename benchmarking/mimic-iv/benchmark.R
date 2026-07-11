@@ -85,7 +85,7 @@ tic <- Sys.time()
       icdv.var = "icd_version",
       dx.var = "dx",
       poa.var = "poa",
-      primarydx = 0,
+      primarydx = 0L,
       flag.method = flag_method,
       method = method,
       subconditions = subconditions

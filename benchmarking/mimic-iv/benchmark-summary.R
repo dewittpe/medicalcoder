@@ -201,7 +201,7 @@ ggsave(file = "benchmark-memory.pdf", plot = gm, width = 12, height = 7)
 
 facet_spec <- . ~ fifelse(subconditions, paste(method, "(with subconditions)"), method)
 
-# use this data set to identify the flag.method
+# use this dataset to identify the flag.method
 fmpt <-
   unique(bench, by = c("data_class", "method", "subconditions", "flag.method", "time_smooth"))
 fmpt <- fmpt[, .SD[time_smooth == max(time_smooth)], by = .(data_class, method, subconditions, flag.method)]
