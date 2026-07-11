@@ -1,3 +1,31 @@
+# Version 0.9.0
+
+New features, extensions, and bug fixes (See NEWS.md)
+
+## R CMD check results
+
+* Local:
+  * R 4.6.1 (MacOS arm)
+    * Status: OK
+
+* GitHub Actions
+  * macos-latest (release)
+    * Status: OK
+  * windows-latest (release)
+    * Status: OK
+  * ubuntu-latest (devel)
+    * Status: OK
+  * ubuntu-latest (release)
+    * Status: OK
+  * ubuntu-latest (oldrel-1)
+    * Status: OK
+
+* rhub
+  * Status: OK
+
+* windbuilder
+  * Status: OK
+
 # Version 0.8.1
 
 Bug fixes - Importantly fixing a CRAN check error on two fedora instances.
