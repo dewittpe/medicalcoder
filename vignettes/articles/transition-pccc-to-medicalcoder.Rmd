@@ -24,10 +24,10 @@ knitr::opts_chunk$set(collapse = TRUE, fig.align = "center")
 
 # Introduction
 
-The R package [pccc](https://cran.r-project.org/package=pccc)
+The R package [_pccc_](https://cran.r-project.org/package=pccc)
 [@feinstein2018pccc;@dewitt2026pccc] was published to support version 2 of
 the Pediatric Complex Chronic Conditions (PCCC) [@feudtner2014pediatric].  This
-document is provided to help users of pccc to transition to medicalcoder.
+document is provided to help users of _pccc_ to transition to _medicalcoder_.
 
 Major differences between `pccc::ccc()` and `medicalcoder::comorbidities()`:
 
@@ -45,7 +45,7 @@ Major differences between `pccc::ccc()` and `medicalcoder::comorbidities()`:
 ```
 
 
-  * `medicalcoder::comorbidities()` expects the input data to be in a data.frame
+  * `medicalcoder::comorbidities()` expects the input data to be in a `data.frame`
     where each row is single ICD code.  For example, the same record for patient
     XX above would be three columns below, one row for each code, one column to
     identify the patient/encounter, and a column to denote if the code is a
@@ -66,7 +66,7 @@ Major differences between `pccc::ccc()` and `medicalcoder::comorbidities()`:
 
 2. ICD Version
 
-  * `pccc::ccc()` only considers ICD-9 and ICD-10 independently.  If the input
+  * `pccc::ccc()` considers ICD-9 and ICD-10 independently.  If the input
     data consists of both ICD-9 and ICD-10 data false negatives will be
     inevitable.  The version is set by the `icdv` argument to `pccc::ccc()`.
 
@@ -83,14 +83,14 @@ Major differences between `pccc::ccc()` and `medicalcoder::comorbidities()`:
 
   * `medicalcoder::comorbidities()` implements:
 
-    * `pccc_v2.0`: consistent results with `pccc::ccc()` for pccc version 1.0.7.
+    * `pccc_v2.0`: consistent results with `pccc::ccc()` for _pccc_ version 1.0.7.
     * `pccc_v2.1`: improved mappings of ICD codes to PCCC using the PCCC v2
       scoring algorithm.
     * `pccc_v3.0`: consistent with SAS code published with PCCC version 3
       [@feinstein2024pediatric].
     * `pccc_v3.1`: extended set of ICD code to condition mappings.
 
-    * Note: medicalcoder also provides several variants of the Charlson and
+    * Note: _medicalcoder_ also provides several variants of the Charlson and
       Elixhauser comorbidities.
 
 4. Subconditions
@@ -109,6 +109,13 @@ Major differences between `pccc::ccc()` and `medicalcoder::comorbidities()`:
   * `medicalcoder::comorbidities()` can account for present-on-admission flags
     and longitudinal flagging of comorbidities within a patient over multiple
     encounters.
+
+    For `flag.method = "cumulative"`, the final element of `id.vars` defines
+    the within-patient encounter order and earlier ICD evidence can be carried
+    forward.  This is especially relevant for PCCC v3 technology-dependent
+    conditions, where a technology-dependent code may need to be evaluated
+    together with non-technology-dependent evidence observed on another
+    encounter.
 
 
 # `pccc::ccc()` vs `medicalcoder::comorbidities()`
@@ -252,18 +259,24 @@ stopifnot(
 
 ## Calling `medicalcoder::comorbidities()`
 
+`medicalcoder::comorbidities()` uses database-style joins of precomputed valid
+ICD codes to conditions.  The `pccc::ccc()` implementation is based on partial
+string matching.  The database-style joins used by
+`medicalcoder::comorbidities()` requires less computational resources and time
+to evaluate than `pccc::ccc()`.
+
 ```{r}
 tic <- Sys.time()
 
 medicalcoder_results <-
   medicalcoder::comorbidities(
-    data = mdcr,
-    id.vars = "patid",
+    data      = mdcr,
+    id.vars   = "patid",
     icd.codes = "code",
-    icdv.var = "icdv",
-    dx.var = "dx",
-    method = "pccc_v2.0",
-    poa = 1
+    icdv.var  = "icdv",
+    dx.var    = "dx",
+    method    = "pccc_v2.0",
+    poa       = 1L # assuming all codes are POA
   )
 
 toc <- Sys.time()
@@ -283,15 +296,11 @@ old_vs_new <-
   )
 ```
 
-Most importantly, the condition flag (`ccc_flag` from `pccc::ccc()` and
+For the `mdcr` dataaet, the any condition flag (`ccc_flag` from `pccc::ccc()` and
 `cmrb_flag` from `medicalcoder::comorbidities()`) are identical.
 
 ```{r}
-stopifnot(
-  isTRUE(
-    with(old_vs_new, identical(ccc_flag, cmrb_flag))
-  )
-)
+stopifnot(isTRUE(with(old_vs_new, identical(ccc_flag, cmrb_flag))))
 ```
 
 Second, the flags for all but the technology dependence and transplant flags are
@@ -325,8 +334,19 @@ for(g in good) {
     data.table::set(old_vs_new, j = j, value = NULL)
   }
 }
-
-old_vs_new
+```
+The remaining columns are:
+```{r, include = FALSE}
+# Sanity check
+stopifnot(
+  identical(
+    names(old_vs_new),
+    c("patid", "tech_dep", "transplant", "misc", "any_tech_dep", "any_transplant", "num_cmrb")
+  )
+)
+```
+```{r}
+str(old_vs_new)
 ```
 
 First, the `num_cmrb` column is a count of the number of conditions and is
@@ -348,7 +368,7 @@ to how medicalcoder is implemented.
 old_vs_new
 ```
 
-There are several ICD codes which need to be corrected in pccc
+There are several ICD codes which need to be corrected in _pccc_
 
 GitHub links:
 
@@ -492,6 +512,14 @@ kableExtra::pack_rows(index = table(cvd_and_metabolic$condition))
 For more detail on the differences between PCCC v2 [@feudtner2014pediatric] and
 PCCC v3 [@feinstein2024pediatric] see the
 [PCCC article](https://www.peteredewitt.com/medicalcoder/articles/pccc.html#pccc-version-2-0-vs-pccc-version-3-0).
+
+The manuscript uses PCCC v3.1 examples to show why encounter-level and
+cumulative flagging can differ.  Under PCCC v3, technology-dependent ICD codes
+do not always flag a condition by themselves; their interpretation can depend on
+whether non-technology-dependent codes are present for the same encounter or
+observed over the patient's record.  `medicalcoder::comorbidities()` exposes
+that distinction with the same `flag.method` argument used for Charlson and
+Elixhauser, while preserving a single long-format input structure.
 
 
 # References
