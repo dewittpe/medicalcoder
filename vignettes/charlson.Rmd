@@ -33,7 +33,7 @@ packageVersion("medicalcoder")
 
 # Introduction
 
-The medicalcoder package implements several variants of the Charlson
+The _medicalcoder_ package implements several variants of the Charlson
 comorbidities algorithm.
 
 * `charlson_deyo1992`: Deyo's original set of codes [@deyo1992adapting;@quan2005]
@@ -64,21 +64,20 @@ Example: applying the @quan2005 variant of the Charlson comorbidities to the
 ```{r}
 mdcr_results <-
   comorbidities(
-    data = mdcr,
-    id.vars = "patid",
-    icdv.var = "icdv",
+    data      = mdcr,
+    id.vars   = "patid",
+    icdv.var  = "icdv",
     icd.codes = "code",
-    dx.var = "dx",
-    flag.method = "current",
-    poa = 1,
-    primarydx = 0,
-    method = "charlson_quan2005"
+    dx.var    = "dx",
+    poa       = 1L,
+    primarydx = 0L,
+    method    = "charlson_quan2005"
   )
 ```
 
-The return object is a `data.frame` with 0/1 integer indicator columns for the
+The return object is a `data.frame` with `0L`/`1L` integer indicator columns for the
 relevant conditions, the id.vars (if applicable), `age_score` (if age, in years,
-is supplied), `num_cmrb` the number of comorbidities, `cmrb_flag` a 0/1
+is supplied), `num_cmrb` the number of comorbidities, `cmrb_flag` a `0L`/`1L`
 indicator for presence of at least one comorbidity, and `cci` the Charlson
 Comorbidity Index.
 
@@ -99,7 +98,7 @@ tab <-
   kableExtra::kbl(
     x = x,
     format = "html",
-    caption = "Counts and percentages of patients in the mdcr example data sets with the @quan2005 comorbidities.",
+    caption = "Counts and percentages of patients in the mdcr example datasets with the @quan2005 comorbidities.",
     col.names = c("", "Count", "Percentage"),
     digits = 3
   )
