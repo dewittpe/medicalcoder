@@ -8,10 +8,10 @@
 #' @param cmrb A `data.frame` containing at least `id.vars` and
 #' `condition` columns; i.e., the 'comorbidity' `data.frame`.
 #' @param primarydx.var Character (scalar) with the name of the column in
-#' `cmrb` denoting if the condition was flaged as a primary diagnostic or not.
+#' `cmrb` denoting if the condition was flagged as a primary diagnosis or not.
 #' @param method Character scalar; name of the Charlson variant to assess
 #'
-#' @return A `data.frame` with `id.vars`, per-condition 0/1
+#' @return A `data.frame` with `id.vars`, per-condition `0L`/`1L`
 #' indicators, `num_cmrb`, `cmrb_flag`, and `cci`.
 #'
 #' @family internal comorbidity functions
