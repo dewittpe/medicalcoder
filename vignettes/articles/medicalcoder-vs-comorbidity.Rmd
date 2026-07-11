@@ -46,27 +46,32 @@ medicalcoder and comorbidity.
 
 ```{r, echo = FALSE, results = "asis"}
 x <- data.table::fread(text ="
-feature                                               | comorbidity  | medicalcoder
-Charlson [@quan2005]                                  | &#9989;      | &#9989;
-Charlson [@quan2011]                                  | &#10060;     | &#9989;
-Charlson [@deyo1992adapting]                          | &#10060;     | &#9989;
-Charlson [@glasheen2019]                              | &#10060;     | &#9989;
-Charlson (Ludvigsson et al., 2021)                    | &#9989;      | &#9989;
-Charlson (Sundararajan et al., 2004)                  | &#9989;      | &#9989;
-Elixhauser [@quan2005]                                | &#9989;      | &#9989;
-Elixhauser [@elixhauser1998]                          | &#10060;     | &#9989;
-Elixhauser (ICD-9-CM AHRQ)                            | &#10060;     | &#9989;
-Elixhauser (ICD-10-CM AHRQ)                           | &#10060;     | &#9989;
-PCCC version 2 [@feudtner2014pediatric]               | &#10060;     | &#9989;
-PCCC version 3 [@feinstein2024pediatric]              | &#10060;     | &#9989;
-Allows for full ICD codes                             | &#10060;     | &#9989;
-Allows for compact ICD codes                          | &#9989;      | &#9989;
-Applies algorithms to ICD-9 and ICD-10 simultaneously | &#10060      | &#9989;
-Diagnosis and Procedure codes simultaneously          | <sup>*</sup> | &#9989;
-Lookup tables <sup>**</sup>                           | &#9989;      | &#9989;
-Procedure codes                                       | &#10060;     | &#9989;
-Diagnostic codes                                      | &#9989;      | &#9989;
-Functions for looking up/testing ICD Codes            | &#10060;     | &#9989;
+feature                                                        | comorbidity  | medicalcoder
+Charlson [@quan2005]                                           | &#9989;      | &#9989;
+Charlson [@quan2011]                                           | &#10060;     | &#9989;
+Charlson [@deyo1992adapting]                                   | &#10060;     | &#9989;
+Charlson [@beyrer2021validation]                               | &#10060;     | &#9989;
+Charlson [@glasheen2019]                                       | &#10060;     | &#9989;
+Charlson [@ludvigsson2021adaptation;@ludvigsson2023adaptation] | &#9989;      | &#9989;
+Charlson [@sundararajan2004]                                   | &#9989;      | &#9989;
+Elixhauser [@quan2005]                                         | &#9989;      | &#9989;
+Elixhauser [@elixhauser1998]                                   | &#10060;     | &#9989;
+Elixhauser (ICD-9-CM AHRQ)                                     | &#10060;     | &#9989;
+Elixhauser (ICD-10-CM AHRQ, FY 2022-2026)                      | &#10060;     | &#9989;
+PCCC version 2 [@feudtner2014pediatric]                        | &#10060;     | &#9989;
+PCCC version 3 [@feinstein2024pediatric]                       | &#10060;     | &#9989;
+Allows for full ICD codes                                      | &#10060;     | &#9989;
+Allows for compact ICD codes                                   | &#9989;      | &#9989;
+Applies algorithms to ICD-9 and ICD-10 simultaneously          | &#10060      | &#9989;
+Diagnosis and Procedure codes simultaneously                   | <sup>*</sup> | &#9989;
+Method-specific ICD-to-condition maps <sup>**</sup>            | &#9989;      | &#9989;
+Procedure codes                                                | &#10060;     | &#9989;
+Diagnostic codes                                               | &#9989;      | &#9989;
+Present-on-admission aware methods                             | &#10060;     | &#9989;
+Primary diagnosis indicator support                            | &#10060;     | &#9989;
+Longitudinal cumulative flagging                               | &#10060;     | &#9989;
+No imported package namespaces for core use                    | &#10060;     | &#9989;
+Functions for looking up/testing ICD Codes                     | &#10060;     | &#9989;
 ")
 
 y <- data.table::as.data.table(get_icd_codes())[
@@ -90,9 +95,10 @@ kbl(
   align = "lcc"
 ) |>
 kable_styling(bootstrap_options = c("striped")) |>
-pack_rows("Comorbidity Algorithm and/or Scoring", start_row = 1, end_row = 12) |>
-pack_rows("Comorbidity ICD Code Inputs", start_row = 13, end_row = 16) |>
-pack_rows("ICD Utilities", start_row = 17, end_row = nrow(x)) |>
+pack_rows("Comorbidity Algorithm and/or Scoring", start_row = 1, end_row = 13) |>
+pack_rows("Comorbidity ICD Code Inputs", start_row = 14, end_row = 20) |>
+pack_rows("Algorithm Metadata and Flagging", start_row = 21, end_row = 24) |>
+pack_rows("ICD Utilities", start_row = 25, end_row = nrow(x)) |>
 footnote(symbol_manual = c("*", "**"),
   symbol = c("Procedure codes are not relevant to Charlson and Elixhauser, not
     needed in comorbidity.",
@@ -111,6 +117,13 @@ version. Also, `medicalcoder::comorbidities()` can handle diagnostic and
 procedure codes simultaneously; a necessary feature for PCCC.
 `comorbidity::comorbidity()` only applies comorbidity algorithms based on
 diagnostic codes and thus does not expect to see any procedure codes.
+
+This split-and-recombine step is the key structural difference between the two
+APIs.  In a mixed-version clinical dataset the ICD version is row-level
+metadata.  _medicalcoder_ accepts that metadata through `icdv.var`; the same
+pattern is used for diagnosis/procedure type (`dx.var`), present-on-admission
+status (`poa.var`), and primary diagnosis status (`primarydx.var`) when those
+columns are available.
 
 ```{r}
 mdcr_icd9dx  <- subset(mdcr, icdv ==  9L & dx == 1L)
@@ -143,14 +156,14 @@ To match the scoring used in `comorbidity::comorbidity()` we need to use the
 ```{r}
 medicalcoder_charlson_results <-
   medicalcoder::comorbidities(
-    data = mdcr,
-    id.vars = "patid",
+    data      = mdcr,
+    id.vars   = "patid",
     icd.codes = "code",
-    dx.var = "dx",
-    icdv.var = "icdv",
-    poa = 1L, # assume all codes are present on admission
+    dx.var    = "dx",
+    icdv.var  = "icdv",
+    poa       = 1L, # assume all codes are present on admission
     primarydx = 0L, # assume all codes are secondary diagnoses
-    method = "charlson_quan2011"
+    method    = "charlson_quan2011"
   )
 ```
 
@@ -161,19 +174,20 @@ results and then apply a scoring function.
 ```{r}
 comorbidity_charlson_icd9_results <-
   comorbidity::comorbidity(
-    x = mdcr_icd9dx,
-    id = "patid",
-    code = "code",
-    map = "charlson_icd9_quan",
-    assign0 = TRUE # set less severe comorbidities flags to 0 when more severe comorbidities is also flagged
+    x       = mdcr_icd9dx,
+    id      = "patid",
+    code    = "code",
+    map     = "charlson_icd9_quan",
+    assign0 = TRUE # set less severe comorbidities flags to 0
+                   # when more severe comorbidities is also flagged
   )
 
 comorbidity_charlson_icd10_results <-
   comorbidity::comorbidity(
-    x = mdcr_icd10dx,
-    id = "patid",
-    code = "code",
-    map = "charlson_icd10_quan",
+    x       = mdcr_icd10dx,
+    id      = "patid",
+    code    = "code",
+    map     = "charlson_icd10_quan",
     assign0 = TRUE
   )
 
@@ -190,7 +204,7 @@ attributes(comorbidity_charlson_results)[c("class", "variable.labels", "map")] <
 
 comorbidity_charlson_results[["score"]] <-
   comorbidity::score(
-    x = comorbidity_charlson_results,
+    x       = comorbidity_charlson_results,
     weights = "quan",
     assign0 = TRUE
   )
@@ -231,10 +245,10 @@ together by patid.
 ```{r}
 charlson_delta <-
   merge(
-    x = comorbidity_charlson_results,
-    y = medicalcoder_charlson_results,
+    x   = comorbidity_charlson_results,
+    y   = medicalcoder_charlson_results,
     all = TRUE,
-    by = "patid"
+    by  = "patid"
   )
 ```
 
@@ -297,6 +311,7 @@ for (i in seq_len(nrow(charlson_columns))) {
 The remaining columns in `charlson_delta` are the `patid` and three columns
 unique to _medicalcoder_
 ```{r, include = FALSE}
+# sanity check
 stopifnot(identical(names(charlson_delta), c("patid", "num_cmrb", "cmrb_flag", "age_score")))
 ```
 ```{r}
@@ -306,15 +321,6 @@ str(charlson_delta)
 * `num_cmrb`: number of comorbidities flagged
 * `cmrb_flag`: a 0/1 indicator for any comorbidity
 * `age_score`: a score adjustment based on age _if_ age is provided.
-
-```{r}
-stopifnot(
-  identical(
-    names(charlson_delta),
-    c("patid", "num_cmrb", "cmrb_flag", "age_score")
-  )
-)
-```
 
 An addition feature the medicalcoder package provides that the comorbidity
 package does not, is a summary method for the results, which can be used to
@@ -341,14 +347,14 @@ Applying the Elixhauser comorbidities to the `mdcr` data set via
 ```{r}
 medicalcoder_elixhauser_results <-
   medicalcoder::comorbidities(
-    data = mdcr,
-    id.vars = "patid",
+    data      = mdcr,
+    id.vars   = "patid",
     icd.codes = "code",
-    dx.var = "dx",
-    icdv.var = "icdv",
-    poa = 1L,       # assume all codes are present on admission
-    primarydx = 0L, # assume all codes are secondary diagnoses
-    method = "elixhauser_quan2005"
+    dx.var    = "dx",
+    icdv.var  = "icdv",
+    poa       = 1L,
+    primarydx = 0L,
+    method    = "elixhauser_quan2005"
   )
 ```
 
@@ -359,19 +365,19 @@ results and then apply a scoring function.
 ```{r}
 comorbidity_elixhauser_icd9_results <-
   comorbidity::comorbidity(
-    x = mdcr_icd9dx,
-    id = "patid",
-    code = "code",
-    map = "elixhauser_icd9_quan",
-    assign0 = TRUE # set less severe comorbidities flags to 0 when more severe comorbidities is also flagged
+    x       = mdcr_icd9dx,
+    id      = "patid",
+    code    = "code",
+    map     = "elixhauser_icd9_quan",
+    assign0 = TRUE
   )
 
 comorbidity_elixhauser_icd10_results <-
   comorbidity::comorbidity(
-    x = mdcr_icd10dx,
-    id = "patid",
-    code = "code",
-    map = "elixhauser_icd10_quan",
+    x       = mdcr_icd10dx,
+    id      = "patid",
+    code    = "code",
+    map     = "elixhauser_icd10_quan",
     assign0 = TRUE
   )
 
@@ -413,10 +419,10 @@ together by patid.
 ```{r}
 elixhauser_delta <-
   merge(
-    x = comorbidity_elixhauser_results,
-    y = medicalcoder_elixhauser_results,
+    x   = comorbidity_elixhauser_results,
+    y   = medicalcoder_elixhauser_results,
     all = TRUE,
-    by = "patid"
+    by  = "patid"
   )
 ```
 
@@ -509,6 +515,7 @@ str(elixhauser_delta)
 ```
 
 ```{r, include = FALSE}
+# sanity check
 stopifnot(identical(names(elixhauser_delta), c("patid", "HTN_C", "num_cmrb", "cmrb_flag", "mortality_index", "readmission_index")))
 ```
 
@@ -561,28 +568,29 @@ all_dx_codes[, code_id := paste0("ICD-", icdv, " ", full_code)]
 ```{r}
 mdcr_results <-
   medicalcoder::comorbidities(
-    data = all_dx_codes,
+    data      = all_dx_codes,
     icd.codes = "code",
-    id.vars = "code_id",
-    icdv.var = "icdv",
-    method = "charlson_quan2011",
-    poa = 1,
-    primarydx = 0L)
+    id.vars   = "code_id",
+    icdv.var  = "icdv",
+    method    = "charlson_quan2011",
+    poa       = 1,
+    primarydx = 0L
+  )
 
 cmrb_results <-
   rbind(
     comorbidity::comorbidity(
-      x = subset(all_dx_codes, icdv == 9),
-      id = "code_id",
-      code = "code",
-      map = "charlson_icd9_quan",
+      x       = subset(all_dx_codes, icdv == 9),
+      id      = "code_id",
+      code    = "code",
+      map     = "charlson_icd9_quan",
       assign0 = TRUE
     ),
     comorbidity::comorbidity(
-      x = subset(all_dx_codes, icdv == 10),
-      id = "code_id",
-      code = "code",
-      map = "charlson_icd10_quan",
+      x       = subset(all_dx_codes, icdv == 10),
+      id      = "code_id",
+      code    = "code",
+      map     = "charlson_icd10_quan",
       assign0 = TRUE
     )
   )
@@ -623,49 +631,69 @@ stopifnot(
 
 The implementation of `comorbidity::comorbidity()` can result in false positives
 when invalid codes are submitted.
+_medicalcoder_ maps input codes to method-specific tables of known ICD codes
+using database-style joins.  That design is stricter than prefix or
+regular-expression matching: invalid strings that start with a valid ICD prefix
+are not treated as valid comorbidity evidence.
 
 ```{r}
 df <- data.frame(id = "pat1", code = "C40-NOT-AN-ICD-CODE")
-comorbidity::comorbidity(x = df, id = "id", code = "code", assign0 = TRUE, map = "charlson_icd10_quan")
-medicalcoder::comorbidities(data = df, id.var = "id", icd.codes = "code", method = "charlson_quan2005", poa = 1, primarydx = 0)
+
+comorbidity::comorbidity(
+  x       = df,
+  id      = "id",
+  code    = "code",
+  assign0 = TRUE,
+  map     = "charlson_icd10_quan"
+)
+
+medicalcoder::comorbidities(
+  data      = df,
+  id.var    = "id",
+  icd.codes = "code",
+  method    = "charlson_quan2005",
+  poa       = 1,
+  primarydx = 0
+)
 ```
 
 ## Elixhauser
 ```{r}
 mdcr_results <-
   medicalcoder::comorbidities(
-    data = all_dx_codes,
+    data      = all_dx_codes,
     icd.codes = "code",
-    id.vars = "code_id",
-    icdv.var = "icdv",
-    method = "elixhauser_quan2005",
-    poa = 1,
-    primarydx = 0L)
+    id.vars   = "code_id",
+    icdv.var  = "icdv",
+    method    = "elixhauser_quan2005",
+    poa       = 1,
+    primarydx = 0L
+  )
 
 cmrb_results <-
   rbind(
     comorbidity::comorbidity(
-      x = subset(all_dx_codes, icdv == 9),
-      id = "code_id",
-      code = "code",
-      map = "elixhauser_icd9_quan",
+      x       = subset(all_dx_codes, icdv =  = 9),
+      id      = "code_id",
+      code    = "code",
+      map     = "elixhauser_icd9_quan",
       assign0 = TRUE
     ),
     comorbidity::comorbidity(
-      x = subset(all_dx_codes, icdv == 10),
-      id = "code_id",
-      code = "code",
-      map = "elixhauser_icd10_quan",
+      x       = subset(all_dx_codes, icdv =  = 10),
+      id      = "code_id",
+      code    = "code",
+      map     = "elixhauser_icd10_quan",
       assign0 = TRUE
     )
   )
 
 elixhauser_delta <-
   merge(
-    x = cmrb_results,
-    y = mdcr_results,
+    x   = cmrb_results,
+    y   = mdcr_results,
     all = TRUE,
-    by = "code_id"
+    by  = "code_id"
   )
 
 data.table::setDT(elixhauser_delta)
@@ -742,69 +770,69 @@ Next we define four functions to simplify calling the code multiple times.
 ```{r}
 medicalcoder_charlson_results <- function() {
   medicalcoder::comorbidities(
-    data = mdcr,
-    id.vars = "patid",
+    data      = mdcr,
+    id.vars   = "patid",
     icd.codes = "code",
-    dx.var = "dx",
-    icdv.var = "icdv",
-    poa = 1L,
+    dx.var    = "dx",
+    icdv.var  = "icdv",
+    poa       = 1L,
     primarydx = 0L,
-    method = "charlson_quan2011"
+    method    = "charlson_quan2011"
   )
 }
 
 medicalcoder_charlson_results_DT <- function() {
   medicalcoder::comorbidities(
-    data = mdcrDT,
-    id.vars = "patid",
+    data      = mdcrDT,
+    id.vars   = "patid",
     icd.codes = "code",
-    dx.var = "dx",
-    icdv.var = "icdv",
-    poa = 1L,
+    dx.var    = "dx",
+    icdv.var  = "icdv",
+    poa       = 1L,
     primarydx = 0L,
-    method = "charlson_quan2011"
+    method    = "charlson_quan2011"
   )
 }
 
 comorbidity_charlson_results <- function() {
   comorbidity_charlson_icd9_results <-
     comorbidity::comorbidity(
-      x = mdcr_icd9dx,
-      id = "patid",
-      code = "code",
-      map = "charlson_icd9_quan",
-      assign0 = TRUE # set less severe comorbidities flags to 0 when more severe comorbidities is also flagged
+      x       = mdcr_icd9dx,
+      id      = "patid",
+      code    = "code",
+      map     = "charlson_icd9_quan",
+      assign0 = TRUE
     )
 
   comorbidity_charlson_icd10_results <-
     comorbidity::comorbidity(
-      x = mdcr_icd10dx,
-      id = "patid",
-      code = "code",
-      map = "charlson_icd10_quan",
+      x       = mdcr_icd10dx,
+      id      = "patid",
+      code    = "code",
+      map     = "charlson_icd10_quan",
       assign0 = TRUE
     )
 
-# combine the ICD-9 and ICD-10 results into one set
+  # combine the ICD-9 and ICD-10 results into one set
   comorbidity_charlson_results <-
     rbind(comorbidity_charlson_icd9_results, comorbidity_charlson_icd10_results)
 
   comorbidity_charlson_results <-
     aggregate(. ~ patid, data = comorbidity_charlson_results, FUN = max)
 
-# add the attributes to the combine set
+  # add the attributes to the combine set
   attributes(comorbidity_charlson_results)[c("class", "variable.labels", "map")] <-
     attributes(comorbidity_charlson_icd9_results)[c("class", "variable.labels", "map")]
 
   comorbidity_charlson_results[["score"]] <-
     comorbidity::score(
-      x = comorbidity_charlson_results,
+      x       = comorbidity_charlson_results,
       weights = "quan",
       assign0 = TRUE
     )
 
-# the score return is a numeric value, setting to integer to match the storage
-# mode of medicalcoder
+  # the score return is a numeric value, setting to integer to match the storage
+  # mode of medicalcoder
   comorbidity_charlson_results[["score"]] <-
     as.integer(comorbidity_charlson_results[["score"]])
 }
@@ -828,14 +856,14 @@ comorbidity_charlson_results_DT <- function() {
       assign0 = TRUE
     )
 
-# combine the ICD-9 and ICD-10 results into one set
+  # combine the ICD-9 and ICD-10 results into one set
   comorbidity_charlson_results <-
     rbind(comorbidity_charlson_icd9_results, comorbidity_charlson_icd10_results)
 
   comorbidity_charlson_results <-
     aggregate(. ~ patid, data = comorbidity_charlson_results, FUN = max)
 
-# add the attributes to the combine set
+   # add the attributes to the combine set
   attributes(comorbidity_charlson_results)[c("class", "variable.labels", "map")] <-
     attributes(comorbidity_charlson_icd9_results)[c("class", "variable.labels", "map")]
 
@@ -846,8 +874,8 @@ comorbidity_charlson_results_DT <- function() {
       assign0 = TRUE
     )
 
-# the score return is a numeric value, setting to integer to match the storage
-# mode of medicalcoder
+  # the score return is a numeric value, setting to integer to match the storage
+  # mode of medicalcoder
   comorbidity_charlson_results[["score"]] <-
     as.integer(comorbidity_charlson_results[["score"]])
 }
@@ -862,10 +890,10 @@ seconds, for each evaluation.
   <summary>Code (click to toggle view/fold)</summary>
 
 ```{r}
-medicalcoder_times <- numeric(0)
+medicalcoder_times    <- numeric(0)
 medicalcoder_times_DT <- numeric(0)
-comorbidity_times <- numeric(0)
-comorbidity_times_DT <- numeric(0)
+comorbidity_times     <- numeric(0)
+comorbidity_times_DT  <- numeric(0)
 
 for (i in 1:20) {
   tic <- Sys.time()
@@ -899,9 +927,14 @@ time to compute. Due in part to the need to aggregate multiple calls for
 `data.frame` is still much faster than `comorbidity::comorbidity()`.
 
 ```{r, echo = FALSE, results = "asis"}
-cbind(medicalcoder_times_DT, medicalcoder_times, comorbidity_times_DT, comorbidity_times) |>
-  apply(2, summary) |>
-  t() |>
+cbind(
+  medicalcoder_times_DT,
+  medicalcoder_times,
+  comorbidity_times_DT,
+  comorbidity_times
+) |>
+apply(2, summary) |>
+t() |>
 kbl(digits = 3) |>
 kable_styling(bootstrap_options = "striped") |>
 add_header_above(c("", "Time (seconds)" = 6))
