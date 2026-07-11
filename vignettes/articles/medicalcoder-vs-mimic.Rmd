@@ -45,6 +45,13 @@ The SQL file used here is vendored from
 [`mimic-code` commit `278df75ec30991ff3a6f5ceb6d2221635a085e9f`](https://raw.githubusercontent.com/MIT-LCP/mimic-code/278df75ec30991ff3a6f5ceb6d2221635a085e9f/mimic-iv/concepts/comorbidity/charlson.sql)
 so this article does not depend on network access during rendering.
 
+The manuscript supplement uses the same commit as the published comparator and
+then harmonizes output conventions before assessing agreement.  The SQL relies
+on string comparisons in the source query, whereas _medicalcoder_ maps input
+codes to known ICD codes through method-specific lookup tables.  That
+precomputed map is what allows the same `comorbidities()` interface to support
+full and compact codes, mixed ICD versions, and multiple comorbidity families.
+
 ```{r}
 mimic_charson_query <-
   scan(
@@ -58,26 +65,25 @@ mimic_charson_query <-
   )
 
 # modify the query to work in SQLite
-mimic_charson_query <-
-  gsub(pattern = "physionet-data.mimiciv_hosp.admissions",
-       replacement = "admissions",
-       x = mimic_charson_query,
-       fixed = TRUE)
-mimic_charson_query <-
-  gsub(pattern = "physionet-data.mimiciv_hosp.diagnoses_icd",
-       replacement = "diagnoses",
-       x = mimic_charson_query,
-       fixed = TRUE)
-mimic_charson_query <-
-  gsub(pattern = "physionet-data.mimiciv_derived.age",
-       replacement = "ages",
-       x = mimic_charson_query,
-       fixed = TRUE)
-mimic_charson_query <-
-  gsub(pattern = "GREATEST",
-       replacement = "MAX",
-       x = mimic_charson_query,
-       fixed = TRUE)
+# replace Google Big Query table names with table names to be using in
+# the local RSQLite in memory database.  Three table names need to be
+# changed and one function call: GBQ GREATEST needs to be replaced by MAX
+prs <-
+  c(
+    "physionet-data.mimiciv_hosp.admissions" = "admissions",
+    "physionet-data.mimiciv_hosp.diagnoses_icd" = "diagnoses",
+    "physionet-data.mimiciv_derived.age" = "ages",
+    "GREATEST" = "MAX"
+  )
+for(i in seq_len(length(prs))) {
+  mimic_charson_query <-
+    gsub(
+      pattern     = names(prs)[i],
+      replacement = prs[i],
+      x           = mimic_charson_query,
+      fixed       = TRUE
+    )
+}
 
 mimic_charson_query <- paste(mimic_charson_query, collapse = "\n")
 ```
@@ -98,7 +104,6 @@ setnames(
 mdcr_for_mimic[, hadm_id := paste0(subject_id, "e1")]
 mdcr_for_mimic[, seq_num := 1L:.N, by = .(subject_id, hadm_id)]
 mdcr_for_mimic[, age := as.integer(substr(as.character(subject_id), 1L, 2L))]
-
 ```
 
 ```{r}
@@ -109,9 +114,23 @@ library(RSQLite)
 con <- dbConnect(drv = RSQLite::SQLite(), dbname = ":memory:")
 
 # add data to the data base
-dbWriteTable(conn = con, name = "diagnoses",  value = mdcr_for_mimic[dx == 1L])
-dbWriteTable(conn = con, name = "admissions", value = mdcr_for_mimic[, unique(.SD), .SDcols = c("subject_id", "hadm_id")])
-dbWriteTable(conn = con, name = "ages",       value = mdcr_for_mimic[, unique(.SD), .SDcols = c("hadm_id", "age")])
+dbWriteTable(
+  conn  = con,
+  name  = "diagnoses",
+  value = mdcr_for_mimic[dx == 1L]
+)
+
+dbWriteTable(
+  conn = con,
+  name = "admissions",
+  value = mdcr_for_mimic[, unique(.SD), .SDcols = c("subject_id", "hadm_id")]
+)
+
+dbWriteTable(
+  conn = con,
+  name = "ages",
+  value = mdcr_for_mimic[, unique(.SD), .SDcols = c("hadm_id", "age")]
+)
 
 # get the charlson results via MIMIC-IV
 mimic_charlson_results <- dbGetQuery(con, mimic_charson_query)
@@ -121,7 +140,8 @@ dbDisconnect(conn = con)
 
 setDT(mimic_charlson_results)
 ```
-
+To get the same results as the MIMIC-IV Code form
+`medicalcoder::comorbidities()` use `method = charlson_mimicivcode`.
 ```{r}
 medicalcoder_charlson_results <-
   comorbidities(
@@ -131,14 +151,14 @@ medicalcoder_charlson_results <-
     icdv.var = "icd_version",
     dx.var = "dx",
     age.var = "age",
-    method = "charlson_quan2005",
+    method = "charlson_mimicivcode",
     full.codes = FALSE,
     flag.method = "current",
     poa = 1L,
     primarydx = 0L
   )
 ```
-
+Let's compare the results:
 ```{r}
 delta <-
   merge(
@@ -149,29 +169,24 @@ delta <-
   )
 ```
 
-
-```{r}
-uniqueN(mdcr_for_mimic$hadm_id)
-nrow(mimic_charlson_results)
-nrow(medicalcoder_charlson_results)
+```{r, include = FALSE}
+# sanity check
+stopifnot(
+  uniqueN(mdcr_for_mimic$hadm_id) == nrow(mimic_charlson_results),
+  uniqueN(mdcr_for_mimic$hadm_id) == nrow(medicalcoder_charlson_results)
+)
 ```
 
-Conditions with multiple severity levels, and the metastatic cancer flags differ
-between the two methods.
+Conditions with multiple severity levels differ between the two methods.
 ```{r}
 dcolumns <- fread(text = "
 medicalcoder | mimic
 aidshiv      | aids
-mal          | malignant_cancer
 cebvd        | cerebrovascular_disease
 copd         | chronic_pulmonary_disease
 chf          | congestive_heart_failure
 dem          | dementia
-dmc          | diabetes_with_cc
-dm           | diabetes_without_cc
 hp           | paraplegia
-mld          | mild_liver_disease
-msld         | severe_liver_disease
 mi           | myocardial_infarct
 pud          | peptic_ulcer_disease
 pvd          | peripheral_vascular_disease
@@ -190,10 +205,10 @@ for (i in seq_len(nrow(dcolumns))) {
   print(e)
   r <- eval(e)
   print(r)
-  #if (r) {
-  #  delta[[x]] <- NULL
-  #  delta[[y]] <- NULL
-  #}
+  if (r) {
+    delta[[x]] <- NULL
+    delta[[y]] <- NULL
+  }
 }
 ```
 
@@ -201,6 +216,17 @@ There are three comorbidities where there are different levels of severity.
 `medicalcoder::comorbidities()` will set the less severe condition indicator to
 0 when the more severe condition is flagged.  Both methods only consider the
 more severe case in the index scoring.
+
+```{r}
+# medicalcoder | mimic
+# dmc          | diabetes_with_cc
+# dm           | diabetes_without_cc
+# mld          | mild_liver_disease
+# msld         | severe_liver_disease
+# mal          | malignant_cancer
+# mst          | metastatic_solid_tumor
+str(delta)
+```
 
 Diabetes - `medicalcoder::comorbidities()` sets the flag for diabetes without
 complication to 0 when diabetes with complication is present.  MIMIC code
@@ -240,25 +266,7 @@ delta[mal == 0L & mst == 0L, .N > 0L & all(malignant_cancer == 0L) & all(metasta
 delta[mal == 1L & mst == 0L, .N > 0L & all(malignant_cancer == 1L) & all(metastatic_solid_tumor == 0L)]
 delta[mal == 0L & mst == 1L, .N > 0L &                               all(metastatic_solid_tumor == 1L)]
 delta[mal == 1L & mst == 1L, .N == 0L]
-```
-Additionally, ICD-10 codes from CMS of the form C7A.x are not mapped by the
-MIMIC codes to metastatic_solid_tumor, but medicalcoder does map these codes to
-that comorbidity.
-```{r}
-subset(
-  merge(
-    x = mdcr_for_mimic,
-    y = subset(delta, mst == 1 & metastatic_solid_tumor == 0, select = c("subject_id", "hadm_id")),
-    all = FALSE,
-    by = c("subject_id", "hadm_id")
-  ),
-  grepl("^C7[A-Z]", icd_code)
-)
-subset(medicalcoder::get_icd_codes(with.descriptions = TRUE),
-  full_code %in% c("C7A.098", "C7A.8", "C7B.8"))
-```
 
-```{r}
 delta[, mal := NULL]
 delta[, mst := NULL]
 delta[, malignant_cancer := NULL]
@@ -293,9 +301,22 @@ All that is left in the `delta` `data.frame` are the id.vars and the
 `medicalcoder::comorbidities()` and report the number of comorbidities flagged
 and indicator for any comorbidity.
 
+```{r, include = FALSE}
+# sanity check
+stopifnot(
+  identical(
+    names(delta),
+    c("subject_id", "hadm_id", "num_cmrb", "cmrb_flag")
+  )
+)
+```
+
 ```{r}
 str(delta)
 ```
+
+After accounting for naming conventions and severity-suppression conventions,
+the remaining columns are _medicalcoder_-specific summaries.
 
 # References
 
