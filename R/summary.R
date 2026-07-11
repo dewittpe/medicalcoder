@@ -19,7 +19,7 @@
 #'                 dx.var = "dx",
 #'                 method = "pccc_v3.1",
 #'                 flag.method = 'current',
-#'                 poa = 1)
+#'                 poa = 1L)
 #' summary(pccc_v3.1_results)
 #'
 #' charlson_results <-
@@ -29,7 +29,7 @@
 #'                 dx.var = "dx",
 #'                 method = "charlson_quan2011",
 #'                 flag.method = 'current',
-#'                 poa = 1)
+#'                 poa = 1L)
 #' summary(charlson_results)
 #'
 #' elixhauser_results <-
@@ -38,12 +38,12 @@
 #'                 id.vars = "patid",
 #'                 dx.var = "dx",
 #'                 method = "elixhauser_ahrq2025",
-#'                 primarydx = 1,
+#'                 primarydx = 1L,
 #'                 flag.method = 'current',
-#'                 poa = 1)
+#'                 poa = 1L)
 #' summary(elixhauser_results)
 #'
-#' @return either a list or a data `data.frame`
+#' @return Either a list or a `data.frame`.
 #'
 #' @export
 summary.medicalcoder_comorbidities <- function(object, ...) {
@@ -60,6 +60,8 @@ summary.medicalcoder_comorbidities <- function(object, ...) {
   } else if (startsWith(attr(object, "method"), "elixhauser")) {
     .elixhauser_summary(object)
   } else {
+    # As of v0.9.0 this guard cannot be reached through exported constructors:
+    # valid medicalcoder_comorbidities objects must use a registered method.
     stop(sprintf("No summary method for a medicalcoder_comorbidities object with method %s has been built", attr(object, "method")))
   }
 }
@@ -86,7 +88,7 @@ summary.medicalcoder_comorbidities <- function(object, ...) {
 #'                 dx.var = "dx",
 #'                 method = "pccc_v3.1",
 #'                 flag.method = 'current',
-#'                 poa = 1,
+#'                 poa = 1L,
 #'                 subconditions = TRUE)
 #' summary(pccc_v3.1_subcondition_results)
 #'
