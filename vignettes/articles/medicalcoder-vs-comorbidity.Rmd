@@ -1,5 +1,5 @@
 ---
-title: "medicalcoder vs comorbidity"
+title: "_medicalcoder_ vs _comorbidity_"
 output:
  rmarkdown::html_vignette:
    toc: true
@@ -25,8 +25,8 @@ knitr::opts_chunk$set(collapse = TRUE, fig.align = "center")
 # Introduction
 
 The purpose of this article is to compare the API and results between
-medicalcoder and the R package
-[comorbidity](https://cran.r-project.org/package=comorbidity)
+_medicalcoder_ and the R package
+[_comorbidity_](https://cran.r-project.org/package=comorbidity)
 [@r-comorbidity].
 
 ```{r}
@@ -42,7 +42,7 @@ stopifnot(packageVersion("comorbidity") == "1.1.0")
 ```
 
 The following table is a partial list of similarities and differences between
-medicalcoder and comorbidity.
+_medicalcoder_ and _comorbidity_.
 
 ```{r, echo = FALSE, results = "asis"}
 x <- data.table::fread(text ="
@@ -101,20 +101,20 @@ pack_rows("Algorithm Metadata and Flagging", start_row = 21, end_row = 24) |>
 pack_rows("ICD Utilities", start_row = 25, end_row = nrow(x)) |>
 footnote(symbol_manual = c("*", "**"),
   symbol = c("Procedure codes are not relevant to Charlson and Elixhauser, not
-    needed in comorbidity.",
+    needed in <em>comorbidity</em>.",
   paste(
-"<small>comorbidity contains look up tables for ICD-10 years 2009, 2011,
-  ICD-10-CM 2018, 2022, and ICD-9 for 2015.  medicalcoder has a more
+"<small><em>comorbidity</em> contains look up tables for ICD-10 years 2009, 2011,
+  ICD-10-CM 2018, 2022, and ICD-9 for 2015. <em>medicalcoder</em> has a more
   extensive internal ICD code database.</small>", y)), escape = FALSE)
 ```
 
-# Prepare Data for comorbidity
+# Prepare Data for _comorbidity_
 
-The example data set `mdcr` within medicalcoder is in a format that is ideal
-for `medicalcoder::comorbidities()`.  To prepare that data set for use in the
+The example dataset `mdcr` within _medicalcoder_ is in a format that is ideal
+for `medicalcoder::comorbidities()`.  To prepare that dataset for use in the
 `comorbidity::comorbidity()` call we need to split the data in ICD-9 and ICD-10
 version. Also, `medicalcoder::comorbidities()` can handle diagnostic and
-procedure codes simultaneously; a necessary feature for PCCC.
+procedure codes simultaneously.
 `comorbidity::comorbidity()` only applies comorbidity algorithms based on
 diagnostic codes and thus does not expect to see any procedure codes.
 
@@ -146,7 +146,7 @@ mdcr_icd10dx <-
 
 # Charlson Comorbidities
 
-Applying the Charlson comorbidities to the `mdcr` data set via
+Applying the Charlson comorbidities to the `mdcr` dataset via
 `medicalcoder::comorbidities()` is
 done as follows.  Important note: the ICD codes used to assess the Charlson
 comorbidities between @quan2005 and @quan2011 are the same. The scoring is not.
@@ -161,7 +161,7 @@ medicalcoder_charlson_results <-
     icd.codes = "code",
     dx.var    = "dx",
     icdv.var  = "icdv",
-    poa       = 1L, # assume all codes are present on admission
+    poa       = 1L, # assume all codes are present-on-admission
     primarydx = 0L, # assume all codes are secondary diagnoses
     method    = "charlson_quan2011"
   )
@@ -198,7 +198,7 @@ comorbidity_charlson_results <-
 comorbidity_charlson_results <-
   aggregate(. ~ patid, data = comorbidity_charlson_results, FUN = max)
 
-# add the attributes to the combine set
+# add the attributes to the combined set
 attributes(comorbidity_charlson_results)[c("class", "variable.labels", "map")] <-
   attributes(comorbidity_charlson_icd9_results)[c("class", "variable.labels", "map")]
 
@@ -239,7 +239,7 @@ dim(comorbidity_charlson_results)
 names(comorbidity_charlson_results)
 ```
 
-We will compare results column by column.  First, we merge the data sets
+We will compare results column by column.  First, we merge the datasets
 together by patid.
 
 ```{r}
@@ -319,13 +319,13 @@ str(charlson_delta)
 ```
 
 * `num_cmrb`: number of comorbidities flagged
-* `cmrb_flag`: a 0/1 indicator for any comorbidity
+* `cmrb_flag`: a `0L`/`1L` indicator for any comorbidity
 * `age_score`: a score adjustment based on age _if_ age is provided.
 
-An addition feature the medicalcoder package provides that the comorbidity
-package does not, is a summary method for the results, which can be used to
+An additional feature _medicalcoder_ provides, which _comorbidity_ does not, is a
+summary method for the results. This can be used to
 build nice tables via
-[kableExtra](https://CRAN.R-project.org/package=kableExtra).
+[_kableExtra_](https://CRAN.R-project.org/package=kableExtra).
 
 ```{r}
 x <- summary(medicalcoder_charlson_results)[[1]][, c("condition_description", "count", "percent")]
@@ -341,7 +341,7 @@ pack_rows("Number of Comorbidities", start_row = 18, end_row = nrow(x))
 
 # Elixhauser Comorbidities
 
-Applying the Elixhauser comorbidities to the `mdcr` data set via
+Applying the Elixhauser comorbidities to the `mdcr` dataset via
 `medicalcoder::comorbidities()` is done as follows.
 
 ```{r}
@@ -413,7 +413,7 @@ dim(comorbidity_elixhauser_results)
 names(comorbidity_elixhauser_results)
 ```
 
-We will compare results column by column.  First, we merge the data sets
+We will compare results column by column.  First, we merge the datasets
 together by patid.
 
 ```{r}
@@ -508,7 +508,7 @@ for (i in seq_len(nrow(elixhauser_columns))) {
 ```
 
 The remaining columns in the `elixhauser_delta` object are specific to
-medicalcoder, save the patient id `patid`.
+_medicalcoder_, except for the patient id `patid`.
 
 ```{r}
 str(elixhauser_delta)
@@ -524,15 +524,14 @@ stopifnot(identical(names(elixhauser_delta), c("patid", "HTN_C", "num_cmrb", "cm
 
 * `num_cmrb`:  Number of comorbidities flagged
 
-* `cmrb_flag`: a 0/1 indicator for _any_ comorbidity being flagged
+* `cmrb_flag`: a `0L`/`1L` indicator for _any_ comorbidity being flagged
 
 * `mortality_index` and `readmission_index`: index scores based on the AHRQ
   weights [@ahrq2017].
 
-An addition feature of the medicalcoder package provides that the
-comorbidity package does not, is a summary method for the results, which can
-be used to build nice tables via
-[kableExtra](https://CRAN.R-project.org/package=kableExtra).
+An additional feature _medicalcoder_ provides, which _comorbidity_ does not, is a
+summary method for the results. This can be used to build nice tables via
+[_kableExtra_](https://CRAN.R-project.org/package=kableExtra).
 
 ```{r}
 x <- summary(medicalcoder_elixhauser_results)[[1]][, c("condition", "count", "percent")]
@@ -573,7 +572,7 @@ mdcr_results <-
     id.vars   = "code_id",
     icdv.var  = "icdv",
     method    = "charlson_quan2011",
-    poa       = 1,
+    poa       = 1L,
     primarydx = 0L
   )
 
@@ -652,8 +651,8 @@ medicalcoder::comorbidities(
   id.var    = "id",
   icd.codes = "code",
   method    = "charlson_quan2005",
-  poa       = 1,
-  primarydx = 0
+  poa       = 1L,
+  primarydx = 0L
 )
 ```
 
@@ -666,7 +665,7 @@ mdcr_results <-
     id.vars   = "code_id",
     icdv.var  = "icdv",
     method    = "elixhauser_quan2005",
-    poa       = 1,
+    poa       = 1L,
     primarydx = 0L
   )
 
@@ -720,8 +719,8 @@ for (i in seq_len(nrow(elixhauser_columns))) {
 stopifnot(identical(names(elixhauser_delta), c("code_id", "HTN_C", "num_cmrb", "cmrb_flag", "mortality_index", "readmission_index")))
 ```
 
-The only differences between the resulting data sets are columns unique to
-medicalcoder.
+The only differences between the resulting datasets are columns unique to
+_medicalcoder_.
 
 ```{r}
 str(elixhauser_delta)
@@ -729,21 +728,21 @@ str(elixhauser_delta)
 
 # Benchmarking
 
-The medicalcoder package was built to use base R methods and has zero imports.
-That said, if the input data set to `medicalcoder::comorbidities()` is a
+The _medicalcoder_ package was built to use base R methods and has zero imports.
+That said, if the input dataset to `medicalcoder::comorbidities()` is a
 [`data.table`](https://cran.r-project.org/package=data.table) and the
-`data.table` namespace is available, the S3 methods for `data.table` will be used
+_data.table_ namespace is available, the S3 methods for `data.table` will be used
 and there will be a performance improvement. When given a
 [`tibble`](https://tibble.tidyverse.org/) and the
-[`dplyr`](https://dplyr.tidyverse.org/) namespace is available, the tibble-aware
+[_dplyr_](https://dplyr.tidyverse.org/) namespace is available, the tibble-aware
 path improves on base `data.frame` performance but remains slower than
 `data.table`; see the project benchmarking results for details.
 
-comorbidity imports several namespaces, including `data.table`, and uses
+_comorbidity_ imports several namespaces, including _data.table_, and uses
 `data.table` for efficiency.
 
 In the following benchmark we will look at the time required to apply the
-Charlson comorbidity method to the `mdcr` data set via
+Charlson comorbidity method to the `mdcr` dataset via
 `medicalcoder::comorbidities()` and `comorbidity::comorbidity()`. We will
 consider the cases when inputting a data.frame and when inputting a data.table.
 To support that work we make some copies of the input data and set the copies to
@@ -820,7 +819,7 @@ comorbidity_charlson_results <- function() {
   comorbidity_charlson_results <-
     aggregate(. ~ patid, data = comorbidity_charlson_results, FUN = max)
 
-  # add the attributes to the combine set
+  # add the attributes to the combined set
   attributes(comorbidity_charlson_results)[c("class", "variable.labels", "map")] <-
     attributes(comorbidity_charlson_icd9_results)[c("class", "variable.labels", "map")]
 
@@ -863,7 +862,7 @@ comorbidity_charlson_results_DT <- function() {
   comorbidity_charlson_results <-
     aggregate(. ~ patid, data = comorbidity_charlson_results, FUN = max)
 
-   # add the attributes to the combine set
+   # add the attributes to the combined set
   attributes(comorbidity_charlson_results)[c("class", "variable.labels", "map")] <-
     attributes(comorbidity_charlson_icd9_results)[c("class", "variable.labels", "map")]
 
