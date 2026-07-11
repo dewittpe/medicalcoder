@@ -22,7 +22,7 @@
 #'
 #' @param icdv.var Character scalar naming the column in `data` that indicates
 #'   the ICD version. If present it must be numeric. Rows with values other than
-#'   `9` or `10` will not be used to map ICD codes to comorbidities.
+#'   `9L` or `10L` will not be used to map ICD codes to comorbidities.
 #'   `icdv.var` takes precedence over `icdv` if both are provided.
 #'
 #' @param icdv An integer value of `9L` or `10L` indicating that all
@@ -30,12 +30,12 @@
 #'   (with a warning) if `icdv.var` is provided.
 #'
 #' @param dx.var Character scalar naming the column in `data` that indicates
-#'   diagnostic (`1`) vs procedural (`0`) codes. If present it must be numeric.
-#'   Rows with values other than `0` or `1` will not be used to map ICD codes to
+#'   diagnostic (`1L`) vs procedural (`0L`) codes. If present it must be numeric.
+#'   Rows with values other than `0L` or `1L` will not be used to map ICD codes to
 #'   comorbidities. `dx.var` takes precedence over `dx` if both are provided.
 #'
 #' @param dx An integer indicating that all `data[[icd.codes]]` are
-#'   diagnostic (`1`) or procedure (`0`) codes. Ignored (with a
+#'   diagnostic (`1L`) or procedure (`0L`) codes. Ignored (with a
 #'   warning) if `dx.var` is provided.
 #'
 #' @param poa.var Character scalar naming the column with present-on-admission
@@ -48,7 +48,7 @@
 #'   present-on-admission while others do not. `poa.var` takes precedence over
 #'   `poa` if both are provided.
 #'
-#' @param poa Integer scalar `0` or `1`. Use when all `icd.codes` share the same
+#' @param poa Integer scalar `0L` or `1L`. Use when all `icd.codes` share the same
 #'   present-on-admission status. Ignored with a warning if `poa` and `poa.var`
 #'   are both provided.
 #'
@@ -58,8 +58,8 @@
 #'   comorbidities and is ignored when the method is a PCCC variant.
 #'   `primarydx.var` takes precedence over `primarydx` if both are provided.
 #'
-#' @param primarydx An integer value of `0` or `1`. If `0`,
-#'   treat all codes as non-primary diagnoses; if `1`, treat all codes as
+#' @param primarydx An integer value of `0L` or `1L`. If `0L`,
+#'   treat all codes as non-primary diagnoses; if `1L`, treat all codes as
 #'   primary diagnoses. Ignored, with a warning, if `primarydx.var` is provided.
 #'
 #' @param age.var Character scalar naming the column in `data` that contains
