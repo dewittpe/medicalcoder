@@ -1,19 +1,38 @@
 # Changelog
 
-## medicalcoder 0.8.1.9000
+## medicalcoder 0.9.0
 
 ### New Features
 
 - [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
-  gains a new argument to allow end users to specify the mapping between
-  ICD codes and the conditions to be done via precomputed link tables or
-  via regex (part of
+  gains a `mapping` argument. The default `mapping = "precomputed"` uses
+  the precomputed ICD code-condition links included with medicalcoder.
+  `mapping = "regex"` applies method regular expressions directly to
+  input ICD codes. Regex mapping is currently available for Charlson
+  methods except `charlson_beyrer2021`. (part of
   [\#45](https://github.com/dewittpe/medicalcoder/issues/45))
+
+- Clarify `flag.method = "cumulative"` documentation for longitudinal
+  data. Users should validate encounter ordering and POA behavior
+  carefully for their study design.
+
+- Add validation for the encounter-order column used by
+  `flag.method = "cumulative"`. Missing values and factor columns now
+  error; character columns are allowed with a warning because they are
+  sorted lexicographically.
 
 - Add `charlson_sundararajan2004`
 
 - Add `charlson_ludvigsson2021`, a Charlson-style Swedish register-based
   comorbidity method.
+
+- Add `charlson_mimicivcode`, a mapping between ICD-10 codes and
+  Charlson comorbidities to be consistent with
+  [mimiciv-code](https://github.com/MIT-LCP/mimic-code/blob/57069783095e7770e66ea97da264c0200078ddbf/mimic-iv/concepts/comorbidity/charlson.sql)
+
+- Add `charlson_beyrer2021`, a Charlson style comorbidity based on U.S.
+  ICD-10-CM diagnostic and ICD-10-PCS (procedure) codes from [Beyrer et
+  al. (2021)](https://doi.org/10.1002/pds.5204)
 
 - Add ICD-10-AM (Australian Modification) to the ICD database
 
@@ -22,13 +41,38 @@
 
 ### Bug Fixes
 
+- [`summary()`](https://rdrr.io/r/base/summary.html) falls back to the
+  next applicable method with a warning when a modified
+  `medicalcoder_comorbidities` object no longer has the structure
+  required by medicalcoder’s methods.
+
+- Prevent unrelated input columns from colliding with internal lookup
+  columns while mapping ICD codes to comorbidities in
+  [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md).
+
 - ICD-10 Z49.1 has been added to elixhauser_quan2005; it was missing by
   error in the prior version of medicalcoder.
 
 ### Improvements
 
-- WHO ICD-10 codes extend 2019 to 2020 and 2021 and the WHO last
-  published in 2019 and then transiitoned to ICD-11 January 1 2022.
+- [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+  now warns, without stopping, when column-backed `icdv.var`, `dx.var`,
+  `poa.var`, or `primarydx.var` values fall outside the values used by
+  the supported comorbidity mappings.
+
+- Clarify that AHRQ SAS present-on-admission indicators should be
+  converted to numeric values before using `poa.var`: `"Y"` and `"W"`
+  map to `1L`, `"N"` and `"U"` map to `0L`, and blank or missing values
+  map to `NA_integer_`.
+
+- Clarify that rows with `icdv.var` values other than `9` or `10` are
+  not used when mapping ICD codes to comorbidities.
+
+- Clarify that rows with `dx.var` values other than `0` or `1` are not
+  used when mapping ICD codes to comorbidities.
+
+- WHO ICD-10 codes extend 2019 to 2020 and 2021. WHO last published
+  ICD-10 in 2019 and transitioned to ICD-11 on January 1, 2022.
 
 ## medicalcoder 0.8.1
 

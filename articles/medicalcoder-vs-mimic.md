@@ -1,4 +1,4 @@
-# medicalcoder vs mimic
+# \_medicalcoder\_ vs MIMIC
 
 ## Introduction
 
@@ -18,15 +18,25 @@ SQL code for applying a Charlson comorbidity algorithm to the MIMIC-IV
 data is available from MIT Laboratory for Computational Physiology
 (MIT_LCP) on GitHub. The code is expected to run on Google Big Query on
 the MIMIC-IV data. We make a few small modifications to the code so we
-can evaluate the SQL locally via RSQLite and on a local data set.
+can evaluate the SQL locally via RSQLite and on a local dataset.
 
 The SQL file used here is vendored from [`mimic-code` commit
 `278df75ec30991ff3a6f5ceb6d2221635a085e9f`](https://raw.githubusercontent.com/MIT-LCP/mimic-code/278df75ec30991ff3a6f5ceb6d2221635a085e9f/mimic-iv/concepts/comorbidity/charlson.sql)
 so this article does not depend on network access during rendering.
 
+The manuscript supplement uses the same commit as the published
+comparator and then harmonizes output conventions before assessing
+agreement. The SQL relies on string comparisons in the source query,
+whereas *medicalcoder* maps input codes to known ICD codes through
+method-specific lookup tables. That precomputed map is what allows the
+same
+[`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+interface to support full and compact codes, mixed ICD versions, and
+multiple comorbidity families.
+
 ``` r
 
-mimic_charson_query <-
+mimic_charlson_query <-
   scan(
     file = system.file(
       "sql", "mimic-iv-charlson-278df75.sql",
@@ -38,28 +48,27 @@ mimic_charson_query <-
   )
 
 # modify the query to work in SQLite
-mimic_charson_query <-
-  gsub(pattern = "physionet-data.mimiciv_hosp.admissions",
-       replacement = "admissions",
-       x = mimic_charson_query,
-       fixed = TRUE)
-mimic_charson_query <-
-  gsub(pattern = "physionet-data.mimiciv_hosp.diagnoses_icd",
-       replacement = "diagnoses",
-       x = mimic_charson_query,
-       fixed = TRUE)
-mimic_charson_query <-
-  gsub(pattern = "physionet-data.mimiciv_derived.age",
-       replacement = "ages",
-       x = mimic_charson_query,
-       fixed = TRUE)
-mimic_charson_query <-
-  gsub(pattern = "GREATEST",
-       replacement = "MAX",
-       x = mimic_charson_query,
-       fixed = TRUE)
+# replace Google Big Query table names with table names used in
+# the local RSQLite in-memory database.  Three table names need to be
+# changed and one function call: GBQ GREATEST needs to be replaced by MAX
+prs <-
+  c(
+    "physionet-data.mimiciv_hosp.admissions" = "admissions",
+    "physionet-data.mimiciv_hosp.diagnoses_icd" = "diagnoses",
+    "physionet-data.mimiciv_derived.age" = "ages",
+    "GREATEST" = "MAX"
+  )
+for(i in seq_len(length(prs))) {
+  mimic_charlson_query <-
+    gsub(
+      pattern     = names(prs)[i],
+      replacement = prs[i],
+      x           = mimic_charlson_query,
+      fixed       = TRUE
+    )
+}
 
-mimic_charson_query <- paste(mimic_charson_query, collapse = "\n")
+mimic_charlson_query <- paste(mimic_charlson_query, collapse = "\n")
 ```
 
 ``` r
@@ -94,19 +103,37 @@ library(RSQLite)
 
 con <- dbConnect(drv = RSQLite::SQLite(), dbname = ":memory:")
 
-# add data to the data base
-dbWriteTable(conn = con, name = "diagnoses",  value = mdcr_for_mimic[dx == 1L])
-dbWriteTable(conn = con, name = "admissions", value = mdcr_for_mimic[, unique(.SD), .SDcols = c("subject_id", "hadm_id")])
-dbWriteTable(conn = con, name = "ages",       value = mdcr_for_mimic[, unique(.SD), .SDcols = c("hadm_id", "age")])
+# add data to the database
+dbWriteTable(
+  conn  = con,
+  name  = "diagnoses",
+  value = mdcr_for_mimic[dx == 1L]
+)
+
+dbWriteTable(
+  conn = con,
+  name = "admissions",
+  value = mdcr_for_mimic[, unique(.SD), .SDcols = c("subject_id", "hadm_id")]
+)
+
+dbWriteTable(
+  conn = con,
+  name = "ages",
+  value = mdcr_for_mimic[, unique(.SD), .SDcols = c("hadm_id", "age")]
+)
 
 # get the charlson results via MIMIC-IV
-mimic_charlson_results <- dbGetQuery(con, mimic_charson_query)
+mimic_charlson_results <- dbGetQuery(con, mimic_charlson_query)
 
 # close DB connection
 dbDisconnect(conn = con)
 
 setDT(mimic_charlson_results)
 ```
+
+To get the same results as the MIMIC-IV Code form
+[`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+use `method = charlson_mimicivcode`.
 
 ``` r
 
@@ -118,13 +145,15 @@ medicalcoder_charlson_results <-
     icdv.var = "icd_version",
     dx.var = "dx",
     age.var = "age",
-    method = "charlson_quan2005",
+    method = "charlson_mimicivcode",
     full.codes = FALSE,
     flag.method = "current",
     poa = 1L,
     primarydx = 0L
   )
 ```
+
+Let’s compare the results:
 
 ``` r
 
@@ -137,34 +166,18 @@ delta <-
   )
 ```
 
-``` r
-
-uniqueN(mdcr_for_mimic$hadm_id)
-## [1] 38262
-nrow(mimic_charlson_results)
-## [1] 38262
-nrow(medicalcoder_charlson_results)
-## [1] 38262
-```
-
-Conditions with multiple severity levels, and the metastatic cancer
-flags differ between the two methods.
+Conditions with multiple severity levels differ between the two methods.
 
 ``` r
 
 dcolumns <- fread(text = "
 medicalcoder | mimic
 aidshiv      | aids
-mal          | malignant_cancer
 cebvd        | cerebrovascular_disease
 copd         | chronic_pulmonary_disease
 chf          | congestive_heart_failure
 dem          | dementia
-dmc          | diabetes_with_cc
-dm           | diabetes_without_cc
 hp           | paraplegia
-mld          | mild_liver_disease
-msld         | severe_liver_disease
 mi           | myocardial_infarct
 pud          | peptic_ulcer_disease
 pvd          | peripheral_vascular_disease
@@ -184,15 +197,13 @@ for (i in seq_len(nrow(dcolumns))) {
   print(e)
   r <- eval(e)
   print(r)
-  #if (r) {
-  #  delta[[x]] <- NULL
-  #  delta[[y]] <- NULL
-  #}
+  if (r) {
+    delta[[x]] <- NULL
+    delta[[y]] <- NULL
+  }
 }
 ## identical(delta[["aidshiv"]], delta[["aids"]])
 ## [1] TRUE
-## identical(delta[["mal"]], delta[["malignant_cancer"]])
-## [1] FALSE
 ## identical(delta[["cebvd"]], delta[["cerebrovascular_disease"]])
 ## [1] TRUE
 ## identical(delta[["copd"]], delta[["chronic_pulmonary_disease"]])
@@ -201,15 +212,7 @@ for (i in seq_len(nrow(dcolumns))) {
 ## [1] TRUE
 ## identical(delta[["dem"]], delta[["dementia"]])
 ## [1] TRUE
-## identical(delta[["dmc"]], delta[["diabetes_with_cc"]])
-## [1] TRUE
-## identical(delta[["dm"]], delta[["diabetes_without_cc"]])
-## [1] FALSE
 ## identical(delta[["hp"]], delta[["paraplegia"]])
-## [1] TRUE
-## identical(delta[["mld"]], delta[["mild_liver_disease"]])
-## [1] FALSE
-## identical(delta[["msld"]], delta[["severe_liver_disease"]])
 ## [1] TRUE
 ## identical(delta[["mi"]], delta[["myocardial_infarct"]])
 ## [1] TRUE
@@ -224,7 +227,7 @@ for (i in seq_len(nrow(dcolumns))) {
 ## identical(delta[["age_score.x"]], delta[["age_score.y"]])
 ## [1] TRUE
 ## identical(delta[["cci"]], delta[["charlson_comorbidity_index"]])
-## [1] FALSE
+## [1] TRUE
 ```
 
 There are three comorbidities where there are different levels of
@@ -233,6 +236,37 @@ severity.
 will set the less severe condition indicator to 0 when the more severe
 condition is flagged. Both methods only consider the more severe case in
 the index scoring.
+
+``` r
+
+# medicalcoder | mimic
+# dmc          | diabetes_with_cc
+# dm           | diabetes_without_cc
+# mld          | mild_liver_disease
+# msld         | severe_liver_disease
+# mal          | malignant_cancer
+# mst          | metastatic_solid_tumor
+str(delta)
+## Classes 'medicalcoder_comorbidities', 'data.table' and 'data.frame': 38262 obs. of  16 variables:
+##  $ subject_id            : int  10000 10002 10005 10006 10008 10010 10014 10015 10017 10018 ...
+##  $ hadm_id               : chr  "10000e1" "10002e1" "10005e1" "10006e1" ...
+##  $ mal                   : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ dmc                   : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ dm                    : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ mld                   : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ msld                  : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ mst                   : int  0 0 1 0 0 0 0 0 0 0 ...
+##  $ num_cmrb              : int  1 0 1 0 0 0 0 1 0 0 ...
+##  $ cmrb_flag             : int  1 0 1 0 0 0 0 1 0 0 ...
+##  $ mild_liver_disease    : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ diabetes_without_cc   : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ diabetes_with_cc      : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ malignant_cancer      : int  0 0 1 0 0 0 0 0 0 0 ...
+##  $ severe_liver_disease  : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ metastatic_solid_tumor: int  0 0 1 0 0 0 0 0 0 0 ...
+##  - attr(*, ".internal.selfref")=<pointer: 0x55931b845ee0> 
+##  - attr(*, "sorted")= chr [1:2] "subject_id" "hadm_id"
+```
 
 Diabetes -
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
@@ -283,7 +317,7 @@ delta[malignant_cancer == 1L & metastatic_solid_tumor == 1L, .N > 0L] # MIMIC
 ## [1] TRUE
 
 delta[malignant_cancer == 0L & metastatic_solid_tumor == 0L, .N > 0L & all(mal == 0L) & all(mst == 0L)]
-## [1] FALSE
+## [1] TRUE
 delta[malignant_cancer == 1L & metastatic_solid_tumor == 0L, .N > 0L & all(mal == 1L) & all(mst == 0L)]
 ## [1] TRUE
 delta[malignant_cancer == 0L & metastatic_solid_tumor == 1L, .N > 0L &                 all(mst == 1L)]
@@ -296,50 +330,9 @@ delta[mal == 0L & mst == 0L, .N > 0L & all(malignant_cancer == 0L) & all(metasta
 delta[mal == 1L & mst == 0L, .N > 0L & all(malignant_cancer == 1L) & all(metastatic_solid_tumor == 0L)]
 ## [1] TRUE
 delta[mal == 0L & mst == 1L, .N > 0L &                               all(metastatic_solid_tumor == 1L)]
-## [1] FALSE
+## [1] TRUE
 delta[mal == 1L & mst == 1L, .N == 0L]
 ## [1] TRUE
-```
-
-Additionally, ICD-10 codes from CMS of the form C7A.x are not mapped by
-the MIMIC codes to metastatic_solid_tumor, but medicalcoder does map
-these codes to that comorbidity.
-
-``` r
-
-subset(
-  merge(
-    x = mdcr_for_mimic,
-    y = subset(delta, mst == 1 & metastatic_solid_tumor == 0, select = c("subject_id", "hadm_id")),
-    all = FALSE,
-    by = c("subject_id", "hadm_id")
-  ),
-  grepl("^C7[A-Z]", icd_code)
-)
-## Key: <subject_id, hadm_id>
-##    subject_id hadm_id icd_version icd_code    dx seq_num   age
-##         <int>  <char>       <int>   <char> <int>   <int> <int>
-## 1:      25628 25628e1          10   C7A098     1      10    25
-## 2:      90045 90045e1          10     C7A8     1       1    90
-## 3:      90045 90045e1          10     C7B8     1       2    90
-## 4:      99058 99058e1          10     C7A8     1       2    99
-subset(medicalcoder::get_icd_codes(with.descriptions = TRUE),
-  full_code %in% c("C7A.098", "C7A.8", "C7B.8"))
-##        icdv dx full_code   code src known_start known_end assignable_start
-## 148812   10  1   C7A.098 C7A098 cms        2014      2026             2014
-## 148814   10  1     C7A.8   C7A8 cms        2014      2026             2014
-## 148824   10  1     C7B.8   C7B8 cms        2014      2026             2014
-##        assignable_end                                      desc desc_start
-## 148812           2026 Malignant carcinoid tumors of other sites       2014
-## 148814           2026     Other malignant neuroendocrine tumors       2014
-## 148824           2026     Other secondary neuroendocrine tumors       2014
-##        desc_end
-## 148812     2026
-## 148814     2026
-## 148824     2026
-```
-
-``` r
 
 delta[, mal := NULL]
 delta[, mst := NULL]
@@ -392,41 +385,19 @@ comorbidity.
 ``` r
 
 str(delta)
-## Classes 'medicalcoder_comorbidities', 'data.table' and 'data.frame': 38262 obs. of  30 variables:
-##  $ subject_id                 : int  10000 10002 10005 10006 10008 10010 10014 10015 10017 10018 ...
-##  $ hadm_id                    : chr  "10000e1" "10002e1" "10005e1" "10006e1" ...
-##  $ aidshiv                    : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ cebvd                      : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ copd                       : int  1 0 0 0 0 0 0 0 0 0 ...
-##  $ chf                        : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ dem                        : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ hp                         : int  0 0 0 0 0 0 0 1 0 0 ...
-##  $ mi                         : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ pud                        : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ pvd                        : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ rnd                        : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ rhd                        : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ num_cmrb                   : int  1 0 1 0 0 0 0 1 0 0 ...
-##  $ cmrb_flag                  : int  1 0 1 0 0 0 0 1 0 0 ...
-##  $ cci                        : int  1 0 6 0 0 0 0 2 0 0 ...
-##  $ age_score.x                : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ age_score.y                : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ myocardial_infarct         : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ congestive_heart_failure   : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ peripheral_vascular_disease: int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ cerebrovascular_disease    : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ dementia                   : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ chronic_pulmonary_disease  : int  1 0 0 0 0 0 0 0 0 0 ...
-##  $ rheumatic_disease          : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ peptic_ulcer_disease       : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ paraplegia                 : int  0 0 0 0 0 0 0 1 0 0 ...
-##  $ renal_disease              : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ aids                       : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ charlson_comorbidity_index : int  1 0 6 0 0 0 0 2 0 0 ...
-##  - attr(*, ".internal.selfref")=<pointer: 0x562cfb494ee0> 
+## Classes 'medicalcoder_comorbidities', 'data.table' and 'data.frame': 38262 obs. of  4 variables:
+##  $ subject_id: int  10000 10002 10005 10006 10008 10010 10014 10015 10017 10018 ...
+##  $ hadm_id   : chr  "10000e1" "10002e1" "10005e1" "10006e1" ...
+##  $ num_cmrb  : int  1 0 1 0 0 0 0 1 0 0 ...
+##  $ cmrb_flag : int  1 0 1 0 0 0 0 1 0 0 ...
+##  - attr(*, ".internal.selfref")=<pointer: 0x55931b845ee0> 
 ##  - attr(*, "sorted")= chr [1:2] "subject_id" "hadm_id"
 ##  - attr(*, "index")= int(0)
 ```
+
+After accounting for naming conventions and severity-suppression
+conventions, the remaining columns are *medicalcoder*-specific
+summaries.
 
 ## References
 

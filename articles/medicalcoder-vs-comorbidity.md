@@ -1,11 +1,11 @@
-# medicalcoder vs comorbidity
+# \_medicalcoder\_ vs \_comorbidity\_
 
 ## Introduction
 
 The purpose of this article is to compare the API and results between
-medicalcoder and the R package
-[comorbidity](https://cran.r-project.org/package=comorbidity) (Gasparini
-2018).
+*medicalcoder* and the R package
+[*comorbidity*](https://cran.r-project.org/package=comorbidity)
+(Gasparini 2018).
 
 ``` r
 
@@ -27,24 +27,30 @@ cat(packageDescription("comorbidity")$Description)
 ```
 
 The following table is a partial list of similarities and differences
-between medicalcoder and comorbidity.
+between *medicalcoder* and *comorbidity*.
 
 [TABLE]
 
-## Prepare Data for comorbidity
+## Prepare Data for *comorbidity*
 
-The example data set `mdcr` within medicalcoder is in a format that is
+The example dataset `mdcr` within *medicalcoder* is in a format that is
 ideal for
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md).
-To prepare that data set for use in the
+To prepare that dataset for use in the
 [`comorbidity::comorbidity()`](https://ellessenne.github.io/comorbidity/reference/comorbidity.html)
 call we need to split the data in ICD-9 and ICD-10 version. Also,
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
-can handle diagnostic and procedure codes simultaneously; a necessary
-feature for PCCC.
+can handle diagnostic and procedure codes simultaneously.
 [`comorbidity::comorbidity()`](https://ellessenne.github.io/comorbidity/reference/comorbidity.html)
 only applies comorbidity algorithms based on diagnostic codes and thus
 does not expect to see any procedure codes.
+
+This split-and-recombine step is the key structural difference between
+the two APIs. In a mixed-version clinical dataset the ICD version is
+row-level metadata. *medicalcoder* accepts that metadata through
+`icdv.var`; the same pattern is used for diagnosis/procedure type
+(`dx.var`), present-on-admission status (`poa.var`), and primary
+diagnosis status (`primarydx.var`) when those columns are available.
 
 ``` r
 
@@ -71,7 +77,7 @@ mdcr_icd10dx <-
 
 ## Charlson Comorbidities
 
-Applying the Charlson comorbidities to the `mdcr` data set via
+Applying the Charlson comorbidities to the `mdcr` dataset via
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
 is done as follows. Important note: the ICD codes used to assess the
 Charlson comorbidities between Quan et al. (2005) and Quan et al. (2011)
@@ -84,14 +90,14 @@ we need to use the `method = "charlson_quan2011"` in
 
 medicalcoder_charlson_results <-
   medicalcoder::comorbidities(
-    data = mdcr,
-    id.vars = "patid",
+    data      = mdcr,
+    id.vars   = "patid",
     icd.codes = "code",
-    dx.var = "dx",
-    icdv.var = "icdv",
-    poa = 1L, # assume all codes are present on admission
+    dx.var    = "dx",
+    icdv.var  = "icdv",
+    poa       = 1L, # assume all codes are present-on-admission
     primarydx = 0L, # assume all codes are secondary diagnoses
-    method = "charlson_quan2011"
+    method    = "charlson_quan2011"
   )
 ```
 
@@ -105,19 +111,20 @@ scoring function.
 
 comorbidity_charlson_icd9_results <-
   comorbidity::comorbidity(
-    x = mdcr_icd9dx,
-    id = "patid",
-    code = "code",
-    map = "charlson_icd9_quan",
-    assign0 = TRUE # set less severe comorbidities flags to 0 when more severe comorbidities is also flagged
+    x       = mdcr_icd9dx,
+    id      = "patid",
+    code    = "code",
+    map     = "charlson_icd9_quan",
+    assign0 = TRUE # set less severe comorbidities flags to 0
+                   # when more severe comorbidities is also flagged
   )
 
 comorbidity_charlson_icd10_results <-
   comorbidity::comorbidity(
-    x = mdcr_icd10dx,
-    id = "patid",
-    code = "code",
-    map = "charlson_icd10_quan",
+    x       = mdcr_icd10dx,
+    id      = "patid",
+    code    = "code",
+    map     = "charlson_icd10_quan",
     assign0 = TRUE
   )
 
@@ -128,13 +135,13 @@ comorbidity_charlson_results <-
 comorbidity_charlson_results <-
   aggregate(. ~ patid, data = comorbidity_charlson_results, FUN = max)
 
-# add the attributes to the combine set
+# add the attributes to the combined set
 attributes(comorbidity_charlson_results)[c("class", "variable.labels", "map")] <-
   attributes(comorbidity_charlson_icd9_results)[c("class", "variable.labels", "map")]
 
 comorbidity_charlson_results[["score"]] <-
   comorbidity::score(
-    x = comorbidity_charlson_results,
+    x       = comorbidity_charlson_results,
     weights = "quan",
     assign0 = TRUE
   )
@@ -187,17 +194,17 @@ names(comorbidity_charlson_results)
 ## [19] "score"
 ```
 
-We will compare results column by column. First, we merge the data sets
+We will compare results column by column. First, we merge the datasets
 together by patid.
 
 ``` r
 
 charlson_delta <-
   merge(
-    x = comorbidity_charlson_results,
-    y = medicalcoder_charlson_results,
+    x   = comorbidity_charlson_results,
+    y   = medicalcoder_charlson_results,
     all = TRUE,
-    by = "patid"
+    by  = "patid"
   )
 ```
 
@@ -260,7 +267,7 @@ for (i in seq_len(nrow(charlson_columns))) {
 ## identical(charlson_delta[["canc"]], charlson_delta[["mal"]])
 ## [1] TRUE
 ## identical(charlson_delta[["metacanc"]], charlson_delta[["mst"]])
-## [1] FALSE
+## [1] TRUE
 ## identical(charlson_delta[["cevd"]], charlson_delta[["cebvd"]])
 ## [1] TRUE
 ## identical(charlson_delta[["cpd"]], charlson_delta[["copd"]])
@@ -290,231 +297,11 @@ for (i in seq_len(nrow(charlson_columns))) {
 ## identical(charlson_delta[["msld.x"]], charlson_delta[["msld.y"]])
 ## [1] TRUE
 ## identical(charlson_delta[["score"]], charlson_delta[["cci"]])
-## [1] FALSE
+## [1] TRUE
 ```
 
-There are differences between the results returned by medicalcoder and
-comorbidity related to metastatic cancer and the ICD codes C7A.x.
-
-``` r
-
-subset(charlson_delta, metacanc != mst)
-##       patid metacanc score mst num_cmrb cmrb_flag cci age_score
-## 6682  25628        0     0   1        1         1   6        NA
-## 34002 90045        0     0   1        1         1   6        NA
-## 37839 99058        0     0   1        1         1   6        NA
-subset(mdcr, patid %in% c(25628, 90045, 99058) & grepl("^C.[^\\d]", code))
-##        patid icdv   code dx
-## 187451 90045   10   C7A8  1
-## 187452 90045   10   C7B8  1
-## 267024 25628   10 C7A098  1
-## 276892 99058   10   C7A8  1
-```
-
-Table 1 of Quan et al. (2005) defining the ICD codes mapping to
-metastatic solid tumor as “C77.x–C80.x”. Under CMS codes there are C7A.x
-and C7B codes. These codes seem applicable to metastatic cancer.
-
-``` r
-
-subset(medicalcoder::get_icd_codes(with.descriptions = TRUE), grepl("^C(7[A-Z])", code))
-##        icdv dx full_code   code src known_start known_end assignable_start
-## 148784   10  1       C7A    C7A cms        2014      2026               NA
-## 148785   10  1     C7A.0   C7A0 cms        2014      2026               NA
-## 148786   10  1    C7A.00  C7A00 cms        2014      2026             2014
-## 148787   10  1    C7A.01  C7A01 cms        2014      2026               NA
-## 148788   10  1   C7A.010 C7A010 cms        2014      2026             2014
-## 148789   10  1   C7A.011 C7A011 cms        2014      2026             2014
-## 148790   10  1   C7A.012 C7A012 cms        2014      2026             2014
-## 148791   10  1   C7A.019 C7A019 cms        2014      2026             2014
-## 148792   10  1    C7A.02  C7A02 cms        2014      2026               NA
-## 148793   10  1   C7A.020 C7A020 cms        2014      2026             2014
-## 148794   10  1   C7A.021 C7A021 cms        2014      2026             2014
-## 148795   10  1   C7A.022 C7A022 cms        2014      2026             2014
-## 148796   10  1   C7A.023 C7A023 cms        2014      2026             2014
-## 148797   10  1   C7A.024 C7A024 cms        2014      2026             2014
-## 148798   10  1   C7A.025 C7A025 cms        2014      2026             2014
-## 148799   10  1   C7A.026 C7A026 cms        2014      2026             2014
-## 148800   10  1   C7A.029 C7A029 cms        2014      2026             2014
-## 148801   10  1    C7A.09  C7A09 cms        2014      2026               NA
-## 148802   10  1   C7A.090 C7A090 cms        2014      2026             2014
-## 148803   10  1   C7A.091 C7A091 cms        2014      2026             2014
-## 148804   10  1   C7A.092 C7A092 cms        2014      2026             2014
-## 148805   10  1   C7A.093 C7A093 cms        2014      2026             2014
-## 148806   10  1   C7A.094 C7A094 cms        2014      2026             2014
-## 148807   10  1   C7A.094 C7A094 cms        2014      2026             2014
-## 148808   10  1   C7A.095 C7A095 cms        2014      2026             2014
-## 148809   10  1   C7A.095 C7A095 cms        2014      2026             2014
-## 148810   10  1   C7A.096 C7A096 cms        2014      2026             2014
-## 148811   10  1   C7A.096 C7A096 cms        2014      2026             2014
-## 148812   10  1   C7A.098 C7A098 cms        2014      2026             2014
-## 148813   10  1     C7A.1   C7A1 cms        2014      2026             2014
-## 148814   10  1     C7A.8   C7A8 cms        2014      2026             2014
-## 148815   10  1       C7B    C7B cms        2014      2026               NA
-## 148816   10  1     C7B.0   C7B0 cms        2014      2026               NA
-## 148817   10  1    C7B.00  C7B00 cms        2014      2026             2014
-## 148818   10  1    C7B.01  C7B01 cms        2014      2026             2014
-## 148819   10  1    C7B.02  C7B02 cms        2014      2026             2014
-## 148820   10  1    C7B.03  C7B03 cms        2014      2026             2014
-## 148821   10  1    C7B.04  C7B04 cms        2014      2026             2014
-## 148822   10  1    C7B.09  C7B09 cms        2014      2026             2014
-## 148823   10  1     C7B.1   C7B1 cms        2014      2026             2014
-## 148824   10  1     C7B.8   C7B8 cms        2014      2026             2014
-##        assignable_end
-## 148784             NA
-## 148785             NA
-## 148786           2026
-## 148787             NA
-## 148788           2026
-## 148789           2026
-## 148790           2026
-## 148791           2026
-## 148792             NA
-## 148793           2026
-## 148794           2026
-## 148795           2026
-## 148796           2026
-## 148797           2026
-## 148798           2026
-## 148799           2026
-## 148800           2026
-## 148801             NA
-## 148802           2026
-## 148803           2026
-## 148804           2026
-## 148805           2026
-## 148806           2026
-## 148807           2026
-## 148808           2026
-## 148809           2026
-## 148810           2026
-## 148811           2026
-## 148812           2026
-## 148813           2026
-## 148814           2026
-## 148815             NA
-## 148816             NA
-## 148817           2026
-## 148818           2026
-## 148819           2026
-## 148820           2026
-## 148821           2026
-## 148822           2026
-## 148823           2026
-## 148824           2026
-##                                                                           desc
-## 148784                                         Malignant neuroendocrine tumors
-## 148785                                              Malignant carcinoid tumors
-## 148786                           Malignant carcinoid tumor of unspecified site
-## 148787                       Malignant carcinoid tumors of the small intestine
-## 148788                               Malignant carcinoid tumor of the duodenum
-## 148789                                Malignant carcinoid tumor of the jejunum
-## 148790                                  Malignant carcinoid tumor of the ileum
-## 148791   Malignant carcinoid tumor of the small intestine, unspecified portion
-## 148792 Malignant carcinoid tumors of the appendix, large intestine, and rectum
-## 148793                               Malignant carcinoid tumor of the appendix
-## 148794                                  Malignant carcinoid tumor of the cecum
-## 148795                        Malignant carcinoid tumor of the ascending colon
-## 148796                       Malignant carcinoid tumor of the transverse colon
-## 148797                       Malignant carcinoid tumor of the descending colon
-## 148798                          Malignant carcinoid tumor of the sigmoid colon
-## 148799                                 Malignant carcinoid tumor of the rectum
-## 148800   Malignant carcinoid tumor of the large intestine, unspecified portion
-## 148801                               Malignant carcinoid tumors of other sites
-## 148802                      Malignant carcinoid tumor of the bronchus and lung
-## 148803                                 Malignant carcinoid tumor of the thymus
-## 148804                                Malignant carcinoid tumor of the stomach
-## 148805                                 Malignant carcinoid tumor of the kidney
-## 148806                            Malignant carcinoid tumor of the foregut NOS
-## 148807                   Malignant carcinoid tumor of the foregut, unspecified
-## 148808                             Malignant carcinoid tumor of the midgut NOS
-## 148809                    Malignant carcinoid tumor of the midgut, unspecified
-## 148810                            Malignant carcinoid tumor of the hindgut NOS
-## 148811                   Malignant carcinoid tumor of the hindgut, unspecified
-## 148812                               Malignant carcinoid tumors of other sites
-## 148813                   Malignant poorly differentiated neuroendocrine tumors
-## 148814                                   Other malignant neuroendocrine tumors
-## 148815                                         Secondary neuroendocrine tumors
-## 148816                                              Secondary carcinoid tumors
-## 148817                            Secondary carcinoid tumors, unspecified site
-## 148818                       Secondary carcinoid tumors of distant lymph nodes
-## 148819                                     Secondary carcinoid tumors of liver
-## 148820                                      Secondary carcinoid tumors of bone
-## 148821                                Secondary carcinoid tumors of peritoneum
-## 148822                               Secondary carcinoid tumors of other sites
-## 148823                                         Secondary Merkel cell carcinoma
-## 148824                                   Other secondary neuroendocrine tumors
-##        desc_start desc_end
-## 148784       2014     2026
-## 148785       2014     2026
-## 148786       2014     2026
-## 148787       2014     2026
-## 148788       2014     2026
-## 148789       2014     2026
-## 148790       2014     2026
-## 148791       2014     2026
-## 148792       2014     2026
-## 148793       2014     2026
-## 148794       2014     2026
-## 148795       2014     2026
-## 148796       2014     2026
-## 148797       2014     2026
-## 148798       2014     2026
-## 148799       2014     2026
-## 148800       2014     2026
-## 148801       2014     2026
-## 148802       2014     2026
-## 148803       2014     2026
-## 148804       2014     2026
-## 148805       2014     2026
-## 148806       2014     2016
-## 148807       2017     2026
-## 148808       2014     2016
-## 148809       2017     2026
-## 148810       2014     2016
-## 148811       2017     2026
-## 148812       2014     2026
-## 148813       2014     2026
-## 148814       2014     2026
-## 148815       2014     2026
-## 148816       2014     2026
-## 148817       2014     2026
-## 148818       2014     2026
-## 148819       2014     2026
-## 148820       2014     2026
-## 148821       2014     2026
-## 148822       2014     2026
-## 148823       2014     2026
-## 148824       2014     2026
-```
-
-The author of the comorbidity package is aware of this and has commented
-on
-[GitHub](https://github.com/ellessenne/comorbidity/issues/16#issuecomment-513265712)
-
-> I am a bit hesitant to add these codes to the scoring algorithm -
-> after all, they did not exist at the time and they have not been
-> validated in these settings (I think?). I think this is a much bigger
-> “problem”, as comorbidity codes evolve over time, but comorbidity
-> scores barely do: how should researchers deal with this disconnection?
-> …I suppose there is no right or wrong answer to that! 😃
-
-For medicalcoder, the choice was made to include these codes as C7A and
-C7B are, in the hierachy, between C77 and C80.
-
-This difference in approaches to mapping ICD codes to comorbidities
-accounts for the differences in the metacanc/mst columns, and the
-score/cci colums.
-
-``` r
-
-charlson_delta[["metacanc"]] <- NULL
-charlson_delta[["mst"]] <- NULL
-charlson_delta[["score"]] <- NULL
-charlson_delta[["cci"]] <- NULL
-```
-
-The remaining columns in `charlson_delta` are:
+The remaining columns in `charlson_delta` are the `patid` and three
+columns unique to *medicalcoder*
 
 ``` r
 
@@ -527,23 +314,13 @@ str(charlson_delta)
 ```
 
 - `num_cmrb`: number of comorbidities flagged
-- `cmrb_flag`: a 0/1 indicator for any comorbidity
+- `cmrb_flag`: a `0L`/`1L` indicator for any comorbidity
 - `age_score`: a score adjustment based on age *if* age is provided.
 
-``` r
-
-stopifnot(
-  identical(
-    names(charlson_delta),
-    c("patid", "num_cmrb", "cmrb_flag", "age_score")
-  )
-)
-```
-
-An addition feature the medicalcoder package provides that the
-comorbidity package does not, is a summary method for the results, which
-can be used to build nice tables via
-[kableExtra](https://CRAN.R-project.org/package=kableExtra).
+An additional feature *medicalcoder* provides, which *comorbidity* does
+not, is a summary method for the results. This can be used to build nice
+tables via
+[*kableExtra*](https://CRAN.R-project.org/package=kableExtra).
 
 ``` r
 
@@ -572,14 +349,14 @@ pack_rows("Number of Comorbidities", start_row = 18, end_row = nrow(x))
 | Hemiplegia or paraplegia               | 1177  | 3.08       |
 | Liver disease, mild                    | 562   | 1.47       |
 | Liver disease, moderate to severe      | 206   | 0.54       |
-| Metastatic solid tumor                 | 456   | 1.19       |
+| Metastatic solid tumor                 | 453   | 1.18       |
 | Myocardial infarction                  | 10    | 0.03       |
 | Peptic ulcer disease                   | 45    | 0.12       |
 | Peripheral vascular disease            | 217   | 0.57       |
 | Renal disease                          | 877   | 2.29       |
 | Rheumatic disease                      | 136   | 0.36       |
 | **Number of Comorbidities**            |       |            |
-| \>= 1                                  | 9792  | 25.59      |
+| \>= 1                                  | 9789  | 25.58      |
 | \>= 2                                  | 1075  | 2.81       |
 | \>= 3                                  | 94    | 0.25       |
 | \>= 4                                  | 9     | 0.02       |
@@ -587,7 +364,7 @@ pack_rows("Number of Comorbidities", start_row = 18, end_row = nrow(x))
 
 ## Elixhauser Comorbidities
 
-Applying the Elixhauser comorbidities to the `mdcr` data set via
+Applying the Elixhauser comorbidities to the `mdcr` dataset via
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
 is done as follows.
 
@@ -595,14 +372,14 @@ is done as follows.
 
 medicalcoder_elixhauser_results <-
   medicalcoder::comorbidities(
-    data = mdcr,
-    id.vars = "patid",
+    data      = mdcr,
+    id.vars   = "patid",
     icd.codes = "code",
-    dx.var = "dx",
-    icdv.var = "icdv",
-    poa = 1L,       # assume all codes are present on admission
-    primarydx = 0L, # assume all codes are secondary diagnoses
-    method = "elixhauser_quan2005"
+    dx.var    = "dx",
+    icdv.var  = "icdv",
+    poa       = 1L,
+    primarydx = 0L,
+    method    = "elixhauser_quan2005"
   )
 ```
 
@@ -616,19 +393,19 @@ scoring function.
 
 comorbidity_elixhauser_icd9_results <-
   comorbidity::comorbidity(
-    x = mdcr_icd9dx,
-    id = "patid",
-    code = "code",
-    map = "elixhauser_icd9_quan",
-    assign0 = TRUE # set less severe comorbidities flags to 0 when more severe comorbidities is also flagged
+    x       = mdcr_icd9dx,
+    id      = "patid",
+    code    = "code",
+    map     = "elixhauser_icd9_quan",
+    assign0 = TRUE
   )
 
 comorbidity_elixhauser_icd10_results <-
   comorbidity::comorbidity(
-    x = mdcr_icd10dx,
-    id = "patid",
-    code = "code",
-    map = "elixhauser_icd10_quan",
+    x       = mdcr_icd10dx,
+    id      = "patid",
+    code    = "code",
+    map     = "elixhauser_icd10_quan",
     assign0 = TRUE
   )
 
@@ -693,17 +470,17 @@ names(comorbidity_elixhauser_results)
 ## [31] "psycho"   "depre"
 ```
 
-We will compare results column by column. First, we merge the data sets
+We will compare results column by column. First, we merge the datasets
 together by patid.
 
 ``` r
 
 elixhauser_delta <-
   merge(
-    x = comorbidity_elixhauser_results,
-    y = medicalcoder_elixhauser_results,
+    x   = comorbidity_elixhauser_results,
+    y   = medicalcoder_elixhauser_results,
     all = TRUE,
-    by = "patid"
+    by  = "patid"
   )
 ```
 
@@ -869,7 +646,7 @@ for (i in seq_len(nrow(elixhauser_columns))) {
 ```
 
 The remaining columns in the `elixhauser_delta` object are specific to
-medicalcoder, save patid.
+*medicalcoder*, except for the patient id `patid`.
 
 ``` r
 
@@ -888,15 +665,15 @@ str(elixhauser_delta)
 
 - `num_cmrb`: Number of comorbidities flagged
 
-- `cmrb_flag`: a 0/1 indicator for *any* comorbidity being flagged
+- `cmrb_flag`: a `0L`/`1L` indicator for *any* comorbidity being flagged
 
 - `mortality_index` and `readmission_index`: index scores based on the
   AHRQ weights (Healthcare Cost and Utilization Project (HCUP) 2017).
 
-An addition feature of the medicalcoder package provides that the
-comorbidity package does not, is a summary method for the results, which
-can be used to build nice tables via
-[kableExtra](https://CRAN.R-project.org/package=kableExtra).
+An additional feature *medicalcoder* provides, which *comorbidity* does
+not, is a summary method for the results. This can be used to build nice
+tables via
+[*kableExtra*](https://CRAN.R-project.org/package=kableExtra).
 
 ``` r
 
@@ -978,28 +755,29 @@ all_dx_codes[, code_id := paste0("ICD-", icdv, " ", full_code)]
 
 mdcr_results <-
   medicalcoder::comorbidities(
-    data = all_dx_codes,
+    data      = all_dx_codes,
     icd.codes = "code",
-    id.vars = "code_id",
-    icdv.var = "icdv",
-    method = "charlson_quan2005",
-    poa = 1,
-    primarydx = 0L)
+    id.vars   = "code_id",
+    icdv.var  = "icdv",
+    method    = "charlson_quan2011",
+    poa       = 1L,
+    primarydx = 0L
+  )
 
 cmrb_results <-
   rbind(
     comorbidity::comorbidity(
-      x = subset(all_dx_codes, icdv == 9),
-      id = "code_id",
-      code = "code",
-      map = "charlson_icd9_quan",
+      x       = subset(all_dx_codes, icdv == 9),
+      id      = "code_id",
+      code    = "code",
+      map     = "charlson_icd9_quan",
       assign0 = TRUE
     ),
     comorbidity::comorbidity(
-      x = subset(all_dx_codes, icdv == 10),
-      id = "code_id",
-      code = "code",
-      map = "charlson_icd10_quan",
+      x       = subset(all_dx_codes, icdv == 10),
+      id      = "code_id",
+      code    = "code",
+      map     = "charlson_icd10_quan",
       assign0 = TRUE
     )
   )
@@ -1010,6 +788,7 @@ charlson_delta <-
 for (i in seq_len(nrow(charlson_columns))) {
   x <- charlson_columns[["comorbidity"]][i]
   y <- charlson_columns[["medicalcoder"]][i]
+  if (y == "cci") next
   if (x == y) {
     x <- paste0(x, ".x")
     y <- paste0(y, ".y")
@@ -1026,9 +805,9 @@ for (i in seq_len(nrow(charlson_columns))) {
 ## identical(charlson_delta[["aids"]], charlson_delta[["aidshiv"]])
 ## [1] TRUE
 ## identical(charlson_delta[["canc"]], charlson_delta[["mal"]])
-## [1] FALSE
+## [1] TRUE
 ## identical(charlson_delta[["metacanc"]], charlson_delta[["mst"]])
-## [1] FALSE
+## [1] TRUE
 ## identical(charlson_delta[["cevd"]], charlson_delta[["cebvd"]])
 ## [1] TRUE
 ## identical(charlson_delta[["cpd"]], charlson_delta[["copd"]])
@@ -1057,86 +836,40 @@ for (i in seq_len(nrow(charlson_columns))) {
 ## [1] TRUE
 ## identical(charlson_delta[["msld.x"]], charlson_delta[["msld.y"]])
 ## [1] TRUE
-## identical(charlson_delta[["score"]], charlson_delta[["cci"]])
-## [1] FALSE
-
-print(charlson_delta[mal != canc, .(code_id, mal, canc)], nrow = Inf)
-## Key: <code_id>
-##            code_id   mal  canc
-##             <char> <int> <int>
-##  1:   ICD-10 C4A.0     1     0
-##  2:  ICD-10 C4A.10     1     0
-##  3:  ICD-10 C4A.11     1     0
-##  4: ICD-10 C4A.111     1     0
-##  5: ICD-10 C4A.112     1     0
-##  6:  ICD-10 C4A.12     1     0
-##  7: ICD-10 C4A.121     1     0
-##  8: ICD-10 C4A.122     1     0
-##  9:  ICD-10 C4A.20     1     0
-## 10:  ICD-10 C4A.21     1     0
-## 11:  ICD-10 C4A.22     1     0
-## 12:  ICD-10 C4A.30     1     0
-## 13:  ICD-10 C4A.31     1     0
-## 14:  ICD-10 C4A.39     1     0
-## 15:   ICD-10 C4A.4     1     0
-## 16:  ICD-10 C4A.51     1     0
-## 17:  ICD-10 C4A.52     1     0
-## 18:  ICD-10 C4A.59     1     0
-## 19:  ICD-10 C4A.60     1     0
-## 20:  ICD-10 C4A.61     1     0
-## 21:  ICD-10 C4A.62     1     0
-## 22:  ICD-10 C4A.70     1     0
-## 23:  ICD-10 C4A.71     1     0
-## 24:  ICD-10 C4A.72     1     0
-## 25:   ICD-10 C4A.8     1     0
-## 26:   ICD-10 C4A.9     1     0
-##            code_id   mal  canc
-##             <char> <int> <int>
-```
-
-The ICD-10 codes C4A.x are not flagged as malignancies via
-[`comorbidity::comorbidity()`](https://ellessenne.github.io/comorbidity/reference/comorbidity.html).
-This is likely due to the mapping missing. Here we can see the mappings
-used between the two utilities. The implementation used by
-[`comorbidity::comorbidity()`](https://ellessenne.github.io/comorbidity/reference/comorbidity.html)
-relies on regular expressions applied to the data and the omitted C4A is
-why the code is not flagged.
-[`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
-builds a table with valid ICD codes to join against and has the C4A.x
-codes
-
-``` r
-
-# comorbidity:::.maps$charlson_icd10_quan$canc
-grep("^C4", comorbidity:::.maps$charlson_icd10_quan$canc, value = TRUE)
-## [1] "C40" "C41" "C43" "C45" "C46" "C47" "C48" "C49"
-grep("^C4A", medicalcoder::get_charlson_codes()$code, value = TRUE)
-##  [1] "C4A"    "C4A0"   "C4A1"   "C4A10"  "C4A11"  "C4A111" "C4A112" "C4A12" 
-##  [9] "C4A121" "C4A122" "C4A2"   "C4A20"  "C4A21"  "C4A22"  "C4A3"   "C4A30" 
-## [17] "C4A31"  "C4A39"  "C4A4"   "C4A5"   "C4A51"  "C4A52"  "C4A59"  "C4A6"  
-## [25] "C4A60"  "C4A61"  "C4A62"  "C4A7"   "C4A70"  "C4A71"  "C4A72"  "C4A8"  
-## [33] "C4A9"
-grep("^C4A", medicalcoder::get_charlson_codes()$full_code, value = TRUE)
-##  [1] "C4A"     "C4A.0"   "C4A.1"   "C4A.10"  "C4A.11"  "C4A.111" "C4A.112"
-##  [8] "C4A.12"  "C4A.121" "C4A.122" "C4A.2"   "C4A.20"  "C4A.21"  "C4A.22" 
-## [15] "C4A.3"   "C4A.30"  "C4A.31"  "C4A.39"  "C4A.4"   "C4A.5"   "C4A.51" 
-## [22] "C4A.52"  "C4A.59"  "C4A.6"   "C4A.60"  "C4A.61"  "C4A.62"  "C4A.7"  
-## [29] "C4A.70"  "C4A.71"  "C4A.72"  "C4A.8"   "C4A.9"
 ```
 
 The implementation of
 [`comorbidity::comorbidity()`](https://ellessenne.github.io/comorbidity/reference/comorbidity.html)
 can result in false positives when invalid codes are submitted.
+*medicalcoder* maps input codes to method-specific tables of known ICD
+codes using database-style joins. That design is stricter than prefix or
+regular-expression matching: invalid strings that start with a valid ICD
+prefix are not treated as valid comorbidity evidence.
 
 ``` r
 
 df <- data.frame(id = "pat1", code = "C40-NOT-AN-ICD-CODE")
-comorbidity::comorbidity(x = df, id = "id", code = "code", assign0 = TRUE, map = "charlson_icd10_quan")
+
+comorbidity::comorbidity(
+  x       = df,
+  id      = "id",
+  code    = "code",
+  assign0 = TRUE,
+  map     = "charlson_icd10_quan"
+)
 ##     id mi chf pvd cevd dementia cpd rheumd pud mld diab diabwc hp rend canc
 ## 1 pat1  0   0   0    0        0   0      0   0   0    0      0  0    0    1
 ##   msld metacanc aids
 ## 1    0        0    0
-medicalcoder::comorbidities(data = df, id.var = "id", icd.codes = "code", method = "charlson_quan2005", poa = 1, primarydx = 0)
+
+medicalcoder::comorbidities(
+  data      = df,
+  id.var    = "id",
+  icd.codes = "code",
+  method    = "charlson_quan2005",
+  poa       = 1L,
+  primarydx = 0L
+)
 ## 
 ## Comorbidities via charlson_quan2005
 ## 
@@ -1152,38 +885,39 @@ medicalcoder::comorbidities(data = df, id.var = "id", icd.codes = "code", method
 
 mdcr_results <-
   medicalcoder::comorbidities(
-    data = all_dx_codes,
+    data      = all_dx_codes,
     icd.codes = "code",
-    id.vars = "code_id",
-    icdv.var = "icdv",
-    method = "elixhauser_quan2005",
-    poa = 1,
-    primarydx = 0L)
+    id.vars   = "code_id",
+    icdv.var  = "icdv",
+    method    = "elixhauser_quan2005",
+    poa       = 1L,
+    primarydx = 0L
+  )
 
 cmrb_results <-
   rbind(
     comorbidity::comorbidity(
-      x = subset(all_dx_codes, icdv == 9),
-      id = "code_id",
-      code = "code",
-      map = "elixhauser_icd9_quan",
+      x       = subset(all_dx_codes, icdv == 9),
+      id      = "code_id",
+      code    = "code",
+      map     = "elixhauser_icd9_quan",
       assign0 = TRUE
     ),
     comorbidity::comorbidity(
-      x = subset(all_dx_codes, icdv == 10),
-      id = "code_id",
-      code = "code",
-      map = "elixhauser_icd10_quan",
+      x       = subset(all_dx_codes, icdv == 10),
+      id      = "code_id",
+      code    = "code",
+      map     = "elixhauser_icd10_quan",
       assign0 = TRUE
     )
   )
 
 elixhauser_delta <-
   merge(
-    x = cmrb_results,
-    y = mdcr_results,
+    x   = cmrb_results,
+    y   = mdcr_results,
     all = TRUE,
-    by = "code_id"
+    by  = "code_id"
   )
 
 data.table::setDT(elixhauser_delta)
@@ -1268,8 +1002,8 @@ for (i in seq_len(nrow(elixhauser_columns))) {
 ## [1] TRUE
 ```
 
-The only differences between the resulting data sets are columns unique
-to medicalcoder.
+The only differences between the resulting datasets are columns unique
+to *medicalcoder*.
 
 ``` r
 
@@ -1281,28 +1015,28 @@ str(elixhauser_delta)
 ##  $ cmrb_flag        : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ mortality_index  : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ readmission_index: int  0 0 0 0 0 0 0 0 0 0 ...
-##  - attr(*, ".internal.selfref")=<pointer: 0x558ca3bb3ee0>
+##  - attr(*, ".internal.selfref")=<pointer: 0x55deb74c2ee0>
 ```
 
 ## Benchmarking
 
-The medicalcoder package was built to use base R methods and has zero
-imports. That said, if the input data set to
+The *medicalcoder* package was built to use base R methods and has zero
+imports. That said, if the input dataset to
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
 is a [`data.table`](https://cran.r-project.org/package=data.table) and
-the `data.table` namespace is available, the S3 methods for `data.table`
+the *data.table* namespace is available, the S3 methods for `data.table`
 will be used and there will be a performance improvement. When given a
 [`tibble`](https://tibble.tidyverse.org/) and the
-[`dplyr`](https://dplyr.tidyverse.org/) namespace is available, the
+[*dplyr*](https://dplyr.tidyverse.org/) namespace is available, the
 tibble-aware path improves on base `data.frame` performance but remains
 slower than `data.table`; see the project benchmarking results for
 details.
 
-comorbidity imports several namespaces, including `data.table`, and uses
-`data.table` for efficiency.
+*comorbidity* imports several namespaces, including *data.table*, and
+uses `data.table` for efficiency.
 
 In the following benchmark we will look at the time required to apply
-the Charlson comorbidity method to the `mdcr` data set via
+the Charlson comorbidity method to the `mdcr` dataset via
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
 and
 [`comorbidity::comorbidity()`](https://ellessenne.github.io/comorbidity/reference/comorbidity.html).
@@ -1331,69 +1065,69 @@ Code (click to toggle view/fold)
 
 medicalcoder_charlson_results <- function() {
   medicalcoder::comorbidities(
-    data = mdcr,
-    id.vars = "patid",
+    data      = mdcr,
+    id.vars   = "patid",
     icd.codes = "code",
-    dx.var = "dx",
-    icdv.var = "icdv",
-    poa = 1L,
+    dx.var    = "dx",
+    icdv.var  = "icdv",
+    poa       = 1L,
     primarydx = 0L,
-    method = "charlson_quan2011"
+    method    = "charlson_quan2011"
   )
 }
 
 medicalcoder_charlson_results_DT <- function() {
   medicalcoder::comorbidities(
-    data = mdcrDT,
-    id.vars = "patid",
+    data      = mdcrDT,
+    id.vars   = "patid",
     icd.codes = "code",
-    dx.var = "dx",
-    icdv.var = "icdv",
-    poa = 1L,
+    dx.var    = "dx",
+    icdv.var  = "icdv",
+    poa       = 1L,
     primarydx = 0L,
-    method = "charlson_quan2011"
+    method    = "charlson_quan2011"
   )
 }
 
 comorbidity_charlson_results <- function() {
   comorbidity_charlson_icd9_results <-
     comorbidity::comorbidity(
-      x = mdcr_icd9dx,
-      id = "patid",
-      code = "code",
-      map = "charlson_icd9_quan",
-      assign0 = TRUE # set less severe comorbidities flags to 0 when more severe comorbidities is also flagged
+      x       = mdcr_icd9dx,
+      id      = "patid",
+      code    = "code",
+      map     = "charlson_icd9_quan",
+      assign0 = TRUE
     )
 
   comorbidity_charlson_icd10_results <-
     comorbidity::comorbidity(
-      x = mdcr_icd10dx,
-      id = "patid",
-      code = "code",
-      map = "charlson_icd10_quan",
+      x       = mdcr_icd10dx,
+      id      = "patid",
+      code    = "code",
+      map     = "charlson_icd10_quan",
       assign0 = TRUE
     )
 
-# combine the ICD-9 and ICD-10 results into one set
+  # combine the ICD-9 and ICD-10 results into one set
   comorbidity_charlson_results <-
     rbind(comorbidity_charlson_icd9_results, comorbidity_charlson_icd10_results)
 
   comorbidity_charlson_results <-
     aggregate(. ~ patid, data = comorbidity_charlson_results, FUN = max)
 
-# add the attributes to the combine set
+  # add the attributes to the combined set
   attributes(comorbidity_charlson_results)[c("class", "variable.labels", "map")] <-
     attributes(comorbidity_charlson_icd9_results)[c("class", "variable.labels", "map")]
 
   comorbidity_charlson_results[["score"]] <-
     comorbidity::score(
-      x = comorbidity_charlson_results,
+      x       = comorbidity_charlson_results,
       weights = "quan",
       assign0 = TRUE
     )
 
-# the score return is a numeric value, setting to integer to match the storage
-# mode of medicalcoder
+  # the score return is a numeric value, setting to integer to match the storage
+  # mode of medicalcoder
   comorbidity_charlson_results[["score"]] <-
     as.integer(comorbidity_charlson_results[["score"]])
 }
@@ -1417,14 +1151,14 @@ comorbidity_charlson_results_DT <- function() {
       assign0 = TRUE
     )
 
-# combine the ICD-9 and ICD-10 results into one set
+  # combine the ICD-9 and ICD-10 results into one set
   comorbidity_charlson_results <-
     rbind(comorbidity_charlson_icd9_results, comorbidity_charlson_icd10_results)
 
   comorbidity_charlson_results <-
     aggregate(. ~ patid, data = comorbidity_charlson_results, FUN = max)
 
-# add the attributes to the combine set
+   # add the attributes to the combined set
   attributes(comorbidity_charlson_results)[c("class", "variable.labels", "map")] <-
     attributes(comorbidity_charlson_icd9_results)[c("class", "variable.labels", "map")]
 
@@ -1435,8 +1169,8 @@ comorbidity_charlson_results_DT <- function() {
       assign0 = TRUE
     )
 
-# the score return is a numeric value, setting to integer to match the storage
-# mode of medicalcoder
+  # the score return is a numeric value, setting to integer to match the storage
+  # mode of medicalcoder
   comorbidity_charlson_results[["score"]] <-
     as.integer(comorbidity_charlson_results[["score"]])
 }
@@ -1449,10 +1183,10 @@ Code (click to toggle view/fold)
 
 ``` r
 
-medicalcoder_times <- numeric(0)
+medicalcoder_times    <- numeric(0)
 medicalcoder_times_DT <- numeric(0)
-comorbidity_times <- numeric(0)
-comorbidity_times_DT <- numeric(0)
+comorbidity_times     <- numeric(0)
+comorbidity_times_DT  <- numeric(0)
 
 for (i in 1:20) {
   tic <- Sys.time()
@@ -1492,6 +1226,12 @@ with a `data.frame` is still much faster than
 
 ## References
 
+Beyrer, Julie, Janna Manjelievskaia, Machaon Bonafede, et al. 2021.
+“Validation of an International Classification of Disease, 10th Revision
+Coding Adaptation for the Charlson Comorbidity Index in United States
+Healthcare Claims Data.” *Pharmacoepidemiology and Drug Safety* 30 (5):
+582–93. https://doi.org/<https://doi.org/10.1002/pds.5204>.
+
 Deyo, Richard A, Daniel C Cherkin, and Marcia A Ciol. 1992. “Adapting a
 Clinical Comorbidity Index for Use with ICD-9-CM Administrative
 Databases.” *Journal of Clinical Epidemiology* 45 (6): 613–19.
@@ -1526,6 +1266,16 @@ Healthcare Cost and Utilization Project (HCUP). 2017. *Elixhauser
 Comorbidity Software for ICD-9-CM*.
 [Https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp](https://hcup-us.ahrq.gov/toolssoftware/comorbidity/comorbidity.jsp).
 
+Ludvigsson, Jonas F, Peter Appelros, Johan Askling, et al. 2021.
+“Adaptation of the Charlson Comorbidity Index for Register-Based
+Research in Sweden.” *Clinical Epidemiology*, 21–41.
+https://doi.org/<https://doi.org/10.2147/CLEP.S282475>.
+
+Ludvigsson, Jonas F, Peter Appelros, Johan Askling, et al. 2023.
+“Adaptation of the Charlson Comorbidity Index for Register-Based
+Research in Sweden \[Corrigendum\].” *Clinical Epidemiology* 15: 753–54.
+https://doi.org/<https://doi.org/10.2147/clep.s425901>.
+
 Quan, Hude, Bo Li, Colette M. Couris, et al. 2011. “Updating and
 Validating the Charlson Comorbidity Index and Score for Risk Adjustment
 in Hospital Discharge Abstracts Using Data from 6 Countries.” *American
@@ -1536,3 +1286,8 @@ Quan, Hude, Vijaya Sundararajan, Patricia Halfon, et al. 2005. “Coding
 Algorithms for Defining Comorbidities in ICD-9-CM and ICD-10
 Administrative Data.” *Medical Care* 43 (11): 1130–39.
 <https://doi.org/10.1097/01.mlr.0000182534.19832.83>.
+
+Sundararajan, Vijaya, Toni Henderson, Catherine Perry, Amanda Muggivan,
+Hude Quan, and William A Ghali. 2004. “New ICD-10 Version of the
+Charlson Comorbidity Index Predicted in-Hospital Mortality.” *Journal of
+Clinical Epidemiology* 57 (12): 1288–94.

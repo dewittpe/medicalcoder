@@ -1,6 +1,6 @@
 # Get Elixhauser Codes
 
-Retrieve copy of internal lookup tables for the ICD codes used in
+Retrieve a copy of internal lookup tables for the ICD codes used in
 assessing Elixhauser comorbidities.
 
 ## Usage
@@ -13,11 +13,11 @@ get_elixhauser_codes()
 
 A `data.frame` with the following columns:
 
-- `icdv`: Integer vector indicating if the code is from ICD-9 or ICD-10
+- `icdv`: Integer vector indicating if the code is from ICD-9 or ICD-10.
 
-- `dx`: Integer vector. 1 if the code is a diagnostic, (ICD-9-CM,
-  ICD-10-CM, ICD-10-AM, ICD-10-SE, WHO, CDC Mortality), or 0 if the code
-  is procedural (ICD-9-PCS, ICD-10-PCS)
+- `dx`: Integer vector. `1L` if the code is diagnostic (ICD-9-CM,
+  ICD-10-CM, ICD-10-AM, ICD-10-SE, WHO, CDC Mortality), or `0L` if the
+  code is procedural (ICD-9-PCS, ICD-10-PCS).
 
 - `full_code`: Character vector with the ICD code and any relevant
   decimal point
@@ -37,7 +37,7 @@ A `data.frame` with the following columns:
   mortality and readmission indices.
 
 - [`get_elixhauser_poa()`](http://www.peteredewitt.com/medicalcoder/reference/get_elixhauser_poa.md)
-  for the lookup table of the conditions which do an do not require
+  for the lookup table of the conditions which do and do not require
   associated ICD codes to be present-on-admission to flag the
   comorbidity.
 
@@ -51,7 +51,7 @@ A `data.frame` with the following columns:
   for the lookup table of ICD codes used for the Charlson comorbidities.
 
 - [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
-  for applying comorbidity algorithms to a data set.
+  for applying comorbidity algorithms to a dataset.
 
 ## Examples
 

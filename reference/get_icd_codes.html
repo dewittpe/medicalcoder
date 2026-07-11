@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,7 +77,9 @@ hierarchy.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>a <code>data.frame</code></p>
 <p>The default return has the following columns:</p><ul><li><p><code>icdv</code>: Integer vector indicating if the code is from ICD-9 or ICD-10</p></li>
-<li><p><code>dx</code>: Integer vector.  1 if the code is a diagnostic, (ICD-9-CM, ICD-10-CM, ICD-10-AM, ICD-10-SE, WHO, CDC Mortality), or 0 if the code is procedural (ICD-9-PCS, ICD-10-PCS)</p></li>
+<li><p><code>dx</code>: Integer vector. <code>1L</code> if the code is diagnostic
+(ICD-9-CM, ICD-10-CM, ICD-10-AM, ICD-10-SE, WHO, CDC Mortality), or <code>0L</code>
+if the code is procedural (ICD-9-PCS, ICD-10-PCS)</p></li>
 <li><p><code>full_code</code>: Character vector with the ICD code and any relevant decimal point</p></li>
 <li><p><code>code</code>: Character vector with the compact ICD code omitting any relevant decimal point</p></li>
 <li><p><code>src</code>: Character vector reporting the source of the information.  See Details.</p></li>
@@ -104,8 +106,8 @@ hierarchy.</p></dd>
 
 
 <p>There are five sources of ICD codes.</p><ul><li><p><code>cms</code>: Codes from the ICD-9-CM, ICD-9-PCS, ICD-10-CM, and ICD-10-PCS standards.</p></li>
-<li><p><code>who</code>: Codes from World Health Organization.</p></li>
-<li><p><code>cdc</code>: Codes from CDC Mortality coding standard.</p></li>
+<li><p><code>who</code>: Codes from the World Health Organization.</p></li>
+<li><p><code>cdc</code>: Codes from the CDC Mortality coding standard.</p></li>
 <li><p><code>ihacpa</code>: ICD-10-AM codes from the Independent Health and Aged Care
 Pricing Authority.</p></li>
 <li><p><code>socialstyrelsen</code>: ICD-10-SE codes from Sweden's National Board of Health
@@ -120,7 +122,7 @@ and Welfare.</p></li>
 years.</p>
 <p>Fiscal years are the United States Federal Government fiscal years, running
 from October 1 to September 30. For example, fiscal year 2013 started October
-1 2012 and ended on September 30 2013.</p>
+1, 2012 and ended on September 30, 2013.</p>
 <p>Financial years are the Australian financial years used for IHACPA data,
 running from July 1 to June 30.</p>
 <p>Calendar years run January 1 to December 31.</p>
@@ -137,7 +139,7 @@ included in medicalcoder span fiscal years 1997–2012; the CMS ICD-9-CM/PCS
 extracts start in fiscal year 2006 and run through fiscal year 2015.  As such
 1997 is the earliest "known start" for ICD-9 within medicalcoder.</p>
 <p><code>known_end</code> is the last fiscal, financial, or calendar year (depending on source)
-for which we have definitive source data for.  For ICD-9-CM and ICD-9-PCS,
+for which we have definitive source data.  For ICD-9-CM and ICD-9-PCS,
 CMS provides data through fiscal year 2015, while the CDC extracts stop at
 fiscal year 2012.  For ICD-10-CM and ICD-10-PCS, which are active, it is just
 the last year of known data.  ICD-10 from the WHO ends in 2019.</p>
@@ -302,7 +304,7 @@ C86.0 a header code and C86.00 and C86.01 assignable codes.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,9 +70,9 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>medicalcoder is a lightweight, base-R package for working with ICD-9 and ICD-10 diagnosis and procedure codes. It implements widely used comorbidity algorithms such as Charlson, Elixhauser, and the Pediatric Complex Chronic Conditions (PCCC), supports longitudinal comorbidity flagging across encounters, and provides fast, dependency-free utilities to look up, validate, and manipulate ICD codes. Designed for portability and reproducibility, the package avoids external dependencies—requiring only R ≥ 3.5.0—yet offers a rich set of curated ICD code libraries from the United States’ Centers for Medicare and Medicaid Services (CMS), Centers for Disease Control (CDC), the World Health Organization (WHO), Australia’s Independent Health and Aged Care Pricing Authority (IHACPA), and Sweden’s National Board of Health and Welfare (Socialstyrelsen).</p>
-<p>The package balances performance with elegance: its internal caching, efficient joins, and compact data structures make it practical for large-scale health data analyses, while its clean design makes it easy to extend or audit. Whether you need to flag comorbidities, explore ICD hierarchies, or standardize clinical coding workflows, medicalcoder provides a robust, transparent foundation for research and applied work in biomedical informatics.</p>
-<p>The primary objectives of medicalcoder are:</p>
+<p><em>medicalcoder</em> is a lightweight, base-R package for working with ICD-9 and ICD-10 diagnosis and procedure codes. It implements widely used comorbidity algorithms such as Charlson, Elixhauser, and the Pediatric Complex Chronic Conditions (PCCC), supports longitudinal comorbidity flagging across encounters, and provides fast, dependency-free utilities to look up, validate, and manipulate ICD codes. Designed for portability and reproducibility, the package avoids external dependencies—requiring only R ≥ 3.5.0—yet offers a rich set of curated ICD code libraries from the United States’ Centers for Medicare and Medicaid Services (CMS), Centers for Disease Control (CDC), the World Health Organization (WHO), Australia’s Independent Health and Aged Care Pricing Authority (IHACPA), and Sweden’s National Board of Health and Welfare (Socialstyrelsen).</p>
+<p>The package balances performance with elegance: its internal caching, efficient joins, and compact data structures make it practical for large-scale health data analyses, while its clean design makes it easy to extend or audit. Whether you need to flag comorbidities, explore ICD hierarchies, or standardize clinical coding workflows, <em>medicalcoder</em> provides a robust, transparent foundation for research and applied work in biomedical informatics.</p>
+<p>The primary objectives of <em>medicalcoder</em> are:</p>
 <ol style="list-style-type: decimal">
 <li>
 <strong>Fully self-contained</strong>
@@ -81,14 +81,15 @@
 <p>Minimal Dependencies</p>
 <ul>
 <li>No dependencies other than base R.</li>
-<li>Requires R version ≥ 3.5.0 due to a <a href="https://cran.r-project.org/src/base/NEWS.3#:~:text=R%20has%20new,to%20version%203.5.0" class="external-link">change in data serialization</a>. R 3.5.0 was released in April 2018. The initial public release of medicalcoder was in 2025.</li>
-<li>Several packages are listed in the <em>Suggests</em> section of the <code>DESCRIPTION</code> file. These are only needed for building vignettes, other documentation, and testing. They are not required to install the package.</li>
+<li>Requires R version ≥ 3.5.0 due to a <a href="https://cran.r-project.org/src/base/NEWS.3#:~:text=R%20has%20new,to%20version%203.5.0" class="external-link">change in data serialization</a>. R 3.5.0 was released in April 2018. The initial public release of <em>medicalcoder</em> was in 2025.</li>
+<li>Several packages are listed in the <code>Suggests</code> section of the <code>DESCRIPTION</code> file. These are only needed for building vignettes, other documentation, and testing. They are not required to install the package.</li>
 </ul>
 </li>
 <li>
 <p>No Imports</p>
 <ul>
-<li>medicalcoder does not import any non-base namespaces. This improves ease of maintenance and usability.</li>
+<li>
+<em>medicalcoder</em> does not import any non-base namespaces. This improves ease of maintenance and usability.</li>
 <li>Suggested packages are needed only for development work and building vignettes. They are not required for installation or use.</li>
 </ul>
 </li>
@@ -106,7 +107,7 @@
 <ul>
 <li>Implements three general algorithms, each with multiple variants. Details are provided below.</li>
 <li>Supports flagging of subconditions within PCCC.</li>
-<li>Supports longitudinal flagging of comorbidities. medicalcoder will flag comorbidities based on present-on-admission indicators for the current encounter and can look back in time for a patient to flag a comorbidity if reported in a prior encounter. See examples.</li>
+<li>Supports longitudinal flagging of comorbidities. <em>medicalcoder</em> will flag comorbidities based on present-on-admission indicators for the current encounter and can look back in time for a patient to flag a comorbidity if reported in a prior encounter. See examples.</li>
 </ul>
 </li>
 <li>
@@ -118,9 +119,10 @@
 </li>
 </ol>
 <div class="section level2">
-<h2 id="why-use-medicalcoder">Why use medicalcoder<a class="anchor" aria-label="anchor" href="#why-use-medicalcoder"></a>
+<h2 id="why-use-medicalcoder">Why Use <em>medicalcoder</em>
+<a class="anchor" aria-label="anchor" href="#why-use-medicalcoder"></a>
 </h2>
-<p>There are several tools for working with ICD codes and comorbidity algorithms. medicalcoder provides novel features:</p>
+<p>There are several tools for working with ICD codes and comorbidity algorithms. <em>medicalcoder</em> provides novel features:</p>
 <ul>
 <li>Unified access to multiple comorbidity algorithms through a single function: <code><a href="reference/comorbidities.html">comorbidities()</a></code>.</li>
 <li>Support for both ICD-9 and ICD-10 diagnostic and procedure codes.</li>
@@ -159,10 +161,10 @@
 <div class="section level3">
 <h3 id="example-data">Example Data<a class="anchor" aria-label="anchor" href="#example-data"></a>
 </h3>
-<p>Input data for <code><a href="reference/comorbidities.html">comorbidities()</a></code> is expected to be in a ‘long’ format. Each row is one code with additional columns for patient and/or encounter id. There are two example data sets in the package: <code>mdcr</code> and <code>mdcr_longitudinal</code>.</p>
+<p>Input data for <code><a href="reference/comorbidities.html">comorbidities()</a></code> is expected to be in a ‘long’ format. Each row is one code with additional columns for patient and/or encounter id. There are two example datasets in the package: <code>mdcr</code> and <code>mdcr_longitudinal</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">mdcr</span>, <span class="va">mdcr_longitudinal</span>, package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span></span></code></pre></div>
-<p>The <code>mdcr</code> data set consists of 319 856 rows. Each row contains one ICD code (<code>code</code>). The column <code>icdv</code> denotes each code as ICD-9 or ICD-10, and the <code>dx</code> column denotes diagnostic (1) or procedure (0) code. This data set contains diagnostic and procedure codes for 38 262 patients.</p>
+<p>The <code>mdcr</code> dataset consists of 319 856 rows. Each row contains one ICD code (<code>code</code>). The column <code>icdv</code> denotes each code as ICD-9 or ICD-10, and the <code>dx</code> column denotes diagnostic (<code>1L</code>) or procedure (<code>0L</code>) code. This dataset contains diagnostic and procedure codes for 38 262 patients.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mdcr</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 'data.frame':    319856 obs. of  4 variables:</span></span>
@@ -178,7 +180,7 @@
 <span><span class="co">#&gt; 4 71412    9 V5865  1</span></span>
 <span><span class="co">#&gt; 5 71412    9  V427  1</span></span>
 <span><span class="co">#&gt; 6 17087   10  V441  1</span></span></code></pre></div>
-<p>The <code>mdcr_longitudinal</code> data set is distinct from the <code>mdcr</code> data set. The major difference is that this data set contains only diagnostic codes and there are only 3 patients. The <code>date</code> column denotes the date of the diagnosis and allows us to look at changes in comorbidities over time.</p>
+<p>The <code>mdcr_longitudinal</code> dataset is distinct from the <code>mdcr</code> dataset. The major difference is that this dataset contains only diagnostic codes and there are only 3 patients. The <code>date</code> column denotes the date of the diagnosis and allows us to look at changes in comorbidities over time.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mdcr_longitudinal</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 'data.frame':    60 obs. of  4 variables:</span></span>
@@ -198,7 +200,7 @@
 <div class="section level3">
 <h3 id="comorbidity-algorithms">Comorbidity Algorithms<a class="anchor" aria-label="anchor" href="#comorbidity-algorithms"></a>
 </h3>
-<p>There are three comorbidity methods, each with several variants, available in medicalcoder. All of which are accessible through the <code><a href="reference/comorbidities.html">comorbidities()</a></code> method by specifying the <code>method</code> argument.</p>
+<p>There are three comorbidity methods, each with several variants, available in <em>medicalcoder</em>. All of which are accessible through the <code><a href="reference/comorbidities.html">comorbidities()</a></code> method by specifying the <code>method</code> argument.</p>
 <p>General examples and explanations for when conditions are flagged are in the vignette</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"comorbidities"</span>, package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span></span></code></pre></div>
@@ -210,7 +212,7 @@
 <ul>
 <li>BMC Pediatrics: <a href="https://doi.org/10.1186/1471-2431-14-199" class="external-link">Feudtner et al. (2014)</a>
 </li>
-<li>Consistent with R package <a href="https://cran.r-project.org/package=pccc" class="external-link">pccc</a>
+<li>Consistent with R package <a href="https://cran.r-project.org/package=pccc" class="external-link"><em>pccc</em></a>
 </li>
 </ul>
 </li>
@@ -229,7 +231,7 @@
 </li>
 <li>Version 3.1
 <ul>
-<li>Updated code base with same assessment algorithm as version 3.0.</li>
+<li>Updated code base with the same assessment algorithm as version 3.0.</li>
 </ul>
 </li>
 <li>All variants can flag conditions and subconditions.</li>
@@ -239,21 +241,21 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.peteredewitt.com/medicalcoder/">medicalcoder</a></span><span class="op">)</span></span>
 <span><span class="va">cmrbs2</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">mdcr</span>,</span>
-<span>    id.vars <span class="op">=</span> <span class="st">"patid"</span>, <span class="co"># can use more than one column, e.g., site, patient, encounter</span></span>
+<span>    data      <span class="op">=</span> <span class="va">mdcr</span>,</span>
+<span>    id.vars   <span class="op">=</span> <span class="st">"patid"</span>, <span class="co"># can use more than one column, e.g., site, patient, encounter</span></span>
 <span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>    dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
-<span>    poa <span class="op">=</span> <span class="fl">1</span>,  <span class="co"># consider all codes to be present on admission</span></span>
-<span>    method <span class="op">=</span> <span class="st">"pccc_v2.1"</span></span>
+<span>    dx.var    <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>    poa       <span class="op">=</span> <span class="fl">1L</span>, <span class="co"># consider all codes to be present-on-admission</span></span>
+<span>    method    <span class="op">=</span> <span class="st">"pccc_v2.1"</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="va">cmrbs3</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">mdcr</span>,</span>
-<span>    id.vars <span class="op">=</span> <span class="st">"patid"</span>,</span>
+<span>    data      <span class="op">=</span> <span class="va">mdcr</span>,</span>
+<span>    id.vars   <span class="op">=</span> <span class="st">"patid"</span>,</span>
 <span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>    dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
-<span>    poa <span class="op">=</span> <span class="fl">1</span>,  <span class="co"># consider all codes to be present on admission</span></span>
-<span>    method <span class="op">=</span> <span class="st">"pccc_v3.1"</span></span>
+<span>    dx.var    <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>    poa       <span class="op">=</span> <span class="fl">1L</span>, <span class="co"># consider all codes to be present-on-admission</span></span>
+<span>    method    <span class="op">=</span> <span class="st">"pccc_v3.1"</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">cmrbs2</span>, max.level <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Classes 'medicalcoder_comorbidities' and 'data.frame':   38262 obs. of  16 variables:</span></span>
@@ -273,7 +275,7 @@
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">s3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cmrbs3</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">s3</span><span class="op">)</span></span></code></pre></div>
-<p>For <code>pccc_v3.0</code> and <code>pccc_v3.1</code> the returned <code>data.frame</code> reports counts and percentages for how the condition was flagged based on diagnosis/procedure codes only, technology dependent codes only, or both. The <code>dxpr_or_tech</code> columns answer the question “did this patient have the condition”.</p>
+<p>For <code>pccc_v3.0</code> and <code>pccc_v3.1</code> the returned <code>data.frame</code> reports counts and percentages for how the condition was flagged based on diagnosis/procedure codes only, technology-dependent codes only, or both. The <code>dxpr_or_tech</code> columns answer the question “did this patient have the condition”.</p>
 <p>Further detail, examples, and explanations are in the vignette.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"pccc"</span>, package <span class="op">=</span> <span class="st">"medicalcoder"</span><span class="op">)</span></span></code></pre></div>
@@ -281,7 +283,7 @@
 <div class="section level4">
 <h4 id="charlson-comorbidities">Charlson Comorbidities<a class="anchor" aria-label="anchor" href="#charlson-comorbidities"></a>
 </h4>
-<p>There are six variants of Charlson comorbidities implemented in medicalcoder:</p>
+<p>There are eight variants of Charlson comorbidities implemented in <em>medicalcoder</em>:</p>
 <ul>
 <li><a href="https://doi.org/10.1016/0895-4356(92)90133-8" class="external-link">Deyo, Cherkin, and Ciol (1992)</a></li>
 <li><a href="https://doi.org/10.1097/01.mlr.0000182534.19832.83" class="external-link">Quan et al. (2005)</a></li>
@@ -289,18 +291,21 @@
 <li><a href="https://doi.org/10.1016/j.jclinepi.2004.03.012" class="external-link">Sundararajan et al. (2004)</a></li>
 <li><a href="https://pubmed.ncbi.nlm.nih.gov/31428236/" class="external-link">Glasheen (2019)</a></li>
 <li><a href="https://doi.org/10.2147/CLEP.S282475" class="external-link">Ludvigsson et al. (2021)</a></li>
+<li><a href="https://doi.org/10.1002/pds.5204" class="external-link">Beyrer et al. (2021)</a></li>
+<li>MIMIC-IV Charlson SQL from <a href="https://github.com/MIT-LCP/mimic-code" class="external-link"><code>mimic-code</code></a>
+</li>
 </ul>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Charlson example</span></span>
 <span><span class="va">cmrbs</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">mdcr</span>,</span>
-<span>    id.vars <span class="op">=</span> <span class="st">"patid"</span>,</span>
+<span>    data      <span class="op">=</span> <span class="va">mdcr</span>,</span>
+<span>    id.vars   <span class="op">=</span> <span class="st">"patid"</span>,</span>
 <span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>    dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
-<span>    poa <span class="op">=</span> <span class="fl">1</span>,        <span class="co"># assume all codes are present on admission</span></span>
-<span>    primarydx <span class="op">=</span> <span class="fl">0L</span>, <span class="co"># assume all codes are secondary diagnosis codes</span></span>
-<span>    method <span class="op">=</span> <span class="st">"charlson_quan2005"</span></span>
+<span>    dx.var    <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>    poa       <span class="op">=</span> <span class="fl">1L</span>,       <span class="co"># assume all codes are present-on-admission</span></span>
+<span>    primarydx <span class="op">=</span> <span class="fl">0L</span>,       <span class="co"># assume all codes are secondary diagnosis codes</span></span>
+<span>    method    <span class="op">=</span> <span class="st">"charlson_quan2005"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p>A summary of the flagged conditions can be generated by calling <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>. Where the summary for the PCCC method was a <code>data.frame</code> the return for the Charlson comorbidities is a list of data frames summarizing the conditions, age category, and the index score.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
@@ -352,13 +357,13 @@
 <code class="sourceCode R"><span><span class="co"># Elixhauser example</span></span>
 <span><span class="va">cmrbs</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">mdcr</span>,</span>
-<span>    id.vars <span class="op">=</span> <span class="st">"patid"</span>,</span>
+<span>    data      <span class="op">=</span> <span class="va">mdcr</span>,</span>
+<span>    id.vars   <span class="op">=</span> <span class="st">"patid"</span>,</span>
 <span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>    dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
-<span>    poa <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    dx.var    <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>    poa       <span class="op">=</span> <span class="fl">1L</span>,</span>
 <span>    primarydx <span class="op">=</span> <span class="fl">0L</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"elixhauser_ahrq_icd10"</span></span>
+<span>    method    <span class="op">=</span> <span class="st">"elixhauser_ahrq_icd10"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p>The summary for the results from <code>method = elixhauser_ahrq_icd10</code> is similar to those for Charlson. A <code>data.frame</code> with the counts and percentages of distinct <code>data[id.vars]</code> with the noted condition, and a summary of the index scores.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
@@ -372,7 +377,7 @@
 <div class="section level3">
 <h3 id="icd">ICD<a class="anchor" aria-label="anchor" href="#icd"></a>
 </h3>
-<p>The package contains internal data sets with references for ICD-9 and ICD-10 US based diagnostic and procedure codes. These codes are supplemented with additional codes from the World Health Organization and ICD-10-AM codes from IHACPA, and ICD-10-SE codes from Socialstyrelsen.</p>
+<p>The package contains internal datasets with references for ICD-9 and ICD-10 US based diagnostic and procedure codes. These codes are supplemented with additional codes from the World Health Organization and ICD-10-AM codes from IHACPA, and ICD-10-SE codes from Socialstyrelsen.</p>
 <p>You can get a table of ICD codes via <code><a href="reference/get_icd_codes.html">get_icd_codes()</a></code>.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">medicalcoder</span><span class="fu">::</span><span class="fu"><a href="reference/get_icd_codes.html">get_icd_codes</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
@@ -388,8 +393,8 @@
 <span><span class="co">#&gt;  $ assignable_end  : int  NA NA NA NA 2015 2012 2015 2012 2015 2012 ...</span></span></code></pre></div>
 <p>The columns are:</p>
 <ul>
-<li><p><code>icdv</code>: integer value 9 or 10; for ICD-9 or ICD-10</p></li>
-<li><p><code>dx</code>: integer 0 or 1; 0 = procedure code, 1 = diagnostic code</p></li>
+<li><p><code>icdv</code>: integer value <code>9L</code> or <code>10L</code>; for ICD-9 or ICD-10</p></li>
+<li><p><code>dx</code>: integer <code>0L</code> or <code>1L</code>; <code>0L</code> = procedure code, <code>1L</code> = diagnostic code</p></li>
 <li><p><code>full_code</code>: character string for the ICD code with any appropriate decimal point.</p></li>
 <li><p><code>code</code>: character string for the compact ICD code, that is, the ICD code without any decimal point, e.g., the full code C00.1 has the compact code form C001.</p></li>
 <li>
@@ -408,12 +413,12 @@
 </ul>
 </li>
 <li>
-<p><code>known_start</code>: The earliest source year when source data for the code was available in the source code for medicalcoder. Codes from CMS are for the United States fiscal year. Codes from IHACPA use the Australian financial year, which starts July 1 and ends June 30. Codes from CDC, Socialstyrelsen, and WHO are calendar year. The United States fiscal year starts October 1 and concludes September 30. For example, fiscal year 2013 started October 1 2012 and concluded September 30 2013.</p>
-<p>To reemphasize that the year is for the data within medicalcoder. For ICD-9-CM, the codes went into effect for fiscal year 1980. The source code only has documented source files for the codes dating back to</p>
+<p><code>known_start</code>: The earliest source year when source data for the code was available in the source code for <em>medicalcoder</em>. Codes from CMS are for the United States fiscal year. Codes from IHACPA use the Australian financial year, which starts July 1 and ends June 30. Codes from CDC, Socialstyrelsen, and WHO are calendar year. The United States fiscal year starts October 1 and concludes September 30. For example, fiscal year 2013 started October 1 2012 and concluded September 30 2013.</p>
+<p>To reemphasize that the year is for the data within <em>medicalcoder</em>. For ICD-9-CM, the codes went into effect for fiscal year 1980. The source code only has documented source files for the codes dating back to</p>
 <ol start="1997" style="list-style-type: decimal"><li>
 </li></ol>
 </li>
-<li><p><code>known_end</code>: The latest (fiscal) year when the code was part of the ICD system and/or known within the medicalcoder lookup tables.</p></li>
+<li><p><code>known_end</code>: The latest (fiscal) year when the code was part of the ICD system and/or known within the <em>medicalcoder</em> lookup tables.</p></li>
 <li>
 <p>Assignable codes. Some codes are header codes, e.g., ICD-10-CM three-digit code Z94 is a header code because the four-digit codes Z94.0, Z94.1, Z94.2, Z94.3, Z94.4, Z94.5, Z94.6, Z94.7, Z94.8, and Z94.9 exist. All but Z94.8 are assignable codes because no five-digit codes with the same initial four-digits exist. Z94.8 is a header code because the five-digit codes Z94.81, Z94.82, Z94.83, Z94.84, and Z94.89 exist.</p>
 <ul>
@@ -457,19 +462,19 @@
 <div class="section level2">
 <h2 id="benchmarking">Benchmarking<a class="anchor" aria-label="anchor" href="#benchmarking"></a>
 </h2>
-<p>The major factors impacting the expected computation time for applying a comorbidity algorithm to a data set are:</p>
+<p>The major factors impacting the expected computation time for applying a comorbidity algorithm to a dataset are:</p>
 <ol style="list-style-type: decimal">
 <li>Data size: number of subjects/encounters.</li>
-<li>Data storage class: medicalcoder has been built such that no imports of other namespaces is required. That said, when a <code>data.table</code> is passed to <code><a href="reference/comorbidities.html">comorbidities()</a></code> and the <code>data.table</code> namespace is available, then S3 dispatch for <code>merge</code> is used, along with some other methods, to reduce memory use and reduce computation time. When a <code>tibble</code> is passed and the tidyverse namespaces are available, the tibble-aware paths improve performance over a base <code>data.frame</code>, but <code>data.table</code> remains fastest.</li>
+<li>Data storage class: <em>medicalcoder</em> has been built such that no imports of other namespaces are required. That said, when a <code>data.table</code> is passed to <code><a href="reference/comorbidities.html">comorbidities()</a></code> and the <em>data.table</em> namespace is available, then S3 dispatch for <code>merge</code> is used, along with some other methods, to reduce memory use and reduce computation time. When a <code>tibble</code> is passed and the tidyverse namespaces are available, the tibble-aware paths improve performance over a base <code>data.frame</code>, but <code>data.table</code> remains fastest.</li>
 <li>
-<code>flag.method</code>: “current” will take less time than the “cumulative” method.</li>
+<code>flag.method</code>: <code>"current"</code> will take less time than the <code>"cumulative"</code> method.</li>
 </ol>
-<p>Details on the benchmarking method, summary graphics, and tables, can be found on the medicalcoder GitHub <a href="https://github.com/dewittpe/medicalcoder/tree/main/benchmarking" class="external-link">benchmarking</a> directory.</p>
+<p>Details on the benchmarking method, summary graphics, and tables can be found on the <em>medicalcoder</em> GitHub <a href="https://github.com/dewittpe/medicalcoder/tree/main/benchmarking" class="external-link">benchmarking</a> directory.</p>
 </div>
 <div class="section level2">
 <h2 id="testing">Testing<a class="anchor" aria-label="anchor" href="#testing"></a>
 </h2>
-<p>Along with the GitHub actions and testing on current versions of R, the <a href="https://github.com/dewittpe/medicalcoder/tree/main/testing" class="external-link">testing</a> directory in the medicalcoder GitHub repo reports the <code>R CMD check</code> results for all R versions from 3.5.0 to latest. Several with, and without Suggests.</p>
+<p>Along with the GitHub actions and testing on current versions of R, the <a href="https://github.com/dewittpe/medicalcoder/tree/main/testing" class="external-link">testing</a> directory in the <em>medicalcoder</em> GitHub repo reports the <code>R CMD check</code> results for R versions from 3.5.0 through the latest release, with and without suggested packages.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -528,7 +533,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

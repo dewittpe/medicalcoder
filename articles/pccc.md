@@ -104,8 +104,8 @@ str(pccc_codes)
 The columns are:
 
 - `icdv`: integer, ICD version
-- `dx`: 1 for diagnostic (ICD-9-CM or ICD-10-CM) codes, 0 for procedure
-  (ICD-9-PCS or ICD-10-PCS) codes.
+- `dx`: denotes type, `1L` for diagnostic codes, `0L` for procedure
+  codes.
 - `full_code`: character, the ICD code retaining any applicable decimal
   point.
 - `code`: character, the compact ICD code; any applicable decimal point
@@ -132,7 +132,7 @@ procedure ICD-9 codes:
 
 pat1 <-
   data.frame(
-    dx = c(1, 1, 1, 1, 0, 0),
+    dx = c(1L, 1L, 1L, 1L, 0L, 0L),
     icdv = 9L,
     code = c("34590", "78065", "3432", "78065", "9929", "8606")
   )
@@ -164,24 +164,22 @@ also has a flag for device and technology use.
 
 pat1_pccc_v2.0 <-
   comorbidities(
-    data = pat1,
+    data      = pat1,
     icd.codes = "code",
-    dx.var = "dx",
-    icdv = 9,
-    method = "pccc_v2.0",
-    flag.method = "current", # default
-    poa = 1                  # default for flag.method = 'current'
+    dx.var    = "dx",
+    icdv      = 9L,
+    method    = "pccc_v2.0",
+    poa       = 1L                 # default for flag.method = 'current'
   )
 
 pat1_pccc_v2.1 <-
   comorbidities(
-    data = pat1,
+    data      = pat1,
     icd.codes = "code",
-    dx.var = "dx",
-    icdv = 9,
-    method = "pccc_v2.1",
-    flag.method = "current",
-    poa = 1
+    dx.var    = "dx",
+    icdv      = 9L,
+    method    = "pccc_v2.1",
+    poa       = 1L
   )
 
 all.equal(pat1_pccc_v2.0, pat1_pccc_v2.1, check.attributes = FALSE)
@@ -204,24 +202,22 @@ for this patient, but are not counted in the total number of conditions.
 
 pat1_pccc_v3.0 <-
   comorbidities(
-    data = pat1,
-    icd.codes = "code",
-    dx.var = "dx",
-    icdv = 9,
-    method = "pccc_v3.0",
-    flag.method = 'current',
-    poa = 1
+    data        = pat1,
+    icd.codes   = "code",
+    dx.var      = "dx",
+    icdv        = 9L,
+    method      = "pccc_v3.0",
+    poa         = 1L
   )
 
 pat1_pccc_v3.1 <-
   comorbidities(
-    data = pat1,
-    icd.codes = "code",
-    dx.var = "dx",
-    icdv = 9,
-    method = "pccc_v3.1",
-    flag.method = 'current',
-    poa = 1
+    data        = pat1,
+    icd.codes   = "code",
+    dx.var      = "dx",
+    icdv        = 9L,
+    method      = "pccc_v3.1",
+    poa         = 1L
   )
 
 all.equal(pat1_pccc_v3.0, pat1_pccc_v3.1, check.attributes = FALSE)
@@ -237,8 +233,8 @@ pat1_pccc_v3.0[, grep("^(cmrb_flag|num_cmrb|neuromus|metabolic|tech_dep_flag)", 
 ## 1                       0                      1        2         1
 ```
 
-In the output from version 3, we have four 0/1 indicator columns for
-each of the conditions.
+In the output from version 3, we have four `0L`/`1L` indicator columns
+for each of the conditions.
 
 - `<condition>_dxpr_only`: the `<condition>` has been flagged due to
   diagnostic
@@ -260,10 +256,10 @@ each of the conditions.
 
 The details in the list above might be easier to understand in a tabular
 form of possible sets. In the case of no conditions, only the
-`<condition>_dxpr_or_tech` columns are flagged as 0/1 with the
+`<condition>_dxpr_or_tech` columns are flagged as `0L`/`1L` with the
 `<condition>_dxpr_only`, `<condition>_tech_only`, and
 `<condition>_dxpr_and_tech` columns set to `NA`. When at least one
-condition is flagged, all the columns will be populated as 0/1.
+condition is flagged, all the columns will be populated as `0L`/`1L`.
 
 [TABLE]
 
@@ -283,13 +279,12 @@ record, but will not have the neuromuscular condition.
 
 pat2_pccc_v2.1 <-
   comorbidities(
-    data = pat2,
+    data      = pat2,
     icd.codes = "code",
-    dx.var = "dx",
-    icdv = 9,
-    method = "pccc_v2.1",
-    flag.method = 'current',
-    poa = 1
+    dx.var    = "dx",
+    icdv      = 9L,
+    method    = "pccc_v2.1",
+    poa       = 1L
   )
 Filter(f = function(x) x > 0, pat2_pccc_v2.1)
 ##   metabolic any_tech_dep num_cmrb cmrb_flag
@@ -297,20 +292,19 @@ Filter(f = function(x) x > 0, pat2_pccc_v2.1)
 ```
 
 Under version 3 of the PCCC, this patient will have no conditions. This
-is because no condition was identified based on non-technology dependent
-codes and thus the one technology dependent code is ignored.
+is because no condition was identified based on non-technology-dependent
+codes and thus the one technology-dependent code is ignored.
 
 ``` r
 
 pat2_pccc_v3.1 <-
   comorbidities(
-    data = pat2,
-    icd.codes = "code",
-    dx.var = "dx",
-    icdv = 9,
-    method = "pccc_v3.1",
-    flag.method = 'current',
-    poa = 1
+    data        = pat2,
+    icd.codes   = "code",
+    dx.var      = "dx",
+    icdv        = 9L,
+    method      = "pccc_v3.1",
+    poa         = 1L
   )
 Filter(f = function(x) x > 0, pat2_pccc_v3.1)
 ## data frame with 0 columns and 1 row
@@ -324,12 +318,12 @@ is a “long” format. The only mandatory column is one column of ICD
 codes. These codes can be full codes (include the decimal point) or
 compact codes (omitting the decimal point). Additionally, column(s) for
 identifying patients, encounters, and any other important groups are
-encouraged. A column to indicate the ICD version (9 or 10), and another
-column for identifying the code as a diagnostic or procedure code are
-also encouraged. The example `mdcr` data set has three columns, a
-patient id (patid), the ICD compact codes (code), and a column to
-indicate if the ICD code is a diagnostic or procedure code, (dx: 1 for
-diagnostic, 0 for procedure).
+encouraged. A column to indicate the ICD version (`9L` or `10L`), and
+another column for identifying the code as a diagnostic or procedure
+code are also encouraged. The example `mdcr` dataset has three columns,
+a patient id (patid), the ICD compact codes (code), and a column to
+indicate if the ICD code is a diagnostic or procedure code (`dx`: `1L`
+for diagnostic, `0L` for procedure).
 
 The `mdcr` data is provided with columns for
 
@@ -368,22 +362,20 @@ code can be done as follows:
 
 mdcr_results_v2.1_01 <-
   comorbidities(
-    data = mdcr,
+    data      = mdcr,
     icd.codes = "code",
-    id.vars = "patid",
-    poa = 1,
-    flag.method = 'current',
-    method = "pccc_v2.1"
+    id.vars   = "patid",
+    poa       = 1L,
+    method    = "pccc_v2.1"
   )
 
 mdcr_results_v3.1_01 <-
   comorbidities(
-    data = mdcr,
+    data      = mdcr,
     icd.codes = "code",
-    id.vars = "patid",
-    poa = 1,
-    flag.method = 'current',
-    method = "pccc_v3.1"
+    id.vars   = "patid",
+    poa       = 1L,
+    method    = "pccc_v3.1"
   )
 ```
 
@@ -467,30 +459,32 @@ table(mdcr[mdcr$code == "3321", "dx"])
 ```
 
 To account for the diagnostic or procedure status of the codes specify a
-value for the `dx.var` argument.
+value for the `dx.var` argument. When calling
+[`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+with a variable to indicate diagnostic or procedure status, values other
+than `0` or `1` will not be joined against and the codes are ignored
+resulting in no condition being flagged.
 
 ``` r
 
 mdcr_results_v2.1_02 <-
   comorbidities(
-    data = mdcr,
-    id.vars = "patid",
-    icd.codes = "code",
-    dx.var = "dx",
-    flag.method = 'current',
-    poa = 1,
-    method = "pccc_v2.1"
+    data        = mdcr,
+    id.vars     = "patid",
+    icd.codes   = "code",
+    dx.var      = "dx",
+    poa         = 1L,
+    method      = "pccc_v2.1"
   )
 
 mdcr_results_v3.1_02 <-
   comorbidities(
-    data = mdcr,
-    id.vars = "patid",
-    icd.codes = "code",
-    dx.var = "dx",
-    flag.method = 'current',
-    poa = 1,
-    method = "pccc_v3.1"
+    data        = mdcr,
+    id.vars     = "patid",
+    icd.codes   = "code",
+    dx.var      = "dx",
+    poa         = 1L,
+    method      = "pccc_v3.1"
   )
 ```
 
@@ -581,8 +575,8 @@ and procedure codes is critically important when looking for complex
 chronic conditions.
 
 If we explicitly look at an inner join between this patient’s data and
-the pccc lookup table we see that the code 5641 matches the procedure
-code in the pccc lookup table. By not accounting for diagnostic and
+the PCCC lookup table we see that the code 5641 matches the procedure
+code in the PCCC lookup table. By not accounting for diagnostic and
 procedure codes, the overlaps between the two coding structures can lead
 to false positives.
 
@@ -610,7 +604,7 @@ different ways that
 [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
 could be called resulting in different outcomes.
 
-Note: this is a good example of how medicalcoder can handle full and
+Note: this is a good example of how *medicalcoder* can handle full and
 compact codes within a single record.
 
 ``` r
@@ -624,12 +618,12 @@ DF <-
 
 # ideal: using the dx/pr status and matching on full and compact codes.
 comorbidities(
-  data = DF,
-  id.vars = "id",
-  dx.var = "dx",
+  data      = DF,
+  id.vars   = "id",
+  dx.var    = "dx",
   icd.codes = "code",
-  poa = 1,
-  method = "pccc_v3.1"
+  poa       = 1L,
+  method    = "pccc_v3.1"
 )[, c("id", "cmrb_flag", "renal_dxpr_or_tech")]
 ##           id cmrb_flag renal_dxpr_or_tech
 ## 1 compact dx         0                  0
@@ -639,11 +633,11 @@ comorbidities(
 
 # false positive for the compact dx
 comorbidities(
-  data = DF,
-  id.vars = "id",
+  data      = DF,
+  id.vars   = "id",
   icd.codes = "code",
-  poa = 1,
-  method = "pccc_v3.1"
+  poa       = 1L,
+  method    = "pccc_v3.1"
 )[, c("id", "cmrb_flag", "renal_dxpr_or_tech")]
 ##           id cmrb_flag renal_dxpr_or_tech
 ## 1 compact dx         1                  1
@@ -653,13 +647,13 @@ comorbidities(
 
 # false negative for compact pr
 comorbidities(
-  data = DF,
-  id.vars = "id",
-  icd.codes = "code",
-  poa = 1,
-  full.code = TRUE,
+  data          = DF,
+  id.vars       = "id",
+  icd.codes     = "code",
+  poa           = 1L,
+  full.code     = TRUE,
   compact.codes = FALSE,
-  method = "pccc_v3.1"
+  method        = "pccc_v3.1"
 )[, c("id", "cmrb_flag", "renal_dxpr_or_tech")]
 ##           id cmrb_flag renal_dxpr_or_tech
 ## 1 compact dx         0                  0
@@ -669,13 +663,13 @@ comorbidities(
 
 # false positive for compact dx
 comorbidities(
-  data = DF,
-  id.vars = "id",
-  icd.codes = "code",
-  poa = 1,
-  full.code = FALSE,
+  data          = DF,
+  id.vars       = "id",
+  icd.codes     = "code",
+  poa           = 1L,
+  full.code     = FALSE,
   compact.codes = TRUE,
-  method = "pccc_v3.1"
+  method        = "pccc_v3.1"
 )[, c("id", "cmrb_flag", "renal_dxpr_or_tech")]
 ##           id cmrb_flag renal_dxpr_or_tech
 ## 1 compact dx         1                  1
@@ -685,14 +679,14 @@ comorbidities(
 
 # false negatives for compact and full pr
 comorbidities(
-  data = DF,
-  id.vars = "id",
-  icd.codes = "code",
-  dx.var = "dx",
-  poa = 1,
-  full.code = FALSE,
+  data          = DF,
+  id.vars       = "id",
+  icd.codes     = "code",
+  dx.var        = "dx",
+  poa           = 1L,
+  full.code     = FALSE,
   compact.codes = TRUE,
-  method = "pccc_v3.1"
+  method        = "pccc_v3.1"
 )[, c("id", "cmrb_flag", "renal_dxpr_or_tech")]
 ##           id cmrb_flag renal_dxpr_or_tech
 ## 1 compact dx         0                  0
@@ -715,11 +709,12 @@ Inputs to the
 [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
 call for the ICD version will impact the output. When calling
 [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
-with a variable to indicate the ICD version `NA` values will not be
-joined against and the codes are ignored resulting in no condition being
-flagged. If we know that we only want to compare against ICD-9 or ICD-10
-values then using the `icdv` argument can simplify the call and in this
-case, no condition for ICD-9 and a condition is flagged for ICD-10.
+with a variable to indicate the ICD version `NA` values, or values other
+than `9` or `10`, will not be joined against and the codes are ignored
+resulting in no condition being flagged. If we know that we only want to
+compare against ICD-9 or ICD-10 values then using the `icdv` argument
+can simplify the call and in this case, no condition for ICD-9 and a
+condition is flagged for ICD-10.
 
 ``` r
 
@@ -727,52 +722,52 @@ subset(mdcr, patid == "95471")
 ##        patid icdv code dx
 ## 125330 95471   10 E030  1
 
-# no flag becuse icdv = 9 which treats all input codes as ICD-9
+# no flag because icdv = 9L treats all input codes as ICD-9
 comorbidities(
-  data = subset(mdcr, patid == "95471"),
+  data      = subset(mdcr, patid == "95471"),
   icd.codes = "code",
-  id.vars = 'patid',
-  dx.var = "dx",
-  icdv = 9L,
-  poa = 1,
+  id.vars   = 'patid',
+  dx.var    = "dx",
+  icdv      = 9L,
+  poa       = 1L,
   method = "pccc_v3.1"
 )[, c('patid', 'cmrb_flag')]
 ##   patid cmrb_flag
 ## 1 95471         0
 
-# flag because icdv = 10 - same as using `icdv.var = "icdv"`
+# flag because icdv = 10L - same as using `icdv.var = "icdv"`
 comorbidities(
-  data = subset(mdcr, patid == "95471"),
+  data      = subset(mdcr, patid == "95471"),
   icd.codes = "code",
-  id.vars = 'patid',
-  dx.var = "dx",
-  icdv = 10L,
-  poa = 1,
-  method = "pccc_v3.1"
+  id.vars   = 'patid',
+  dx.var    = "dx",
+  icdv      = 10L,
+  poa       = 1L,
+  method    = "pccc_v3.1"
 )[, c('patid', 'cmrb_flag')]
 ##   patid cmrb_flag
 ## 1 95471         1
 
 comorbidities(
-  data = subset(mdcr, patid == "95471"),
+  data      = subset(mdcr, patid == "95471"),
   icd.codes = "code",
-  id.vars = 'patid',
-  dx.var = "dx",
-  icdv.var = "icdv",
-  poa = 1,
-  method = "pccc_v3.0"
+  id.vars   = 'patid',
+  dx.var    = "dx",
+  icdv.var  = "icdv",
+  poa       = 1L,
+  method    = "pccc_v3.0"
 )[, c('patid', 'cmrb_flag')]
 ##   patid cmrb_flag
 ## 1 95471         1
 ```
 
 Lastly, it should be noted that a lot of the ambiguity resulting from
-compact codes can be avoided when full codes are available. medicalcoder
-can handle both forms. In the example below we again use the “E030” and
-assess it against all full and compact codes (default), against only
-full codes, and lastly against only compact codes. Note in this example
-that we are not specifying the ICD version nor the diagnostic/procedure
-status of the code.
+compact codes can be avoided when full codes are available.
+*medicalcoder* can handle both forms. In the example below we again use
+the “E030” and assess it against all full and compact codes (default),
+against only full codes, and lastly against only compact codes. Note in
+this example that we are not specifying the ICD version nor the
+diagnostic/procedure status of the code.
 
 ``` r
 
@@ -806,7 +801,7 @@ args <-
     data = data,
     id.vars = "id",
     icd.codes = "code",
-    poa = 1,
+    poa = 1L,
     method = "pccc_v3.1"
   )
 
@@ -845,7 +840,7 @@ full code with the same compact form.
 
 ## Longitudinal Conditions
 
-The medicalcoder package includes the example data set,
+The *medicalcoder* package includes the example dataset,
 `mdcr_longitudinal`, with ICD-9 and ICD-10 codes for 3 synthetic
 patients with multiple encounters. Each row has a date (encounter) for
 when the ICD code was reported.
@@ -874,13 +869,13 @@ method considers all codes as occurring on one encounter.
 
 longitudinal_v2_patid <-
   comorbidities(
-    data = mdcr_longitudinal,
-    icd.codes = "code",
-    id.vars = c("patid"),
-    icdv.var = "icdv",
-    method = "pccc_v2.1",
-    flag.method = "current",
-    poa = 1
+    data        = mdcr_longitudinal,
+    icd.codes   = "code",
+    id.vars     = c("patid"),
+    icdv.var    = "icdv",
+    method      = "pccc_v2.1",
+    flag.method = "current", # Default value
+    poa         = 1L
   )
 tab <- kableExtra::kbl(longitudinal_v2_patid)
 tab <- kableExtra::kable_styling(tab, bootstrap_options = c("striped"), font_size = 10)
@@ -899,13 +894,14 @@ the `id.vars = c("patid", "date")`.
 ``` r
 
 longitudinal_v2_patid_date <-
-  comorbidities(data = mdcr_longitudinal,
-    icd.codes = "code",
-    id.vars = c("patid", "date"),
-    icdv.var = "icdv",
-    method = "pccc_v2.1",
+  comorbidities(
+    data        = mdcr_longitudinal,
+    icd.codes   = "code",
+    id.vars     = c("patid", "date"),
+    icdv.var    = "icdv",
+    method      = "pccc_v2.1",
     flag.method = "current",
-    poa = 1
+    poa         = 1L
   )
 ```
 
@@ -921,27 +917,26 @@ longitudinal_v2_patid_date <-
 | 9663901 | 2017-02-16 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | 9663901 | 2018-03-29 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 | 1 | 1 |
 
-Looking at patid 9663901 at an encounter level we see that the
-conditions occur at different moments in time and the condition the
-patient has change overtime. Because these are chronic conditions, once
-the condition is observed, it should be considered to exist in
-perpetuity.
+Looking at patid 9663901 at an encounter level, we see that conditions
+occur at different moments in time, and that the patient’s conditions
+change over time. Because these are chronic conditions, once the
+condition is observed, it should be considered to exist in perpetuity.
 
-For `pccc_v2.1` a simple carry-forward method can be applied to the data
-set to mark the presence of a condition at the time of reporting and
-thereafter.
+For `pccc_v2.1` the `flag.method = "cumulative"` option can be used as a
+simple carry-forward method to mark the presence of a condition at the
+time of reporting and thereafter.
 
 ``` r
 
 longitudinal_v2_patid_date_cumulative_poa0 <-
   comorbidities(
-    data = mdcr_longitudinal,
-    icd.codes = "code",
-    id.vars = c("patid", "date"),
-    icdv.var = "icdv",
-    method = "pccc_v2.1",
+    data        = mdcr_longitudinal,
+    icd.codes   = "code",
+    id.vars     = c("patid", "date"),
+    icdv.var    = "icdv",
+    method      = "pccc_v2.1",
     flag.method = "cumulative",
-    poa = 0
+    poa         = 0L
   )
 ```
 
@@ -961,13 +956,13 @@ longitudinal_v2_patid_date_cumulative_poa0 <-
 
 longitudinal_v2_patid_date_cumulative_poa1 <-
   comorbidities(
-    data = mdcr_longitudinal,
-    icd.codes = "code",
-    id.vars = c("patid", "date"),
-    icdv.var = "icdv",
-    method = "pccc_v2.1",
+    data        = mdcr_longitudinal,
+    icd.codes   = "code",
+    id.vars     = c("patid", "date"),
+    icdv.var    = "icdv",
+    method      = "pccc_v2.1",
     flag.method = "cumulative",
-    poa = 1
+    poa         = 1L
   )
 ```
 
@@ -986,12 +981,12 @@ longitudinal_v2_patid_date_cumulative_poa1 <-
 ### PCCC V3
 
 For `pccc_v3.0` and `pccc_v3.1` a simple carry-forward method would not
-be easy to use as information about technology dependent codes is
-omitted when non-technology dependent codes do not exist.
+be easy to use because information about technology-dependent codes is
+omitted when non-technology-dependent codes do not exist.
 
 Let’s use three ICD-10 diagnostic codes for this example and we will
 explore all six possible permutations of the codes. We’ll generate a
-data set with seven encounters and one code appearing on each of
+dataset with seven encounters and one code appearing on each of
 encounters 2, 4, and 6.
 
 The codes we’ll use are:
@@ -1039,7 +1034,7 @@ str(permutations, vec.len = 1)
 ##  $ encounter_id: int  1 2 ...
 ##  $ code        : chr  NA ...
 ##  $ plabel      : chr  "Permutation 1: H49.811, J84.111, Z96.41" ...
-##  - attr(*, ".internal.selfref")=<pointer: 0x56219d9cfee0>
+##  - attr(*, ".internal.selfref")=<pointer: 0x55c87deebee0>
 ```
 
 - Permutation 1: H49.811, J84.111, Z96.41
@@ -1049,7 +1044,7 @@ str(permutations, vec.len = 1)
 - Permutation 5: Z96.41, H49.811, J84.111
 - Permutation 6: Z96.41, J84.111, H49.811
 
-We’ll apply the `pccc_v3.1` to this code set with
+We’ll apply `pccc_v3.1` to this code set with
 `flag.method = "cumulative"` and all codes considered to be
 present-on-admission.
 
@@ -1057,14 +1052,14 @@ present-on-admission.
 
 rtn <-
   comorbidities(
-    data = permutations,
-    icd.codes = "code",
-    id.vars = c("permutation", "plabel", "encounter_id"),
-    icdv = 10L,
+    data          = permutations,
+    icd.codes     = "code",
+    id.vars       = c("permutation", "plabel", "encounter_id"),
+    icdv          = 10L,
     compact.codes = FALSE,
-    method = "pccc_v3.1",
-    flag.method = "cumulative",
-    poa = 1
+    method        = "pccc_v3.1",
+    flag.method   = "cumulative",
+    poa           = 1L
   )
 ```
 
@@ -1109,7 +1104,7 @@ metabolic for encounters 4 through 7.
 [TABLE]
 
 Permutation 4 is notable as presence of the respiratory condition on
-encounters 2 through 7 means that when the technology dependent
+encounters 2 through 7 means that when the technology-dependent
 metabolic code appears on encounter 4, a metabolic is flagged for
 encounters 4 through 7. Compare this with permutations 5 and 6.
 
@@ -1117,19 +1112,20 @@ encounters 4 through 7. Compare this with permutations 5 and 6.
 
 [TABLE]
 
-For permutation 5 the first code is a tech dependent metabolic code on
-encounter 2. Because the *only* code for flagging a condition is a
-technology dependent code the PCCC version 3 algorithm results in *no*
+For permutation 5 the first code is a technology-dependent metabolic
+code on encounter 2. Because the *only* code for flagging a condition is
+a technology-dependent code the PCCC version 3 algorithm results in *no*
 condition being flagged for encounters 2 and 3. On encounter 4, when the
 non-tech metabolic code appears then the metabolic condition is flagged
-and the past history of the technology dependent code persists.
+and the past history of the technology-dependent dependent code
+persists.
 
 **Permutation 6**
 
 [TABLE]
 
 As with permutation 5, since the only code in the record for encounter 2
-and 3 is the technology dependent metabolic code, there is no flagged
+and 3 is the technology-dependent metabolic code, there is no flagged
 condition. On encounter 4, when the dxpr code for a respiratory
 condition is reported then the respiratory condition *and* the metabolic
 condition is flagged as technology dependent. Note that technology only
@@ -1139,8 +1135,8 @@ conditions are flagged if at least one other condition is flagged.
 
 The documentation for PCCC version 2 (Feudtner et al. 2014) and version
 3 (Feinstein et al. 2024) include subconditions under each of the major
-conditions. However, to our knowledge, no software prior to medicalcoder
-implemented flagging for the subconditions.
+conditions. However, to our knowledge, no software prior to
+*medicalcoder* implemented flagging for the subconditions.
 
 The subconditions for each condition are shown in the next table.
 
@@ -1239,25 +1235,25 @@ comorbidities.
 
 without_subconditions <-
   comorbidities(
-    data = mdcr,
-    id.vars = "patid",
-    icd.codes = "code",
-    icdv.var = "icdv",
-    dx.var = "dx",
-    poa = 1,
-    method = "pccc_v3.1",
+    data          = mdcr,
+    id.vars       = "patid",
+    icd.codes     = "code",
+    icdv.var      = "icdv",
+    dx.var        = "dx",
+    poa           = 1L,
+    method        = "pccc_v3.1",
     subconditions = FALSE
   )
 
 with_subconditions <-
   comorbidities(
-    data = mdcr,
-    id.vars = "patid",
-    icd.codes = "code",
-    icdv.var = "icdv",
-    dx.var = "dx",
-    poa = 1,
-    method = "pccc_v3.1",
+    data          = mdcr,
+    id.vars       = "patid",
+    icd.codes     = "code",
+    icdv.var      = "icdv",
+    dx.var        = "dx",
+    poa           = 1L,
+    method        = "pccc_v3.1",
     subconditions = TRUE
   )
 ```
@@ -1290,7 +1286,7 @@ with_subconditions
 ##   ..$ respiratory    :'data.frame':  3200 obs. of  7 variables:
 
 all.equal(
-  with_subconditions$conditions,
+  with_subconditions[["conditions"]],
   without_subconditions,
   check.attributes = FALSE
 )
@@ -1314,7 +1310,7 @@ str(summary(with_subconditions))
 ##  $ percent_of_those_with_condition: num  NA 25.6 47.9 9.3 23.4 ...
 ```
 
-The subconditions are available for all pccc variants. A summary is
+The subconditions are available for all PCCC variants. A summary is
 presented in the following tables.
 
 ### Congenital or Genetic
@@ -1363,22 +1359,22 @@ presented in the following tables.
 
 ### Longitudinal
 
-The longitudinal assessment for subconditions work as well. Using the
-same `permutations` data set from above we will look at the metabolic
-and respiratory conditions and subconditions.
+The longitudinal assessment for subconditions works as well. Using the
+same `permutations` dataset from above we will look at the metabolic and
+respiratory conditions and subconditions.
 
 ``` r
 
 rslts <-
   comorbidities(
-    data = permutations,
-    icd.codes = "code",
-    id.vars = c("permutation", "plabel", "encounter_id"),
-    icdv = 10L,
+    data          = permutations,
+    icd.codes     = "code",
+    id.vars       = c("permutation", "plabel", "encounter_id"),
+    icdv          = 10L,
     compact.codes = FALSE,
-    method = "pccc_v3.1",
-    flag.method = "cumulative",
-    poa = 1,
+    method        = "pccc_v3.1",
+    flag.method   = "cumulative",
+    poa           = 1L,
     subconditions = TRUE
   )
 ```
@@ -1443,11 +1439,11 @@ cnd <-
 # which encounters flag for the subconditions?
 scnd <-
   data.table::melt(
-    rslts$subconditions$metabolic,
-    id.vars = c("plabel", "encounter_id"),
-    measure.vars = c("device_and_technology_use", "other_metabolic_disorders"),
+    data            = rslts$subconditions$metabolic,
+    id.vars         = c("plabel", "encounter_id"),
+    measure.vars    = c("device_and_technology_use", "other_metabolic_disorders"),
     variable.factor = FALSE,
-    variable.name = "subcondition"
+    variable.name   = "subcondition"
   )
 scnd <- scnd[value == 1]
 scnd <-
@@ -1459,8 +1455,8 @@ scnd <-
 
 scnd <-
   data.table::dcast(
-    scnd,
-    plabel ~ subcondition,
+    data      = scnd,
+    formula   = plabel ~ subcondition,
     value.var = "sencid"
   )
 ```

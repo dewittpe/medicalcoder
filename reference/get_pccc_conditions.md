@@ -1,8 +1,8 @@
 # Pediatric Complex Chronic Condition and Subconditions
 
-Retrieve a copy of internal lookup tables for the syntax valid and human
-readable labels of the Pediatric Complex Chronic Conditions (PCCC)
-conditions and subconditions.
+Retrieve a copy of internal lookup tables for the syntactically valid
+and human readable labels of the Pediatric Complex Chronic Conditions
+(PCCC) conditions and subconditions.
 
 ## Usage
 
@@ -12,16 +12,15 @@ get_pccc_conditions()
 
 ## Value
 
-a `data.frame` with the following columns
+A `data.frame` with the following character columns:
 
-- `condition`: (character) syntax valid name for the condition
+- `condition`: Syntactically valid name for the condition
 
-- `subcondition`: (character) syntax valid name for the subcondition
+- `subcondition`: Syntactically valid name for the subcondition
 
-- `condition_label`: (character) human readable label for the condition
+- `condition_label`: Human-readable label for the condition
 
-- `subcondition_label`: (character) human readable label for the
-  subcondition
+- `subcondition_label`: Human-readable label for the subcondition
 
 ## See also
 
@@ -29,7 +28,7 @@ a `data.frame` with the following columns
   for the lookup table of ICD codes used for the PCCC.
 
 - [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
-  for applying comorbidity algorithms to a data set.
+  for applying comorbidity algorithms to a dataset.
 
 ## Examples
 

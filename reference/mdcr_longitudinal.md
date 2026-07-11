@@ -18,7 +18,7 @@ ICD-9 codes which could match to procedure codes.
 
 - `date`: date the diagnostic code was recorded
 
-- `icdv`: ICD version 9 or 10, integer valued
+- `icdv`: ICD version `9L` or `10L`, integer valued
 
 - `code`: ICD codes; character values
 

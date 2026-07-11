@@ -15,10 +15,10 @@ A `data.frame` with the following columns:
 
 - `condition`: Character vector of the conditions
 
-- `index`: Character vector indicating if the score is for the mortality
-  or the readmission index score
+- `index`: Character vector indicating whether the score is for the
+  mortality or readmission index.
 
-- `elixhauser_<variant>`: integer vector of the scores
+- `elixhauser_<variant>`: Integer vector of the scores.
 
 ## See also
 
@@ -27,12 +27,12 @@ A `data.frame` with the following columns:
   comorbidities.
 
 - [`get_elixhauser_poa()`](http://www.peteredewitt.com/medicalcoder/reference/get_elixhauser_poa.md)
-  for the lookup table of the conditions which do an do not require
+  for the lookup table of the conditions which do and do not require
   associated ICD codes to be present-on-admission to flag the
   comorbidity.
 
 - [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
-  for applying comorbidity algorithms to a data set.
+  for applying comorbidity algorithms to a dataset.
 
 ## Examples
 

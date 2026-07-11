@@ -4,17 +4,17 @@
 
 library(medicalcoder)
 packageVersion("medicalcoder")
-## [1] '0.8.1.9000'
+## [1] '0.9.0'
 ```
 
 ## Comorbidity Algorithms
 
 There are three comorbidity algorithms, each with several variants,
-implemented in the medicalcoder package:
+implemented in the *medicalcoder* package:
 
 1.  Pediatric Complex Chronic Condition System (PCCC)
     1.  Version 2.0 (Feudtner et al. 2014)
-        1.  `pccc_v2.0` is consistent with the older R package pccc
+        1.  `pccc_v2.0` is consistent with the older R package *pccc*
             (v1.0.7) (Feinstein et al. 2018; DeWitt et al. 2026).
         2.  `pccc_v2.1` modifies the set of ICD codes to be more
             consistent with documentation and other implementations of
@@ -36,6 +36,10 @@ implemented in the medicalcoder package:
     4.  `charlson_cdmf2019`: (Glasheen et al. 2019)
     5.  `charlson_ludvigsson2021`: Swedish ICD-10-SE adaptation
         (Ludvigsson et al. 2021, 2023)
+    6.  `charlson_beyrer2021`: U.S. ICD-10-CM and ICD-10-PCS adaptation
+        (Beyrer et al. 2021, 2020)
+    7.  `charlson_mimicivcode`: mapping used by the MIMIC-IV Charlson
+        SQL in [`mimic-code`](https://github.com/MIT-LCP/mimic-code)
 3.  Elixhauser
     1.  Based on codes provided by the Agency for Healthcare Research
         and Quality (AHRQ) for fiscal years 2022 through 2026
@@ -55,9 +59,9 @@ implemented in the medicalcoder package:
         3.  `elixhauser_quan2005`: (Quan et al. 2005)
 
 **IMPORTANT NOTE:** Elixhauser 1998 and AHRQ Web used diagnosis-related
-group (DRG) codes as part of the methods. The medicalcoder package *does
-not* use DRG codes. This is consistent with the way these methods were
-implemented in Quan et al. (2005).
+group (DRG) codes as part of the methods. The *medicalcoder* package
+*does not* use DRG codes. This is consistent with the way these methods
+were implemented in Quan et al. (2005).
 
 A list of the valid methods for the package can be accessed via a
 non-exported function. In general, the methods are listed in the form of
@@ -71,11 +75,12 @@ medicalcoder:::comorbidities_methods()
 ##  [5] "charlson_deyo1992"         "charlson_quan2011"        
 ##  [7] "charlson_quan2005"         "charlson_cdmf2019"        
 ##  [9] "charlson_sundararajan2004" "charlson_ludvigsson2021"  
-## [11] "elixhauser_elixhauser1988" "elixhauser_ahrq_web"      
-## [13] "elixhauser_quan2005"       "elixhauser_ahrq2022"      
-## [15] "elixhauser_ahrq2023"       "elixhauser_ahrq2024"      
-## [17] "elixhauser_ahrq2025"       "elixhauser_ahrq2026"      
-## [19] "elixhauser_ahrq_icd10"
+## [11] "charlson_beyrer2021"       "charlson_mimicivcode"     
+## [13] "elixhauser_elixhauser1988" "elixhauser_ahrq_web"      
+## [15] "elixhauser_quan2005"       "elixhauser_ahrq2022"      
+## [17] "elixhauser_ahrq2023"       "elixhauser_ahrq2024"      
+## [19] "elixhauser_ahrq2025"       "elixhauser_ahrq2026"      
+## [21] "elixhauser_ahrq_icd10"
 ```
 
 Vignettes for each of the major methods are available.
@@ -112,15 +117,15 @@ args(comorbidities)
 We highlight a general concept for the arguments. Note that several
 arguments are in pairs, e.g., `dx.var` and `dx` (used for denoting if
 codes are diagnostic or procedural), or `poa.var` and `poa` (used for
-denoting if a codes are present on admission). The `.var` version is the
-name of a variable within the `data.frame` passed into the `data`
+denoting whether codes are present-on-admission). The `.var` version is
+the name of a variable within the `data.frame` passed into the `data`
 argument. The version without `.var` is a default value to be applied to
 the entirety of `data`. We will see some examples where this is useful.
 
 The `data` element is expected to be a `data.frame`, or at least
 something that inherits the `data.frame` class. The format is expected
-to be a ‘long’ format: one ICD code per row. Two example data sets in
-the package show the general expected form of the `data`.
+to be a ‘long’ format: one ICD code per row. Two example datasets in the
+package show the general expected form of the `data`.
 
 ``` r
 
@@ -144,15 +149,15 @@ head(mdcr_longitudinal)
 
 ## When are conditions flagged?
 
-Whether or not the code is present on admission (POA) is useful when
+Whether or not the code is present-on-admission (POA) is useful when
 applying the comorbidity algorithms and considering if the patient has a
 comorbidity at the start of an encounter, or if the condition is a
 result of the current hospitalization.
 
 Implementation of Elixhauser comorbidities for 2022 and beyond
 (Healthcare Research and (AHRQ) 2025) explicitly define the use of
-present on admission flags for specific conditions (see the
-`poa_required` flag reported in the data set returned by
+present-on-admission flags for specific conditions (see the
+`poa_required` flag reported in the dataset returned by
 [`get_elixhauser_poa()`](http://www.peteredewitt.com/medicalcoder/reference/get_elixhauser_poa.md)).
 
 ``` r
@@ -199,52 +204,61 @@ From Quan et al. (2005):
 > condition-by-condition basis of whether to include particular
 > variables, depending on their study objectives.
 
-PCCC does not explicitly note the if POA is required.
+PCCC does not explicitly state whether POA is required.
 
-medicalcoder has been built to consider POA for all comorbidity
+*medicalcoder* has been built to consider POA for all comorbidity
 algorithms.
 
-End users can use a 0/1 indicator variable in the data set to report
-which codes are POA via the function argument `poa.var`. If all the
-codes are to be considered POA or not, the functional argument `poa` can
-be used to set a common status without adding a column to the input data
-set.
+End users can use a `0L`/`1L` indicator variable in the dataset to
+report which codes are POA via the function argument `poa.var`. If all
+the codes are to be considered POA or not, the functional argument `poa`
+can be used to set a common status without adding a column to the input
+dataset.
 
-Additionally, medicalcoder provides a `flag.method` argument for
-longitudinal data sets.
+Additionally, *medicalcoder* provides a `flag.method` argument for
+longitudinal datasets. The default `flag.method = "current"` evaluates
+each encounter on its own. The `flag.method = "cumulative"` option also
+considers prior encounters for the same patient or grouping.
 
 **Example:** Let’s assume we have a patient record for six encounters.
 We use ICD-10 diagnostic codes C78.4 and I50.40 which maps to a cancer
 and heart failure (cardiovascular disease) comorbidity respectively for
 PCCC, Charlson, and Elixhauser. For demonstration, we also flag POA with
-the second report of I50.40 intentionally marked as not present on
-admission.
+the second report of I50.40 intentionally marked as not
+present-on-admission.
 
 We will call
 [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
-for the three methods using static POA flags and dynamic POA flags, and
-both flag methods. Results are shown in the following table.
+for the three methods using static POA flags and dynamic POA flags, the
+default current-encounter flagging method, and the cumulative flagging
+method. Results are shown in the following table.
 
 [TABLE]
 
 Indicators for when a comorbidity is flagged based on the algorithm,
-present on admission (poa), and flag.method. The two ICD codes, C78.4
+present-on-admission (poa), and flag.method. The two ICD codes, C78.4
 and I50.40, map to cancer and cardiovascular disease respectively.
 {.table .table .table-striped .table-bordered
 style="NAborder-bottom: 0; font-size: 8px; width: auto !important; margin-left: auto; margin-right: auto;"}
 
 #### Flag method and POA defaults
 
-When `flag.method = "cumulative"` and you do *not* supply `poa` or
-`poa.var`,
+When `flag.method = "cumulative"` is used and you do *not* supply `poa`
+or `poa.var`,
 [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
-treats the first encounter where a condition appears as `poa = 0` and
-carries that condition forward with `poa = 1` on later encounters.
+treats the first encounter where a condition appears as `poa = 0L` and
+carries that condition forward with `poa = 1L` on later encounters.
 
 When `flag.method = "current"` and you do *not* supply `poa` or
 `poa.var`,
 [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
-treats all ICD codes as `poa = 1`.
+treats all ICD codes as `poa = 1L`.
+
+For `flag.method = "cumulative"`, the last column named in `id.vars` is
+the encounter order column. It must not contain missing values, must not
+be a factor, and must be numeric, character, `Date`, or `POSIXt`.
+Character encounter order columns are allowed with a warning because
+they are sorted lexicographically.
 
 ## Mapping ICD Codes to Comorbidities
 
@@ -252,9 +266,9 @@ End users can quickly assess the lookup table for all the ICD codes
 associated with a comorbidity algorithm using the
 `get_<comorbidity>_codes` functions. Each `data.frame` has columns for
 the ICD version, diagnostic or procedure flag, the compact code, and the
-full code. A column for the condition and other method specific flags
+full code. A column for the condition and other method-specific flags
 are provided. Lastly, there are indicator columns for the variant of
-each method
+each method.
 
 ``` r
 
@@ -273,15 +287,17 @@ str(get_pccc_codes())
 ##  $ pccc_v2.1      : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ pccc_v2.0      : int  1 1 1 1 1 1 1 1 1 1 ...
 str(get_charlson_codes())
-## 'data.frame':    8975 obs. of  11 variables:
+## 'data.frame':    9248 obs. of  13 variables:
 ##  $ icdv                     : int  9 9 9 9 9 9 9 9 9 9 ...
 ##  $ dx                       : int  0 1 1 1 1 1 1 1 1 1 ...
 ##  $ full_code                : chr  "38.48" "003.1" "007.2" "007.4" ...
 ##  $ code                     : chr  "3848" "0031" "0072" "0074" ...
 ##  $ condition                : chr  "pvd" "aids" "aids" "aids" ...
+##  $ charlson_beyrer2021      : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ charlson_cdmf2019        : int  0 1 1 1 1 1 1 1 1 1 ...
 ##  $ charlson_deyo1992        : int  1 0 0 0 0 0 0 0 0 0 ...
 ##  $ charlson_ludvigsson2021  : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ charlson_mimicivcode     : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ charlson_quan2005        : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ charlson_sundararajan2004: int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ charlson_quan2011        : int  0 0 0 0 0 0 0 0 0 0 ...
@@ -304,11 +320,11 @@ str(get_elixhauser_codes())
 ##  $ elixhauser_ahrq_icd10    : int  NA NA NA NA NA NA NA NA NA NA ...
 ```
 
-End users should be aware that just because an ICD code exists in a data
-set does not mean that the patient has the condition. For Elixhauser,
-the presence on admission is important to consider. For PCCC version 3.0
-and 3.1, tech dependencies on their own are insufficient to flag a
-condition (see
+End users should be aware that just because an ICD code exists in a
+dataset does not mean that the patient has the condition. For AHRQ
+variants of Elixhauser, the present-on-admission status of the ICD is
+considered. For PCCC version 3.0 and 3.1, tech dependencies on their own
+are insufficient to flag a condition (see
 [`vignette(topic = "pccc", package = "medicalcoder")`](http://www.peteredewitt.com/medicalcoder/articles/pccc.md)).
 
 For the `charlson_cdmf2019` method (Glasheen et al. 2019), the AIDS
@@ -323,7 +339,7 @@ cdmf_eg <-
   merge(x = mdcr,
         y = subset(get_charlson_codes(),
                    condition %in% c("aids", "hiv") &
-                   charlson_cdmf2019 == 1),
+                   charlson_cdmf2019 == 1L),
         by = c("icdv", "dx", "code"))
 data.table::setDT(cdmf_eg)
 
@@ -370,6 +386,17 @@ cmdf_mdcr[, .N, keyby = .(hiv, aids)]
 ```
 
 ## References
+
+Beyrer, Julie, Janna Manjelievskaia, Machaon Bonafede, et al. 2020.
+*Codes Used to Identify Hospital Complications in Validation of Charlson
+Comorbidity Index ICD-10 for the US*. Zenodo.
+<https://doi.org/10.5281/zenodo.3968784>.
+
+Beyrer, Julie, Janna Manjelievskaia, Machaon Bonafede, et al. 2021.
+“Validation of an International Classification of Disease, 10th Revision
+Coding Adaptation for the Charlson Comorbidity Index in United States
+Healthcare Claims Data.” *Pharmacoepidemiology and Drug Safety* 30 (5):
+582–93. https://doi.org/<https://doi.org/10.1002/pds.5204>.
 
 DeWitt, Peter, James Feinstein, and Seth Russell. 2026. *Pccc: Pediatric
 Complex Chronic Conditions*. <https://github.com/CUD2V/pccc>.

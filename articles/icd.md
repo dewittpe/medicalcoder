@@ -1,6 +1,6 @@
 # ICD Codes
 
-There are four functions in the medicalcoder package specifically for
+There are four functions in the *medicalcoder* package specifically for
 working with International Classification of Diseases (ICD) codes.
 
 1.  [`get_icd_codes()`](http://www.peteredewitt.com/medicalcoder/reference/get_icd_codes.md):
@@ -19,14 +19,14 @@ working with International Classification of Diseases (ICD) codes.
 
 ## `get_icd_codes()`
 
-A lookup table for the ICD codes has been built as internal data sets
-within the medicalcoder package. The sources for these lookup tables
+A lookup table for the ICD codes has been built as internal datasets
+within the *medicalcoder* package. The sources for these lookup tables
 come from the Centers for Disease Control (CDC) and from the Centers for
 Medicare & Medicaid Services (CMS), World Health Organization (WHO),
 Australia’s Independent Health and Aged Care Pricing Authority (IHACPA),
 and Sweden’s National Board of Health and Welfare (Socialstyrelsen). The
-specific links to the source data sets can be found in the source code
-for the medicalcoder package on
+specific links to the source datasets can be found in the source code
+for the *medicalcoder* package on
 [GitHub](https://github.com/dewittpe/medicalcoder).
 
 End users can get a `data.frame` with ICD-9 diagnostic, ICD-9 procedure,
@@ -51,14 +51,14 @@ str(icd_codes)
 
 The columns of this data.frame are:
 
-- `icdv`: integer value 9 or 10 indicating ICD-9 or ICD-10
+- `icdv`: integer value `9L` or `10L` indicating ICD-9 or ICD-10
 
-- `dx`: 1 if the code is a diagnostic code, i.e., from the ICD-9-CM or
-  ICD-10-CM standard. This also covers codes from the World Health
+- `dx`: `1L` if the code is a diagnostic code, i.e., from the ICD-9-CM
+  or ICD-10-CM standard. This also covers codes from the World Health
   Organization (WHO), the Center for Disease Control and
   Prevention (CDC) Mortality codes, ICD-10-AM codes from IHACPA, and
-  ICD-10-SE codes from Socialstyrelsen. `dx` will be 0 if the code is a
-  procedure code, i.e., from the ICD-9-PCS or ICD-10-PCS standard.
+  ICD-10-SE codes from Socialstyrelsen. `dx` will be `0L` if the code is
+  a procedure code, i.e., from the ICD-9-PCS or ICD-10-PCS standard.
 
 - `full_code`: the full ICD code with the decimal point if applicable.
 
@@ -66,7 +66,7 @@ The columns of this data.frame are:
 
 - `src`: a character vector denoting the source of the information.
 
-- `known_start`: The first year that the medicalcoder package has data
+- `known_start`: The first year that the *medicalcoder* package has data
   for this code.
 
   - For codes based on the ICD-9-CM, ICD-9-PCS, ICD-10-CM, ICD-10-PCS
@@ -81,16 +81,16 @@ The columns of this data.frame are:
     Disease Control and Prevention (CDC) Mortality coding, and
     Socialstyrelsen, the year is *calendar year*.
 
-  - For ICD-9, CDC extracts in medicalcoder span fiscal years 1997–2012
-    and CMS extracts span fiscal years 2006–2015.
+  - For ICD-9, CDC extracts in *medicalcoder* span fiscal years
+    1997–2012 and CMS extracts span fiscal years 2006–2015.
 
 - `known_end`: the last year the code was part of the standard, or that
-  the medicalcoder package has data for.
+  the *medicalcoder* package has data for.
 
   - ICD-9 CMS extracts run through FY 2015; CDC ICD-9 extracts end at FY
     2012.
-  - ICD-10 is active. The current version of medicalcoder has details on
-    ICD-10 codes through FY 2026.
+  - ICD-10 is active. The current version of *medicalcoder* has details
+    on ICD-10 codes through FY 2026.
 
 - `assignable_start`: The first year (fiscal or calendar based on src) a
   code was assignable. `NA` indicates the code was never assignable.
@@ -222,10 +222,10 @@ The additional columns, in order of hierarchy, are:
 - subsubclassification
 - extension
 
-To keep the install size of medicalcoder under the size limits for CRAN,
-the stored data is structured in a way that several joins and other
-operations are needed to have a data set that is end user friendly.
-Several data sets are generated and cached when the namespace is loaded.
+To keep the install size of *medicalcoder* under the size limits for
+CRAN, the stored data is structured in a way that several joins and
+other operations are needed to have a dataset that is end user friendly.
+Several datasets are generated and cached when the namespace is loaded.
 
 ## `lookup_icd_codes()`
 
@@ -376,13 +376,13 @@ procedure code.
 is_icd(x = "7993")
 ## Warning: Input '7993' is a: ICD 9 pr compact; ICD 9 dx compact
 ## [1] TRUE
-is_icd(x = "7993", icdv =  9, dx = 1)
+is_icd(x = "7993", icdv =  9L, dx = 1L)
 ## [1] TRUE
-is_icd(x = "7993", icdv =  9, dx = 0)
+is_icd(x = "7993", icdv =  9L, dx = 0L)
 ## [1] TRUE
-is_icd(x = "7993", icdv = 10, dx = 1)
+is_icd(x = "7993", icdv = 10L, dx = 1L)
 ## [1] FALSE
-is_icd(x = "7993", icdv = 10, dx = 0)
+is_icd(x = "7993", icdv = 10L, dx = 0L)
 ## [1] FALSE
 lookup_icd_codes("7993")
 ##   input_code   match_type icdv dx full_code code src known_start known_end
@@ -420,8 +420,8 @@ x <- c("7993",  # valid dx and pr code
        "799.3", # valid dx code; invalid pr code
        "7993.") # not a valid code
 data.frame(x = x,
-           icd9_dx = is_icd(x, icdv = 9, dx = 1, warn.ambiguous = FALSE),
-           icd9_pr = is_icd(x, icdv = 9, dx = 0, warn.ambiguous = FALSE))
+           icd9_dx = is_icd(x, icdv = 9L, dx = 1L, warn.ambiguous = FALSE),
+           icd9_pr = is_icd(x, icdv = 9L, dx = 0L, warn.ambiguous = FALSE))
 ##       x icd9_dx icd9_pr
 ## 1  7993    TRUE    TRUE
 ## 2 .7993   FALSE   FALSE
@@ -453,14 +453,14 @@ x <- paste0("516.3", c("", 0:9))
 tab <-
   data.frame(
     code       = x,
-    default    = is_icd(x, icdv = 9, dx = 1),
-    assignable_1997_cdc = is_icd(x, src = "cdc", icdv = 9, dx = 1, year = 1997),
-    assignable_2010_cms = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 2010),
-    assignable_2011_cms = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 2011),
-    assignable_2012_cdc = is_icd(x, src = "cdc", icdv = 9, dx = 1, year = 2012),
-    assignable_2012_cms = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 2012),
-    assignable_2015_cms = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 2015),
-    assignable_ever_cdc = is_icd(x, src = "cdc", icdv = 9, dx = 1, ever.assignable = TRUE)
+    default    = is_icd(x, icdv = 9L, dx = 1L),
+    assignable_1997_cdc = is_icd(x, src = "cdc", icdv = 9L, dx = 1L, year = 1997),
+    assignable_2010_cms = is_icd(x, src = "cms", icdv = 9L, dx = 1L, year = 2010),
+    assignable_2011_cms = is_icd(x, src = "cms", icdv = 9L, dx = 1L, year = 2011),
+    assignable_2012_cdc = is_icd(x, src = "cdc", icdv = 9L, dx = 1L, year = 2012),
+    assignable_2012_cms = is_icd(x, src = "cms", icdv = 9L, dx = 1L, year = 2012),
+    assignable_2015_cms = is_icd(x, src = "cms", icdv = 9L, dx = 1L, year = 2015),
+    assignable_ever_cdc = is_icd(x, src = "cdc", icdv = 9L, dx = 1L, ever.assignable = TRUE)
   )
 knitr::kable(tab)
 ```
@@ -532,9 +532,9 @@ x <- c("516", "5163", "51631", "A00")
 tab <-
   data.frame(
     code     = x,
-    default  = is_icd(x, icdv = 9, dx = 1, src = "cms", headerok = FALSE, ever.assignable = FALSE, warn.ambiguous = FALSE),
-    ever     = is_icd(x, icdv = 9, dx = 1, src = "cms", headerok = FALSE, ever.assignable = TRUE,  warn.ambiguous = FALSE),
-    headerok = is_icd(x, icdv = 9, dx = 1, src = "cms", headerok = TRUE,                           warn.ambiguous = FALSE)
+    default  = is_icd(x, icdv = 9L, dx = 1L, src = "cms", headerok = FALSE, ever.assignable = FALSE, warn.ambiguous = FALSE),
+    ever     = is_icd(x, icdv = 9L, dx = 1L, src = "cms", headerok = FALSE, ever.assignable = TRUE,  warn.ambiguous = FALSE),
+    headerok = is_icd(x, icdv = 9L, dx = 1L, src = "cms", headerok = TRUE,                           warn.ambiguous = FALSE)
   )
 knitr::kable(tab)
 ```
@@ -559,12 +559,12 @@ x <- paste0("719.7", c("", "0", 5:9))
 tab <-
   data.frame(
     code            = x,
-    default         = is_icd(x, src = "cms", icdv = 9, dx = 1),
-    assignable_2002 = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 2002),
-    assignable_2003 = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 2003),
-    assignable_2004 = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 2004),
-    assignable_2005 = is_icd(x, src = "cms", icdv = 9, dx = 1, year = 2005),
-    assignable_ever = is_icd(x, src = "cms", icdv = 9, dx = 1, ever.assignable = TRUE)
+    default         = is_icd(x, src = "cms", icdv = 9L, dx = 1L),
+    assignable_2002 = is_icd(x, src = "cms", icdv = 9L, dx = 1L, year = 2002),
+    assignable_2003 = is_icd(x, src = "cms", icdv = 9L, dx = 1L, year = 2003),
+    assignable_2004 = is_icd(x, src = "cms", icdv = 9L, dx = 1L, year = 2004),
+    assignable_2005 = is_icd(x, src = "cms", icdv = 9L, dx = 1L, year = 2005),
+    assignable_ever = is_icd(x, src = "cms", icdv = 9L, dx = 1L, ever.assignable = TRUE)
   )
 ## Warning: The combination of `icdv` = 9; `dx` = 1; and `src` = cms; has ICD
 ## codes with a first known_start year of 2006. The input of `year` = 2002 results
@@ -597,12 +597,13 @@ To go from a full code to a compact code is simple, omit any decimal
 point in the string.
 
 To go from a compact code to a full code requires knowing if the code is
-from version 9 or 10, and if it is a diagnostic or a procedure code.
+from version `9L` or `10L`, and if it is a diagnostic or a procedure
+code.
 [`icd_compact_to_full()`](http://www.peteredewitt.com/medicalcoder/reference/icd_compact_to_full.md)
 will format a string appropriately, within reason. This method only
 formats the strings and will not validate the return.
 
-For example, the compact code “E1234” is in the format expected for a
+For example, the compact code “E1234” is in the format expected for an
 ICD-9 diagnostic code or ICD-10 diagnostic code. It could not be a
 procedure code as ICD-9 procedure codes are all numeric values and
 ICD-10 procedure codes are seven characters long. The actual code E1234
@@ -610,9 +611,9 @@ is not a valid ICD code. We use this string as an example.
 
 ``` r
 
-icd_compact_to_full("E1234", icdv =  9, dx = 1)
+icd_compact_to_full("E1234", icdv =  9L, dx = 1L)
 ## [1] "E123.4"
-icd_compact_to_full("E1234", icdv = 10, dx = 1)
+icd_compact_to_full("E1234", icdv = 10L, dx = 1L)
 ## [1] "E12.34"
 
 lookup_icd_codes(c("E1234", "E123.4", "E12.34"))[, c("input_code", "match_type")]
@@ -627,9 +628,9 @@ full procedure code.
 
 ``` r
 
-icd_compact_to_full("E1234", icdv =  9, dx = 0)
+icd_compact_to_full("E1234", icdv =  9L, dx = 0L)
 ## [1] "E1234"
-icd_compact_to_full("E1234", icdv = 10, dx = 0)
+icd_compact_to_full("E1234", icdv = 10L, dx = 0L)
 ## [1] "E1234"
 ```
 
@@ -688,7 +689,7 @@ hierarchy of
 6.  subsubclassification, and
 7.  extension.
 
-The category describes the general type of disease of injury, with the
+The category describes the general type of disease or injury, with the
 subcategory, subclassification and subsubclassification providing detail
 on the cause, manifestation, location, severity, and type of disease or
 injury. Finally, the extension specifies the type of encounter, i.e.,
@@ -697,6 +698,6 @@ prior disease or injury.
 
 ### ICD-10 Procedure Codes
 
-In general, ICD-10 procedure codes are seven digits. In medicalcoder,
+In general, ICD-10 procedure codes are seven digits. In *medicalcoder*,
 the three digit (chapter, subchapter, *category*) and the seven digit
-codes are in the data base.
+codes are in the database.

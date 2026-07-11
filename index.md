@@ -1,7 +1,7 @@
 # medicalcoder: A Unified and Longitudinally Aware Framework for ICD-Based Comorbidity Assessment ![medicalcoder hex logo](reference/figures/hex.svg)
 
-medicalcoder is a lightweight, base-R package for working with ICD-9 and
-ICD-10 diagnosis and procedure codes. It implements widely used
+*medicalcoder* is a lightweight, base-R package for working with ICD-9
+and ICD-10 diagnosis and procedure codes. It implements widely used
 comorbidity algorithms such as Charlson, Elixhauser, and the Pediatric
 Complex Chronic Conditions (PCCC), supports longitudinal comorbidity
 flagging across encounters, and provides fast, dependency-free utilities
@@ -17,11 +17,11 @@ The package balances performance with elegance: its internal caching,
 efficient joins, and compact data structures make it practical for
 large-scale health data analyses, while its clean design makes it easy
 to extend or audit. Whether you need to flag comorbidities, explore ICD
-hierarchies, or standardize clinical coding workflows, medicalcoder
+hierarchies, or standardize clinical coding workflows, *medicalcoder*
 provides a robust, transparent foundation for research and applied work
 in biomedical informatics.
 
-The primary objectives of medicalcoder are:
+The primary objectives of *medicalcoder* are:
 
 1.  **Fully self-contained**
     - Minimal Dependencies
@@ -30,15 +30,15 @@ The primary objectives of medicalcoder are:
       - Requires R version ≥ 3.5.0 due to a [change in data
         serialization](https://cran.r-project.org/src/base/NEWS.3#:~:text=R%20has%20new,to%20version%203.5.0).
         R 3.5.0 was released in April 2018. The initial public release
-        of medicalcoder was in 2025.
-      - Several packages are listed in the *Suggests* section of the
+        of *medicalcoder* was in 2025.
+      - Several packages are listed in the `Suggests` section of the
         `DESCRIPTION` file. These are only needed for building
         vignettes, other documentation, and testing. They are not
         required to install the package.
 
     - No Imports
 
-      - medicalcoder does not import any non-base namespaces. This
+      - *medicalcoder* does not import any non-base namespaces. This
         improves ease of maintenance and usability.
       - Suggested packages are needed only for development work and
         building vignettes. They are not required for installation or
@@ -61,19 +61,20 @@ The primary objectives of medicalcoder are:
     - Implements three general algorithms, each with multiple variants.
       Details are provided below.
     - Supports flagging of subconditions within PCCC.
-    - Supports longitudinal flagging of comorbidities. medicalcoder will
-      flag comorbidities based on present-on-admission indicators for
-      the current encounter and can look back in time for a patient to
-      flag a comorbidity if reported in a prior encounter. See examples.
+    - Supports longitudinal flagging of comorbidities. *medicalcoder*
+      will flag comorbidities based on present-on-admission indicators
+      for the current encounter and can look back in time for a patient
+      to flag a comorbidity if reported in a prior encounter. See
+      examples.
 3.  **Tools for working with ICD codes**
     - Lookup tables.
     - Ability to work with both full codes (ICD codes with decimal
       points) and compact codes (ICD codes with decimal points omitted).
 
-## Why use medicalcoder
+## Why Use *medicalcoder*
 
 There are several tools for working with ICD codes and comorbidity
-algorithms. medicalcoder provides novel features:
+algorithms. *medicalcoder* provides novel features:
 
 - Unified access to multiple comorbidity algorithms through a single
   function:
@@ -121,17 +122,18 @@ Input data for
 [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
 is expected to be in a ‘long’ format. Each row is one code with
 additional columns for patient and/or encounter id. There are two
-example data sets in the package: `mdcr` and `mdcr_longitudinal`.
+example datasets in the package: `mdcr` and `mdcr_longitudinal`.
 
 ``` r
 
 data(mdcr, mdcr_longitudinal, package = "medicalcoder")
 ```
 
-The `mdcr` data set consists of 319 856 rows. Each row contains one ICD
+The `mdcr` dataset consists of 319 856 rows. Each row contains one ICD
 code (`code`). The column `icdv` denotes each code as ICD-9 or ICD-10,
-and the `dx` column denotes diagnostic (1) or procedure (0) code. This
-data set contains diagnostic and procedure codes for 38 262 patients.
+and the `dx` column denotes diagnostic (`1L`) or procedure (`0L`) code.
+This dataset contains diagnostic and procedure codes for 38 262
+patients.
 
 ``` r
 
@@ -151,11 +153,10 @@ head(mdcr)
 #> 6 17087   10  V441  1
 ```
 
-The `mdcr_longitudinal` data set is distinct from the `mdcr` data set.
-The major difference is that this data set contains only diagnostic
-codes and there are only 3 patients. The `date` column denotes the date
-of the diagnosis and allows us to look at changes in comorbidities over
-time.
+The `mdcr_longitudinal` dataset is distinct from the `mdcr` dataset. The
+major difference is that this dataset contains only diagnostic codes and
+there are only 3 patients. The `date` column denotes the date of the
+diagnosis and allows us to look at changes in comorbidities over time.
 
 ``` r
 
@@ -178,7 +179,7 @@ head(mdcr_longitudinal)
 ### Comorbidity Algorithms
 
 There are three comorbidity methods, each with several variants,
-available in medicalcoder. All of which are accessible through the
+available in *medicalcoder*. All of which are accessible through the
 [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
 method by specifying the `method` argument.
 
@@ -196,7 +197,7 @@ vignette(topic = "comorbidities", package = "medicalcoder")
   - BMC Pediatrics: [Feudtner et
     al. (2014)](https://doi.org/10.1186/1471-2431-14-199)
   - Consistent with R package
-    [pccc](https://cran.r-project.org/package=pccc)
+    [*pccc*](https://cran.r-project.org/package=pccc)
 - Version 2.1
   - Updated code base with the same assessment algorithm as version 2.0.
 - Version 3.0
@@ -205,7 +206,7 @@ vignette(topic = "comorbidities", package = "medicalcoder")
   - Children’s Hospital Association
     [Toolkit](https://www.childrenshospitals.org/content/analytics/toolkit/complex-chronic-conditions)
 - Version 3.1
-  - Updated code base with same assessment algorithm as version 3.0.
+  - Updated code base with the same assessment algorithm as version 3.0.
 - All variants can flag conditions and subconditions.
 
 ``` r
@@ -214,21 +215,21 @@ vignette(topic = "comorbidities", package = "medicalcoder")
 library(medicalcoder)
 cmrbs2 <-
   comorbidities(
-    data = mdcr,
-    id.vars = "patid", # can use more than one column, e.g., site, patient, encounter
+    data      = mdcr,
+    id.vars   = "patid", # can use more than one column, e.g., site, patient, encounter
     icd.codes = "code",
-    dx.var = "dx",
-    poa = 1,  # consider all codes to be present on admission
-    method = "pccc_v2.1"
+    dx.var    = "dx",
+    poa       = 1L, # consider all codes to be present-on-admission
+    method    = "pccc_v2.1"
   )
 cmrbs3 <-
   comorbidities(
-    data = mdcr,
-    id.vars = "patid",
+    data      = mdcr,
+    id.vars   = "patid",
     icd.codes = "code",
-    dx.var = "dx",
-    poa = 1,  # consider all codes to be present on admission
-    method = "pccc_v3.1"
+    dx.var    = "dx",
+    poa       = 1L, # consider all codes to be present-on-admission
+    method    = "pccc_v3.1"
   )
 str(cmrbs2, max.level = 0)
 #> Classes 'medicalcoder_comorbidities' and 'data.frame':   38262 obs. of  16 variables:
@@ -263,7 +264,7 @@ str(s3)
 
 For `pccc_v3.0` and `pccc_v3.1` the returned `data.frame` reports counts
 and percentages for how the condition was flagged based on
-diagnosis/procedure codes only, technology dependent codes only, or
+diagnosis/procedure codes only, technology-dependent codes only, or
 both. The `dxpr_or_tech` columns answer the question “did this patient
 have the condition”.
 
@@ -276,8 +277,8 @@ vignette(topic = "pccc", package = "medicalcoder")
 
 #### Charlson Comorbidities
 
-There are six variants of Charlson comorbidities implemented in
-medicalcoder:
+There are eight variants of Charlson comorbidities implemented in
+*medicalcoder*:
 
 - [Deyo, Cherkin, and Ciol
   (1992)](https://doi.org/10.1016/0895-4356(92)90133-8)
@@ -288,19 +289,22 @@ medicalcoder:
   al. (2004)](https://doi.org/10.1016/j.jclinepi.2004.03.012)
 - [Glasheen (2019)](https://pubmed.ncbi.nlm.nih.gov/31428236/)
 - [Ludvigsson et al. (2021)](https://doi.org/10.2147/CLEP.S282475)
+- [Beyrer et al. (2021)](https://doi.org/10.1002/pds.5204)
+- MIMIC-IV Charlson SQL from
+  [`mimic-code`](https://github.com/MIT-LCP/mimic-code)
 
 ``` r
 
 # Charlson example
 cmrbs <-
   comorbidities(
-    data = mdcr,
-    id.vars = "patid",
+    data      = mdcr,
+    id.vars   = "patid",
     icd.codes = "code",
-    dx.var = "dx",
-    poa = 1,        # assume all codes are present on admission
-    primarydx = 0L, # assume all codes are secondary diagnosis codes
-    method = "charlson_quan2005"
+    dx.var    = "dx",
+    poa       = 1L,       # assume all codes are present-on-admission
+    primarydx = 0L,       # assume all codes are secondary diagnosis codes
+    method    = "charlson_quan2005"
   )
 ```
 
@@ -349,13 +353,13 @@ vignette(topic = "charlson", package = "medicalcoder")
 # Elixhauser example
 cmrbs <-
   comorbidities(
-    data = mdcr,
-    id.vars = "patid",
+    data      = mdcr,
+    id.vars   = "patid",
     icd.codes = "code",
-    dx.var = "dx",
-    poa = 1,
+    dx.var    = "dx",
+    poa       = 1L,
     primarydx = 0L,
-    method = "elixhauser_ahrq_icd10"
+    method    = "elixhauser_ahrq_icd10"
   )
 ```
 
@@ -379,7 +383,7 @@ vignette(topic = "elixhauser", package = "medicalcoder")
 
 ### ICD
 
-The package contains internal data sets with references for ICD-9 and
+The package contains internal datasets with references for ICD-9 and
 ICD-10 US based diagnostic and procedure codes. These codes are
 supplemented with additional codes from the World Health Organization
 and ICD-10-AM codes from IHACPA, and ICD-10-SE codes from
@@ -405,9 +409,10 @@ str(medicalcoder::get_icd_codes())
 
 The columns are:
 
-- `icdv`: integer value 9 or 10; for ICD-9 or ICD-10
+- `icdv`: integer value `9L` or `10L`; for ICD-9 or ICD-10
 
-- `dx`: integer 0 or 1; 0 = procedure code, 1 = diagnostic code
+- `dx`: integer `0L` or `1L`; `0L` = procedure code, `1L` = diagnostic
+  code
 
 - `full_code`: character string for the ICD code with any appropriate
   decimal point.
@@ -429,22 +434,23 @@ The columns are:
   - `who`: World Health Organization.
 
 - `known_start`: The earliest source year when source data for the code
-  was available in the source code for medicalcoder. Codes from CMS are
-  for the United States fiscal year. Codes from IHACPA use the
+  was available in the source code for *medicalcoder*. Codes from CMS
+  are for the United States fiscal year. Codes from IHACPA use the
   Australian financial year, which starts July 1 and ends June 30. Codes
   from CDC, Socialstyrelsen, and WHO are calendar year. The United
   States fiscal year starts October 1 and concludes September 30. For
   example, fiscal year 2013 started October 1 2012 and concluded
   September 30 2013.
 
-  To reemphasize that the year is for the data within medicalcoder. For
-  ICD-9-CM, the codes went into effect for fiscal year 1980. The source
-  code only has documented source files for the codes dating back to
+  To reemphasize that the year is for the data within *medicalcoder*.
+  For ICD-9-CM, the codes went into effect for fiscal year 1980. The
+  source code only has documented source files for the codes dating back
+  to
 
   1997. 
 
 - `known_end`: The latest (fiscal) year when the code was part of the
-  ICD system and/or known within the medicalcoder lookup tables.
+  ICD system and/or known within the *medicalcoder* lookup tables.
 
 - Assignable codes. Some codes are header codes, e.g., ICD-10-CM
   three-digit code Z94 is a header code because the four-digit codes
@@ -506,24 +512,24 @@ vignette(topic = "icd", package = "medicalcoder")
 ## Benchmarking
 
 The major factors impacting the expected computation time for applying a
-comorbidity algorithm to a data set are:
+comorbidity algorithm to a dataset are:
 
 1.  Data size: number of subjects/encounters.
-2.  Data storage class: medicalcoder has been built such that no imports
-    of other namespaces is required. That said, when a `data.table` is
-    passed to
+2.  Data storage class: *medicalcoder* has been built such that no
+    imports of other namespaces are required. That said, when a
+    `data.table` is passed to
     [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
-    and the `data.table` namespace is available, then S3 dispatch for
+    and the *data.table* namespace is available, then S3 dispatch for
     `merge` is used, along with some other methods, to reduce memory use
     and reduce computation time. When a `tibble` is passed and the
     tidyverse namespaces are available, the tibble-aware paths improve
     performance over a base `data.frame`, but `data.table` remains
     fastest.
-3.  `flag.method`: “current” will take less time than the “cumulative”
-    method.
+3.  `flag.method`: `"current"` will take less time than the
+    `"cumulative"` method.
 
-Details on the benchmarking method, summary graphics, and tables, can be
-found on the medicalcoder GitHub
+Details on the benchmarking method, summary graphics, and tables can be
+found on the *medicalcoder* GitHub
 [benchmarking](https://github.com/dewittpe/medicalcoder/tree/main/benchmarking)
 directory.
 
@@ -531,6 +537,6 @@ directory.
 
 Along with the GitHub actions and testing on current versions of R, the
 [testing](https://github.com/dewittpe/medicalcoder/tree/main/testing)
-directory in the medicalcoder GitHub repo reports the `R CMD check`
-results for all R versions from 3.5.0 to latest. Several with, and
-without Suggests.
+directory in the *medicalcoder* GitHub repo reports the `R CMD check`
+results for R versions from 3.5.0 through the latest release, with and
+without suggested packages.

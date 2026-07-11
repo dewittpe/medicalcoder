@@ -9,7 +9,7 @@ scores used in assessing Elixhauser comorbidities."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,18 +65,19 @@ scores used in assessing Elixhauser comorbidities.</p>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A <code>data.frame</code> with the following columns:</p><ul><li><p><code>condition</code>: Character vector of the conditions</p></li>
-<li><p><code>index</code>: Character vector indicating if the score is for the mortality or the readmission index score</p></li>
-<li><p><code>elixhauser_&lt;variant&gt;</code>: integer vector of the scores</p></li>
+<li><p><code>index</code>: Character vector indicating whether the score is for the
+mortality or readmission index.</p></li>
+<li><p><code>elixhauser_&lt;variant&gt;</code>: Integer vector of the scores.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index">
 <ul><li><p><code><a href="get_elixhauser_codes.html">get_elixhauser_codes()</a></code> for the lookup table of ICD codes mapping to the
 Elixhauser comorbidities.</p></li>
-<li><p><code><a href="get_elixhauser_poa.html">get_elixhauser_poa()</a></code> for the lookup table of the conditions which do an
+<li><p><code><a href="get_elixhauser_poa.html">get_elixhauser_poa()</a></code> for the lookup table of the conditions which do and
 do not require associated ICD codes to be present-on-admission to flag the
 comorbidity.</p></li>
-<li><p><code><a href="comorbidities.html">comorbidities()</a></code> for applying comorbidity algorithms to a data set.</p></li>
+<li><p><code><a href="comorbidities.html">comorbidities()</a></code> for applying comorbidity algorithms to a dataset.</p></li>
 </ul></div>
     </div>
 
@@ -136,7 +137,7 @@ comorbidity.</p></li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

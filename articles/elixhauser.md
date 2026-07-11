@@ -4,12 +4,12 @@
 
 library(medicalcoder)
 packageVersion("medicalcoder")
-## [1] '0.8.1.9000'
+## [1] '0.9.0'
 ```
 
 ## Introduction
 
-The medicalcoder package implements several variants of the Elixhauser
+The *medicalcoder* package implements several variants of the Elixhauser
 comorbidity algorithm.
 
 - Based on codes provided by the Agency for Healthcare Research and
@@ -29,9 +29,9 @@ comorbidity algorithm.
   - `elixhauser_quan2005`: (Quan et al. 2005)
 
 **IMPORTANT NOTE:** Elixhauser 1998 and AHRQ Web used diagnosis-related
-group (DRG) codes as part of the methods. The medicalcoder package *does
-not* use DRG codes. This is consistent with the way these methods were
-implemented in Quan et al. (2005).
+group (DRG) codes as part of the methods. The *medicalcoder* package
+*does not* use DRG codes. This is consistent with the way these methods
+were implemented in Quan et al. (2005).
 
 ## ICD Codes and Index Scores
 
@@ -111,13 +111,12 @@ pass an appropriate value for either argument.
 mdcr_results0 <-
   comorbidities(
     data = mdcr,
-    id.vars = "patid",
-    icdv.var = "icdv",
+    id.vars   = "patid",
+    icdv.var  = "icdv",
     icd.codes = "code",
-    dx.var = "dx",
-    flag.method = "current",
-    poa = 1,
-    method = "elixhauser_ahrq2025"
+    dx.var    = "dx",
+    poa       = 1L,
+    method    = "elixhauser_ahrq2025"
   )
 ## Warning: Assuming all codes provided are secondary diagnostic codes.  Define
 ## `primarydx.var` or `primarydx` if this assumption is incorrect.
@@ -125,26 +124,25 @@ mdcr_results0 <-
 # no warning
 mdcr_results <-
   comorbidities(
-    data = mdcr,
-    id.vars = "patid",
-    icdv.var = "icdv",
+    data      = mdcr,
+    id.vars   = "patid",
+    icdv.var  = "icdv",
     icd.codes = "code",
-    dx.var = "dx",
-    flag.method = "current",
-    poa = 1,
-    method = "elixhauser_ahrq2025",
-    primarydx = 0
+    dx.var    = "dx",
+    poa       = 1L,
+    method    = "elixhauser_ahrq2025",
+    primarydx = 0L
   )
 
 identical(mdcr_results, mdcr_results0)
 ## [1] TRUE
 ```
 
-The return object is a `data.frame` with 0/1 integer indicator columns
-for the relevant conditions, the id.vars (if applicable), `num_cmrb`,
-the number of comorbidities, `cmrb_flag`, a 0/1 indicator for presence
-of at least one comorbidity, and the mortality and readmission index
-scores.
+The return object is a `data.frame` with `0L`/`1L` integer indicator
+columns for the relevant conditions, the id.vars (if applicable),
+`num_cmrb`, the number of comorbidities, `cmrb_flag`, a `0L`/`1L`
+indicator for presence of at least one comorbidity, and the mortality
+and readmission index scores.
 
 ``` r
 
@@ -321,8 +319,8 @@ summary(mdcr_results)
 | \>= 7                   | 7     | 0.018      |
 | \>= 8                   | 1     | 0.003      |
 
-Counts and percentages of patients in the mdcr example data sets with
-the Elixhauser Quan et al. (2005) comorbidities. {.table .table
+Counts and percentages of patients in the mdcr example datasets with the
+Elixhauser Quan et al. (2005) comorbidities. {.table .table
 .table-striped
 style="font-size: 10px; margin-left: auto; margin-right: auto;"}
 

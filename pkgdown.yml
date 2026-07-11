@@ -1,5 +1,5 @@
 pandoc: 3.8.3
-pkgdown: 2.2.0
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   charlson: charlson.html
@@ -11,7 +11,7 @@ articles:
   articles/medicalcoder-vs-multimorbidity: medicalcoder-vs-multimorbidity.html
   pccc: pccc.html
   articles/transition-pccc-to-medicalcoder: transition-pccc-to-medicalcoder.html
-last_built: 2026-06-25T20:21Z
+last_built: 2026-07-11T20:21Z
 urls:
   reference: http://www.peteredewitt.com/medicalcoder/reference
   article: http://www.peteredewitt.com/medicalcoder/articles

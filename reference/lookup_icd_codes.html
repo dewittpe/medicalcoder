@@ -25,7 +25,7 @@ which starts on July 1 and ends on June 30.'></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -124,11 +124,11 @@ the decimal point.</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A <code>data.frame</code> with one or more rows per input, including columns</p><ul><li><p><code>match_type</code>: did the input match a full or compact code</p></li>
-<li><p><code>icdv</code>: icd version (9 or 10)</p></li>
-<li><p><code>dx</code>: diagnostic code (1) or procedure code (0)</p></li>
+<li><p><code>icdv</code>: ICD version (<code>9L</code> or <code>10L</code>)</p></li>
+<li><p><code>dx</code>: diagnostic code (<code>1L</code>) or procedure code (<code>0L</code>)</p></li>
 <li><p><code>full_code</code>: the full code string</p></li>
-<li><p><code>code</code>: the compact codes string</p></li>
-<li><p><code>src</code>: the source - CMS, CDC, or WHO.</p></li>
+<li><p><code>code</code>: the compact code string</p></li>
+<li><p><code>src</code>: the source CMS, CDC, WHO, IHACPA, or Socialstyrelsen</p></li>
 <li><p>year ranges (<code>known_*</code>, <code>assignable_*</code>).</p></li>
 </ul></div>
     <div class="section level2">
@@ -164,7 +164,7 @@ full format based on ICD version and type (diagnostic or procedure).</p></li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

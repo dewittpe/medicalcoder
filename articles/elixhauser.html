@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,11 +81,11 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.peteredewitt.com/medicalcoder/">medicalcoder</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"medicalcoder"</span><span class="op">)</span></span>
-<span><span class="co">## [1] '0.8.1.9000'</span></span></code></pre></div>
+<span><span class="co">## [1] '0.9.0'</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>The medicalcoder package implements several variants of the
+<p>The <em>medicalcoder</em> package implements several variants of the
 Elixhauser comorbidity algorithm.</p>
 <ul>
 <li>Based on codes provided by the Agency for Healthcare Research and
@@ -121,8 +121,8 @@ al. 2005)</span>
 </ul>
 <p><strong>IMPORTANT NOTE:</strong> Elixhauser 1998 and AHRQ Web used
 diagnosis-related group (DRG) codes as part of the methods. The
-medicalcoder package <em>does not</em> use DRG codes. This is consistent
-with the way these methods were implemented in <span class="citation">Quan et al. (2005)</span>.</p>
+<em>medicalcoder</em> package <em>does not</em> use DRG codes. This is
+consistent with the way these methods were implemented in <span class="citation">Quan et al. (2005)</span>.</p>
 </div>
 <div class="section level2">
 <h2 id="icd-codes-and-index-scores">ICD Codes and Index Scores<a class="anchor" aria-label="anchor" href="#icd-codes-and-index-scores"></a>
@@ -199,13 +199,12 @@ argument.</p>
 <span><span class="va">mdcr_results0</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
 <span>    data <span class="op">=</span> <span class="va">mdcr</span>,</span>
-<span>    id.vars <span class="op">=</span> <span class="st">"patid"</span>,</span>
-<span>    icdv.var <span class="op">=</span> <span class="st">"icdv"</span>,</span>
+<span>    id.vars   <span class="op">=</span> <span class="st">"patid"</span>,</span>
+<span>    icdv.var  <span class="op">=</span> <span class="st">"icdv"</span>,</span>
 <span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>    dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
-<span>    flag.method <span class="op">=</span> <span class="st">"current"</span>,</span>
-<span>    poa <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"elixhauser_ahrq2025"</span></span>
+<span>    dx.var    <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>    poa       <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>    method    <span class="op">=</span> <span class="st">"elixhauser_ahrq2025"</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="co">## Warning: Assuming all codes provided are secondary diagnostic codes.  Define</span></span>
 <span><span class="co">## `primarydx.var` or `primarydx` if this assumption is incorrect.</span></span>
@@ -213,23 +212,23 @@ argument.</p>
 <span><span class="co"># no warning</span></span>
 <span><span class="va">mdcr_results</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">mdcr</span>,</span>
-<span>    id.vars <span class="op">=</span> <span class="st">"patid"</span>,</span>
-<span>    icdv.var <span class="op">=</span> <span class="st">"icdv"</span>,</span>
+<span>    data      <span class="op">=</span> <span class="va">mdcr</span>,</span>
+<span>    id.vars   <span class="op">=</span> <span class="st">"patid"</span>,</span>
+<span>    icdv.var  <span class="op">=</span> <span class="st">"icdv"</span>,</span>
 <span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>    dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
-<span>    flag.method <span class="op">=</span> <span class="st">"current"</span>,</span>
-<span>    poa <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"elixhauser_ahrq2025"</span>,</span>
-<span>    primarydx <span class="op">=</span> <span class="fl">0</span></span>
+<span>    dx.var    <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>    poa       <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>    method    <span class="op">=</span> <span class="st">"elixhauser_ahrq2025"</span>,</span>
+<span>    primarydx <span class="op">=</span> <span class="fl">0L</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">mdcr_results</span>, <span class="va">mdcr_results0</span><span class="op">)</span></span>
 <span><span class="co">## [1] TRUE</span></span></code></pre></div>
-<p>The return object is a <code>data.frame</code> with 0/1 integer
-indicator columns for the relevant conditions, the id.vars (if
-applicable), <code>num_cmrb</code>, the number of comorbidities,
-<code>cmrb_flag</code>, a 0/1 indicator for presence of at least one
+<p>The return object is a <code>data.frame</code> with
+<code>0L</code>/<code>1L</code> integer indicator columns for the
+relevant conditions, the id.vars (if applicable), <code>num_cmrb</code>,
+the number of comorbidities, <code>cmrb_flag</code>, a
+<code>0L</code>/<code>1L</code> indicator for presence of at least one
 comorbidity, and the mortality and readmission index scores.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mdcr_results</span><span class="op">)</span></span>
@@ -350,8 +349,8 @@ used to generate summary tables.</p>
 <span><span class="co">## 2   mortality -24  0      0  0  75</span></span></code></pre></div>
 <table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-Counts and percentages of patients in the mdcr example data sets with
-the Elixhauser <span class="citation">Quan et al. (2005)</span>
+Counts and percentages of patients in the mdcr example datasets with the
+Elixhauser <span class="citation">Quan et al. (2005)</span>
 comorbidities.
 </caption>
 <thead><tr>
@@ -924,7 +923,7 @@ ICD-10 Administrative Data.”</span> <em>Medical Care</em> 43 (11):
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

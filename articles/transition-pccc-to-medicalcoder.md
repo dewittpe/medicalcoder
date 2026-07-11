@@ -1,12 +1,12 @@
-# Transition From The pccc Package to the medicalcoder Package
+# Transition From the \_pccc\_ Package to the \_medicalcoder\_ Package
 
 ## Introduction
 
-The R package [pccc](https://cran.r-project.org/package=pccc) (Feinstein
-et al. 2018; DeWitt et al. 2026) was published to support version 2 of
-the Pediatric Complex Chronic Conditions (PCCC) (Feudtner et al. 2014).
-This document is provided to help users of pccc to transition to
-medicalcoder.
+The R package [*pccc*](https://cran.r-project.org/package=pccc)
+(Feinstein et al. 2018; DeWitt et al. 2026) was published to support
+version 2 of the Pediatric Complex Chronic Conditions (PCCC) (Feudtner
+et al. 2014). This document is provided to help users of *pccc* to
+transition to *medicalcoder*.
 
 Major differences between
 [`pccc::ccc()`](https://rdrr.io/pkg/pccc/man/ccc.html) and
@@ -17,9 +17,9 @@ Major differences between
     - [`pccc::ccc()`](https://rdrr.io/pkg/pccc/man/ccc.html) expects a
       data.frame with each row representing one patient and/or
       encounter. There is a column for each diagnostic and procedure
-      code. For example, a data set were the max number of diagnostic
-      codes is six and the max number of procedure codes is five, an
-      entry for patient XX could look like the following:
+      code. For example, a dataset where the maximum number of
+      diagnostic codes is six and the max number of procedure codes is
+      five, an entry for patient XX could look like the following:
 
 &nbsp;
 
@@ -27,11 +27,11 @@ Major differences between
       patXX  T8619  E8809   E876  Z7982  NA  NA 02PAX3Z 5A1D70Z 04Q90ZZ 0TS60ZZ  NA
 
 - [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
-  expects the input data to be in a data.frame where each row is single
-  ICD code. For example, the same record for patient XX above would be
-  three columns below, one row for each code, one column to identify the
-  patient/encounter, and a column to denote if the code is a diagnostic
-  (dx = 1) or procedure (dx = 0).
+  expects the input data to be in a `data.frame` where each row is
+  single ICD code. For example, the same record for patient XX above
+  would be three columns below, one row for each code, one column to
+  identify the patient/encounter, and a column to denote if the code is
+  a diagnostic (`dx = 1L`) or procedure (`dx = 0L`).
 
 &nbsp;
 
@@ -47,10 +47,10 @@ Major differences between
 
 2.  ICD Version
 
-- [`pccc::ccc()`](https://rdrr.io/pkg/pccc/man/ccc.html) only considers
-  ICD-9 and ICD-10 independently. If the input data consists of both
-  ICD-9 and ICD-10 data false negatives will be inevitable. The version
-  is set by the `icdv` argument to
+- [`pccc::ccc()`](https://rdrr.io/pkg/pccc/man/ccc.html) considers ICD-9
+  and ICD-10 independently. If the input data consists of both ICD-9 and
+  ICD-10 data false negatives will be inevitable. The version is set by
+  the `icdv` argument to
   [`pccc::ccc()`](https://rdrr.io/pkg/pccc/man/ccc.html).
 
 - [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
@@ -70,7 +70,7 @@ Major differences between
   implements:
 
   - `pccc_v2.0`: consistent results with
-    [`pccc::ccc()`](https://rdrr.io/pkg/pccc/man/ccc.html) for pccc
+    [`pccc::ccc()`](https://rdrr.io/pkg/pccc/man/ccc.html) for *pccc*
     version 1.0.7.
 
   - `pccc_v2.1`: improved mappings of ICD codes to PCCC using the PCCC
@@ -81,7 +81,7 @@ Major differences between
 
   - `pccc_v3.1`: extended set of ICD code to condition mappings.
 
-  - Note: medicalcoder also provides several variants of the Charlson
+  - Note: *medicalcoder* also provides several variants of the Charlson
     and Elixhauser comorbidities.
 
 4.  Subconditions
@@ -103,6 +103,13 @@ Major differences between
   can account for present-on-admission flags and longitudinal flagging
   of comorbidities within a patient over multiple encounters.
 
+  For `flag.method = "cumulative"`, the final element of `id.vars`
+  defines the within-patient encounter order and earlier ICD evidence
+  can be carried forward. This is especially relevant for PCCC v3
+  technology-dependent conditions, where a technology-dependent code may
+  need to be evaluated together with non-technology-dependent evidence
+  observed on another encounter.
+
 ## `pccc::ccc()` vs `medicalcoder::comorbidities()`
 
 ``` r
@@ -115,7 +122,7 @@ library(medicalcoder)
 
 ### Prepare Data
 
-We’ll use the `mdcr` data set from the medicalcoder package.
+We’ll use the `mdcr` dataset from the *medicalcoder* package.
 
 ``` r
 
@@ -129,10 +136,10 @@ head(mdcr)
 ## 6 17087   10  V441  1
 ```
 
-We will split the data set into two sets, one for ICD-9 and one for
+We will split the dataset into two sets, one for ICD-9 and one for
 ICD-10.
 
-Using the tidyverse we can build the needed input data sets
+Using the tidyverse packages, we can build the needed input datasets.
 
 ``` r
 
@@ -154,7 +161,7 @@ mdcr_tbls <-
   )
 ```
 
-A data.table approach:
+A `data.table` approach:
 
 ``` r
 
@@ -191,7 +198,7 @@ pccc_9_results_tbl <-
     id = patid,
     dx_cols = grep("dx", names(mdcr_tbls[[1]]), value = TRUE),
     pc_cols = grep("pr", names(mdcr_tbls[[1]]), value = TRUE),
-    icdv = 9
+    icdv = 9L
   )
 
 pccc_10_results_tbl <-
@@ -200,7 +207,7 @@ pccc_10_results_tbl <-
     id = patid,
     dx_cols = grep("dx", names(mdcr_tbls[[2]]), value = TRUE),
     pc_cols = grep("pr", names(mdcr_tbls[[2]]), value = TRUE),
-    icdv = 10
+    icdv = 10L
   )
 
 pccc_results_tbl <-
@@ -225,7 +232,7 @@ pccc_9_results_DT <-
     id = patid,
     dx_cols = grep("dx", names(mdcr_DTs[[1]]), value = TRUE),
     pc_cols = grep("pr", names(mdcr_DTs[[1]]), value = TRUE),
-    icdv = 9
+    icdv = 9L
   )
 
 pccc_10_results_DT <-
@@ -234,7 +241,7 @@ pccc_10_results_DT <-
     id = patid,
     dx_cols = grep("dx", names(mdcr_DTs[[2]]), value = TRUE),
     pc_cols = grep("pr", names(mdcr_DTs[[2]]), value = TRUE),
-    icdv = 10
+    icdv = 10L
   )
 
 pccc_results_DT <- data.table::rbindlist(list(pccc_9_results_DT, pccc_10_results_DT))
@@ -249,7 +256,7 @@ pccc_ccc_dt_time <- difftime(toc, tic)
 ```
 
 A quick sanity check that we have the same results for both the
-tidyverse and data.table input data sets.
+tidyverse and `data.table` input datasets.
 
 ``` r
 
@@ -262,19 +269,28 @@ stopifnot(
 
 ### Calling `medicalcoder::comorbidities()`
 
+[`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+uses database-style joins of precomputed valid ICD codes to conditions.
+The [`pccc::ccc()`](https://rdrr.io/pkg/pccc/man/ccc.html)
+implementation is based on partial string matching. The database-style
+joins used by
+[`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+requires less computational resources and time to evaluate than
+[`pccc::ccc()`](https://rdrr.io/pkg/pccc/man/ccc.html).
+
 ``` r
 
 tic <- Sys.time()
 
 medicalcoder_results <-
   medicalcoder::comorbidities(
-    data = mdcr,
-    id.vars = "patid",
+    data      = mdcr,
+    id.vars   = "patid",
     icd.codes = "code",
-    icdv.var = "icdv",
-    dx.var = "dx",
-    method = "pccc_v2.0",
-    poa = 1
+    icdv.var  = "icdv",
+    dx.var    = "dx",
+    method    = "pccc_v2.0",
+    poa       = 1L # assuming all codes are POA
   )
 
 toc <- Sys.time()
@@ -295,7 +311,7 @@ old_vs_new <-
   )
 ```
 
-Most importantly, the condition flag (`ccc_flag` from
+For the `mdcr` dataset, the any-condition flag (`ccc_flag` from
 [`pccc::ccc()`](https://rdrr.io/pkg/pccc/man/ccc.html) and `cmrb_flag`
 from
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md))
@@ -303,11 +319,7 @@ are identical.
 
 ``` r
 
-stopifnot(
-  isTRUE(
-    with(old_vs_new, identical(ccc_flag, cmrb_flag))
-  )
-)
+stopifnot(isTRUE(with(old_vs_new, identical(ccc_flag, cmrb_flag))))
 ```
 
 Second, the flags for all but the technology dependence and transplant
@@ -343,22 +355,23 @@ for(g in good) {
     data.table::set(old_vs_new, j = j, value = NULL)
   }
 }
+```
 
-old_vs_new
-## Key: <patid>
-##        patid tech_dep transplant  misc any_tech_dep any_transplant num_cmrb
-##        <int>    <int>      <int> <int>        <int>          <int>    <int>
-##     1: 10000        0          0     0            0              0        0
-##     2: 10002        0          0     0            0              0        1
-##     3: 10005        0          0     0            0              0        1
-##     4: 10006        0          0     0            0              0        1
-##     5: 10008        0          0     0            0              0        1
-##    ---                                                                     
-## 38258: 99992        0          0     0            0              0        0
-## 38259: 99995        0          0     0            0              0        0
-## 38260: 99997        0          0     0            0              0        0
-## 38261: 99998        0          0     0            0              0        1
-## 38262: 99999        1          0     0            1              0        3
+The remaining columns are:
+
+``` r
+
+str(old_vs_new)
+## Classes 'data.table' and 'data.frame':   38262 obs. of  7 variables:
+##  $ patid         : int  10000 10002 10005 10006 10008 10010 10014 10015 10017 10018 ...
+##  $ tech_dep      : int  0 0 0 0 0 0 1 0 0 0 ...
+##  $ transplant    : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ misc          : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ any_tech_dep  : int  0 0 0 0 0 0 1 0 0 0 ...
+##  $ any_transplant: int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ num_cmrb      : int  0 1 1 1 1 1 5 1 0 0 ...
+##  - attr(*, ".internal.selfref")=<pointer: 0x5568e9db3ee0> 
+##  - attr(*, "sorted")= chr "patid"
 ```
 
 First, the `num_cmrb` column is a count of the number of conditions and
@@ -380,7 +393,7 @@ the `misc` column and some differences in the returned results between
 [`pccc::ccc()`](https://rdrr.io/pkg/pccc/man/ccc.html) version 1.0.7,
 and
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
-is due to how medicalcoder is implemented.
+is due to how *medicalcoder* is implemented.
 
 ``` r
 
@@ -401,7 +414,7 @@ old_vs_new
 ## 38262: 99999        1          0     0            1              0
 ```
 
-There are several ICD codes which need to be corrected in pccc
+There are several ICD codes which need to be corrected in *pccc*
 
 GitHub links:
 
@@ -417,15 +430,16 @@ GitHub links:
 - [ICD-9 V42.0](https://github.com/CUD2V/pccc/issues/54)
 - [ICD-10 Z94](https://github.com/CUD2V/pccc/issues/55)
 
-## Additional Benefits of medicalcoder
+## Additional Benefits of *medicalcoder*
 
 ### Computation Performance
 
-medicalcoder was built such that only base R is needed to install and
-use the package. That said, there is specific support for the tidyverse
-and data.table. For example, the same calls as above but with either a
-tibble or a data.table instead of a simple base R data.table take less
-time to compute. The differences here are small. See
+*medicalcoder* was built such that only base R is needed to install and
+use the package. That said, there is specific support for tidyverse
+packages and *data.table*. For example, the same calls as above but with
+either a `tibble` or a `data.table` instead of a simple base R
+`data.frame` take less time to compute. The differences here are small.
+See
 [benchmarking](https://github.com/dewittpe/medicalcoder/tree/main/benchmarking)
 for more details.
 
@@ -435,13 +449,13 @@ mdcr_tbl <- tibble::as_tibble(mdcr)
 tic <- Sys.time()
 medicalcoder_results <-
   medicalcoder::comorbidities(
-    data = mdcr_tbl,
-    id.vars = "patid",
+    data      = mdcr_tbl,
+    id.vars   = "patid",
     icd.codes = "code",
-    icdv.var = "icdv",
-    dx.var = "dx",
-    method = "pccc_v2.0",
-    poa = 1
+    icdv.var  = "icdv",
+    dx.var    = "dx",
+    method    = "pccc_v2.0",
+    poa       = 1L
   )
 toc <- Sys.time()
 medicalcoder_tbl_time <- difftime(toc, tic, units = "secs")
@@ -450,13 +464,13 @@ mdcr_DT <- data.table::as.data.table(data.table::copy(mdcr))
 tic <- Sys.time()
 medicalcoder_results <-
   medicalcoder::comorbidities(
-    data = mdcr_DT,
-    id.vars = "patid",
+    data      = mdcr_DT,
+    id.vars   = "patid",
     icd.codes = "code",
-    icdv.var = "icdv",
-    dx.var = "dx",
-    method = "pccc_v2.0",
-    poa = 1
+    icdv.var  = "icdv",
+    dx.var    = "dx",
+    method    = "pccc_v2.0",
+    poa       = 1L
   )
 toc <- Sys.time()
 medicalcoder_dt_time <- difftime(toc, tic, units = "secs")
@@ -465,15 +479,15 @@ medicalcoder_dt_time <- difftime(toc, tic, units = "secs")
 ``` r
 
 pccc_ccc_tbl_time
-## Time difference of 9.380136 secs
+## Time difference of 9.754338 secs
 pccc_ccc_dt_time
-## Time difference of 7.013334 secs
+## Time difference of 7.482514 secs
 medicalcoder_df_time
-## Time difference of 0.8459918 secs
+## Time difference of 0.8562932 secs
 medicalcoder_tbl_time
-## Time difference of 0.2792623 secs
+## Time difference of 0.3251994 secs
 medicalcoder_dt_time
-## Time difference of 0.1387787 secs
+## Time difference of 0.1595488 secs
 ```
 
 ### Summary of results
@@ -534,13 +548,13 @@ conditions as well as the primary conditions.
 
 with_subconditions <-
   medicalcoder::comorbidities(
-    data = mdcr,
-    id.vars = "patid",
-    icd.codes = "code",
-    icdv.var = "icdv",
-    dx.var = "dx",
-    method = "pccc_v2.0",
-    poa = 1,
+    data          = mdcr,
+    id.vars       = "patid",
+    icd.codes     = "code",
+    icdv.var      = "icdv",
+    dx.var        = "dx",
+    method        = "pccc_v2.0",
+    poa           = 1L,
     subconditions = TRUE
   )
 
@@ -565,7 +579,7 @@ with_subconditions
 ```
 
 The summary includes counts and percentages as before. Additionally, for
-a subconditon, the percentage is reported as percent of the cohort and
+a subcondition, the percentage is reported as percent of the cohort and
 as the percent of those with the primary condition.
 
 ``` r
@@ -590,16 +604,16 @@ cvd_and_metabolic$subcondition[is.na(cvd_and_metabolic$subcondition)] <- "Any su
 
 kableExtra::kbl(
   x = cvd_and_metabolic[, c("subcondition", "count", "percent_of_cohort", "percent_of_those_with_condition")],
-  caption = "Patients with cardiovascular and/or metabolic conditions and the associated with_subconditions.",
+  caption = "Patients with cardiovascular and/or metabolic conditions and the associated subconditions.",
   row.names = FALSE,
   digits = 2,
-  col.names = c("Subcondition", "Patients", "% of chort", "% of those with the primary condition")
+  col.names = c("Subcondition", "Patients", "% of cohort", "% of those with the primary condition")
 ) |>
 kableExtra::kable_styling(bootstrap_options = "striped") |>
 kableExtra::pack_rows(index = table(cvd_and_metabolic$condition))
 ```
 
-| Subcondition | Patients | % of chort | % of those with the primary condition |
+| Subcondition | Patients | % of cohort | % of those with the primary condition |
 |----|----|----|----|
 | **cvd** |  |  |  |
 | Any subcondition | 4952 | 12.94 |  |
@@ -622,7 +636,7 @@ kableExtra::pack_rows(index = table(cvd_and_metabolic$condition))
 | storage_disorders | 69 | 0.18 | 2.31 |
 
 Patients with cardiovascular and/or metabolic conditions and the
-associated with_subconditions. {.table .table .table-striped
+associated subconditions. {.table .table .table-striped
 style="margin-left: auto; margin-right: auto;"}
 
 ## PCCC version 3
@@ -630,6 +644,16 @@ style="margin-left: auto; margin-right: auto;"}
 For more detail on the differences between PCCC v2 (Feudtner et al.
 2014) and PCCC v3 (Feinstein et al. 2024) see the [PCCC
 article](https://www.peteredewitt.com/medicalcoder/articles/pccc.html#pccc-version-2-0-vs-pccc-version-3-0).
+
+The manuscript uses PCCC v3.1 examples to show why encounter-level and
+cumulative flagging can differ. Under PCCC v3, technology-dependent ICD
+codes do not always flag a condition by themselves; their interpretation
+can depend on whether non-technology-dependent codes are present for the
+same encounter or observed over the patient’s record.
+[`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
+exposes that distinction with the same `flag.method` argument used for
+Charlson and Elixhauser, while preserving a single long-format input
+structure.
 
 ## References
 

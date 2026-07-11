@@ -11,7 +11,7 @@ present-on-admission to be flagged."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,7 +69,8 @@ present-on-admission to be flagged.</p>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A <code>data.frame</code> with the following columns:</p><ul><li><p><code>condition</code>: Character vector of the conditions</p></li>
 <li><p><code>desc</code>: Character vector with a verbose description of the condition</p></li>
-<li><p><code>poa_required</code>: Integer indicators if the code needs to present on admission to be considered a comorbidity</p></li>
+<li><p><code>poa_required</code>: Integer indicator for whether the code must be
+present-on-admission to be considered a comorbidity.</p></li>
 <li><p><code>elixhauser_&lt;variant&gt;</code>: indicators for the Elixhauser <code>&lt;variant&gt;</code></p></li>
 </ul></div>
     <div class="section level2">
@@ -79,7 +80,7 @@ present-on-admission to be flagged.</p>
 condition scores for mortality and readmission indices.</p></li>
 <li><p><code><a href="get_elixhauser_codes.html">get_elixhauser_codes()</a></code> for the lookup table of ICD codes mapping to the
 Elixhauser comorbidities.</p></li>
-<li><p><code><a href="comorbidities.html">comorbidities()</a></code> for applying comorbidity algorithms to a data set.</p></li>
+<li><p><code><a href="comorbidities.html">comorbidities()</a></code> for applying comorbidity algorithms to a dataset.</p></li>
 </ul></div>
     </div>
 
@@ -129,7 +130,7 @@ Elixhauser comorbidities.</p></li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

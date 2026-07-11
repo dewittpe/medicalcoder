@@ -4,12 +4,12 @@
 
 library(medicalcoder)
 packageVersion("medicalcoder")
-## [1] '0.8.1.9000'
+## [1] '0.9.0'
 ```
 
 ## Introduction
 
-The medicalcoder package implements several variants of the Charlson
+The *medicalcoder* package implements several variants of the Charlson
 comorbidities algorithm.
 
 - `charlson_deyo1992`: Deyo’s original set of codes (Deyo et al. 1992;
@@ -21,6 +21,10 @@ comorbidities algorithm.
 - `charlson_cdmf2019`: (Glasheen et al. 2019)
 - `charlson_ludvigsson2021`: Swedish ICD-10-SE adaptation (Ludvigsson et
   al. 2021, 2023)
+- `charlson_beyrer2021`: U.S. ICD-10-CM and ICD-10-PCS adaptation
+  (Beyrer et al. 2021, 2020)
+- `charlson_mimicivcode`: mapping used by the MIMIC-IV Charlson SQL in
+  [`mimic-code`](https://github.com/MIT-LCP/mimic-code)
 
 ## ICD Codes and Index Scores
 
@@ -35,28 +39,32 @@ calls respectively.
 ``` r
 
 str(get_charlson_codes())
-## 'data.frame':    8975 obs. of  11 variables:
+## 'data.frame':    9248 obs. of  13 variables:
 ##  $ icdv                     : int  9 9 9 9 9 9 9 9 9 9 ...
 ##  $ dx                       : int  0 1 1 1 1 1 1 1 1 1 ...
 ##  $ full_code                : chr  "38.48" "003.1" "007.2" "007.4" ...
 ##  $ code                     : chr  "3848" "0031" "0072" "0074" ...
 ##  $ condition                : chr  "pvd" "aids" "aids" "aids" ...
+##  $ charlson_beyrer2021      : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ charlson_cdmf2019        : int  0 1 1 1 1 1 1 1 1 1 ...
 ##  $ charlson_deyo1992        : int  1 0 0 0 0 0 0 0 0 0 ...
 ##  $ charlson_ludvigsson2021  : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ charlson_mimicivcode     : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ charlson_quan2005        : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ charlson_sundararajan2004: int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ charlson_quan2011        : int  0 0 0 0 0 0 0 0 0 0 ...
 str(get_charlson_index_scores())
-## 'data.frame':    22 obs. of  8 variables:
+## 'data.frame':    22 obs. of  10 variables:
 ##  $ condition_description    : chr  "AIDS" "AIDS/HIV" "HIV infection, no AIDS" "Any malignancy" ...
 ##  $ condition                : chr  "aids" "aidshiv" "hiv" "mal" ...
 ##  $ charlson_cdmf2019        : int  6 NA 3 2 1 1 1 1 2 1 ...
 ##  $ charlson_quan2011        : int  NA 4 NA 2 0 1 2 2 1 0 ...
 ##  $ charlson_quan2005        : int  NA 6 NA 2 1 1 1 1 2 1 ...
+##  $ charlson_beyrer2021      : int  NA 6 NA 2 1 1 1 1 2 1 ...
 ##  $ charlson_deyo1992        : int  NA 6 NA 2 1 1 1 1 2 1 ...
 ##  $ charlson_sundararajan2004: int  NA 6 NA 2 1 1 1 1 2 1 ...
 ##  $ charlson_ludvigsson2021  : int  NA 6 NA 2 1 1 1 1 2 1 ...
+##  $ charlson_mimicivcode     : int  NA 6 NA 2 1 1 1 1 2 1 ...
 ```
 
 ## Applying Charlson
@@ -68,23 +76,22 @@ comorbidities to the `mdcr` data can be done as follows.
 
 mdcr_results <-
   comorbidities(
-    data = mdcr,
-    id.vars = "patid",
-    icdv.var = "icdv",
+    data      = mdcr,
+    id.vars   = "patid",
+    icdv.var  = "icdv",
     icd.codes = "code",
-    dx.var = "dx",
-    flag.method = "current",
-    poa = 1,
-    primarydx = 0,
-    method = "charlson_quan2005"
+    dx.var    = "dx",
+    poa       = 1L,
+    primarydx = 0L,
+    method    = "charlson_quan2005"
   )
 ```
 
-The return object is a `data.frame` with 0/1 integer indicator columns
-for the relevant conditions, the id.vars (if applicable), `age_score`
-(if age, in years, is supplied), `num_cmrb` the number of comorbidities,
-`cmrb_flag` a 0/1 indicator for presence of at least one comorbidity,
-and `cci` the Charlson Comorbidity Index.
+The return object is a `data.frame` with `0L`/`1L` integer indicator
+columns for the relevant conditions, the id.vars (if applicable),
+`age_score` (if age, in years, is supplied), `num_cmrb` the number of
+comorbidities, `cmrb_flag` a `0L`/`1L` indicator for presence of at
+least one comorbidity, and `cci` the Charlson Comorbidity Index.
 
 ``` r
 
@@ -156,24 +163,35 @@ str(summary(mdcr_results))
 | Hemiplegia or paraplegia               | 1177  | 3.076      |
 | Liver disease, mild                    | 562   | 1.469      |
 | Liver disease, moderate to severe      | 206   | 0.538      |
-| Metastatic solid tumor                 | 456   | 1.192      |
+| Metastatic solid tumor                 | 453   | 1.184      |
 | Myocardial infarction                  | 10    | 0.026      |
 | Peptic ulcer disease                   | 45    | 0.118      |
 | Peripheral vascular disease            | 217   | 0.567      |
 | Renal disease                          | 877   | 2.292      |
 | Rheumatic disease                      | 136   | 0.355      |
 | **Total Comorbidities**                |       |            |
-| \>= 1                                  | 9792  | 25.592     |
+| \>= 1                                  | 9789  | 25.584     |
 | \>= 2                                  | 1075  | 2.810      |
 | \>= 3                                  | 94    | 0.246      |
 | \>= 4                                  | 9     | 0.024      |
 | \>= 5                                  | 1     | 0.003      |
 
-Counts and percentages of patients in the mdcr example data sets with
-the Quan et al. (2005) comorbidities. {.table .table .table-striped
+Counts and percentages of patients in the mdcr example datasets with the
+Quan et al. (2005) comorbidities. {.table .table .table-striped
 style="font-size: 10px; margin-left: auto; margin-right: auto;"}
 
 ## References
+
+Beyrer, Julie, Janna Manjelievskaia, Machaon Bonafede, et al. 2020.
+*Codes Used to Identify Hospital Complications in Validation of Charlson
+Comorbidity Index ICD-10 for the US*. Zenodo.
+<https://doi.org/10.5281/zenodo.3968784>.
+
+Beyrer, Julie, Janna Manjelievskaia, Machaon Bonafede, et al. 2021.
+“Validation of an International Classification of Disease, 10th Revision
+Coding Adaptation for the Charlson Comorbidity Index in United States
+Healthcare Claims Data.” *Pharmacoepidemiology and Drug Safety* 30 (5):
+582–93. https://doi.org/<https://doi.org/10.1002/pds.5204>.
 
 Deyo, Richard A, Daniel C Cherkin, and Marcia A Ciol. 1992. “Adapting a
 Clinical Comorbidity Index for Use with ICD-9-CM Administrative

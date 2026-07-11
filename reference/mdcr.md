@@ -10,13 +10,14 @@ mdcr
 
 ## Format
 
-`mdcr` is a `data.frame` with 4 columns, Each row is for one ICD id.
+`mdcr` is a `data.frame` with 4 columns. Each row is for one ICD code.
 
 - `patid`: patient identifier, integer values
 
-- `icdv`: ICD version; integer values, 9 or 10
+- `icdv`: ICD version; integer values, `9L` or `10L`
 
-- `dx`: indicator column for ICD diagnostic (1) or procedure (0) codes
+- `dx`: indicator column for ICD diagnostic (`1L`) or procedure (`0L`)
+  codes
 
 - `code`: ICD code; character values
 

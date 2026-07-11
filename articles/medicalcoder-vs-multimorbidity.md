@@ -1,10 +1,10 @@
-# medicalcoder vs multimorbidity
+# \_medicalcoder\_ vs \_multimorbidity\_
 
 ## Introduction
 
 The purpose of this article is to compare the API and results between
-medicalcoder and the R package
-[multimorbidity](https://cran.r-project.org/package=multimorbidity)
+*medicalcoder* and the R package
+[*multimorbidity*](https://cran.r-project.org/package=multimorbidity)
 (Bensken 2023).
 
 ``` r
@@ -40,9 +40,9 @@ cat(packageDescription("multimorbidity")$Description)
 ##     Martin Fortin, José Almirall, and Kathryn Nicholson (2017)<doi:10.15256/joc.2017.7.122>.
 ```
 
-## Prepare Data for multimorbidity
+## Prepare Data for *multimorbidity*
 
-The example data set `mdcr` within medicalcoder is in a format that is
+The example dataset `mdcr` within *medicalcoder* is in a format that is
 ideal for
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
 and for the
@@ -81,20 +81,20 @@ tic <- Sys.time()
 
 medicalcoder_charlson_results <-
   medicalcoder::comorbidities(
-    data = mdcr,
-    id.vars = "patid",
+    data      = mdcr,
+    id.vars   = "patid",
     icd.codes = "code",
-    dx.var = "dx",
-    icdv.var = "icdv",
-    poa = 1L, # assume all codes are present on admission
+    dx.var    = "dx",
+    icdv.var  = "icdv",
+    poa       = 1L, # assume all codes are present-on-admission
     primarydx = 0L, # assume all codes are secondary diagnoses
-    method = "charlson_quan2011"
+    method    = "charlson_quan2011"
   )
 
 toc <- Sys.time()
 
 difftime(toc, tic, units = "secs")
-## Time difference of 0.751745 secs
+## Time difference of 0.8275588 secs
 ```
 
 Calling
@@ -115,7 +115,7 @@ multimorbidity_charlson_results <-
 toc <- Sys.time()
 
 difftime(toc, tic, units = "secs")
-## Time difference of 13.29879 secs
+## Time difference of 13.51739 secs
 ```
 
 ### Differences in the results
@@ -309,7 +309,7 @@ And the enhanced ICD-9-CM codes are:
 ## Conclusions
 
 [`multimorbidity::charlson()`](https://rdrr.io/pkg/multimorbidity/man/charlson.html)
-takes more time to evaluate the same data set than
+takes more time to evaluate the same dataset than
 [`medicalcoder::comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
 and
 [`multimorbidity::charlson()`](https://rdrr.io/pkg/multimorbidity/man/charlson.html)

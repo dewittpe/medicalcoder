@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -297,8 +297,8 @@ one non-technology condition is flagged.</p>
 <li>
 <code>icdv</code>: integer, ICD version</li>
 <li>
-<code>dx</code>: 1 for diagnostic (ICD-9-CM or ICD-10-CM) codes, 0
-for procedure (ICD-9-PCS or ICD-10-PCS) codes.</li>
+<code>dx</code>: denotes type, <code>1L</code> for diagnostic codes,
+<code>0L</code> for procedure codes.</li>
 <li>
 <code>full_code</code>: character, the ICD code retaining any
 applicable decimal point.</li>
@@ -332,7 +332,7 @@ two procedure ICD-9 codes:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pat1</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>    dx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>    dx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1L</span>, <span class="fl">1L</span>, <span class="fl">1L</span>, <span class="fl">1L</span>, <span class="fl">0L</span>, <span class="fl">0L</span><span class="op">)</span>,</span>
 <span>    icdv <span class="op">=</span> <span class="fl">9L</span>,</span>
 <span>    code <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"34590"</span>, <span class="st">"78065"</span>, <span class="st">"3432"</span>, <span class="st">"78065"</span>, <span class="st">"9929"</span>, <span class="st">"8606"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
@@ -357,24 +357,22 @@ use.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pat1_pccc_v2.0</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">pat1</span>,</span>
+<span>    data      <span class="op">=</span> <span class="va">pat1</span>,</span>
 <span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>    dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
-<span>    icdv <span class="op">=</span> <span class="fl">9</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"pccc_v2.0"</span>,</span>
-<span>    flag.method <span class="op">=</span> <span class="st">"current"</span>, <span class="co"># default</span></span>
-<span>    poa <span class="op">=</span> <span class="fl">1</span>                  <span class="co"># default for flag.method = 'current'</span></span>
+<span>    dx.var    <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>    icdv      <span class="op">=</span> <span class="fl">9L</span>,</span>
+<span>    method    <span class="op">=</span> <span class="st">"pccc_v2.0"</span>,</span>
+<span>    poa       <span class="op">=</span> <span class="fl">1L</span>                 <span class="co"># default for flag.method = 'current'</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="va">pat1_pccc_v2.1</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">pat1</span>,</span>
+<span>    data      <span class="op">=</span> <span class="va">pat1</span>,</span>
 <span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>    dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
-<span>    icdv <span class="op">=</span> <span class="fl">9</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"pccc_v2.1"</span>,</span>
-<span>    flag.method <span class="op">=</span> <span class="st">"current"</span>,</span>
-<span>    poa <span class="op">=</span> <span class="fl">1</span></span>
+<span>    dx.var    <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>    icdv      <span class="op">=</span> <span class="fl">9L</span>,</span>
+<span>    method    <span class="op">=</span> <span class="st">"pccc_v2.1"</span>,</span>
+<span>    poa       <span class="op">=</span> <span class="fl">1L</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">pat1_pccc_v2.0</span>, <span class="va">pat1_pccc_v2.1</span>, check.attributes <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -394,24 +392,22 @@ conditions.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pat1_pccc_v3.0</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">pat1</span>,</span>
-<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>    dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
-<span>    icdv <span class="op">=</span> <span class="fl">9</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"pccc_v3.0"</span>,</span>
-<span>    flag.method <span class="op">=</span> <span class="st">'current'</span>,</span>
-<span>    poa <span class="op">=</span> <span class="fl">1</span></span>
+<span>    data        <span class="op">=</span> <span class="va">pat1</span>,</span>
+<span>    icd.codes   <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    dx.var      <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>    icdv        <span class="op">=</span> <span class="fl">9L</span>,</span>
+<span>    method      <span class="op">=</span> <span class="st">"pccc_v3.0"</span>,</span>
+<span>    poa         <span class="op">=</span> <span class="fl">1L</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="va">pat1_pccc_v3.1</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">pat1</span>,</span>
-<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>    dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
-<span>    icdv <span class="op">=</span> <span class="fl">9</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"pccc_v3.1"</span>,</span>
-<span>    flag.method <span class="op">=</span> <span class="st">'current'</span>,</span>
-<span>    poa <span class="op">=</span> <span class="fl">1</span></span>
+<span>    data        <span class="op">=</span> <span class="va">pat1</span>,</span>
+<span>    icd.codes   <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    dx.var      <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>    icdv        <span class="op">=</span> <span class="fl">9L</span>,</span>
+<span>    method      <span class="op">=</span> <span class="st">"pccc_v3.1"</span>,</span>
+<span>    poa         <span class="op">=</span> <span class="fl">1L</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">pat1_pccc_v3.0</span>, <span class="va">pat1_pccc_v3.1</span>, check.attributes <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -425,8 +421,9 @@ conditions.</p>
 <span><span class="co">## 1                      1                   1                   0</span></span>
 <span><span class="co">##   neuromusc_dxpr_and_tech neuromusc_dxpr_or_tech num_cmrb cmrb_flag</span></span>
 <span><span class="co">## 1                       0                      1        2         1</span></span></code></pre></div>
-<p>In the output from version 3, we have four 0/1 indicator columns for
-each of the conditions.</p>
+<p>In the output from version 3, we have four
+<code>0L</code>/<code>1L</code> indicator columns for each of the
+conditions.</p>
 <ul>
 <li>
 <p><code>&lt;condition&gt;_dxpr_only</code>: the
@@ -451,12 +448,13 @@ patient/encounter.”</strong></p></li>
 </ul>
 <p>The details in the list above might be easier to understand in a
 tabular form of possible sets. In the case of no conditions, only the
-<code>&lt;condition&gt;_dxpr_or_tech</code> columns are flagged as 0/1
-with the <code>&lt;condition&gt;_dxpr_only</code>,
+<code>&lt;condition&gt;_dxpr_or_tech</code> columns are flagged as
+<code>0L</code>/<code>1L</code> with the
+<code>&lt;condition&gt;_dxpr_only</code>,
 <code>&lt;condition&gt;_tech_only</code>, and
 <code>&lt;condition&gt;_dxpr_and_tech</code> columns set to
 <code>NA</code>. When at least one condition is flagged, all the columns
-will be populated as 0/1.</p>
+will be populated as <code>0L</code>/<code>1L</code>.</p>
 <table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -696,31 +694,29 @@ record, but will not have the neuromuscular condition.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pat2_pccc_v2.1</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">pat2</span>,</span>
+<span>    data      <span class="op">=</span> <span class="va">pat2</span>,</span>
 <span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>    dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
-<span>    icdv <span class="op">=</span> <span class="fl">9</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"pccc_v2.1"</span>,</span>
-<span>    flag.method <span class="op">=</span> <span class="st">'current'</span>,</span>
-<span>    poa <span class="op">=</span> <span class="fl">1</span></span>
+<span>    dx.var    <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>    icdv      <span class="op">=</span> <span class="fl">9L</span>,</span>
+<span>    method    <span class="op">=</span> <span class="st">"pccc_v2.1"</span>,</span>
+<span>    poa       <span class="op">=</span> <span class="fl">1L</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Filter</a></span><span class="op">(</span>f <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="va">pat2_pccc_v2.1</span><span class="op">)</span></span>
 <span><span class="co">##   metabolic any_tech_dep num_cmrb cmrb_flag</span></span>
 <span><span class="co">## 1         1            1        1         1</span></span></code></pre></div>
 <p>Under version 3 of the PCCC, this patient will have no conditions.
-This is because no condition was identified based on non-technology
-dependent codes and thus the one technology dependent code is
-ignored.</p>
+This is because no condition was identified based on
+non-technology-dependent codes and thus the one technology-dependent
+code is ignored.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pat2_pccc_v3.1</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">pat2</span>,</span>
-<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>    dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
-<span>    icdv <span class="op">=</span> <span class="fl">9</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"pccc_v3.1"</span>,</span>
-<span>    flag.method <span class="op">=</span> <span class="st">'current'</span>,</span>
-<span>    poa <span class="op">=</span> <span class="fl">1</span></span>
+<span>    data        <span class="op">=</span> <span class="va">pat2</span>,</span>
+<span>    icd.codes   <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    dx.var      <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>    icdv        <span class="op">=</span> <span class="fl">9L</span>,</span>
+<span>    method      <span class="op">=</span> <span class="st">"pccc_v3.1"</span>,</span>
+<span>    poa         <span class="op">=</span> <span class="fl">1L</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Filter</a></span><span class="op">(</span>f <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="va">pat2_pccc_v3.1</span><span class="op">)</span></span>
 <span><span class="co">## data frame with 0 columns and 1 row</span></span></code></pre></div>
@@ -734,12 +730,13 @@ ignored.</p>
 These codes can be full codes (include the decimal point) or compact
 codes (omitting the decimal point). Additionally, column(s) for
 identifying patients, encounters, and any other important groups are
-encouraged. A column to indicate the ICD version (9 or 10), and another
-column for identifying the code as a diagnostic or procedure code are
-also encouraged. The example <code>mdcr</code> data set has three
-columns, a patient id (patid), the ICD compact codes (code), and a
-column to indicate if the ICD code is a diagnostic or procedure code,
-(dx: 1 for diagnostic, 0 for procedure).</p>
+encouraged. A column to indicate the ICD version (<code>9L</code> or
+<code>10L</code>), and another column for identifying the code as a
+diagnostic or procedure code are also encouraged. The example
+<code>mdcr</code> dataset has three columns, a patient id (patid), the
+ICD compact codes (code), and a column to indicate if the ICD code is a
+diagnostic or procedure code (<code>dx</code>: <code>1L</code> for
+diagnostic, <code>0L</code> for procedure).</p>
 <p>The <code>mdcr</code> data is provided with columns for</p>
 <ul>
 <li>patient id,</li>
@@ -775,22 +772,20 @@ diagnostic/procedure status of the code can be done as follows:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mdcr_results_v2.1_01</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">mdcr</span>,</span>
+<span>    data      <span class="op">=</span> <span class="va">mdcr</span>,</span>
 <span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>    id.vars <span class="op">=</span> <span class="st">"patid"</span>,</span>
-<span>    poa <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    flag.method <span class="op">=</span> <span class="st">'current'</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"pccc_v2.1"</span></span>
+<span>    id.vars   <span class="op">=</span> <span class="st">"patid"</span>,</span>
+<span>    poa       <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>    method    <span class="op">=</span> <span class="st">"pccc_v2.1"</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="va">mdcr_results_v3.1_01</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">mdcr</span>,</span>
+<span>    data      <span class="op">=</span> <span class="va">mdcr</span>,</span>
 <span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>    id.vars <span class="op">=</span> <span class="st">"patid"</span>,</span>
-<span>    poa <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    flag.method <span class="op">=</span> <span class="st">'current'</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"pccc_v3.1"</span></span>
+<span>    id.vars   <span class="op">=</span> <span class="st">"patid"</span>,</span>
+<span>    poa       <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>    method    <span class="op">=</span> <span class="st">"pccc_v3.1"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p>A useful summary of the object returned from
 <code><a href="../reference/comorbidities.html">comorbidities()</a></code> is gained by calling
@@ -1721,28 +1716,30 @@ both diagnostic and procedure.</p>
 <span><span class="co">##  0  1 </span></span>
 <span><span class="co">## 77  1</span></span></code></pre></div>
 <p>To account for the diagnostic or procedure status of the codes
-specify a value for the <code>dx.var</code> argument.</p>
+specify a value for the <code>dx.var</code> argument. When calling
+<code><a href="../reference/comorbidities.html">comorbidities()</a></code> with a variable to indicate diagnostic or
+procedure status, values other than <code>0</code> or <code>1</code>
+will not be joined against and the codes are ignored resulting in no
+condition being flagged.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mdcr_results_v2.1_02</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">mdcr</span>,</span>
-<span>    id.vars <span class="op">=</span> <span class="st">"patid"</span>,</span>
-<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>    dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
-<span>    flag.method <span class="op">=</span> <span class="st">'current'</span>,</span>
-<span>    poa <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"pccc_v2.1"</span></span>
+<span>    data        <span class="op">=</span> <span class="va">mdcr</span>,</span>
+<span>    id.vars     <span class="op">=</span> <span class="st">"patid"</span>,</span>
+<span>    icd.codes   <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    dx.var      <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>    poa         <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>    method      <span class="op">=</span> <span class="st">"pccc_v2.1"</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="va">mdcr_results_v3.1_02</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">mdcr</span>,</span>
-<span>    id.vars <span class="op">=</span> <span class="st">"patid"</span>,</span>
-<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>    dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
-<span>    flag.method <span class="op">=</span> <span class="st">'current'</span>,</span>
-<span>    poa <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"pccc_v3.1"</span></span>
+<span>    data        <span class="op">=</span> <span class="va">mdcr</span>,</span>
+<span>    id.vars     <span class="op">=</span> <span class="st">"patid"</span>,</span>
+<span>    icd.codes   <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    dx.var      <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>    poa         <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>    method      <span class="op">=</span> <span class="st">"pccc_v3.1"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p>Specificity is increased by using the diagnostic/procedure flag.
 Using <code>pccc_v2.1</code> there are 278 false positive flags when the
@@ -1817,8 +1814,8 @@ is for Irritable bowel syndrome. This is an example of where
 discriminating between diagnostic and procedure codes is critically
 important when looking for complex chronic conditions.</p>
 <p>If we explicitly look at an inner join between this patient’s data
-and the pccc lookup table we see that the code 5641 matches the
-procedure code in the pccc lookup table. By not accounting for
+and the PCCC lookup table we see that the code 5641 matches the
+procedure code in the PCCC lookup table. By not accounting for
 diagnostic and procedure codes, the overlaps between the two coding
 structures can lead to false positives.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
@@ -1842,8 +1839,8 @@ structures can lead to false positives.</p>
 <p>Using full codes can prevent false positives too. Here are several
 different ways that <code><a href="../reference/comorbidities.html">comorbidities()</a></code> could be called
 resulting in different outcomes.</p>
-<p>Note: this is a good example of how medicalcoder can handle full and
-compact codes within a single record.</p>
+<p>Note: this is a good example of how <em>medicalcoder</em> can handle
+full and compact codes within a single record.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">DF</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
@@ -1854,12 +1851,12 @@ compact codes within a single record.</p>
 <span></span>
 <span><span class="co"># ideal: using the dx/pr status and matching on full and compact codes.</span></span>
 <span><span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="va">DF</span>,</span>
-<span>  id.vars <span class="op">=</span> <span class="st">"id"</span>,</span>
-<span>  dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>  data      <span class="op">=</span> <span class="va">DF</span>,</span>
+<span>  id.vars   <span class="op">=</span> <span class="st">"id"</span>,</span>
+<span>  dx.var    <span class="op">=</span> <span class="st">"dx"</span>,</span>
 <span>  icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>  poa <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"pccc_v3.1"</span></span>
+<span>  poa       <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>  method    <span class="op">=</span> <span class="st">"pccc_v3.1"</span></span>
 <span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"cmrb_flag"</span>, <span class="st">"renal_dxpr_or_tech"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">##           id cmrb_flag renal_dxpr_or_tech</span></span>
 <span><span class="co">## 1 compact dx         0                  0</span></span>
@@ -1869,11 +1866,11 @@ compact codes within a single record.</p>
 <span></span>
 <span><span class="co"># false positive for the compact dx</span></span>
 <span><span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="va">DF</span>,</span>
-<span>  id.vars <span class="op">=</span> <span class="st">"id"</span>,</span>
+<span>  data      <span class="op">=</span> <span class="va">DF</span>,</span>
+<span>  id.vars   <span class="op">=</span> <span class="st">"id"</span>,</span>
 <span>  icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>  poa <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"pccc_v3.1"</span></span>
+<span>  poa       <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>  method    <span class="op">=</span> <span class="st">"pccc_v3.1"</span></span>
 <span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"cmrb_flag"</span>, <span class="st">"renal_dxpr_or_tech"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">##           id cmrb_flag renal_dxpr_or_tech</span></span>
 <span><span class="co">## 1 compact dx         1                  1</span></span>
@@ -1883,13 +1880,13 @@ compact codes within a single record.</p>
 <span></span>
 <span><span class="co"># false negative for compact pr</span></span>
 <span><span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="va">DF</span>,</span>
-<span>  id.vars <span class="op">=</span> <span class="st">"id"</span>,</span>
-<span>  icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>  poa <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  full.code <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  data          <span class="op">=</span> <span class="va">DF</span>,</span>
+<span>  id.vars       <span class="op">=</span> <span class="st">"id"</span>,</span>
+<span>  icd.codes     <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>  poa           <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>  full.code     <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  compact.codes <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"pccc_v3.1"</span></span>
+<span>  method        <span class="op">=</span> <span class="st">"pccc_v3.1"</span></span>
 <span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"cmrb_flag"</span>, <span class="st">"renal_dxpr_or_tech"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">##           id cmrb_flag renal_dxpr_or_tech</span></span>
 <span><span class="co">## 1 compact dx         0                  0</span></span>
@@ -1899,13 +1896,13 @@ compact codes within a single record.</p>
 <span></span>
 <span><span class="co"># false positive for compact dx</span></span>
 <span><span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="va">DF</span>,</span>
-<span>  id.vars <span class="op">=</span> <span class="st">"id"</span>,</span>
-<span>  icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>  poa <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  full.code <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  data          <span class="op">=</span> <span class="va">DF</span>,</span>
+<span>  id.vars       <span class="op">=</span> <span class="st">"id"</span>,</span>
+<span>  icd.codes     <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>  poa           <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>  full.code     <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  compact.codes <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"pccc_v3.1"</span></span>
+<span>  method        <span class="op">=</span> <span class="st">"pccc_v3.1"</span></span>
 <span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"cmrb_flag"</span>, <span class="st">"renal_dxpr_or_tech"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">##           id cmrb_flag renal_dxpr_or_tech</span></span>
 <span><span class="co">## 1 compact dx         1                  1</span></span>
@@ -1915,14 +1912,14 @@ compact codes within a single record.</p>
 <span></span>
 <span><span class="co"># false negatives for compact and full pr</span></span>
 <span><span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="va">DF</span>,</span>
-<span>  id.vars <span class="op">=</span> <span class="st">"id"</span>,</span>
-<span>  icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>  dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
-<span>  poa <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  full.code <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  data          <span class="op">=</span> <span class="va">DF</span>,</span>
+<span>  id.vars       <span class="op">=</span> <span class="st">"id"</span>,</span>
+<span>  icd.codes     <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>  dx.var        <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>  poa           <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>  full.code     <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  compact.codes <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"pccc_v3.1"</span></span>
+<span>  method        <span class="op">=</span> <span class="st">"pccc_v3.1"</span></span>
 <span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"cmrb_flag"</span>, <span class="st">"renal_dxpr_or_tech"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">##           id cmrb_flag renal_dxpr_or_tech</span></span>
 <span><span class="co">## 1 compact dx         0                  0</span></span>
@@ -1941,61 +1938,61 @@ code E03.0 with only the ICD-10 version being related to a chronic
 complex condition.</p>
 <p>Inputs to the <code><a href="../reference/comorbidities.html">comorbidities()</a></code> call for the ICD version
 will impact the output. When calling <code><a href="../reference/comorbidities.html">comorbidities()</a></code> with a
-variable to indicate the ICD version <code>NA</code> values will not be
-joined against and the codes are ignored resulting in no condition being
-flagged. If we know that we only want to compare against ICD-9 or ICD-10
-values then using the <code>icdv</code> argument can simplify the call
-and in this case, no condition for ICD-9 and a condition is flagged for
-ICD-10.</p>
+variable to indicate the ICD version <code>NA</code> values, or values
+other than <code>9</code> or <code>10</code>, will not be joined against
+and the codes are ignored resulting in no condition being flagged. If we
+know that we only want to compare against ICD-9 or ICD-10 values then
+using the <code>icdv</code> argument can simplify the call and in this
+case, no condition for ICD-9 and a condition is flagged for ICD-10.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">mdcr</span>, <span class="va">patid</span> <span class="op">==</span> <span class="st">"95471"</span><span class="op">)</span></span>
 <span><span class="co">##        patid icdv code dx</span></span>
 <span><span class="co">## 125330 95471   10 E030  1</span></span>
 <span></span>
-<span><span class="co"># no flag becuse icdv = 9 which treats all input codes as ICD-9</span></span>
+<span><span class="co"># no flag because icdv = 9L treats all input codes as ICD-9</span></span>
 <span><span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">mdcr</span>, <span class="va">patid</span> <span class="op">==</span> <span class="st">"95471"</span><span class="op">)</span>,</span>
+<span>  data      <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">mdcr</span>, <span class="va">patid</span> <span class="op">==</span> <span class="st">"95471"</span><span class="op">)</span>,</span>
 <span>  icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>  id.vars <span class="op">=</span> <span class="st">'patid'</span>,</span>
-<span>  dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
-<span>  icdv <span class="op">=</span> <span class="fl">9L</span>,</span>
-<span>  poa <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  id.vars   <span class="op">=</span> <span class="st">'patid'</span>,</span>
+<span>  dx.var    <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>  icdv      <span class="op">=</span> <span class="fl">9L</span>,</span>
+<span>  poa       <span class="op">=</span> <span class="fl">1L</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"pccc_v3.1"</span></span>
 <span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'patid'</span>, <span class="st">'cmrb_flag'</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">##   patid cmrb_flag</span></span>
 <span><span class="co">## 1 95471         0</span></span>
 <span></span>
-<span><span class="co"># flag because icdv = 10 - same as using `icdv.var = "icdv"`</span></span>
+<span><span class="co"># flag because icdv = 10L - same as using `icdv.var = "icdv"`</span></span>
 <span><span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">mdcr</span>, <span class="va">patid</span> <span class="op">==</span> <span class="st">"95471"</span><span class="op">)</span>,</span>
+<span>  data      <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">mdcr</span>, <span class="va">patid</span> <span class="op">==</span> <span class="st">"95471"</span><span class="op">)</span>,</span>
 <span>  icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>  id.vars <span class="op">=</span> <span class="st">'patid'</span>,</span>
-<span>  dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
-<span>  icdv <span class="op">=</span> <span class="fl">10L</span>,</span>
-<span>  poa <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"pccc_v3.1"</span></span>
+<span>  id.vars   <span class="op">=</span> <span class="st">'patid'</span>,</span>
+<span>  dx.var    <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>  icdv      <span class="op">=</span> <span class="fl">10L</span>,</span>
+<span>  poa       <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>  method    <span class="op">=</span> <span class="st">"pccc_v3.1"</span></span>
 <span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'patid'</span>, <span class="st">'cmrb_flag'</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">##   patid cmrb_flag</span></span>
 <span><span class="co">## 1 95471         1</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">mdcr</span>, <span class="va">patid</span> <span class="op">==</span> <span class="st">"95471"</span><span class="op">)</span>,</span>
+<span>  data      <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">mdcr</span>, <span class="va">patid</span> <span class="op">==</span> <span class="st">"95471"</span><span class="op">)</span>,</span>
 <span>  icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>  id.vars <span class="op">=</span> <span class="st">'patid'</span>,</span>
-<span>  dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
-<span>  icdv.var <span class="op">=</span> <span class="st">"icdv"</span>,</span>
-<span>  poa <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"pccc_v3.0"</span></span>
+<span>  id.vars   <span class="op">=</span> <span class="st">'patid'</span>,</span>
+<span>  dx.var    <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>  icdv.var  <span class="op">=</span> <span class="st">"icdv"</span>,</span>
+<span>  poa       <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>  method    <span class="op">=</span> <span class="st">"pccc_v3.0"</span></span>
 <span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'patid'</span>, <span class="st">'cmrb_flag'</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">##   patid cmrb_flag</span></span>
 <span><span class="co">## 1 95471         1</span></span></code></pre></div>
 <p>Lastly, it should be noted that a lot of the ambiguity resulting from
-compact codes can be avoided when full codes are available. medicalcoder
-can handle both forms. In the example below we again use the “E030” and
-assess it against all full and compact codes (default), against only
-full codes, and lastly against only compact codes. Note in this example
-that we are not specifying the ICD version nor the diagnostic/procedure
-status of the code.</p>
+compact codes can be avoided when full codes are available.
+<em>medicalcoder</em> can handle both forms. In the example below we
+again use the “E030” and assess it against all full and compact codes
+(default), against only full codes, and lastly against only compact
+codes. Note in this example that we are not specifying the ICD version
+nor the diagnostic/procedure status of the code.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/lookup_icd_codes.html">lookup_icd_codes</a></span><span class="op">(</span><span class="st">"E030"</span><span class="op">)</span></span>
 <span><span class="co">##   input_code   match_type icdv dx full_code code             src known_start</span></span>
@@ -2027,7 +2024,7 @@ status of the code.</p>
 <span>    data <span class="op">=</span> <span class="va">data</span>,</span>
 <span>    id.vars <span class="op">=</span> <span class="st">"id"</span>,</span>
 <span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>    poa <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    poa <span class="op">=</span> <span class="fl">1L</span>,</span>
 <span>    method <span class="op">=</span> <span class="st">"pccc_v3.1"</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
@@ -2066,7 +2063,7 @@ full code with the same compact form.</p>
 <div class="section level2">
 <h2 id="longitudinal-conditions">Longitudinal Conditions<a class="anchor" aria-label="anchor" href="#longitudinal-conditions"></a>
 </h2>
-<p>The medicalcoder package includes the example data set,
+<p>The <em>medicalcoder</em> package includes the example dataset,
 <code>mdcr_longitudinal</code>, with ICD-9 and ICD-10 codes for 3
 synthetic patients with multiple encounters. Each row has a date
 (encounter) for when the ICD code was reported.</p>
@@ -2090,13 +2087,13 @@ one encounter.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">longitudinal_v2_patid</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">mdcr_longitudinal</span>,</span>
-<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>    id.vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"patid"</span><span class="op">)</span>,</span>
-<span>    icdv.var <span class="op">=</span> <span class="st">"icdv"</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"pccc_v2.1"</span>,</span>
-<span>    flag.method <span class="op">=</span> <span class="st">"current"</span>,</span>
-<span>    poa <span class="op">=</span> <span class="fl">1</span></span>
+<span>    data        <span class="op">=</span> <span class="va">mdcr_longitudinal</span>,</span>
+<span>    icd.codes   <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    id.vars     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"patid"</span><span class="op">)</span>,</span>
+<span>    icdv.var    <span class="op">=</span> <span class="st">"icdv"</span>,</span>
+<span>    method      <span class="op">=</span> <span class="st">"pccc_v2.1"</span>,</span>
+<span>    flag.method <span class="op">=</span> <span class="st">"current"</span>, <span class="co"># Default value</span></span>
+<span>    poa         <span class="op">=</span> <span class="fl">1L</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html" class="external-link">kbl</a></span><span class="op">(</span><span class="va">longitudinal_v2_patid</span><span class="op">)</span></span>
 <span><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html" class="external-link">kable_styling</a></span><span class="op">(</span><span class="va">tab</span>, bootstrap_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"striped"</span><span class="op">)</span>, font_size <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
@@ -2309,13 +2306,14 @@ cmrb_flag
 the <code>id.vars = c("patid", "date")</code>.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">longitudinal_v2_patid_date</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mdcr_longitudinal</span>,</span>
-<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>    id.vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"patid"</span>, <span class="st">"date"</span><span class="op">)</span>,</span>
-<span>    icdv.var <span class="op">=</span> <span class="st">"icdv"</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"pccc_v2.1"</span>,</span>
+<span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
+<span>    data        <span class="op">=</span> <span class="va">mdcr_longitudinal</span>,</span>
+<span>    icd.codes   <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    id.vars     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"patid"</span>, <span class="st">"date"</span><span class="op">)</span>,</span>
+<span>    icdv.var    <span class="op">=</span> <span class="st">"icdv"</span>,</span>
+<span>    method      <span class="op">=</span> <span class="st">"pccc_v2.1"</span>,</span>
 <span>    flag.method <span class="op">=</span> <span class="st">"current"</span>,</span>
-<span>    poa <span class="op">=</span> <span class="fl">1</span></span>
+<span>    poa         <span class="op">=</span> <span class="fl">1L</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
 <thead><tr>
@@ -2851,24 +2849,25 @@ cmrb_flag
 </tr>
 </tbody>
 </table>
-<p>Looking at patid 9663901 at an encounter level we see that the
-conditions occur at different moments in time and the condition the
-patient has change overtime. Because these are chronic conditions, once
+<p>Looking at patid 9663901 at an encounter level, we see that
+conditions occur at different moments in time, and that the patient’s
+conditions change over time. Because these are chronic conditions, once
 the condition is observed, it should be considered to exist in
 perpetuity.</p>
-<p>For <code>pccc_v2.1</code> a simple carry-forward method can be
-applied to the data set to mark the presence of a condition at the time
-of reporting and thereafter.</p>
+<p>For <code>pccc_v2.1</code> the
+<code>flag.method = "cumulative"</code> option can be used as a simple
+carry-forward method to mark the presence of a condition at the time of
+reporting and thereafter.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">longitudinal_v2_patid_date_cumulative_poa0</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">mdcr_longitudinal</span>,</span>
-<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>    id.vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"patid"</span>, <span class="st">"date"</span><span class="op">)</span>,</span>
-<span>    icdv.var <span class="op">=</span> <span class="st">"icdv"</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"pccc_v2.1"</span>,</span>
+<span>    data        <span class="op">=</span> <span class="va">mdcr_longitudinal</span>,</span>
+<span>    icd.codes   <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    id.vars     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"patid"</span>, <span class="st">"date"</span><span class="op">)</span>,</span>
+<span>    icdv.var    <span class="op">=</span> <span class="st">"icdv"</span>,</span>
+<span>    method      <span class="op">=</span> <span class="st">"pccc_v2.1"</span>,</span>
 <span>    flag.method <span class="op">=</span> <span class="st">"cumulative"</span>,</span>
-<span>    poa <span class="op">=</span> <span class="fl">0</span></span>
+<span>    poa         <span class="op">=</span> <span class="fl">0L</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
 <thead><tr>
@@ -3407,13 +3406,13 @@ cmrb_flag
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">longitudinal_v2_patid_date_cumulative_poa1</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">mdcr_longitudinal</span>,</span>
-<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>    id.vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"patid"</span>, <span class="st">"date"</span><span class="op">)</span>,</span>
-<span>    icdv.var <span class="op">=</span> <span class="st">"icdv"</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"pccc_v2.1"</span>,</span>
+<span>    data        <span class="op">=</span> <span class="va">mdcr_longitudinal</span>,</span>
+<span>    icd.codes   <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    id.vars     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"patid"</span>, <span class="st">"date"</span><span class="op">)</span>,</span>
+<span>    icdv.var    <span class="op">=</span> <span class="st">"icdv"</span>,</span>
+<span>    method      <span class="op">=</span> <span class="st">"pccc_v2.1"</span>,</span>
 <span>    flag.method <span class="op">=</span> <span class="st">"cumulative"</span>,</span>
-<span>    poa <span class="op">=</span> <span class="fl">1</span></span>
+<span>    poa         <span class="op">=</span> <span class="fl">1L</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
 <thead><tr>
@@ -3954,12 +3953,12 @@ cmrb_flag
 <h3 id="pccc-v3">PCCC V3<a class="anchor" aria-label="anchor" href="#pccc-v3"></a>
 </h3>
 <p>For <code>pccc_v3.0</code> and <code>pccc_v3.1</code> a simple
-carry-forward method would not be easy to use as information about
-technology dependent codes is omitted when non-technology dependent
+carry-forward method would not be easy to use because information about
+technology-dependent codes is omitted when non-technology-dependent
 codes do not exist.</p>
 <p>Let’s use three ICD-10 diagnostic codes for this example and we will
 explore all six possible permutations of the codes. We’ll generate a
-data set with seven encounters and one code appearing on each of
+dataset with seven encounters and one code appearing on each of
 encounters 2, 4, and 6.</p>
 <p>The codes we’ll use are:</p>
 <ul>
@@ -4001,7 +4000,7 @@ encounters 2, 4, and 6.</p>
 <span><span class="co">##  $ encounter_id: int  1 2 ...</span></span>
 <span><span class="co">##  $ code        : chr  NA ...</span></span>
 <span><span class="co">##  $ plabel      : chr  "Permutation 1: H49.811, J84.111, Z96.41" ...</span></span>
-<span><span class="co">##  - attr(*, ".internal.selfref")=&lt;pointer: 0x56219d9cfee0&gt;</span></span></code></pre></div>
+<span><span class="co">##  - attr(*, ".internal.selfref")=&lt;pointer: 0x55c87deebee0&gt;</span></span></code></pre></div>
 <ul>
 <li>Permutation 1: H49.811, J84.111, Z96.41</li>
 <li>Permutation 2: H49.811, Z96.41, J84.111</li>
@@ -4010,20 +4009,20 @@ encounters 2, 4, and 6.</p>
 <li>Permutation 5: Z96.41, H49.811, J84.111</li>
 <li>Permutation 6: Z96.41, J84.111, H49.811</li>
 </ul>
-<p>We’ll apply the <code>pccc_v3.1</code> to this code set with
+<p>We’ll apply <code>pccc_v3.1</code> to this code set with
 <code>flag.method = "cumulative"</code> and all codes considered to be
 present-on-admission.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rtn</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">permutations</span>,</span>
-<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>    id.vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"permutation"</span>, <span class="st">"plabel"</span>, <span class="st">"encounter_id"</span><span class="op">)</span>,</span>
-<span>    icdv <span class="op">=</span> <span class="fl">10L</span>,</span>
+<span>    data          <span class="op">=</span> <span class="va">permutations</span>,</span>
+<span>    icd.codes     <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    id.vars       <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"permutation"</span>, <span class="st">"plabel"</span>, <span class="st">"encounter_id"</span><span class="op">)</span>,</span>
+<span>    icdv          <span class="op">=</span> <span class="fl">10L</span>,</span>
 <span>    compact.codes <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"pccc_v3.1"</span>,</span>
-<span>    flag.method <span class="op">=</span> <span class="st">"cumulative"</span>,</span>
-<span>    poa <span class="op">=</span> <span class="fl">1</span></span>
+<span>    method        <span class="op">=</span> <span class="st">"pccc_v3.1"</span>,</span>
+<span>    flag.method   <span class="op">=</span> <span class="st">"cumulative"</span>,</span>
+<span>    poa           <span class="op">=</span> <span class="fl">1L</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p>Let’s walk through the results for each permutation.</p>
 <p><strong>Permutation 1</strong></p>
@@ -5306,7 +5305,7 @@ num ccc
 </tbody>
 </table>
 <p>Permutation 4 is notable as presence of the respiratory condition on
-encounters 2 through 7 means that when the technology dependent
+encounters 2 through 7 means that when the technology-dependent
 metabolic code appears on encounter 4, a metabolic is flagged for
 encounters 4 through 7. Compare this with permutations 5 and 6.</p>
 <strong>Permutation 5</strong>
@@ -5623,13 +5622,13 @@ num ccc
 </tr>
 </tbody>
 </table>
-<p>For permutation 5 the first code is a tech dependent metabolic code
-on encounter 2. Because the <em>only</em> code for flagging a condition
-is a technology dependent code the PCCC version 3 algorithm results in
-<em>no</em> condition being flagged for encounters 2 and 3. On encounter
-4, when the non-tech metabolic code appears then the metabolic condition
-is flagged and the past history of the technology dependent code
-persists.</p>
+<p>For permutation 5 the first code is a technology-dependent metabolic
+code on encounter 2. Because the <em>only</em> code for flagging a
+condition is a technology-dependent code the PCCC version 3 algorithm
+results in <em>no</em> condition being flagged for encounters 2 and 3.
+On encounter 4, when the non-tech metabolic code appears then the
+metabolic condition is flagged and the past history of the
+technology-dependent dependent code persists.</p>
 <strong>Permutation 6</strong>
 <table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
 <thead>
@@ -5945,7 +5944,7 @@ num ccc
 </tbody>
 </table>
 <p>As with permutation 5, since the only code in the record for
-encounter 2 and 3 is the technology dependent metabolic code, there is
+encounter 2 and 3 is the technology-dependent metabolic code, there is
 no flagged condition. On encounter 4, when the dxpr code for a
 respiratory condition is reported then the respiratory condition
 <em>and</em> the metabolic condition is flagged as technology dependent.
@@ -5959,8 +5958,8 @@ condition is flagged.</p>
 <p>The documentation for PCCC version 2 <span class="citation">(Feudtner
 et al. 2014)</span> and version 3 <span class="citation">(Feinstein et
 al. 2024)</span> include subconditions under each of the major
-conditions. However, to our knowledge, no software prior to medicalcoder
-implemented flagging for the subconditions.</p>
+conditions. However, to our knowledge, no software prior to
+<em>medicalcoder</em> implemented flagging for the subconditions.</p>
 <p>The subconditions for each condition are shown in the next table.</p>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
 <table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
@@ -6606,25 +6605,25 @@ Transplantation
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">without_subconditions</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">mdcr</span>,</span>
-<span>    id.vars <span class="op">=</span> <span class="st">"patid"</span>,</span>
-<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>    icdv.var <span class="op">=</span> <span class="st">"icdv"</span>,</span>
-<span>    dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
-<span>    poa <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"pccc_v3.1"</span>,</span>
+<span>    data          <span class="op">=</span> <span class="va">mdcr</span>,</span>
+<span>    id.vars       <span class="op">=</span> <span class="st">"patid"</span>,</span>
+<span>    icd.codes     <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    icdv.var      <span class="op">=</span> <span class="st">"icdv"</span>,</span>
+<span>    dx.var        <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>    poa           <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>    method        <span class="op">=</span> <span class="st">"pccc_v3.1"</span>,</span>
 <span>    subconditions <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="va">with_subconditions</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">mdcr</span>,</span>
-<span>    id.vars <span class="op">=</span> <span class="st">"patid"</span>,</span>
-<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>    icdv.var <span class="op">=</span> <span class="st">"icdv"</span>,</span>
-<span>    dx.var <span class="op">=</span> <span class="st">"dx"</span>,</span>
-<span>    poa <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"pccc_v3.1"</span>,</span>
+<span>    data          <span class="op">=</span> <span class="va">mdcr</span>,</span>
+<span>    id.vars       <span class="op">=</span> <span class="st">"patid"</span>,</span>
+<span>    icd.codes     <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    icdv.var      <span class="op">=</span> <span class="st">"icdv"</span>,</span>
+<span>    dx.var        <span class="op">=</span> <span class="st">"dx"</span>,</span>
+<span>    poa           <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>    method        <span class="op">=</span> <span class="st">"pccc_v3.1"</span>,</span>
 <span>    subconditions <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p>The structure of the return object <code>with_subconditions</code> is
@@ -6652,7 +6651,7 @@ identical to the results of calling <code><a href="../reference/comorbidities.ht
 <span><span class="co">##   ..$ respiratory    :'data.frame':  3200 obs. of  7 variables:</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span></span>
-<span>  <span class="va">with_subconditions</span><span class="op">$</span><span class="va">conditions</span>,</span>
+<span>  <span class="va">with_subconditions</span><span class="op">[[</span><span class="st">"conditions"</span><span class="op">]</span><span class="op">]</span>,</span>
 <span>  <span class="va">without_subconditions</span>,</span>
 <span>  check.attributes <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
@@ -6670,7 +6669,7 @@ only those with the condition.</p>
 <span><span class="co">##  $ count                          : num  3225 825 1544 300 754 ...</span></span>
 <span><span class="co">##  $ percent_of_cohort              : num  8.429 2.156 4.035 0.784 1.971 ...</span></span>
 <span><span class="co">##  $ percent_of_those_with_condition: num  NA 25.6 47.9 9.3 23.4 ...</span></span></code></pre></div>
-<p>The subconditions are available for all pccc variants. A summary is
+<p>The subconditions are available for all PCCC variants. A summary is
 presented in the following tables.</p>
 <div class="section level3">
 <h3 id="congenital-or-genetic">Congenital or Genetic<a class="anchor" aria-label="anchor" href="#congenital-or-genetic"></a>
@@ -10803,20 +10802,20 @@ Transplantation
 <div class="section level3">
 <h3 id="longitudinal">Longitudinal<a class="anchor" aria-label="anchor" href="#longitudinal"></a>
 </h3>
-<p>The longitudinal assessment for subconditions work as well. Using the
-same <code>permutations</code> data set from above we will look at the
-metabolic and respiratory conditions and subconditions.</p>
+<p>The longitudinal assessment for subconditions works as well. Using
+the same <code>permutations</code> dataset from above we will look at
+the metabolic and respiratory conditions and subconditions.</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rslts</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/comorbidities.html">comorbidities</a></span><span class="op">(</span></span>
-<span>    data <span class="op">=</span> <span class="va">permutations</span>,</span>
-<span>    icd.codes <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>    id.vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"permutation"</span>, <span class="st">"plabel"</span>, <span class="st">"encounter_id"</span><span class="op">)</span>,</span>
-<span>    icdv <span class="op">=</span> <span class="fl">10L</span>,</span>
+<span>    data          <span class="op">=</span> <span class="va">permutations</span>,</span>
+<span>    icd.codes     <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>    id.vars       <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"permutation"</span>, <span class="st">"plabel"</span>, <span class="st">"encounter_id"</span><span class="op">)</span>,</span>
+<span>    icdv          <span class="op">=</span> <span class="fl">10L</span>,</span>
 <span>    compact.codes <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"pccc_v3.1"</span>,</span>
-<span>    flag.method <span class="op">=</span> <span class="st">"cumulative"</span>,</span>
-<span>    poa <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    method        <span class="op">=</span> <span class="st">"pccc_v3.1"</span>,</span>
+<span>    flag.method   <span class="op">=</span> <span class="st">"cumulative"</span>,</span>
+<span>    poa           <span class="op">=</span> <span class="fl">1L</span>,</span>
 <span>    subconditions <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p>Let’s start by looking at the respiratory results. The only
@@ -10963,11 +10962,11 @@ device and technology use, and 2) other metabolic disorders.</p>
 <span><span class="co"># which encounters flag for the subconditions?</span></span>
 <span><span class="va">scnd</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/melt.data.table.html" class="external-link">melt</a></span><span class="op">(</span></span>
-<span>    <span class="va">rslts</span><span class="op">$</span><span class="va">subconditions</span><span class="op">$</span><span class="va">metabolic</span>,</span>
-<span>    id.vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plabel"</span>, <span class="st">"encounter_id"</span><span class="op">)</span>,</span>
-<span>    measure.vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"device_and_technology_use"</span>, <span class="st">"other_metabolic_disorders"</span><span class="op">)</span>,</span>
+<span>    data            <span class="op">=</span> <span class="va">rslts</span><span class="op">$</span><span class="va">subconditions</span><span class="op">$</span><span class="va">metabolic</span>,</span>
+<span>    id.vars         <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plabel"</span>, <span class="st">"encounter_id"</span><span class="op">)</span>,</span>
+<span>    measure.vars    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"device_and_technology_use"</span>, <span class="st">"other_metabolic_disorders"</span><span class="op">)</span>,</span>
 <span>    variable.factor <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    variable.name <span class="op">=</span> <span class="st">"subcondition"</span></span>
+<span>    variable.name   <span class="op">=</span> <span class="st">"subcondition"</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="va">scnd</span> <span class="op">&lt;-</span> <span class="va">scnd</span><span class="op">[</span><span class="va">value</span> <span class="op">==</span> <span class="fl">1</span><span class="op">]</span></span>
 <span><span class="va">scnd</span> <span class="op">&lt;-</span></span>
@@ -10979,8 +10978,8 @@ device and technology use, and 2) other metabolic disorders.</p>
 <span></span>
 <span><span class="va">scnd</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/dcast.data.table.html" class="external-link">dcast</a></span><span class="op">(</span></span>
-<span>    <span class="va">scnd</span>,</span>
-<span>    <span class="va">plabel</span> <span class="op">~</span> <span class="va">subcondition</span>,</span>
+<span>    data      <span class="op">=</span> <span class="va">scnd</span>,</span>
+<span>    formula   <span class="op">=</span> <span class="va">plabel</span> <span class="op">~</span> <span class="va">subcondition</span>,</span>
 <span>    value.var <span class="op">=</span> <span class="st">"sencid"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <table class="table table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;">
@@ -11134,7 +11133,7 @@ Dependence and Transplantation.”</span> <em>BMC Pediatrics</em> 14: 1–7.
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

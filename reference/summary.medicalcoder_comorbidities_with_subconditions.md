@@ -61,7 +61,7 @@ pccc_v3.1_subcondition_results <-
                 dx.var = "dx",
                 method = "pccc_v3.1",
                 flag.method = 'current',
-                poa = 1,
+                poa = 1L,
                 subconditions = TRUE)
 summary(pccc_v3.1_subcondition_results)
 #>          condition                                subcondition count

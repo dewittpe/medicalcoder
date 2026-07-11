@@ -11,7 +11,7 @@ implemented Charlson variant."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,8 +67,10 @@ implemented Charlson variant.</p>
 
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <code>data.frame</code> with the following columns:</p><ul><li><p><code>icdv</code>: Integer vector indicating if the code is from ICD-9 or ICD-10</p></li>
-<li><p><code>dx</code>: Integer vector.  1 if the code is a diagnostic, (ICD-9-CM, ICD-10-CM, ICD-10-AM, ICD-10-SE, WHO, CDC Mortality), or 0 if the code is procedural (ICD-9-PCS, ICD-10-PCS)</p></li>
+    <p>A <code>data.frame</code> with the following columns:</p><ul><li><p><code>icdv</code>: Integer vector indicating if the code is from ICD-9 or ICD-10.</p></li>
+<li><p><code>dx</code>: Integer vector. <code>1L</code> if the code is diagnostic
+(ICD-9-CM, ICD-10-CM, ICD-10-AM, ICD-10-SE, WHO, CDC Mortality), or <code>0L</code>
+if the code is procedural (ICD-9-PCS, ICD-10-PCS).</p></li>
 <li><p><code>full_code</code>: Character vector with the ICD code and any relevant decimal point</p></li>
 <li><p><code>code</code>: Character vector with the compact ICD code</p></li>
 <li><p><code>condition</code>: Character vector of the conditions</p></li>
@@ -78,48 +80,50 @@ implemented Charlson variant.</p>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index">
-<ul><li><p><code><a href="get_charlson_index_scores.html">get_charlson_index_scores()</a></code> for a lookup table of the by comorbidity index scores.</p></li>
+<ul><li><p><code><a href="get_charlson_index_scores.html">get_charlson_index_scores()</a></code> for a lookup table of comorbidity index scores.</p></li>
 <li><p><code><a href="get_icd_codes.html">get_icd_codes()</a></code> for the lookup table of all ICD codes.</p></li>
 <li><p><code><a href="get_pccc_codes.html">get_pccc_codes()</a></code> for the lookup table of ICD codes used for the PCCC.</p></li>
 <li><p><code><a href="get_elixhauser_codes.html">get_elixhauser_codes()</a></code> for the lookup table of ICD codes used for the Elixhauser comorbidities.</p></li>
-<li><p><code><a href="comorbidities.html">comorbidities()</a></code> for applying comorbidity algorithms to a data set.</p></li>
+<li><p><code><a href="comorbidities.html">comorbidities()</a></code> for applying comorbidity algorithms to a dataset.</p></li>
 </ul></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">get_charlson_codes</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   icdv dx full_code code condition charlson_cdmf2019 charlson_deyo1992</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    9  0     38.48 3848       pvd                 0                 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    9  1     003.1 0031      aids                 1                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    9  1     007.2 0072      aids                 1                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    9  1     007.4 0074      aids                 1                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    9  1       010  010      aids                 1                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    9  1     010.0 0100      aids                 1                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   charlson_ludvigsson2021 charlson_quan2005 charlson_sundararajan2004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                       0                 0                         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                       0                 0                         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                       0                 0                         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                       0                 0                         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                       0                 0                         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6                       0                 0                         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   charlson_quan2011</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   icdv dx full_code code condition charlson_beyrer2021 charlson_cdmf2019</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    9  0     38.48 3848       pvd                   0                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    9  1     003.1 0031      aids                   0                 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    9  1     007.2 0072      aids                   0                 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    9  1     007.4 0074      aids                   0                 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    9  1       010  010      aids                   0                 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    9  1     010.0 0100      aids                   0                 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   charlson_deyo1992 charlson_ludvigsson2021 charlson_mimicivcode</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                 1                       0                    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                 0                       0                    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                 0                       0                    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                 0                       0                    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                 0                       0                    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                 0                       0                    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   charlson_quan2005 charlson_sundararajan2004 charlson_quan2011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                 0                         0                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                 0                         0                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                 0                         0                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                 0                         0                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                 0                         0                 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                 0                         0                 0</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">get_charlson_codes</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	8975 obs. of  11 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	9248 obs. of  13 variables:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ icdv                     : int  9 9 9 9 9 9 9 9 9 9 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ dx                       : int  0 1 1 1 1 1 1 1 1 1 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ full_code                : chr  "38.48" "003.1" "007.2" "007.4" ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ code                     : chr  "3848" "0031" "0072" "0074" ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ condition                : chr  "pvd" "aids" "aids" "aids" ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ charlson_beyrer2021      : int  0 0 0 0 0 0 0 0 0 0 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ charlson_cdmf2019        : int  0 1 1 1 1 1 1 1 1 1 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ charlson_deyo1992        : int  1 0 0 0 0 0 0 0 0 0 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ charlson_ludvigsson2021  : int  0 0 0 0 0 0 0 0 0 0 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ charlson_mimicivcode     : int  0 0 0 0 0 0 0 0 0 0 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ charlson_quan2005        : int  0 0 0 0 0 0 0 0 0 0 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ charlson_sundararajan2004: int  0 0 0 0 0 0 0 0 0 0 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ charlson_quan2011        : int  0 0 0 0 0 0 0 0 0 0 ...</span>
@@ -135,7 +139,7 @@ implemented Charlson variant.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

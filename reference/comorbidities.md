@@ -59,12 +59,16 @@ comorbidities(
   input `data` is treated as a single encounter from a single patient.
   If you want to set `flag.method = "cumulative"` then
   `length(id.vars) >= 2` is expected. The last element should be the
-  encounter order (must be sortable).
+  encounter order. It must not contain missing values, must not be a
+  factor, and must be numeric, character, `Date`, or `POSIXt`. Character
+  encounter order columns are allowed with a warning because they are
+  sorted lexicographically.
 
 - icdv.var:
 
   Character scalar naming the column in `data` that indicates the ICD
-  version (9 or 10). If present it must be integer values `9` or `10`.
+  version. If present it must be numeric. Rows with values other than
+  `9L` or `10L` will not be used to map ICD codes to comorbidities.
   `icdv.var` takes precedence over `icdv` if both are provided.
 
 - icdv:
@@ -76,27 +80,32 @@ comorbidities(
 - dx.var:
 
   Character scalar naming the column in `data` that indicates diagnostic
-  (`1`) vs procedural (`0`) codes. If present it must be integer values
-  `0` or `1`. `dx.var` takes precedence over `dx` if both are provided.
+  (`1L`) vs procedural (`0L`) codes. If present it must be numeric. Rows
+  with values other than `0L` or `1L` will not be used to map ICD codes
+  to comorbidities. `dx.var` takes precedence over `dx` if both are
+  provided.
 
 - dx:
 
   An integer indicating that all `data[[icd.codes]]` are diagnostic
-  (`1`) or procedure (`0`) codes. Ignored (with a warning) if `dx.var`
+  (`1L`) or procedure (`0L`) codes. Ignored (with a warning) if `dx.var`
   is provided.
 
 - poa.var:
 
   Character scalar naming the column with present-on-admission flags:
-  integer `1L` (present), `0L` (not present), or `NA`. PCCC and Charlson
-  will only flag conditions when the code is present-on-admission.
-  Elixhauser has a mix of conditions; some require present-on-admission
-  while others do not. `poa.var` takes precedence over `poa` if both are
-  provided.
+  integer `1L` (present), `0L` (not present), or `NA`. For AHRQ
+  SAS-compatible present-on-admission indicators, convert `"Y"` and
+  `"W"` to `1L`, convert `"N"` and `"U"` to `0L`, and convert blank or
+  missing values to `NA_integer_` before calling `comorbidities()`. PCCC
+  and Charlson will only flag conditions when the code is
+  present-on-admission. Elixhauser has a mix of conditions; some require
+  present-on-admission while others do not. `poa.var` takes precedence
+  over `poa` if both are provided.
 
 - poa:
 
-  Integer scalar `0` or `1`. Use when all `icd.codes` share the same
+  Integer scalar `0L` or `1L`. Use when all `icd.codes` share the same
   present-on-admission status. Ignored with a warning if `poa` and
   `poa.var` are both provided.
 
@@ -116,15 +125,15 @@ comorbidities(
 
 - primarydx:
 
-  An integer value of `0` or `1`. If `0`, treat all codes as non-primary
-  diagnoses; if `1`, treat all codes as primary diagnoses. Ignored, with
-  a warning, if `primarydx.var` is provided.
+  An integer value of `0L` or `1L`. If `0L`, treat all codes as
+  non-primary diagnoses; if `1L`, treat all codes as primary diagnoses.
+  Ignored, with a warning, if `primarydx.var` is provided.
 
 - flag.method:
 
-  When `flag.method = 'current'` (default) only codes associated with
-  the current `id.vars` are considered when flagging comorbidities. When
-  `flag.method = 'cumulative'` then all prior encounters are considered
+  When `flag.method = "current"` (default) only codes associated with
+  the current `id.vars` are considered when flagging comorbidities. The
+  `flag.method = "cumulative"` option also considers prior encounters
   when flagging comorbidities. See **Details**.
 
 - full.codes, compact.codes:
@@ -161,7 +170,7 @@ The return object will be slightly different depending on the value of
 
   - `num_cmrb` a count of comorbidities/conditions flagged
 
-  - `cmrb_flag` a 0/1 integer indicator for at least one
+  - `cmrb_flag` a `0L`/`1L` integer indicator for at least one
     comorbidity/condition.
 
   Additional columns:
@@ -181,12 +190,12 @@ The return object will be slightly different depending on the value of
         diagnostic or procedure code.
 
       - `<condition>_dxpr_only`: the condition was flagged due to the
-        presence of a non-technology dependent diagnostic or procedure
+        presence of a non-technology-dependent diagnostic or procedure
         code only.
 
       - `<condition>_tech_only`: the condition was flagged due to the
-        presence of a technology dependent code only and at least one
-        other comorbidity was flagged by a non-technology dependent
+        presence of a technology-dependent code only and at least one
+        other comorbidity was flagged by a non-technology-dependent
         code.
 
       - `<condition>_dxpr_and_tech`: The patient had both diagnostic or
@@ -208,14 +217,13 @@ The return object will be slightly different depending on the value of
 ## Details
 
 When `flag.method = "current"`, only codes from the index encounter
-contribute to flags. When a longitudinal method is selected (e.g.,
-`"cumulative"`), prior encounters for the same `id.vars` combination may
-contribute to condition flags. For the cumulative method to work,
-`id.vars` needs to be a character vector of length 2 or more. The last
-element is treated as the encounter identifier and must be sortable. For
-example, say you have data with a hospital, patient, and encounter id.
-The `id.vars` could be one of two entries:
-`c("hospital", "patient", "encounter")` or
+contribute to flags. The `flag.method = "cumulative"` option lets prior
+encounters for the same `id.vars` combination contribute to condition
+flags. For the cumulative method to work, `id.vars` needs to be a
+character vector of length 2 or more. The last element is treated as the
+encounter identifier and must be sortable. For example, say you have
+data with a hospital, patient, and encounter id. The `id.vars` could be
+one of two entries: `c("hospital", "patient", "encounter")` or
 `c("patient", "hospital", "encounter")`. In both cases the return will
 be the same because the encounter identifier is unchanged regardless of
 whether hospital or patient is listed first.
@@ -247,11 +255,17 @@ and calling `comorbidities()` with `id.vars = c("patid", "enc_seq")`
 will have better performance than using the date and will clear up any
 possible issues with non-sequential encounter ids from the source data.
 
-**Cumulative + POA defaults:**
+For `flag.method = "cumulative"`, the encounter order column must not
+contain missing values, must not be a factor, and must be numeric,
+character, `Date`, or `POSIXt`. Character encounter order columns are
+allowed, but they are sorted lexicographically; use an integer sequence,
+`Date`, or `POSIXt` column when possible.
+
+**Cumulative flagging + POA defaults:**
 
 When `flag.method = "cumulative"` and neither `poa` nor `poa.var` is
-supplied, the first encounter for a condition is treated as `poa = 0`.
-Subsequent encounters for that condition are flagged as `poa = 1`.
+supplied, the first encounter for a condition is treated as `poa = 0L`.
+Subsequent encounters for that condition are flagged as `poa = 1L`.
 
 When `flag.method = "current"` and neither `poa` nor `poa.var` is
 supplied, then all codes will be considered present-on-admission. If poa
@@ -363,7 +377,7 @@ pccc_v3.1_results <-
                 dx.var = "dx",
                 method = "pccc_v3.1",
                 flag.method = 'current',
-                poa = 1)
+                poa = 1L)
 summary(pccc_v3.1_results)
 #>          condition                                   label dxpr_or_tech_count
 #> 1  congeni_genetic      Other Congenital or Genetic Defect               3225
@@ -448,7 +462,7 @@ pccc_v3.1_subcondition_results <-
                 dx.var = "dx",
                 method = "pccc_v3.1",
                 flag.method = 'current',
-                poa = 1,
+                poa = 1L,
                 subconditions = TRUE)
 summary(pccc_v3.1_subcondition_results)
 #>          condition                                subcondition count
@@ -625,7 +639,7 @@ charlson_results <-
                 dx.var = "dx",
                 method = "charlson_quan2011",
                 flag.method = 'current',
-                poa = 1)
+                poa = 1L)
 #> Warning: Assuming all codes provided are secondary diagnostic codes.  Define `primarydx.var` or `primarydx` if this assumption is incorrect.
 summary(charlson_results)
 #> $conditions
@@ -641,13 +655,13 @@ summary(charlson_results)
 #> 9                Hemiplegia or paraplegia        hp  1177  3.076159113
 #> 10                    Liver disease, mild       mld   593  1.549840573
 #> 11      Liver disease, moderate to severe      msld   206  0.538393184
-#> 12                 Metastatic solid tumor       mst   456  1.191782970
+#> 12                 Metastatic solid tumor       mst   453  1.183942293
 #> 13                  Myocardial infarction        mi    10  0.026135591
 #> 14                   Peptic ulcer disease       pud    45  0.117610162
 #> 15            Peripheral vascular disease       pvd   217  0.567142334
 #> 16                          Renal disease       rnd   898  2.346976112
 #> 17                      Rheumatic disease       rhd   136  0.355444044
-#> 18                                   >= 1      <NA>  9844 25.727876222
+#> 18                                   >= 1      <NA>  9841 25.720035544
 #> 19                                   >= 2      <NA>  1075  2.809576081
 #> 20                                   >= 3      <NA>    94  0.245674560
 #> 21                                   >= 4      <NA>     9  0.023522032
@@ -668,9 +682,9 @@ elixhauser_results <-
                 id.vars = "patid",
                 dx.var = "dx",
                 method = "elixhauser_ahrq2025",
-                primarydx = 1,
+                primarydx = 1L,
                 flag.method = 'current',
-                poa = 1)
+                poa = 1L)
 summary(elixhauser_results)
 #> $conditions
 #>       condition count percent

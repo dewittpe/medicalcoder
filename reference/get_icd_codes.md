@@ -26,9 +26,9 @@ The default return has the following columns:
 
 - `icdv`: Integer vector indicating if the code is from ICD-9 or ICD-10
 
-- `dx`: Integer vector. 1 if the code is a diagnostic, (ICD-9-CM,
-  ICD-10-CM, ICD-10-AM, ICD-10-SE, WHO, CDC Mortality), or 0 if the code
-  is procedural (ICD-9-PCS, ICD-10-PCS)
+- `dx`: Integer vector. `1L` if the code is diagnostic (ICD-9-CM,
+  ICD-10-CM, ICD-10-AM, ICD-10-SE, WHO, CDC Mortality), or `0L` if the
+  code is procedural (ICD-9-PCS, ICD-10-PCS)
 
 - `full_code`: Character vector with the ICD code and any relevant
   decimal point
@@ -87,9 +87,9 @@ There are five sources of ICD codes.
 - `cms`: Codes from the ICD-9-CM, ICD-9-PCS, ICD-10-CM, and ICD-10-PCS
   standards.
 
-- `who`: Codes from World Health Organization.
+- `who`: Codes from the World Health Organization.
 
-- `cdc`: Codes from CDC Mortality coding standard.
+- `cdc`: Codes from the CDC Mortality coding standard.
 
 - `ihacpa`: ICD-10-AM codes from the Independent Health and Aged Care
   Pricing Authority.
@@ -104,7 +104,7 @@ years.
 
 Fiscal years are the United States Federal Government fiscal years,
 running from October 1 to September 30. For example, fiscal year 2013
-started October 1 2012 and ended on September 30 2013.
+started October 1, 2012 and ended on September 30, 2013.
 
 Financial years are the Australian financial years used for IHACPA data,
 running from July 1 to June 30.
@@ -127,8 +127,8 @@ run through fiscal year 2015. As such 1997 is the earliest "known start"
 for ICD-9 within medicalcoder.
 
 `known_end` is the last fiscal, financial, or calendar year (depending
-on source) for which we have definitive source data for. For ICD-9-CM
-and ICD-9-PCS, CMS provides data through fiscal year 2015, while the CDC
+on source) for which we have definitive source data. For ICD-9-CM and
+ICD-9-PCS, CMS provides data through fiscal year 2015, while the CDC
 extracts stop at fiscal year 2012. For ICD-10-CM and ICD-10-PCS, which
 are active, it is just the last year of known data. ICD-10 from the WHO
 ends in 2019.

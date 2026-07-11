@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,22 +50,32 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.8.1.9000" id="medicalcoder-0819000">medicalcoder 0.8.1.9000<a class="anchor" aria-label="anchor" href="#medicalcoder-0819000"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.9.0" id="medicalcoder-090">medicalcoder 0.9.0<a class="anchor" aria-label="anchor" href="#medicalcoder-090"></a></h2>
 <div class="section level3">
-<h3 id="new-features-0-8-1-9000">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-8-1-9000"></a></h3>
-<ul><li><p><code><a href="../reference/comorbidities.html">comorbidities()</a></code> gains a new argument to allow end users to specify the mapping between ICD codes and the conditions to be done via precomputed link tables or via regex (part of <a href="https://github.com/dewittpe/medicalcoder/issues/45" class="external-link">#45</a>)</p></li>
+<h3 id="new-features-0-9-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-9-0"></a></h3>
+<ul><li><p><code><a href="../reference/comorbidities.html">comorbidities()</a></code> gains a <code>mapping</code> argument. The default <code>mapping = "precomputed"</code> uses the precomputed ICD code-condition links included with medicalcoder. <code>mapping = "regex"</code> applies method regular expressions directly to input ICD codes. Regex mapping is currently available for Charlson methods except <code>charlson_beyrer2021</code>. (part of <a href="https://github.com/dewittpe/medicalcoder/issues/45" class="external-link">#45</a>)</p></li>
+<li><p>Clarify <code>flag.method = "cumulative"</code> documentation for longitudinal data. Users should validate encounter ordering and POA behavior carefully for their study design.</p></li>
+<li><p>Add validation for the encounter-order column used by <code>flag.method = "cumulative"</code>. Missing values and factor columns now error; character columns are allowed with a warning because they are sorted lexicographically.</p></li>
 <li><p>Add <code>charlson_sundararajan2004</code></p></li>
 <li><p>Add <code>charlson_ludvigsson2021</code>, a Charlson-style Swedish register-based comorbidity method.</p></li>
+<li><p>Add <code>charlson_mimicivcode</code>, a mapping between ICD-10 codes and Charlson comorbidities to be consistent with <a href="https://github.com/MIT-LCP/mimic-code/blob/57069783095e7770e66ea97da264c0200078ddbf/mimic-iv/concepts/comorbidity/charlson.sql" class="external-link">mimiciv-code</a></p></li>
+<li><p>Add <code>charlson_beyrer2021</code>, a Charlson style comorbidity based on U.S. ICD-10-CM diagnostic and ICD-10-PCS (procedure) codes from <a href="https://doi.org/10.1002/pds.5204" class="external-link">Beyrer et al. (2021)</a></p></li>
 <li><p>Add ICD-10-AM (Australian Modification) to the ICD database</p></li>
 <li><p>Add ICD-10-SE (Swedish) to the ICD database. Source files from Socialstyrelsen.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-0-8-1-9000">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-8-1-9000"></a></h3>
-<ul><li>ICD-10 Z49.1 has been added to elixhauser_quan2005; it was missing by error in the prior version of medicalcoder.</li>
+<h3 id="bug-fixes-0-9-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-9-0"></a></h3>
+<ul><li><p><code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> falls back to the next applicable method with a warning when a modified <code>medicalcoder_comorbidities</code> object no longer has the structure required by medicalcoder’s methods.</p></li>
+<li><p>Prevent unrelated input columns from colliding with internal lookup columns while mapping ICD codes to comorbidities in <code><a href="../reference/comorbidities.html">comorbidities()</a></code>.</p></li>
+<li><p>ICD-10 Z49.1 has been added to elixhauser_quan2005; it was missing by error in the prior version of medicalcoder.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="improvements-0-8-1-9000">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-8-1-9000"></a></h3>
-<ul><li>WHO ICD-10 codes extend 2019 to 2020 and 2021 and the WHO last published in 2019 and then transiitoned to ICD-11 January 1 2022.</li>
+<h3 id="improvements-0-9-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-9-0"></a></h3>
+<ul><li><p><code><a href="../reference/comorbidities.html">comorbidities()</a></code> now warns, without stopping, when column-backed <code>icdv.var</code>, <code>dx.var</code>, <code>poa.var</code>, or <code>primarydx.var</code> values fall outside the values used by the supported comorbidity mappings.</p></li>
+<li><p>Clarify that AHRQ SAS present-on-admission indicators should be converted to numeric values before using <code>poa.var</code>: <code>"Y"</code> and <code>"W"</code> map to <code>1L</code>, <code>"N"</code> and <code>"U"</code> map to <code>0L</code>, and blank or missing values map to <code>NA_integer_</code>.</p></li>
+<li><p>Clarify that rows with <code>icdv.var</code> values other than <code>9</code> or <code>10</code> are not used when mapping ICD codes to comorbidities.</p></li>
+<li><p>Clarify that rows with <code>dx.var</code> values other than <code>0</code> or <code>1</code> are not used when mapping ICD codes to comorbidities.</p></li>
+<li><p>WHO ICD-10 codes extend 2019 to 2020 and 2021. WHO last published ICD-10 in 2019 and transitioned to ICD-11 on January 1, 2022.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -164,7 +174,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

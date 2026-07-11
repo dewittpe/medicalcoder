@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,8 +78,9 @@
 
     
     
-<p>There are four functions in the medicalcoder package specifically for
-working with International Classification of Diseases (ICD) codes.</p>
+<p>There are four functions in the <em>medicalcoder</em> package
+specifically for working with International Classification of Diseases
+(ICD) codes.</p>
 <ol style="list-style-type: decimal">
 <li>
 <code><a href="../reference/get_icd_codes.html">get_icd_codes()</a></code>: returns a lookup table of ICD codes as
@@ -102,14 +103,14 @@ just format the input string appropriately.</li>
 <h2 id="get_icd_codes">
 <code>get_icd_codes()</code><a class="anchor" aria-label="anchor" href="#get_icd_codes"></a>
 </h2>
-<p>A lookup table for the ICD codes has been built as internal data sets
-within the medicalcoder package. The sources for these lookup tables
-come from the Centers for Disease Control (CDC) and from the Centers for
-Medicare &amp; Medicaid Services (CMS), World Health Organization (WHO),
-Australia’s Independent Health and Aged Care Pricing Authority (IHACPA),
-and Sweden’s National Board of Health and Welfare (Socialstyrelsen). The
-specific links to the source data sets can be found in the source code
-for the medicalcoder package on <a href="https://github.com/dewittpe/medicalcoder" class="external-link">GitHub</a>.</p>
+<p>A lookup table for the ICD codes has been built as internal datasets
+within the <em>medicalcoder</em> package. The sources for these lookup
+tables come from the Centers for Disease Control (CDC) and from the
+Centers for Medicare &amp; Medicaid Services (CMS), World Health
+Organization (WHO), Australia’s Independent Health and Aged Care Pricing
+Authority (IHACPA), and Sweden’s National Board of Health and Welfare
+(Socialstyrelsen). The specific links to the source datasets can be
+found in the source code for the <em>medicalcoder</em> package on <a href="https://github.com/dewittpe/medicalcoder" class="external-link">GitHub</a>.</p>
 <p>End users can get a <code>data.frame</code> with ICD-9 diagnostic,
 ICD-9 procedure, ICD-10 diagnostic, and ICD-10 procedure codes.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -128,15 +129,15 @@ ICD-9 procedure, ICD-10 diagnostic, and ICD-10 procedure codes.</p>
 <span><span class="co">##  $ assignable_end  : int  NA NA NA NA 2015 2012 2015 2012 2015 2012 ...</span></span></code></pre></div>
 <p>The columns of this data.frame are:</p>
 <ul>
-<li><p><code>icdv</code>: integer value 9 or 10 indicating ICD-9 or
-ICD-10</p></li>
-<li><p><code>dx</code>: 1 if the code is a diagnostic code, i.e., from
-the ICD-9-CM or ICD-10-CM standard. This also covers codes from the
-World Health Organization (WHO), the Center for Disease Control and
-Prevention (CDC) Mortality codes, ICD-10-AM codes from IHACPA, and
-ICD-10-SE codes from Socialstyrelsen. <code>dx</code> will be 0 if the
-code is a procedure code, i.e., from the ICD-9-PCS or ICD-10-PCS
-standard.</p></li>
+<li><p><code>icdv</code>: integer value <code>9L</code> or
+<code>10L</code> indicating ICD-9 or ICD-10</p></li>
+<li><p><code>dx</code>: <code>1L</code> if the code is a diagnostic
+code, i.e., from the ICD-9-CM or ICD-10-CM standard. This also covers
+codes from the World Health Organization (WHO), the Center for Disease
+Control and Prevention (CDC) Mortality codes, ICD-10-AM codes from
+IHACPA, and ICD-10-SE codes from Socialstyrelsen. <code>dx</code> will
+be <code>0L</code> if the code is a procedure code, i.e., from the
+ICD-9-PCS or ICD-10-PCS standard.</p></li>
 <li><p><code>full_code</code>: the full ICD code with the decimal point
 if applicable.</p></li>
 <li><p><code>code</code>: compact code, any applicable decimal point has
@@ -144,8 +145,8 @@ been omitted.</p></li>
 <li><p><code>src</code>: a character vector denoting the source of the
 information.</p></li>
 <li>
-<p><code>known_start</code>: The first year that the medicalcoder
-package has data for this code.</p>
+<p><code>known_start</code>: The first year that the
+<em>medicalcoder</em> package has data for this code.</p>
 <ul>
 <li><p>For codes based on the ICD-9-CM, ICD-9-PCS, ICD-10-CM, ICD-10-PCS
 standards the year is the <em>fiscal year</em> for the United States
@@ -156,18 +157,18 @@ Federal Government; October 1 - September 30. For example, fiscal year
 <li><p>For codes from the World Health Organization (WHO), the Centers
 for Disease Control and Prevention (CDC) Mortality coding, and
 Socialstyrelsen, the year is <em>calendar year</em>.</p></li>
-<li><p>For ICD-9, CDC extracts in medicalcoder span fiscal years
-1997–2012 and CMS extracts span fiscal years 2006–2015.</p></li>
+<li><p>For ICD-9, CDC extracts in <em>medicalcoder</em> span fiscal
+years 1997–2012 and CMS extracts span fiscal years 2006–2015.</p></li>
 </ul>
 </li>
 <li>
 <p><code>known_end</code>: the last year the code was part of the
-standard, or that the medicalcoder package has data for.</p>
+standard, or that the <em>medicalcoder</em> package has data for.</p>
 <ul>
 <li>ICD-9 CMS extracts run through FY 2015; CDC ICD-9 extracts end at FY
 2012.</li>
-<li>ICD-10 is active. The current version of medicalcoder has details on
-ICD-10 codes through FY 2026.</li>
+<li>ICD-10 is active. The current version of <em>medicalcoder</em> has
+details on ICD-10 codes through FY 2026.</li>
 </ul>
 </li>
 <li><p><code>assignable_start</code>: The first year (fiscal or calendar
@@ -429,10 +430,10 @@ details for the codes.</p>
 <li>subsubclassification</li>
 <li>extension</li>
 </ul>
-<p>To keep the install size of medicalcoder under the size limits for
-CRAN, the stored data is structured in a way that several joins and
-other operations are needed to have a data set that is end user
-friendly. Several data sets are generated and cached when the namespace
+<p>To keep the install size of <em>medicalcoder</em> under the size
+limits for CRAN, the stored data is structured in a way that several
+joins and other operations are needed to have a dataset that is end user
+friendly. Several datasets are generated and cached when the namespace
 is loaded.</p>
 </div>
 </div>
@@ -1444,13 +1445,13 @@ procedure code.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"7993"</span><span class="op">)</span></span>
 <span><span class="co">## Warning: Input '7993' is a: ICD 9 pr compact; ICD 9 dx compact</span></span>
 <span><span class="co">## [1] TRUE</span></span>
-<span><span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"7993"</span>, icdv <span class="op">=</span>  <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"7993"</span>, icdv <span class="op">=</span>  <span class="fl">9L</span>, dx <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></span>
 <span><span class="co">## [1] TRUE</span></span>
-<span><span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"7993"</span>, icdv <span class="op">=</span>  <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"7993"</span>, icdv <span class="op">=</span>  <span class="fl">9L</span>, dx <span class="op">=</span> <span class="fl">0L</span><span class="op">)</span></span>
 <span><span class="co">## [1] TRUE</span></span>
-<span><span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"7993"</span>, icdv <span class="op">=</span> <span class="fl">10</span>, dx <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"7993"</span>, icdv <span class="op">=</span> <span class="fl">10L</span>, dx <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></span>
 <span><span class="co">## [1] FALSE</span></span>
-<span><span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"7993"</span>, icdv <span class="op">=</span> <span class="fl">10</span>, dx <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"7993"</span>, icdv <span class="op">=</span> <span class="fl">10L</span>, dx <span class="op">=</span> <span class="fl">0L</span><span class="op">)</span></span>
 <span><span class="co">## [1] FALSE</span></span>
 <span><span class="fu"><a href="../reference/lookup_icd_codes.html">lookup_icd_codes</a></span><span class="op">(</span><span class="st">"7993"</span><span class="op">)</span></span>
 <span><span class="co">##   input_code   match_type icdv dx full_code code src known_start known_end</span></span>
@@ -1480,8 +1481,8 @@ ICD-9 diagnostic and procedure codes can be done.</p>
 <span>       <span class="st">"799.3"</span>, <span class="co"># valid dx code; invalid pr code</span></span>
 <span>       <span class="st">"7993."</span><span class="op">)</span> <span class="co"># not a valid code</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>,</span>
-<span>           icd9_dx <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, warn.ambiguous <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
-<span>           icd9_pr <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">0</span>, warn.ambiguous <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
+<span>           icd9_dx <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, icdv <span class="op">=</span> <span class="fl">9L</span>, dx <span class="op">=</span> <span class="fl">1L</span>, warn.ambiguous <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
+<span>           icd9_pr <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, icdv <span class="op">=</span> <span class="fl">9L</span>, dx <span class="op">=</span> <span class="fl">0L</span>, warn.ambiguous <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">##       x icd9_dx icd9_pr</span></span>
 <span><span class="co">## 1  7993    TRUE    TRUE</span></span>
 <span><span class="co">## 2 .7993   FALSE   FALSE</span></span>
@@ -1508,14 +1509,14 @@ assignable.</p>
 <span><span class="va">tab</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>    code       <span class="op">=</span> <span class="va">x</span>,</span>
-<span>    default    <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
-<span>    assignable_1997_cdc <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cdc"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, year <span class="op">=</span> <span class="fl">1997</span><span class="op">)</span>,</span>
-<span>    assignable_2010_cms <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, year <span class="op">=</span> <span class="fl">2010</span><span class="op">)</span>,</span>
-<span>    assignable_2011_cms <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, year <span class="op">=</span> <span class="fl">2011</span><span class="op">)</span>,</span>
-<span>    assignable_2012_cdc <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cdc"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, year <span class="op">=</span> <span class="fl">2012</span><span class="op">)</span>,</span>
-<span>    assignable_2012_cms <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, year <span class="op">=</span> <span class="fl">2012</span><span class="op">)</span>,</span>
-<span>    assignable_2015_cms <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, year <span class="op">=</span> <span class="fl">2015</span><span class="op">)</span>,</span>
-<span>    assignable_ever_cdc <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cdc"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, ever.assignable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>    default    <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, icdv <span class="op">=</span> <span class="fl">9L</span>, dx <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span>,</span>
+<span>    assignable_1997_cdc <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cdc"</span>, icdv <span class="op">=</span> <span class="fl">9L</span>, dx <span class="op">=</span> <span class="fl">1L</span>, year <span class="op">=</span> <span class="fl">1997</span><span class="op">)</span>,</span>
+<span>    assignable_2010_cms <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9L</span>, dx <span class="op">=</span> <span class="fl">1L</span>, year <span class="op">=</span> <span class="fl">2010</span><span class="op">)</span>,</span>
+<span>    assignable_2011_cms <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9L</span>, dx <span class="op">=</span> <span class="fl">1L</span>, year <span class="op">=</span> <span class="fl">2011</span><span class="op">)</span>,</span>
+<span>    assignable_2012_cdc <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cdc"</span>, icdv <span class="op">=</span> <span class="fl">9L</span>, dx <span class="op">=</span> <span class="fl">1L</span>, year <span class="op">=</span> <span class="fl">2012</span><span class="op">)</span>,</span>
+<span>    assignable_2012_cms <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9L</span>, dx <span class="op">=</span> <span class="fl">1L</span>, year <span class="op">=</span> <span class="fl">2012</span><span class="op">)</span>,</span>
+<span>    assignable_2015_cms <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9L</span>, dx <span class="op">=</span> <span class="fl">1L</span>, year <span class="op">=</span> <span class="fl">2015</span><span class="op">)</span>,</span>
+<span>    assignable_ever_cdc <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cdc"</span>, icdv <span class="op">=</span> <span class="fl">9L</span>, dx <span class="op">=</span> <span class="fl">1L</span>, ever.assignable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">tab</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
@@ -1980,9 +1981,9 @@ checks of ICD-9 codes.</p>
 <span><span class="va">tab</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>    code     <span class="op">=</span> <span class="va">x</span>,</span>
-<span>    default  <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, src <span class="op">=</span> <span class="st">"cms"</span>, headerok <span class="op">=</span> <span class="cn">FALSE</span>, ever.assignable <span class="op">=</span> <span class="cn">FALSE</span>, warn.ambiguous <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
-<span>    ever     <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, src <span class="op">=</span> <span class="st">"cms"</span>, headerok <span class="op">=</span> <span class="cn">FALSE</span>, ever.assignable <span class="op">=</span> <span class="cn">TRUE</span>,  warn.ambiguous <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
-<span>    headerok <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, src <span class="op">=</span> <span class="st">"cms"</span>, headerok <span class="op">=</span> <span class="cn">TRUE</span>,                           warn.ambiguous <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>    default  <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, icdv <span class="op">=</span> <span class="fl">9L</span>, dx <span class="op">=</span> <span class="fl">1L</span>, src <span class="op">=</span> <span class="st">"cms"</span>, headerok <span class="op">=</span> <span class="cn">FALSE</span>, ever.assignable <span class="op">=</span> <span class="cn">FALSE</span>, warn.ambiguous <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
+<span>    ever     <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, icdv <span class="op">=</span> <span class="fl">9L</span>, dx <span class="op">=</span> <span class="fl">1L</span>, src <span class="op">=</span> <span class="st">"cms"</span>, headerok <span class="op">=</span> <span class="cn">FALSE</span>, ever.assignable <span class="op">=</span> <span class="cn">TRUE</span>,  warn.ambiguous <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
+<span>    headerok <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, icdv <span class="op">=</span> <span class="fl">9L</span>, dx <span class="op">=</span> <span class="fl">1L</span>, src <span class="op">=</span> <span class="st">"cms"</span>, headerok <span class="op">=</span> <span class="cn">TRUE</span>,                           warn.ambiguous <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">tab</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
@@ -2030,12 +2031,12 @@ assignable.</p>
 <span><span class="va">tab</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>    code            <span class="op">=</span> <span class="va">x</span>,</span>
-<span>    default         <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
-<span>    assignable_2002 <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, year <span class="op">=</span> <span class="fl">2002</span><span class="op">)</span>,</span>
-<span>    assignable_2003 <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, year <span class="op">=</span> <span class="fl">2003</span><span class="op">)</span>,</span>
-<span>    assignable_2004 <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, year <span class="op">=</span> <span class="fl">2004</span><span class="op">)</span>,</span>
-<span>    assignable_2005 <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, year <span class="op">=</span> <span class="fl">2005</span><span class="op">)</span>,</span>
-<span>    assignable_ever <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span>, ever.assignable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>    default         <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9L</span>, dx <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span>,</span>
+<span>    assignable_2002 <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9L</span>, dx <span class="op">=</span> <span class="fl">1L</span>, year <span class="op">=</span> <span class="fl">2002</span><span class="op">)</span>,</span>
+<span>    assignable_2003 <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9L</span>, dx <span class="op">=</span> <span class="fl">1L</span>, year <span class="op">=</span> <span class="fl">2003</span><span class="op">)</span>,</span>
+<span>    assignable_2004 <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9L</span>, dx <span class="op">=</span> <span class="fl">1L</span>, year <span class="op">=</span> <span class="fl">2004</span><span class="op">)</span>,</span>
+<span>    assignable_2005 <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9L</span>, dx <span class="op">=</span> <span class="fl">1L</span>, year <span class="op">=</span> <span class="fl">2005</span><span class="op">)</span>,</span>
+<span>    assignable_ever <span class="op">=</span> <span class="fu"><a href="../reference/is_icd.html">is_icd</a></span><span class="op">(</span><span class="va">x</span>, src <span class="op">=</span> <span class="st">"cms"</span>, icdv <span class="op">=</span> <span class="fl">9L</span>, dx <span class="op">=</span> <span class="fl">1L</span>, ever.assignable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="co">## Warning: The combination of `icdv` = 9; `dx` = 1; and `src` = cms; has ICD</span></span>
 <span><span class="co">## codes with a first known_start year of 2006. The input of `year` = 2002 results</span></span>
@@ -2144,19 +2145,19 @@ assignable.</p>
 <p>To go from a full code to a compact code is simple, omit any decimal
 point in the string.</p>
 <p>To go from a compact code to a full code requires knowing if the code
-is from version 9 or 10, and if it is a diagnostic or a procedure code.
-<code><a href="../reference/icd_compact_to_full.html">icd_compact_to_full()</a></code> will format a string appropriately,
-within reason. This method only formats the strings and will not
-validate the return.</p>
-<p>For example, the compact code “E1234” is in the format expected for a
-ICD-9 diagnostic code or ICD-10 diagnostic code. It could not be a
+is from version <code>9L</code> or <code>10L</code>, and if it is a
+diagnostic or a procedure code. <code><a href="../reference/icd_compact_to_full.html">icd_compact_to_full()</a></code> will
+format a string appropriately, within reason. This method only formats
+the strings and will not validate the return.</p>
+<p>For example, the compact code “E1234” is in the format expected for
+an ICD-9 diagnostic code or ICD-10 diagnostic code. It could not be a
 procedure code as ICD-9 procedure codes are all numeric values and
 ICD-10 procedure codes are seven characters long. The actual code E1234
 is not a valid ICD code. We use this string as an example.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/icd_compact_to_full.html">icd_compact_to_full</a></span><span class="op">(</span><span class="st">"E1234"</span>, icdv <span class="op">=</span>  <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/icd_compact_to_full.html">icd_compact_to_full</a></span><span class="op">(</span><span class="st">"E1234"</span>, icdv <span class="op">=</span>  <span class="fl">9L</span>, dx <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></span>
 <span><span class="co">## [1] "E123.4"</span></span>
-<span><span class="fu"><a href="../reference/icd_compact_to_full.html">icd_compact_to_full</a></span><span class="op">(</span><span class="st">"E1234"</span>, icdv <span class="op">=</span> <span class="fl">10</span>, dx <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/icd_compact_to_full.html">icd_compact_to_full</a></span><span class="op">(</span><span class="st">"E1234"</span>, icdv <span class="op">=</span> <span class="fl">10L</span>, dx <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></span>
 <span><span class="co">## [1] "E12.34"</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/lookup_icd_codes.html">lookup_icd_codes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"E1234"</span>, <span class="st">"E123.4"</span>, <span class="st">"E12.34"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"input_code"</span>, <span class="st">"match_type"</span><span class="op">)</span><span class="op">]</span></span>
@@ -2167,9 +2168,9 @@ is not a valid ICD code. We use this string as an example.</p>
 <p>Notice that no change to the string is made when trying to convert to
 a full procedure code.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/icd_compact_to_full.html">icd_compact_to_full</a></span><span class="op">(</span><span class="st">"E1234"</span>, icdv <span class="op">=</span>  <span class="fl">9</span>, dx <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/icd_compact_to_full.html">icd_compact_to_full</a></span><span class="op">(</span><span class="st">"E1234"</span>, icdv <span class="op">=</span>  <span class="fl">9L</span>, dx <span class="op">=</span> <span class="fl">0L</span><span class="op">)</span></span>
 <span><span class="co">## [1] "E1234"</span></span>
-<span><span class="fu"><a href="../reference/icd_compact_to_full.html">icd_compact_to_full</a></span><span class="op">(</span><span class="st">"E1234"</span>, icdv <span class="op">=</span> <span class="fl">10</span>, dx <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/icd_compact_to_full.html">icd_compact_to_full</a></span><span class="op">(</span><span class="st">"E1234"</span>, icdv <span class="op">=</span> <span class="fl">10L</span>, dx <span class="op">=</span> <span class="fl">0L</span><span class="op">)</span></span>
 <span><span class="co">## [1] "E1234"</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -2232,7 +2233,7 @@ hierarchy of</p>
 <li>subsubclassification, and</li>
 <li>extension.</li>
 </ol>
-<p>The category describes the general type of disease of injury, with
+<p>The category describes the general type of disease or injury, with
 the subcategory, subclassification and subsubclassification providing
 detail on the cause, manifestation, location, severity, and type of
 disease or injury. Finally, the extension specifies the type of
@@ -2242,9 +2243,9 @@ encounters related to prior disease or injury.</p>
 <div class="section level3">
 <h3 id="icd-10-procedure-codes">ICD-10 Procedure Codes<a class="anchor" aria-label="anchor" href="#icd-10-procedure-codes"></a>
 </h3>
-<p>In general, ICD-10 procedure codes are seven digits. In medicalcoder,
-the three digit (chapter, subchapter, <em>category</em>) and the seven
-digit codes are in the data base.</p>
+<p>In general, ICD-10 procedure codes are seven digits. In
+<em>medicalcoder</em>, the three digit (chapter, subchapter,
+<em>category</em>) and the seven digit codes are in the database.</p>
 <!-- ----------------------------------------------------------------------- -->
 <!--                              End of File                                -->
 <!-- ----------------------------------------------------------------------- -->
@@ -2261,7 +2262,7 @@ digit codes are in the data base.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>
