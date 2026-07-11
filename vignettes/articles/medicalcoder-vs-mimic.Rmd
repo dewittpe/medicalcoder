@@ -1,5 +1,5 @@
 ---
-title: "medicalcoder vs mimic"
+title: "_medicalcoder_ vs MIMIC"
 output:
  rmarkdown::html_vignette:
    toc: true
@@ -39,7 +39,7 @@ available from MIT Laboratory for Computational Physiology (MIT_LCP) on
 GitHub\footnote{\url{https://github.com/MIT-LCP/mimic-code.git}}.  The code is
 expected to run on Google Big Query on the MIMIC-IV data.  We make a few small
 modifications to the code so we can evaluate the SQL locally via RSQLite and on
-a local data set.
+a local dataset.
 
 The SQL file used here is vendored from
 [`mimic-code` commit `278df75ec30991ff3a6f5ceb6d2221635a085e9f`](https://raw.githubusercontent.com/MIT-LCP/mimic-code/278df75ec30991ff3a6f5ceb6d2221635a085e9f/mimic-iv/concepts/comorbidity/charlson.sql)
@@ -53,7 +53,7 @@ precomputed map is what allows the same `comorbidities()` interface to support
 full and compact codes, mixed ICD versions, and multiple comorbidity families.
 
 ```{r}
-mimic_charson_query <-
+mimic_charlson_query <-
   scan(
     file = system.file(
       "sql", "mimic-iv-charlson-278df75.sql",
@@ -65,8 +65,8 @@ mimic_charson_query <-
   )
 
 # modify the query to work in SQLite
-# replace Google Big Query table names with table names to be using in
-# the local RSQLite in memory database.  Three table names need to be
+# replace Google Big Query table names with table names used in
+# the local RSQLite in-memory database.  Three table names need to be
 # changed and one function call: GBQ GREATEST needs to be replaced by MAX
 prs <-
   c(
@@ -76,16 +76,16 @@ prs <-
     "GREATEST" = "MAX"
   )
 for(i in seq_len(length(prs))) {
-  mimic_charson_query <-
+  mimic_charlson_query <-
     gsub(
       pattern     = names(prs)[i],
       replacement = prs[i],
-      x           = mimic_charson_query,
+      x           = mimic_charlson_query,
       fixed       = TRUE
     )
 }
 
-mimic_charson_query <- paste(mimic_charson_query, collapse = "\n")
+mimic_charlson_query <- paste(mimic_charlson_query, collapse = "\n")
 ```
 
 ```{r}
@@ -113,7 +113,7 @@ library(RSQLite)
 
 con <- dbConnect(drv = RSQLite::SQLite(), dbname = ":memory:")
 
-# add data to the data base
+# add data to the database
 dbWriteTable(
   conn  = con,
   name  = "diagnoses",
@@ -133,7 +133,7 @@ dbWriteTable(
 )
 
 # get the charlson results via MIMIC-IV
-mimic_charlson_results <- dbGetQuery(con, mimic_charson_query)
+mimic_charlson_results <- dbGetQuery(con, mimic_charlson_query)
 
 # close DB connection
 dbDisconnect(conn = con)
