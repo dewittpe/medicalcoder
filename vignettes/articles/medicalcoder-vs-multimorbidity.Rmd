@@ -1,5 +1,5 @@
 ---
-title: "medicalcoder vs multimorbidity"
+title: "_medicalcoder_ vs _multimorbidity_"
 output:
  rmarkdown::html_vignette:
    toc: true
@@ -25,8 +25,8 @@ knitr::opts_chunk$set(collapse = TRUE, fig.align = "center")
 # Introduction
 
 The purpose of this article is to compare the API and results between
-medicalcoder and the R package
-[multimorbidity](https://cran.r-project.org/package=multimorbidity)
+_medicalcoder_ and the R package
+[_multimorbidity_](https://cran.r-project.org/package=multimorbidity)
 [@r-multimorbidity].
 
 ```{r}
@@ -38,8 +38,8 @@ packageDescription("multimorbidity")$Title
 cat(packageDescription("multimorbidity")$Description)
 ```
 
-# Prepare Data for multimorbidity
-The example data set `mdcr` within medicalcoder is in a format that is ideal
+# Prepare Data for _multimorbidity_
+The example dataset `mdcr` within _medicalcoder_ is in a format that is ideal
 for `medicalcoder::comorbidities()` and for the `multimorbidity::charlson()`
 call.  The only issue that needs to be addressed is that
 `multimorbidity::charlson()` is expecting to only see diagnostic codes so we
@@ -69,14 +69,14 @@ tic <- Sys.time()
 
 medicalcoder_charlson_results <-
   medicalcoder::comorbidities(
-    data = mdcr,
-    id.vars = "patid",
+    data      = mdcr,
+    id.vars   = "patid",
     icd.codes = "code",
-    dx.var = "dx",
-    icdv.var = "icdv",
-    poa = 1L, # assume all codes are present on admission
+    dx.var    = "dx",
+    icdv.var  = "icdv",
+    poa       = 1L, # assume all codes are present-on-admission
     primarydx = 0L, # assume all codes are secondary diagnoses
-    method = "charlson_quan2011"
+    method    = "charlson_quan2011"
   )
 
 toc <- Sys.time()
@@ -243,7 +243,7 @@ And the enhanced ICD-9-CM codes are:
 
 # Conclusions
 
-`multimorbidity::charlson()` takes more time to evaluate the same data set than
+`multimorbidity::charlson()` takes more time to evaluate the same dataset than
 `medicalcoder::comorbidities()` and `multimorbidity::charlson()` reports several
 false negatives.
 
