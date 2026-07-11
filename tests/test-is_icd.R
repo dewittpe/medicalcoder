@@ -76,7 +76,7 @@ stopifnot(
 x <- tryCatchWarning(is_icd("7993"))
 stopifnot(inherits(x, "warning"))
 
-# For ICD-10 dx, if there is a dot, it need be the fourth character
+# For ICD-10 dx, if there is a dot, it needs to be the fourth character
 # C44.1121 (basal cell carcinoma of skn of right upper eyelide, including
 # canthus) is a valid code, so "C441121" should return TRUE and a dot anywere
 # other than the fourth character should be FALSE.
@@ -191,6 +191,14 @@ warn <-
   )
 stopifnot(inherits(warn, "warning"))
 
+stopifnot(
+  identical(is_icd("7993", icdv = 9L, dx = 1L, full.codes = FALSE), TRUE),
+  identical(is_icd("799.3", icdv = 9L, dx = 1L, compact.codes = FALSE), TRUE)
+)
+
+full_warning <- tryCatchWarning(is_icd("V01.0", warn.ambiguous = TRUE))
+stopifnot(inherits(full_warning, "warning"))
+
 ################################################################################
 # Warn if user provides a year before the earliest known year.  Note: ICD-9 in
 # the United states went into effect for
@@ -216,6 +224,9 @@ w3 <- tryCatchWarning(is_icd("516.3", year = 2000, src = c("cdc", "cms"), icdv =
 w4 <- tryCatchWarning(is_icd("516.3", year = 2000, src = c("cdc", "cms"), icdv = 10))
 w5 <- tryCatchWarning(is_icd("516.3", year = 2009, src = c("cdc", "cms"), icdv = 10))
 w6 <- tryCatchWarning(is_icd("516.3", year = 2009, src = c(       "cms"), icdv = 10))
+w7 <- tryCatchWarning(is_icd("516.3", year = 9999, icdv = 9))
+before_min_year <- suppressWarnings(is_icd("516.3", year = 1979, icdv = 9))
+after_max_year <- suppressWarnings(is_icd("516.3", year = 9999, icdv = 9))
 
 stopifnot(
   "Year before first known year generates an warning: w1" = inherits(w1, "warning"),
@@ -223,7 +234,10 @@ stopifnot(
   "year = 2000 does not generate a warning for icdv 9"    = !inherits(w3, "warning"),
   "year = 2000 generates a warning for icdv 10"           = inherits(w4, "warning"),
   "year = 2009 does not generate a warning for icdv 10"   = !inherits(w5, "warning"),
-  "year = 2009 does generate a warning for icdv 10 with src = cms" = inherits(w6, "warning")
+  "year = 2009 does generate a warning for icdv 10 with src = cms" = inherits(w6, "warning"),
+  "year before first known year returns FALSE" = identical(before_min_year, FALSE),
+  "year after last known year generates a warning" = inherits(w7, "warning"),
+  "year after last known year returns FALSE" = identical(after_max_year, FALSE)
 )
 
 

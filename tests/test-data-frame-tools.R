@@ -22,7 +22,7 @@ mdcr <- getNamespace("medicalcoder")
 # are all the dataframetools in the namespcae
 stopifnot(all(dataframetools %in% names(mdcr)))
 
-# check that there are not unaccounted for data sets.  the ..mdcr_internal_
+# check that there are not unaccounted for datasets.  the ..mdcr_internal_
 # prefix and .. suffix is expected.  noted in the data-raw/build_sysdata.R
 stopifnot(
   all(
@@ -690,6 +690,29 @@ outTBL <- getFromNamespace(x = "mdcr_full_outer_join", ns = "medicalcoder")(r, l
 outTBL <- outTBL[order(outTBL$x1), ]
 rownames(outTBL) <- NULL
 stopifnot(identical(outTBL, expected_tb))
+
+if (requireNamespace("dplyr", quietly = TRUE)) {
+  r_byxy <- dplyr::as_tibble(data.frame(x_id = c(1L, 2L), x = c("a", "b")))
+  l_byxy <- dplyr::as_tibble(data.frame(y_id = c(2L, 3L), y = c("B", "C")))
+  out_byxy <-
+    getFromNamespace(x = "mdcr_full_outer_join", ns = "medicalcoder")(
+      r_byxy,
+      l_byxy,
+      by.x = "x_id",
+      by.y = "y_id"
+    )
+  out_byxy <- out_byxy[order(out_byxy$x_id), ]
+  rownames(out_byxy) <- NULL
+  expected_byxy <-
+    dplyr::as_tibble(
+      data.frame(
+        x_id = c(1L, 2L, 3L),
+        x = c("a", "b", NA),
+        y = c(NA, "B", "C")
+      )
+    )
+  stopifnot(identical(out_byxy, expected_byxy))
+}
 
 ################################################################################
 # testing mdcr_unique

@@ -410,6 +410,243 @@ for (m in ms) {
 }
 
 ################################################################################
+# Argument precedence warnings and cumulative encounter validation
+
+warn_pccc_primarydx <-
+  tryCatchWarning(
+    comorbidities(
+      data = mdcr[1:10, ],
+      id.vars = "patid",
+      icd.codes = "code",
+      poa = 1L,
+      primarydx = 0L,
+      method = "pccc_v3.1"
+    )
+  )
+
+warn_icdv_conflict <-
+  tryCatchWarning(
+    comorbidities(
+      data = mdcr[1:10, ],
+      id.vars = "patid",
+      icd.codes = "code",
+      icdv.var = "icdv",
+      icdv = 10L,
+      poa = 1L,
+      method = "pccc_v3.1"
+    )
+  )
+
+warn_dx_conflict <-
+  tryCatchWarning(
+    comorbidities(
+      data = mdcr[1:10, ],
+      id.vars = "patid",
+      icd.codes = "code",
+      dx.var = "dx",
+      dx = 1L,
+      poa = 1L,
+      method = "pccc_v3.1"
+    )
+  )
+
+warn_poa_conflict <-
+  tryCatchWarning(
+    comorbidities(
+      data = data.frame(id = 1L, code = "C78.4", poa = 1L),
+      id.vars = "id",
+      icd.codes = "code",
+      poa.var = "poa",
+      poa = 0L,
+      method = "pccc_v3.1"
+    )
+  )
+
+warn_primarydx_conflict <-
+  tryCatchWarning(
+    comorbidities(
+      data = data.frame(id = 1L, code = "C78.4", primarydx = 0L),
+      id.vars = "id",
+      icd.codes = "code",
+      poa = 1L,
+      primarydx.var = "primarydx",
+      primarydx = 1L,
+      method = "charlson_quan2005"
+    )
+  )
+
+pccc_primarydx_complete <-
+  suppressWarnings(
+    comorbidities(
+      data = data.frame(id = 1L, code = "C78.4"),
+      id.vars = "id",
+      icd.codes = "code",
+      poa = 1L,
+      primarydx = 1L,
+      method = "pccc_v3.1"
+    )
+  )
+
+subconditions_complete <-
+  suppressWarnings(
+    comorbidities(
+      data = data.frame(id = 1L, code = "C78.4"),
+      id.vars = "id",
+      icd.codes = "code",
+      poa = 1L,
+      method = "charlson_quan2005",
+      subconditions = TRUE
+    )
+  )
+
+icdv_conflict_complete <-
+  suppressWarnings(
+    comorbidities(
+      data = data.frame(id = 1L, code = "C78.4", icdv = 10L),
+      id.vars = "id",
+      icd.codes = "code",
+      icdv.var = "icdv",
+      icdv = 9L,
+      dx = 1L,
+      poa = 1L,
+      primarydx = 0L,
+      method = "charlson_quan2005"
+    )
+  )
+
+dx_conflict_complete <-
+  suppressWarnings(
+    comorbidities(
+      data = data.frame(id = 1L, code = "C78.4", dx = 1L),
+      id.vars = "id",
+      icd.codes = "code",
+      icdv = 10L,
+      dx.var = "dx",
+      dx = 0L,
+      poa = 1L,
+      primarydx = 0L,
+      method = "charlson_quan2005"
+    )
+  )
+
+primarydx_default_complete <-
+  suppressWarnings(
+    comorbidities(
+      data = data.frame(id = 1L, code = "C78.4"),
+      id.vars = "id",
+      icd.codes = "code",
+      poa = 1L,
+      method = "charlson_quan2005"
+    )
+  )
+
+bad_enc <-
+  tryCatchError(
+    comorbidities(
+      data = data.frame(id = 1L, enc = I(list(list(1L))), code = "C78.4"),
+      id.vars = c("id", "enc"),
+      icd.codes = "code",
+      poa = 1L,
+      flag.method = "cumulative",
+      method = "pccc_v3.1"
+    )
+  )
+
+stopifnot(
+  inherits(warn_pccc_primarydx, "warning"),
+  warn_pccc_primarydx$message == "primarydx.var and primarydx are ignored when method = 'pccc_v3.1'",
+  inherits(warn_icdv_conflict, "warning"),
+  warn_icdv_conflict$message == "'icdv.var' and 'icdv' were both specified; ignoring 'icdv'",
+  inherits(warn_dx_conflict, "warning"),
+  warn_dx_conflict$message == "'dx.var' and 'dx' were both specified; ignoring 'dx'",
+  inherits(warn_poa_conflict, "warning"),
+  warn_poa_conflict$message == "'poa.var' and 'poa' were both specified; ignoring 'poa'",
+  inherits(warn_primarydx_conflict, "warning"),
+  warn_primarydx_conflict$message == "'primarydx.var' and 'primarydx' were both specified; ignoring 'primarydx'",
+  inherits(bad_enc, "error"),
+  grepl("must be numeric, character, Date, or POSIXt", bad_enc$message, fixed = TRUE),
+  inherits(pccc_primarydx_complete, "medicalcoder_comorbidities"),
+  inherits(subconditions_complete, "medicalcoder_comorbidities"),
+  inherits(icdv_conflict_complete, "medicalcoder_comorbidities"),
+  inherits(dx_conflict_complete, "medicalcoder_comorbidities"),
+  inherits(primarydx_default_complete, "medicalcoder_comorbidities")
+)
+
+################################################################################
+# Regex mapping paths for Charlson variants
+
+regex_data <-
+  data.frame(
+    id = seq_len(4L),
+    code = c("C78.4", "C78.4", "C78.4", "C78.4"),
+    icdv = c(10L, 10L, 10L, 10L),
+    dx = c(1L, 1L, 1L, 1L),
+    stringsAsFactors = FALSE
+  )
+
+regex_args <-
+  list(
+    data = regex_data,
+    id.vars = "id",
+    icd.codes = "code",
+    poa = 1L,
+    primarydx = 0L,
+    method = "charlson_quan2005",
+    mapping = "regex"
+  )
+
+regex_none <- do.call(comorbidities, regex_args)
+regex_dx <- do.call(comorbidities, c(regex_args, list(dx.var = "dx")))
+regex_icdv <- do.call(comorbidities, c(regex_args, list(icdv.var = "icdv")))
+regex_both <- do.call(comorbidities, c(regex_args, list(icdv.var = "icdv", dx.var = "dx")))
+
+stopifnot(
+  all(regex_none[["mst"]] == 1L),
+  all(regex_dx[["mst"]] == 1L),
+  all(regex_icdv[["mst"]] == 1L),
+  all(regex_both[["mst"]] == 1L)
+)
+
+name_collision <-
+  comorbidities(
+    data = data.frame(..medicalcoder_id.. = "C78.4", stringsAsFactors = FALSE),
+    icd.codes = "..medicalcoder_id..",
+    poa = 1L,
+    primarydx = 0L,
+    method = "charlson_quan2005"
+  )
+
+stopifnot(name_collision[["mst"]] == 1L, !("..medicalcoder_id.." %in% names(name_collision)))
+
+################################################################################
+# Zero-row inputs without id.vars exercise internally-created ID removal paths.
+
+zero_no_id <-
+  comorbidities(
+    data = mdcr[0, ],
+    icd.codes = "code",
+    poa = 1L,
+    method = "pccc_v3.1"
+  )
+
+zero_subconditions_no_id <-
+  comorbidities(
+    data = mdcr[0, ],
+    icd.codes = "code",
+    poa = 1L,
+    method = "pccc_v3.1",
+    subconditions = TRUE
+  )
+
+stopifnot(
+  inherits(zero_no_id, "medicalcoder_comorbidities"),
+  nrow(zero_no_id) == 0L,
+  inherits(zero_subconditions_no_id, "medicalcoder_comorbidities_with_subconditions"),
+  nrow(zero_subconditions_no_id[["conditions"]]) == 0L,
+  all(vapply(zero_subconditions_no_id[["subconditions"]], nrow, integer(1)) == 0L)
+)
+
+################################################################################
 # age.var handling for charlson with missing/ambiguous id.vars
 #
 # RE: https://github.com/dewittpe/medicalcoder/issues/43
