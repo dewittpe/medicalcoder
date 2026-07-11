@@ -7,11 +7,11 @@ library(medicalcoder)
 # run once, and only run when needed to update the data, so that a data.frame,
 # data.table, and dplyr are all available.
 #
-# To keep the disk space use down, use only a subset of the mdcr data set
+# To keep the disk space use down, use only a subset of the mdcr dataset
 
-### c1 <- comorbidities(data = mdcr, id.vars = "patid", icd.codes = "code", icdv.var = "icdv", dx.var = "dx", poa = 1, method = "charlson_quan2005")
-### c2 <- comorbidities(data = mdcr, id.vars = "patid", icd.codes = "code", icdv.var = "icdv", dx.var = "dx", poa = 1, primarydx = 0, method = "elixhauser_quan2005")
-### c3 <- comorbidities(data = mdcr, id.vars = "patid", icd.codes = "code", icdv.var = "icdv", dx.var = "dx", poa = 1, method = "pccc_v3.1")
+### c1 <- comorbidities(data = mdcr, id.vars = "patid", icd.codes = "code", icdv.var = "icdv", dx.var = "dx", poa = 1L, method = "charlson_quan2005")
+### c2 <- comorbidities(data = mdcr, id.vars = "patid", icd.codes = "code", icdv.var = "icdv", dx.var = "dx", poa = 1L, primarydx = 0L, method = "elixhauser_quan2005")
+### c3 <- comorbidities(data = mdcr, id.vars = "patid", icd.codes = "code", icdv.var = "icdv", dx.var = "dx", poa = 1L, method = "pccc_v3.1")
 ###
 ### set.seed(42)
 ### foo <- function(n, size = 100) {
@@ -45,7 +45,7 @@ mdcrDF  <- readRDS(file = "mdcr_subset_DF.rds")
 mdcrTBL <- readRDS(file = "mdcr_subset_TBL.rds")
 
 ################################################################################
-# apply the comorbidities_methods to the three data sets
+# apply the comorbidities_methods to the three datasets
 common_args <-
   list(id.vars = "patid", icdv.var = "icdv", icd.codes = "code", dx.var = "dx", poa = 1)
 
