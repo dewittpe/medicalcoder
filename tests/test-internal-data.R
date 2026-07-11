@@ -1,7 +1,7 @@
 library(medicalcoder)
 source("utilities.R")
 ################################################################################
-# testing the internal data sets - both the internal sets and the user visible
+# testing the internal datasets - both the internal sets and the user visible
 # versions.
 
 # The internal sets can to look for: this cannot be done dynamically
@@ -34,7 +34,7 @@ mdcr <- getNamespace("medicalcoder")
 # are all the expected sets in the medicalcoder namespace?
 stopifnot(all(internal_data_sets %in% names(mdcr)))
 
-# check that there are not unaccounted for data sets.  the ..mdcr_internal_
+# check that there are not unaccounted for datasets.  the ..mdcr_internal_
 # prefix and .. suffix is expected.  noted in the data-raw/build_sysdata.R
 stopifnot(
   all(
@@ -56,7 +56,7 @@ t03 <- !any(sapply(sapply(internal_data_sets, get, envir = mdcr), inherits, "tbl
 stopifnot(t01, t02, t03)
 
 ################################################################################
-# Verify the names and classes of the internal data sets
+# Verify the names and classes of the internal datasets
 expected_internal_names_and_classes <-
   list(
     "..mdcr_internal_charlson_codes.." = c(code_id = "integer", condition = "character", charlson_beyrer2021 = "integer", charlson_cdmf2019 = "integer", charlson_deyo1992 = "integer", charlson_ludvigsson2021 = "integer", charlson_mimicivcode = "integer", charlson_quan2005 = "integer", charlson_sundararajan2004 = "integer", charlson_quan2011 = "integer"),
@@ -99,7 +99,7 @@ for(n in names(current_names_and_classes)) {
 }
 
 ################################################################################
-# get the data sets via get_ methods
+# get the datasets via get_ methods
 
 # expected methods
 user_visible_get_methods <-

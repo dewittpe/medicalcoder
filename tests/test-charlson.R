@@ -146,7 +146,7 @@ stopifnot(
 
 mdcr2 <- mdcr
 
-# add a patient and row to this data set that will result in a false positive
+# add a patient and row to this dataset that will result in a false positive
 # for charlson_quan2005 when dx is not specified correctly.  This can be an
 # ICD-9 procedure code which has the same compact form as an ICD-9 diagnostic
 # code.  Found a good code for this.  ICD-9 5829, as a diagnostic code maps to
@@ -233,8 +233,8 @@ out06 <- do.call(comorbidities, c(cargs, list(icdv.var = "icdv", dx = 1       ))
 
 # all the outputs should be unique _except_ out04 and out06: charlson is only
 # defined on diagnostic codes, so when nothing is passed for dx.var and dx then
-# any diagnostic or procedure code will flag, in the same way that when dx = 1
-# will treat al the input codes as diagnostic and will have the same false
+# any diagnostic or procedure code will flag, in the same way that `dx = 1L`
+# will treat all the input codes as diagnostic and will have the same false
 # positives.
 stopifnot(
   !isTRUE(all.equal(out00, out01)),

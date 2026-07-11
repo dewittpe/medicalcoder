@@ -5,7 +5,7 @@ library(medicalcoder)
 # AHRQ SAS-compatible present-on-admission values
 #
 # The medicalcoder API expects numeric POA values.  AHRQ SAS POA indicators map
-# "Y" and "W" to present on admission, "N" and "U" to not present on admission,
+# "Y" and "W" to present-on-admission, "N" and "U" to not-present-on-admission,
 # and blank or missing values to missing.
 ################################################################################
 
@@ -79,10 +79,10 @@ row <- function(patid, column) {
   res[[column]][res[["patid"]] == patid]
 }
 
-# "W" is SAS-present and should behave like poa = 1.
+# "W" is SAS-present and should behave like `poa = 1L`.
 stopifnot(row("HF_W", "HF") == 1L)
 
-# "U" is SAS-not-present and should behave like poa = 0 for POA-required
+# "U" is SAS-not-present and should behave like `poa = 0L` for POA-required
 # conditions.
 stopifnot(row("HF_U", "HF") == 0L)
 
@@ -95,7 +95,7 @@ stopifnot(row("CBVD_POA_W", "CBVD") == 1L)
 stopifnot(row("CBVD_POA_U", "CBVD_POA") == 0L)
 stopifnot(row("CBVD_POA_U", "CBVD") == 0L)
 
-# CBVD sequela flags CBVD when present on admission, unless a CBVD_POA code is
+# CBVD sequela flags CBVD when present-on-admission, unless a CBVD_POA code is
 # present with a SAS-not-present value ("U"), matching the AHRQ CBVD_NPOA rule.
 stopifnot(row("CBVD_SQLA_W", "CBVD_SQLA") == 1L)
 stopifnot(row("CBVD_SQLA_W", "CBVD") == 1L)
