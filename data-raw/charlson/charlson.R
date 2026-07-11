@@ -63,6 +63,8 @@ get_codes <- function(pattern, dx, icdv) {
 }
 
 # get the set of ever billable codes that match the regex
+cores <- parallel::detectCores(logical = FALSE)
+cores <- if (is.na(cores)) 1L else min(cores, length(regex_patterns))
 codes <-
   pbapply::pblapply(
     regex_patterns,
@@ -71,7 +73,7 @@ codes <-
         full_code = get_codes(pattern = x[["pattern"]], dx = x[["dx"]], icdv = x[["icdv"]])
       )
     },
-    cl = min(parallel::detectCores(logical = FALSE), length(regex_patterns))
+    cl = cores
   )
 
 if (any(sapply(codes, nrow) == 0)) {
