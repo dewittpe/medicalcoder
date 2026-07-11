@@ -27,31 +27,31 @@ icd_codes[["code_id"]] <- seq_len(nrow(icd_codes))
 ###
 ### oldpccc <- rbind(
 ###   pccc::ccc(
-###     data = icd_codes[icd_codes$icdv ==  9 & icd_codes$dx == 1, c("code_id", "code")],
+###     data = icd_codes[icd_codes$icdv ==  9L & icd_codes$dx == 1L, c("code_id", "code")],
 ###     id = code_id,
 ###     dx_cols = "code",
-###     icdv = 9
+###     icdv = 9L
 ###   )
 ###   ,
 ###   pccc::ccc(
-###     data = icd_codes[icd_codes$icdv ==  9 & icd_codes$dx == 0, c("code_id", "code")],
+###     data = icd_codes[icd_codes$icdv ==  9L & icd_codes$dx == 0L, c("code_id", "code")],
 ###     id = code_id,
 ###     pc_cols = "code",
-###     icdv = 9
+###     icdv = 9L
 ###   )
 ###   ,
 ###   pccc::ccc(
-###     data = icd_codes[icd_codes$icdv ==  10 & icd_codes$dx == 1, c("code_id", "code")],
+###     data = icd_codes[icd_codes$icdv ==  10L & icd_codes$dx == 1L, c("code_id", "code")],
 ###     id = code_id,
 ###     dx_cols = "code",
-###     icdv = 10
+###     icdv = 10L
 ###   )
 ###   ,
 ###   pccc::ccc(
-###     data = icd_codes[icd_codes$icdv ==  10 & icd_codes$dx == 0, c("code_id", "code")],
+###     data = icd_codes[icd_codes$icdv ==  10L & icd_codes$dx == 0L, c("code_id", "code")],
 ###     id = code_id,
 ###     pc_cols = "code",
-###     icdv = 10
+###     icdv = 10L
 ###   )
 ### )
 ###
