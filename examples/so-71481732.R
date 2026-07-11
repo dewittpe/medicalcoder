@@ -13,7 +13,7 @@ reprex({
   packageVersion("medicalcoder")
   packageVersion("comorbidity")
 
-  # generate example data
+  # generate example records
   set.seed(1)
 
   x <-
@@ -27,10 +27,10 @@ reprex({
       data      = x,
       icd.codes = "code",
       id.vars   = c("pat_id"),
-      dx        = 1, # all ICD codes are diagnostic codes
-      poa       = 1, # assume all ICD codes are present-on-admission
-      primarydx = 0, # assume all ICD codes are secondary diagnoses
-      method    = "charlson_quan2005" # <family>_<variant>, support for Charlson, Elixhuaser, PCCC
+      dx        = 1L, # all ICD codes are diagnostic codes
+      poa       = 1L, # assume all ICD codes are present-on-admission
+      primarydx = 0L, # assume all ICD codes are secondary diagnoses
+      method    = "charlson_quan2005" # <family>_<variant>, support for Charlson, Elixhauser, PCCC
     )
 
   #' The return from `medicalcoder::comorbidities()` is a data.frame (or a
@@ -46,5 +46,3 @@ reprex({
 },
 venue = "so"
 )
-
-

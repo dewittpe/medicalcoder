@@ -24,11 +24,11 @@ reprex({
       data          = df,
       icd.codes     = "ICD10",
       id.vars       = c("ID"),
-      icdv          = 10, # all codes are ICD-10; use icdv.var to specify a column in data for mixed ICD version data.
-      dx            = 1, # all ICD codes are diagnostic codes; use dx.var to specify a column in data for mixed diagnostic and procedure codes
-      poa           = 1, # assume all ICD codes are present-on-admission; use poa.var to specify a column in data for dynamic data
-      primarydx     = 0, # assume all ICD codes are secondary diagnoses; use primarydx.var to specify individual codes are primary/secondary
-      method        = "charlson_quan2005", # <family>_<variant>, support for Charlson, Elixhuaser, PCCC
+      icdv          = 10L, # all codes are ICD-10; use icdv.var to specify a column in data for mixed ICD version data.
+      dx            = 1L, # all ICD codes are diagnostic codes; use dx.var to specify a column in data for mixed diagnostic and procedure codes
+      poa           = 1L, # assume all ICD codes are present-on-admission; use poa.var to specify a column in data for dynamic data
+      primarydx     = 0L, # assume all ICD codes are secondary diagnoses; use primarydx.var to specify individual codes are primary/secondary
+      method        = "charlson_quan2005", # <family>_<variant>, support for Charlson, Elixhauser, PCCC
       full.codes    = TRUE, # (default) match on full ICD codes (with dots, e.g. E78.5)
       compact.codes = TRUE # (default) match on compact ICD codes (no dots, e.g. E785)
     )
@@ -46,5 +46,4 @@ reprex({
 },
 venue = "so"
 )
-
 

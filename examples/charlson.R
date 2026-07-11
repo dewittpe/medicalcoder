@@ -1,5 +1,5 @@
 mdcr_charlson_flags <-
-  comorbidities(data = mdcr, id.vars = "patid", icd.codes = "code", poa = 1, method = "charlson_quan2005")
+  comorbidities(data = mdcr, id.vars = "patid", icd.codes = "code", poa = 1L, method = "charlson_quan2005")
 
 #charlson_index_scores
 
@@ -22,4 +22,4 @@ mdcr_charlson_flags <-
 #compact.codes = TRUE
 #flag.method   = "current"
 #poa.var       = NULL
-#poa           = 1
+#poa           = 1L
