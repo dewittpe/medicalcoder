@@ -53,8 +53,8 @@
 #'
 #' When `flag.method = "cumulative"` and neither
 #' `poa` nor `poa.var` is supplied, the first encounter for a condition is
-#' treated as `poa = 0`. Subsequent encounters for that condition are flagged as
-#' `poa = 1`.
+#' treated as `poa = 0L`. Subsequent encounters for that condition are flagged
+#' as `poa = 1L`.
 #'
 #' When `flag.method = "current"` and neither `poa` nor `poa.var` is supplied,
 #' then all codes will be considered present-on-admission.  If poa was assumed
@@ -87,7 +87,7 @@
 #'   defined in the function call.  For all methods there will be the following
 #'   columns:
 #'   * `num_cmrb` a count of comorbidities/conditions flagged
-#'   * `cmrb_flag` a 0/1 integer indicator for at least one
+#'   * `cmrb_flag` a `0L`/`1L` integer indicator for at least one
 #'   comorbidity/condition.
 #'
 #'   Additional columns:
@@ -103,11 +103,11 @@
 #'         the presence of a technology dependence code along with at least one
 #'         comorbidity being flagged by a diagnostic or procedure code.
 #'       * `<condition>_dxpr_only`: the condition was flagged due to the
-#'         presence of a non-technology dependent diagnostic or procedure code
+#'         presence of a non-technology-dependent diagnostic or procedure code
 #'         only.
 #'       * `<condition>_tech_only`: the condition was flagged due to the
-#'         presence of a technology dependent code only and at least one other
-#'         comorbidity was flagged by a non-technology dependent code.
+#'         presence of a technology-dependent code only and at least one other
+#'         comorbidity was flagged by a non-technology-dependent code.
 #'       * `<condition>_dxpr_and_tech`: The patient had both diagnostic or
 #'         procedure codes and a technology dependence code for the condition.
 #'
@@ -244,7 +244,7 @@ comorbidities.data.frame <- function(data,
     }
     pn <- which(id.vars %in% ..protected_names..)
     if (length(pn)) {
-      stop(sprintf("The value(s) \"%s\" in 'id.vars' are protected name(s).  It is ill-advised to use a protected name as medicalcoder is expecting to use them internally to apply the comorbidity algorithms.  Sorry for the inconvenience, but you will need to rename the column(s) in your data set.  Protected names that you should not use for 'id.vars' are: %s.",
+      stop(sprintf("The value(s) \"%s\" in 'id.vars' are protected name(s).  It is ill-advised to use a protected name as medicalcoder is expecting to use them internally to apply the comorbidity algorithms.  Sorry for the inconvenience, but you will need to rename the column(s) in your dataset.  Protected names that you should not use for 'id.vars' are: %s.",
         paste(id.vars[pn], collapse = ", "),
         paste(..protected_names.., collapse = ", ")
         )
@@ -267,7 +267,7 @@ comorbidities.data.frame <- function(data,
     pn <- poa.var %in% ..protected_names..
     if (pn) {
       stop(
-        sprintf("The value \"%s\" in 'poa.var' is a protected name.  It is ill-advised to use a protected name as medicalcoder is expecting to use them internally to apply the comorbidity algorithms.  Sorry for the inconvenience, but you will need to rename the column in your data set.  Protected names that you should not use for 'poa.var' are: %s.",
+        sprintf("The value \"%s\" in 'poa.var' is a protected name.  It is ill-advised to use a protected name as medicalcoder is expecting to use them internally to apply the comorbidity algorithms.  Sorry for the inconvenience, but you will need to rename the column in your dataset.  Protected names that you should not use for 'poa.var' are: %s.",
           poa.var,
           paste(..protected_names.., collapse = ", ")
         )
@@ -290,7 +290,7 @@ comorbidities.data.frame <- function(data,
     pn <- primarydx.var %in% ..protected_names..
     if (pn) {
       stop(
-        sprintf("The value \"%s\" in 'primarydx.var' is a protected name.  It is ill-advised to use a protected name as medicalcoder is expecting to use them internally to apply the comorbidity algorithms.  Sorry for the inconvenience, but you will need to rename the column in your data set.  Protected names that you should not use for 'primarydx.var' are: %s.",
+        sprintf("The value \"%s\" in 'primarydx.var' is a protected name.  It is ill-advised to use a protected name as medicalcoder is expecting to use them internally to apply the comorbidity algorithms.  Sorry for the inconvenience, but you will need to rename the column in your dataset.  Protected names that you should not use for 'primarydx.var' are: %s.",
           primarydx.var,
           paste(..protected_names.., collapse = ", ")
         )
@@ -687,9 +687,9 @@ comorbidities.data.frame <- function(data,
     )
 
   # Retain only meaningful rows. If a condition is reported more than once with
-  # the same information except for poa, keep one row with poa = 1 when one is
+  # the same information except for poa, keep one row with poa = 1L when one is
   # available. Primary-diagnosis status is part of the grouping key, so rows
-  # with primarydx = 0 and primarydx = 1 are retained separately and POA is
+  # with primarydx = 0L and primarydx = 1L are retained separately and POA is
   # resolved independently within each status. Downstream Charlson and
   # Elixhauser processing removes primary-diagnosis rows. Consequently, when a
   # condition is represented by both primary and non-primary diagnoses, it is
@@ -723,7 +723,7 @@ comorbidities.data.frame <- function(data,
     id.vars2 <- id.vars[-length(id.vars)]
     encid <- id.vars[length(id.vars)]
 
-    # find the first occurance of each condition
+    # find the first occurrence of each condition
     grps <- c(id.vars2, "condition")
     byconditions <- c("condition")
     if (startsWith(method, "pccc")) {
@@ -736,14 +736,14 @@ comorbidities.data.frame <- function(data,
     keep <- !mdcr_duplicated(tmp, by = grps)
     foc <- mdcr_subset(tmp, keep)
 
-    # add the first occurrence on to the cmrb data.frame
+    # add the first occurrence to the cmrb data.frame
     foc <-
       mdcr_left_join(
         x = cmrb,
         y = foc,
         by = c(id.vars2, encid, byconditions)
       )
-    foc <- mdcr_setnames(foc, old = encid, new = "first_occurrance")
+    foc <- mdcr_setnames(foc, old = encid, new = "first_occurrence")
 
     iddf2 <-
       mdcr_inner_join(
@@ -765,29 +765,29 @@ comorbidities.data.frame <- function(data,
              function(y) {
                rtn <- mdcr_left_join(x = iddf2, y = y, by = c(id.vars2))
                rtn <- mdcr_subset(rtn, i = !is.na(rtn[["condition"]]))
-               i <- rtn[[encid]] >= rtn[["first_occurrance"]]
+               i <- rtn[[encid]] >= rtn[["first_occurrence"]]
                mdcr_subset(rtn, i = i)
              })
 
     cmrb <- do.call(rbind, foc)
 
-    # Carry condition forward after first occurrence: set poa to 1 and
-    # primarydx to 0 on later encounters so downstream POA filtering keeps
+    # Carry condition forward after first occurrence: set poa to 1L and
+    # primarydx to 0L on later encounters so downstream POA filtering keeps
     # all post-first-occurrence rows and the first-occurrence row only if poa =
-    # 1 (via poa.var or poa) for the first-occurrence
-    idx <- cmrb[[encid]] > cmrb[["first_occurrance"]]
+    # 1L (via poa.var or poa) for the first occurrence.
+    idx <- cmrb[[encid]] > cmrb[["first_occurrence"]]
     cmrb[[poa.var]][idx] <- 1L
     if (!is.null(primarydx.var)) {
-      cmrb[[primarydx.var]][cmrb[[encid]] > cmrb[["first_occurrance"]]] <- 0L
+      cmrb[[primarydx.var]][cmrb[[encid]] > cmrb[["first_occurrence"]]] <- 0L
     }
-    cmrb <- mdcr_set(cmrb, j = "first_occurrance", value =  NULL)
+    cmrb <- mdcr_set(cmrb, j = "first_occurrence", value =  NULL)
 
     cmrb <- mdcr_unique(cmrb)
   }
 
   ##############################################################################
-  # retain only the row for present on admission for pccc and charlson.
-  # elixhauser conditions may or may not need poa, so do not subset in that
+  # retain only present-on-admission rows for PCCC and Charlson.
+  # Elixhauser conditions may or may not need POA, so do not subset in that
   # case.
   if (startsWith(method, "charlson") | startsWith(method, "pccc")) {
     cmrb <- mdcr_subset(cmrb, i = cmrb[[poa.var]] == 1L)
@@ -831,6 +831,8 @@ comorbidities.data.frame <- function(data,
   } else if (startsWith(method, "elixhauser")) {
     ccc <- .elixhauser(id.vars = id.vars, iddf = iddf, cmrb = cmrb, poa.var = poa.var, primarydx.var = primarydx.var, method = method)
   } else {
+    # As of v0.9.0 this guard cannot be reached through comorbidities():
+    # method is constrained by match.arg() before dispatch reaches this branch.
     stop(sprintf("method '%s' has not yet been implemented", method))
   }
 
@@ -943,6 +945,8 @@ map_by_regex <- function(uc, ptrns, icd.codes, by_x, by_y) {
     if (length(y) > 0L) {
       which(y)
     } else {
+      # As of v0.9.0 this branch cannot be reached through comorbidities():
+      # map_by_regex() returns before this point when no regex patterns exist.
       integer(0)
     }
   })
