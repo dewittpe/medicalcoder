@@ -1,10 +1,10 @@
 source('utilities.R')
 ################################################################################
 library(medicalcoder)
-# build and test the longitudinal flagging of conditions.  The renal code will
-# be provided twice, once as poa and once as not poa.   This should flag on the
-# encounter as expected.  the duplication is here to see if there is a any bug
-# in the code that would get messed up by a 0 and a 1 poa for a conditon on an
+# Build and test the longitudinal flagging of conditions. The renal code will
+# be provided twice, once as POA and once as not POA. This should flag on the
+# encounter as expected. The duplication is here to catch any bug in the code
+# that would get confused by `poa = 0L` and `poa = 1L` for a condition on an
 # encounter.
 
 # C78.4: Cancer

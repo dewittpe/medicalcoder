@@ -6,7 +6,7 @@ if (!requireNamespace("data.table", quietly = TRUE)) {
 
 library(data.table)
 
-# it is possible for a end user to modify the internal objects, this is a R
+# it is possible for an end user to modify the internal objects; this is an R
 # problem. For example, if you use data.table::setDT on datasets::mtcars you can
 # modify the object. The following example worked as of 29 Aug 2025 in R 4.5.1
 # and datasets_4.5.1.
@@ -16,11 +16,11 @@ library(data.table)
 #> stopifnot(all(mtcars[["cyl"]] == 1L))
 #> stopifnot(all(datasets::mtcars[["cyl"]] == 1L))
 
-# medicalcoder tries to prevent this for its lookup tables.  Importally, :w
+# medicalcoder tries to prevent this for its lookup tables. Importantly,
 #
-# several user friendly data sets in .onLoad.  If a end user tries to
-# modify the non-exported internal objects, only accessable via ::: then the
-# namespace is loaded _before_ anything else can be done and the data sets used
+# several user-friendly datasets are built in .onLoad. If an end user tries to
+# modify the non-exported internal objects, only accessible via :::, then the
+# namespace is loaded _before_ anything else can be done and the datasets used
 # within the package should be preserved.
 setDT(medicalcoder:::..mdcr_internal_icd_codes..)
 x <- medicalcoder:::..mdcr_internal_icd_codes..
@@ -29,14 +29,14 @@ x <- medicalcoder:::..mdcr_internal_icd_codes..
 x[, icdv := 8L]
 stopifnot(medicalcoder:::..mdcr_internal_icd_codes..[, all(icdv == 8L)])
 
-# but the good news is that when the namespace was loaded the data set that
+# but the good news is that when the namespace was loaded the dataset that
 # needed to be provided to the user and is called within the package via
 # get_icd_codes is not modified!
 x <- medicalcoder::get_icd_codes()
 stopifnot(x[["icdv"]] %in% c(9L, 10L))
 
 # now, what about getting at the built objects?
-# first, the ..mdcr_data_env.. is not accessable other than by :::
+# first, the ..mdcr_data_env.. is not accessible other than by :::
 library(medicalcoder)
 stopifnot(medicalcoder:::..mdcr_internal_icd_codes..[, all(icdv == 8L)])  # still bad, but...
 
@@ -48,7 +48,7 @@ stopifnot(inherits(x, "error"))
 
 x <- medicalcoder:::..mdcr_data_env..
 stopifnot(is.environment(x))
-# and modifing the data will error
+# and modifying the data will error
 t <- tryCatchError(x$icd_codes[["icdv"]] <- 11L)
 stopifnot(inherits(t, "error"))
 
@@ -67,7 +67,7 @@ stopifnot(
    is.data.table(medicalcoder:::..mdcr_data_env..$icd_codes)
 )
 
-# so now, end user could modify the object and the return from get_icd_codes()
+# so now, an end user could modify the object and the return from get_icd_codes()
 # will reflect this change
 stopifnot(all(get_icd_codes()[["icdv"]] %in% c(9L, 10L)))
 medicalcoder:::..mdcr_data_env..$icd_codes[, icdv := 98L]
@@ -78,7 +78,7 @@ stopifnot(all(get_icd_codes()[["icdv"]] == 98L))
 #
 # unserialize(serialize(x, connection = NULL))
 #
-# to ensure end users only get deep copies of the chached data sets.  One quick
+# to ensure end users only get deep copies of the cached datasets. One quick
 # check.
 detach("package:medicalcoder", unload = TRUE)
 library(medicalcoder)

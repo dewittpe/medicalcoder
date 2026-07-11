@@ -15,8 +15,8 @@ capture_warning_and_value <- function(expr) {
 
 # Verifies cumulative flagging behavior for Charlson when poa/poa.var is omitted.
 # Expected default: first encounter for a condition is NOT flagged (poa defaults
-# to 0), but the condition carries forward and is flagged on later encounters
-# (poa set to 1 after first occurrence). Explicit poa = 1 should flag all
+# to `0L`), but the condition carries forward and is flagged on later encounters
+# (`poa` set to `1L` after first occurrence). Explicit `poa = 1L` should flag all
 # encounters.
 
 df <- data.frame(
@@ -28,7 +28,7 @@ df <- data.frame(
   stringsAsFactors = FALSE
 )
 
-# Baseline: explicit poa = 1 flags the condition under cumulative logic
+# Baseline: explicit `poa = 1L` flags the condition under cumulative logic
 explicit_poa <- comorbidities(
   data        = df,
   icd.codes   = "code",

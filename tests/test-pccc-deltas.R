@@ -1,6 +1,6 @@
 source('utilities.R')
 # test the construction and results of the icd to pccc mappings.  the code to
-# build the data sets is in
+# build the datasets is in
 # inst/mappings/icd-codes-and-mappings.R
 #
 # ANY CHANGES IN THE CODES AND THESE TESTS MAY IMPACT THE WRITE UP AND THESE TESTS
