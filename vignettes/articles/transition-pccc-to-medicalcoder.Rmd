@@ -1,5 +1,5 @@
 ---
-title: "Transition From The pccc Package to the medicalcoder Package"
+title: "Transition From the _pccc_ Package to the _medicalcoder_ Package"
 output:
  rmarkdown::html_vignette:
    toc: true
@@ -35,7 +35,7 @@ Major differences between `pccc::ccc()` and `medicalcoder::comorbidities()`:
 
    * `pccc::ccc()` expects a data.frame with each row representing one patient
      and/or encounter.  There is a column for each diagnostic and procedure code.
-     For example, a data set were the max number of diagnostic codes is six and
+     For example, a dataset where the maximum number of diagnostic codes is six and
      the max number of procedure codes is five, an entry for patient XX could
      look like the following:
 
@@ -49,7 +49,7 @@ Major differences between `pccc::ccc()` and `medicalcoder::comorbidities()`:
     where each row is single ICD code.  For example, the same record for patient
     XX above would be three columns below, one row for each code, one column to
     identify the patient/encounter, and a column to denote if the code is a
-    diagnostic (dx = 1) or procedure (dx = 0).
+    diagnostic (`dx = 1L`) or procedure (`dx = 0L`).
 
 ```
   patid    code  dx
@@ -128,15 +128,15 @@ library(medicalcoder)
 
 ## Prepare Data
 
-We'll use the `mdcr` data set from the medicalcoder package.
+We'll use the `mdcr` dataset from the _medicalcoder_ package.
 
 ```{r}
 head(mdcr)
 ```
 
-We will split the data set into two sets, one for ICD-9 and one for ICD-10.
+We will split the dataset into two sets, one for ICD-9 and one for ICD-10.
 
-Using the tidyverse we can build the needed input data sets
+Using the tidyverse packages, we can build the needed input datasets.
 
 ```{r}
 mdcr_tbls <-
@@ -157,7 +157,7 @@ mdcr_tbls <-
   )
 ```
 
-A data.table approach:
+A `data.table` approach:
 
 ```{r}
 mdcr_DTs <- data.table::as.data.table(data.table::copy(mdcr))
@@ -191,7 +191,7 @@ pccc_9_results_tbl <-
     id = patid,
     dx_cols = grep("dx", names(mdcr_tbls[[1]]), value = TRUE),
     pc_cols = grep("pr", names(mdcr_tbls[[1]]), value = TRUE),
-    icdv = 9
+    icdv = 9L
   )
 
 pccc_10_results_tbl <-
@@ -200,7 +200,7 @@ pccc_10_results_tbl <-
     id = patid,
     dx_cols = grep("dx", names(mdcr_tbls[[2]]), value = TRUE),
     pc_cols = grep("pr", names(mdcr_tbls[[2]]), value = TRUE),
-    icdv = 10
+    icdv = 10L
   )
 
 pccc_results_tbl <-
@@ -224,7 +224,7 @@ pccc_9_results_DT <-
     id = patid,
     dx_cols = grep("dx", names(mdcr_DTs[[1]]), value = TRUE),
     pc_cols = grep("pr", names(mdcr_DTs[[1]]), value = TRUE),
-    icdv = 9
+    icdv = 9L
   )
 
 pccc_10_results_DT <-
@@ -233,7 +233,7 @@ pccc_10_results_DT <-
     id = patid,
     dx_cols = grep("dx", names(mdcr_DTs[[2]]), value = TRUE),
     pc_cols = grep("pr", names(mdcr_DTs[[2]]), value = TRUE),
-    icdv = 10
+    icdv = 10L
   )
 
 pccc_results_DT <- data.table::rbindlist(list(pccc_9_results_DT, pccc_10_results_DT))
@@ -248,7 +248,7 @@ pccc_ccc_dt_time <- difftime(toc, tic)
 ```
 
 A quick sanity check that we have the same results for both the tidyverse and
-data.table input data sets.
+`data.table` input datasets.
 ```{r}
 stopifnot(
   isTRUE(
@@ -296,7 +296,7 @@ old_vs_new <-
   )
 ```
 
-For the `mdcr` dataaet, the any condition flag (`ccc_flag` from `pccc::ccc()` and
+For the `mdcr` dataset, the any-condition flag (`ccc_flag` from `pccc::ccc()` and
 `cmrb_flag` from `medicalcoder::comorbidities()`) are identical.
 
 ```{r}
@@ -362,7 +362,7 @@ The `misc` column is the "miscellaneous" category reported by
 `medicalcoder::comorbidities()` and is not reported by `pccc::ccc()`.  The
 existence of the `misc` column and some differences in the returned results
 between `pccc::ccc()` version 1.0.7, and `medicalcoder::comorbidities()` is due
-to how medicalcoder is implemented.
+to how _medicalcoder_ is implemented.
 
 ```{r}
 old_vs_new
@@ -385,15 +385,15 @@ GitHub links:
 * [ICD-10 Z94](https://github.com/CUD2V/pccc/issues/55)
 
 
-# Additional Benefits of medicalcoder
+# Additional Benefits of _medicalcoder_
 
 ## Computation Performance
 
-medicalcoder was built such that only base R is needed to install and use the
-package.  That said, there is specific support for the tidyverse and data.table.
-For example, the same calls as above but with either a tibble or a data.table
-instead of a simple base R data.table take less time to compute.  The
-differences here are small.  See
+_medicalcoder_ was built such that only base R is needed to install and use the
+package. That said, there is specific support for tidyverse packages and
+_data.table_. For example, the same calls as above but with either a `tibble` or
+a `data.table` instead of a simple base R `data.frame` take less time to
+compute. The differences here are small.  See
 [benchmarking](https://github.com/dewittpe/medicalcoder/tree/main/benchmarking)
 for more details.
 
@@ -402,13 +402,13 @@ mdcr_tbl <- tibble::as_tibble(mdcr)
 tic <- Sys.time()
 medicalcoder_results <-
   medicalcoder::comorbidities(
-    data = mdcr_tbl,
-    id.vars = "patid",
+    data      = mdcr_tbl,
+    id.vars   = "patid",
     icd.codes = "code",
-    icdv.var = "icdv",
-    dx.var = "dx",
-    method = "pccc_v2.0",
-    poa = 1
+    icdv.var  = "icdv",
+    dx.var    = "dx",
+    method    = "pccc_v2.0",
+    poa       = 1L
   )
 toc <- Sys.time()
 medicalcoder_tbl_time <- difftime(toc, tic, units = "secs")
@@ -417,13 +417,13 @@ mdcr_DT <- data.table::as.data.table(data.table::copy(mdcr))
 tic <- Sys.time()
 medicalcoder_results <-
   medicalcoder::comorbidities(
-    data = mdcr_DT,
-    id.vars = "patid",
+    data      = mdcr_DT,
+    id.vars   = "patid",
     icd.codes = "code",
-    icdv.var = "icdv",
-    dx.var = "dx",
-    method = "pccc_v2.0",
-    poa = 1
+    icdv.var  = "icdv",
+    dx.var    = "dx",
+    method    = "pccc_v2.0",
+    poa       = 1L
   )
 toc <- Sys.time()
 medicalcoder_dt_time <- difftime(toc, tic, units = "secs")
@@ -468,13 +468,13 @@ with PCCC will flag these conditions as well as the primary conditions.
 ```{r}
 with_subconditions <-
   medicalcoder::comorbidities(
-    data = mdcr,
-    id.vars = "patid",
-    icd.codes = "code",
-    icdv.var = "icdv",
-    dx.var = "dx",
-    method = "pccc_v2.0",
-    poa = 1,
+    data          = mdcr,
+    id.vars       = "patid",
+    icd.codes     = "code",
+    icdv.var      = "icdv",
+    dx.var        = "dx",
+    method        = "pccc_v2.0",
+    poa           = 1L,
     subconditions = TRUE
   )
 
@@ -482,7 +482,7 @@ with_subconditions
 ```
 
 The summary includes counts and percentages as before.  Additionally, for a
-subconditon, the percentage is reported as percent of the cohort and as the
+subcondition, the percentage is reported as percent of the cohort and as the
 percent of those with the primary condition.
 
 ```{r}
@@ -499,10 +499,10 @@ cvd_and_metabolic$subcondition[is.na(cvd_and_metabolic$subcondition)] <- "Any su
 
 kableExtra::kbl(
   x = cvd_and_metabolic[, c("subcondition", "count", "percent_of_cohort", "percent_of_those_with_condition")],
-  caption = "Patients with cardiovascular and/or metabolic conditions and the associated with_subconditions.",
+  caption = "Patients with cardiovascular and/or metabolic conditions and the associated subconditions.",
   row.names = FALSE,
   digits = 2,
-  col.names = c("Subcondition", "Patients", "% of chort", "% of those with the primary condition")
+  col.names = c("Subcondition", "Patients", "% of cohort", "% of those with the primary condition")
 ) |>
 kableExtra::kable_styling(bootstrap_options = "striped") |>
 kableExtra::pack_rows(index = table(cvd_and_metabolic$condition))
