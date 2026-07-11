@@ -19,6 +19,7 @@
 ^logo/*
 ^.*\\.tar\\.gz$
 ^.*\\.Rcheck/*
+^covr-report-.*\\.html$
 ^vignettes/articles/*
 (^|/)\\.DS_Store$
 ^shiny/*
