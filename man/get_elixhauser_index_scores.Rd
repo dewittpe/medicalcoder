@@ -10,8 +10,9 @@ get_elixhauser_index_scores()
 A \code{data.frame} with the following columns:
 \itemize{
 \item \code{condition}: Character vector of the conditions
-\item \code{index}: Character vector indicating if the score is for the mortality or the readmission index score
-\item \verb{elixhauser_<variant>}: integer vector of the scores
+\item \code{index}: Character vector indicating whether the score is for the
+mortality or readmission index.
+\item \verb{elixhauser_<variant>}: Integer vector of the scores.
 }
 }
 \description{
@@ -27,9 +28,9 @@ str(get_elixhauser_index_scores())
 \itemize{
 \item \code{\link[=get_elixhauser_codes]{get_elixhauser_codes()}} for the lookup table of ICD codes mapping to the
 Elixhauser comorbidities.
-\item \code{\link[=get_elixhauser_poa]{get_elixhauser_poa()}} for the lookup table of the conditions which do an
+\item \code{\link[=get_elixhauser_poa]{get_elixhauser_poa()}} for the lookup table of the conditions which do and
 do not require associated ICD codes to be present-on-admission to flag the
 comorbidity.
-\item \code{\link[=comorbidities]{comorbidities()}} for applying comorbidity algorithms to a data set.
+\item \code{\link[=comorbidities]{comorbidities()}} for applying comorbidity algorithms to a dataset.
 }
 }

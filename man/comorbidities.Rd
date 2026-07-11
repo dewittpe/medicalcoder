@@ -53,7 +53,7 @@ allowed with a warning because they are sorted lexicographically.}
 
 \item{icdv.var}{Character scalar naming the column in \code{data} that indicates
 the ICD version. If present it must be numeric. Rows with values other than
-\code{9} or \code{10} will not be used to map ICD codes to comorbidities.
+\code{9L} or \code{10L} will not be used to map ICD codes to comorbidities.
 \code{icdv.var} takes precedence over \code{icdv} if both are provided.}
 
 \item{icdv}{An integer value of \code{9L} or \code{10L} indicating that all
@@ -61,12 +61,12 @@ the ICD version. If present it must be numeric. Rows with values other than
 (with a warning) if \code{icdv.var} is provided.}
 
 \item{dx.var}{Character scalar naming the column in \code{data} that indicates
-diagnostic (\code{1}) vs procedural (\code{0}) codes. If present it must be numeric.
-Rows with values other than \code{0} or \code{1} will not be used to map ICD codes to
+diagnostic (\code{1L}) vs procedural (\code{0L}) codes. If present it must be numeric.
+Rows with values other than \code{0L} or \code{1L} will not be used to map ICD codes to
 comorbidities. \code{dx.var} takes precedence over \code{dx} if both are provided.}
 
 \item{dx}{An integer indicating that all \code{data[[icd.codes]]} are
-diagnostic (\code{1}) or procedure (\code{0}) codes. Ignored (with a
+diagnostic (\code{1L}) or procedure (\code{0L}) codes. Ignored (with a
 warning) if \code{dx.var} is provided.}
 
 \item{poa.var}{Character scalar naming the column with present-on-admission
@@ -79,7 +79,7 @@ present-on-admission. Elixhauser has a mix of conditions; some require
 present-on-admission while others do not. \code{poa.var} takes precedence over
 \code{poa} if both are provided.}
 
-\item{poa}{Integer scalar \code{0} or \code{1}. Use when all \code{icd.codes} share the same
+\item{poa}{Integer scalar \code{0L} or \code{1L}. Use when all \code{icd.codes} share the same
 present-on-admission status. Ignored with a warning if \code{poa} and \code{poa.var}
 are both provided.}
 
@@ -92,8 +92,8 @@ or not (\code{0L}). Primary diagnosis is used only for Elixhauser and Charlson
 comorbidities and is ignored when the method is a PCCC variant.
 \code{primarydx.var} takes precedence over \code{primarydx} if both are provided.}
 
-\item{primarydx}{An integer value of \code{0} or \code{1}. If \code{0},
-treat all codes as non-primary diagnoses; if \code{1}, treat all codes as
+\item{primarydx}{An integer value of \code{0L} or \code{1L}. If \code{0L},
+treat all codes as non-primary diagnoses; if \code{1L}, treat all codes as
 primary diagnoses. Ignored, with a warning, if \code{primarydx.var} is provided.}
 
 \item{flag.method}{When \code{flag.method = "current"} (default) only codes
@@ -128,7 +128,7 @@ defined in the function call.  For all methods there will be the following
 columns:
 \itemize{
 \item \code{num_cmrb} a count of comorbidities/conditions flagged
-\item \code{cmrb_flag} a 0/1 integer indicator for at least one
+\item \code{cmrb_flag} a \code{0L}/\code{1L} integer indicator for at least one
 comorbidity/condition.
 }
 
@@ -146,11 +146,11 @@ presence of either a diagnostic or procedure code, or was flagged due to
 the presence of a technology dependence code along with at least one
 comorbidity being flagged by a diagnostic or procedure code.
 \item \verb{<condition>_dxpr_only}: the condition was flagged due to the
-presence of a non-technology dependent diagnostic or procedure code
+presence of a non-technology-dependent diagnostic or procedure code
 only.
 \item \verb{<condition>_tech_only}: the condition was flagged due to the
-presence of a technology dependent code only and at least one other
-comorbidity was flagged by a non-technology dependent code.
+presence of a technology-dependent code only and at least one other
+comorbidity was flagged by a non-technology-dependent code.
 \item \verb{<condition>_dxpr_and_tech}: The patient had both diagnostic or
 procedure codes and a technology dependence code for the condition.
 }
@@ -217,8 +217,8 @@ when possible.
 
 When \code{flag.method = "cumulative"} and neither
 \code{poa} nor \code{poa.var} is supplied, the first encounter for a condition is
-treated as \code{poa = 0}. Subsequent encounters for that condition are flagged as
-\code{poa = 1}.
+treated as \code{poa = 0L}. Subsequent encounters for that condition are flagged
+as \code{poa = 1L}.
 
 When \code{flag.method = "current"} and neither \code{poa} nor \code{poa.var} is supplied,
 then all codes will be considered present-on-admission.  If poa was assumed
@@ -249,7 +249,7 @@ pccc_v3.1_results <-
                 dx.var = "dx",
                 method = "pccc_v3.1",
                 flag.method = 'current',
-                poa = 1)
+                poa = 1L)
 summary(pccc_v3.1_results)
 
 pccc_v3.1_subcondition_results <-
@@ -259,7 +259,7 @@ pccc_v3.1_subcondition_results <-
                 dx.var = "dx",
                 method = "pccc_v3.1",
                 flag.method = 'current',
-                poa = 1,
+                poa = 1L,
                 subconditions = TRUE)
 summary(pccc_v3.1_subcondition_results)
 
@@ -270,7 +270,7 @@ charlson_results <-
                 dx.var = "dx",
                 method = "charlson_quan2011",
                 flag.method = 'current',
-                poa = 1)
+                poa = 1L)
 summary(charlson_results)
 
 elixhauser_results <-
@@ -279,9 +279,9 @@ elixhauser_results <-
                 id.vars = "patid",
                 dx.var = "dx",
                 method = "elixhauser_ahrq2025",
-                primarydx = 1,
+                primarydx = 1L,
                 flag.method = 'current',
-                poa = 1)
+                poa = 1L)
 summary(elixhauser_results)
 }
 \references{

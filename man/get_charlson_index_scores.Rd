@@ -10,8 +10,9 @@ get_charlson_index_scores()
 A \code{data.frame} with the following columns:
 \itemize{
 \item \code{condition}: Character vector of the conditions
-\item \code{index}: Character vector indicating if the score is for the mortality or the readmission index score
-\item \verb{charlson_<variant>}:  the index scores for the variant
+\item \code{index}: Character vector indicating whether the score is for the
+mortality or readmission index.
+\item \verb{charlson_<variant>}: The index scores for the variant.
 }
 }
 \description{
@@ -28,6 +29,6 @@ str(get_charlson_index_scores())
 \itemize{
 \item \code{\link[=get_charlson_codes]{get_charlson_codes()}} for a lookup table of the ICD codes mapping to the
 Charlson comorbidities.
-\item \code{\link[=comorbidities]{comorbidities()}} for applying comorbidity algorithms to a data set.
+\item \code{\link[=comorbidities]{comorbidities()}} for applying comorbidity algorithms to a dataset.
 }
 }

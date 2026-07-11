@@ -11,7 +11,8 @@ A \code{data.frame} with the following columns:
 \itemize{
 \item \code{condition}: Character vector of the conditions
 \item \code{desc}: Character vector with a verbose description of the condition
-\item \code{poa_required}: Integer indicators if the code needs to present on admission to be considered a comorbidity
+\item \code{poa_required}: Integer indicator for whether the code must be
+present-on-admission to be considered a comorbidity.
 \item \verb{elixhauser_<variant>}: indicators for the Elixhauser \verb{<variant>}
 }
 }
@@ -31,6 +32,6 @@ str(get_elixhauser_poa())
 condition scores for mortality and readmission indices.
 \item \code{\link[=get_elixhauser_codes]{get_elixhauser_codes()}} for the lookup table of ICD codes mapping to the
 Elixhauser comorbidities.
-\item \code{\link[=comorbidities]{comorbidities()}} for applying comorbidity algorithms to a data set.
+\item \code{\link[=comorbidities]{comorbidities()}} for applying comorbidity algorithms to a dataset.
 }
 }

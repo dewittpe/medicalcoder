@@ -5,11 +5,11 @@
 \alias{mdcr}
 \title{Synthetic Data}
 \format{
-\code{mdcr} is a \code{data.frame} with 4 columns, Each row is for one ICD id.
+\code{mdcr} is a \code{data.frame} with 4 columns. Each row is for one ICD code.
 \itemize{
 \item \code{patid}: patient identifier, integer values
-\item \code{icdv}: ICD version; integer values, 9 or 10
-\item \code{dx}: indicator column for ICD diagnostic (1) or procedure (0) codes
+\item \code{icdv}: ICD version; integer values, \code{9L} or \code{10L}
+\item \code{dx}: indicator column for ICD diagnostic (\code{1L}) or procedure (\code{0L}) codes
 \item \code{code}: ICD code; character values
 }
 }

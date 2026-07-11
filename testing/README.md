@@ -2,12 +2,12 @@
 
 
 
-# Testing medicalcoder
+# Testing _medicalcoder_
 
 Along with GitHub Actions and local tests, the workflow in this directory will
-test a recent local build of `medicalcoder` against every major and minor
-release of R from 3.5.0 through the latest version, with, and without, suggested
-packages.  The tests are done in [Docker](https://www.docker.com/) images based
+test a recent local build of _medicalcoder_ against every major and minor
+release of R from 3.5.0 through the latest version, with and without suggested
+packages. The tests are run in [Docker](https://www.docker.com/) images based
 on the [R-base](https://hub.docker.com/_/r-base) images.
 
 ## System Requirements:
@@ -26,8 +26,23 @@ run from this directory.
 # Last Testing Results
 
 
+```
+#> Warning in `[.data.table`(DT, , `:=`(checkdir, NULL)): Tried to assign NULL to
+#> column 'checkdir', but this column does not exist to remove
+#> Error in `data.table::fifelse()`:
+#> ! 'no' is of type list but 'yes' is character. Please make all arguments have the same type.
+#> Error in `data.table::fifelse()`:
+#> ! 'no' is of type list but 'yes' is character. Please make all arguments have the same type.
+#> Error in `data.table::fifelse()`:
+#> ! 'no' is of type list but 'yes' is character. Please make all arguments have the same type.
+#> Error in `setkeyv()`:
+#> ! some columns are not in the data.table: [rversion]
+```
 
 The green tiles indicate no notes, no warning, no error.
 
-![plot of chunk testing-matrix](figure/testing-matrix-1.png)
 
+```
+#> Error in `melt.data.table()`:
+#> ! One or more values in 'id.vars' is invalid.
+```

@@ -89,13 +89,13 @@ and became a header in 2012–2015.
 # Some ICD-9 diagnostic codes
 x <- c("136.2", "718.60", "642.02")
 
-is_icd(x, icdv =  9, dx = 1)
-is_icd(x, icdv =  9, dx = 0)
-is_icd(x, icdv = 10, dx = 1)
-is_icd(x, icdv = 10, dx = 0)
+is_icd(x, icdv =  9L, dx = 1L)
+is_icd(x, icdv =  9L, dx = 0L)
+is_icd(x, icdv = 10L, dx = 1L)
+is_icd(x, icdv = 10L, dx = 0L)
 
-is_icd(x, icdv = 9, dx = 1, headerok = TRUE)
-is_icd(x, icdv = 9, dx = 1, year = 2006)
+is_icd(x, icdv = 9L, dx = 1L, headerok = TRUE)
+is_icd(x, icdv = 9L, dx = 1L, year = 2006)
 
 ################################################################################
 # ICD code with, or without a dot.  The ICD-9 diagnostic code 799.3 and ICD-9
@@ -107,8 +107,8 @@ is_icd(x, icdv = 9, dx = 1, year = 2006)
 x <- c("7993", ".7993", "7.993", "79.93", "799.3", "7993.")
 data.frame(
   x,
-  dx = is_icd(x, icdv = 9, dx = 1),
-  pr = is_icd(x, icdv = 9, dx = 0)
+  dx = is_icd(x, icdv = 9L, dx = 1L),
+  pr = is_icd(x, icdv = 9L, dx = 0L)
 )
 
 ################################################################################
@@ -135,16 +135,16 @@ is_icd("516.3", year = 2011)
 is_icd("516.3", year = 2015, ever.assignable = TRUE)
 
 ################################################################################
-# Consiser the string E010
-#   - This could be a ICD-9-CM full code
-#   - Could be a ICD-10-CM compact code
+# Consider the string E010
+#   - This could be an ICD-9-CM full code
+#   - Could be an ICD-10-CM compact code
 lookup_icd_codes("E010")
 subset(get_icd_codes(with.descriptions = TRUE), grepl("^E010$", code))
 
 is_icd("E010")
-is_icd("E010", icdv = 9) # FALSE because it is a header code and was never assignable
-is_icd("E010", icdv = 9, ever.assignable = TRUE) # FALSE
-is_icd("E010", icdv = 9, headerok = TRUE) # TRUE
+is_icd("E010", icdv = 9L) # FALSE because it is a header code and was never assignable
+is_icd("E010", icdv = 9L, ever.assignable = TRUE) # FALSE
+is_icd("E010", icdv = 9L, headerok = TRUE) # TRUE
 }
 \seealso{
 \itemize{

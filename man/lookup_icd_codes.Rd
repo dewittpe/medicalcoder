@@ -32,11 +32,11 @@ the decimal point.}
 A \code{data.frame} with one or more rows per input, including columns
 \itemize{
 \item \code{match_type}: did the input match a full or compact code
-\item \code{icdv}: icd version (9 or 10)
-\item \code{dx}: diagnostic code (1) or procedure code (0)
+\item \code{icdv}: ICD version (\code{9L} or \code{10L})
+\item \code{dx}: diagnostic code (\code{1L}) or procedure code (\code{0L})
 \item \code{full_code}: the full code string
-\item \code{code}: the compact codes string
-\item \code{src}: the source - CMS, CDC, or WHO.
+\item \code{code}: the compact code string
+\item \code{src}: the source CMS, CDC, WHO, IHACPA, or Socialstyrelsen
 \item year ranges (\verb{known_*}, \verb{assignable_*}).
 }
 }

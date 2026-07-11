@@ -9,8 +9,10 @@ get_charlson_codes()
 \value{
 A \code{data.frame} with the following columns:
 \itemize{
-\item \code{icdv}: Integer vector indicating if the code is from ICD-9 or ICD-10
-\item \code{dx}: Integer vector.  1 if the code is a diagnostic, (ICD-9-CM, ICD-10-CM, ICD-10-AM, ICD-10-SE, WHO, CDC Mortality), or 0 if the code is procedural (ICD-9-PCS, ICD-10-PCS)
+\item \code{icdv}: Integer vector indicating if the code is from ICD-9 or ICD-10.
+\item \code{dx}: Integer vector. \code{1L} if the code is diagnostic
+(ICD-9-CM, ICD-10-CM, ICD-10-AM, ICD-10-SE, WHO, CDC Mortality), or \code{0L}
+if the code is procedural (ICD-9-PCS, ICD-10-PCS).
 \item \code{full_code}: Character vector with the ICD code and any relevant decimal point
 \item \code{code}: Character vector with the compact ICD code
 \item \code{condition}: Character vector of the conditions
@@ -34,6 +36,6 @@ str(get_charlson_codes())
 \item \code{\link[=get_icd_codes]{get_icd_codes()}} for the lookup table of all ICD codes.
 \item \code{\link[=get_pccc_codes]{get_pccc_codes()}} for the lookup table of ICD codes used for the PCCC.
 \item \code{\link[=get_elixhauser_codes]{get_elixhauser_codes()}} for the lookup table of ICD codes used for the Elixhauser comorbidities.
-\item \code{\link[=comorbidities]{comorbidities()}} for applying comorbidity algorithms to a data set.
+\item \code{\link[=comorbidities]{comorbidities()}} for applying comorbidity algorithms to a dataset.
 }
 }

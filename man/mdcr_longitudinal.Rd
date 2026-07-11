@@ -11,7 +11,7 @@ codes which could match to procedure codes.
 \itemize{
 \item \code{patid}: patient identifier, integer values
 \item \code{date}: date the diagnostic code was recorded
-\item \code{icdv}: ICD version 9 or 10, integer valued
+\item \code{icdv}: ICD version \code{9L} or \code{10L}, integer valued
 \item \code{code}: ICD codes; character values
 }
 }

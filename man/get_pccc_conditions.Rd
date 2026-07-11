@@ -7,17 +7,17 @@
 get_pccc_conditions()
 }
 \value{
-a \code{data.frame} with the following columns
+A \code{data.frame} with the following character columns:
 \itemize{
-\item \code{condition}: (character) syntax valid name for the condition
-\item \code{subcondition}: (character) syntax valid name for the subcondition
-\item \code{condition_label}: (character) human readable label for the condition
-\item \code{subcondition_label}: (character) human readable label for the
+\item \code{condition}: Syntactically valid name for the condition
+\item \code{subcondition}: Syntactically valid name for the subcondition
+\item \code{condition_label}: Human-readable label for the condition
+\item \code{subcondition_label}: Human-readable label for the
 subcondition
 }
 }
 \description{
-Retrieve a copy of internal lookup tables for the syntax valid and human
+Retrieve a copy of internal lookup tables for the syntactically valid and human
 readable labels of the Pediatric Complex Chronic Conditions (PCCC) conditions
 and subconditions.
 }
@@ -28,6 +28,6 @@ get_pccc_conditions()
 \seealso{
 \itemize{
 \item \code{\link[=get_pccc_codes]{get_pccc_codes()}} for the lookup table of ICD codes used for the PCCC.
-\item \code{\link[=comorbidities]{comorbidities()}} for applying comorbidity algorithms to a data set.
+\item \code{\link[=comorbidities]{comorbidities()}} for applying comorbidity algorithms to a dataset.
 }
 }

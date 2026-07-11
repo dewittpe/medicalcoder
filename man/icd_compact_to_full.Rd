@@ -21,7 +21,7 @@ A character vector the same length as \code{x}.
 }
 \description{
 Take an assumed ICD compact code string and convert to a full code based on
-the ICD version (9 or 10) and type (diagnostic or procedure).  This method
+the ICD version (\code{9L} or \code{10L}) and type (diagnostic or procedure). This method
 only formats strings and does not validate the code(s).
 }
 \seealso{
