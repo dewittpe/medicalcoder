@@ -26,7 +26,7 @@
   [mimiciv-code](https://github.com/MIT-LCP/mimic-code/blob/57069783095e7770e66ea97da264c0200078ddbf/mimic-iv/concepts/comorbidity/charlson.sql)
 
 * Add `charlson_beyrer2021`, a Charlson style comorbidity based on U.S.
-  ICD-10-CM diagnostic and ICD-10-PCS (procedure) codes from [Beyrey et al.
+  ICD-10-CM diagnostic and ICD-10-PCS (procedure) codes from [Beyrer et al.
   (2021)](https://doi.org/10.1002/pds.5204)
 
 * Add ICD-10-AM (Australian Modification) to the ICD database
