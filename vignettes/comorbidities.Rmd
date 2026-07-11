@@ -33,11 +33,11 @@ packageVersion("medicalcoder")
 # Comorbidity Algorithms
 
 There are three comorbidity algorithms, each with several variants,
-implemented in the medicalcoder package:
+implemented in the _medicalcoder_ package:
 
 1. Pediatric Complex Chronic Condition System (PCCC)
    a. Version 2.0 [@feudtner2014pediatric]
-       i. `pccc_v2.0` is consistent with the older R package pccc (v1.0.7) [@feinstein2018pccc;@dewitt2026pccc].
+       i. `pccc_v2.0` is consistent with the older R package _pccc_ (v1.0.7) [@feinstein2018pccc;@dewitt2026pccc].
        ii. `pccc_v2.1` modifies the set of ICD codes to be more consistent with documentation and other implementations of v2.0.
 
    b. Version 3.0 [@feinstein2024pediatric]
@@ -69,7 +69,7 @@ implemented in the medicalcoder package:
       iii. `elixhauser_quan2005`: [@quan2005]
 
 **IMPORTANT NOTE:** Elixhauser 1998 and AHRQ Web used diagnosis-related
-group (DRG) codes as part of the methods.  The medicalcoder
+group (DRG) codes as part of the methods. The _medicalcoder_
 package _does not_ use DRG codes.  This is consistent with the way these
 methods were implemented in @quan2005.
 
@@ -93,7 +93,7 @@ The focus of this vignette is to highlight the general use of the
 
 ```{r, label = 'test-that-the-args-have-not-changed', include = FALSE}
 # IF THIS FAILS YOU NEED TO MAKE SURE THE DOCUMENTATION IN THIS VIGNETTE IS
-# UPTO DATE
+# UP TO DATE
 # dput(capture.output(args(comorbidities)))
 stopifnot(
   capture.output(args(comorbidities))  ==
@@ -116,15 +116,15 @@ args(comorbidities)
 
 We highlight a general concept for the arguments.  Note that several arguments
 are in pairs, e.g., `dx.var` and `dx` (used for denoting if codes are
-diagnostic or procedural), or `poa.var` and `poa` (used for denoting if a codes
-are present on admission).  The `.var` version is the name of a variable within
+diagnostic or procedural), or `poa.var` and `poa` (used for denoting whether
+codes are present-on-admission).  The `.var` version is the name of a variable within
 the `data.frame` passed into the `data` argument.  The version without `.var` is
 a default value to be applied to the entirety of `data`. We will see some
 examples where this is useful.
 
 The `data` element is expected to be a `data.frame`, or at least something that
 inherits the `data.frame` class.  The format is expected to be a 'long' format:
-one ICD code per row.  Two example data sets in the package show the general
+one ICD code per row.  Two example datasets in the package show the general
 expected form of the `data`.
 
 ```{r label = "example-data"}
@@ -134,14 +134,14 @@ head(mdcr_longitudinal)
 
 # When are conditions flagged?
 
-Whether or not the code is present on admission (POA) is useful when applying
+Whether or not the code is present-on-admission (POA) is useful when applying
 the comorbidity algorithms and considering if the patient has a comorbidity at
 the start of an encounter, or if the condition is a result of the current
 hospitalization.
 
 Implementation of Elixhauser comorbidities for 2022 and beyond [@ahrqicd10]
-explicitly define the use of present on admission flags for specific conditions
-(see the `poa_required` flag reported in the data set returned by
+explicitly define the use of present-on-admission flags for specific conditions
+(see the `poa_required` flag reported in the dataset returned by
 `get_elixhauser_poa()`).
 ```{r}
 str(get_elixhauser_poa())
@@ -175,17 +175,17 @@ From @quan2005:
 > researchers make decisions on a condition-by-condition basis of whether to
 > include particular variables, depending on their study objectives.
 
-PCCC does not explicitly note the if POA is required.
+PCCC does not explicitly state whether POA is required.
 
-medicalcoder has been built to consider POA for all comorbidity algorithms.
+_medicalcoder_ has been built to consider POA for all comorbidity algorithms.
 
-End users can use a 0/1 indicator variable in the data set to report
+End users can use a `0L`/`1L` indicator variable in the dataset to report
 which codes are POA via the function argument `poa.var`.  If all the codes are
 to be considered POA or not, the functional argument `poa` can be used to set a
-common status without adding a column to the input data set.
+common status without adding a column to the input dataset.
 
-Additionally, medicalcoder provides a `flag.method` argument for longitudinal
-data sets. The default `flag.method = "current"` evaluates each encounter on
+Additionally, _medicalcoder_ provides a `flag.method` argument for longitudinal
+datasets. The default `flag.method = "current"` evaluates each encounter on
 its own. The `flag.method = "cumulative"` option also considers
 prior encounters for the same patient or grouping.
 
@@ -193,7 +193,7 @@ prior encounters for the same patient or grouping.
 ICD-10 diagnostic codes C78.4 and I50.40 which maps to a cancer and heart
 failure (cardiovascular disease) comorbidity respectively for PCCC, Charlson,
 and Elixhauser. For demonstration, we also flag POA with the second report of
-I50.40 intentionally marked as not present on admission.
+I50.40 intentionally marked as not present-on-admission.
 
 ```{r, label = "example-setup", include = FALSE}
 lookup_icd_codes(c("C78.4", "I50.40"))
@@ -243,7 +243,7 @@ args <-
        icd.codes = "code",
        id.vars = c("patid", "encid"),
        icdv = 10L,
-       dx = 1
+       dx = 1L
   )
 args_current_poa0    <- c(args, poa = 0L,        flag.method = "current")
 args_current_poa1    <- c(args, poa = 1L,        flag.method = "current")
@@ -296,12 +296,12 @@ tab <-
     row.names = FALSE,
     escape = FALSE,
     align = rep("c", nrow(rtn)),
-    caption = "Indicators for when a comorbidity is flagged based on the algorithm, present on admission (poa), and flag.method. The two ICD codes, C78.4 and I50.40, map to cancer and cardiovascular disease respectively."
+    caption = "Indicators for when a comorbidity is flagged based on the algorithm, present-on-admission (poa), and flag.method. The two ICD codes, C78.4 and I50.40, map to cancer and cardiovascular disease respectively."
   )
 tab <-
   footnote(
     tab,
-    symbol = c("Present on Admission"),
+    symbol = c("Present-on-admission"),
     general = "C78.4 does not need to be POA to count for Elixhauser. I50.40 does need to be POA to count for Elixhauser."
   )
 
@@ -318,11 +318,11 @@ tab
 
 When `flag.method = "cumulative"` is used and you do
 *not* supply `poa` or `poa.var`, `comorbidities()` treats the first encounter
-where a condition appears as `poa = 0` and carries that condition forward with
-`poa = 1` on later encounters.
+where a condition appears as `poa = 0L` and carries that condition forward with
+`poa = 1L` on later encounters.
 
 When `flag.method = "current"` and you do *not* supply `poa` or `poa.var`,
-`comorbidities()` treats all ICD codes as `poa = 1`.
+`comorbidities()` treats all ICD codes as `poa = 1L`.
 
 For `flag.method = "cumulative"`, the last column named in `id.vars` is the
 encounter order column. It must not contain missing values, must not be a
@@ -336,8 +336,8 @@ End users can quickly assess the lookup table for all the ICD codes associated
 with a comorbidity algorithm using the `get_<comorbidity>_codes` functions.
 Each `data.frame` has columns for the ICD version, diagnostic or procedure flag,
 the compact code, and the full code.  A column for the condition and other
-method specific flags are provided.  Lastly, there are indicator columns for the
-variant of each method
+method-specific flags are provided. Lastly, there are indicator columns for the
+variant of each method.
 
 ```{r, label = "get-codes"}
 str(get_pccc_codes())
@@ -345,9 +345,9 @@ str(get_charlson_codes())
 str(get_elixhauser_codes())
 ```
 
-End users should be aware that just because an ICD code exists in a data
-set does not mean that the patient has the condition.  For Elixhauser, the
-presence on admission is important to consider.  For PCCC version 3.0 and 3.1,
+End users should be aware that just because an ICD code exists in a dataset does
+not mean that the patient has the condition.  For AHRQ variants of Elixhauser, the
+present-on-admission status of the ICD is considered.  For PCCC version 3.0 and 3.1,
 tech dependencies on their own are insufficient to flag a condition (see
 `vignette(topic = "pccc", package = "medicalcoder")`).
 
@@ -363,7 +363,7 @@ cdmf_eg <-
   merge(x = mdcr,
         y = subset(get_charlson_codes(),
                    condition %in% c("aids", "hiv") &
-                   charlson_cdmf2019 == 1),
+                   charlson_cdmf2019 == 1L),
         by = c("icdv", "dx", "code"))
 data.table::setDT(cdmf_eg)
 
