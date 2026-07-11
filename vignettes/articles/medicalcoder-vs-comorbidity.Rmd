@@ -673,14 +673,14 @@ mdcr_results <-
 cmrb_results <-
   rbind(
     comorbidity::comorbidity(
-      x       = subset(all_dx_codes, icdv =  = 9),
+      x       = subset(all_dx_codes, icdv == 9),
       id      = "code_id",
       code    = "code",
       map     = "elixhauser_icd9_quan",
       assign0 = TRUE
     ),
     comorbidity::comorbidity(
-      x       = subset(all_dx_codes, icdv =  = 10),
+      x       = subset(all_dx_codes, icdv == 10),
       id      = "code_id",
       code    = "code",
       map     = "elixhauser_icd10_quan",
