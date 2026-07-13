@@ -26,23 +26,7 @@ run from this directory.
 # Last Testing Results
 
 
-```
-#> Warning in `[.data.table`(DT, , `:=`(checkdir, NULL)): Tried to assign NULL to
-#> column 'checkdir', but this column does not exist to remove
-#> Error in `data.table::fifelse()`:
-#> ! 'no' is of type list but 'yes' is character. Please make all arguments have the same type.
-#> Error in `data.table::fifelse()`:
-#> ! 'no' is of type list but 'yes' is character. Please make all arguments have the same type.
-#> Error in `data.table::fifelse()`:
-#> ! 'no' is of type list but 'yes' is character. Please make all arguments have the same type.
-#> Error in `setkeyv()`:
-#> ! some columns are not in the data.table: [rversion]
-```
 
 The green tiles indicate no notes, no warning, no error.
 
-
-```
-#> Error in `melt.data.table()`:
-#> ! One or more values in 'id.vars' is invalid.
-```
+![plot of chunk testing-matrix](figure/testing-matrix-1.png)

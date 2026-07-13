@@ -74,7 +74,7 @@ DT <-
   ) |>
   rbindlist()
 
-DT[, suggests := fifelse(grepl("R-.+without-suggests.+$", DT$checkdir), "Without Suggested Packages", "With Suggested Packages")]
+DT[, suggests := fifelse(grepl("R-.+without-suggests.+$", DT$checkdir), "Without\nSuggested Packages", "With\nSuggested Packages")]
 DT[, checkdir := NULL]
 DT <- unique(DT)
 
