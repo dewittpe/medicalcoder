@@ -2,6 +2,8 @@
 
 ## medicalcoder 0.9.0
 
+CRAN release: 2026-07-11
+
 ### New Features
 
 - [`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md)
