@@ -215,6 +215,17 @@ the codes are to be considered POA or not, the functional argument `poa`
 can be used to set a common status without adding a column to the input
 dataset.
 
+Some source datasets encode POA or diagnosis-type information together
+with the ICD code. [For
+example](https://github.com/dewittpe/medicalcoder/issues/35#issuecomment-4440738819),
+Australian linked hospital data may store values such as `2I490`, where
+the leading `2` indicates that the condition did not arise during the
+episode of care, and `I490` is the compact ICD-10-AM code for I49.0.
+Decode these source-specific values before calling
+[`comorbidities()`](http://www.peteredewitt.com/medicalcoder/reference/comorbidities.md):
+pass the ICD code without the POA prefix via `icd.codes`, and pass a
+separate `0L`/`1L`/`NA` indicator via `poa.var`.
+
 Additionally, *medicalcoder* provides a `flag.method` argument for
 longitudinal datasets. The default `flag.method = "current"` evaluates
 each encounter on its own. The `flag.method = "cumulative"` option also
