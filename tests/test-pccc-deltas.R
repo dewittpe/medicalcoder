@@ -24,7 +24,7 @@ stopifnot("pccc_pers" %in% ls())
 
 # Expected counts in pccc_pers
 stopifnot(
-  pccc_pers[per ==  1, N == 226566],
+  pccc_pers[per ==  1, N == 226893],
   pccc_pers[per ==  2, N ==     44],
   pccc_pers[per ==  3, N ==      0],
   pccc_pers[per ==  4, N ==      0],
@@ -68,7 +68,7 @@ stopifnot(
   pccc_pers[per == 42, N ==      0],
   pccc_pers[per == 43, N ==     86],
   pccc_pers[per == 44, N ==      0],
-  pccc_pers[per == 45, N ==   1884],
+  pccc_pers[per == 45, N ==   1897],
   pccc_pers[per == 46, N ==      0],
   pccc_pers[per == 47, N ==      3],
   pccc_pers[per == 48, N ==     25],
@@ -81,7 +81,7 @@ stopifnot(
 # Expected counts in pccc_deltas, this should be the same as pccc_pers, but you
 # need to count the rows.
 stopifnot(
-  pccc_deltas[per ==  1, .N == 226566],
+  pccc_deltas[per ==  1, .N == 226893],
   pccc_deltas[per ==  2, .N ==     44],
   pccc_deltas[per ==  3, .N ==      0],
   pccc_deltas[per ==  4, .N ==      0],
@@ -125,7 +125,7 @@ stopifnot(
   pccc_deltas[per == 42, .N ==      0],
   pccc_deltas[per == 43, .N ==     86],
   pccc_deltas[per == 44, .N ==      0],
-  pccc_deltas[per == 45, .N ==   1884],
+  pccc_deltas[per == 45, .N ==   1897],
   pccc_deltas[per == 46, .N ==      0],
   pccc_deltas[per == 47, .N ==      3],
   pccc_deltas[per == 48, .N ==     25],
@@ -436,6 +436,21 @@ if (interactive()) {
 # Tests related to PER 44
 
 # Tests related to PER 45
+# FY 2027 adds 13 ICD-10-CM codes, increasing the count from 1884 to 1897.
+# These have the same mapping in v2.0, v2.1, and v3.1, but no mapping in v3.0:
+# C78.31 - Secondary malignant neoplasm of larynx
+# C78.32 - Secondary malignant neoplasm of pharynx
+# I42.00 - Dilated cardiomyopathy, unspecified
+# I42.01 - Familial-genetic dilated cardiomyopathy
+# I42.09 - Other dilated cardiomyopathy
+# I42.81 - Arrhythmogenic cardiomyopathy
+# I42.89 - Other cardiomyopathies not elsewhere classified
+# I47.22 - Catecholaminergic polymorphic ventricular tachycardia [CPVT]
+# I49.81 - Brugada syndrome
+# I49.82 - Ventricular bigeminy
+# I49.89 - Other specified cardiac arrhythmias not elsewhere classified
+# K74.0A - Hepatic fibrosis, moderate fibrosis
+# K76.83 - Intestinal failure-associated liver disease
 
 # Tests related to PER 46
 

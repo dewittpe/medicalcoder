@@ -354,7 +354,7 @@ icdv ; dx ; chapter ; subchapter ; code_range_start ; code_range_end ; pattern  
 10   ; 1  ;         ; K40-K46    ; K40              ; K46            ; ^K4                ; K40-K46 Hernia
 10   ; 1  ;         ; K50-K52    ; K50              ; K52            ; ^K5[0-2]           ; K50-K52 Noninfective enteritis and colitis
 10   ; 1  ;         ; K55-K64    ; K55              ; K64            ; ^K(5[5-9]|6[0-4])  ; K55-K64 Other diseases of intestines
-10   ; 1  ;         ; K65-K68    ; K65              ; K68            ; ^K6[5-8]           ; K65-K68 Diseases of peritoneum
+10   ; 1  ;         ; K65-K6A    ; K65              ; K6A            ; ^K6[5-8A]          ; K65-K6A Diseases of peritoneum
 10   ; 1  ;         ; K70-K77    ; K70              ; K77            ; ^K7                ; K70-K77 Diseases of liver
 10   ; 1  ;         ; K80-K87    ; K80              ; K87            ; ^K8                ; K80-K87 Disorders of gallbladder, biliary tract and pancreas
 10   ; 1  ;         ; K90-K93    ; K90              ; K93            ; ^K9                ; K90-K93 Other diseases of the digestive system
@@ -641,6 +641,7 @@ icdv ; dx ; chapter ; subchapter ; code_range_start ; code_range_end ; pattern  
 10   ; 0  ;         ; X2         ; X2               ; X2             ; ^X2                ; X2 Cardiovascular System
 10   ; 0  ;         ; X9         ; X9               ; X9             ; ^X9                ; X9 Ear, Nose, Sinus
 10   ; 0  ;         ; XD         ; XD               ; XD             ; ^XD                ; XD Gastrointestinal System
+10   ; 0  ;         ; XE         ; XE               ; XE             ; ^XE                ; XE Physiological Systems and Anatomical Regions
 10   ; 0  ;         ; XF         ; XF               ; XF             ; ^XF                ; XF Hepatobiliary System and Pancreas
 10   ; 0  ;         ; XH         ; XH               ; XH             ; ^XH                ; XH Skin, Subcutaneous Tissue, Fascia and Breast
 10   ; 0  ;         ; XK         ; XK               ; XK             ; ^XK                ; XK Muscles, Tendons, Bursae and Ligaments

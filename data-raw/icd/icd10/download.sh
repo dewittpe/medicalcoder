@@ -18,6 +18,15 @@ wget --no-check-certificate\
 #
 mkdir -p cms
 
+# FY 2027
+wget --no-check-certificate\
+  -O cms/cms_2027_pr.zip\
+  https://www.cms.gov/files/zip/2027-icd-10-pcs-order-file-long-abbreviated-titles.zip
+
+wget --no-check-certificate\
+  -O cms/cms_2027_dx.zip\
+  https://www.cms.gov/files/zip/2027-code-descriptions-tabular-order.zip
+
 # FY 2026 - Addendum effective April 1 2026
 wget --no-check-certificate\
   -O cms/cms_2026_pr.zip\
@@ -28,13 +37,13 @@ wget --no-check-certificate\
   https://www.cms.gov/files/zip/april-1-2026-code-descriptions-tabular-order.zip
 
 # FY 2026 - original for October 1 2025 - March 31 2026
-#wget --no-check-certificate\
-#  -O cms/cms_2026_pr.zip\
-#  https://www.cms.gov/files/zip/2026-icd-10-pcs-order-file-long-and-abbreviated-titles.zip
-#
-#wget --no-check-certificate\
-#  -O cms/cms_2026_dx.zip\
-#  https://www.cms.gov/files/zip/2026-code-descriptions-tabular-order.zip
+wget --no-check-certificate\
+  -O cms/cms_2026_pr-oct-1-2025.zip\
+  https://www.cms.gov/files/zip/2026-icd-10-pcs-order-file-long-and-abbreviated-titles.zip
+
+wget --no-check-certificate\
+  -O cms/cms_2026_dx-oct-1-2025.zip\
+  https://www.cms.gov/files/zip/2026-code-descriptions-tabular-order.zip
 
 # FY 2025
 wget --no-check-certificate\

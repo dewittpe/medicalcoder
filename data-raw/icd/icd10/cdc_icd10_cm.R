@@ -273,6 +273,20 @@ if (interactive()) {
 ###       0 revisions to long title only
 ###       0 revisions to short title only
 
+######
+# 2027
+#
+if (interactive()) {
+  dir(file.path(cdc_icd10cm_dir, "2027"))
+  unzip(file.path(cdc_icd10cm_dir, "2027", "icd10cm-code-descriptions-2027.zip"), list = TRUE)
+}
+
+unzip(file.path(cdc_icd10cm_dir, "2027/icd10cm-code-descriptions-2027.zip"),
+      exdir = file.path(cdc_tempdir, "2027"),
+      junkpaths = TRUE,
+      overwrite = TRUE
+)
+
 ################################################################################
 # scan all the files - Just for 2014 and beyond, the same as for CMS
 cdc_files <-
@@ -296,7 +310,8 @@ cdc_files <-
        cdc_dx_2023 = file.path(cdc_tempdir, "2023", "icd10cm-order-2023.txt"),
        cdc_dx_2024 = file.path(cdc_tempdir, "2024", "icd10cm-order-2024.txt"),
        cdc_dx_2025 = file.path(cdc_tempdir, "2025", "icd10cm-order-2025.txt"),
-       cdc_dx_2026 = file.path(cdc_tempdir, "2026", "icd10cm-order-2026.txt")
+       cdc_dx_2026 = file.path(cdc_tempdir, "2026", "icd10cm-order-2026.txt"),
+       cdc_dx_2027 = file.path(cdc_tempdir, "2027", "icd10cm-order-2027.txt")
       ) |>
   lapply(scan, what = "character", sep = "\n", quiet = !interactive())
 

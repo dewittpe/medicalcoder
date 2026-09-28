@@ -24,7 +24,7 @@ source("utilities.R")
 ################################################################################
 # Data from CMS
 cms_files <- list.files(path = "cms", pattern = "cms_.*\\.zip", full.name = TRUE)
-cms_tempdir <- file.path(tempdir(), "/cms")
+cms_tempdir <- file.path(tempdir(), "cms")
 dir.create(cms_tempdir, showWarnings = FALSE)
 for (f in cms_files) {
   suppressWarnings(unzip(f, exdir = cms_tempdir, junkpaths = TRUE, overwrite = FALSE))
@@ -36,7 +36,8 @@ if (interactive()) {
 
 cms_files <-
   list(
-      cms_dx_2026 = "icd10cm_order_2026.txt"
+      cms_dx_2027 = "icd10cm_order_2027.txt"
+    , cms_dx_2026 = "icd10cm_order_2026.txt"
     , cms_dx_2025 = "icd10cm_order_2025.txt"
     , cms_dx_2024 = "icd10cm_order_2024.txt"
     , cms_dx_2023 = "icd10cm_order_2023.txt"
@@ -49,6 +50,7 @@ cms_files <-
     , cms_dx_2016 = "icd10cm_order_2016.txt"
     , cms_dx_2015 = "icd10cm_order_2015.txt"
     , cms_dx_2014 = "icd10cm_order_2014.txt"
+    , cms_pr_2027 = "icd10pcs_order_2027.txt"
     , cms_pr_2026 = "icd10pcs_order_2026.txt"
     , cms_pr_2025 = "icd10pcs_order_2025.txt"
     , cms_pr_2024 = "icd10pcs_order_2024.txt"
