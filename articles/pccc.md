@@ -86,7 +86,7 @@ returns a data.frame.
 
 pccc_codes <- get_pccc_codes()
 str(pccc_codes)
-## 'data.frame':    8900 obs. of  12 variables:
+## 'data.frame':    8913 obs. of  12 variables:
 ##  $ icdv           : int  9 9 9 9 9 9 9 9 9 9 ...
 ##  $ dx             : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ full_code      : chr  "00.10" "00.50" "00.51" "00.53" ...
@@ -783,7 +783,7 @@ lookup_icd_codes("E030")
 ##   known_end assignable_start assignable_end
 ## 1      2015             2010           2015
 ## 2      2012             2010           2012
-## 3      2026             2014           2026
+## 3      2027             2014           2027
 ## 4      2025             2001           2025
 ## 5      2026             2020           2026
 ## 6      2026             1997           2026
@@ -1000,13 +1000,13 @@ The codes we’ll use are:
 codes <- c("H49.811", "J84.111", "Z96.41")
 subset(get_pccc_codes(), full_code %in% codes)
 ##      icdv dx full_code   code   condition                 subcondition
-## 6987   10  1   H49.811 H49811   metabolic    other_metabolic_disorders
-## 7276   10  1   J84.111 J84111 respiratory chronic_respiratory_diseases
-## 8892   10  1    Z96.41  Z9641   metabolic    device_and_technology_use
+## 6989   10  1   H49.811 H49811   metabolic    other_metabolic_disorders
+## 7287   10  1   J84.111 J84111 respiratory chronic_respiratory_diseases
+## 8905   10  1    Z96.41  Z9641   metabolic    device_and_technology_use
 ##      transplant_flag tech_dep_flag pccc_v3.1 pccc_v3.0 pccc_v2.1 pccc_v2.0
-## 6987               0             0         1         1         1         1
-## 7276               0             0         1         1         0         0
-## 8892               0             1         1         1         1         1
+## 6989               0             0         1         1         1         1
+## 7287               0             0         1         1         0         0
+## 8905               0             1         1         1         1         1
 ```
 
 The constructed data and permutations are:
@@ -1034,7 +1034,7 @@ str(permutations, vec.len = 1)
 ##  $ encounter_id: int  1 2 ...
 ##  $ code        : chr  NA ...
 ##  $ plabel      : chr  "Permutation 1: H49.811, J84.111, Z96.41" ...
-##  - attr(*, ".internal.selfref")=<pointer: 0x55ebb4e35ee0>
+##  - attr(*, ".internal.selfref")=<pointer: 0x55cb07fd2f20>
 ```
 
 - Permutation 1: H49.811, J84.111, Z96.41

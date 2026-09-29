@@ -250,7 +250,7 @@ lookup_icd_codes("E010")
 #>   known_end assignable_start assignable_end
 #> 1      2015               NA             NA
 #> 2      2012               NA             NA
-#> 3      2026             2014           2026
+#> 3      2027             2014           2027
 #> 4      2025             2001           2025
 #> 5      2026             2020           2026
 #> 6      2026             1997           2026
@@ -259,35 +259,35 @@ subset(get_icd_codes(with.descriptions = TRUE), grepl("^E010$", code))
 #>        icdv dx full_code code             src known_start known_end
 #> 47745     9  1      E010 E010             cms        2010      2015
 #> 47746     9  1      E010 E010             cdc        2010      2012
-#> 153669   10  1     E01.0 E010             cms        2014      2026
-#> 153670   10  1     E01.0 E010             cdc        2001      2025
-#> 153671   10  1     E01.0 E010          ihacpa        2020      2026
-#> 153672   10  1     E01.0 E010             who        2008      2021
-#> 153673   10  1     E01.0 E010 socialstyrelsen        1997      2026
+#> 153779   10  1     E01.0 E010             cms        2014      2027
+#> 153780   10  1     E01.0 E010             cdc        2001      2025
+#> 153781   10  1     E01.0 E010          ihacpa        2020      2026
+#> 153782   10  1     E01.0 E010             who        2008      2021
+#> 153783   10  1     E01.0 E010 socialstyrelsen        1997      2026
 #>        assignable_start assignable_end
 #> 47745                NA             NA
 #> 47746                NA             NA
-#> 153669             2014           2026
-#> 153670             2001           2025
-#> 153671             2020           2026
-#> 153672             2008           2021
-#> 153673             1997           2026
+#> 153779             2014           2027
+#> 153780             2001           2025
+#> 153781             2020           2026
+#> 153782             2008           2021
+#> 153783             1997           2026
 #>                                                           desc desc_start
 #> 47745  Activity involving other muscle strengthening exercises       2010
 #> 47746  Activity involving other muscle strengthening exercises       2010
-#> 153669      Iodine-deficiency related diffuse (endemic) goiter       2014
-#> 153670      Iodine-deficiency-related diffuse (endemic) goiter       2001
-#> 153671      Iodine-deficiency-related diffuse (endemic) goitre       2020
-#> 153672      Iodine-deficiency-related diffuse (endemic) goitre       2008
-#> 153673              Jodbristrelaterad diffus (endemisk) struma       1997
+#> 153779      Iodine-deficiency related diffuse (endemic) goiter       2014
+#> 153780      Iodine-deficiency-related diffuse (endemic) goiter       2001
+#> 153781      Iodine-deficiency-related diffuse (endemic) goitre       2020
+#> 153782      Iodine-deficiency-related diffuse (endemic) goitre       2008
+#> 153783              Jodbristrelaterad diffus (endemisk) struma       1997
 #>        desc_end
 #> 47745      2015
 #> 47746      2012
-#> 153669     2026
-#> 153670     2025
-#> 153671     2026
-#> 153672     2021
-#> 153673     2026
+#> 153779     2027
+#> 153780     2025
+#> 153781     2026
+#> 153782     2021
+#> 153783     2026
 
 is_icd("E010")
 #> [1] TRUE

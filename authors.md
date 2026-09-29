@@ -19,16 +19,25 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/dewittpe/medicalcoder/blob/main/DESCRIPTION)
+[`inst/CITATION`](https://github.com/dewittpe/medicalcoder/blob/main/inst/CITATION)
 
-DeWitt P (2026). *medicalcoder: A Unified and Longitudinally Aware
-Framework for ICD-Based Comorbidity Assessment*. R package version
-0.9.0, <http://www.peteredewitt.com/medicalcoder/>.
+DeWitt P, Russell S, Feinstein J, Rebull M, Bennett T (2026).
+“medicalcoder: a unified and longitudinally aware framework for
+International Classification of Diseases code-based comorbidity
+assessment in R.” *JAMIA Open*, **9**(5), ooag182. ISSN 2574-2531.
+[doi:10.1093/jamiaopen/ooag182](https://doi.org/10.1093/jamiaopen/ooag182).
+<https://doi.org/10.1093/jamiaopen/ooag182>.
 
-    @Manual{,
-      title = {medicalcoder: A Unified and Longitudinally Aware Framework for ICD-Based Comorbidity Assessment},
-      author = {Peter DeWitt},
+    @Article{,
+      title = {medicalcoder: a unified and longitudinally aware framework for International Classification of Diseases code-based comorbidity assessment in R},
+      author = {Peter E. DeWitt and Seth Russell and James A. Feinstein and Margaret N. Rebull and Tellen D. Bennett},
+      journal = {JAMIA Open},
+      volume = {9},
+      number = {5},
+      pages = {ooag182},
       year = {2026},
-      note = {R package version 0.9.0},
-      url = {http://www.peteredewitt.com/medicalcoder/},
+      month = {oct},
+      issn = {2574-2531},
+      doi = {10.1093/jamiaopen/ooag182},
+      url = {https://doi.org/10.1093/jamiaopen/ooag182},
     }

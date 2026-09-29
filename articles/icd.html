@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -117,7 +117,7 @@ ICD-9 procedure, ICD-10 diagnostic, and ICD-10 procedure codes.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.peteredewitt.com/medicalcoder/">medicalcoder</a></span><span class="op">)</span></span>
 <span><span class="va">icd_codes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_icd_codes.html">get_icd_codes</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">icd_codes</span><span class="op">)</span></span>
-<span><span class="co">## 'data.frame':    330606 obs. of  9 variables:</span></span>
+<span><span class="co">## 'data.frame':    330947 obs. of  9 variables:</span></span>
 <span><span class="co">##  $ icdv            : int  9 9 9 9 9 9 9 9 9 9 ...</span></span>
 <span><span class="co">##  $ dx              : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span><span class="co">##  $ full_code       : chr  "00" "00" "00.0" "00.0" ...</span></span>
@@ -168,7 +168,7 @@ standard, or that the <em>medicalcoder</em> package has data for.</p>
 <li>ICD-9 CMS extracts run through FY 2015; CDC ICD-9 extracts end at FY
 2012.</li>
 <li>ICD-10 is active. The current version of <em>medicalcoder</em> has
-details on ICD-10 codes through FY 2026.</li>
+details on ICD-10 codes through FY 2027.</li>
 </ul>
 </li>
 <li><p><code>assignable_start</code>: The first year (fiscal or calendar
@@ -192,7 +192,7 @@ assignable.</p></li>
 <code>with.descriptions = TRUE</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_icd_codes.html">get_icd_codes</a></span><span class="op">(</span>with.descriptions <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## 'data.frame':    346582 obs. of  12 variables:</span></span>
+<span><span class="co">## 'data.frame':    346929 obs. of  12 variables:</span></span>
 <span><span class="co">##  $ icdv            : int  9 9 9 9 9 9 9 9 9 9 ...</span></span>
 <span><span class="co">##  $ dx              : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span><span class="co">##  $ full_code       : chr  "00" "00" "00.0" "00.0" ...</span></span>
@@ -293,7 +293,7 @@ bacilli found (in sputum) by microscopy</td>
 <td align="left">cms</td>
 <td align="left">Allergy status to serum and vaccine</td>
 <td align="right">2021</td>
-<td align="right">2026</td>
+<td align="right">2027</td>
 </tr>
 <tr class="even">
 <td align="left">Z88.7</td>
@@ -403,16 +403,16 @@ argument <code>with.hierarchy</code> which will provide additional
 details for the codes.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/get_icd_codes.html">get_icd_codes</a></span><span class="op">(</span>with.hierarchy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## 'data.frame':    330606 obs. of  16 variables:</span></span>
+<span><span class="co">## 'data.frame':    330947 obs. of  16 variables:</span></span>
 <span><span class="co">##  $ icdv                : int  10 10 10 10 10 10 10 10 10 10 ...</span></span>
 <span><span class="co">##  $ dx                  : int  0 0 0 0 0 0 0 0 0 0 ...</span></span>
 <span><span class="co">##  $ full_code           : chr  "001" "0016070" "0016071" "0016072" ...</span></span>
 <span><span class="co">##  $ code                : chr  "001" "0016070" "0016071" "0016072" ...</span></span>
 <span><span class="co">##  $ src                 : chr  "cms" "cms" "cms" "cms" ...</span></span>
 <span><span class="co">##  $ known_start         : int  2014 2014 2014 2014 2014 2014 2014 2014 2014 2014 ...</span></span>
-<span><span class="co">##  $ known_end           : int  2026 2026 2026 2026 2026 2026 2026 2026 2026 2026 ...</span></span>
+<span><span class="co">##  $ known_end           : int  2027 2027 2027 2027 2027 2027 2027 2027 2027 2027 ...</span></span>
 <span><span class="co">##  $ assignable_start    : int  NA 2014 2014 2014 2014 2014 2014 2014 2014 2014 ...</span></span>
-<span><span class="co">##  $ assignable_end      : int  NA 2026 2026 2026 2026 2026 2026 2026 2026 2026 ...</span></span>
+<span><span class="co">##  $ assignable_end      : int  NA 2027 2027 2027 2027 2027 2027 2027 2027 2027 ...</span></span>
 <span><span class="co">##  $ chapter             : chr  "0  Medical and Surgical" "0  Medical and Surgical" "0  Medical and Surgical" "0  Medical and Surgical" ...</span></span>
 <span><span class="co">##  $ subchapter          : chr  "00 Central Nervous System and Cranial Nerves" "00 Central Nervous System and Cranial Nerves" "00 Central Nervous System and Cranial Nerves" "00 Central Nervous System and Cranial Nerves" ...</span></span>
 <span><span class="co">##  $ category            : chr  "001" "001" "001" "001" ...</span></span>
@@ -656,9 +656,9 @@ assignable.</p>
 <td align="left">A924</td>
 <td align="left">cms</td>
 <td align="right">2014</td>
-<td align="right">2026</td>
+<td align="right">2027</td>
 <td align="right">2014</td>
-<td align="right">2026</td>
+<td align="right">2027</td>
 </tr>
 <tr class="odd">
 <td align="left">A924</td>
@@ -747,7 +747,7 @@ assignable.</p>
 <td align="left">Z00</td>
 <td align="left">cms</td>
 <td align="right">2014</td>
-<td align="right">2026</td>
+<td align="right">2027</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -994,9 +994,9 @@ considered.</p>
 <td align="left">A924</td>
 <td align="left">cms</td>
 <td align="right">2014</td>
-<td align="right">2026</td>
+<td align="right">2027</td>
 <td align="right">2014</td>
-<td align="right">2026</td>
+<td align="right">2027</td>
 </tr>
 <tr class="even">
 <td align="left">A924</td>
@@ -1085,7 +1085,7 @@ considered.</p>
 <td align="left">Z00</td>
 <td align="left">cms</td>
 <td align="right">2014</td>
-<td align="right">2026</td>
+<td align="right">2027</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -1304,7 +1304,7 @@ codes.</p>
 <td align="left">Z00</td>
 <td align="left">cms</td>
 <td align="right">2014</td>
-<td align="right">2026</td>
+<td align="right">2027</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
@@ -1396,9 +1396,9 @@ By providing a vector of regular expression patterns for the codes
 <td align="left">C8460</td>
 <td align="left">cms</td>
 <td align="right">2014</td>
-<td align="right">2026</td>
+<td align="right">2027</td>
 <td align="right">2014</td>
-<td align="right">2026</td>
+<td align="right">2027</td>
 </tr>
 <tr class="even">
 <td align="left">^C84.6[0-1A-Z]</td>
@@ -1409,9 +1409,9 @@ By providing a vector of regular expression patterns for the codes
 <td align="left">C8461</td>
 <td align="left">cms</td>
 <td align="right">2014</td>
-<td align="right">2026</td>
+<td align="right">2027</td>
 <td align="right">2014</td>
-<td align="right">2026</td>
+<td align="right">2027</td>
 </tr>
 <tr class="odd">
 <td align="left">^C84.6[0-1A-Z]</td>
@@ -1422,9 +1422,9 @@ By providing a vector of regular expression patterns for the codes
 <td align="left">C846A</td>
 <td align="left">cms</td>
 <td align="right">2025</td>
-<td align="right">2026</td>
+<td align="right">2027</td>
 <td align="right">2025</td>
-<td align="right">2026</td>
+<td align="right">2027</td>
 </tr>
 </tbody>
 </table>

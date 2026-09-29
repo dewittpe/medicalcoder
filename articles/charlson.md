@@ -4,7 +4,7 @@
 
 library(medicalcoder)
 packageVersion("medicalcoder")
-## [1] '0.9.0'
+## [1] '0.10.0'
 ```
 
 ## Introduction
@@ -39,7 +39,7 @@ calls respectively.
 ``` r
 
 str(get_charlson_codes())
-## 'data.frame':    9248 obs. of  13 variables:
+## 'data.frame':    9257 obs. of  13 variables:
 ##  $ icdv                     : int  9 9 9 9 9 9 9 9 9 9 ...
 ##  $ dx                       : int  0 1 1 1 1 1 1 1 1 1 ...
 ##  $ full_code                : chr  "38.48" "003.1" "007.2" "007.4" ...

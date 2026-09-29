@@ -37,7 +37,7 @@ ICD-10 diagnostic, and ICD-10 procedure codes.
 library(medicalcoder)
 icd_codes <- get_icd_codes()
 str(icd_codes)
-## 'data.frame':    330606 obs. of  9 variables:
+## 'data.frame':    330947 obs. of  9 variables:
 ##  $ icdv            : int  9 9 9 9 9 9 9 9 9 9 ...
 ##  $ dx              : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ full_code       : chr  "00" "00" "00.0" "00.0" ...
@@ -90,7 +90,7 @@ The columns of this data.frame are:
   - ICD-9 CMS extracts run through FY 2015; CDC ICD-9 extracts end at FY
     2012.
   - ICD-10 is active. The current version of *medicalcoder* has details
-    on ICD-10 codes through FY 2026.
+    on ICD-10 codes through FY 2027.
 
 - `assignable_start`: The first year (fiscal or calendar based on src) a
   code was assignable. `NA` indicates the code was never assignable.
@@ -114,7 +114,7 @@ with `with.descriptions = TRUE`.
 ``` r
 
 str(get_icd_codes(with.descriptions = TRUE))
-## 'data.frame':    346582 obs. of  12 variables:
+## 'data.frame':    346929 obs. of  12 variables:
 ##  $ icdv            : int  9 9 9 9 9 9 9 9 9 9 ...
 ##  $ dx              : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ full_code       : chr  "00" "00" "00.0" "00.0" ...
@@ -163,7 +163,7 @@ ICD-10-CM Z88.7 has differences in the description over time within
 
 | full_code | src | desc | desc_start | desc_end |
 |:---|:---|:---|---:|---:|
-| Z88.7 | cms | Allergy status to serum and vaccine | 2021 | 2026 |
+| Z88.7 | cms | Allergy status to serum and vaccine | 2021 | 2027 |
 | Z88.7 | cms | Allergy status to serum and vaccine status | 2014 | 2020 |
 | Z88.7 | ihacpa | Personal history of allergy to serum and vaccine | 2020 | 2026 |
 | Z88.7 | who | Personal history of allergy to serum and vaccine | 2008 | 2021 |
@@ -193,16 +193,16 @@ additional details for the codes.
 ``` r
 
 str(get_icd_codes(with.hierarchy = TRUE))
-## 'data.frame':    330606 obs. of  16 variables:
+## 'data.frame':    330947 obs. of  16 variables:
 ##  $ icdv                : int  10 10 10 10 10 10 10 10 10 10 ...
 ##  $ dx                  : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ full_code           : chr  "001" "0016070" "0016071" "0016072" ...
 ##  $ code                : chr  "001" "0016070" "0016071" "0016072" ...
 ##  $ src                 : chr  "cms" "cms" "cms" "cms" ...
 ##  $ known_start         : int  2014 2014 2014 2014 2014 2014 2014 2014 2014 2014 ...
-##  $ known_end           : int  2026 2026 2026 2026 2026 2026 2026 2026 2026 2026 ...
+##  $ known_end           : int  2027 2027 2027 2027 2027 2027 2027 2027 2027 2027 ...
 ##  $ assignable_start    : int  NA 2014 2014 2014 2014 2014 2014 2014 2014 2014 ...
-##  $ assignable_end      : int  NA 2026 2026 2026 2026 2026 2026 2026 2026 2026 ...
+##  $ assignable_end      : int  NA 2027 2027 2027 2027 2027 2027 2027 2027 2027 ...
 ##  $ chapter             : chr  "0  Medical and Surgical" "0  Medical and Surgical" "0  Medical and Surgical" "0  Medical and Surgical" ...
 ##  $ subchapter          : chr  "00 Central Nervous System and Cranial Nerves" "00 Central Nervous System and Cranial Nerves" "00 Central Nervous System and Cranial Nerves" "00 Central Nervous System and Cranial Nerves" ...
 ##  $ category            : chr  "001" "001" "001" "001" ...
@@ -258,14 +258,14 @@ knitr::kable(lookup_icd_codes(codes), row.names = FALSE)
 | 7329 | compact_code | 9 | 1 | 732.9 | 7329 | cms | 2006 | 2015 | 2006 | 2015 |
 | 7329 | compact_code | 9 | 1 | 732.9 | 7329 | cdc | 1997 | 2012 | 1997 | 2012 |
 | 73291 | NA | NA | NA | NA | NA | NA | NA | NA | NA | NA |
-| A924 | compact_code | 10 | 1 | A92.4 | A924 | cms | 2014 | 2026 | 2014 | 2026 |
+| A924 | compact_code | 10 | 1 | A92.4 | A924 | cms | 2014 | 2027 | 2014 | 2027 |
 | A924 | compact_code | 10 | 1 | A92.4 | A924 | cdc | 2001 | 2025 | 2001 | 2025 |
 | A924 | compact_code | 10 | 1 | A92.4 | A924 | ihacpa | 2020 | 2026 | 2020 | 2026 |
 | A924 | compact_code | 10 | 1 | A92.4 | A924 | socialstyrelsen | 1997 | 2026 | 1997 | 2026 |
 | A924 | compact_code | 10 | 1 | A92.4 | A924 | who | 2008 | 2021 | 2008 | 2021 |
 | A9248 | NA | NA | NA | NA | NA | NA | NA | NA | NA | NA |
 | not a code | NA | NA | NA | NA | NA | NA | NA | NA | NA | NA |
-| Z00 | full_code | 10 | 1 | Z00 | Z00 | cms | 2014 | 2026 | NA | NA |
+| Z00 | full_code | 10 | 1 | Z00 | Z00 | cms | 2014 | 2027 | NA | NA |
 | Z00 | full_code | 10 | 1 | Z00 | Z00 | ihacpa | 2020 | 2026 | NA | NA |
 | Z00 | full_code | 10 | 1 | Z00 | Z00 | socialstyrelsen | 1997 | 2026 | NA | NA |
 | Z00 | full_code | 10 | 1 | Z00 | Z00 | who | 2008 | 2021 | NA | NA |
@@ -296,14 +296,14 @@ knitr::kable(
 | 7329 | compact_code | 9 | 1 | 732.9 | 7329 | cms | 2006 | 2015 | 2006 | 2015 |
 | 7329 | compact_code | 9 | 1 | 732.9 | 7329 | cdc | 1997 | 2012 | 1997 | 2012 |
 | 73291 | NA | NA | NA | NA | NA | NA | NA | NA | NA | NA |
-| A924 | compact_code | 10 | 1 | A92.4 | A924 | cms | 2014 | 2026 | 2014 | 2026 |
+| A924 | compact_code | 10 | 1 | A92.4 | A924 | cms | 2014 | 2027 | 2014 | 2027 |
 | A924 | compact_code | 10 | 1 | A92.4 | A924 | cdc | 2001 | 2025 | 2001 | 2025 |
 | A924 | compact_code | 10 | 1 | A92.4 | A924 | ihacpa | 2020 | 2026 | 2020 | 2026 |
 | A924 | compact_code | 10 | 1 | A92.4 | A924 | socialstyrelsen | 1997 | 2026 | 1997 | 2026 |
 | A924 | compact_code | 10 | 1 | A92.4 | A924 | who | 2008 | 2021 | 2008 | 2021 |
 | A9248 | NA | NA | NA | NA | NA | NA | NA | NA | NA | NA |
 | not a code | NA | NA | NA | NA | NA | NA | NA | NA | NA | NA |
-| Z00 | compact_code | 10 | 1 | Z00 | Z00 | cms | 2014 | 2026 | NA | NA |
+| Z00 | compact_code | 10 | 1 | Z00 | Z00 | cms | 2014 | 2027 | NA | NA |
 | Z00 | compact_code | 10 | 1 | Z00 | Z00 | ihacpa | 2020 | 2026 | NA | NA |
 | Z00 | compact_code | 10 | 1 | Z00 | Z00 | socialstyrelsen | 1997 | 2026 | NA | NA |
 | Z00 | compact_code | 10 | 1 | Z00 | Z00 | who | 2008 | 2021 | NA | NA |
@@ -330,7 +330,7 @@ knitr::kable(
 | A924 | NA | NA | NA | NA | NA | NA | NA | NA | NA | NA |
 | A9248 | NA | NA | NA | NA | NA | NA | NA | NA | NA | NA |
 | not a code | NA | NA | NA | NA | NA | NA | NA | NA | NA | NA |
-| Z00 | full_code | 10 | 1 | Z00 | Z00 | cms | 2014 | 2026 | NA | NA |
+| Z00 | full_code | 10 | 1 | Z00 | Z00 | cms | 2014 | 2027 | NA | NA |
 | Z00 | full_code | 10 | 1 | Z00 | Z00 | ihacpa | 2020 | 2026 | NA | NA |
 | Z00 | full_code | 10 | 1 | Z00 | Z00 | socialstyrelsen | 1997 | 2026 | NA | NA |
 | Z00 | full_code | 10 | 1 | Z00 | Z00 | who | 2008 | 2021 | NA | NA |
@@ -355,9 +355,9 @@ knitr::kable(
 
 | input_regex | match_type | icdv | dx | full_code | code | src | known_start | known_end | assignable_start | assignable_end |
 |:---|:---|---:|---:|:---|:---|:---|---:|---:|---:|---:|
-| ^C84.6\[0-1A-Z\] | full_code | 10 | 1 | C84.60 | C8460 | cms | 2014 | 2026 | 2014 | 2026 |
-| ^C84.6\[0-1A-Z\] | full_code | 10 | 1 | C84.61 | C8461 | cms | 2014 | 2026 | 2014 | 2026 |
-| ^C84.6\[0-1A-Z\] | full_code | 10 | 1 | C84.6A | C846A | cms | 2025 | 2026 | 2025 | 2026 |
+| ^C84.6\[0-1A-Z\] | full_code | 10 | 1 | C84.60 | C8460 | cms | 2014 | 2027 | 2014 | 2027 |
+| ^C84.6\[0-1A-Z\] | full_code | 10 | 1 | C84.61 | C8461 | cms | 2014 | 2027 | 2014 | 2027 |
+| ^C84.6\[0-1A-Z\] | full_code | 10 | 1 | C84.6A | C846A | cms | 2025 | 2027 | 2025 | 2027 |
 
 ## `is_icd()`
 

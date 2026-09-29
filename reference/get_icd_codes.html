@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">medicalcoder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -172,7 +172,7 @@ C86.0 a header code and C86.00 and C86.01 assignable codes.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">icd_codes</span> <span class="op">&lt;-</span> <span class="fu">get_icd_codes</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">icd_codes</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	330606 obs. of  9 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	330947 obs. of  9 variables:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ icdv            : int  9 9 9 9 9 9 9 9 9 9 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ dx              : int  0 0 0 0 0 0 0 0 0 0 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ full_code       : chr  "00" "00" "00.0" "00.0" ...</span>
@@ -187,89 +187,89 @@ C86.0 a header code and C86.00 and C86.01 assignable codes.</p>
 <span class="r-in"><span><span class="co"># WHO</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="fu">get_icd_codes</span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^C86$"</span>, <span class="va">full_code</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        icdv dx full_code code             src known_start known_end</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136338   10  1       C86  C86             cms        2014      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136339   10  1       C86  C86          ihacpa        2020      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136340   10  1       C86  C86 socialstyrelsen        2010      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136341   10  1       C86  C86             who        2010      2021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136444   10  1       C86  C86             cms        2014      2027</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136445   10  1       C86  C86          ihacpa        2020      2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136446   10  1       C86  C86 socialstyrelsen        2010      2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136447   10  1       C86  C86             who        2010      2021</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        assignable_start assignable_end</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136338               NA             NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136339               NA             NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136340               NA             NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136341               NA             NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136444               NA             NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136445               NA             NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136446               NA             NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136447               NA             NA</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="fu">get_icd_codes</span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^C86\\.\\d$"</span>, <span class="va">full_code</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        icdv dx full_code code             src known_start known_end</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136342   10  1     C86.0 C860             cms        2014      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136343   10  1     C86.0 C860          ihacpa        2020      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136344   10  1     C86.0 C860 socialstyrelsen        2010      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136345   10  1     C86.0 C860             who        2010      2021</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136348   10  1     C86.1 C861             cms        2014      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136349   10  1     C86.1 C861          ihacpa        2020      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136350   10  1     C86.1 C861 socialstyrelsen        2010      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136351   10  1     C86.1 C861             who        2010      2021</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136354   10  1     C86.2 C862             cms        2014      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136355   10  1     C86.2 C862          ihacpa        2020      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136356   10  1     C86.2 C862 socialstyrelsen        2010      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136357   10  1     C86.2 C862             who        2010      2021</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136360   10  1     C86.3 C863             cms        2014      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136361   10  1     C86.3 C863          ihacpa        2020      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136362   10  1     C86.3 C863 socialstyrelsen        2010      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136363   10  1     C86.3 C863             who        2010      2021</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136366   10  1     C86.4 C864             cms        2014      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136367   10  1     C86.4 C864          ihacpa        2020      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136368   10  1     C86.4 C864 socialstyrelsen        2010      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136369   10  1     C86.4 C864             who        2010      2021</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136372   10  1     C86.5 C865             cms        2014      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136373   10  1     C86.5 C865          ihacpa        2020      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136374   10  1     C86.5 C865 socialstyrelsen        2010      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136375   10  1     C86.5 C865             who        2010      2021</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136378   10  1     C86.6 C866             cms        2014      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136379   10  1     C86.6 C866          ihacpa        2020      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136380   10  1     C86.6 C866 socialstyrelsen        2010      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136381   10  1     C86.6 C866             who        2010      2021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136448   10  1     C86.0 C860             cms        2014      2027</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136449   10  1     C86.0 C860          ihacpa        2020      2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136450   10  1     C86.0 C860 socialstyrelsen        2010      2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136451   10  1     C86.0 C860             who        2010      2021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136454   10  1     C86.1 C861             cms        2014      2027</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136455   10  1     C86.1 C861          ihacpa        2020      2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136456   10  1     C86.1 C861 socialstyrelsen        2010      2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136457   10  1     C86.1 C861             who        2010      2021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136460   10  1     C86.2 C862             cms        2014      2027</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136461   10  1     C86.2 C862          ihacpa        2020      2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136462   10  1     C86.2 C862 socialstyrelsen        2010      2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136463   10  1     C86.2 C862             who        2010      2021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136466   10  1     C86.3 C863             cms        2014      2027</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136467   10  1     C86.3 C863          ihacpa        2020      2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136468   10  1     C86.3 C863 socialstyrelsen        2010      2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136469   10  1     C86.3 C863             who        2010      2021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136472   10  1     C86.4 C864             cms        2014      2027</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136473   10  1     C86.4 C864          ihacpa        2020      2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136474   10  1     C86.4 C864 socialstyrelsen        2010      2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136475   10  1     C86.4 C864             who        2010      2021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136478   10  1     C86.5 C865             cms        2014      2027</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136479   10  1     C86.5 C865          ihacpa        2020      2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136480   10  1     C86.5 C865 socialstyrelsen        2010      2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136481   10  1     C86.5 C865             who        2010      2021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136484   10  1     C86.6 C866             cms        2014      2027</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136485   10  1     C86.6 C866          ihacpa        2020      2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136486   10  1     C86.6 C866 socialstyrelsen        2010      2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136487   10  1     C86.6 C866             who        2010      2021</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        assignable_start assignable_end</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136342             2014           2024</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136343             2020           2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136344             2010           2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136345             2010           2021</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136348             2014           2024</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136349             2020           2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136350             2010           2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136351             2010           2021</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136354             2014           2024</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136355             2020           2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136356             2010           2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136357             2010           2021</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136360             2014           2024</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136361             2020           2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136362             2010           2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136363             2010           2021</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136366             2014           2024</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136367             2020           2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136368             2010           2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136369             2010           2021</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136372             2014           2024</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136373             2020           2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136374             2010           2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136375             2010           2021</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136378             2014           2024</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136379             2020           2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136380             2010           2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136381             2010           2021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136448             2014           2024</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136449             2020           2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136450             2010           2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136451             2010           2021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136454             2014           2024</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136455             2020           2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136456             2010           2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136457             2010           2021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136460             2014           2024</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136461             2020           2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136462             2010           2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136463             2010           2021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136466             2014           2024</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136467             2020           2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136468             2010           2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136469             2010           2021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136472             2014           2024</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136473             2020           2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136474             2010           2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136475             2010           2021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136478             2014           2024</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136479             2020           2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136480             2010           2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136481             2010           2021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136484             2014           2024</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136485             2020           2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136486             2010           2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136487             2010           2021</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="fu">get_icd_codes</span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^C86\\.0(\\d|$)"</span>, <span class="va">full_code</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        icdv dx full_code  code             src known_start known_end</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136342   10  1     C86.0  C860             cms        2014      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136343   10  1     C86.0  C860          ihacpa        2020      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136344   10  1     C86.0  C860 socialstyrelsen        2010      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136345   10  1     C86.0  C860             who        2010      2021</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136346   10  1    C86.00 C8600             cms        2025      2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136347   10  1    C86.01 C8601             cms        2025      2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136448   10  1     C86.0  C860             cms        2014      2027</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136449   10  1     C86.0  C860          ihacpa        2020      2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136450   10  1     C86.0  C860 socialstyrelsen        2010      2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136451   10  1     C86.0  C860             who        2010      2021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136452   10  1    C86.00 C8600             cms        2025      2027</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136453   10  1    C86.01 C8601             cms        2025      2027</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        assignable_start assignable_end</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136342             2014           2024</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136343             2020           2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136344             2010           2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136345             2010           2021</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136346             2025           2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 136347             2025           2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136448             2014           2024</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136449             2020           2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136450             2010           2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136451             2010           2021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136452             2025           2027</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 136453             2025           2027</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="is_icd.html">is_icd</a></span><span class="op">(</span><span class="st">"C86"</span>, headerok <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># FALSE</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
@@ -287,12 +287,12 @@ C86.0 a header code and C86.00 and C86.01 assignable codes.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 ^C86\\.0\\d*  full_code   10  1    C86.00 C8600             cms        2025</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 ^C86\\.0\\d*  full_code   10  1    C86.01 C8601             cms        2025</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   known_end assignable_start assignable_end</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      2026             2014           2024</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      2027             2014           2024</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      2026             2020           2026</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3      2026             2010           2026</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4      2021             2010           2021</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      2026             2025           2026</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6      2026             2025           2026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      2027             2025           2027</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      2027             2025           2027</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
