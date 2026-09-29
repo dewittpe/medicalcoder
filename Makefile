@@ -33,7 +33,7 @@ all: $(TARBALL)
 # Build the package
 # =============================================================================
 
-$(TARBALL): .install_dev_deps.Rout .document.Rout $(VIGNETTES) $(TESTS) $(DATA)
+$(TARBALL): .install_dev_deps.Rout .document.Rout $(VIGNETTES) $(TESTS) $(DATA) inst/CITATION
 	$(R) CMD build --md5 "$(PKG_ROOT)"
 
 # The data-raw makefiles own the detailed dependency graph for generated data.

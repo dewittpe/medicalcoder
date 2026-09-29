@@ -118,6 +118,23 @@ From the command line:
 R CMD INSTALL medicalcoder_X.Y.Z.tar.gz
 ```
 
+## Citation
+
+Two things to cite,
+
+    Peter E DeWitt, Seth Russell, James A Feinstein, Margaret N Rebull, Tellen D
+    Bennett, medicalcoder: a unified and longitudinally aware framework for
+    International Classification of Diseases code-based comorbidity assessment
+    in R, JAMIA Open, Volume 9, Issue 5, October 2026, ooag182
+
+    https://doi.org/10.1093/jamiaopen/ooag182
+
+And the package itself (run this code locally to get the version you are using.
+
+``` r
+citation("medicalcoder", auto = TRUE)
+```
+
 ## Quick Start:
 
 ### Example Data

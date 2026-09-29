@@ -4,6 +4,11 @@
 
 * ICD-10-CM and ICD-10-PCS from CDC and CMS for FY 2027 added to the package.
 
+## Other Changes
+
+* Added CITATION file and added to the README the [JAMIA
+  Open](https://doi.org/10.1093/jamiaopen/ooag182) manuscript.
+
 # medicalcoder 0.9.0
 
 ## New Features

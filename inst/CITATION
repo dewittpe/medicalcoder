@@ -1,0 +1,22 @@
+bibentry(
+  bibtype = "Article",
+  title = "medicalcoder: a unified and longitudinally aware framework for International Classification of Diseases code-based comorbidity assessment in R",
+  author =
+    c(
+      person(given = "Peter E.", family = "DeWitt"),
+      person(given = "Seth", family = "Russell"),
+      person(given = "James A.", family = "Feinstein"),
+      person(given = "Margaret N.", family = "Rebull"),
+      person(given = "Tellen D.", family = "Bennett")
+    ),
+  journal = "JAMIA Open",
+  volume = "9",
+  number = "5",
+  pages = "ooag182",
+  year = "2026",
+  month = "oct",
+  issn = "2574-2531",
+  doi = "10.1093/jamiaopen/ooag182",
+  url = "https://doi.org/10.1093/jamiaopen/ooag182",
+)
+
