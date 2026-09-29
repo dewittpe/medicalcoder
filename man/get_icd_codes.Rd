@@ -59,7 +59,9 @@ There are five sources of ICD codes.
 \itemize{
 \item \code{cms}: Codes from the ICD-9-CM, ICD-9-PCS, ICD-10-CM, and ICD-10-PCS standards.
 \item \code{who}: Codes from the World Health Organization.
-\item \code{cdc}: Codes from the CDC Mortality coding standard.
+\item \code{cdc}: For ICD-10, CDC mortality codes, not CDC-hosted ICD-10-CM files.
+ICD-10-CM uses the canonical \code{cms} source. CDC ICD-9 extracts are also
+retained under \code{cdc}.
 \item \code{ihacpa}: ICD-10-AM codes from the Independent Health and Aged Care
 Pricing Authority.
 \item \code{socialstyrelsen}: ICD-10-SE codes from Sweden's National Board of Health
@@ -100,6 +102,10 @@ for which we have definitive source data.  For ICD-9-CM and ICD-9-PCS,
 CMS provides data through fiscal year 2015, while the CDC extracts stop at
 fiscal year 2012.  For ICD-10-CM and ICD-10-PCS, which are active, it is just
 the last year of known data.  ICD-10 from the WHO ends in 2019.
+
+CMS annual tables represent the selected release within each fiscal year,
+including April updates where incorporated. Integer validity years do not
+distinguish October and April effective dates within the same fiscal year.
 }
 
 \subsection{Header and Assignable Codes}{

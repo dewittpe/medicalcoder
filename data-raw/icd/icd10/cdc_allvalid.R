@@ -167,6 +167,9 @@ cdc_allvalid_2019 <- data.table::copy(cdc_allvalid_2011)
 cdc_allvalid_2021 <- data.table::copy(cdc_allvalid_2020)
 cdc_allvalid_2022 <- data.table::copy(cdc_allvalid_2020)
 #cdc_allvalid_2023
+# Carry-forward assumption, not new source releases. The December 2024
+# upload of the 2023 file is already included. Review mortality sources
+# separately before extending beyond 2025; see README.md.
 cdc_allvalid_2024 <- data.table::copy(cdc_allvalid_2023)
 cdc_allvalid_2025 <- data.table::copy(cdc_allvalid_2023)
 

@@ -19,6 +19,8 @@
 #
 # idempotent: yes (pure joins and save)
 ################################################################################
+# CDC here is mortality ICD-10. CDC-hosted CM duplicates are intentionally
+# not merged: CMS supplies CM/PCS (policy since commit 4fbb956).
 cdc_allvalid <- readRDS("cdc_allvalid.rds")
 who_icd10    <- readRDS("who_icd10.rds")
 cms_icd10    <- readRDS("cms_icd10.rds")

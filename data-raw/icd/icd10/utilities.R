@@ -38,6 +38,21 @@ desc_to_DT <- function(x) {
     )
 }
 
+# Read exactly one order-file member by basename, allowing publisher directory
+# layouts to vary. No shared extraction directory or silent overwrite policy.
+read_order_archive <- function(archive, member) {
+  if (!file.exists(archive)) stop("Missing source archive: ", archive)
+  entries <- unzip(archive, list = TRUE)$Name
+  selected <- entries[basename(entries) == member]
+  if (length(selected) != 1L) {
+    stop("Expected exactly one ", member, " in ", archive)
+  }
+  con <- unz(archive, selected, open = "r")
+  on.exit(close(con))
+  readLines(con, warn = FALSE)
+}
+
 ################################################################################
 #                                 End of File                                  #
 ################################################################################
+

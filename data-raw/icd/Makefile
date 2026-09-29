@@ -8,15 +8,18 @@ ICD_DATA_SETS := icd_codes.rds\
 								 icd_chapters.rds\
 								 icd_subchapters.rds
 
-.PHONY: all clean
+.PHONY: all clean icd-sources
 
 all: $(ICD_DATA_SETS)
 
-icd9/icd9.rds:
+# Consult child dependency graphs even when their outputs already exist.
+# Order-only prerequisites keep an unchanged child from rebuilding parent data.
+icd-sources:
 	$(MAKE) -C icd9 icd9.rds
-
-icd10/icd10.rds:
 	$(MAKE) -C icd10 icd10.rds
+
+icd9/icd9.rds icd10/icd10.rds: | icd-sources
+	@test -e "$@"
 
 $(ICD_DATA_SETS) &: icd_codes.R icd9/icd9.rds icd10/icd10.rds icd_chapters_subchapters.dat ../../R/icd_compact_to_full.R
 	$(RSCRIPT) $<
