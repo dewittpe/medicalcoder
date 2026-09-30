@@ -1,7 +1,7 @@
 ################################################################################
 # file: elixhauser/elixhauser_ahrq_icd10.R
 #
-# purpose: Ingest AHRQ ICD-10 Elixhauser kit (versions 2022-2025) to build code
+# purpose: Ingest AHRQ ICD-10 Elixhauser kit (versions 2022-2026) to build code
 #          flags, POA rules, and index weights.
 #
 # inputs:
