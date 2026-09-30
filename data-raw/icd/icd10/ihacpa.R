@@ -108,8 +108,12 @@ a23 <- codes[year == 2023L]
 a24 <- data.table::copy(a23); a24[, year := 2024L]
 a25 <- data.table::copy(a23); a25[, year := 2025L]
 a26 <- codes[year == 2026L]
+a27 <- data.table::copy(a26); a27[, year := 2027L]
 
-codes <- data.table::rbindlist(list(a20, a21, a22, a23, a24, a25, a26))
+# FY 2027 remains covered by the current Thirteenth Edition. Errata 6, effective
+# 1 October 2026, contains no ICD-10-AM Tabular List corrections, so carry the
+# FY 2026 Thirteenth Edition code table forward for FY 2027.
+codes <- data.table::rbindlist(list(a20, a21, a22, a23, a24, a25, a26, a27))
 
 ################################################################################
 # Find headers

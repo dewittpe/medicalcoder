@@ -3,6 +3,8 @@
 ## New Features
 
 * ICD-10-CM and ICD-10-PCS from CDC and CMS for FY 2027 added to the package.
+* Extend ICD-10-AM code coverage through Australian financial year 2027 using
+  the current Thirteenth Edition.
 
 ## Bug Fixes
 
