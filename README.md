@@ -118,6 +118,24 @@ From the command line:
 R CMD INSTALL medicalcoder_X.Y.Z.tar.gz
 ```
 
+## Reproducibility and versioning
+
+`medicalcoder` includes ICD code data and comorbidity mappings that can change
+between package releases. Record the package version used for an analysis so
+that its results can be reproduced:
+
+
+``` r
+packageVersion("medicalcoder")
+```
+
+For example, install a specific release from CRAN with:
+
+
+``` r
+remotes::install_version("medicalcoder", version = "0.10.0")
+```
+
 ## Citation
 
 Two things to cite,
