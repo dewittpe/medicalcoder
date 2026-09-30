@@ -53,9 +53,10 @@ historical years and currently carries the 2023 table forward through 2025.
 The carry-forward is an explicit assumption, not a newer mortality release.
 Do not extend it using CDC ICD-10-CM files or an upload timestamp alone.
 
-On September 29, 2026, the [CDC directory](https://ftp.cdc.gov/pub/Health_Statistics/NCHS/Publications/ICD10/)
+On September 30, 2026, the [CDC directory](https://ftp.cdc.gov/pub/Health_Statistics/NCHS/Publications/ICD10/)
 still listed the 2023 CSV/PDF/XLSX files dated December 19, 2024. The remote
-CSV was byte-for-byte identical to the local input (SHA-256
-`3b0bd43cf4f1330bcb683ea010e7a9396dc923b11db0be24919481b32ec283fb`).
-Its heading specifies 1999–2023. No parser or input replacement was needed.
-Extending mortality coverage beyond 2025 requires separate source review.
+CSV was downloaded and verified byte-for-byte identical to the local input
+with matching SHA-256 `3b0bd43cf4f1330bcb683ea010e7a9396dc923b11db0be24919481b32ec283fb`.
+Its heading specifies 1999–2023. No newer allvalid mortality file was listed,
+so no parser or source-data change is needed. Extending mortality coverage
+beyond 2025 requires separate evidence of continued applicability.

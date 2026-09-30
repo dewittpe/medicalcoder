@@ -2,7 +2,9 @@
 
 ## New Features
 
-* ICD-10-CM and ICD-10-PCS from CDC and CMS for FY 2027 added to the package.
+* Add FY2027 ICD-10-CM and ICD-10-PCS from CMS. The CDC-hosted FY2027 CM
+  order file agrees with CMS; the package's `cdc` source label continues to
+  refer to mortality codes.
 * Extend ICD-10-AM code coverage through Australian financial year 2027 using
   the current Thirteenth Edition.
 
