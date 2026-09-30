@@ -30,6 +30,16 @@ A `data.frame` with the following columns:
 - `elixhauser_<variant>`: Integer vector indicating if the code is part
   of the `<variant>` of the Elixhauser comorbidities.
 
+## Details
+
+The method previously named `elixhauser_elixhauser1988` is named
+`elixhauser_elixhauser1998` in this release, correcting the publication
+year. Accordingly, the returned method indicator column is now
+`elixhauser_elixhauser1998`. Code that refers to the old column name
+must be updated; the old column is not included as an alias. Calls to
+`comorbidities(method = "elixhauser_elixhauser1988")` remain temporarily
+supported with a deprecation warning.
+
 ## See also
 
 - [`get_elixhauser_index_scores()`](http://www.peteredewitt.com/medicalcoder/reference/get_elixhauser_index_scores.md)
@@ -64,7 +74,7 @@ head(get_elixhauser_codes())
 #> 4    9  1    070.32 07032        NA     LIVER                   1
 #> 5    9  1    070.33 07033        NA     LIVER                   1
 #> 6    9  1    070.44 07044        NA     LIVER                   1
-#>   elixhauser_elixhauser1988 elixhauser_quan2005 elixhauser_ahrq2022
+#>   elixhauser_elixhauser1998 elixhauser_quan2005 elixhauser_ahrq2022
 #> 1                         1                   1                  NA
 #> 2                         0                   1                  NA
 #> 3                         0                   1                  NA
@@ -94,7 +104,7 @@ str(get_elixhauser_codes())
 #>  $ poaexempt                : int  NA NA NA NA NA NA NA NA NA NA ...
 #>  $ condition                : chr  "AIDS" "LIVER" "LIVER" "LIVER" ...
 #>  $ elixhauser_ahrq_web      : int  1 1 1 1 1 1 1 0 0 0 ...
-#>  $ elixhauser_elixhauser1988: int  1 0 0 1 1 0 1 0 0 0 ...
+#>  $ elixhauser_elixhauser1998: int  1 0 0 1 1 0 1 0 0 0 ...
 #>  $ elixhauser_quan2005      : int  1 1 1 1 1 1 1 1 1 1 ...
 #>  $ elixhauser_ahrq2022      : int  NA NA NA NA NA NA NA NA NA NA ...
 #>  $ elixhauser_ahrq2023      : int  NA NA NA NA NA NA NA NA NA NA ...

@@ -352,7 +352,7 @@ vignette(topic = "charlson", package = "medicalcoder")
 
 - [Elixhauser et
   al. (1998)](https://doi.org/10.1097/00005650-199801000-00004)
-  - `method = elixhauser_elixhauser1988`
+  - `method = elixhauser_elixhauser1998`
 - [Quan et
   al. (2005)](https://doi.org/10.1097/01.mlr.0000182534.19832.83)
   - `method = elixhauser_quan2005`

@@ -64,6 +64,10 @@
 <h3 id="other-changes-0-10-0">Other Changes<a class="anchor" aria-label="anchor" href="#other-changes-0-10-0"></a></h3>
 <ul><li>Added CITATION file and added to the README the <a href="https://doi.org/10.1093/jamiaopen/ooag182" class="external-link">JAMIA Open</a> manuscript.</li>
 </ul></div>
+<div class="section level3">
+<h3 id="breaking-changes-0-10-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-10-0"></a></h3>
+<ul><li>Corrected the Elixhauser method name from <code>elixhauser_elixhauser1988</code> to <code>elixhauser_elixhauser1998</code>. The <code><a href="../reference/get_elixhauser_codes.html">get_elixhauser_codes()</a></code> and <code><a href="../reference/get_elixhauser_index_scores.html">get_elixhauser_index_scores()</a></code> lookup tables now use the <code>elixhauser_elixhauser1998</code> column and no longer include the old column name. Update code that selects the old column. Calls to <code>comorbidities(method = "elixhauser_elixhauser1988")</code> remain temporarily supported with a deprecation warning. (<a href="https://github.com/dewittpe/medicalcoder/issues/50" class="external-link">#50</a>)</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.9.0" id="medicalcoder-090">medicalcoder 0.9.0<a class="anchor" aria-label="anchor" href="#medicalcoder-090"></a></h2><p class="text-muted">CRAN release: 2026-07-11</p>

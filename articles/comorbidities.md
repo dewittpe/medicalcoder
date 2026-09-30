@@ -52,7 +52,7 @@ implemented in the *medicalcoder* package:
         6.  `elixhauser_ahrq_icd10`: uses all codes from all the
             specific years
     2.  Codes from Table 2 of Quan et al. (2005)
-        1.  `elixhauser_elixhauser1988`: (Elixhauser et al. 1998; Quan
+        1.  `elixhauser_elixhauser1998`: (Elixhauser et al. 1998; Quan
             et al. 2005)
         2.  `elixhauser_ahrq_web`: (Quan et al. 2005; Healthcare Cost
             and Utilization Project (HCUP) 2017)
@@ -76,7 +76,7 @@ medicalcoder:::comorbidities_methods()
 ##  [7] "charlson_quan2005"         "charlson_cdmf2019"        
 ##  [9] "charlson_sundararajan2004" "charlson_ludvigsson2021"  
 ## [11] "charlson_beyrer2021"       "charlson_mimicivcode"     
-## [13] "elixhauser_elixhauser1988" "elixhauser_ahrq_web"      
+## [13] "elixhauser_elixhauser1998" "elixhauser_ahrq_web"      
 ## [15] "elixhauser_quan2005"       "elixhauser_ahrq2022"      
 ## [17] "elixhauser_ahrq2023"       "elixhauser_ahrq2024"      
 ## [19] "elixhauser_ahrq2025"       "elixhauser_ahrq2026"      
@@ -321,7 +321,7 @@ str(get_elixhauser_codes())
 ##  $ poaexempt                : int  NA NA NA NA NA NA NA NA NA NA ...
 ##  $ condition                : chr  "AIDS" "LIVER" "LIVER" "LIVER" ...
 ##  $ elixhauser_ahrq_web      : int  1 1 1 1 1 1 1 0 0 0 ...
-##  $ elixhauser_elixhauser1988: int  1 0 0 1 1 0 1 0 0 0 ...
+##  $ elixhauser_elixhauser1998: int  1 0 0 1 1 0 1 0 0 0 ...
 ##  $ elixhauser_quan2005      : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ elixhauser_ahrq2022      : int  NA NA NA NA NA NA NA NA NA NA ...
 ##  $ elixhauser_ahrq2023      : int  NA NA NA NA NA NA NA NA NA NA ...

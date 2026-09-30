@@ -74,6 +74,16 @@ if the code is procedural (ICD-9-PCS, ICD-10-PCS).</p></li>
 <li><p><code>elixhauser_&lt;variant&gt;</code>: Integer vector indicating if the code is part of the <code>&lt;variant&gt;</code> of the Elixhauser comorbidities.</p></li>
 </ul></div>
     <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>The method previously named <code>elixhauser_elixhauser1988</code> is named
+<code>elixhauser_elixhauser1998</code> in this release, correcting the publication year.
+Accordingly, the returned method indicator column is now
+<code>elixhauser_elixhauser1998</code>. Code that refers to the old column name must be
+updated; the old column is not included as an alias. Calls to
+<code>comorbidities(method = "elixhauser_elixhauser1988")</code> remain temporarily
+supported with a deprecation warning.</p>
+    </div>
+    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index">
 <ul><li><p><code><a href="get_elixhauser_index_scores.html">get_elixhauser_index_scores()</a></code> for the lookup table of the condition by
@@ -98,7 +108,7 @@ comorbidity.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4    9  1    070.32 07032        NA     LIVER                   1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5    9  1    070.33 07033        NA     LIVER                   1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6    9  1    070.44 07044        NA     LIVER                   1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   elixhauser_elixhauser1988 elixhauser_quan2005 elixhauser_ahrq2022</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   elixhauser_elixhauser1998 elixhauser_quan2005 elixhauser_ahrq2022</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1                         1                   1                  NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2                         0                   1                  NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3                         0                   1                  NA</span>
@@ -128,7 +138,7 @@ comorbidity.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ poaexempt                : int  NA NA NA NA NA NA NA NA NA NA ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ condition                : chr  "AIDS" "LIVER" "LIVER" "LIVER" ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ elixhauser_ahrq_web      : int  1 1 1 1 1 1 1 0 0 0 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ elixhauser_elixhauser1988: int  1 0 0 1 1 0 1 0 0 0 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ elixhauser_elixhauser1998: int  1 0 0 1 1 0 1 0 0 0 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ elixhauser_quan2005      : int  1 1 1 1 1 1 1 1 1 1 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ elixhauser_ahrq2022      : int  NA NA NA NA NA NA NA NA NA NA ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ elixhauser_ahrq2023      : int  NA NA NA NA NA NA NA NA NA NA ...</span>
