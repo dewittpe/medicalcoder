@@ -56,16 +56,20 @@ codes <- codes[,
 # This isn't needed for the codes defined in Quan (2005).
 poa <- readRDS("./elixhauser_poa_ahrq_icd10.rds")
 
-# Check the unioned exemption flag against each annual release for codes that
-# are mapped by that release and valid in the corresponding CMS fiscal year.
-# Use known validity rather than assignability: AHRQ mapping membership is the
-# relevant criterion.
+# Check that code-level POA exemption status stays static across AHRQ releases
+# whenever a code is mapped by the release and assignable in the corresponding
+# CMS fiscal year. Include both exempt and non-exempt values so a 1-to-0
+# transition is detected as well as a 0-to-1 transition. AHRQ omits a code from
+# an exemption list once it is no longer assignable; that omission is expected
+# because the code is no longer valid input for that ICD version. This check
+# therefore tests code-level exemption stability only during assignable years,
+# not equality of the all-years union with every version-specific AHRQ list.
 poaexempt_by_release <- data.table::as.data.table(
   readRDS("./elixhauser_poaexempt_ahrq_icd10.rds")
 )
 cms_validity <- data.table::as.data.table(
   readRDS("../icd/known_and_assignable_start_stop.rds")
-)[src == "cms", .(code_id, known_start, known_end)]
+)[src == "cms", .(code_id, assignable_start, assignable_end)]
 cms_validity <- unique(cms_validity)
 
 annual_methods <- sub(
@@ -75,28 +79,58 @@ annual_methods <- sub(
 stopifnot(length(annual_methods) > 0L)
 stopifnot(setequal(annual_methods, grep("^ahrq[0-9]{4}$", names(codes), value = TRUE)))
 
-poaexempt_check <- merge(
-  x = data.table::as.data.table(codes[, c("code_id", annual_methods), drop = FALSE]),
-  y = poaexempt_by_release,
-  by = "code_id",
-  all = FALSE
+mapped_by_release <- data.table::melt(
+  data = unique(data.table::as.data.table(
+    codes[, c("code_id", annual_methods), drop = FALSE]
+  )),
+  id.vars = "code_id",
+  variable.name = "method",
+  value.name = "mapped"
 )
+exempt_by_release <- data.table::melt(
+  data = poaexempt_by_release,
+  id.vars = "code_id",
+  variable.name = "method",
+  value.name = "poaexempt"
+)
+exempt_by_release[, method := sub("^poaexempt_", "", method)]
+
+poaexempt_check <- merge(
+  x = mapped_by_release,
+  y = exempt_by_release,
+  by = c("code_id", "method"),
+  all.x = TRUE
+)
+poaexempt_check[is.na(poaexempt), poaexempt := 0L]
 poaexempt_check <- merge(poaexempt_check, cms_validity, by = "code_id", all = FALSE)
 
-for (method in annual_methods) {
-  year <- as.integer(sub("^ahrq", "", method))
-  exemption_method <- paste0("poaexempt_", method)
-  idx <-
-    !is.na(poaexempt_check[[method]]) &
-    poaexempt_check[[exemption_method]] == 1L &
-    !is.na(poaexempt_check[["known_start"]]) &
-    !is.na(poaexempt_check[["known_end"]]) &
-    poaexempt_check[["known_start"]] <= year &
-    poaexempt_check[["known_end"]] >= year
-  if (!any(idx)) stop("No mapped CMS codes found for POA exemption check in ", method)
-  if (!all(poaexempt_check[["poaexempt"]][idx] == poaexempt_check[[exemption_method]][idx])) {
-    stop("Union POA exemption differs for mapped CMS codes in ", method)
-  }
+poaexempt_check[, year := as.integer(sub("^ahrq", "", method))]
+
+poaexempt_check <- unique(
+  poaexempt_check[
+    mapped == 1L &
+    !is.na(assignable_start) &
+    !is.na(assignable_end) &
+    assignable_start <= year &
+    assignable_end >= year,
+    .(code_id, method, year, poaexempt)
+  ]
+)
+
+poaexempt_status_by_code <- poaexempt_check[
+  , .(n_releases = data.table::uniqueN(method), n_statuses = data.table::uniqueN(poaexempt)),
+  by = "code_id"
+]
+poaexempt_comparison_codes <- poaexempt_status_by_code[n_releases > 1L]
+if (nrow(poaexempt_comparison_codes) == 0L) {
+  stop("No CMS codes mapped in multiple AHRQ releases found for POA exemption check")
+}
+poaexempt_changes <- poaexempt_comparison_codes[n_statuses > 1L, code_id]
+if (length(poaexempt_changes) > 0L) {
+  stop(
+    "POA exemption status changes across AHRQ releases for mapped, assignable CMS code_id(s): ",
+    paste(poaexempt_changes, collapse = ", ")
+  )
 }
 
 ################################################################################

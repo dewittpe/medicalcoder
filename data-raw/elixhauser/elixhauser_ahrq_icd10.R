@@ -255,6 +255,12 @@ data.table::setcolorder(
   c("code_id", paste0("poaexempt_", names(poaexempt_formats)))
 )
 
+# AHRQ's SAS program selects POA exemptions by ICDVER (and quarter), so its
+# results are version-specific. medicalcoder has no encounter-year or quarter
+# input: `poaexempt` is the union across included AHRQ versions, and
+# `elixhauser_ahrq_icd10` combines their mappings. AHRQ may omit a code from a
+# later exemption list once that code is no longer assignable; this does not
+# indicate a changed exemption status for codes usable in that ICD version.
 elixhauser_poaexempt <- unique(elixhauser_poaexempt$code)
 
 # add a poaexmpt column to elixhauser_codes
