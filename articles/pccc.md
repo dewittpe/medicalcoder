@@ -785,7 +785,7 @@ lookup_icd_codes("E030")
 ## 2      2012             2010           2012
 ## 3      2027             2014           2027
 ## 4      2025             2001           2025
-## 5      2026             2020           2026
+## 5      2027             2020           2027
 ## 6      2026             1997           2026
 ## 7      2021             2008           2021
 data <- data.frame(id = c("Ambiguous compact code", "Full ICD-9 code", "Full ICD-10 code"),
@@ -1034,7 +1034,7 @@ str(permutations, vec.len = 1)
 ##  $ encounter_id: int  1 2 ...
 ##  $ code        : chr  NA ...
 ##  $ plabel      : chr  "Permutation 1: H49.811, J84.111, Z96.41" ...
-##  - attr(*, ".internal.selfref")=<pointer: 0x55bdcd9aef20>
+##  - attr(*, ".internal.selfref")=<pointer: 0x564f3cbd0f20>
 ```
 
 - Permutation 1: H49.811, J84.111, Z96.41

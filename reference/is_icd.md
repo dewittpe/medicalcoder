@@ -252,7 +252,7 @@ lookup_icd_codes("E010")
 #> 2      2012               NA             NA
 #> 3      2027             2014           2027
 #> 4      2025             2001           2025
-#> 5      2026             2020           2026
+#> 5      2027             2020           2027
 #> 6      2026             1997           2026
 #> 7      2021             2008           2021
 subset(get_icd_codes(with.descriptions = TRUE), grepl("^E010$", code))
@@ -261,7 +261,7 @@ subset(get_icd_codes(with.descriptions = TRUE), grepl("^E010$", code))
 #> 47746     9  1      E010 E010             cdc        2010      2012
 #> 153780   10  1     E01.0 E010             cms        2014      2027
 #> 153781   10  1     E01.0 E010             cdc        2001      2025
-#> 153782   10  1     E01.0 E010          ihacpa        2020      2026
+#> 153782   10  1     E01.0 E010          ihacpa        2020      2027
 #> 153783   10  1     E01.0 E010             who        2008      2021
 #> 153784   10  1     E01.0 E010 socialstyrelsen        1997      2026
 #>        assignable_start assignable_end
@@ -269,7 +269,7 @@ subset(get_icd_codes(with.descriptions = TRUE), grepl("^E010$", code))
 #> 47746                NA             NA
 #> 153780             2014           2027
 #> 153781             2001           2025
-#> 153782             2020           2026
+#> 153782             2020           2027
 #> 153783             2008           2021
 #> 153784             1997           2026
 #>                                                           desc desc_start
@@ -285,7 +285,7 @@ subset(get_icd_codes(with.descriptions = TRUE), grepl("^E010$", code))
 #> 47746      2012
 #> 153780     2027
 #> 153781     2025
-#> 153782     2026
+#> 153782     2027
 #> 153783     2021
 #> 153784     2026
 

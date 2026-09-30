@@ -165,7 +165,7 @@ ICD-10-CM Z88.7 has differences in the description over time within
 |:---|:---|:---|---:|---:|
 | Z88.7 | cms | Allergy status to serum and vaccine | 2021 | 2027 |
 | Z88.7 | cms | Allergy status to serum and vaccine status | 2014 | 2020 |
-| Z88.7 | ihacpa | Personal history of allergy to serum and vaccine | 2020 | 2026 |
+| Z88.7 | ihacpa | Personal history of allergy to serum and vaccine | 2020 | 2027 |
 | Z88.7 | who | Personal history of allergy to serum and vaccine | 2008 | 2021 |
 | Z88.7 | socialstyrelsen | Överkänslighet mot serum och vaccin i den egna sjukhistorien | 1997 | 2026 |
 
@@ -180,7 +180,7 @@ understand.
 | V76.49 | cms | Other sites | 2006 | 2009 |
 | V76.49 | cdc | Other sites | 2001 | 2012 |
 | V76.49 | cms | Special screening for malignant neoplasms of other sites | 2010 | 2015 |
-| V76.49 | ihacpa | Bus occupant injured in collision with other nonmotor vehicle, while boarding or alighting, during unspecified activity | 2020 | 2026 |
+| V76.49 | ihacpa | Bus occupant injured in collision with other nonmotor vehicle, while boarding or alighting, during unspecified activity | 2020 | 2027 |
 | V76.49 | socialstyrelsen | Förare av eller passagerare i buss skadad i kollision med annat icke motordrivet fordon - person skadad vid på- och avstigning - aktivitet, ospecificerad | 1997 | 2026 |
 
 ### with.hierarchy
@@ -260,13 +260,13 @@ knitr::kable(lookup_icd_codes(codes), row.names = FALSE)
 | 73291 | NA | NA | NA | NA | NA | NA | NA | NA | NA | NA |
 | A924 | compact_code | 10 | 1 | A92.4 | A924 | cms | 2014 | 2027 | 2014 | 2027 |
 | A924 | compact_code | 10 | 1 | A92.4 | A924 | cdc | 2001 | 2025 | 2001 | 2025 |
-| A924 | compact_code | 10 | 1 | A92.4 | A924 | ihacpa | 2020 | 2026 | 2020 | 2026 |
+| A924 | compact_code | 10 | 1 | A92.4 | A924 | ihacpa | 2020 | 2027 | 2020 | 2027 |
 | A924 | compact_code | 10 | 1 | A92.4 | A924 | socialstyrelsen | 1997 | 2026 | 1997 | 2026 |
 | A924 | compact_code | 10 | 1 | A92.4 | A924 | who | 2008 | 2021 | 2008 | 2021 |
 | A9248 | NA | NA | NA | NA | NA | NA | NA | NA | NA | NA |
 | not a code | NA | NA | NA | NA | NA | NA | NA | NA | NA | NA |
 | Z00 | full_code | 10 | 1 | Z00 | Z00 | cms | 2014 | 2027 | NA | NA |
-| Z00 | full_code | 10 | 1 | Z00 | Z00 | ihacpa | 2020 | 2026 | NA | NA |
+| Z00 | full_code | 10 | 1 | Z00 | Z00 | ihacpa | 2020 | 2027 | NA | NA |
 | Z00 | full_code | 10 | 1 | Z00 | Z00 | socialstyrelsen | 1997 | 2026 | NA | NA |
 | Z00 | full_code | 10 | 1 | Z00 | Z00 | who | 2008 | 2021 | NA | NA |
 
@@ -298,13 +298,13 @@ knitr::kable(
 | 73291 | NA | NA | NA | NA | NA | NA | NA | NA | NA | NA |
 | A924 | compact_code | 10 | 1 | A92.4 | A924 | cms | 2014 | 2027 | 2014 | 2027 |
 | A924 | compact_code | 10 | 1 | A92.4 | A924 | cdc | 2001 | 2025 | 2001 | 2025 |
-| A924 | compact_code | 10 | 1 | A92.4 | A924 | ihacpa | 2020 | 2026 | 2020 | 2026 |
+| A924 | compact_code | 10 | 1 | A92.4 | A924 | ihacpa | 2020 | 2027 | 2020 | 2027 |
 | A924 | compact_code | 10 | 1 | A92.4 | A924 | socialstyrelsen | 1997 | 2026 | 1997 | 2026 |
 | A924 | compact_code | 10 | 1 | A92.4 | A924 | who | 2008 | 2021 | 2008 | 2021 |
 | A9248 | NA | NA | NA | NA | NA | NA | NA | NA | NA | NA |
 | not a code | NA | NA | NA | NA | NA | NA | NA | NA | NA | NA |
 | Z00 | compact_code | 10 | 1 | Z00 | Z00 | cms | 2014 | 2027 | NA | NA |
-| Z00 | compact_code | 10 | 1 | Z00 | Z00 | ihacpa | 2020 | 2026 | NA | NA |
+| Z00 | compact_code | 10 | 1 | Z00 | Z00 | ihacpa | 2020 | 2027 | NA | NA |
 | Z00 | compact_code | 10 | 1 | Z00 | Z00 | socialstyrelsen | 1997 | 2026 | NA | NA |
 | Z00 | compact_code | 10 | 1 | Z00 | Z00 | who | 2008 | 2021 | NA | NA |
 
@@ -331,7 +331,7 @@ knitr::kable(
 | A9248 | NA | NA | NA | NA | NA | NA | NA | NA | NA | NA |
 | not a code | NA | NA | NA | NA | NA | NA | NA | NA | NA | NA |
 | Z00 | full_code | 10 | 1 | Z00 | Z00 | cms | 2014 | 2027 | NA | NA |
-| Z00 | full_code | 10 | 1 | Z00 | Z00 | ihacpa | 2020 | 2026 | NA | NA |
+| Z00 | full_code | 10 | 1 | Z00 | Z00 | ihacpa | 2020 | 2027 | NA | NA |
 | Z00 | full_code | 10 | 1 | Z00 | Z00 | socialstyrelsen | 1997 | 2026 | NA | NA |
 | Z00 | full_code | 10 | 1 | Z00 | Z00 | who | 2008 | 2021 | NA | NA |
 
