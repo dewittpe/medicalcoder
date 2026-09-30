@@ -59,4 +59,13 @@ CSV was downloaded and verified byte-for-byte identical to the local input
 with matching SHA-256 `3b0bd43cf4f1330bcb683ea010e7a9396dc923b11db0be24919481b32ec283fb`.
 Its heading specifies 1999–2023. No newer allvalid mortality file was listed,
 so no parser or source-data change is needed. Extending mortality coverage
-beyond 2025 requires separate evidence of continued applicability.
+beyond 2025 requires separate evidence of continued applicability. CDC's
+final mortality reports state that no ICD-10 codes were added or deleted in
+2023 or 2024 ([2023 report](https://www.cdc.gov/nchs/data/nvsr/nvsr74/nvsr74-10.pdf),
+[2024 report](https://stacks.cdc.gov/view/cdc/252465/cdc_252465_DS1.pdf)). This
+supports the unchanged code set through 2024, but does not establish allvalid
+coverage for 2025–2027. We therefore leave the existing carry-forward through
+2025 unchanged and do not extend it to 2026 or 2027. Treat 2024–2025 as the
+package's documented carry-forward assumption, not as years covered by the
+2023 CDC allvalid file; future extensions need year-specific mortality-source
+evidence.
