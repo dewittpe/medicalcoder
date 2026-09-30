@@ -259,35 +259,35 @@ subset(get_icd_codes(with.descriptions = TRUE), grepl("^E010$", code))
 #>        icdv dx full_code code             src known_start known_end
 #> 47745     9  1      E010 E010             cms        2010      2015
 #> 47746     9  1      E010 E010             cdc        2010      2012
-#> 153779   10  1     E01.0 E010             cms        2014      2027
-#> 153780   10  1     E01.0 E010             cdc        2001      2025
-#> 153781   10  1     E01.0 E010          ihacpa        2020      2026
-#> 153782   10  1     E01.0 E010             who        2008      2021
-#> 153783   10  1     E01.0 E010 socialstyrelsen        1997      2026
+#> 153780   10  1     E01.0 E010             cms        2014      2027
+#> 153781   10  1     E01.0 E010             cdc        2001      2025
+#> 153782   10  1     E01.0 E010          ihacpa        2020      2026
+#> 153783   10  1     E01.0 E010             who        2008      2021
+#> 153784   10  1     E01.0 E010 socialstyrelsen        1997      2026
 #>        assignable_start assignable_end
 #> 47745                NA             NA
 #> 47746                NA             NA
-#> 153779             2014           2027
-#> 153780             2001           2025
-#> 153781             2020           2026
-#> 153782             2008           2021
-#> 153783             1997           2026
+#> 153780             2014           2027
+#> 153781             2001           2025
+#> 153782             2020           2026
+#> 153783             2008           2021
+#> 153784             1997           2026
 #>                                                           desc desc_start
 #> 47745  Activity involving other muscle strengthening exercises       2010
 #> 47746  Activity involving other muscle strengthening exercises       2010
-#> 153779      Iodine-deficiency related diffuse (endemic) goiter       2014
-#> 153780      Iodine-deficiency-related diffuse (endemic) goiter       2001
-#> 153781      Iodine-deficiency-related diffuse (endemic) goitre       2020
-#> 153782      Iodine-deficiency-related diffuse (endemic) goitre       2008
-#> 153783              Jodbristrelaterad diffus (endemisk) struma       1997
+#> 153780      Iodine-deficiency related diffuse (endemic) goiter       2014
+#> 153781      Iodine-deficiency-related diffuse (endemic) goiter       2001
+#> 153782      Iodine-deficiency-related diffuse (endemic) goitre       2020
+#> 153783      Iodine-deficiency-related diffuse (endemic) goitre       2008
+#> 153784              Jodbristrelaterad diffus (endemisk) struma       1997
 #>        desc_end
 #> 47745      2015
 #> 47746      2012
-#> 153779     2027
-#> 153780     2025
-#> 153781     2026
-#> 153782     2021
-#> 153783     2026
+#> 153780     2027
+#> 153781     2025
+#> 153782     2026
+#> 153783     2021
+#> 153784     2026
 
 is_icd("E010")
 #> [1] TRUE

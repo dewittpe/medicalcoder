@@ -7,6 +7,15 @@
 - ICD-10-CM and ICD-10-PCS from CDC and CMS for FY 2027 added to the
   package.
 
+### Bug Fixes
+
+- Select CMS source archives explicitly so the original FY2026 PCS
+  archive cannot mask the April 2026 update. Correct affected FY2026
+  code validity.
+- Repair recursive ICD build dependencies and track selected source
+  files so importer and source updates propagate to generated package
+  data.
+
 ### Other Changes
 
 - Added CITATION file and added to the README the [JAMIA

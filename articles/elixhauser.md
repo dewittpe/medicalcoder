@@ -91,11 +91,16 @@ str(get_elixhauser_poa())
   mortality and readmission indices by variant.
 
 - [`get_elixhauser_poa()`](http://www.peteredewitt.com/medicalcoder/reference/get_elixhauser_poa.md)
-  returns a `data.frame` which reports which conditions are required and
-  not required to be present-on-admission for the conditions to be
-  classified as a comorbidity by variant. For the variants not listed
-  the default is as with the Charlson and PCCC methods, the code needs
-  to be present-on-admission for the condition to be flagged.
+  returns a condition-level rule table. `poa_required = 1` means a
+  mapped diagnosis must be POA for the condition to be flagged, unless
+  its code is POA exempt. `poa_required = 0` means POA does not affect
+  that condition. The `elixhauser_ahrqYYYY` columns identify the annual
+  AHRQ releases that use each condition/rule row.
+  `elixhauser_ahrq_icd10` is the union across included AHRQ releases,
+  not an additional annual release. Code-level POA exemptions are
+  tracked separately from this condition-level table. For variants
+  without an explicit POA rule, the default is that the code must be POA
+  for the condition to be flagged.
 
 ## Applying Elixhauser
 

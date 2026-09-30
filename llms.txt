@@ -447,7 +447,9 @@ The columns are:
 
   - `cms`: The ICD-9-CM, ICD-9-PCS, ICD-10-CM, or ICD-10-PCS codes
     curated by the Centers for Medicare and Medicaid Services (CMS).
-  - `cdc`: CDC mortality coding.
+  - `cdc`: CDC mortality ICD-10 codes (calendar years), plus historical
+    CDC ICD-9 extracts. CDC-hosted ICD-10-CM files are represented by
+    the canonical `cms` source.
   - `ihacpa`: ICD-10-AM codes from the Independent Health and Aged Care
     Pricing Authority.
   - `socialstyrelsen`: ICD-10-SE codes from Sweden’s National Board of

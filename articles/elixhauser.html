@@ -177,12 +177,17 @@ indicators for the inclusion in specific variants.</p></li>
 <li><p><code><a href="../reference/get_elixhauser_index_scores.html">get_elixhauser_index_scores()</a></code> returns a
 <code>data.frame</code> with points scored per condition for both
 mortality and readmission indices by variant.</p></li>
-<li><p><code><a href="../reference/get_elixhauser_poa.html">get_elixhauser_poa()</a></code> returns a
-<code>data.frame</code> which reports which conditions are required and
-not required to be present-on-admission for the conditions to be
-classified as a comorbidity by variant. For the variants not listed the
-default is as with the Charlson and PCCC methods, the code needs to be
-present-on-admission for the condition to be flagged.</p></li>
+<li><p><code><a href="../reference/get_elixhauser_poa.html">get_elixhauser_poa()</a></code> returns a condition-level rule
+table. <code>poa_required = 1</code> means a mapped diagnosis must be
+POA for the condition to be flagged, unless its code is POA exempt.
+<code>poa_required = 0</code> means POA does not affect that condition.
+The <code>elixhauser_ahrqYYYY</code> columns identify the annual AHRQ
+releases that use each condition/rule row.
+<code>elixhauser_ahrq_icd10</code> is the union across included AHRQ
+releases, not an additional annual release. Code-level POA exemptions
+are tracked separately from this condition-level table. For variants
+without an explicit POA rule, the default is that the code must be POA
+for the condition to be flagged.</p></li>
 </ul>
 </div>
 <div class="section level2">

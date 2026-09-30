@@ -107,7 +107,9 @@ if the code is procedural (ICD-9-PCS, ICD-10-PCS)</p></li>
 
 <p>There are five sources of ICD codes.</p><ul><li><p><code>cms</code>: Codes from the ICD-9-CM, ICD-9-PCS, ICD-10-CM, and ICD-10-PCS standards.</p></li>
 <li><p><code>who</code>: Codes from the World Health Organization.</p></li>
-<li><p><code>cdc</code>: Codes from the CDC Mortality coding standard.</p></li>
+<li><p><code>cdc</code>: For ICD-10, CDC mortality codes, not CDC-hosted ICD-10-CM files.
+ICD-10-CM uses the canonical <code>cms</code> source. CDC ICD-9 extracts are also
+retained under <code>cdc</code>.</p></li>
 <li><p><code>ihacpa</code>: ICD-10-AM codes from the Independent Health and Aged Care
 Pricing Authority.</p></li>
 <li><p><code>socialstyrelsen</code>: ICD-10-SE codes from Sweden's National Board of Health
@@ -143,6 +145,9 @@ for which we have definitive source data.  For ICD-9-CM and ICD-9-PCS,
 CMS provides data through fiscal year 2015, while the CDC extracts stop at
 fiscal year 2012.  For ICD-10-CM and ICD-10-PCS, which are active, it is just
 the last year of known data.  ICD-10 from the WHO ends in 2019.</p>
+<p>CMS annual tables represent the selected release within each fiscal year,
+including April updates where incorporated. Integer validity years do not
+distinguish October and April effective dates within the same fiscal year.</p>
 </div>
 
 <div class="section">

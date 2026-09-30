@@ -370,7 +370,7 @@ str(old_vs_new)
 ##  $ any_tech_dep  : int  0 0 0 0 0 0 1 0 0 0 ...
 ##  $ any_transplant: int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ num_cmrb      : int  0 1 1 1 1 1 5 1 0 0 ...
-##  - attr(*, ".internal.selfref")=<pointer: 0x5568e7281f20> 
+##  - attr(*, ".internal.selfref")=<pointer: 0x564c5b674f20> 
 ##  - attr(*, "sorted")= chr "patid"
 ```
 
@@ -479,15 +479,15 @@ medicalcoder_dt_time <- difftime(toc, tic, units = "secs")
 ``` r
 
 pccc_ccc_tbl_time
-## Time difference of 9.627967 secs
+## Time difference of 9.375185 secs
 pccc_ccc_dt_time
-## Time difference of 7.514024 secs
+## Time difference of 7.653732 secs
 medicalcoder_df_time
-## Time difference of 0.6662021 secs
+## Time difference of 0.7446992 secs
 medicalcoder_tbl_time
-## Time difference of 0.3458374 secs
+## Time difference of 0.3819356 secs
 medicalcoder_dt_time
-## Time difference of 0.151845 secs
+## Time difference of 0.160923 secs
 ```
 
 ### Summary of results

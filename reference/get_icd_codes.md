@@ -89,7 +89,9 @@ There are five sources of ICD codes.
 
 - `who`: Codes from the World Health Organization.
 
-- `cdc`: Codes from the CDC Mortality coding standard.
+- `cdc`: For ICD-10, CDC mortality codes, not CDC-hosted ICD-10-CM
+  files. ICD-10-CM uses the canonical `cms` source. CDC ICD-9 extracts
+  are also retained under `cdc`.
 
 - `ihacpa`: ICD-10-AM codes from the Independent Health and Aged Care
   Pricing Authority.
@@ -132,6 +134,11 @@ ICD-9-PCS, CMS provides data through fiscal year 2015, while the CDC
 extracts stop at fiscal year 2012. For ICD-10-CM and ICD-10-PCS, which
 are active, it is just the last year of known data. ICD-10 from the WHO
 ends in 2019.
+
+CMS annual tables represent the selected release within each fiscal
+year, including April updates where incorporated. Integer validity years
+do not distinguish October and April effective dates within the same
+fiscal year.
 
 ### Header and Assignable Codes
 
