@@ -23,8 +23,18 @@
 #     each ahrqYYYY
 #
 #   elixhauser_poa_ahrq_icd10.rds:
-#     a data.frame with the ahrqYYYY columns indicating if the condition is
-#     requires POA or not
+#     condition-level POA requirement rules imported from sheet 2 of each
+#     AHRQ CMR Reference File. Columns are condition, poa_required, and one
+#     0/1 ahrqYYYY membership flag per release. AHRQ's broad conditions are
+#     expanded to the package's more detailed condition names below. This is
+#     an intermediate; elixhauser.R adds the ahrq_icd10 any-release flag and
+#     the public elixhauser_poa.rds prefixes release columns with
+#     elixhauser_.
+#
+#   elixhauser_poaexempt_ahrq_icd10.rds:
+#     separate build-only code-level 0/1 POA exemption flags for each annual
+#     AHRQ release. Used to check the unioned exemption mapping; this is not
+#     the condition-level poa_required table.
 #
 # deps: data.table, readxl
 #
@@ -177,6 +187,7 @@ elixhauser_poaexempt <- values[value != "COMFMT"]
 elixhauser_poaexempt[, strings := NULL]
 elixhauser_poaexempt[, start := NULL]
 elixhauser_poaexempt[, stop := NULL]
+
 elixhauser_poaexempt <-
   split(elixhauser_poaexempt, by = c("version", "value")) |>
     lapply(function(x) {
@@ -189,6 +200,60 @@ elixhauser_poaexempt <-
       y
     }) |>
   data.table::rbindlist()
+
+poaexempt_formats <-
+  lapply(format_programs, function(x) {
+    formats <- grep("^\\s*Value \\$POAXMPT_V[0-9]+FMT", x, value = TRUE)
+    versions <- as.integer(sub("^.*POAXMPT_V([0-9]+)FMT.*$", "\\1", trimws(formats)))
+    max(versions)
+  })
+
+# Save each annual AHRQ release's latest ICDVER exemption list for the
+# consistency check in elixhauser.R. This remains build-only metadata.
+elixhauser_poaexempt_by_release <-
+  data.table::rbindlist(lapply(names(poaexempt_formats), function(release) {
+    fmt <- paste0("POAXMPT_V", poaexempt_formats[[release]], "FMT")
+    codes <- elixhauser_poaexempt[
+      version == release & value == fmt,
+      unique(code)
+    ]
+    data.table::data.table(code = codes, version = release, exempt = 1L)
+  }))
+elixhauser_poaexempt_by_release <-
+  data.table::dcast(
+    elixhauser_poaexempt_by_release,
+    code ~ version,
+    value.var = "exempt",
+    fill = 0L
+  )
+
+elixhauser_poaexempt[, dummy := 1L]
+elixhauser_poaexempt <-
+  data.table::dcast(
+    data = elixhauser_poaexempt,
+    formula = code + value ~ version,
+    value.var = "dummy",
+    fill = 0L
+  )
+
+elixhauser_poaexempt_by_release <-
+  merge(
+    x = elixhauser_poaexempt_by_release,
+    y = icd_codes[icdv == 10L & dx == 1L, .(code, code_id)],
+    all.x = TRUE,
+    by = "code"
+  )
+stopifnot(!anyNA(elixhauser_poaexempt_by_release$code_id))
+elixhauser_poaexempt_by_release[, code := NULL]
+data.table::setnames(
+  elixhauser_poaexempt_by_release,
+  old = names(poaexempt_formats),
+  new = paste0("poaexempt_", names(poaexempt_formats))
+)
+data.table::setcolorder(
+  elixhauser_poaexempt_by_release,
+  c("code_id", paste0("poaexempt_", names(poaexempt_formats)))
+)
 
 elixhauser_poaexempt <- unique(elixhauser_poaexempt$code)
 
@@ -254,7 +319,14 @@ elixhauser_conditions <-
   )
 
 ################################################################################
-# POA Required - conditions that require a POA flag
+# Import condition-level POA requirements from the AHRQ reference workbook.
+# `poa_required = 1` means diagnoses for the condition must be POA, unless
+# their code is POA exempt. `poa_required = 0` means the condition is flagged
+# regardless of the diagnosis POA value. This condition-level table is distinct
+# from the code-level POA exemption formats imported above.
+# Merge annual rules by condition and requirement value so a rule that changes
+# between releases remains represented by separate rows with separate method
+# membership flags.
 elixhauser_poa <-
   list("ahrq2022" = readxl::read_xlsx(paste0(tmpdir, "/CMR-Reference-File-v2022-1.xlsx"), sheet = 2, skip = 1),
        "ahrq2023" = readxl::read_xlsx(paste0(tmpdir, "/CMR-Reference-File-v2023-1.xlsx"), sheet = 2, skip = 1),
@@ -381,6 +453,7 @@ saveRDS(elixhauser_index_scores, "./elixhauser_index_scores_ahrq_icd10.rds")
 
 data.table::setDF(elixhauser_poa)
 saveRDS(elixhauser_poa, "./elixhauser_poa_ahrq_icd10.rds")
+saveRDS(elixhauser_poaexempt_by_release, "./elixhauser_poaexempt_ahrq_icd10.rds")
 
 data.table::setDF(elixhauser_codes)
 saveRDS(elixhauser_codes, "./elixhauser_codes_ahrq_icd10.rds")
