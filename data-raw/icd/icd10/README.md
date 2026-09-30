@@ -11,9 +11,9 @@ ICD-9 has its own CDC/CMS source handling.
 The older `icd10_cm_pcs.R` merger preferred CMS descriptions and headers.
 Commit `4fbb956` (November 24, 2025) replaced it with direct CMS input;
 `dbf74a9` later removed the obsolete merger. `cdc_icd10_cm.R` remains an
-optional historical CM import, not an input to the packaged database.
-`gmake check-sources` compares the FY2027 CDC CM release with the selected
-CMS CM release without changing the source labels.
+optional historical CM import, not an input to the packaged database. The
+package's canonical ICD-10-CM source remains CMS; CDC-hosted CM files are not
+merged into the CDC mortality source.
 
 ## Selecting and rebuilding releases
 
@@ -36,17 +36,14 @@ From this directory:
 ```sh
 gmake download        # explicit network refresh; review changed inputs
 gmake                 # rebuild from local sources
-gmake check-sources   # every selected CMS table, plus CDC/CMS FY2027 CM
 ```
 
 For downstream ICD tables, comorbidity mappings, and `R/sysdata.rda`, run
 `gmake -C data-raw` from the repository root. The parent ICD Makefile always
 consults its child Makefiles. Import scripts, the manifest, and selected
 source files are dependencies; unchanged builds do not regenerate data.
-Run `python3 data-raw/icd/check-build.py` from the repository root to
-verify recursive rebuild and no-op behavior in an isolated fixture.
-After adding a new year, update the manifest, download URLs, validation
-coverage, NEWS, and source provenance together. Preserve selected archives
+After adding a new year, update the manifest, download URLs, source review,
+NEWS, and source provenance together. Preserve selected archives
 in the repository or provide a reproducible download before release.
 
 ## CDC mortality coverage

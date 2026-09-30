@@ -16,7 +16,7 @@
 # notes:
 #   Optional historical/validation import, not a packaged data input. CMS is
 #   the canonical CM source; the package CDC label denotes mortality ICD-10.
-#   See README.md and the check-sources target for the current CM comparison.
+#   See README.md for source terminology and import policy.
 #   Run from data-raw/icd/icd10/; expects the ftp.cdc.gov directory tree
 #     downloaded locally.
 #   Uses utilities.R::orderfile_to_DT; unzip targets are written to tempdir().
