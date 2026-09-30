@@ -25,7 +25,7 @@ Elixhauser comorbidities.
 }
 \details{
 The method previously named \code{elixhauser_elixhauser1988} is named
-\code{elixhauser_elixhauser1998} in this release, correcting the publication year.
+\code{elixhauser_elixhauser1998} as of v0.10.0, correcting the publication year.
 Accordingly, the returned method indicator column is now
 \code{elixhauser_elixhauser1998}. Code that refers to the old column name must be
 updated; the old column is not included as an alias. Calls to
