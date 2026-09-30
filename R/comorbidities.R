@@ -227,6 +227,15 @@ comorbidities.data.frame <- function(data,
   assert_scalar_logical(compact.codes)
   stopifnot(full.codes | compact.codes)
 
+  # for version 0.10.0 a warning is given for elixhauser_elixhauser1988
+  if (method == "elixhauser_elixhauser1988") {
+    warning(
+      "method elixhauser_elixhauser1988 is a errant name.  The publication was in 1998, not 1988.  Please use `method = 'elixhauser_elixhauser1998'` instead.  This warning will become an error in a future release.",
+      call. = FALSE
+    )
+    method <- "elixhauser_elixhauser1998"
+  }
+
   method <-
     match.arg(
       method,
@@ -906,7 +915,8 @@ comorbidities_methods <- function() {
       "charlson_deyo1992", "charlson_quan2011", "charlson_quan2005",
       "charlson_cdmf2019", "charlson_sundararajan2004", "charlson_ludvigsson2021",
       "charlson_beyrer2021", "charlson_mimicivcode",
-      "elixhauser_elixhauser1988", "elixhauser_ahrq_web", "elixhauser_quan2005",
+      "elixhauser_elixhauser1998",
+      "elixhauser_ahrq_web", "elixhauser_quan2005",
       "elixhauser_ahrq2022", "elixhauser_ahrq2023", "elixhauser_ahrq2024",
       "elixhauser_ahrq2025", "elixhauser_ahrq2026", "elixhauser_ahrq_icd10")
 }
@@ -981,7 +991,7 @@ map_by_regex <- function(uc, ptrns, icd.codes, by_x, by_y) {
     "assignable_start", "assignable_end", "condition", "subcondition",
     "transplant_flag", "tech_dep_flag",
     "pccc_v3.1", "pccc_v3.0", "pccc_v2.1", "pccc_v2.0",
-    "elixhauser_ahrq_web", "elixhauser_elixhauser1988", "elixhauser_quan2005",
+    "elixhauser_ahrq_web", "elixhauser_elixhauser1998", "elixhauser_quan2005",
     "elixhauser_ahrq2022", "elixhauser_ahrq2023", "elixhauser_ahrq2024", "elixhauser_ahrq2025", "elixhauser_ahrq2026",
     "elixhauser_ahrq_icd10",
     "charlson_cdmf2019", "charlson_deyo1992", "charlson_ludvigsson2021",

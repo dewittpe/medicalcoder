@@ -278,7 +278,7 @@ server <- function(input, output, session) {
       comorbiditycodes[rws()$crws, .(
         `known ICD codes` = .N,
         `AHRQ (ICD-9)` = sum(grepl(pattern, elixhauser_ahrq_web)),
-        `Elixhauser (1998)` = sum(grepl(pattern, elixhauser_elixhauser1988)),
+        `Elixhauser (1998)` = sum(grepl(pattern, elixhauser_elixhauser1998)),
         `Quan (2005)` = sum(grepl(pattern, elixhauser_quan2005)),
         `AHRQ (2022)` = sum(grepl(pattern, elixhauser_ahrq2022)),
         `AHRQ (2023)` = sum(grepl(pattern, elixhauser_ahrq2023)),
@@ -298,7 +298,7 @@ server <- function(input, output, session) {
   elixhauser_codes_and_condtions_table <- reactive({
     comorbiditycodes[rws()$crws, .(full_code,
         `AHRQ (ICD-9)`      = elixhauser_ahrq_web,
-        `Elixhauser (1998)` = elixhauser_elixhauser1988,
+        `Elixhauser (1998)` = elixhauser_elixhauser1998,
         `Quan (2005)`       = elixhauser_quan2005,
         `AHRQ (2022)`       = elixhauser_ahrq2022,
         `AHRQ (2023)`       = elixhauser_ahrq2023,

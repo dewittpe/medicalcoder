@@ -23,6 +23,15 @@ if the code is procedural (ICD-9-PCS, ICD-10-PCS).
 Retrieve a copy of internal lookup tables for the ICD codes used in assessing
 Elixhauser comorbidities.
 }
+\details{
+The method previously named \code{elixhauser_elixhauser1988} is named
+\code{elixhauser_elixhauser1998} in this release, correcting the publication year.
+Accordingly, the returned method indicator column is now
+\code{elixhauser_elixhauser1998}. Code that refers to the old column name must be
+updated; the old column is not included as an alias. Calls to
+\code{comorbidities(method = "elixhauser_elixhauser1988")} remain temporarily
+supported with a deprecation warning.
+}
 \examples{
 head(get_elixhauser_codes())
 str(get_elixhauser_codes())

@@ -398,6 +398,12 @@ args <- list(
   )
 ms <- medicalcoder:::comorbidities_methods()
 ms <- ms[!startsWith(ms, "pccc")]
+
+# for v0.10.0 the method elixhauser_elixhauser1988 has been soft deprecated for
+# the correct name elixhauser_elixhauser1998.  Omit the 1988 version from this
+# test.
+ms <- ms[ms != "elixhauser_elixhauser1988"]
+
 for (m in ms) {
   x <- tryCatchWarning(do.call(comorbidities, c(args, list(method = m))))
   z <- inherits(x, "warning")

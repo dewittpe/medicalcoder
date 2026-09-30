@@ -47,7 +47,7 @@ codes <-
 codes <- codes[,
   c("code_id", "poaexempt", "condition",
   "ahrq_web",
-  "elixhauser1988",
+  "elixhauser1998",
   "quan2005",
   sort(grep("ahrq\\d{4}", names(codes), value = TRUE)),
   "ahrq_icd10")]

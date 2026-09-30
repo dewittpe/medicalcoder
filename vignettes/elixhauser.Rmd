@@ -45,7 +45,7 @@ comorbidity algorithm.
   *  `elixhauser_ahrq_icd10` - All ICD-10 codes ever listed by AHRQ
 
 * Codes from Table 2 of @quan2005
-  * `elixhauser_elixhauser1988`: [@elixhauser1998;@quan2005]
+  * `elixhauser_elixhauser1998`: [@elixhauser1998;@quan2005]
   * `elixhauser_ahrq_web`: [@quan2005;@ahrq2017]
   * `elixhauser_quan2005`: [@quan2005]
 

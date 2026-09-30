@@ -7,7 +7,7 @@ m <- grep("elixhauser_", medicalcoder:::comorbidities_methods(), value = TRUE)
 stopifnot(
   identical(
     m,
-    c("elixhauser_elixhauser1988",
+    c("elixhauser_elixhauser1998",
       "elixhauser_ahrq_web",
       "elixhauser_quan2005",
       "elixhauser_ahrq2022",

@@ -16,6 +16,16 @@
 * Added CITATION file and added to the README the [JAMIA
   Open](https://doi.org/10.1093/jamiaopen/ooag182) manuscript.
 
+## Breaking Changes
+
+* Corrected the Elixhauser method name from `elixhauser_elixhauser1988` to
+  `elixhauser_elixhauser1998`. The `get_elixhauser_codes()` and
+  `get_elixhauser_index_scores()` lookup tables now use the
+  `elixhauser_elixhauser1998` column and no longer include the old column
+  name. Update code that selects the old column. Calls to
+  `comorbidities(method = "elixhauser_elixhauser1988")` remain temporarily
+  supported with a deprecation warning. (#50)
+
 # medicalcoder 0.9.0
 
 ## New Features

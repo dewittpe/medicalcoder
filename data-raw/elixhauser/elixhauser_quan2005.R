@@ -116,7 +116,7 @@ for (j in grep("^ahrq", names(index_scores))) {
 
 # to make coding easier when building the index scores duplicate the index score
 # column with the method names
-index_scores[, elixhauser1988 := ahrq_web]
+index_scores[, elixhauser1998 := ahrq_web]
 index_scores[, quan2005       := ahrq_web]
 
 ################################################################################

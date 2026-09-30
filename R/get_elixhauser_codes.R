@@ -3,6 +3,14 @@
 #' Retrieve a copy of internal lookup tables for the ICD codes used in assessing
 #' Elixhauser comorbidities.
 #'
+#' The method previously named `elixhauser_elixhauser1988` is named
+#' `elixhauser_elixhauser1998` as of v0.10.0, correcting the publication year.
+#' Accordingly, the returned method indicator column is now
+#' `elixhauser_elixhauser1998`. Code that refers to the old column name must be
+#' updated; the old column is not included as an alias. Calls to
+#' `comorbidities(method = "elixhauser_elixhauser1988")` remain temporarily
+#' supported with a deprecation warning.
+#'
 #' @seealso
 #' * [`get_elixhauser_index_scores()`] for the lookup table of the condition by
 #'   condition scores for mortality and readmission indices.
@@ -13,7 +21,7 @@
 #' * [`get_pccc_codes()`] for the lookup table of ICD codes used for the PCCC.
 #' * [`get_charlson_codes()`] for the lookup table of ICD codes used for the Charlson comorbidities.
 #' * [`comorbidities()`] for applying comorbidity algorithms to a dataset.
-#' 
+#'
 #' @return A `data.frame` with the following columns:
 #' * `icdv`: Integer vector indicating if the code is from ICD-9 or ICD-10.
 #' * `dx`: Integer vector. `1L` if the code is diagnostic
