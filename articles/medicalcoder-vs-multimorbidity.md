@@ -94,7 +94,7 @@ medicalcoder_charlson_results <-
 toc <- Sys.time()
 
 difftime(toc, tic, units = "secs")
-## Time difference of 0.7692733 secs
+## Time difference of 0.7666836 secs
 ```
 
 Calling
@@ -115,7 +115,7 @@ multimorbidity_charlson_results <-
 toc <- Sys.time()
 
 difftime(toc, tic, units = "secs")
-## Time difference of 10.29213 secs
+## Time difference of 10.66932 secs
 ```
 
 ### Differences in the results
@@ -327,4 +327,4 @@ Multimorbidity, and Frailty Measures*.
 Quan, Hude, Vijaya Sundararajan, Patricia Halfon, et al. 2005. “Coding
 Algorithms for Defining Comorbidities in ICD-9-CM and ICD-10
 Administrative Data.” *Medical Care* 43 (11): 1130–39.
-<https://doi.org/10.1097/01.mlr.0000182534.19832.83>.
+https://doi.org/<https://doi.org/10.1097/01.mlr.0000182534.19832.83>.

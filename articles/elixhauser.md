@@ -348,4 +348,4 @@ Utilization Project (HCUP)*.
 Quan, Hude, Vijaya Sundararajan, Patricia Halfon, et al. 2005. “Coding
 Algorithms for Defining Comorbidities in ICD-9-CM and ICD-10
 Administrative Data.” *Medical Care* 43 (11): 1130–39.
-<https://doi.org/10.1097/01.mlr.0000182534.19832.83>.
+https://doi.org/<https://doi.org/10.1097/01.mlr.0000182534.19832.83>.

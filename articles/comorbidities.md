@@ -466,12 +466,12 @@ Quan, Hude, Bo Li, Colette M. Couris, et al. 2011. “Updating and
 Validating the Charlson Comorbidity Index and Score for Risk Adjustment
 in Hospital Discharge Abstracts Using Data from 6 Countries.” *American
 Journal of Epidemiology* 173 (6): 676–82.
-<https://doi.org/10.1093/aje/kwq433>.
+https://doi.org/<https://doi.org/10.1093/aje/kwq433>.
 
 Quan, Hude, Vijaya Sundararajan, Patricia Halfon, et al. 2005. “Coding
 Algorithms for Defining Comorbidities in ICD-9-CM and ICD-10
 Administrative Data.” *Medical Care* 43 (11): 1130–39.
-<https://doi.org/10.1097/01.mlr.0000182534.19832.83>.
+https://doi.org/<https://doi.org/10.1097/01.mlr.0000182534.19832.83>.
 
 Sundararajan, Vijaya, Toni Henderson, Catherine Perry, Amanda Muggivan,
 Hude Quan, and William A Ghali. 2004. “New ICD-10 Version of the
