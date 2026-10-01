@@ -441,7 +441,7 @@ and Transplantation.” *BMC Pediatrics* 14: 1–7.
 Glasheen, William P, Tristan Cordier, Rajiv Gumpina, Gil Haugh, Jared
 Davis, and Andrew Renda. 2019. “Charlson Comorbidity Index: ICD-9 Update
 and ICD-10 Translation.” *American Health & Drug Benefits* 12 (4): 188.
-<https://pubmed.ncbi.nlm.nih.gov/31428236/>.
+<https://pmc.ncbi.nlm.nih.gov/articles/PMC6684052/>.
 
 Healthcare Cost and Utilization Project (HCUP). 2017. *Elixhauser
 Comorbidity Software for ICD-9-CM*.

@@ -53,17 +53,19 @@
 <h2 class="pkg-version" data-toc-text="0.10.0" id="medicalcoder-0100">medicalcoder 0.10.0<a class="anchor" aria-label="anchor" href="#medicalcoder-0100"></a></h2>
 <div class="section level3">
 <h3 id="new-features-0-10-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-10-0"></a></h3>
-<ul><li>ICD-10-CM and ICD-10-PCS from CDC and CMS for FY 2027 added to the package.</li>
+<ul><li>Add FY2027 ICD-10-CM and ICD-10-PCS from CMS. The CDC-hosted FY2027 CM order file agrees with CMS; the package’s <code>cdc</code> source label continues to refer to mortality codes.</li>
 <li>Extend ICD-10-AM code coverage through Australian financial year 2027 using the current Thirteenth Edition.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-10-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-10-0"></a></h3>
 <ul><li>Select CMS source archives explicitly so the original FY2026 PCS archive cannot mask the April 2026 update. Correct affected FY2026 code validity.</li>
 <li>Repair recursive ICD build dependencies and track selected source files so importer and source updates propagate to generated package data.</li>
+<li>Preserve the union of codes from supported annual AHRQ ICD-10 mappings in <code>elixhauser_ahrq_icd10</code>. This method has no encounter year or quarter input, so codes from earlier releases remain included even if a later release no longer lists them as assignable.</li>
+<li>Add a data-build check that mapped, assignable ICD-10 codes retain the same POA-exemption status across supported AHRQ releases. This guards the assumption behind the combined <code>elixhauser_ahrq_icd10</code> method (<a href="https://github.com/dewittpe/medicalcoder/issues/47" class="external-link">#47</a>).</li>
 </ul></div>
 <div class="section level3">
 <h3 id="other-changes-0-10-0">Other Changes<a class="anchor" aria-label="anchor" href="#other-changes-0-10-0"></a></h3>
-<ul><li>Added CITATION file and added to the README the <a href="https://doi.org/10.1093/jamiaopen/ooag182" class="external-link">JAMIA Open</a> manuscript.</li>
+<ul><li>Add a <code>CITATION</code> file and cite the <a href="https://doi.org/10.1093/jamiaopen/ooag182" class="external-link">JAMIA Open manuscript</a> in the README.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="breaking-changes-0-10-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-10-0"></a></h3>

@@ -1,4 +1,4 @@
-# \_medicalcoder\_ vs \_comorbidity\_
+# medicalcoder vs comorbidity
 
 ## Introduction
 
@@ -1015,7 +1015,7 @@ str(elixhauser_delta)
 ##  $ cmrb_flag        : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ mortality_index  : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ readmission_index: int  0 0 0 0 0 0 0 0 0 0 ...
-##  - attr(*, ".internal.selfref")=<pointer: 0x55a339241f20>
+##  - attr(*, ".internal.selfref")=<pointer: 0x55acf2eb9f20>
 ```
 
 ## Benchmarking
@@ -1260,7 +1260,7 @@ Comorbidity Scores.” *Journal of Open Source Software* 3: 648.
 Glasheen, William P, Tristan Cordier, Rajiv Gumpina, Gil Haugh, Jared
 Davis, and Andrew Renda. 2019. “Charlson Comorbidity Index: ICD-9 Update
 and ICD-10 Translation.” *American Health & Drug Benefits* 12 (4): 188.
-<https://pubmed.ncbi.nlm.nih.gov/31428236/>.
+<https://pmc.ncbi.nlm.nih.gov/articles/PMC6684052/>.
 
 Healthcare Cost and Utilization Project (HCUP). 2017. *Elixhauser
 Comorbidity Software for ICD-9-CM*.

@@ -326,7 +326,7 @@ There are eight variants of Charlson comorbidities implemented in
 - [Quan et al. (2011)](https://doi.org/10.1093/aje/kwq433)
 - [Sundararajan et
   al. (2004)](https://doi.org/10.1016/j.jclinepi.2004.03.012)
-- [Glasheen (2019)](https://pubmed.ncbi.nlm.nih.gov/31428236/)
+- [Glasheen (2019)](https://pmc.ncbi.nlm.nih.gov/articles/PMC6684052/)
 - [Ludvigsson et al. (2021)](https://doi.org/10.2147/CLEP.S282475)
 - [Beyrer et al. (2021)](https://doi.org/10.1002/pds.5204)
 - MIMIC-IV Charlson SQL from

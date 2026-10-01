@@ -201,7 +201,7 @@ https://doi.org/<https://doi.org/10.1016/0895-4356(92)90133-8>.
 Glasheen, William P, Tristan Cordier, Rajiv Gumpina, Gil Haugh, Jared
 Davis, and Andrew Renda. 2019. “Charlson Comorbidity Index: ICD-9 Update
 and ICD-10 Translation.” *American Health & Drug Benefits* 12 (4): 188.
-<https://pubmed.ncbi.nlm.nih.gov/31428236/>.
+<https://pmc.ncbi.nlm.nih.gov/articles/PMC6684052/>.
 
 Ludvigsson, Jonas F, Peter Appelros, Johan Askling, et al. 2021.
 “Adaptation of the Charlson Comorbidity Index for Register-Based

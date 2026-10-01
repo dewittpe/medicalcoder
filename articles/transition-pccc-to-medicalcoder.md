@@ -1,4 +1,4 @@
-# Transition From the \_pccc\_ Package to the \_medicalcoder\_ Package
+# Transition From The pccc Package to the medicalcoder Package
 
 ## Introduction
 
@@ -370,7 +370,7 @@ str(old_vs_new)
 ##  $ any_tech_dep  : int  0 0 0 0 0 0 1 0 0 0 ...
 ##  $ any_transplant: int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ num_cmrb      : int  0 1 1 1 1 1 5 1 0 0 ...
-##  - attr(*, ".internal.selfref")=<pointer: 0x560ebe08af20> 
+##  - attr(*, ".internal.selfref")=<pointer: 0x559f5c4d0f20> 
 ##  - attr(*, "sorted")= chr "patid"
 ```
 
@@ -479,15 +479,15 @@ medicalcoder_dt_time <- difftime(toc, tic, units = "secs")
 ``` r
 
 pccc_ccc_tbl_time
-## Time difference of 4.838997 secs
+## Time difference of 5.220901 secs
 pccc_ccc_dt_time
-## Time difference of 3.340243 secs
+## Time difference of 3.540543 secs
 medicalcoder_df_time
-## Time difference of 0.4756734 secs
+## Time difference of 0.5854211 secs
 medicalcoder_tbl_time
-## Time difference of 0.2504923 secs
+## Time difference of 0.3596869 secs
 medicalcoder_dt_time
-## Time difference of 0.1042781 secs
+## Time difference of 0.1599634 secs
 ```
 
 ### Summary of results
