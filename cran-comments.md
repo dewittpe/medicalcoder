@@ -1,4 +1,4 @@
-# Version 0.9.0
+# Version 0.10.0
 
 This is an update to the CRAN package medicalcoder.
 
