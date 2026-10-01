@@ -1,5 +1,5 @@
 ---
-title: "Transition From the _pccc_ Package to the _medicalcoder_ Package"
+title: "Transition From The pccc Package to the medicalcoder Package"
 output:
  rmarkdown::html_vignette:
    toc: true

@@ -1,5 +1,5 @@
 ---
-title: "_medicalcoder_ vs _comorbidity_"
+title: "medicalcoder vs comorbidity"
 output:
  rmarkdown::html_vignette:
    toc: true
