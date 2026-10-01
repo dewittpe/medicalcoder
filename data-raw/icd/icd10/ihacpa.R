@@ -59,7 +59,7 @@ codes <-
             )
         )]
 
-# remove whitesapce within the codes
+# remove whitespace within the codes
 codes[, full_code := gsub("\\s", "", full_code)]
 stopifnot(!any(grepl("[[:space:]]", codes[["full_code"]])))
 

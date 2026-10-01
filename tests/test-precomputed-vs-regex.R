@@ -305,7 +305,7 @@ for (m in names(charlson_codes)[which(!(names(charlson_codes) %in% jsc))]) {
       by = c(jsc, m)
     )
 
-  message("  [INFO] assement completed in ", round(difftime(Sys.time(), tic, units = "secs"), 2), " seconds")
+  message("  [INFO] assessment completed in ", round(difftime(Sys.time(), tic, units = "secs"), 2), " seconds")
 
   if (!identical(z[["rf"]], z[["rc"]])) {
     stop("regex on full codes is not the same as for compact codes for ", m, call. = FALSE)

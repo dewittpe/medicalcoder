@@ -139,10 +139,9 @@ stopifnot(
 #
 # ICD-10-CM Z49 - same, not in v2 documents, in the software
 #
-# ICD-9-PCS 86.06 - this is in the document as metabolic (devices) but is only
-# listed under metabolic in the software.  Again, because of the use of the
-# subconditions in the implementation in medicalcoder the corrected mapping is
-# needed in medicalcoder and thus the difference.
+# ICD-9-PCS 86.06 - the document classifies this as metabolic (devices), but
+# the software lists it only under metabolic. Because medicalcoder uses
+# subconditions, its mapping must be corrected, which explains the difference.
 #
 # ICD-9-CM V45.85 - same as ICD-9-PCS 86.06
 #

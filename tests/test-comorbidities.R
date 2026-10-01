@@ -4,7 +4,7 @@ library(medicalcoder)
 set.seed(42)
 
 ################################################################################
-# verify an error will be thrown if lenght(id.vars) < 2 and flag.method =
+# verify an error will be thrown if length(id.vars) < 2 and flag.method =
 # "cumulative"
 
 rtn <- # length(id.vars) = 0
@@ -191,8 +191,7 @@ DF0 <- data.frame(pid = NA, code = "A00")
 DF1 <- data.frame(medicalcoder_id = NA, code = "A00")
 DF2 <- data.frame(..medicalcoder_id.. = NA, code = "A00")
 
-# verify that the constuction of a id.vars within the function works as
-# expected.
+# verify that constructing id.vars within the function works as expected.
 OUT0 <- comorbidities(data = DF0, icd.codes = "code", method = "pccc_v3.0", poa = 1)
 OUT1 <- comorbidities(data = DF1, icd.codes = "code", method = "pccc_v3.0", poa = 1)
 OUT2 <- comorbidities(data = DF2, icd.codes = "code", method = "pccc_v3.0", poa = 1)
@@ -369,8 +368,8 @@ stopifnot(
 )
 
 ################################################################################
-# when a primarydx.var was passed to comorbidities when not needed an error was
-# thrown.  https://github.com/dewittpe/medicalcoder/issues/16
+# Passing primarydx.var to comorbidities() when it was not needed previously
+# caused an error. https://github.com/dewittpe/medicalcoder/issues/16
 #
 # This has been corrected to be a warning
 x <-
@@ -411,7 +410,7 @@ for (m in ms) {
     stop(sprintf("no warning given for subconditions = TRUE with method = '%s'", m))
   }
   if (x$message != "subconditions only implemented for PCCC") {
-    stop(sprintf("unexpected warning message for subcondtions = TRUE with method = '%s'", m))
+    stop(sprintf("unexpected warning message for subconditions = TRUE with method = '%s'", m))
   }
 }
 
@@ -685,7 +684,7 @@ out_no_error <-
 stopifnot(inherits(out_no_error, "medicalcoder_comorbidities"), nrow(out_no_error) == 2L)
 
 # if id.vars = NULL, or id.vars = "ptid", for the example, data, the return will
-# have three rows becuase the ages are distinct.  This should give a warning
+# have three rows because the ages are distinct. This should give a warning.
 out0_warning <-
   tryCatchWarning(
     do.call(comorbidities, c(common_args, list(id.vars = NULL, age.var = "age")))

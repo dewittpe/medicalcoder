@@ -19,7 +19,7 @@ library(medicalcoder)
 #     - malignancy_dxpr_and_tech
 #     - malignancy_dxpr_or_tech
 #
-# I50.40: heart failure, or cardiovasular disease
+# I50.40: heart failure, or cardiovascular disease
 #   - Charlson (Quan 2005)
 #     - chf
 #   - Elixhauser (AHRQ 2025)
@@ -436,7 +436,7 @@ for (i in seq_len(length(CMRBS))) {
 }
 
 ################################################################################
-# remove the subcondtions after verifying they are all empty
+# remove the subconditions after verifying they are all empty
 for( i in seq_len(length(CMRBS)) ) {
   stopifnot(identical(length(CMRBS[[i]][["spccc_current_0"]][["subconditions"]]), 0L))
   CMRBS[[i]][["spccc_current_0"]][["subconditions"]] <- NULL

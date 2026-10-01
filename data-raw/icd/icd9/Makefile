@@ -24,7 +24,7 @@ endif
 CMS_SOURCES := cms/cms_v32.zip cms/cms_v31.zip cms/cms_v30.zip cms/cms_v29.zip cms/cms_v28.zip cms/cms_v27.zip cms/cms_v26.zip cms/cms_v25.zip cms/cms_v24.zip cms/cms_v23.zip
 
 # CDC Sources are RTF file and will be processed to plain text files.  The rtf
-# files are aquired from runnig the download script
+# files are acquired by running the download script
 ICD9CMPATH := ./ftp.cdc.gov/pub/Health_Statistics/NCHS/Publications/ICD9-CM
 
 DTAB97_CHAPTERS := chap01.rtf chap02.rtf chap03.rtf chap04.rtf chap05.rtf chap06.rtf chap07.rtf chap08.rtf chap09.rtf chap10.rtf chap11.rtf chap12.rtf chap13.rtf chap14.rtf chap15.rtf chap16.rtf chap17.rtf vcodes.rtf ecodes.rtf
@@ -45,7 +45,7 @@ CDC_SOURCES := cdc/dtab97.txt cdc/dtab98.txt cdc/dtab99.txt cdc/dtab01.txt cdc/d
 # remove some markdown formatting from text files
 #
 # * remove backslashes:
-# * remove double asterisks.  the bolding was not consistent from year to year.
+# * remove double asterisks. The bolding was inconsistent between years.
 #   Yes, that means I'm losing some information, but the primary purpose for this
 #   work is to be able to get the ICD codes out
 # * remove any leading white space
@@ -348,4 +348,3 @@ $(ICD9CMPATH)/%: .download_stamp
 
 clean:
 	$(RM) *.rds
-

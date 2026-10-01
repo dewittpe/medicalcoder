@@ -78,7 +78,7 @@ stopifnot(rtn[rtn$permutation == 5, "plabel"] == "Permutation 5: Z96.41, H49.811
 stopifnot(rtn[rtn$permutation == 6, "plabel"] == "Permutation 6: Z96.41, J84.111, H49.811")
 
 # Permutation 1
-#   The sequnce of conditions:
+#   The sequence of conditions:
 #     2. metabolic (other) (H49.811)
 #     4. respiratory       (J84.111)
 #     6. metabolic (tech)  (Z96.41)
@@ -93,7 +93,7 @@ expected_respiratory_tech_only_1     = c(0L, 0L, 0L, 0L, 0L, 0L, 0L)
 expected_respiratory_dxpr_and_tech_1 = c(0L, 0L, 0L, 0L, 0L, 0L, 0L)
 
 # Permutation 2
-#   The sequnce of conditions:
+#   The sequence of conditions:
 #     2. metabolic (other) (H49.811)
 #     4. metabolic (tech)  (Z96.41)
 #     6. respiratory       (J84.111)
@@ -108,7 +108,7 @@ expected_respiratory_tech_only_2     = c(0L, 0L, 0L, 0L, 0L, 0L, 0L)
 expected_respiratory_dxpr_and_tech_2 = c(0L, 0L, 0L, 0L, 0L, 0L, 0L)
 
 # Permutation 3
-#   The sequnce of conditions:
+#   The sequence of conditions:
 #     2. respiratory       (J84.111)
 #     4. metabolic (other) (H49.811)
 #     6. metabolic (tech)  (Z96.41)
@@ -123,7 +123,7 @@ expected_respiratory_tech_only_3     = c(0L, 0L, 0L, 0L, 0L, 0L, 0L)
 expected_respiratory_dxpr_and_tech_3 = c(0L, 0L, 0L, 0L, 0L, 0L, 0L)
 
 # Permutation 4
-#   The sequnce of conditions:
+#   The sequence of conditions:
 #     2. respiratory       (J84.111)
 #     4. metabolic (tech)  (Z96.41)
 #     6. metabolic (other) (H49.811)
@@ -138,7 +138,7 @@ expected_respiratory_tech_only_4     = c(0L, 0L, 0L, 0L, 0L, 0L, 0L)
 expected_respiratory_dxpr_and_tech_4 = c(0L, 0L, 0L, 0L, 0L, 0L, 0L)
 
 # Permutation 5
-#   The sequnce of conditions:
+#   The sequence of conditions:
 #     2. metabolic (tech)  (Z96.41)
 #     4. metabolic (other) (H49.811)
 #     6. respiratory       (J84.111)
@@ -153,7 +153,7 @@ expected_respiratory_tech_only_5     = c(0L, 0L, 0L, 0L, 0L, 0L, 0L)
 expected_respiratory_dxpr_and_tech_5 = c(0L, 0L, 0L, 0L, 0L, 0L, 0L)
 
 # Permutation 6
-#   The sequnce of conditions:
+#   The sequence of conditions:
 #     2. metabolic (tech)  (Z96.41)
 #     4. respiratory       (J84.111)
 #     6. metabolic (other) (H49.811)

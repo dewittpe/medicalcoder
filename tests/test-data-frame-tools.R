@@ -19,7 +19,7 @@ dataframetools <-
 
 mdcr <- getNamespace("medicalcoder")
 
-# are all the dataframetools in the namespcae
+# are all the data frame tools in the namespace
 stopifnot(all(dataframetools %in% names(mdcr)))
 
 # check that there are not unaccounted for datasets.  the ..mdcr_internal_
@@ -116,7 +116,7 @@ stopifnot(
 
 ################################################################################
 # testing mdcr_select
-# set colummns - change the order of the columns
+# set columns - change the order of the columns
 DF  <- getFromNamespace(x = "mdcr_select", ns = "medicalcoder")(DF,  col = c("D", "B", "C", "A"))
 TBL <- getFromNamespace(x = "mdcr_select", ns = "medicalcoder")(TBL, col = c("D", "B", "C", "A"))
 DT  <- getFromNamespace(x = "mdcr_select", ns = "medicalcoder")(DT,  col = c("D", "B", "C", "A"))
@@ -127,7 +127,7 @@ stopifnot(
   identical(names(DT),  c("D", "B", "C", "A"))
 )
 
-# retun the object if col is missing
+# return the object if col is missing
 stopifnot(
   identical(getFromNamespace(x = "mdcr_select", ns = "medicalcoder")(DF), DF),
   identical(getFromNamespace(x = "mdcr_select", ns = "medicalcoder")(TBL), TBL),
@@ -154,14 +154,14 @@ stopifnot(
 ################################################################################
 # testing mdcr_subset
 
-# if arg i and cols are missing then the object is retruned
+# if arguments i and cols are missing, then the object is returned
 stopifnot(
   identical(getFromNamespace(x = "mdcr_subset", ns = "medicalcoder")(DF), DF),
   identical(getFromNamespace(x = "mdcr_subset", ns = "medicalcoder")(TBL), TBL),
   identical(getFromNamespace(x = "mdcr_subset", ns = "medicalcoder")(DT), DT)
 )
 
-# with no row specfied, it is the same as calling mdcr_select
+# with no row specified, this is the same as calling mdcr_select
 stopifnot(
   identical(
     getFromNamespace(x = "mdcr_subset", ns = "medicalcoder")(DF,  col = c("D", "B", "C", "A")),

@@ -4,8 +4,8 @@ library(medicalcoder)
 ################################################################################
 # a code of length 1 should not be a valid code for either ICD-9 or ICD-10, that
 # is because the minimum number of characters for ICD-9-CM ICD-10-CM is three,
-# ICD-10-PCS is seven, and ICD-9-PCS is two.  The folowing tests verify that
-# is_icd will return FALSE any reasonable one characters string.
+# ICD-10-PCS is seven, and ICD-9-PCS is two. The following tests verify that
+# is_icd returns FALSE for any reasonable one-character string.
 #
 # tests:
 #
@@ -53,11 +53,11 @@ stopifnot(
 
 
 ################################################################################
-# For ICD-9 test that the presense of a dot is considered when testing.
+# For ICD-9, test that the presence of a dot is considered.
 # Example 7993 is the simplified version of the proper ICD-9 DX code 799.3 and
-# PR code 79.93.  Becuase the look up tables use 7993, the input of 7993 will be
-# valid code for both dx and pr.  if a dot is present, consider it, and return
-# FALSE if the dot is in the wrong place
+# PR code 79.93. Because the lookup tables use 7993, the input 7993 is a valid
+# code for both dx and PR. If a dot is present, its position is considered, and
+# FALSE is returned if the dot is in the wrong place.
 
 x <- c("7993", ".7993", "7.993", "79.93", "799.3", "7993.")
 f <- factor(x)
@@ -77,9 +77,9 @@ x <- tryCatchWarning(is_icd("7993"))
 stopifnot(inherits(x, "warning"))
 
 # For ICD-10 dx, if there is a dot, it needs to be the fourth character
-# C44.1121 (basal cell carcinoma of skn of right upper eyelide, including
-# canthus) is a valid code, so "C441121" should return TRUE and a dot anywere
-# other than the fourth character should be FALSE.
+# C44.1121 (basal cell carcinoma of skin of the right upper eyelid, including
+# canthus) is a valid code, so "C441121" should return TRUE. A dot anywhere
+# other than in the fourth character position should return FALSE.
 x <- c("C441121",
        ".C441121",
        "C.441121",

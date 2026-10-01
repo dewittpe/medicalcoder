@@ -1,10 +1,10 @@
 library(medicalcoder)
 source("utilities.R")
 ################################################################################
-# testing the internal datasets - both the internal sets and the user visible
-# versions.
+# test the internal datasets, including their user-visible versions.
 
-# The internal sets can to look for: this cannot be done dynamically
+# To inspect the internal datasets, run these commands. This cannot be done
+# dynamically.
 # e <- new.env()
 # load("../R/sysdata.rda", envir = e)
 # dput(sort(ls(all.names = TRUE, envir = e)))
@@ -260,7 +260,7 @@ for (n in grep("^icd_", names(user_visible), value = TRUE)) {
 }
 
 # For the biggest set of icd codes let's make sure fields are at least populated
-# as exptected
+# as expected
 stopifnot(
   !any(is.na(user_visible[["icd_dh"]][["icdv"]])),
   all(user_visible[["icd_dh"]][["icdv"]] %in% c(9L, 10L)),

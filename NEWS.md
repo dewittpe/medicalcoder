@@ -14,11 +14,18 @@
   cannot mask the April 2026 update. Correct affected FY2026 code validity.
 * Repair recursive ICD build dependencies and track selected source files so
   importer and source updates propagate to generated package data.
+* Preserve the union of codes from supported annual AHRQ ICD-10 mappings in
+  `elixhauser_ahrq_icd10`. This method has no encounter year or quarter input,
+  so codes from earlier releases remain included even if a later release no
+  longer lists them as assignable.
+* Add a data-build check that mapped, assignable ICD-10 codes retain the same
+  POA-exemption status across supported AHRQ releases. This guards the
+  assumption behind the combined `elixhauser_ahrq_icd10` method (#47).
 
 ## Other Changes
 
-* Added CITATION file and added to the README the [JAMIA
-  Open](https://doi.org/10.1093/jamiaopen/ooag182) manuscript.
+* Add a `CITATION` file and cite the [JAMIA Open
+  manuscript](https://doi.org/10.1093/jamiaopen/ooag182) in the README.
 
 ## Breaking Changes
 

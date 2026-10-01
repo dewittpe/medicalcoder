@@ -223,7 +223,7 @@
 }
 
 .elixhauser_pre2022 <- function(ccc, id.vars, iddf, cmrb, poa.var, primarydx.var, method) {
-  # what are the relevent coniditions
+  # find the relevant conditions
   conditions <-
     unique(..mdcr_internal_elixhauser_codes..[["condition"]][which(..mdcr_internal_elixhauser_codes..[[method]] == 1L)])
 
