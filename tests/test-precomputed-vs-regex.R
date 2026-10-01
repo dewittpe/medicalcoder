@@ -1,3 +1,11 @@
+# Treat this as a CRAN-style run when NOT_CRAN is unset/empty and R is
+# non-interactive (as in a plain `R CMD check`), or whenever NOT_CRAN is not
+# explicitly TRUE. In an interactive session with NOT_CRAN unset, this returns
+# FALSE so the full check can run.
+#
+# devtools sets NOT_CRAN=TRUE while checking, so this returns FALSE there and
+# the exhaustive comparison below runs. That comparison is skipped for plain
+# non-interactive R CMD check runs to keep the CRAN check shorter.
 on_cran <- function () {
   env <- Sys.getenv("NOT_CRAN")
   if (identical(env, "")) {
@@ -180,17 +188,21 @@ p <- new.env()   # store precomputed results
 rf <- new.env()  # store regex on full codes
 rc <- new.env()  # sotre regex on compact codes
 
-map_by_regex_wrapper <- function(uc, ptrns, full_code = TRUE) {
-  # define the lapply to use
-  if (requireNamespace("parallel", quietly = TRUE)) {
-    listapply <- getExportedValue(ns = "parallel", name = "mclapply")
-    cores <- parallel::detectCores()
-    cores <- if (is.na(cores)) 1L else max(floor(cores / 2L), 1L)
-    options("mc.cores" = cores)
-  } else {
-    listapply <- lapply
+# define the lapply to use
+if (requireNamespace("parallel", quietly = TRUE)) {
+  listapply <- getExportedValue(ns = "parallel", name = "mclapply")
+  cores <- parallel::detectCores()
+  cores <- if (is.na(cores)) 1L else max(floor(cores / 2L), 1L)
+  limit_cores <- tolower(Sys.getenv("_R_CHECK_LIMIT_CORES_", "")) %in% c("true", "1")
+  if (limit_cores) {
+    cores <- min(cores, 2L)
   }
+  options(mc.cores = cores)
+} else {
+  listapply <- lapply
+}
 
+map_by_regex_wrapper <- function(uc, ptrns, full_code = TRUE) {
   if (full_code) {
     rtn <-
       listapply(
@@ -217,7 +229,6 @@ map_by_regex_wrapper <- function(uc, ptrns, full_code = TRUE) {
 }
 
 for (m in names(charlson_codes)[which(!(names(charlson_codes) %in% jsc))]) {
-
   if (m == "charlson_beyrer2021") {
     # skip for now, no regex yet
     next
@@ -314,7 +325,6 @@ for (m in names(charlson_codes)[which(!(names(charlson_codes) %in% jsc))]) {
   } else {
     stop("precomputed vs regex is not the same for ", m, call. = FALSE)
   }
-
 }
 
 ################################################################################
