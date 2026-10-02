@@ -1,4 +1,14 @@
 source('utilities.R')
+# This checks the complete PCCC mapping table and is reserved for extended test
+# runs. Routine CRAN checks exercise PCCC behavior through focused tests.
+if (!extended_tests_enabled()) {
+  message(
+    "Skipping extended PCCC mapping checks; set ",
+    "MEDICALCODER_RUN_EXTENDED_TESTS=true to run them."
+  )
+  quit(save = "no", status = 0, runLast = FALSE)
+}
+
 # test the construction and results of the icd to pccc mappings.  the code to
 # build the datasets is in
 # inst/mappings/icd-codes-and-mappings.R

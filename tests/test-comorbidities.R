@@ -6,11 +6,12 @@ set.seed(42)
 ################################################################################
 # verify an error will be thrown if length(id.vars) < 2 and flag.method =
 # "cumulative"
+# These checks need mdcr's column structure, but not its actual records.
 
 rtn <- # length(id.vars) = 0
   tryCatchError(
     comorbidities(
-      data = mdcr,
+      data = mdcr[0, ],
       icd.codes = "code",
       poa = 1L,
       flag.method = 'cumulative',
@@ -22,7 +23,7 @@ stopifnot(inherits(rtn, "error"))
 rtn <- # length(id.vars) = 1
   tryCatchError(
     comorbidities(
-      data = mdcr,
+      data = mdcr[0, ],
       id.vars = "patid",
       icd.codes = "code",
       poa = 1L,
@@ -36,8 +37,9 @@ stopifnot(inherits(rtn, "error"))
 ################################################################################
 # verify errors are thrown if a "protected" name is used for the id.vars,
 # poa.var, or primarydx.var
-mdcr2 <- mdcr
-mdcr2[["condition"]] <- 1L
+# The column structure is needed for these checks, but the actual records are not.
+mdcr2 <- mdcr[0, ]
+mdcr2[["condition"]] <- integer()
 
 x <-
   tryCatchError(
@@ -86,7 +88,8 @@ stopifnot(inherits(x, "error"))
 ################################################################################
 # verify errors are thrown when icdv.var, dx.var, poa.var, or primarydx.var are
 # non-numeric
-mdcr3 <- mdcr
+# These checks need the input columns, but not any actual diagnosis records.
+mdcr3 <- mdcr[0, ]
 mdcr3[["icdv_chr"]] <- as.character(mdcr3[["icdv"]])
 mdcr3[["dx_chr"]] <- as.character(mdcr3[["dx"]])
 mdcr3[["poa_chr"]] <- as.character(rep(1L, nrow(mdcr3)))
@@ -351,10 +354,13 @@ stopifnot(
 # that should not be used in the id.vars, poa.var, or the primarydx.var.  Tests
 # for those are above.  The tests below would have passed for 0.0.0.9039 -
 # 0.0.0.9044, but will error for 0.0.0.9045 with a useful error message.
-mdcr$full_code <- "just a test"
+# The data structure is needed to test protected names; actual records are not.
+mdcr_zero <- mdcr[0, ]
+mdcr_zero$full_code <- character()
+mdcr_zero$icd_code <- mdcr_zero$code
 mdcr$icd_code <- mdcr$code
 
-args <- list(data = mdcr, icd.code = "icd_code", method = "pccc_v3.0", poa = 1)
+args <- list(data = mdcr_zero, icd.code = "icd_code", method = "pccc_v3.0", poa = 1)
 
 out1 <- tryCatchError(do.call(comorbidities, c(args, list(id.vars = c("patid", "full_code")))))
 out2 <- tryCatchError(do.call(comorbidities, c(args, list(id.vars = c("patid", "icdv")))))
@@ -372,10 +378,11 @@ stopifnot(
 # caused an error. https://github.com/dewittpe/medicalcoder/issues/16
 #
 # This has been corrected to be a warning
+# The warning check needs mdcr's columns, but not its actual records.
 x <-
   tryCatchWarning(
     comorbidities(
-      data = mdcr,
+      data = mdcr[0, ],
       id.var = "patid",
       method = "charlson_quan2005",
       icd.codes = "code",
@@ -625,6 +632,7 @@ stopifnot(name_collision[["mst"]] == 1L, !("..medicalcoder_id.." %in% names(name
 
 ################################################################################
 # Zero-row inputs without id.vars exercise internally-created ID removal paths.
+# These checks need mdcr's column structure, but not its actual records.
 
 zero_no_id <-
   comorbidities(

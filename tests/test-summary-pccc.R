@@ -143,6 +143,7 @@ stopifnot(
 
 ################################################################################
 # Zero-row input should summarize without NaN/Inf (v2.1)
+# mdcr supplies the required input columns; its actual records are not needed.
 
 pccc_zero <- comorbidities(
   data        = mdcr[0, ],
@@ -164,6 +165,7 @@ stopifnot(
 
 ################################################################################
 # Zero-row input should summarize without NaN/Inf (v3.1)
+# mdcr supplies the required input columns; its actual records are not needed.
 
 pccc_zero <- comorbidities(
   data        = mdcr[0, ],

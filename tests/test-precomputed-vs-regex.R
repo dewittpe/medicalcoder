@@ -154,17 +154,11 @@ stopifnot(
 # The exhaustive comparisons below apply every supported Charlson regex to the
 # full ICD database, in both full and compact code formats. They take several
 # minutes, so leave them out of routine package checks. Run them locally with
-# MEDICALCODER_RUN_EXTENDED_REGEX_TESTS=true to enable the extended checks.
-run_extended_regex_tests <-
-  identical(
-    tolower(Sys.getenv("MEDICALCODER_RUN_EXTENDED_REGEX_TESTS", "false")),
-    "true"
-  )
-
-if (!run_extended_regex_tests) {
+# MEDICALCODER_RUN_EXTENDED_TESTS=true to enable the extended checks.
+if (!extended_tests_enabled()) {
   message(
     "Skipping extended regex comparisons; set ",
-    "MEDICALCODER_RUN_EXTENDED_REGEX_TESTS=true to run them."
+    "MEDICALCODER_RUN_EXTENDED_TESTS=true to run them."
   )
   q(save = "no", status = 0)
 }

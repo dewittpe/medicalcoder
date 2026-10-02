@@ -19,10 +19,11 @@ summary_warning_msg <-
 
 ################################################################################
 # Modified data-frame results fall back to base summary/print methods.
+# These tests need mdcr's column structure, but not its actual records.
 
 pccc <-
   comorbidities(
-    data = mdcr,
+    data = mdcr[0, ],
     id.vars = "patid",
     icd.codes = "code",
     dx.var = "dx",
@@ -47,7 +48,7 @@ stopifnot(
 
 charlson <-
   comorbidities(
-    data = mdcr,
+    data = mdcr[0, ],
     id.vars = "patid",
     icd.codes = "code",
     dx.var = "dx",
@@ -70,7 +71,7 @@ stopifnot(
 
 pccc_subconditions <-
   comorbidities(
-    data = mdcr,
+    data = mdcr[0, ],
     id.vars = "patid",
     icd.codes = "code",
     dx.var = "dx",

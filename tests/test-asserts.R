@@ -40,7 +40,8 @@ stopifnot(
   t07b = !("assert_column" %in% getNamespaceExports("medicalcoder"))
 )
 
-common_args <- list(data = mdcr, method = "pccc_v3.1", icd.codes = "code", poa = 1L)
+# These argument checks need mdcr's column structure, but not its actual rows.
+common_args <- list(data = mdcr[0, ], method = "pccc_v3.1", icd.codes = "code", poa = 1L)
 
 t02a <- tryCatchError(do.call(comorbidities, args = c(common_args, list(full.codes = TRUE))))
 t02b <- tryCatchError(do.call(comorbidities, args = c(common_args, list(full.codes = FALSE))))

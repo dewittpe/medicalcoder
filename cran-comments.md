@@ -8,10 +8,16 @@ Windows.
 * Local:
   * R 4.6.1 (macOS Tahoe 26.5.2, aarch64-apple-darwin23)
     * Status: OK
+    * about 3 minutes to run R CMD check
+    * about 3 mintues 45 seconds to run R CMD check --as-cran
 
 * GitHub Actions
   * macos-latest (release)
     * Status: OK
+    * INFO: 
+       installed size is  5.1Mb
+       sub-directories of 1Mb or more:
+         R   3.2Mb
   * windows-latest (release)
     * Status: OK
   * ubuntu-latest (devel)
