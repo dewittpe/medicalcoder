@@ -1,6 +1,7 @@
 # Version 0.10.0
 
-This is an update to the CRAN package medicalcoder.
+Resubmission - Tests have been modified to reduce the amount of compute time on
+Windows.
 
 ## R CMD check results
 

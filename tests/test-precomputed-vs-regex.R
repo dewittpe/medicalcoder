@@ -1,21 +1,3 @@
-# Treat this as a CRAN-style run when NOT_CRAN is unset/empty and R is
-# non-interactive (as in a plain `R CMD check`), or whenever NOT_CRAN is not
-# explicitly TRUE. In an interactive session with NOT_CRAN unset, this returns
-# FALSE so the full check can run.
-#
-# devtools sets NOT_CRAN=TRUE while checking, so this returns FALSE there and
-# the exhaustive comparison below runs. That comparison is skipped for plain
-# non-interactive R CMD check runs to keep the CRAN check shorter.
-on_cran <- function () {
-  env <- Sys.getenv("NOT_CRAN")
-  if (identical(env, "")) {
-    !interactive()
-  }
-  else {
-    !isTRUE(as.logical(env))
-  }
-}
-
 source('utilities.R')
 library(medicalcoder)
 
@@ -169,8 +151,21 @@ stopifnot(
   all(short_fragment_deyo[["cmrb_flag"]] == 0L)
 )
 
-if (on_cran()) {
-  message("CRAN environment detected: skipping this test file.")
+# The exhaustive comparisons below apply every supported Charlson regex to the
+# full ICD database, in both full and compact code formats. They take several
+# minutes, so leave them out of routine package checks. Run them locally with
+# MEDICALCODER_RUN_EXTENDED_REGEX_TESTS=true to enable the extended checks.
+run_extended_regex_tests <-
+  identical(
+    tolower(Sys.getenv("MEDICALCODER_RUN_EXTENDED_REGEX_TESTS", "false")),
+    "true"
+  )
+
+if (!run_extended_regex_tests) {
+  message(
+    "Skipping extended regex comparisons; set ",
+    "MEDICALCODER_RUN_EXTENDED_REGEX_TESTS=true to run them."
+  )
   q(save = "no", status = 0)
 }
 

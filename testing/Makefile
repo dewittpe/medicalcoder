@@ -7,6 +7,7 @@ SHELL := $(if $(USER_SHELL),$(USER_SHELL),/bin/bash)
 DOCKER ?= docker
 DOCKER_PLATFORM ?= linux/amd64
 DOCKER_PLATFORM_FLAG := $(if $(DOCKER_PLATFORM),--platform $(DOCKER_PLATFORM),)
+EXTENDED_TEST_ENV := -e MEDICALCODER_RUN_EXTENDED_REGEX_TESTS=true
 
 V35 := 3.5.0 3.5.1 3.5.2 3.5.3
 V36 := 3.6.0 3.6.1 3.6.2 3.6.3
@@ -48,6 +49,7 @@ R-%-without-suggests/$(PKG_NAME).Rcheck/00check.log: $(TARBALL)
 	mkdir -p R-$*-without-suggests
 	$(DOCKER) run \
 		$(DOCKER_PLATFORM_FLAG) \
+		$(EXTENDED_TEST_ENV) \
 		-v "$$(PWD)":/work \
 		-w /work \
 		-e _R_CHECK_FORCE_SUGGESTS_=false \
@@ -59,6 +61,7 @@ R-%-with-suggests/$(PKG_NAME).Rcheck/00check.log: .images/R-%-with-suggests.stam
 	mkdir -p R-$*-with-suggests
 	$(DOCKER) run \
 		$(DOCKER_PLATFORM_FLAG) \
+		$(EXTENDED_TEST_ENV) \
 		-v "$$(PWD)":/work \
 		--rm 	mdcr-$*-with-suggests \
 		R CMD check -o R-$*-with-suggests $(TARBALL) > R-$*-with-suggests/docker.log 2>&1

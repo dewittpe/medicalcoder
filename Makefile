@@ -21,7 +21,7 @@ TARBALL   := $(PKG_NAME)_$(PKG_VERSION).tar.gz
 # Phony targets
 # =============================================================================
 
-.PHONY: all check check-as-cran install uninstall clean data-raw site covr
+.PHONY: all check check-extended check-as-cran install uninstall clean data-raw site covr
 
 # =============================================================================
 # Default
@@ -77,6 +77,12 @@ README.md: $(PKG_ROOT)/README.Rmd $(PKG_ROOT)/DESCRIPTION $(DATA) .install_dev_d
 
 check: $(TARBALL) .install_dev_deps.Rout
 	$(R) CMD check $(TARBALL)
+
+# Run the exhaustive regex/precomputed comparison in addition to routine tests.
+# This takes several minutes; the environment variable is consumed by
+# tests/test-precomputed-vs-regex.R.
+check-extended: $(TARBALL) .install_dev_deps.Rout
+	MEDICALCODER_RUN_EXTENDED_REGEX_TESTS=true $(R) CMD check $(TARBALL)
 
 check-as-cran: $(TARBALL) .install_dev_deps.Rout
 	$(R) CMD check --as-cran $(TARBALL)
