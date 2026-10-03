@@ -60,8 +60,9 @@ summary.medicalcoder_comorbidities <- function(object, ...) {
   } else if (startsWith(attr(object, "method"), "elixhauser")) {
     .elixhauser_summary(object)
   } else {
-    # As of v0.9.0 this guard cannot be reached through exported constructors:
-    # valid medicalcoder_comorbidities objects must use a registered method.
+    # Coverage note: this guard cannot be reached through exported
+    # constructors; valid objects must use a registered method, and all
+    # registered methods are handled above.
     stop(sprintf("No summary method for a medicalcoder_comorbidities object with method %s has been built", attr(object, "method")))
   }
 }

@@ -1,6 +1,10 @@
 ..mdcr_data_env.. <- new.env(parent = emptyenv())
 
 .onLoad <- function(libname, pkgname) {
+  # Coverage note: covr does not record these expressions because .onLoad runs
+  # as the namespace is initialized, before package test coverage is collected.
+  # Package loading still exercises this initialization in every test process.
+
   # Build icd_codes
   # NOTE: code_id is a distinct key mapping to: icdv, dx, full_code, code.
   # See data-raw/icd/icd_codes.R
@@ -70,4 +74,3 @@
 
   lockEnvironment(..mdcr_data_env.., bindings = TRUE)
 }
-

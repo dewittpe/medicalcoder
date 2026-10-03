@@ -840,7 +840,7 @@ comorbidities.data.frame <- function(data,
   } else if (startsWith(method, "elixhauser")) {
     ccc <- .elixhauser(id.vars = id.vars, iddf = iddf, cmrb = cmrb, poa.var = poa.var, primarydx.var = primarydx.var, method = method)
   } else {
-    # As of v0.9.0 this guard cannot be reached through comorbidities():
+    # Coverage note: this guard cannot be reached through comorbidities();
     # method is constrained by match.arg() before dispatch reaches this branch.
     stop(sprintf("method '%s' has not yet been implemented", method))
   }
@@ -955,7 +955,7 @@ map_by_regex <- function(uc, ptrns, icd.codes, by_x, by_y) {
     if (length(y) > 0L) {
       which(y)
     } else {
-      # As of v0.9.0 this branch cannot be reached through comorbidities():
+      # Coverage note: this branch cannot be reached through comorbidities();
       # map_by_regex() returns before this point when no regex patterns exist.
       integer(0)
     }

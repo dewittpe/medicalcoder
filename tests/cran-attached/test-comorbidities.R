@@ -406,6 +406,31 @@ ms <- ms[!startsWith(ms, "pccc")]
 # test.
 ms <- ms[ms != "elixhauser_elixhauser1988"]
 
+legacy_elixhauser_warnings <- character()
+legacy_elixhauser <-
+  withCallingHandlers(
+    comorbidities(
+      data = mdcr[1:10, ],
+      id.vars = "patid",
+      icdv.var = "icdv",
+      dx.var = "dx",
+      icd.codes = "code",
+      poa = 1L,
+      primarydx = 0L,
+      method = "elixhauser_elixhauser1988"
+    ),
+    warning = function(w) {
+      legacy_elixhauser_warnings <<- c(legacy_elixhauser_warnings, conditionMessage(w))
+      invokeRestart("muffleWarning")
+    }
+  )
+
+stopifnot(
+  length(legacy_elixhauser_warnings) == 1L,
+  grepl("Please use `method = 'elixhauser_elixhauser1998'` instead", legacy_elixhauser_warnings, fixed = TRUE),
+  identical(attr(legacy_elixhauser, "method"), "elixhauser_elixhauser1998")
+)
+
 for (m in ms) {
   x <- tryCatchWarning(do.call(comorbidities, c(args, list(method = m))))
   z <- inherits(x, "warning")

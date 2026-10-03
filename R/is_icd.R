@@ -121,8 +121,9 @@ is_icd <- function(x, icdv = c(9L, 10L), dx = c(1L, 0L),
       codes[["assignable_end"]] >= year
   }
   if (!any(keep)) {
-    # As of v0.9.0 this warning cannot be reached with current lookup tables:
-    # every source/version/type combination has at least one assignable code.
+    # Coverage note: current lookup tables make this warning unreachable;
+    # each source/version/type combination has an assignable code in every
+    # year within its known range.
     msg <-
       paste0(
         "The combination of ", icdv_dx_src_msg,
