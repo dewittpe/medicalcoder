@@ -26,6 +26,11 @@
 
 * Add a `CITATION` file and cite the [JAMIA Open
   manuscript](https://doi.org/10.1093/jamiaopen/ooag182) in the README.
+* Organize tests into attached, unattached, and extended groups, with a runner
+  that isolates each test script in its own environment. Routine checks now
+  disable extended tests explicitly; use `make check-extended` to run them.
+  Tests that require an unavailable optional dependency can use `skip_test()`
+  so the runner records a skip and continues with the group.
 
 ## Breaking Changes
 

@@ -107,7 +107,6 @@ mdcr_for_mimic[, age := as.integer(substr(as.character(subject_id), 1L, 2L))]
 ```
 
 ```{r}
-library(odbc)
 library(DBI)
 library(RSQLite)
 

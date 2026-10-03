@@ -31,5 +31,5 @@ Suggests:
     tidyr
 VignetteBuilder: knitr, rmarkdown
 Roxygen: list(markdown = TRUE)
-Config/Needs/website: pkgdown, comorbidity, icdcomorbid, multimorbidity, dplyr, tidyr, tibble, odbc, DBI, RSQLite, pccc
+Config/Needs/website: pkgdown, comorbidity, multimorbidity, dplyr, tidyr, tibble, DBI, RSQLite, pccc
 Config/roxygen2/version: 8.1.0

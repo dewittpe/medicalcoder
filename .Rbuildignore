@@ -2,6 +2,7 @@
 ^.*Makevars$
 ^.*\.Rout$
 ^README\.Rmd
+^CONTRIBUTING\.md$
 ^_pkgdown\.yml$
 ^benchmarking/*
 ^data-raw/*
