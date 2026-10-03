@@ -615,6 +615,18 @@ stopifnot(
   all(regex_both[["mst"]] == 1L)
 )
 
+# A non-empty input with no regex matches exercises the empty-result fallback.
+regex_no_match_data <- regex_data
+regex_no_match_data[["code"]] <- "ZZZ"
+regex_no_match_args <- regex_args
+regex_no_match_args[["data"]] <- regex_no_match_data
+regex_no_match <- do.call(comorbidities, regex_no_match_args)
+
+stopifnot(
+  nrow(regex_no_match) == nrow(regex_no_match_data),
+  all(regex_no_match[["mst"]] == 0L)
+)
+
 name_collision <-
   comorbidities(
     data = data.frame(..medicalcoder_id.. = "C78.4", stringsAsFactors = FALSE),

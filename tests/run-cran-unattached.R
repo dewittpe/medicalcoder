@@ -1,4 +1,20 @@
-loadNamespace("medicalcoder")
+# covr instruments package code after it is attached.  Briefly attach the
+# package during coverage runs, then detach it without unloading the namespace
+# so these tests still exercise the loaded-but-unattached state.  Ordinary
+# checks load the namespace directly and never attach it.
+if (identical(Sys.getenv("R_COVR"), "true")) {
+  library(medicalcoder)
+  detach("package:medicalcoder", unload = FALSE)
+} else {
+  loadNamespace("medicalcoder")
+}
+
+# Verify the group left medicalcoder loaded but unattached.
+stopifnot(
+  "medicalcoder namespace loaded" = "medicalcoder" %in% loadedNamespaces(),
+  "medicalcoder namespace not attached" = !("package:medicalcoder" %in% search())
+)
+
 source(file.path("utilities", "run_script.R"))
 
 test_scripts <-
