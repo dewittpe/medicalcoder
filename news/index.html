@@ -66,6 +66,7 @@
 <div class="section level3">
 <h3 id="other-changes-0-10-0">Other Changes<a class="anchor" aria-label="anchor" href="#other-changes-0-10-0"></a></h3>
 <ul><li>Add a <code>CITATION</code> file and cite the <a href="https://doi.org/10.1093/jamiaopen/ooag182" class="external-link">JAMIA Open manuscript</a> in the README.</li>
+<li>Organize tests into attached, unattached, and extended groups, with a runner that isolates each test script in its own environment. Routine checks now disable extended tests explicitly; use <code>make check-extended</code> to run them. Tests that require an unavailable optional dependency can use <code>skip_test()</code> so the runner records a skip and continues with the group.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="breaking-changes-0-10-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-10-0"></a></h3>
