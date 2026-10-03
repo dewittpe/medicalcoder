@@ -10,7 +10,13 @@ PKG_NAME    := $(shell awk '/^Package:/{print $$2}' $(PKG_ROOT)/DESCRIPTION)
 # Sources
 RFILES     := $(wildcard $(PKG_ROOT)/R/*.R)
 MANROXYGEN := $(wildcard $(PKG_ROOT)/man-roxygen/*.R)
-TESTS      := $(wildcard $(PKG_ROOT)/tests/*.R)
+TESTS      := $(wildcard $(PKG_ROOT)/tests/*.R) \
+	$(wildcard $(PKG_ROOT)/tests/cran-attached/*.R) \
+	$(wildcard $(PKG_ROOT)/tests/cran-unattached/*.R) \
+	$(wildcard $(PKG_ROOT)/tests/extended-attached/*.R) \
+	$(wildcard $(PKG_ROOT)/tests/utilities/*.R) \
+	$(wildcard $(PKG_ROOT)/tests/fixtures/*.rds) \
+	$(wildcard $(PKG_ROOT)/tests/fixtures/expected-results-for-test-pccc/*.rds)
 EXAMPLES   := $(wildcard $(PKG_ROOT)/examples/*.R)
 VIGNETTES  := $(wildcard $(PKG_ROOT)/vignettes/*.Rmd)
 DATA       := $(PKG_ROOT)/data/mdcr.rda $(PKG_ROOT)/data/mdcr_longitudinal.rda $(PKG_ROOT)/R/sysdata.rda
@@ -76,7 +82,7 @@ README.md: $(PKG_ROOT)/README.Rmd $(PKG_ROOT)/DESCRIPTION $(DATA) .install_dev_d
 # =============================================================================
 
 check: $(TARBALL) .install_dev_deps.Rout
-	$(R) CMD check $(TARBALL)
+	MEDICALCODER_RUN_EXTENDED_TESTS=false $(R) CMD check $(TARBALL)
 
 # Run extended regex and PCCC mapping checks in addition to routine tests.
 # These take several minutes; the environment variable is consumed by tests.
@@ -84,7 +90,7 @@ check-extended: $(TARBALL) .install_dev_deps.Rout
 	MEDICALCODER_RUN_EXTENDED_TESTS=true $(R) CMD check $(TARBALL)
 
 check-as-cran: $(TARBALL) .install_dev_deps.Rout
-	$(R) CMD check --as-cran $(TARBALL)
+	MEDICALCODER_RUN_EXTENDED_TESTS=false $(R) CMD check --as-cran $(TARBALL)
 
 install: $(TARBALL)
 	$(R) CMD INSTALL $(TARBALL)
