@@ -3,7 +3,8 @@
 There are several different groups of tests each controlled by it's own runner.
 
 1. cran-attached: these tests are expected to run on CRAN and have the
-   medicalcoder namespace loaded and attached.
+   medicalcoder namespace loaded and attached. The internal data-frame helper
+   tests are in this group so coverage tools record execution of the helpers.
 
 2. cran-unattached: these tests are expected to run on CRAN and have the
    medicalcoder namespace loaded but not attached.  These are tests focused on

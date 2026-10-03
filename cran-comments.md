@@ -1,7 +1,10 @@
 # Version 0.10.0
 
-Resubmission - Tests have been modified to reduce the amount of compute time on
-Windows.
+Resubmission after the previous submission was rejected because the overall
+build and check time exceeded 10 minutes, mainly due to the tests. The test
+pipeline was reorganized to load the package once per test group, and the
+longer-running tests are now run only by the extended test target locally. In
+the latest Windows run, the CRAN test suite completed in under 2 minutes.
 
 ## R CMD check results
 
@@ -9,7 +12,7 @@ Windows.
   * R 4.6.1 (macOS Tahoe 26.5.2, aarch64-apple-darwin23)
     * Status: OK
     * about 3 minutes to run R CMD check
-    * about 3 mintues 45 seconds to run R CMD check --as-cran
+    * about 3 minutes 45 seconds to run R CMD check --as-cran
 
 * GitHub Actions
   * macos-latest (release)
@@ -30,7 +33,7 @@ Windows.
 * rhub
   * Status: OK
 
-* windbuilder
+* win-builder
   * Status: OK
 
 ## Additional checks

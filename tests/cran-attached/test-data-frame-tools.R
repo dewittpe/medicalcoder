@@ -1,6 +1,5 @@
-# No need to load and attach the namespace, everything in this test script is
-# non-exported.
-# library(medicalcoder)
+# The attached test runner loads medicalcoder once for this group. These checks
+# exercise internal data-frame helpers through getFromNamespace().
 
 dataframetools <-
   c("mdcr_set",
