@@ -19,7 +19,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/dewittpe/medicalcoder/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/dewittpe/medicalcoder/blob/v0.10.0/inst/CITATION)
 
 DeWitt P, Russell S, Feinstein J, Rebull M, Bennett T (2026).
 “medicalcoder: a unified and longitudinally aware framework for

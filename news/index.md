@@ -2,6 +2,8 @@
 
 ## medicalcoder 0.10.0
 
+CRAN release: 2026-10-03
+
 ### New Features
 
 - Add FY2027 ICD-10-CM and ICD-10-PCS from CMS. The CDC-hosted FY2027 CM
